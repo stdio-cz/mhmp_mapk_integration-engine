@@ -1,0 +1,5 @@
+node_modules/
+dist/
+test/REPORTING/test.txt
+package-lock.json
+config.js
