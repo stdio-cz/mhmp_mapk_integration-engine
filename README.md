@@ -9,6 +9,7 @@ Developed by http://operatorict.cz
 - node.js
 - mongo
 - npm
+- data-platform-schema-definitions module
 
 ## Installation
 

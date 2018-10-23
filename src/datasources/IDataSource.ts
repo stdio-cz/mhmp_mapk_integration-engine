@@ -1,7 +1,5 @@
 "use strict";
 
-import ISchema from "../schemas/ISchema";
-
 export default interface IDataSource {
 
     /** The name of the data source. */

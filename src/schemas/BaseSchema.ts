@@ -1,6 +1,6 @@
 "use strict";
 
-import mongoose = require("mongoose");
+import { Model, SchemaDefinition } from "mongoose";
 import ISchema from "../schemas/ISchema";
 
 /**
@@ -8,13 +8,12 @@ import ISchema from "../schemas/ISchema";
  * Schema for source data or response data.
  * Specifies a JSON schema for the object and uses mongoose Model for validation for the schema.
  */
-
 export default abstract class BaseSchema implements ISchema {
 
     /** The (json) schema object */
-    public abstract schemaObject: object;
+    public abstract schemaObject: SchemaDefinition;
     /** Reference to mongoose model object, used for validation */
-    protected abstract mongooseModel: mongoose.Model;
+    protected abstract mongooseModel: Model;
 
     /** Validate input object by this schema
      * @return true if the object is succesfully validated by the schema
@@ -25,7 +24,7 @@ export default abstract class BaseSchema implements ISchema {
                 return resolve(true);
             }
 
-            let modelData: mongoose.Model;
+            let modelData: Model;
 
             if (data instanceof Array) {
                 const promises = data.map((d) => {

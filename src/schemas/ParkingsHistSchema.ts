@@ -1,28 +1,23 @@
 "use strict";
 
-import mongoose = require("mongoose");
+import { ParkingsHistory } from "data-platform-schema-definitions";
+import { model, Model, Schema, SchemaDefinition } from "mongoose";
 import BaseSchema from "./BaseSchema";
 import ISchema from "./ISchema";
 
 export default class ParkingsHistSchema extends BaseSchema implements ISchema {
 
-    public schemaObject: object;
-    protected mongooseModel: mongoose.Model;
+    public schemaObject: SchemaDefinition;
+    protected mongooseModel: Model;
 
     constructor() {
         super();
-        this.schemaObject = {
-            id: { type: Number, required: true },
-            num_of_free_places: { type: Number, required: true },
-            num_of_taken_places: { type: Number, required: true },
-            time: { type: String, required: true },
-            total_num_of_places: { type: Number, required: true },
-        };
+        this.schemaObject = ParkingsHistory;
         try {
-            this.mongooseModel = mongoose.model("ParkingsHistModel");
+            this.mongooseModel = model("ParkingsHistModel");
         } catch (error) {
-            this.mongooseModel = mongoose.model("ParkingsHistModel",
-                new mongoose.Schema(this.schemaObject));
+            this.mongooseModel = model("ParkingsHistModel",
+                new Schema(this.schemaObject));
         }
     }
 

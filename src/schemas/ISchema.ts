@@ -1,8 +1,10 @@
 "use strict";
 
+import { SchemaDefinition } from "mongoose";
+
 export default interface ISchema {
 
-    schemaObject: object;
+    schemaObject: SchemaDefinition;
     Validate(data: object): Promise<boolean>;
 
 }

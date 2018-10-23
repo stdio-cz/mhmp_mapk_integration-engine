@@ -1,33 +1,23 @@
 "use strict";
 
-import mongoose = require("mongoose");
+import { TSKParkingsDataSource } from "data-platform-schema-definitions";
+import { model, Model, Schema, SchemaDefinition } from "mongoose";
 import BaseSchema from "./BaseSchema";
 import ISchema from "./ISchema";
 
 export default class TSKParkingsDataSourceSchema extends BaseSchema implements ISchema {
 
-    public schemaObject: object;
-    protected mongooseModel: mongoose.Model;
+    public schemaObject: SchemaDefinition;
+    protected mongooseModel: Model;
 
     constructor() {
         super();
-        this.schemaObject = {
-            gid: { type: Number },
-            id: { type: Number, required: true },
-            lastUpdated: { type: Number, required: true },
-            lat: { type: Number, required: true },
-            lng: { type: Number, required: true },
-            name: { type: String, required: true },
-            numOfFreePlaces: { type: Number, required: true },
-            numOfTakenPlaces: { type: Number, required: true },
-            pr: { type: Boolean },
-            totalNumOfPlaces: { type: Number, required: true },
-        };
+        this.schemaObject = TSKParkingsDataSource;
         try {
-            this.mongooseModel = mongoose.model("TSKParkingsDataSourceModel");
+            this.mongooseModel = model("TSKParkingsDataSourceModel");
         } catch (error) {
-            this.mongooseModel = mongoose.model("TSKParkingsDataSourceModel",
-                new mongoose.Schema(this.schemaObject));
+            this.mongooseModel = model("TSKParkingsDataSourceModel",
+                new Schema(this.schemaObject));
         }
     }
 
