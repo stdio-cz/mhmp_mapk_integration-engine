@@ -14,9 +14,7 @@ export default interface IModel {
      * @returns {boolean} True or false if data are valid or not.
      */
     Validate(data: object);
-    GetAll(limit?, offset?);
-    GetOne(id);
-    SaveToDb?(data);
-    RemoveOldRecords?(refreshTimeInMinutes);
+    SaveToDb(data);
+    RemoveOldRecords(refreshTimeInMinutes);
 
 }

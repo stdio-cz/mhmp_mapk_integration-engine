@@ -27,42 +27,52 @@ export default class ParkingsWorker {
     }
 
     public refreshDataInDB = async (): Promise<any> => {
-        const data = await this.parkingsDataSource.GetAll();
-        const transformedData = await this.parkingsPipeline.TransformDataCollection(data);
-        const isValid = await this.parkingsModel.Validate(transformedData);
-        if (!isValid) {
-            throw new Error("ParkingsWorker::refreshDataInDB Source data are not valid.");
-        } else {
-            return this.parkingsModel.SaveToDb(transformedData)
-                .then(async (savingResult) => {
-                    const removeRes =
-                        await this.parkingsModel.RemoveOldRecords(config.refreshTimesInMinutes.Parkings);
-                    if (removeRes.records.length !== 0) {
-                        log("During the saving data from source to DB the old "
-                            + "records was found and removed.");
-                        log(removeRes);
-                    }
-                    return transformedData;
-                }).catch((err) => {
-                    errorLog(err);
-                    throw new Error("ParkingsWorker::refreshDataInDB Error");
-                });
+        try {
+            const data = await this.parkingsDataSource.GetAll();
+            const transformedData = await this.parkingsPipeline.TransformDataCollection(data);
+            const isValid = await this.parkingsModel.Validate(transformedData);
+            if (!isValid) {
+                throw new Error("Source data are not valid.");
+            } else {
+                await this.parkingsModel.SaveToDb(transformedData);
+                const removeRes =
+                    await this.parkingsModel.RemoveOldRecords(config.refreshTimesInMinutes.Parkings);
+                if (removeRes.records.length !== 0) {
+                    log("During the saving data from source to DB the old "
+                        + "records was found and removed.");
+                    log(removeRes);
+                }
+                return transformedData;
+            }
+        } catch (err) {
+            if (err instanceof Error) {
+                errorLog(err.message);
+                throw err;
+            } else {
+                errorLog(err);
+                throw new Error(err);
+            }
         }
     }
 
     public saveDataToHistory = async (data: any): Promise<any> => {
-        const transformedData = await this.parkingsHistPipeline.TransformDataCollection(data);
-        const isValid = await this.parkingsHistModel.Validate(transformedData);
-        if (!isValid) {
-            throw new Error("ParkingsWorker::saveDataToHistory Source data are not valid.");
-        } else {
-            return this.parkingsHistModel.SaveToDb(transformedData)
-                .then(async (savingResult) => {
-                    return transformedData;
-                }).catch((err) => {
-                    errorLog(err);
-                    throw new Error("ParkingsWorker::saveDataToHistory Error");
-                });
+        try {
+            const transformedData = await this.parkingsHistPipeline.TransformDataCollection(data);
+            const isValid = await this.parkingsHistModel.Validate(transformedData);
+            if (!isValid) {
+                throw new Error("Source data are not valid.");
+            } else {
+                const savingResult = await this.parkingsHistModel.SaveToDb(transformedData);
+                return transformedData;
+            }
+        } catch (err) {
+            if (err instanceof Error) {
+                errorLog(err.message);
+                throw err;
+            } else {
+                errorLog(err);
+                throw new Error(err);
+            }
         }
     }
 

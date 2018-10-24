@@ -14,13 +14,16 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("ParkingsWorker.refreshDataInDB", this.processParkingsWorkerRefreshDataInDB);
-        await this.registerQueue("ParkingsWorker.saveDataToHistory", this.processParkingsWorkerSaveDataToHistory);
+        await this.registerQueue("parkings-refreshDataInDB", "*.parkings.refreshDataInDB",
+            this.processParkingsWorkerRefreshDataInDB);
+        await this.registerQueue("parkings-saveDataToHistory", "*.parkings.saveDataToHistory",
+            this.processParkingsWorkerSaveDataToHistory);
     }
 
-    protected registerQueue = async (name: string, processor: (msg: any) => any): Promise<any> => {
-        await this.channel.assertQueue(name, {durable: true});
+    protected registerQueue = async (name: string, key: string, processor: (msg: any) => any): Promise<any> => {
+        const q = await this.channel.assertQueue(name, {durable: true});
         this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
+        this.channel.bindQueue(q.queue, "topic_logs", key); // TODO exchange name and key to config?
         log(" [*] Waiting for messages in %s.", name);
         this.channel.consume(name, processor, {noAck: false});
     }
@@ -28,14 +31,14 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected processParkingsWorkerRefreshDataInDB = async (msg: any): Promise<any> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] ParkingsWorker.refreshDataInDB received some data.");
+            log(" [>] parkings-refreshDataInDB received some data.");
             const res = await parkingsWorker.refreshDataInDB();
 
             // historization
-            await this.sendMessageToQueue("ParkingsWorker.saveDataToHistory", JSON.stringify(res.features));
+            await this.sendMessageToExchange("workers.parkings.saveDataToHistory", JSON.stringify(res.features));
 
             this.channel.ack(msg);
-            log(" [<] ParkingsWorker.refreshDataInDB: done");
+            log(" [<] parkings-refreshDataInDB: done");
         } catch (err) {
             errorLog(err);
         }
@@ -44,11 +47,11 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected processParkingsWorkerSaveDataToHistory = async (msg: any): Promise<any> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] ParkingsWorker.saveDataToHistory received some data.");
+            log(" [>] parkings-saveDataToHistory received some data.");
             await parkingsWorker.saveDataToHistory(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] ParkingsWorker.saveDataToHistory: done");
+            log(" [<] parkings-saveDataToHistory: done");
         } catch (err) {
             errorLog(err);
         }

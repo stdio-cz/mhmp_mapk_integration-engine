@@ -2,7 +2,7 @@
 
 import * as amqplib from "amqplib";
 
-export default abstract class ParkingsQueueProcessor {
+export default abstract class BaseQueueProcessor {
 
     public abstract registerQueues: () => Promise<any>;
     protected channel: amqplib.Channel;
@@ -11,11 +11,9 @@ export default abstract class ParkingsQueueProcessor {
         this.channel = channel;
     }
 
-    /**
-     * TODO pridat exchange
-     */
-    public sendMessageToQueue = async (key, msg): Promise<any> => {
-        await this.channel.assertQueue(key, {durable: true});
-        await this.channel.sendToQueue(key, new Buffer(msg), {persistent: true});
+    public sendMessageToExchange = async (key, msg): Promise<any> => {
+        // TODO exchange name to config?
+        this.channel.assertExchange("topic_logs", "topic", {durable: false});
+        this.channel.publish("topic_logs", key, new Buffer(msg));
     }
 }

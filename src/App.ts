@@ -18,7 +18,7 @@ class App {
                 log("Started!");
             }).catch((err) => {
                 errorLog(err);
-                process.exit(0);
+                process.exit(0); // if anything fails, process is killed
             });
     }
 
@@ -26,21 +26,14 @@ class App {
      * Starts the database connection with initial configuration
      */
     private database = async () => {
-        mongoose.Promise = global.Promise;
-        return mongoose.connect("mongodb://" + config.mongo.url + "/" + config.mongo.db, {
-            auth: {
-                authdb: config.mongo.authdb,
-            },
-            autoReconnect: true,
-            bufferMaxEntries: 0, // Don't wait with queries when DB is unavailable
-            pass: config.mongo.password,
-            user: config.mongo.username,
-        }).then(() => {
+        try {
+            mongoose.Promise = global.Promise;
+            await mongoose.connect(config.mongo.url, config.mongo.options);
             log("Connected to DB!");
-        }).catch((err) => {
+        } catch (err) {
             errorLog(err);
             throw new Error("Error while connecting to DB.");
-        });
+        }
     }
 
     private queueProcessors = async () => {
@@ -49,6 +42,7 @@ class App {
             const ch = await conn.createChannel();
             const parkingsQP = new ParkingsQueueProcessor(ch);
 
+            // ready to register more queue processors
             return Promise.all([
                 parkingsQP.registerQueues(),
             ]);
