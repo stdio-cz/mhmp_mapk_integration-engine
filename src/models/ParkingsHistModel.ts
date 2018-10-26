@@ -1,13 +1,13 @@
 "use strict";
 
 import mongoose = require("mongoose");
+import CustomError from "../helpers/errors/CustomError";
 import ISchema from "../schemas/ISchema";
 import ParkingsHistSchema from "../schemas/ParkingsHistSchema";
 import BaseModel from "./BaseModel";
 import IModel from "./IModel";
 
 const log = require("debug")("ParkingsHistModel");
-const errorLog = require("debug")("error");
 
 export default class ParkingsHistModel extends BaseModel implements IModel {
 
@@ -35,19 +35,14 @@ export default class ParkingsHistModel extends BaseModel implements IModel {
     public SaveToDb = async (data) => {
         // If the data to be saved is the whole collection (contains geoJSON features)
         if (data instanceof Array) {
-            try {
-                const promises = data.map((item) => {
-                    return this.SaveOrUpdateOneToDb(item);
-                });
-                return Promise.all(promises).then(async (res) => {
-                    log("Saving or updating data to database.");
-                    return res;
-                });
-            } catch (err) {
-                return data;
-            }
-        // If it's a single element
-        } else {
+            const promises = data.map((item) => {
+                return this.SaveOrUpdateOneToDb(item);
+            });
+            return Promise.all(promises).then(async (res) => {
+                log("Saving or updating data to database.");
+                return res;
+            });
+        } else { // If it's a single element
             return await this.SaveOrUpdateOneToDb(data);
         }
     }
@@ -66,11 +61,7 @@ export default class ParkingsHistModel extends BaseModel implements IModel {
             // Returns the item saved to the database (stripped of _id and __v)
             return result;
         } catch (err) {
-            if (err instanceof Error) {
-                throw err;
-            } else {
-                throw new Error("Error while saving to database.");
-            }
+            throw new CustomError("Error while saving to database.", true, 1003, err);
         }
     }
 

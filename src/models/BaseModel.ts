@@ -1,6 +1,7 @@
 "use strict";
 
 import mongoose = require("mongoose");
+import CustomError from "../helpers/errors/CustomError";
 import ISchema from "../schemas/ISchema";
 import RefreshTimesModel from "./RefreshTimesModel";
 
@@ -48,14 +49,10 @@ export default abstract class BaseModel {
      * @returns {Promise<any>}
      */
     public RemoveOldRecords = async (refreshTimeInMinutes: number): Promise<any> => {
-        try {
-            const ids = await this.refreshTimesModel.GetExpiredIds(this.name, refreshTimeInMinutes);
-            const removed = await this.mongooseModel.remove(this.searchPath(ids, true));
-            const removedIds = await this.refreshTimesModel.RemoveExpiredIds(this.name, ids);
-            return { name: this.name, records: ids };
-        } catch (err) {
-            return err;
-        }
+        const ids = await this.refreshTimesModel.GetExpiredIds(this.name, refreshTimeInMinutes);
+        const removed = await this.RemoveElements(this.searchPath(ids, true));
+        const removedIds = await this.refreshTimesModel.RemoveExpiredIds(this.name, ids);
+        return { name: this.name, records: ids };
     }
 
     /**
@@ -111,6 +108,14 @@ export default abstract class BaseModel {
                 }
             });
         });
+    }
+
+    protected RemoveElements = async (data: object): Promise<any> => {
+        try {
+            return await this.mongooseModel.remove(data);
+        } catch (err) {
+            throw new CustomError("Error while removing expired elements.", true, 1010, err);
+        }
     }
 
 }

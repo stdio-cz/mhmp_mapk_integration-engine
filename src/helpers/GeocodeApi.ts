@@ -10,6 +10,9 @@ class GeocodeApi {
     protected googleApiUrl: string;
     protected openStreetMapApiUrl: string;
 
+    /**
+     * TODO zahodit google, dat url do configu
+     */
     constructor() {
         this.googleApiUrl = "https://maps.google.com/maps/api/geocode/json?key=AIzaSyDEB20Wqg_g5N0U45sru3Z58nHX8aGhAMI";
         this.openStreetMapApiUrl = "https://nominatim.openstreetmap.org/reverse?format=json&accept-language=cs&zoom=18";

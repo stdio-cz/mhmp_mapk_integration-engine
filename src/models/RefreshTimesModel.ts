@@ -1,8 +1,7 @@
 "use strict";
 
 import mongoose = require("mongoose");
-const log = require("debug")("RefreshTimesModel");
-const errorLog = require("debug")("error");
+import CustomError from "../helpers/errors/CustomError";
 
 /**
  * Model for accessing the collection with refresh times for all sources and providing info about their values.
@@ -43,14 +42,13 @@ export default class RefreshTimesModel {
      *
      * @param id Identifier of the data record to be refreshed
      */
-    public UpdateLastRefresh = async (id) => {
+    public UpdateLastRefresh = async (id): Promise<void> => {
         const options = { upsert: true, new: true, setDefaultOnInsert: true };
         const update = { lastRefresh: new Date() };
         try {
             return await this.mongooseModel.findOneAndUpdate({ _collection: id }, update, options).exec();
         } catch (err) {
-            errorLog(err);
-            throw new Error("Error while updating refresh time.");
+            throw new CustomError("Error while updating refresh time.", true, 1004, err);
         }
     }
 
@@ -72,7 +70,7 @@ export default class RefreshTimesModel {
                 return 0;
             }
         } catch (err) {
-            errorLog(err);
+            throw new CustomError("Error while getting last refreshed time.", true, 1005, err);
         }
     }
 
@@ -99,10 +97,10 @@ export default class RefreshTimesModel {
                 });
                 return ids;
             } else {
-                return Promise.reject("Error getting last refresh time from database.");
+                throw new Error("Last refreshed times for collection " + name + " was not found.");
             }
-        }).catch((error) => {
-            return Promise.reject("Error getting last refresh time from database.");
+        }).catch((err) => {
+            throw new CustomError("Error getting last refresh time from database.", true, 1006, err);
         });
     }
 
@@ -113,12 +111,16 @@ export default class RefreshTimesModel {
      * @param {array} ids
      * @returns {Promise<any>}
      */
-    public RemoveExpiredIds = (name, ids): Promise<any> => {
-        return this.mongooseModel.remove({
-            _collection: { $in: ids.map((id) => {
-                return (id === 0) ? name + "-all" : name + "-" + id;
-            }) },
-        });
+    public RemoveExpiredIds = (name: string, ids: any[]): Promise<any> => {
+        try {
+            return this.mongooseModel.remove({
+                _collection: { $in: ids.map((id) => {
+                    return (id === 0) ? name + "-all" : name + "-" + id;
+                }) },
+            });
+        } catch (err) {
+            throw new CustomError("Error while removing expired ids.", true, 1009, err);
+        }
     }
 
     /**

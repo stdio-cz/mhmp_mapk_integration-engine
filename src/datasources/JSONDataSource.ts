@@ -1,8 +1,9 @@
 "use strict";
 
+import CustomError from "../helpers/errors/CustomError";
 import BaseDataSource from "./BaseDataSource";
 
-const request = require("request");
+const request = require("request-promise");
 
 export default abstract class JSONDataSource extends BaseDataSource {
 
@@ -12,19 +13,12 @@ export default abstract class JSONDataSource extends BaseDataSource {
      * @returns {Promise<any>} Promise with returned data.
      */
     protected GetRawData = async (): Promise<any> => {
-        return new Promise((resolve, reject) => {
-            request(this.sourceRequestObject, (err, response, body) => {
-                if (!err && response && response.statusCode === 200) {
-                    resolve(this.GetSubElement(this.resultsPath, JSON.parse(body)));
-                } else {
-                    // TODO vytvorit vlastni chybovou tridu
-                    reject({
-                        error: "Retrieving of the source data failed.",
-                        error_description: err,
-                    });
-                }
-            });
-        });
+        try {
+            const body = await request(this.sourceRequestObject);
+            return this.GetSubElement(this.resultsPath, JSON.parse(body));
+        } catch (err) {
+            throw new CustomError("Retrieving of the source data failed.", true, 1002, err);
+        }
     }
 
 }

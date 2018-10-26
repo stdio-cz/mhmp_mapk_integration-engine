@@ -7,6 +7,8 @@ const log = require("debug")("RdfExportUtils");
 const errorLog = require("debug")("error");
 
 /**
+ * TODO refaktoring, neukladat do filesystemu
+ *
  * Helper class for RDF export.
  */
 class RdfExportUtils {

@@ -1,5 +1,6 @@
 "use strict";
 
+import CustomError from "../helpers/errors/CustomError";
 import ISchema from "../schemas/ISchema";
 import ISourceRequest from "./ISourceRequest";
 
@@ -28,20 +29,12 @@ export default abstract class BaseDataSource {
      * @returns {Promise<any>} Promise with received data.
      */
     public GetAll = async (): Promise<any> => {
-        try {
-            const data = await this.GetRawData();
-            const isValid = await this.schema.Validate(data);
-            if (isValid) { // If there was error getting the data, or the data are ok, return this
-                return data;
-            } else { // If the data returned correctly, but in wrong (not valid) format
-                throw new Error("Source data is not valid.");
-            }
-        } catch (err) {
-            if (err instanceof Error) {
-                throw err;
-            } else {
-                throw new Error(err);
-            }
+        const data = await this.GetRawData();
+        const isValid = await this.schema.Validate(data);
+        if (isValid) { // If there was error getting the data, or the data are ok, return this
+            return data;
+        } else { // If the data returned correctly, but in wrong (not valid) format
+            throw new CustomError("Source data are not valid.", true, 1007);
         }
     }
 
@@ -53,28 +46,20 @@ export default abstract class BaseDataSource {
      * @returns {Promise<{}>} Promise with received data.
      */
     public GetOne = async (inId: any): Promise<{}> => {
-        try {
-            const data = await this.GetRawData();
-            const isValid = await this.schema.Validate(data);
-            if (isValid) { // If there was error getting the data, or the data are ok, return this
-                let res = {};
-                res = _.find(data, (item) => {
-                    return this.GetSubElement(this.searchPath, item) === inId;
-                });
-                if (!res) { // If the object with given ID was not found, return 404 error
-                    throw new Error("Not Found"); // TODO vracet vlastni chybove tridy
-                } else { // Return the found object
-                    return res;
-                }
-            } else { // If the data returned correctly, but in wrong (not valid) format
-                throw new Error("Source data is not valid.");
+        const data = await this.GetRawData();
+        const isValid = await this.schema.Validate(data);
+        if (isValid) { // If there was error getting the data, or the data are ok, return this
+            let res = {};
+            res = _.find(data, (item) => {
+                return this.GetSubElement(this.searchPath, item) === inId;
+            });
+            if (!res) { // If the object with given ID was not found, throw error
+                throw new CustomError("Source data was not found.", true, 1008);
+            } else { // Return the found object
+                return res;
             }
-        } catch (err) {
-            if (err instanceof Error) {
-                throw err;
-            } else {
-                throw new Error(err);
-            }
+        } else { // If the data returned correctly, but in wrong (not valid) format
+            throw new CustomError("Source data are not valid.", true, 1007);
         }
     }
 

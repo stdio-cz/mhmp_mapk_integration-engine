@@ -1,11 +1,12 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import CustomError from "../helpers/errors/CustomError";
+import handleError from "../helpers/errors/ErrorHandler";
 import ParkingsWorker from "../workers/ParkingsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("ParkingsQueueProcessor");
-const errorLog = require("debug")("error");
+const log = require("debug")("data-platform:integration-engine");
 
 export default class ParkingsQueueProcessor extends BaseQueueProcessor {
 
@@ -14,10 +15,10 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("parkings-refreshDataInDB", "*.parkings.refreshDataInDB",
-            this.processParkingsWorkerRefreshDataInDB);
-        await this.registerQueue("parkings-saveDataToHistory", "*.parkings.saveDataToHistory",
-            this.processParkingsWorkerSaveDataToHistory);
+        await this.registerQueue("parkings-refreshDataInDB",
+            "*.parkings.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("parkings-saveDataToHistory",
+            "*.parkings.saveDataToHistory", this.saveDataToHistory);
     }
 
     protected registerQueue = async (name: string, key: string, processor: (msg: any) => any): Promise<any> => {
@@ -28,7 +29,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
         this.channel.consume(name, processor, {noAck: false});
     }
 
-    protected processParkingsWorkerRefreshDataInDB = async (msg: any): Promise<any> => {
+    protected refreshDataInDB = async (msg: any): Promise<any> => {
         try {
             const parkingsWorker = new ParkingsWorker();
             log(" [>] parkings-refreshDataInDB received some data.");
@@ -40,11 +41,12 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             this.channel.ack(msg);
             log(" [<] parkings-refreshDataInDB: done");
         } catch (err) {
-            errorLog(err);
+            handleError(err);
+            this.channel.ack(msg);
         }
     }
 
-    protected processParkingsWorkerSaveDataToHistory = async (msg: any): Promise<any> => {
+    protected saveDataToHistory = async (msg: any): Promise<any> => {
         try {
             const parkingsWorker = new ParkingsWorker();
             log(" [>] parkings-saveDataToHistory received some data.");
@@ -53,7 +55,8 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             this.channel.ack(msg);
             log(" [<] parkings-saveDataToHistory: done");
         } catch (err) {
-            errorLog(err);
+            handleError(err);
+            this.channel.ack(msg);
         }
     }
 

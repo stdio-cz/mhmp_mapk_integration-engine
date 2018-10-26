@@ -1,57 +1,65 @@
 "use strict";
 
 import mongoose = require("mongoose");
+import CustomError from "./helpers/errors/CustomError";
+import handleError from "./helpers/errors/ErrorHandler";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 
 const amqp = require("amqplib");
 const config = require("../config.js");
-const log = require("debug")("App");
-const errorLog = require("debug")("error");
+const log = require("debug")("data-platform:integration-engine");
 
 class App {
 
-    constructor() {
-        this.database()
-            .then(() => {
-                return this.queueProcessors();
-            }).then(() => {
-                log("Started!");
-            }).catch((err) => {
-                errorLog(err);
-                process.exit(0); // if anything fails, process is killed
-            });
+    /**
+     * Starts the application
+     */
+    public start = async (): Promise<void> => {
+        try {
+            await this.database();
+            await this.queueProcessors();
+            log("Started!");
+        } catch (err) {
+            handleError(err);
+        }
     }
 
     /**
      * Starts the database connection with initial configuration
      */
-    private database = async () => {
-        try {
-            mongoose.Promise = global.Promise;
-            await mongoose.connect(config.mongo.url, config.mongo.options);
-            log("Connected to DB!");
-        } catch (err) {
-            errorLog(err);
-            throw new Error("Error while connecting to DB.");
-        }
+    private database = async (): Promise<void> => {
+        await mongoose.connect(config.mongo_connection, {
+            autoReconnect: true,
+            bufferMaxEntries: 0,
+            reconnectInterval: 5000, // Reconnect every 5s
+            reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+            useNewUrlParser: true,
+        });
+        log("Connected to DB!");
+        mongoose.connection.on("disconnected", () => {
+            handleError(new CustomError("Database disconnected", false));
+        });
     }
 
-    private queueProcessors = async () => {
-        try {
-            const conn = await amqp.connect(config.amqp);
-            const ch = await conn.createChannel();
-            const parkingsQP = new ParkingsQueueProcessor(ch);
+    /**
+     * Starts the message queue connection, creates communication channel
+     * and register queue processors to consume messages
+     */
+    private queueProcessors = async (): Promise<void> => {
+        const conn = await amqp.connect(config.amqp_connection);
+        const ch = await conn.createChannel();
+        const parkingsQP = new ParkingsQueueProcessor(ch);
+        log("Connected to Queue!");
+        conn.on("close", () => {
+            handleError(new CustomError("Queue disconnected", false));
+        });
 
-            // ready to register more queue processors
-            return Promise.all([
-                parkingsQP.registerQueues(),
-            ]);
-        } catch (err) {
-            errorLog(err);
-            throw new Error("Error while processing the queue.");
-        }
+        await Promise.all([
+            parkingsQP.registerQueues(),
+            // ...ready to register more queue processors
+        ]);
     }
 
 }
 
-export default new App();
+export default new App().start();
