@@ -33,6 +33,8 @@ class App {
             bufferMaxEntries: 0,
             reconnectInterval: 5000, // Reconnect every 5s
             reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+            useCreateIndex: true,
+            useFindAndModify: false,
             useNewUrlParser: true,
         });
         log("Connected to DB!");

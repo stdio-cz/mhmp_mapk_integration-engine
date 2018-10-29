@@ -113,7 +113,7 @@ export default class RefreshTimesModel {
      */
     public RemoveExpiredIds = (name: string, ids: any[]): Promise<any> => {
         try {
-            return this.mongooseModel.remove({
+            return this.mongooseModel.deleteMany({
                 _collection: { $in: ids.map((id) => {
                     return (id === 0) ? name + "-all" : name + "-" + id;
                 }) },

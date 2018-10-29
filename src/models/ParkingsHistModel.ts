@@ -7,7 +7,7 @@ import ParkingsHistSchema from "../schemas/ParkingsHistSchema";
 import BaseModel from "./BaseModel";
 import IModel from "./IModel";
 
-const log = require("debug")("ParkingsHistModel");
+const log = require("debug")("data-platform:integration-engine");
 
 export default class ParkingsHistModel extends BaseModel implements IModel {
 
@@ -39,7 +39,7 @@ export default class ParkingsHistModel extends BaseModel implements IModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                log("Saving or updating data to database.");
+                log("ParkingsHistModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

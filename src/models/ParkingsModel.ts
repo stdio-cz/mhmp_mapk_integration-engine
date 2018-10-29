@@ -19,8 +19,14 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
         try {
             this.mongooseModel = mongoose.model("Parkings");
         } catch (error) {
+            const schema = new mongoose.Schema(this.schema.schemaObject, { bufferCommands: false });
+            // create $geonear index
+            schema.index({ geometry : "2dsphere" });
+            // create $text index
+            schema.index({ "properties.name": "text", "properties.address": "text" },
+                {weights: { "properties.name": 5, "properties.address": 1 }});
             this.mongooseModel = mongoose.model("Parkings",
-                new mongoose.Schema(this.schema.schemaObject, { bufferCommands: false }));
+                schema);
         }
         // const dateFrom = new Date().getTime() - (2 * 24 * 60 * 60 * 1000);
         // this.where = {"properties.last_updated" : { $gte: dateFrom } };

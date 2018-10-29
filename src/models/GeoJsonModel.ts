@@ -5,8 +5,7 @@ import CustomError from "../helpers/errors/CustomError";
 import ISchema from "../schemas/ISchema";
 import BaseModel from "./BaseModel";
 
-const log = require("debug")("GeoJsonModel");
-const errorLog = require("debug")("error");
+const log = require("debug")("data-platform:integration-engine");
 
 export default abstract class GeoJsonModel extends BaseModel {
 
@@ -40,7 +39,7 @@ export default abstract class GeoJsonModel extends BaseModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                log("Saving or updating data to database.");
+                log("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
                 await this.refreshTimesModel.UpdateLastRefresh(this.name + "-all");
                 return this.createOutputCollection(res);
             });

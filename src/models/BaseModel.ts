@@ -112,7 +112,7 @@ export default abstract class BaseModel {
 
     protected RemoveElements = async (data: object): Promise<any> => {
         try {
-            return await this.mongooseModel.remove(data);
+            return await this.mongooseModel.deleteMany(data);
         } catch (err) {
             throw new CustomError("Error while removing expired elements.", true, 1010, err);
         }
