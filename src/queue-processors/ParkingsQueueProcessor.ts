@@ -1,7 +1,6 @@
 "use strict";
 
 import * as amqplib from "amqplib";
-import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import ParkingsWorker from "../workers/ParkingsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
