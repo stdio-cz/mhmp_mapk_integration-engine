@@ -13,3 +13,8 @@
 - 1009: Error while removing expired ids.
 - 1010: Error while removing expired elements.
 - 1011: Transformed data are not valid.
+- 1012: Retrieving of the open street map nominatim data failed.
+- 1013: Error while getting district by coordinations.
+- 1014: Model data was not found.
+- 1015: Error while updating district.
+- 1016: Error while updating adress.

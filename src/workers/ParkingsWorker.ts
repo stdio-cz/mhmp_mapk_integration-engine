@@ -2,6 +2,8 @@
 
 import TSKParkingsDataSource from "../datasources/TSKParkingsDataSource";
 import CustomError from "../helpers/errors/CustomError";
+import GeocodeApi from "../helpers/GeocodeApi";
+import CityDistrictsModel from "../models/CityDistrictsModel";
 import ParkingsHistModel from "../models/ParkingsHistModel";
 import ParkingsModel from "../models/ParkingsModel";
 import ParkingsHistPipeline from "../pipelines/ParkingsHistPipeline";
@@ -56,4 +58,35 @@ export default class ParkingsWorker {
         }
     }
 
+    public updateAddressAndDistrict = async (data: any): Promise<any> => {
+        const id = data.properties.id;
+        const dbData = await this.parkingsModel.GetOneFromModel(id);
+
+        if (!dbData.properties.district
+            || data.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || data.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            try {
+                const cityDistricts = new CityDistrictsModel();
+                const result = await cityDistricts.GetDistrictByCoordinations(dbData.geometry.coordinates);
+                dbData.properties.district = result;
+                await dbData.save();
+            } catch (err) {
+                throw new CustomError("Error while updating district.", true, 1015, err);
+            }
+        }
+
+        if (!dbData.properties.address
+            || data.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || data.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            try {
+                const address = await GeocodeApi.getAddressByLatLng(dbData.geometry.coordinates[1],
+                    dbData.geometry.coordinates[0]);
+                dbData.properties.address = address;
+                await dbData.save();
+            } catch (err) {
+                throw new CustomError("Error while updating adress.", true, 1016, err);
+            }
+        }
+        return dbData;
+    }
 }

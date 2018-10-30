@@ -3,6 +3,7 @@
 import mongoose = require("mongoose");
 import CustomError from "./helpers/errors/CustomError";
 import handleError from "./helpers/errors/ErrorHandler";
+import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 
 const amqp = require("amqplib");
@@ -28,7 +29,7 @@ class App {
      * Starts the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
-        await mongoose.connect(config.mongo_connection, {
+        await mongoose.connect(config.mongoConnection, {
             autoReconnect: true,
             bufferMaxEntries: 0,
             reconnectInterval: 5000, // Reconnect every 5s
@@ -48,9 +49,10 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const conn = await amqp.connect(config.amqp_connection);
+        const conn = await amqp.connect(config.amqpConnection);
         const ch = await conn.createChannel();
         const parkingsQP = new ParkingsQueueProcessor(ch);
+        const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
         log("Connected to Queue!");
         conn.on("close", () => {
             handleError(new CustomError("Queue disconnected", false));
@@ -58,6 +60,7 @@ class App {
 
         await Promise.all([
             parkingsQP.registerQueues(),
+            cityDistrictsQP.registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

@@ -41,6 +41,19 @@ export default abstract class BaseModel {
         this.createOutputCollection = null;
     }
 
+    public GetOneFromModel = async (id: any): Promise<any> => {
+        try {
+            const data = await this.mongooseModel.findOne(this.searchPath(id)).exec();
+            if (!data) {
+                throw new CustomError("Model data was not found.", true, 1014);
+            } else {
+                return data;
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+
     /**
      * Removes old records in DB (cache DB)
      * Old records are removed if its real refreshed time in DB is older then its refreshed time set in config and

@@ -25,7 +25,7 @@ class RdfExportUtils {
                 "file[]": null,
             },
             headers: {
-                "authorization": config.sparql_endpoint_authorization,
+                "authorization": config.sparqlEndpointAuthorization,
                 "cache-control": "no-cache",
                 "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
             },
@@ -36,7 +36,7 @@ class RdfExportUtils {
         const promises = files.map((file) => {
             return new Promise((resolve, reject) => {
                 this.deleteRdfDatasetFromEndpoint(file.name).then(() => {
-                    options.url = config.sparql_endpoint_url + "/" + file.name + "/data";
+                    options.url = config.sparqlEndpointUrl + "/" + file.name + "/data";
                     options.formData["file[]"] = [{
                         options: {
                             contentType: "text/turtle",
@@ -59,7 +59,7 @@ class RdfExportUtils {
         });
         // uploading all datasets to `live`
         Promise.all(promises).then((eachDatasetResult) => {
-            options.url = config.sparql_endpoint_url + "/live/data";
+            options.url = config.sparqlEndpointUrl + "/live/data";
             options.formData["file[]"] = [];
             for (let i = 0, iMax = files.length; i < iMax; i++) {
                 options.formData["file[]"].push({
@@ -377,12 +377,12 @@ class RdfExportUtils {
                     },
                 },
                 headers: {
-                    "authorization": config.sparql_endpoint_authorization,
+                    "authorization": config.sparqlEndpointAuthorization,
                     "cache-control": "no-cache",
                     "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
                 },
                 method: "POST",
-                url: config.sparql_endpoint_url + "/metadata/data",
+                url: config.sparqlEndpointUrl + "/metadata/data",
             };
             // delete old dataset
             this.deleteRdfDatasetFromEndpoint("metadata")
@@ -407,13 +407,13 @@ class RdfExportUtils {
         const options = {
             formData: {},
             headers: {
-                "authorization": config.sparql_endpoint_authorization,
+                "authorization": config.sparqlEndpointAuthorization,
                 "cache-control": "no-cache",
                 "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
             },
             method: "DELETE",
             qs: { default: "" },
-            url: config.sparql_endpoint_url + "/" + name,
+            url: config.sparqlEndpointUrl + "/" + name,
         };
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
