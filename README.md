@@ -25,7 +25,7 @@ npm install
 To compile typescript code into js one-time
 
 ```
-npm run buld
+npm run build
 ```
 or run this, to watch all changes
 ```
