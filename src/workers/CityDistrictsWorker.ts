@@ -5,9 +5,6 @@ import CustomError from "../helpers/errors/CustomError";
 import CityDistrictsModel from "../models/CityDistrictsModel";
 import CityDistrictsPipeline from "../pipelines/CityDistrictsPipeline";
 
-const config = require("../../config.js");
-const log = require("debug")("data-platform:integration-engine");
-
 export default class CityDistrictsWorker {
 
     private cityDistrictsModel: CityDistrictsModel;

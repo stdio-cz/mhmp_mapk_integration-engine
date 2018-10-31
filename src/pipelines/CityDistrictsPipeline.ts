@@ -3,7 +3,6 @@
 import BasePipeline from "./BasePipeline";
 import IPipeline from "./IPipeline";
 
-const config = require("../../config.js");
 const slug = require("slugify");
 
 export default class CityDistrictsPipeline extends BasePipeline implements IPipeline {

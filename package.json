@@ -5,7 +5,7 @@
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
 	"scripts": {
-		"start": "export DEBUG='*,-mquery' ; node dist/App.js",
+		"start": "node dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --timeout 60000 --require ts-node/register test/*/*.test.ts --exit",
@@ -29,6 +29,7 @@
 		"amqplib": "0.5.2",
 		"data-platform-schema-definitions": "file:../schema-definitions",
 		"debug": "3.1.0",
+		"dotenv": "6.1.0",
 		"mongoose": "5.3.6",
 		"request": "2.88.0",
 		"request-promise": "4.2.2",

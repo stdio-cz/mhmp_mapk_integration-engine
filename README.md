@@ -20,12 +20,18 @@ Install all npm modules using command:
 npm install
 ```
 
+## Configuration
+
+All configuration files are in the `config/` directory. Configuration is split to environment (.env files) options and other specific options (e.g. datasources). Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `.env.default` -> .`.env.` or `datasources.default.js` -> `datasources.js`.
+
+Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`). In this case options in the .evn files are override.
+
 ## Compilation of typescript code
 
 To compile typescript code into js one-time
 
 ```
-npm run buld
+npm run build
 ```
 or run this, to watch all changes
 ```
