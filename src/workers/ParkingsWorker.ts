@@ -9,7 +9,7 @@ import ParkingsModel from "../models/ParkingsModel";
 import ParkingsHistPipeline from "../pipelines/ParkingsHistPipeline";
 import ParkingsPipeline from "../pipelines/ParkingsPipeline";
 
-const configHelper = require("../helpers/ConfigHelper")("refreshtimes");
+const config = require("../helpers/ConfigLoader");
 const log = require("debug")("data-platform:integration-engine");
 
 export default class ParkingsWorker {
@@ -37,7 +37,7 @@ export default class ParkingsWorker {
         } else {
             await this.parkingsModel.SaveToDb(transformedData);
             const removeRes =
-                await this.parkingsModel.RemoveOldRecords(configHelper.getVar("Parkings"));
+                await this.parkingsModel.RemoveOldRecords(config.refreshtimes.Parkings);
             if (removeRes.records.length !== 0) {
                 log("During the saving data from source to DB the old "
                     + "records was found and removed.");

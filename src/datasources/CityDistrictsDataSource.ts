@@ -8,7 +8,7 @@ import JSONDataSource from "./JSONDataSource";
 
 const _ = require("underscore");
 const slug = require("slugify");
-const configHelper = require("../helpers/ConfigHelper")("datasources");
+const config = require("../helpers/ConfigLoader");
 
 export default class CityDistrictsDataSource extends JSONDataSource implements IDataSource {
 
@@ -31,7 +31,7 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
         this.sourceRequestObject = {
             headers : {},
             method: "GET",
-            url: configHelper.getVar("CityDistricts"),
+            url: config.datasources.CityDistricts,
         };
         this.schema = new CityDistrictsDataSourceSchema();
         this.resultsPath = "features";

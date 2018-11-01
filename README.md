@@ -26,6 +26,9 @@ All configuration files are in the `config/` directory. Configuration is split t
 
 Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`). In this case options in the .evn files are override.
 
+Default and specific configuration files are merge by the rule: specific options overrides default options.
+
+
 ## Compilation of typescript code
 
 To compile typescript code into js one-time

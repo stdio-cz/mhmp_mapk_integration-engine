@@ -5,7 +5,7 @@ import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
 import JSONDataSource from "./JSONDataSource";
 
-const configHelper = require("../helpers/ConfigHelper")("datasources");
+const config = require("../helpers/ConfigLoader");
 
 export default class TSKParkingsDataSource extends JSONDataSource implements IDataSource {
 
@@ -28,7 +28,7 @@ export default class TSKParkingsDataSource extends JSONDataSource implements IDa
         this.sourceRequestObject = {
             headers : {},
             method: "GET",
-            url: configHelper.getVar("TSKParkings"),
+            url: config.datasources.TSKParkings,
         };
         this.schema = new TSKParkingsDataSourceSchema();
         this.resultsPath = "results";
