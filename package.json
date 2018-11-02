@@ -6,6 +6,7 @@
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"start": "node dist/App.js",
+		"postinstall": "tsc",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --timeout 60000 --require ts-node/register test/*/*.test.ts --exit",

@@ -13,6 +13,8 @@ Developed by http://operatorict.cz
 
 ## Installation
 
+Download repository `data-platform-schema-definitions` to the same directory as the directory of this repository and name it `schema-definitions/`. For the better understanding the dependency is visible in the `package.json` at the line `"data-platform-schema-definitions": "file:../schema-definitions",`.
+
 Install Node, MongoDB
 
 Install all npm modules using command:
@@ -22,11 +24,11 @@ npm install
 
 ## Configuration
 
-All configuration files are in the `config/` directory. Configuration is split to environment (.env files) options and other specific options (e.g. datasources). Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `.env.default` -> .`.env.` or `datasources.default.js` -> `datasources.js`.
+All configuration files are in the `config/` directory. Configuration is split to environment (.env files) options and other specific options (e.g. datasources). Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `.env.default` -> `.env.` or `datasources.default.js` -> `datasources.js`.
 
-Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`). In this case options in the .evn files are override.
+In the case of the other specific options (e.g. datasources) the default and specific configuration files are merged by the rule: specific options overrides default options.
 
-Default and specific configuration files are merge by the rule: specific options overrides default options.
+Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`). In this case the options in the `.env` files are overridden. But combination of the `.env` and `.env.default` is not working, only one of them is used ([dotenv FAQ](https://github.com/motdotla/dotenv#should-i-have-multiple-env-files)).
 
 
 ## Compilation of typescript code
