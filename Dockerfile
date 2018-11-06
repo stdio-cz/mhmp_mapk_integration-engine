@@ -6,6 +6,8 @@ WORKDIR /home/node/app/
 
 COPY . .
 
+RUN ls -la
+
 WORKDIR /home/node/app/integration-engine
 RUN npm install
 RUN npm run build
