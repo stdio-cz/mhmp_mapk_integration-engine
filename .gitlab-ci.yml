@@ -1,20 +1,10 @@
-image: docker:stable
-
-services:
-  - docker:dind
-  
 variables:
-  CONTAINER_IMAGE: gitlab.oict.cz/data-platform/$CI_PROJECT_PATH
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay2
+  CONTAINER_IMAGE: gitlab.oict.cz:4567/$CI_PROJECT_PATH
 
 before_script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN gitlab.oict.cz
-  - docker info
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567
 
-build:
-  stage: build
-  script:
-    - docker build -t $CONTAINER_IMAGE .
-    - docker push $CONTAINER_IMAGE:$CI_COMMIT_SHA
-    - docker push $CONTAINER_IMAGE:latest
+build_image:
+   script:
+     - docker build -t $CONTAINER_IMAGE .
+     - docker push $CONTAINER_IMAGE
