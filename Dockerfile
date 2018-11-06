@@ -1,14 +1,12 @@
 FROM gitlab.oict.cz:4567/data-platform/schema-definitions:latest
 
-RUN ls -la
-
 RUN mkdir -p /home/node/app/integration-engine
-
-RUN ls -la
 
 WORKDIR /home/node/app/integration-engine
 
 COPY . .
+
+RUN chown -R node:node *
 
 RUN ls -la
 
