@@ -6,7 +6,7 @@ WORKDIR /home/node/app/integration-engine
 
 COPY . .
 
-RUN chown -R node:node *
+RUN chown -R node:node .
 
 RUN ls -la
 
