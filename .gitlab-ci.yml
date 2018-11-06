@@ -1,0 +1,19 @@
+variables:
+  CONTAINER_IMAGE: gitlab.oict.cz:4567/$CI_PROJECT_PATH
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567
+
+stages:
+  - build
+  - deploy
+
+build_image:
+    stage: build
+    script:
+      - docker build -t $CONTAINER_IMAGE .
+     
+registry:_deployment:
+    stage: deploy
+    script:
+      - docker push $CONTAINER_IMAGE
