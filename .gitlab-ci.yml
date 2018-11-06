@@ -4,25 +4,16 @@ variables:
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567
 
-
 stages:
   - build
-#  - test
   - deploy
 
 build_image:
-   script:
-     - docker build -t $CONTAINER_IMAGE .
-     - docker push $CONTAINER_IMAGE
+    stage: build
+    script:
+      - docker build -t $CONTAINER_IMAGE .
      
 registry:_deployment:
-  stage: deploy
-   script:
-     - docker push $CONTAINER_IMAGE
-
-
-
-build_job:
-  stage: build
-  script:
-    - make build
+    stage: deploy
+    script:
+      - docker push $CONTAINER_IMAGE
