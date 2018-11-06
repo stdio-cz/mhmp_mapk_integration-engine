@@ -1,4 +1,4 @@
-FROM data-platform/schema-definitions:latest
+FROM gitlab.oict.cz:4567/data-platform/schema-definitions:latest
 
 USER node
 
