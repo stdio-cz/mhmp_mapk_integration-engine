@@ -71,7 +71,6 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
             });
             return Promise.all(promises).then(async (res) => {
                 log("CityDistrictsModel::SaveToDB(): Saving or updating data to database.");
-                await this.refreshTimesModel.UpdateLastRefresh(this.name + "-all");
                 return res;
             });
         } else { // If it's a single element
@@ -89,6 +88,7 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
         result.slug = item.slug;
         result.name = item.name;
         result.loc = item.loc;
+        result.timestamp = item.timestamp;
         return result;
     }
 
@@ -111,7 +111,6 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
                 // Save the change
                 result = await result.save();
             }
-            await this.refreshTimesModel.UpdateLastRefresh(this.name + "-" + item.id);
             result = result.toObject();
             delete result._id;
             delete result.__v;

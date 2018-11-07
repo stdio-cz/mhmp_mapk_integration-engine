@@ -30,12 +30,12 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
     }
 
     protected updateValues = (result, item) => {
-        result.properties.last_updated = item.properties.last_updated;
         result.properties.name = item.properties.name;
         result.properties.num_of_free_places = item.properties.num_of_free_places;
         result.properties.num_of_taken_places = item.properties.num_of_taken_places;
         result.properties.total_num_of_places = item.properties.total_num_of_places;
         result.properties.parking_type = item.properties.parking_type;
+        result.properties.timestamp = item.properties.timestamp;
         return result;
     }
 

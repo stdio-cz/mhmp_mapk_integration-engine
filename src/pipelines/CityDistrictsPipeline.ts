@@ -26,6 +26,7 @@ export default class CityDistrictsPipeline extends BasePipeline implements IPipe
             },
             name: element.properties.NAZEV_MC,
             slug: slug(element.properties.NAZEV_MC, { lower: true }),
+            timestamp: new Date().getTime(),
         };
     }
 

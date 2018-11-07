@@ -23,9 +23,6 @@ export default class ParkingsPipeline extends GeoJsonPipeline implements IPipeli
             },
             properties: {
                 id: element.id,
-                last_updated: !isNaN(parseInt(element.lastUpdated, 10))
-                    ? new Date(parseInt(element.lastUpdated, 10)).toISOString()
-                    : null,
                 name: element.name,
                 num_of_free_places: !isNaN(parseInt(element.numOfFreePlaces, 10))
                     ? parseInt(element.numOfFreePlaces, 10)
@@ -36,6 +33,9 @@ export default class ParkingsPipeline extends GeoJsonPipeline implements IPipeli
                 parking_type: (element.pr)
                     ? { description: "P+R parkoviště", id: 1 }
                     : { description: "placené parkoviště", id: 2 },
+                timestamp: !isNaN(parseInt(element.lastUpdated, 10))
+                    ? element.lastUpdated
+                    : null,
                 total_num_of_places: !isNaN(parseInt(element.totalNumOfPlaces, 10))
                     ? parseInt(element.totalNumOfPlaces, 10)
                     : null,

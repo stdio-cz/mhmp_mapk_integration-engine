@@ -40,11 +40,34 @@ export default abstract class GeoJsonModel extends BaseModel {
             });
             return Promise.all(promises).then(async (res) => {
                 log("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
-                await this.refreshTimesModel.UpdateLastRefresh(this.name + "-all");
                 return this.createOutputCollection(res);
             });
         } else { // If it's a single element
             return await this.SaveOrUpdateOneToDb(data);
+        }
+    }
+
+    /**
+     * Data validation
+     * Overrides BaseModel::Validate()
+     *
+     * @param {any} data
+     * @returns {boolean}
+     */
+    public Validate = async (data: any): Promise<boolean> => {
+        data = data.features;
+        if (data instanceof Array) {
+            if (data.length === 0) {
+                return true;
+            } else {
+                const promises = data.map((element) => {
+                    return this.ValidateElement(element);
+                });
+                const elemResults = await Promise.all(promises);
+                return (elemResults.indexOf(false) !== -1) ? false : true;
+            }
+        } else {
+            return await this.ValidateElement(data);
         }
     }
 
@@ -80,7 +103,6 @@ export default abstract class GeoJsonModel extends BaseModel {
                 // Save the change
                 result = await result.save();
             }
-            await this.refreshTimesModel.UpdateLastRefresh(this.name + "-" + item.properties.id);
             result = result.toObject();
             delete result._id;
             delete result.__v;

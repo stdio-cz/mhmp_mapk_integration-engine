@@ -20,7 +20,7 @@ export default class ParkingsHistPipeline extends BasePipeline implements IPipel
             id: element.properties.id,
             num_of_free_places: element.properties.num_of_free_places,
             num_of_taken_places: element.properties.num_of_taken_places,
-            time: new Date().toISOString(),
+            timestamp: new Date().getTime(),
             total_num_of_places: element.properties.total_num_of_places,
         };
         return res;

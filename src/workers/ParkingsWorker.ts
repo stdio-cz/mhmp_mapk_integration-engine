@@ -9,9 +9,6 @@ import ParkingsModel from "../models/ParkingsModel";
 import ParkingsHistPipeline from "../pipelines/ParkingsHistPipeline";
 import ParkingsPipeline from "../pipelines/ParkingsPipeline";
 
-const config = require("../helpers/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine");
-
 export default class ParkingsWorker {
 
     private parkingsModel: ParkingsModel;
@@ -36,13 +33,6 @@ export default class ParkingsWorker {
             throw new CustomError("Transformed data are not valid.", true, 1011);
         } else {
             await this.parkingsModel.SaveToDb(transformedData);
-            const removeRes =
-                await this.parkingsModel.RemoveOldRecords(config.refreshtimes.Parkings);
-            if (removeRes.records.length !== 0) {
-                log("During the saving data from source to DB the old "
-                    + "records was found and removed.");
-                log(removeRes);
-            }
             return transformedData;
         }
     }
@@ -53,7 +43,7 @@ export default class ParkingsWorker {
         if (!isValid) {
             throw new CustomError("Transformed data are not valid.", true, 1011);
         } else {
-            const savingResult = await this.parkingsHistModel.SaveToDb(transformedData);
+            await this.parkingsHistModel.SaveToDb(transformedData);
             return transformedData;
         }
     }

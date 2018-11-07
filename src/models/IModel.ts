@@ -15,6 +15,5 @@ export default interface IModel {
      */
     Validate(data: object);
     SaveToDb(data);
-    RemoveOldRecords(refreshTimeInMinutes);
 
 }

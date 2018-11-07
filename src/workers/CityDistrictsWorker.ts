@@ -25,14 +25,6 @@ export default class CityDistrictsWorker {
             throw new CustomError("Transformed data are not valid.", true, 1011);
         } else {
             await this.cityDistrictsModel.SaveToDb(transformedData);
-            /*
-            const removeRes =
-                await this.cityDistrictsModel.RemoveOldRecords(config.refreshTimesInMinutes.CityDistricts);
-            if (removeRes.records.length !== 0) {
-                log("During the saving data from source to DB the old "
-                    + "records was found and removed.");
-                log(removeRes);
-            }*/
             return transformedData;
         }
     }
