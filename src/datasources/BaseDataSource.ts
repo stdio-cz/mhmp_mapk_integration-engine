@@ -43,9 +43,9 @@ export default abstract class BaseDataSource {
      * If they are valid, searches for specific element within and sends it as a response.
      *
      * @param {any} inId Identifier of the specific element.
-     * @returns {Promise<{}>} Promise with received data.
+     * @returns {Promise<any>} Promise with received data.
      */
-    public GetOne = async (inId: any): Promise<{}> => {
+    public GetOne = async (inId: any): Promise<any> => {
         const data = await this.GetRawData();
         const isValid = await this.schema.Validate(data);
         if (isValid) { // If there was error getting the data, or the data are ok, return this

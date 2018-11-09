@@ -1,12 +1,14 @@
 "use strict";
 
+import CustomError from "./CustomError";
+
 const errorLog = require("debug")("data-platform:integration-engine:error");
 
 class ErrorHandler {
 
-    public handle = async (err: any) => {
+    public handle = async (err: CustomError|Error) => {
 
-        if (err.isOperational) {
+        if (err instanceof CustomError && err.isOperational) {
             errorLog(err.toString());
             return err.toObject();
         } else { // Unexpected non-operational error, handle it!

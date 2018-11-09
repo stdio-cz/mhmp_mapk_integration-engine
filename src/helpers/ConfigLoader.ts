@@ -1,20 +1,33 @@
 "use strict";
 
-const warning = require("debug")("data-platform:integration-engine:warning");
+import * as path from "path";
 
+/**
+ * Helper for loading and merging default and specific config files.
+ */
 class ConfigLoader {
 
+    /** Object with configurations */
     public conf: object;
+    /** Path to directory with config files */
+    private configDirPath: string;
 
-    constructor(filename) {
-        let conf = {};
-        let defaultConf = {};
+    /**
+     * Constructor
+     *
+     * @param {string} filename Filename of the configuration file.
+     */
+    constructor(filename: string) {
+        this.configDirPath = "../../config/";
+        let conf: object = {};
+        let defaultConf: object = {};
         try {
-            conf = require("../../config/" + filename + ".js");
-            defaultConf = require("../../config/" + filename + ".default.js");
+            conf = require(path.join(this.configDirPath, filename + ".js"));
+            defaultConf = require(path.join(this.configDirPath, filename + ".default.js"));
         } catch (err) {
-            defaultConf = require("../../config/" + filename + ".default.js");
+            defaultConf = require(path.join(this.configDirPath, filename + ".default.js"));
         }
+        /// merging objects defaultConf and conf for export
         this.conf = { ...defaultConf, ...conf };
     }
 }

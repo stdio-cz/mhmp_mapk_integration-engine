@@ -2,9 +2,13 @@
 
 export default class CustomError extends Error {
 
+    /** Error description */
     public name: string;
+    /** Defines that error is operational */
     public isOperational?: boolean;
+    /** Error code for better identifing type of error */
     public code?: number;
+    /** Additional info about error */
     public info?: string;
 
     constructor(message: string, isOperational?: boolean, code?: number, info?: string) {
@@ -17,6 +21,9 @@ export default class CustomError extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 
+    /**
+     * Returns complete error description as string.
+     */
     public toString = (): string => {
         return ((this.code) ? "[" + this.code + "] " : "")
             + this.message
@@ -24,8 +31,11 @@ export default class CustomError extends Error {
             + ((process.env.NODE_ENV === "development") ? "\n" + this.stack : "");
     }
 
-    public toObject = (): object => {
-        const toReturn: any = {
+    /**
+     * Returns complete error description as object.
+     */
+    public toObject = (): {error_message: string, error_code?: number, error_info?: string, stack_trace?: any} => {
+        const toReturn: {error_message: string, error_code?: number, error_info?: string, stack_trace?: any} = {
             error_message: this.message,
         };
         if (this.code) {

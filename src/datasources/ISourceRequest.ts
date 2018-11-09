@@ -3,7 +3,7 @@
 export default interface ISourceRequest {
 
     /** (optional) Data to send with request, e.g. credentials */
-    body?: string;
+    body?: object;
 
     /** HTTP method */
     method: string;

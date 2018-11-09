@@ -8,16 +8,16 @@ export default interface IDataSource {
     /**
      * Gets raw data, validates them and sends as a response.
      *
-     * @returns {Promise<{}>} Promise with received data.
+     * @returns {Promise<any>} Promise with received data.
      */
-    GetAll(): Promise<{}>;
+    GetAll(): Promise<any>;
 
     /**
      * Gets raw data, validates them.
      * If they are valid, searches for specific element within and sends it as a response.
      *
      * @param {any} inId Identifier of the specific element.
-     * @returns {Promise<{}>} Promise with received data.
+     * @returns {Promise<any>} Promise with received data.
      */
-    GetOne(inId: any): Promise<{}>;
+    GetOne(inId: any): Promise<any>;
 }

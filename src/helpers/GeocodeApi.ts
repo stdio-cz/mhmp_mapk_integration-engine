@@ -5,7 +5,7 @@ import CustomError from "../helpers/errors/CustomError";
 const request = require("request-promise");
 
 /**
- * Helper class for requesting additional data from Google API and OpenStreetMap API.
+ * Helper class for requesting additional data from OpenStreetMap API.
  */
 class GeocodeApi {
 
@@ -15,7 +15,7 @@ class GeocodeApi {
      * @param {number} lat Latitude
      * @param {number} lng Longitude
      */
-    public getAddressByLatLng = async (lat: number, lng: number): Promise<any> => {
+    public getAddressByLatLng = async (lat: number, lng: number): Promise<string> => {
         const options = {
             headers: {
                 "Cache-Control": "no-cache",
