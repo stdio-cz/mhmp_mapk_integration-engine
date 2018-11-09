@@ -6,13 +6,19 @@ before_script:
 
 stages:
   - build
+  - test
   - deploy
 
 build_image:
     stage: build
     script:
       - docker build -t $CONTAINER_IMAGE .
-     
+
+run_tests:
+    stage: test
+    script:
+      - npm test
+
 registry:_deployment:
     stage: deploy
     script:
