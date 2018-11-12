@@ -10,16 +10,19 @@ stages:
   - deploy
 
 build_image:
-    stage: build
-    script:
-      - docker build -t $CONTAINER_IMAGE:latest -t $CONTAINER_IMAGE:$CI_PIPELINE_ID .
+  stage: build
+  script:
+    - docker build -t $CONTAINER_IMAGE:latest -t $CONTAINER_IMAGE:$CI_PIPELINE_ID .
 
 run_tests:
-    stage: test
-    script:
-      - docker run $CONTAINER_IMAGE npm test
+  stage: test
+  script:
+    - docker run $CONTAINER_IMAGE npm test
 
 registry:_deployment:
-    stage: deploy
-    script:
-      - docker push $CONTAINER_IMAGE
+  stage: deploy
+  script:
+    - docker push $CONTAINER_IMAGE
+  only:
+    refs:
+      - master
