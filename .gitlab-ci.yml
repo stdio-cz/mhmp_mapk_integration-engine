@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - deploy
+  - clean
 
 build_image:
   stage: build
@@ -24,10 +25,16 @@ code_coverage:
   script:
     - tap --coverage-report=text-summary
 
-registry:_deployment:
+registry_deployment:
   stage: deploy
   script:
     - docker push $CONTAINER_IMAGE
   only:
     refs:
       - master
+      
+registry_deployment:
+  stage: clean
+  script:
+    - docker rmi $CONTAINER_IMAGE
+ 
