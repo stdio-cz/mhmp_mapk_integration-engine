@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - deploy
+  - clean
 
 build_image:
   stage: build
@@ -22,7 +23,13 @@ run_tests:
 registry_deployment:
   stage: deploy
   script:
-    - docker push $CONTAINER_IMAGE && docker rmi $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE
   only:
     refs:
       - master
+      
+registry_deployment:
+  stage: clean
+  script:
+    - docker rmi $CONTAINER_IMAGE
+ 
