@@ -1,0 +1,287 @@
+[
+    {
+        "id": 547310,
+        "name": "Praha-Čakovice",
+        "slug": "praha-cakovice"
+    },
+    {
+        "id": 539791,
+        "name": "Praha-Újezd",
+        "slug": "praha-ujezd"
+    },
+    {
+        "id": 500054,
+        "name": "Praha 1",
+        "slug": "praha-1"
+    },
+    {
+        "id": 539635,
+        "name": "Praha-Řeporyje",
+        "slug": "praha-reporyje"
+    },
+    {
+        "id": 547107,
+        "name": "Praha 12",
+        "slug": "praha-12"
+    },
+    {
+        "id": 547174,
+        "name": "Praha 17",
+        "slug": "praha-17"
+    },
+    {
+        "id": 547361,
+        "name": "Praha 14",
+        "slug": "praha-14"
+    },
+    {
+        "id": 500178,
+        "name": "Praha 6",
+        "slug": "praha-6"
+    },
+    {
+        "id": 539694,
+        "name": "Praha 13",
+        "slug": "praha-13"
+    },
+    {
+        "id": 547344,
+        "name": "Praha 19",
+        "slug": "praha-19"
+    },
+    {
+        "id": 500224,
+        "name": "Praha 10",
+        "slug": "praha-10"
+    },
+    {
+        "id": 547158,
+        "name": "Praha-Nebušice",
+        "slug": "praha-nebusice"
+    },
+    {
+        "id": 538124,
+        "name": "Praha-Březiněves",
+        "slug": "praha-brezineves"
+    },
+    {
+        "id": 538175,
+        "name": "Praha-Dolní Počernice",
+        "slug": "praha-dolni-pocernice"
+    },
+    {
+        "id": 547115,
+        "name": "Praha-Velká Chuchle",
+        "slug": "praha-velka-chuchle"
+    },
+    {
+        "id": 538736,
+        "name": "Praha-Satalice",
+        "slug": "praha-satalice"
+    },
+    {
+        "id": 547379,
+        "name": "Praha-Dolní Měcholupy",
+        "slug": "praha-dolni-mecholupy"
+    },
+    {
+        "id": 539864,
+        "name": "Praha-Zbraslav",
+        "slug": "praha-zbraslav"
+    },
+    {
+        "id": 500216,
+        "name": "Praha 9",
+        "slug": "praha-9"
+    },
+    {
+        "id": 547298,
+        "name": "Praha-Ďáblice",
+        "slug": "praha-dablice"
+    },
+    {
+        "id": 539678,
+        "name": "Praha-Slivenec",
+        "slug": "praha-slivenec"
+    },
+    {
+        "id": 538388,
+        "name": "Praha-Královice",
+        "slug": "praha-kralovice"
+    },
+    {
+        "id": 547271,
+        "name": "Praha-Suchdol",
+        "slug": "praha-suchdol"
+    },
+    {
+        "id": 547417,
+        "name": "Praha 18",
+        "slug": "praha-18"
+    },
+    {
+        "id": 500119,
+        "name": "Praha 4",
+        "slug": "praha-4"
+    },
+    {
+        "id": 538949,
+        "name": "Praha 21",
+        "slug": "praha-21"
+    },
+    {
+        "id": 547409,
+        "name": "Praha-Štěrboholy",
+        "slug": "praha-sterboholy"
+    },
+    {
+        "id": 538931,
+        "name": "Praha 22",
+        "slug": "praha-22"
+    },
+    {
+        "id": 538400,
+        "name": "Praha-Křeslice",
+        "slug": "praha-kreslice"
+    },
+    {
+        "id": 539589,
+        "name": "Praha-Přední Kopanina",
+        "slug": "praha-predni-kopanina"
+    },
+    {
+        "id": 538078,
+        "name": "Praha-Benice",
+        "slug": "praha-benice"
+    },
+    {
+        "id": 538353,
+        "name": "Praha-Koloděje",
+        "slug": "praha-kolodeje"
+    },
+    {
+        "id": 547387,
+        "name": "Praha 15",
+        "slug": "praha-15"
+    },
+    {
+        "id": 500089,
+        "name": "Praha 2",
+        "slug": "praha-2"
+    },
+    {
+        "id": 500208,
+        "name": "Praha 8",
+        "slug": "praha-8"
+    },
+    {
+        "id": 538531,
+        "name": "Praha-Nedvězí",
+        "slug": "praha-nedvezi"
+    },
+    {
+        "id": 539449,
+        "name": "Praha-Lipence",
+        "slug": "praha-lipence"
+    },
+    {
+        "id": 539899,
+        "name": "Praha-Zličín",
+        "slug": "praha-zlicin"
+    },
+    {
+        "id": 547395,
+        "name": "Praha-Petrovice",
+        "slug": "praha-petrovice"
+    },
+    {
+        "id": 547051,
+        "name": "Praha-Libuš",
+        "slug": "praha-libus"
+    },
+    {
+        "id": 500186,
+        "name": "Praha 7",
+        "slug": "praha-7"
+    },
+    {
+        "id": 539465,
+        "name": "Praha-Lochkov",
+        "slug": "praha-lochkov"
+    },
+    {
+        "id": 547034,
+        "name": "Praha 11",
+        "slug": "praha-11"
+    },
+    {
+        "id": 538213,
+        "name": "Praha 20",
+        "slug": "praha-20"
+    },
+    {
+        "id": 500097,
+        "name": "Praha 3",
+        "slug": "praha-3"
+    },
+    {
+        "id": 547140,
+        "name": "Praha-Lysolaje",
+        "slug": "praha-lysolaje"
+    },
+    {
+        "id": 538302,
+        "name": "Praha-Klánovice",
+        "slug": "praha-klanovice"
+    },
+    {
+        "id": 539601,
+        "name": "Praha 16",
+        "slug": "praha-16"
+    },
+    {
+        "id": 547042,
+        "name": "Praha-Kunratice",
+        "slug": "praha-kunratice"
+    },
+    {
+        "id": 539007,
+        "name": "Praha-Vinoř",
+        "slug": "praha-vinor"
+    },
+    {
+        "id": 538361,
+        "name": "Praha-Kolovraty",
+        "slug": "praha-kolovraty"
+    },
+    {
+        "id": 539724,
+        "name": "Praha-Šeberov",
+        "slug": "praha-seberov"
+    },
+    {
+        "id": 538205,
+        "name": "Praha-Dubeč",
+        "slug": "praha-dubec"
+    },
+    {
+        "id": 538060,
+        "name": "Praha-Běchovice",
+        "slug": "praha-bechovice"
+    },
+    {
+        "id": 500143,
+        "name": "Praha 5",
+        "slug": "praha-5"
+    },
+    {
+        "id": 547301,
+        "name": "Praha-Dolní Chabry",
+        "slug": "praha-dolni-chabry"
+    },
+    {
+        "id": 547328,
+        "name": "Praha-Troja",
+        "slug": "praha-troja"
+    }
+]
