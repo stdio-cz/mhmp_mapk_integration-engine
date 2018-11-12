@@ -23,7 +23,7 @@ run_tests:
 code_coverage:
   stage: test
   script:
-    - tap --coverage-report=text-summary
+    - npm code-coverage
 
 registry_deployment:
   stage: deploy
