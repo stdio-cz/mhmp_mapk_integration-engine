@@ -1,5 +1,5 @@
 variables:
-  CONTAINER_IMAGE: gitlab.oict.cz:4567/$CI_PROJECT_PATH
+  CONTAINER_IMAGE: gitlab.oict.cz:4567/$CI_PROJECT_PATH:$CI_PIPELINE_ID
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567
