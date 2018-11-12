@@ -17,7 +17,7 @@ build_image:
 run_tests:
     stage: test
     script:
-      - npm test
+      - docker run $CONTAINER_IMAGE "npm test"
 
 registry:_deployment:
     stage: deploy
