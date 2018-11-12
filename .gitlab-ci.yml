@@ -12,7 +12,7 @@ stages:
 build_image:
     stage: build
     script:
-      - docker build -t $CONTAINER_IMAGE .
+      - docker build -t $CONTAINER_IMAGE:latest -t $CONTAINER_IMAGE:$CI_PIPELINE_ID .
 
 run_tests:
     stage: test
