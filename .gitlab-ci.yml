@@ -19,10 +19,10 @@ run_tests:
   script:
     - docker run $CONTAINER_IMAGE npm test
 
-registry:_deployment:
+registry_deployment:
   stage: deploy
   script:
-    - docker push $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE && docker rmi $CONTAINER_IMAGE
   only:
     refs:
       - master
