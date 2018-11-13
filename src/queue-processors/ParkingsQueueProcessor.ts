@@ -22,14 +22,6 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             "*.parkings.updateAddressAndDistrict", this.updateAddressAndDistrict);
     }
 
-    protected registerQueue = async (name: string, key: string, processor: (msg: any) => any): Promise<any> => {
-        const q = await this.channel.assertQueue(name, {durable: true});
-        this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
-        this.channel.bindQueue(q.queue, "topic_logs", key); // TODO exchange name and key to config?
-        log(" [*] Waiting for messages in %s.", name);
-        this.channel.consume(name, processor, {noAck: false});
-    }
-
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
