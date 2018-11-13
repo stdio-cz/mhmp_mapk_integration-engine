@@ -18,9 +18,8 @@ build_image:
 run_tests:
   stage: test
   script:
-    - echo "$TEST_SECRETS_DATASOURCES_JS" > datasources.js
-    - cat $PWD/datasources.js
-    - docker run -v $PWD/datasources.js:/home/node/app/integration-engine/config/datasources.js:ro $CONTAINER_IMAGE cat /home/node/app/integration-engine/config/datasources.js && npm run code-coverage
+    - echo "$TEST_SECRETS_DATASOURCES_JS" > ${PWD}/datasources.js
+    - docker run -v ${PWD}/datasources.js:/home/node/app/integration-engine/config/datasources.js:ro $CONTAINER_IMAGE cat /home/node/app/integration-engine/config/datasources.js && npm run code-coverage
 
 registry_deployment:
   stage: deploy
