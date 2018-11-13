@@ -1,3 +1,5 @@
+[![coverage report](http://gitlab.oict.cz/data-platform/integration-engine/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/integration-engine/commits/master)
+
 # Data Platform Integration Engine
 
 Integration Engine of the Data Platform System.

@@ -18,7 +18,7 @@ build_image:
 run_tests:
   stage: test
   script:
-    - docker run $CONTAINER_IMAGE npm test
+    - docker run $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
