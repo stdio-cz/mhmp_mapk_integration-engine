@@ -28,7 +28,7 @@ registry_deployment:
     refs:
       - master
       
-registry_deployment:
+remove_images:
   stage: clean
   script:
     - docker rmi $CONTAINER_IMAGE
