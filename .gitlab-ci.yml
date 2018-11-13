@@ -23,7 +23,7 @@ run_tests:
 registry_deployment:
   stage: deploy
   script:
-    - docker push $CONTAINER_IMAGE:latest $CONTAINER_IMAGE:$CI_PIPELINE_ID
+    - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
   only:
     refs:
       - master
