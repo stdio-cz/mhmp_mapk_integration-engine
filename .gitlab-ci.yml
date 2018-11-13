@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - deploy
+  - clean
 
 build_image:
   stage: build
@@ -17,12 +18,18 @@ build_image:
 run_tests:
   stage: test
   script:
-    - docker run $CONTAINER_IMAGE npm test
+    - docker run $CONTAINER_IMAGE npm run code-coverage
 
-registry:_deployment:
+registry_deployment:
   stage: deploy
   script:
-    - docker push $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
   only:
     refs:
       - master
+      
+remove_images:
+  stage: clean
+  script:
+    - docker rmi $CONTAINER_IMAGE
+ 
