@@ -18,7 +18,8 @@ build_image:
 run_tests:
   stage: test
   script:
-    - docker run $CONTAINER_IMAGE npm run code-coverage
+    - echo "$TEST_SECRETS_DATASOURCES_JS" > datasources.js
+    - docker run -v datasources.js:/home/node/app/integration-engine/config/datasources.js $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
