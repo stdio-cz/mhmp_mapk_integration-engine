@@ -3,6 +3,11 @@ variables:
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567
+  # PRODUCTION SSH
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "$PRODUCTION_SSH_KEY" > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
 
 stages:
   - build
@@ -27,6 +32,17 @@ registry_deployment:
   only:
     refs:
       - master
+      
+production_deployment:
+  stage: deploy
+  script:
+    - ssh gitlab@$PRODUCTION_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN gitlab.oict.cz:4567"
+    - ssh gitlab@$PRODUCTION_IP "docker service update dp_integration-engine --image $CONTAINER_IMAGE:latest"
+  only:
+    refs:
+      - master
+      
+
       
 remove_images:
   stage: clean
