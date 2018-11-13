@@ -1,15 +1,6 @@
 variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  
-
-before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL
-  # PRODUCTION SSH
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - echo "$PRODUCTION_SSH_KEY" > ~/.ssh/id_rsa
-  - chmod 600 ~/.ssh/id_rsa
 
 stages:
   - build
@@ -30,7 +21,9 @@ run_tests:
 registry_deployment:
   stage: deploy
   script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL
     - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
+    - docker logout $DOCKER_REGISTRY_URL
   only:
     refs:
       - master
@@ -38,14 +31,17 @@ registry_deployment:
 production_deployment:
   stage: deploy
   script:
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$PRODUCTION_SSH_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
     - ssh gitlab@$PRODUCTION_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL"
     - ssh gitlab@$PRODUCTION_IP "docker service update dp_integration-engine --image $CONTAINER_IMAGE:latest"
+    - ssh gitlab@$PRODUCTION_IP "docker logout $DOCKER_REGISTRY_URL"
   only:
     refs:
       - master
       
 
-after_script:
-  - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
-  - docker logout $DOCKER_REGISTRY_URL
- 
+remove_images:
+  stage: clean
+  script:
+    - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
