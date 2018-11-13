@@ -23,7 +23,7 @@ run_tests:
 code_coverage:
   stage: test
   script:
-    - docker run npm run code-coverage
+    - docker run $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
