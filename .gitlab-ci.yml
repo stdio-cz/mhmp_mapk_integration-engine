@@ -46,3 +46,4 @@ remove_images:
   stage: clean
   script:
     - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
+  when: always
