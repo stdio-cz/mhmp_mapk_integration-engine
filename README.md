@@ -26,11 +26,11 @@ npm install
 
 ## Configuration
 
-All configuration files are in the `config/` directory. Configuration is split to environment (.env files) options and other specific options (e.g. datasources). Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `.env.default` -> `.env.` or `datasources.default.js` -> `datasources.js`.
+Configuration is split to environment (.env file) options and other specific options (e.g. datasources).
 
-In the case of the other specific options (e.g. datasources) the default and specific configuration files are merged by the rule: specific options overrides default options.
+The specific configuration files are in the `src/config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.js` -> `datasources.js`. The default and specific configuration files are merged by the rule: specific options overrides default options.
 
-Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`). In this case the options in the `.env` files are overridden. But combination of the `.env` and `.env.default` is not working, only one of them is used ([dotenv FAQ](https://github.com/motdotla/dotenv#should-i-have-multiple-env-files)).
+Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`) or with the `.env` file. Example of the `.env` file is saved as `.env.template`.
 
 
 ## Compilation of typescript code

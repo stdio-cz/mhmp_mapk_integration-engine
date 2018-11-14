@@ -1,7 +1,5 @@
 "use strict";
 
-import * as path from "path";
-
 /**
  * Helper for loading and merging default and specific config files.
  */
@@ -9,8 +7,6 @@ class ConfigLoader {
 
     /** Object with configurations */
     public conf: object;
-    /** Path to directory with config files */
-    private configDirPath: string;
 
     /**
      * Constructor
@@ -18,14 +14,13 @@ class ConfigLoader {
      * @param {string} filename Filename of the configuration file.
      */
     constructor(filename: string) {
-        this.configDirPath = "../../config/";
         let conf: object = {};
         let defaultConf: object = {};
         try {
-            conf = require(path.join(this.configDirPath, filename + ".js"));
-            defaultConf = require(path.join(this.configDirPath, filename + ".default.js"));
+            conf = require("./" + filename);
+            defaultConf = require("./" + filename + ".default");
         } catch (err) {
-            defaultConf = require(path.join(this.configDirPath, filename + ".default.js"));
+            defaultConf = require("./" + filename + ".default");
         }
         /// merging objects defaultConf and conf for export
         this.conf = { ...defaultConf, ...conf };
@@ -33,6 +28,11 @@ class ConfigLoader {
 }
 
 module.exports = {
+    MONGO_CONN: process.env.MONGO_CONN,
+    OPEN_STREET_MAP_API_URL: process.env.OPEN_STREET_MAP_API_URL,
+    RABBIT_CONN: process.env.RABBIT_CONN,
+    SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
+    SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
     datasources: new ConfigLoader("datasources").conf,
     refreshtimes: new ConfigLoader("refreshtimes").conf,
 };

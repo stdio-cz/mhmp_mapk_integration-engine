@@ -1,6 +1,7 @@
 node_modules/
 dist/
-test/REPORTING/test.txt
 package-lock.json
-config/*
-!config/*.default*
+.env
+src/config/*.ts
+!src/config/ConfigLoader.ts
+!src/config/*.default.ts

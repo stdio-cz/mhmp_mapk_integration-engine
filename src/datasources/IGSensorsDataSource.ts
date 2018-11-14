@@ -5,7 +5,7 @@ import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
 import JSONDataSource from "./JSONDataSource";
 
-const config = require("../helpers/ConfigLoader");
+const config = require("../config/ConfigLoader");
 
 export default class IGSensorsDataSource extends JSONDataSource implements IDataSource {
 

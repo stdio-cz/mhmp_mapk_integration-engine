@@ -17,6 +17,16 @@ describe("CustomError", () => {
     let error2: CustomError;
     let error3: CustomError;
     let error4: CustomError;
+    let tmpNodeEnv;
+
+    before(() => {
+        tmpNodeEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = "test";
+    });
+
+    after(() => {
+        process.env.NODE_ENV = tmpNodeEnv;
+    });
 
     beforeEach(() => {
         error1 = new CustomError("Test error");
