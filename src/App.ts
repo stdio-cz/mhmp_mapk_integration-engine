@@ -5,6 +5,7 @@ import * as path from "path";
 import CustomError from "./helpers/errors/CustomError";
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
+import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 
 const amqp = require("amqplib");
@@ -71,6 +72,7 @@ class App {
         const ch = await conn.createChannel();
         const parkingsQP = new ParkingsQueueProcessor(ch);
         const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
+        const igsensorsQP = new IGSensorsQueueProcessor(ch);
         log("Connected to Queue!");
         conn.on("close", () => {
             handleError(new CustomError("Queue disconnected", false));
@@ -79,6 +81,7 @@ class App {
         await Promise.all([
             parkingsQP.registerQueues(),
             cityDistrictsQP.registerQueues(),
+            igsensorsQP.registerQueues(),
             // ...ready to register more queue processors
         ]);
     }
