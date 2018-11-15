@@ -1,5 +1,7 @@
 "use strict";
 
+const config = require("../../config/ConfigLoader");
+
 export default class CustomError extends Error {
 
     /** Error description */
@@ -28,7 +30,7 @@ export default class CustomError extends Error {
         return ((this.code) ? "[" + this.code + "] " : "")
             + this.message
             + ((this.info) ? " (" + this.info + ")" : "")
-            + ((process.env.NODE_ENV === "development") ? "\n" + this.stack : "");
+            + ((config.NODE_ENV === "development") ? "\n" + this.stack : "");
     }
 
     /**
@@ -44,7 +46,7 @@ export default class CustomError extends Error {
         if (this.info) {
             toReturn.error_info = this.info;
         }
-        if (process.env.NODE_ENV === "development") {
+        if (config.NODE_ENV === "development") {
             toReturn.stack_trace = this.stack;
         }
         return toReturn;
