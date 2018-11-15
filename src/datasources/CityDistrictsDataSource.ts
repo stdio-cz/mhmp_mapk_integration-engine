@@ -8,7 +8,7 @@ import JSONDataSource from "./JSONDataSource";
 
 const _ = require("underscore");
 const slug = require("slugify");
-const config = require("../helpers/ConfigLoader");
+const config = require("../config/ConfigLoader");
 
 export default class CityDistrictsDataSource extends JSONDataSource implements IDataSource {
 

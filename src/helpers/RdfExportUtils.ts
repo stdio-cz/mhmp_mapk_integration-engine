@@ -4,6 +4,7 @@ const fs = require("fs");
 const request = require("request");
 const log = require("debug")("RdfExportUtils");
 const errorLog = require("debug")("error");
+const config = require("../config/ConfigLoader");
 
 /**
  * TODO refaktoring, neukladat do filesystemu
@@ -24,7 +25,7 @@ class RdfExportUtils {
                 "file[]": null,
             },
             headers: {
-                "authorization": process.env.SPARQL_ENDPOINT_AUTH,
+                "authorization": config.SPARQL_ENDPOINT_AUTH,
                 "cache-control": "no-cache",
                 "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
             },
@@ -35,7 +36,7 @@ class RdfExportUtils {
         const promises = files.map((file) => {
             return new Promise((resolve, reject) => {
                 this.deleteRdfDatasetFromEndpoint(file.name).then(() => {
-                    options.url = process.env.SPARQL_ENDPOINT_URL + "/" + file.name + "/data";
+                    options.url = config.SPARQL_ENDPOINT_URL + "/" + file.name + "/data";
                     options.formData["file[]"] = [{
                         options: {
                             contentType: "text/turtle",
@@ -58,7 +59,7 @@ class RdfExportUtils {
         });
         // uploading all datasets to `live`
         Promise.all(promises).then((eachDatasetResult) => {
-            options.url = process.env.SPARQL_ENDPOINT_URL + "/live/data";
+            options.url = config.SPARQL_ENDPOINT_URL + "/live/data";
             options.formData["file[]"] = [];
             for (let i = 0, iMax = files.length; i < iMax; i++) {
                 options.formData["file[]"].push({
@@ -376,12 +377,12 @@ class RdfExportUtils {
                     },
                 },
                 headers: {
-                    "authorization": process.env.SPARQL_ENDPOINT_AUTH,
+                    "authorization": config.SPARQL_ENDPOINT_AUTH,
                     "cache-control": "no-cache",
                     "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
                 },
                 method: "POST",
-                url: process.env.SPARQL_ENDPOINT_URL + "/metadata/data",
+                url: config.SPARQL_ENDPOINT_URL + "/metadata/data",
             };
             // delete old dataset
             this.deleteRdfDatasetFromEndpoint("metadata")
@@ -406,13 +407,13 @@ class RdfExportUtils {
         const options = {
             formData: {},
             headers: {
-                "authorization": process.env.SPARQL_ENDPOINT_AUTH,
+                "authorization": config.SPARQL_ENDPOINT_AUTH,
                 "cache-control": "no-cache",
                 "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
             },
             method: "DELETE",
             qs: { default: "" },
-            url: process.env.SPARQL_ENDPOINT_URL + "/" + name,
+            url: config.SPARQL_ENDPOINT_URL + "/" + name,
         };
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {

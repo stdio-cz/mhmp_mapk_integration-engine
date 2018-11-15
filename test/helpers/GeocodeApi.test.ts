@@ -3,7 +3,6 @@
 "use strict";
 
 import "mocha";
-import * as path from "path";
 import GeocodeApi from "../../src/helpers/GeocodeApi";
 
 const chai = require("chai");
@@ -12,20 +11,7 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-const debug = require("debug");
-const dotenv = require("dotenv");
-
 describe("GeocodeApi", () => {
-
-    before(() => {
-        const env = dotenv.config({ path: path.resolve(process.cwd(), "config/.env") });
-        debug.enable(process.env.DEBUG);
-
-        if (env.error) {
-            dotenv.config({ path: path.resolve(process.cwd(), "config/.env.default") });
-            debug.enable(process.env.DEBUG);
-        }
-    });
 
     it("should has getAddressByLatLng method", async () => {
         expect(GeocodeApi.getAddressByLatLng).not.to.be.undefined;

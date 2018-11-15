@@ -3,6 +3,7 @@
 import CustomError from "../helpers/errors/CustomError";
 
 const request = require("request-promise");
+const config = require("../config/ConfigLoader");
 
 /**
  * Helper class for requesting additional data from OpenStreetMap API.
@@ -21,7 +22,7 @@ class GeocodeApi {
                 "Cache-Control": "no-cache",
                 "Referer": "https://www.golemio.cz",
             },
-            url: process.env.OPEN_STREET_MAP_API_URL + "&lat=" + lat + "&lon=" + lng,
+            url: config.OPEN_STREET_MAP_API_URL + "&lat=" + lat + "&lon=" + lng,
         };
 
         try {

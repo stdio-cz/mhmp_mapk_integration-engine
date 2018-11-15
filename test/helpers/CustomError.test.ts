@@ -11,12 +11,24 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
+const config = require("../../src/config/ConfigLoader");
+
 describe("CustomError", () => {
 
     let error1: CustomError;
     let error2: CustomError;
     let error3: CustomError;
     let error4: CustomError;
+    let tmpNodeEnv;
+
+    before(() => {
+        tmpNodeEnv = config.NODE_ENV;
+        config.NODE_ENV = "test";
+    });
+
+    after(() => {
+        config.NODE_ENV = tmpNodeEnv;
+    });
 
     beforeEach(() => {
         error1 = new CustomError("Test error");
