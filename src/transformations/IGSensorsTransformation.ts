@@ -1,9 +1,9 @@
 "use strict";
 
-import GeoJsonPipeline from "./GeoJsonPipeline";
-import IPipeline from "./IPipeline";
+import GeoJsonTransformation from "./GeoJsonTransformation";
+import ITransformation from "./ITransformation";
 
-export default class IGSensorsPipeline extends GeoJsonPipeline implements IPipeline {
+export default class IGSensorsTransformation extends GeoJsonTransformation implements ITransformation {
 
     public name: string;
 

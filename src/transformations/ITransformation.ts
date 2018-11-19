@@ -1,6 +1,6 @@
 "use strict";
 
-export default interface IPipeline {
+export default interface ITransformation {
 
     name: string;
     TransformDataElement(element): Promise<any>;

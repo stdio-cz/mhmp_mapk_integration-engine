@@ -2,18 +2,18 @@
 
 import CityDistrictsDataSource from "../datasources/CityDistrictsDataSource";
 import CityDistrictsModel from "../models/CityDistrictsModel";
-import CityDistrictsPipeline from "../pipelines/CityDistrictsPipeline";
+import CityDistrictsTransformation from "../transformations/CityDistrictsTransformation";
 
 export default class CityDistrictsWorker {
 
     private model: CityDistrictsModel;
     private dataSource: CityDistrictsDataSource;
-    private pipeline: CityDistrictsPipeline;
+    private pipeline: CityDistrictsTransformation;
 
     constructor() {
         this.model = new CityDistrictsModel();
         this.dataSource = new CityDistrictsDataSource();
-        this.pipeline = new CityDistrictsPipeline();
+        this.pipeline = new CityDistrictsTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {

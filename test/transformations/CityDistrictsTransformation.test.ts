@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import ParkingsHistoryPipeline from "../../src/pipelines/ParkingsHistoryPipeline";
+import CityDistrictsTransformation from "../../src/transformations/CityDistrictsTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,22 +24,22 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("ParkingsHistoryPipeline", () => {
+describe("CityDistrictsTransformation", () => {
 
     let pipeline;
     let testSourceData;
 
     beforeEach(() => {
-        pipeline = new ParkingsHistoryPipeline();
+        pipeline = new CityDistrictsTransformation();
         beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/parkings-response.json");
+            const buffer = await fs.readFileAsync(__dirname + "/../data/city-districts-datasource.json");
             testSourceData = JSON.parse(buffer.toString());
         });
     });
 
     it("should has name", async () => {
         expect(pipeline.name).not.to.be.undefined;
-        expect(pipeline.name).is.equal("ParkingsHistory");
+        expect(pipeline.name).is.equal("CityDistricts");
     });
 
     it("should has TransformDataElement method", async () => {
@@ -49,10 +49,10 @@ describe("ParkingsHistoryPipeline", () => {
     it("should properly transform element", async () => {
         const data = await pipeline.TransformDataElement(testSourceData.features[0]);
         expect(data).to.have.property("id");
-        expect(data).to.have.property("num_of_free_places");
-        expect(data).to.have.property("num_of_taken_places");
+        expect(data).to.have.property("name");
+        expect(data).to.have.property("slug");
+        expect(data).to.have.property("loc");
         expect(data).to.have.property("timestamp");
-        expect(data).to.have.property("total_num_of_places");
     });
 
     it("should has TransformDataCollection method", async () => {
@@ -63,10 +63,10 @@ describe("ParkingsHistoryPipeline", () => {
         const data = await pipeline.TransformDataCollection(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("id");
-            expect(data[i]).to.have.property("num_of_free_places");
-            expect(data[i]).to.have.property("num_of_taken_places");
+            expect(data[i]).to.have.property("name");
+            expect(data[i]).to.have.property("slug");
+            expect(data[i]).to.have.property("loc");
             expect(data[i]).to.have.property("timestamp");
-            expect(data[i]).to.have.property("total_num_of_places");
         }
     });
 

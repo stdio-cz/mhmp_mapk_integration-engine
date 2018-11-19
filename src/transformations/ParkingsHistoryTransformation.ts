@@ -1,26 +1,27 @@
 "use strict";
 
-import BasePipeline from "./BasePipeline";
-import IPipeline from "./IPipeline";
+import BaseTransformation from "./BaseTransformation";
+import ITransformation from "./ITransformation";
 
-export default class IGSensorsHistoryPipeline extends BasePipeline implements IPipeline {
+export default class ParkingsHistoryTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "IGSensorsHistory";
+        this.name = "ParkingsHistory";
     }
 
     /**
      * Transforms data from data source to output format (geoJSON Feature)
      */
     public TransformDataElement = async (element): Promise<any> => {
-        const filteredSensors = element.properties.sensors.filter((s) => s.validity === 0);
         const res = {
             id: element.properties.id,
-            sensors: filteredSensors,
-            timestamp: element.properties.timestamp,
+            num_of_free_places: element.properties.num_of_free_places,
+            num_of_taken_places: element.properties.num_of_taken_places,
+            timestamp: new Date().getTime(),
+            total_num_of_places: element.properties.total_num_of_places,
         };
         return res;
     }
@@ -28,7 +29,7 @@ export default class IGSensorsHistoryPipeline extends BasePipeline implements IP
     /**
      * Transforms data from data source to output format
      * Creates a ollection and puts each transformed object as single feature in it
-     * (transformation of single objects/features depends on concrete Pipeline implementation)
+     * (transformation of single objects/features depends on concrete Transformation implementation)
      *
      * @param collection Array of objects to be transformed and saved as single features
      */
@@ -42,9 +43,7 @@ export default class IGSensorsHistoryPipeline extends BasePipeline implements IP
                     return;
                 }
                 const element = await this.TransformDataElement(collection[i]);
-                if (element.sensors.length !== 0) {
-                    res.push(element);
-                }
+                res.push(element);
                 setImmediate(collectionIterator.bind(null, i + 1, cb));
             };
             collectionIterator(0, () => {

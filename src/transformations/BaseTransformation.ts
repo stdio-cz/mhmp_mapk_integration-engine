@@ -1,8 +1,8 @@
 "use strict";
 
-export default abstract class BasePipeline {
+export default abstract class BaseTransformation {
 
-    /** Pipeline name */
+    /** Transformation name */
     public abstract name: string;
     /** Transform one single element from input format (from data source) to output format */
     public abstract TransformDataElement;

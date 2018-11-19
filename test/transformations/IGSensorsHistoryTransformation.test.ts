@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import CityDistrictsPipeline from "../../src/pipelines/CityDistrictsPipeline";
+import IGSensorsHistoryTransformation from "../../src/transformations/IGSensorsHistoryTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,22 +24,22 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("CityDistrictsPipeline", () => {
+describe("IGSensorsHistoryTransformation", () => {
 
     let pipeline;
     let testSourceData;
 
     beforeEach(() => {
-        pipeline = new CityDistrictsPipeline();
+        pipeline = new IGSensorsHistoryTransformation();
         beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/city-districts-datasource.json");
+            const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
             testSourceData = JSON.parse(buffer.toString());
         });
     });
 
     it("should has name", async () => {
         expect(pipeline.name).not.to.be.undefined;
-        expect(pipeline.name).is.equal("CityDistricts");
+        expect(pipeline.name).is.equal("IGSensorsHistory");
     });
 
     it("should has TransformDataElement method", async () => {
@@ -49,9 +49,7 @@ describe("CityDistrictsPipeline", () => {
     it("should properly transform element", async () => {
         const data = await pipeline.TransformDataElement(testSourceData.features[0]);
         expect(data).to.have.property("id");
-        expect(data).to.have.property("name");
-        expect(data).to.have.property("slug");
-        expect(data).to.have.property("loc");
+        expect(data).to.have.property("sensors");
         expect(data).to.have.property("timestamp");
     });
 
@@ -63,9 +61,7 @@ describe("CityDistrictsPipeline", () => {
         const data = await pipeline.TransformDataCollection(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("id");
-            expect(data[i]).to.have.property("name");
-            expect(data[i]).to.have.property("slug");
-            expect(data[i]).to.have.property("loc");
+            expect(data[i]).to.have.property("sensors");
             expect(data[i]).to.have.property("timestamp");
         }
     });

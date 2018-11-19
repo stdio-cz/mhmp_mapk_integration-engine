@@ -6,23 +6,23 @@ import GeocodeApi from "../helpers/GeocodeApi";
 import CityDistrictsModel from "../models/CityDistrictsModel";
 import ParkingsHistoryModel from "../models/ParkingsHistoryModel";
 import ParkingsModel from "../models/ParkingsModel";
-import ParkingsHistoryPipeline from "../pipelines/ParkingsHistoryPipeline";
-import ParkingsPipeline from "../pipelines/ParkingsPipeline";
+import ParkingsHistoryTransformation from "../transformations/ParkingsHistoryTransformation";
+import ParkingsTransformation from "../transformations/ParkingsTransformation";
 
 export default class ParkingsWorker {
 
     private model: ParkingsModel;
     private dataSource: TSKParkingsDataSource;
-    private pipeline: ParkingsPipeline;
+    private pipeline: ParkingsTransformation;
     private historyModel: ParkingsHistoryModel;
-    private historyPipeline: ParkingsHistoryPipeline;
+    private historyTransformation: ParkingsHistoryTransformation;
 
     constructor() {
         this.model = new ParkingsModel();
         this.dataSource = new TSKParkingsDataSource();
-        this.pipeline = new ParkingsPipeline();
+        this.pipeline = new ParkingsTransformation();
         this.historyModel = new ParkingsHistoryModel();
-        this.historyPipeline = new ParkingsHistoryPipeline();
+        this.historyTransformation = new ParkingsHistoryTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
@@ -33,7 +33,7 @@ export default class ParkingsWorker {
     }
 
     public saveDataToHistory = async (data: any): Promise<any> => {
-        const transformedData = await this.historyPipeline.TransformDataCollection(data);
+        const transformedData = await this.historyTransformation.TransformDataCollection(data);
         await this.historyModel.SaveToDb(transformedData);
         return transformedData;
     }

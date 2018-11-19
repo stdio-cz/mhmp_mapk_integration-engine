@@ -3,23 +3,23 @@
 import IGSensorsDataSource from "../datasources/IGSensorsDataSource";
 import IGSensorsHistoryModel from "../models/IGSensorsHistoryModel";
 import IGSensorsModel from "../models/IGSensorsModel";
-import IGSensorsHistoryPipeline from "../pipelines/IGSensorsHistoryPipeline";
-import IGSensorsPipeline from "../pipelines/IGSensorsPipeline";
+import IGSensorsHistoryTransformation from "../transformations/IGSensorsHistoryTransformation";
+import IGSensorsTransformation from "../transformations/IGSensorsTransformation";
 
 export default class IGSensorsWorker {
 
     private model: IGSensorsModel;
     private dataSource: IGSensorsDataSource;
-    private pipeline: IGSensorsPipeline;
+    private pipeline: IGSensorsTransformation;
     private historyModel: IGSensorsHistoryModel;
-    private historyPipeline: IGSensorsHistoryPipeline;
+    private historyTransformation: IGSensorsHistoryTransformation;
 
     constructor() {
         this.model = new IGSensorsModel();
         this.dataSource = new IGSensorsDataSource();
-        this.pipeline = new IGSensorsPipeline();
+        this.pipeline = new IGSensorsTransformation();
         this.historyModel = new IGSensorsHistoryModel();
-        this.historyPipeline = new IGSensorsHistoryPipeline();
+        this.historyTransformation = new IGSensorsHistoryTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
@@ -30,7 +30,7 @@ export default class IGSensorsWorker {
     }
 
     public saveDataToHistory = async (data: any): Promise<any> => {
-        const transformedData = await this.historyPipeline.TransformDataCollection(data);
+        const transformedData = await this.historyTransformation.TransformDataCollection(data);
         await this.historyModel.SaveToDb(transformedData);
         return transformedData;
     }

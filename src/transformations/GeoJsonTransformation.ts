@@ -1,12 +1,12 @@
 "use strict";
 
-import BasePipeline from "./BasePipeline";
+import BaseTransformation from "./BaseTransformation";
 
 /**
  * TODO: geoJSON - has specific format, has FeatureCollection, Features,
  * always coordinates, always properties.district?
  */
-export default abstract class GeoJsonPipeline extends BasePipeline {
+export default abstract class GeoJsonTransformation extends BaseTransformation {
 
     /** Transform one single element from input format (from data source) to output format */
     public abstract TransformDataElement;
@@ -18,7 +18,7 @@ export default abstract class GeoJsonPipeline extends BasePipeline {
     /**
      * Transforms data from data source to output format (geoJSON FeatureCollection)
      * Creates a FeatureCollection and puts each transformed object as single feature in it
-     * (transformation of single objects/features depends on concrete Pipeline implementation)
+     * (transformation of single objects/features depends on concrete Transformation implementation)
      *
      * @param collection Array of objects to be transformed and saved as single features
      */

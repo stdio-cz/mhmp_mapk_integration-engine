@@ -1,37 +1,37 @@
 "use strict";
 
-import BasePipeline from "./BasePipeline";
-import IPipeline from "./IPipeline";
+import BaseTransformation from "./BaseTransformation";
+import ITransformation from "./ITransformation";
 
-export default class ParkingsHistoryPipeline extends BasePipeline implements IPipeline {
+const slug = require("slugify");
+
+export default class CityDistrictsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "ParkingsHistory";
+        this.name = "CityDistricts";
     }
 
     /**
-     * Transforms data from data source to output format (geoJSON Feature)
+     * Transforms data from data source to output format (JSON)
      */
     public TransformDataElement = async (element): Promise<any> => {
-        const res = {
-            id: element.properties.id,
-            num_of_free_places: element.properties.num_of_free_places,
-            num_of_taken_places: element.properties.num_of_taken_places,
+        return {
+            id: parseInt(element.properties.KOD_MC, 10),
+            loc: {
+                coordinates: element.geometry.coordinates,
+                type: element.geometry.type,
+            },
+            name: element.properties.NAZEV_MC,
+            slug: slug(element.properties.NAZEV_MC, { lower: true }),
             timestamp: new Date().getTime(),
-            total_num_of_places: element.properties.total_num_of_places,
         };
-        return res;
     }
 
     /**
-     * Transforms data from data source to output format
-     * Creates a ollection and puts each transformed object as single feature in it
-     * (transformation of single objects/features depends on concrete Pipeline implementation)
-     *
-     * @param collection Array of objects to be transformed and saved as single features
+     * Transforms data from data source to output format (JSON)
      */
     public TransformDataCollection = (collection): Promise<any> => {
         return new Promise((resolve, reject) => {
