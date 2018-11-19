@@ -1,7 +1,9 @@
 "use strict";
 
+import { CityDistrictsDataSource as schemaObject } from "data-platform-schema-definitions";
+import { model, Schema } from "mongoose";
 import CustomError from "../helpers/errors/CustomError";
-import CityDistrictsDataSourceSchema from "../schemas/CityDistrictsDataSourceSchema";
+import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
 import JSONDataSource from "./JSONDataSource";
@@ -16,10 +18,8 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
     public name: string;
     /** The object which specifies HTTP request. */
     protected sourceRequestObject: ISourceRequest;
-    /** Schema of the incoming data.
-     * Performs validation based on this schema before any processing of the data in the app.
-     */
-    protected schema: CityDistrictsDataSourceSchema;
+    /** Validation helper */
+    protected validator: Validator;
     /** Specifies where to look for the unique identifier of the object to find it in the collection. */
     protected searchPath: string;
     /** Specifies where is the collection of the individual results stored in the returned object. */
@@ -27,13 +27,19 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
 
     constructor() {
         super();
-        this.name = "CityDistricts";
+        this.name = "CityDistrictsDataSource";
         this.sourceRequestObject = {
             headers : {},
             method: "GET",
             url: config.datasources.CityDistricts,
         };
-        this.schema = new CityDistrictsDataSourceSchema();
+        let mongooseModel: model;
+        try {
+            mongooseModel = model(this.name);
+        } catch (error) {
+            mongooseModel = model(this.name, new Schema(schemaObject, { bufferCommands: false }));
+        }
+        this.validator = new Validator(this.name, mongooseModel);
         this.resultsPath = "features";
         this.searchPath = "item.properties.KOD_MC";
     }
@@ -48,20 +54,16 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
      */
     public GetOne = async (inId: any): Promise<any> => {
         const data = await this.GetRawData();
-        const isValid = await this.schema.Validate(data);
-        if (isValid) { // If there was error getting the data, or the data are ok, return this
-            let res = {};
-            res = _.find(data, (item) => {
-                return item.properties.KOD_MC === inId
-                    || slug(item.properties.NAZEV_MC, { lower: true }) === inId;
-            });
-            if (!res) { // If the object with given ID was not found, throw error
-                throw new CustomError("Source data was not found.", true, 1008);
-            } else { // Return the found object
-                return res;
-            }
-        } else { // If the data returned correctly, but in wrong (not valid) format
-            throw new CustomError("Source data are not valid.", true, 1007);
+        await this.validator.Validate(data);
+        let res = {};
+        res = _.find(data, (item) => {
+            return item.properties.KOD_MC === inId
+                || slug(item.properties.NAZEV_MC, { lower: true }) === inId;
+        });
+        if (!res) { // If the object with given ID was not found, throw error
+            throw new CustomError("Source data was not found.", true, 1008);
+        } else { // Return the found object
+            return res;
         }
     }
 

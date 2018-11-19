@@ -1,49 +1,38 @@
 "use strict";
 
 import IGSensorsDataSource from "../datasources/IGSensorsDataSource";
-import CustomError from "../helpers/errors/CustomError";
-import IGSensorsHistModel from "../models/IGSensorsHistModel";
+import IGSensorsHistoryModel from "../models/IGSensorsHistoryModel";
 import IGSensorsModel from "../models/IGSensorsModel";
-import IGSensorsHistPipeline from "../pipelines/IGSensorsHistPipeline";
+import IGSensorsHistoryPipeline from "../pipelines/IGSensorsHistoryPipeline";
 import IGSensorsPipeline from "../pipelines/IGSensorsPipeline";
 
 export default class IGSensorsWorker {
 
-    private igsensorsModel: IGSensorsModel;
-    private igsensorsDataSource: IGSensorsDataSource;
-    private igsensorsPipeline: IGSensorsPipeline;
-    private igsensorsHistModel: IGSensorsHistModel;
-    private igsensorsHistPipeline: IGSensorsHistPipeline;
+    private model: IGSensorsModel;
+    private dataSource: IGSensorsDataSource;
+    private pipeline: IGSensorsPipeline;
+    private historyModel: IGSensorsHistoryModel;
+    private historyPipeline: IGSensorsHistoryPipeline;
 
     constructor() {
-        this.igsensorsModel = new IGSensorsModel();
-        this.igsensorsDataSource = new IGSensorsDataSource();
-        this.igsensorsPipeline = new IGSensorsPipeline();
-        this.igsensorsHistModel = new IGSensorsHistModel();
-        this.igsensorsHistPipeline = new IGSensorsHistPipeline();
+        this.model = new IGSensorsModel();
+        this.dataSource = new IGSensorsDataSource();
+        this.pipeline = new IGSensorsPipeline();
+        this.historyModel = new IGSensorsHistoryModel();
+        this.historyPipeline = new IGSensorsHistoryPipeline();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
-        const data = await this.igsensorsDataSource.GetAll();
-        const transformedData = await this.igsensorsPipeline.TransformDataCollection(data);
-        const isValid = await this.igsensorsModel.Validate(transformedData);
-        if (!isValid) {
-            throw new CustomError("Transformed data are not valid.", true, 1011);
-        } else {
-            await this.igsensorsModel.SaveToDb(transformedData);
-            return transformedData;
-        }
+        const data = await this.dataSource.GetAll();
+        const transformedData = await this.pipeline.TransformDataCollection(data);
+        await this.model.SaveToDb(transformedData);
+        return transformedData;
     }
 
     public saveDataToHistory = async (data: any): Promise<any> => {
-        const transformedData = await this.igsensorsHistPipeline.TransformDataCollection(data);
-        const isValid = await this.igsensorsHistModel.Validate(transformedData);
-        if (!isValid) {
-            throw new CustomError("Transformed data are not valid.", true, 1011);
-        } else {
-            await this.igsensorsHistModel.SaveToDb(transformedData);
-            return transformedData;
-        }
+        const transformedData = await this.historyPipeline.TransformDataCollection(data);
+        await this.historyModel.SaveToDb(transformedData);
+        return transformedData;
     }
 
 }

@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGSensorsHistPipeline from "../../src/pipelines/IGSensorsHistPipeline";
+import IGSensorsHistoryPipeline from "../../src/pipelines/IGSensorsHistoryPipeline";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,13 +24,13 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("IGSensorsHistPipeline", () => {
+describe("IGSensorsHistoryPipeline", () => {
 
     let pipeline;
     let testSourceData;
 
     beforeEach(() => {
-        pipeline = new IGSensorsHistPipeline();
+        pipeline = new IGSensorsHistoryPipeline();
         beforeEach(async () => {
             const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
             testSourceData = JSON.parse(buffer.toString());
@@ -39,7 +39,7 @@ describe("IGSensorsHistPipeline", () => {
 
     it("should has name", async () => {
         expect(pipeline.name).not.to.be.undefined;
-        expect(pipeline.name).is.equal("IGSensorsHist");
+        expect(pipeline.name).is.equal("IGSensorsHistory");
     });
 
     it("should has TransformDataElement method", async () => {

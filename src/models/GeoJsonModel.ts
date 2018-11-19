@@ -2,7 +2,7 @@
 
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
-import ISchema from "../schemas/ISchema";
+import Validator from "../helpers/Validator";
 import BaseModel from "./BaseModel";
 
 const log = require("debug")("data-platform:integration-engine");
@@ -10,11 +10,11 @@ const log = require("debug")("data-platform:integration-engine");
 export default abstract class GeoJsonModel extends BaseModel {
 
     /** The Mongoose Model */
-    public abstract mongooseModel: mongoose.model;
-    /** The schema which contains schemaObject for creating the Mongoose Schema */
-    protected abstract schema: ISchema;
+    protected abstract mongooseModel: mongoose.model;
     /** Updates values of the object which is already in DB */
     protected abstract updateValues;
+    /** Validation helper */
+    protected abstract validator: Validator;
 
     constructor() {
         super();
@@ -28,11 +28,14 @@ export default abstract class GeoJsonModel extends BaseModel {
     }
 
     /**
-     * Saves transformed element or collection to database and updates refresh timestamp.
+     * Validates and Saves transformed element or collection to database.
      *
      * @param data Whole FeatureCollection to be saved into DB, or single item to be saved
      */
     public SaveToDb = async (data: any): Promise<any> => {
+        // data validation
+        await this.validator.Validate(data.features);
+
         // If the data to be saved is the whole collection (contains geoJSON features)
         if (data.features && data.features instanceof Array) {
             const promises = data.features.map((item) => {
@@ -44,30 +47,6 @@ export default abstract class GeoJsonModel extends BaseModel {
             });
         } else { // If it's a single element
             return await this.SaveOrUpdateOneToDb(data);
-        }
-    }
-
-    /**
-     * Data validation
-     * Overrides BaseModel::Validate()
-     *
-     * @param {any} data
-     * @returns {boolean}
-     */
-    public Validate = async (data: any): Promise<boolean> => {
-        data = data.features;
-        if (data instanceof Array) {
-            if (data.length === 0) {
-                return true;
-            } else {
-                const promises = data.map((element) => {
-                    return this.ValidateElement(element);
-                });
-                const elemResults = await Promise.all(promises);
-                return (elemResults.indexOf(false) !== -1) ? false : true;
-            }
-        } else {
-            return await this.ValidateElement(data);
         }
     }
 

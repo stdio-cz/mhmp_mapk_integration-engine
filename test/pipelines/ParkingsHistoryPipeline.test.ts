@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import ParkingsHistPipeline from "../../src/pipelines/ParkingsHistPipeline";
+import ParkingsHistoryPipeline from "../../src/pipelines/ParkingsHistoryPipeline";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,13 +24,13 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("ParkingsHistPipeline", () => {
+describe("ParkingsHistoryPipeline", () => {
 
     let pipeline;
     let testSourceData;
 
     beforeEach(() => {
-        pipeline = new ParkingsHistPipeline();
+        pipeline = new ParkingsHistoryPipeline();
         beforeEach(async () => {
             const buffer = await fs.readFileAsync(__dirname + "/../data/parkings-response.json");
             testSourceData = JSON.parse(buffer.toString());
@@ -39,7 +39,7 @@ describe("ParkingsHistPipeline", () => {
 
     it("should has name", async () => {
         expect(pipeline.name).not.to.be.undefined;
-        expect(pipeline.name).is.equal("ParkingsHist");
+        expect(pipeline.name).is.equal("ParkingsHistory");
     });
 
     it("should has TransformDataElement method", async () => {

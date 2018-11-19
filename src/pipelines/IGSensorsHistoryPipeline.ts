@@ -3,25 +3,24 @@
 import BasePipeline from "./BasePipeline";
 import IPipeline from "./IPipeline";
 
-export default class ParkingsHistPipeline extends BasePipeline implements IPipeline {
+export default class IGSensorsHistoryPipeline extends BasePipeline implements IPipeline {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "ParkingsHist";
+        this.name = "IGSensorsHistory";
     }
 
     /**
      * Transforms data from data source to output format (geoJSON Feature)
      */
     public TransformDataElement = async (element): Promise<any> => {
+        const filteredSensors = element.properties.sensors.filter((s) => s.validity === 0);
         const res = {
             id: element.properties.id,
-            num_of_free_places: element.properties.num_of_free_places,
-            num_of_taken_places: element.properties.num_of_taken_places,
-            timestamp: new Date().getTime(),
-            total_num_of_places: element.properties.total_num_of_places,
+            sensors: filteredSensors,
+            timestamp: element.properties.timestamp,
         };
         return res;
     }
@@ -43,7 +42,9 @@ export default class ParkingsHistPipeline extends BasePipeline implements IPipel
                     return;
                 }
                 const element = await this.TransformDataElement(collection[i]);
-                res.push(element);
+                if (element.sensors.length !== 0) {
+                    res.push(element);
+                }
                 setImmediate(collectionIterator.bind(null, i + 1, cb));
             };
             collectionIterator(0, () => {

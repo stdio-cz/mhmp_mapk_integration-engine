@@ -1,32 +1,26 @@
 "use strict";
 
 import CityDistrictsDataSource from "../datasources/CityDistrictsDataSource";
-import CustomError from "../helpers/errors/CustomError";
 import CityDistrictsModel from "../models/CityDistrictsModel";
 import CityDistrictsPipeline from "../pipelines/CityDistrictsPipeline";
 
 export default class CityDistrictsWorker {
 
-    private cityDistrictsModel: CityDistrictsModel;
-    private cityDistrictsDataSource: CityDistrictsDataSource;
-    private cityDistrictsPipeline: CityDistrictsPipeline;
+    private model: CityDistrictsModel;
+    private dataSource: CityDistrictsDataSource;
+    private pipeline: CityDistrictsPipeline;
 
     constructor() {
-        this.cityDistrictsModel = new CityDistrictsModel();
-        this.cityDistrictsDataSource = new CityDistrictsDataSource();
-        this.cityDistrictsPipeline = new CityDistrictsPipeline();
+        this.model = new CityDistrictsModel();
+        this.dataSource = new CityDistrictsDataSource();
+        this.pipeline = new CityDistrictsPipeline();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
-        const data = await this.cityDistrictsDataSource.GetAll();
-        const transformedData = await this.cityDistrictsPipeline.TransformDataCollection(data);
-        const isValid = await this.cityDistrictsModel.Validate(transformedData);
-        if (!isValid) {
-            throw new CustomError("Transformed data are not valid.", true, 1011);
-        } else {
-            await this.cityDistrictsModel.SaveToDb(transformedData);
-            return transformedData;
-        }
+        const data = await this.dataSource.GetAll();
+        const transformedData = await this.pipeline.TransformDataCollection(data);
+        await this.model.SaveToDb(transformedData);
+        return transformedData;
     }
 
 }
