@@ -35,7 +35,7 @@ production_deployment:
     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
     - echo "$PRODUCTION_SSH_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
     - ssh gitlab@$PRODUCTION_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL"
-    - ssh gitlab@$PRODUCTION_IP "docker service update dp_integration-engine --with-registry-auth --image $CONTAINER_IMAGE:latest"
+    - ssh gitlab@$PRODUCTION_IP "docker service update dp_integration-engine --with-registry-auth --image $CONTAINER_IMAGE:$CI_PIPELINE_ID"
     - ssh gitlab@$PRODUCTION_IP "docker logout $DOCKER_REGISTRY_URL"
   only:
     refs:
