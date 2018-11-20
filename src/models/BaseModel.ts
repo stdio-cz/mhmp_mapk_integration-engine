@@ -18,8 +18,6 @@ export default abstract class BaseModel {
     protected searchPath;
     /** String to specify selection of DB query. */
     protected select;
-    /** Function which cover results to specific object, e.g. GeoJson. Default = null */
-    protected createOutputCollection;
 
     constructor() {
         this.searchPath = (id, multiple = false) => {
@@ -28,7 +26,6 @@ export default abstract class BaseModel {
                 : { id };
         };
         this.select = "-_id -__v";
-        this.createOutputCollection = null;
     }
 
     public GetOneFromModel = async (id: any): Promise<any> => {

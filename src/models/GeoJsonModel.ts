@@ -24,7 +24,6 @@ export default abstract class GeoJsonModel extends BaseModel {
                 : { "properties.id": id };
         };
         this.select = "-_id -__v";
-        this.createOutputCollection = this.createOutputFeatureCollection;
     }
 
     /**
@@ -43,24 +42,11 @@ export default abstract class GeoJsonModel extends BaseModel {
             });
             return Promise.all(promises).then(async (res) => {
                 log("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
-                return this.createOutputCollection(res);
+                return this.createOutputFeatureCollection(res);
             });
         } else { // If it's a single element
             return await this.SaveOrUpdateOneToDb(data);
         }
-    }
-
-    /**
-     * Creates output geoJSON FeatureCollection from array of single geoJSON features in array
-     * format (eg. from database)
-     *
-     * @param data Array of single geoJSON features
-     */
-    protected createOutputFeatureCollection = (data) => {
-        return {
-            features: data,
-            type: "FeatureCollection",
-        };
     }
 
     /**
@@ -90,6 +76,19 @@ export default abstract class GeoJsonModel extends BaseModel {
         } catch (err) {
             throw new CustomError("Error while saving to database.", true, 1003, err);
         }
+    }
+
+    /**
+     * Creates output geoJSON FeatureCollection from array of single geoJSON features in array
+     * format (eg. from database)
+     *
+     * @param data Array of single geoJSON features
+     */
+    private createOutputFeatureCollection = (data) => {
+        return {
+            features: data,
+            type: "FeatureCollection",
+        };
     }
 
 }
