@@ -11,6 +11,7 @@ stages:
 build_image:
   stage: build
   script:
+    - echo $CI_COMMIT_SHA > commitsha
     - docker build -t $CONTAINER_IMAGE:latest -t $CONTAINER_IMAGE:$CI_PIPELINE_ID .
 
 run_tests:
