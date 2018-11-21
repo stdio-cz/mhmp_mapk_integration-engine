@@ -20,9 +20,9 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
 
     protected refreshDataInDB = async (msg: any): Promise<any> => {
         try {
-            const cityDistrictsWorker = new ParkingZonesWorker();
+            const parkingZonesWorker = new ParkingZonesWorker();
             log(" [>] parking-zones-refreshDataInDB received some data.");
-            const res = await cityDistrictsWorker.refreshDataInDB();
+            const res = await parkingZonesWorker.refreshDataInDB();
 
             this.channel.ack(msg);
             log(" [<] parking-zones-refreshDataInDB: done");
