@@ -13,7 +13,7 @@ export default abstract class BaseModel {
     /** The Mongoose Model */
     protected abstract mongooseModel: mongoose.model;
     /** Validation helper */
-    protected validator: Validator;
+    protected abstract validator: Validator;
     /** Path where to look for ID - identifier to search by */
     protected searchPath;
     /** String to specify selection of DB query. */

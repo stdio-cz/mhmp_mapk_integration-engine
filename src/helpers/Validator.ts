@@ -1,6 +1,6 @@
 "use strict";
 
-import { Model } from "mongoose";
+import { model, Schema, SchemaDefinition } from "mongoose";
 import CustomError from "./errors/CustomError";
 
 /**
@@ -11,11 +11,15 @@ export default class Validator {
     /** Name of the model */
     private modelName: string;
     /** Reference to mongoose model object, used for validation */
-    private mongooseModel: Model;
+    private mongooseModel: model;
 
-    constructor(modelName: string, model: Model) {
+    constructor(modelName: string, schemaObject: SchemaDefinition) {
         this.modelName = modelName;
-        this.mongooseModel = model;
+        try {
+            this.mongooseModel = model(this.modelName);
+        } catch (error) {
+            this.mongooseModel = model(this.modelName, new Schema(schemaObject, { bufferCommands: false }));
+        }
     }
 
     /**

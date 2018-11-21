@@ -1,7 +1,6 @@
 "use strict";
 
 import { ParkingZonesDataSource as schemaObject } from "data-platform-schema-definitions";
-import { model, Schema } from "mongoose";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
@@ -32,13 +31,7 @@ export default class ParkingZonesDataSource extends JSONDataSource implements ID
             method: "GET",
             url: config.datasources.ParkingZones,
         };
-        let mongooseModel: model;
-        try {
-            mongooseModel = model(this.name);
-        } catch (error) {
-            mongooseModel = model(this.name, new Schema(schemaObject, { bufferCommands: false }));
-        }
-        this.validator = new Validator(this.name, mongooseModel);
+        this.validator = new Validator(this.name, schemaObject);
         this.resultsPath = "features";
         this.searchPath = "properties.TARIFTAB";
     }

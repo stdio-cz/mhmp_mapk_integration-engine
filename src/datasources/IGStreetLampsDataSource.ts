@@ -1,7 +1,6 @@
 "use strict";
 
 import { IGStreetLampsDataSource as schemaObject } from "data-platform-schema-definitions";
-import { model, Schema } from "mongoose";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
@@ -32,13 +31,7 @@ export default class IGStreetLampsDataSource extends JSONDataSource implements I
             method: "GET",
             url: config.datasources.IGStreetLamps,
         };
-        let mongooseModel: model;
-        try {
-            mongooseModel = model(this.name);
-        } catch (error) {
-            mongooseModel = model(this.name, new Schema(schemaObject, { bufferCommands: false }));
-        }
-        this.validator = new Validator(this.name, mongooseModel);
+        this.validator = new Validator(this.name, schemaObject);
         this.resultsPath = "";
         this.searchPath = "ice_id";
     }

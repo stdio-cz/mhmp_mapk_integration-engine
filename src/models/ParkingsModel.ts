@@ -27,7 +27,7 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
                 {weights: { "properties.name": 5, "properties.address": 1 }});
             this.mongooseModel = mongoose.model(this.name, schema);
         }
-        this.validator = new Validator(this.name, this.mongooseModel);
+        this.validator = new Validator(this.name, schemaObject);
     }
 
     protected updateValues = (result, item) => {

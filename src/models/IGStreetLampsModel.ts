@@ -24,7 +24,7 @@ export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
             schema.index({ geometry : "2dsphere" });
             this.mongooseModel = mongoose.model(this.name, schema);
         }
-        this.validator = new Validator(this.name, this.mongooseModel);
+        this.validator = new Validator(this.name, schemaObject);
     }
 
     protected updateValues = (result, item) => {

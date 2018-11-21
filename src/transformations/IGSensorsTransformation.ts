@@ -29,6 +29,7 @@ export default class IGSensorsTransformation extends GeoJsonTransformation imple
             type: "Feature",
         };
 
+        // TODO je to spravne? prepsat do async/await?
         /// Parsing sensors to array using recursion.
         const parseSensors = (obj: any, ary: any[], name?: string) => {
             /// if object contains validity then sensor is push to ary and recursion ends

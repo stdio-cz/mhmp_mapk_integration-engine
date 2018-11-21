@@ -24,7 +24,7 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
             this.mongooseModel = mongoose.model(this.name,
                 new mongoose.Schema(schemaObject, { bufferCommands: false }));
         }
-        this.validator = new Validator(this.name, this.mongooseModel);
+        this.validator = new Validator(this.name, schemaObject);
         this.searchPath = (id, multiple = false) => {
             return (multiple)
                 ? (!isNaN(Number(id))) ? { id: { $in: id } } : { slug: { $in: id } }

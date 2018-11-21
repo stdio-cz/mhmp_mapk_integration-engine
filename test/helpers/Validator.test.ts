@@ -4,7 +4,6 @@
 
 import { CityDistricts } from "data-platform-schema-definitions";
 import "mocha";
-import { model, Schema } from "mongoose";
 import CustomError from "../../src/helpers/errors/CustomError";
 import Validator from "../../src/helpers/Validator";
 
@@ -17,17 +16,10 @@ chai.use(chaiAsPromised);
 describe("Validator", () => {
 
     let validator: Validator;
-    let testMongooseModel: model;
     let testData: object;
 
     beforeEach(() => {
-        try {
-            testMongooseModel = model("CityDistricts");
-        } catch (error) {
-            testMongooseModel = model("CityDistricts",
-                new Schema(CityDistricts, { bufferCommands: false }));
-        }
-        validator = new Validator("CityDistricts", testMongooseModel);
+        validator = new Validator("CityDistricts", CityDistricts);
         testData = [{
             id: 547310,
             name: "Praha-Čakovice",
