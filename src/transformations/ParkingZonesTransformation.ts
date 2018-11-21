@@ -34,13 +34,14 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
             },
             properties: {
                 code: element.properties.TARIFTAB,
-                max_coord: null,
-                min_coord: null,
+                midpoint: null,
                 name: (types[parseInt(element.properties.TYPZONY, 10)])
                     ? types[parseInt(element.properties.TYPZONY, 10)] + " - " + element.properties.TARIFTAB
                     : element.properties.TARIFTAB,
+                northeast: null,
                 number_of_places: parseInt(element.properties.PS_ZPS, 10),
                 payment_link: config.PARKINGS_PAYMENT_URL + "?shortname=" + element.properties.TARIFTAB,
+                southwest: null,
                 tariffs: [],
                 timestamp: new Date().getTime(),
                 type: {
@@ -63,13 +64,16 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         if (res.geometry.type === "Polygon") {
             const result = await this.filterAndFindMinMax(res.geometry.coordinates[0]);
             res.geometry.coordinates[0] = result.coords;
-            res.properties.min_coord = result.min;
-            res.properties.max_coord = result.max;
+            res.properties.southwest = result.min;
+            res.properties.northeast = result.max;
         } else if (res.geometry.type === "MultiPolygon") {
             const result = await this.filterAndFindMinMaxMulti(res.geometry.coordinates);
             res.geometry.coordinates = result.coords;
-            res.properties.min_coord = result.min;
-            res.properties.max_coord = result.max;
+            res.properties.southwest = result.min;
+            res.properties.northeast = result.max;
+        }
+        if (res.properties.southwest && res.properties.northeast) {
+            res.properties.midpoint = this.middlePoint(res.properties.southwest, res.properties.northeast);
         }
 
         return res;
@@ -231,6 +235,33 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         };
         await multiCoordsIterator(0);
         return { coords: newArr, min: [minLng, minLat], max: [maxLng, maxLat] };
+    }
+
+    private middlePoint([lng1, lat1], [lng2, lat2]) {
+        const toRad = (num: number) => {
+            return num * Math.PI / 180;
+        };
+
+        const toDeg = (num: number) => {
+            return num * (180 / Math.PI);
+        };
+
+        // Longitude difference
+        const dLng = toRad(lng2 - lng1);
+
+        // Convert to radians
+        lat1 = toRad(lat1);
+        lat2 = toRad(lat2);
+        lng1 = toRad(lng1);
+
+        const bX = Math.cos(lat2) * Math.cos(dLng);
+        const bY = Math.cos(lat2) * Math.sin(dLng);
+        const lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2),
+            Math.sqrt((Math.cos(lat1) + bX) * (Math.cos(lat1) + bX) + bY * bY));
+        const lng3 = lng1 + Math.atan2(bY, Math.cos(lat1) + bX);
+
+        // Return result
+        return [toDeg(lng3), toDeg(lat3)];
     }
 
 }

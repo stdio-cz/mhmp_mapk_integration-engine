@@ -78,8 +78,9 @@ describe("ParkingZonesTransformation", () => {
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("code");
-        expect(data.properties).to.have.property("max_coord");
-        expect(data.properties).to.have.property("min_coord");
+        expect(data.properties).to.have.property("midpoint");
+        expect(data.properties).to.have.property("northeast");
+        expect(data.properties).to.have.property("southwest");
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("number_of_places");
         expect(data.properties).to.have.property("payment_link");
@@ -100,8 +101,9 @@ describe("ParkingZonesTransformation", () => {
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("code");
-            expect(data[i].properties).to.have.property("max_coord");
-            expect(data[i].properties).to.have.property("min_coord");
+            expect(data[i].properties).to.have.property("midpoint");
+            expect(data[i].properties).to.have.property("northeast");
+            expect(data[i].properties).to.have.property("southwest");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("number_of_places");
             expect(data[i].properties).to.have.property("payment_link");

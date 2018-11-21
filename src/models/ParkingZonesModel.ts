@@ -39,6 +39,10 @@ export default class ParkingZonesModel extends GeoJsonModel implements IModel {
         result.properties.tariffs = item.properties.tariffs;
         result.properties.timestamp = item.properties.timestamp;
         result.properties.type = item.properties.type;
+        result.properties.midpoint = item.properties.midpoint;
+        result.properties.northeast = item.properties.northeast;
+        result.properties.southwest = item.properties.southwest;
+        result.properties.zps_id = item.properties.zps_id;
         return result;
     }
 
