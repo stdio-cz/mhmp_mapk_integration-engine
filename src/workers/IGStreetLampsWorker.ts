@@ -8,17 +8,17 @@ export default class IGStreetLampsWorker {
 
     private model: IGStreetLampsModel;
     private dataSource: IGStreetLampsDataSource;
-    private pipeline: IGStreetLampsTransformation;
+    private transformation: IGStreetLampsTransformation;
 
     constructor() {
         this.model = new IGStreetLampsModel();
         this.dataSource = new IGStreetLampsDataSource();
-        this.pipeline = new IGStreetLampsTransformation();
+        this.transformation = new IGStreetLampsTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
         const data = await this.dataSource.GetAll();
-        const transformedData = await this.pipeline.TransformDataCollection(data);
+        const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
         return transformedData;
     }

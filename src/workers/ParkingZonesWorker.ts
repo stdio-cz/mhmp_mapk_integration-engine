@@ -8,17 +8,17 @@ export default class ParkingZonesWorker {
 
     private model: ParkingZonesModel;
     private dataSource: ParkingZonesDataSource;
-    private pipeline: ParkingZonesTransformation;
+    private transformation: ParkingZonesTransformation;
 
     constructor() {
         this.model = new ParkingZonesModel();
         this.dataSource = new ParkingZonesDataSource();
-        this.pipeline = new ParkingZonesTransformation();
+        this.transformation = new ParkingZonesTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
         const data = await this.dataSource.GetAll();
-        const transformedData = await this.pipeline.TransformDataCollection(data);
+        const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
         return transformedData;
     }

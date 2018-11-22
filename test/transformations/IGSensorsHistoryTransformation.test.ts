@@ -26,11 +26,11 @@ fs.readFileAsync = (filename) => {
 
 describe("IGSensorsHistoryTransformation", () => {
 
-    let pipeline;
+    let transformation;
     let testSourceData;
 
     beforeEach(() => {
-        pipeline = new IGSensorsHistoryTransformation();
+        transformation = new IGSensorsHistoryTransformation();
         beforeEach(async () => {
             const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
             testSourceData = JSON.parse(buffer.toString());
@@ -38,27 +38,27 @@ describe("IGSensorsHistoryTransformation", () => {
     });
 
     it("should has name", async () => {
-        expect(pipeline.name).not.to.be.undefined;
-        expect(pipeline.name).is.equal("IGSensorsHistory");
+        expect(transformation.name).not.to.be.undefined;
+        expect(transformation.name).is.equal("IGSensorsHistory");
     });
 
     it("should has TransformDataElement method", async () => {
-        expect(pipeline.TransformDataElement).not.to.be.undefined;
+        expect(transformation.TransformDataElement).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await pipeline.TransformDataElement(testSourceData.features[0]);
+        const data = await transformation.TransformDataElement(testSourceData.features[0]);
         expect(data).to.have.property("id");
         expect(data).to.have.property("sensors");
         expect(data).to.have.property("timestamp");
     });
 
     it("should has TransformDataCollection method", async () => {
-        expect(pipeline.TransformDataCollection).not.to.be.undefined;
+        expect(transformation.TransformDataCollection).not.to.be.undefined;
     });
 
     it("should properly transform collection", async () => {
-        const data = await pipeline.TransformDataCollection(testSourceData.features);
+        const data = await transformation.TransformDataCollection(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("id");
             expect(data[i]).to.have.property("sensors");

@@ -13,21 +13,21 @@ export default class ParkingsWorker {
 
     private model: ParkingsModel;
     private dataSource: TSKParkingsDataSource;
-    private pipeline: ParkingsTransformation;
+    private transformation: ParkingsTransformation;
     private historyModel: ParkingsHistoryModel;
     private historyTransformation: ParkingsHistoryTransformation;
 
     constructor() {
         this.model = new ParkingsModel();
         this.dataSource = new TSKParkingsDataSource();
-        this.pipeline = new ParkingsTransformation();
+        this.transformation = new ParkingsTransformation();
         this.historyModel = new ParkingsHistoryModel();
         this.historyTransformation = new ParkingsHistoryTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
         const data = await this.dataSource.GetAll();
-        const transformedData = await this.pipeline.TransformDataCollection(data);
+        const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
         return transformedData;
     }

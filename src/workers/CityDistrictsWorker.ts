@@ -8,17 +8,17 @@ export default class CityDistrictsWorker {
 
     private model: CityDistrictsModel;
     private dataSource: CityDistrictsDataSource;
-    private pipeline: CityDistrictsTransformation;
+    private transformation: CityDistrictsTransformation;
 
     constructor() {
         this.model = new CityDistrictsModel();
         this.dataSource = new CityDistrictsDataSource();
-        this.pipeline = new CityDistrictsTransformation();
+        this.transformation = new CityDistrictsTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
         const data = await this.dataSource.GetAll();
-        const transformedData = await this.pipeline.TransformDataCollection(data);
+        const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
         return transformedData;
     }
