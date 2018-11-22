@@ -47,5 +47,5 @@ production_deployment:
 remove_images:
   stage: clean
   script:
-    - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
+    - docker rmi -f $CONTAINER_IMAGE:$CI_PIPELINE_ID
   when: always
