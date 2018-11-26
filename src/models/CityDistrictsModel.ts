@@ -1,9 +1,9 @@
 "use strict";
 
+import { CityDistricts as schemaObject } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
-import CityDistrictsResponseSchema from "../schemas/CityDistrictsResponseSchema";
-import ISchema from "../schemas/ISchema";
+import Validator from "../helpers/Validator";
 import BaseModel from "./BaseModel";
 import IModel from "./IModel";
 
@@ -12,20 +12,19 @@ const log = require("debug")("data-platform:integration-engine");
 export default class CityDistrictsModel extends BaseModel implements IModel {
 
     public name: string;
-    public mongooseModel: mongoose.model;
-    protected schema: ISchema;
+    protected mongooseModel: mongoose.model;
+    protected validator: Validator;
 
     constructor() {
         super();
         this.name = "CityDistricts";
-        this.schema = new CityDistrictsResponseSchema("elementSchema");
-
         try {
-            this.mongooseModel = mongoose.model("CityDistricts");
+            this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
-            this.mongooseModel = mongoose.model("CityDistricts",
-                new mongoose.Schema(this.schema.schemaObject, { bufferCommands: false }));
+            this.mongooseModel = mongoose.model(this.name,
+                new mongoose.Schema(schemaObject, { bufferCommands: false }));
         }
+        this.validator = new Validator(this.name, schemaObject);
         this.searchPath = (id, multiple = false) => {
             return (multiple)
                 ? (!isNaN(Number(id))) ? { id: { $in: id } } : { slug: { $in: id } }
@@ -59,12 +58,15 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
     }
 
     /**
-     * Saves transformed element or collection to database and updates refresh timestamp.
+     * Validates and Saves transformed element or collection to database.
      *
      * @param data
      */
     public SaveToDb = async (data: any): Promise<any> => {
-        // If the data to be saved is the whole collection (contains geoJSON features)
+        // data validation
+        await this.validator.Validate(data);
+
+        // If the data to be saved is the whole collection
         if (data instanceof Array) {
             const promises = data.map((item) => {
                 return this.SaveOrUpdateOneToDb(item);

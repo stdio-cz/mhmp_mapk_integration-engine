@@ -4,53 +4,43 @@ import TSKParkingsDataSource from "../datasources/TSKParkingsDataSource";
 import CustomError from "../helpers/errors/CustomError";
 import GeocodeApi from "../helpers/GeocodeApi";
 import CityDistrictsModel from "../models/CityDistrictsModel";
-import ParkingsHistModel from "../models/ParkingsHistModel";
+import ParkingsHistoryModel from "../models/ParkingsHistoryModel";
 import ParkingsModel from "../models/ParkingsModel";
-import ParkingsHistPipeline from "../pipelines/ParkingsHistPipeline";
-import ParkingsPipeline from "../pipelines/ParkingsPipeline";
+import ParkingsHistoryTransformation from "../transformations/ParkingsHistoryTransformation";
+import ParkingsTransformation from "../transformations/ParkingsTransformation";
 
 export default class ParkingsWorker {
 
-    private parkingsModel: ParkingsModel;
-    private parkingsDataSource: TSKParkingsDataSource;
-    private parkingsPipeline: ParkingsPipeline;
-    private parkingsHistModel: ParkingsHistModel;
-    private parkingsHistPipeline: ParkingsHistPipeline;
+    private model: ParkingsModel;
+    private dataSource: TSKParkingsDataSource;
+    private transformation: ParkingsTransformation;
+    private historyModel: ParkingsHistoryModel;
+    private historyTransformation: ParkingsHistoryTransformation;
 
     constructor() {
-        this.parkingsModel = new ParkingsModel();
-        this.parkingsDataSource = new TSKParkingsDataSource();
-        this.parkingsPipeline = new ParkingsPipeline();
-        this.parkingsHistModel = new ParkingsHistModel();
-        this.parkingsHistPipeline = new ParkingsHistPipeline();
+        this.model = new ParkingsModel();
+        this.dataSource = new TSKParkingsDataSource();
+        this.transformation = new ParkingsTransformation();
+        this.historyModel = new ParkingsHistoryModel();
+        this.historyTransformation = new ParkingsHistoryTransformation();
     }
 
     public refreshDataInDB = async (): Promise<any> => {
-        const data = await this.parkingsDataSource.GetAll();
-        const transformedData = await this.parkingsPipeline.TransformDataCollection(data);
-        const isValid = await this.parkingsModel.Validate(transformedData);
-        if (!isValid) {
-            throw new CustomError("Transformed data are not valid.", true, 1011);
-        } else {
-            await this.parkingsModel.SaveToDb(transformedData);
-            return transformedData;
-        }
+        const data = await this.dataSource.GetAll();
+        const transformedData = await this.transformation.TransformDataCollection(data);
+        await this.model.SaveToDb(transformedData);
+        return transformedData;
     }
 
     public saveDataToHistory = async (data: any): Promise<any> => {
-        const transformedData = await this.parkingsHistPipeline.TransformDataCollection(data);
-        const isValid = await this.parkingsHistModel.Validate(transformedData);
-        if (!isValid) {
-            throw new CustomError("Transformed data are not valid.", true, 1011);
-        } else {
-            await this.parkingsHistModel.SaveToDb(transformedData);
-            return transformedData;
-        }
+        const transformedData = await this.historyTransformation.TransformDataCollection(data);
+        await this.historyModel.SaveToDb(transformedData);
+        return transformedData;
     }
 
     public updateAddressAndDistrict = async (data: any): Promise<any> => {
         const id = data.properties.id;
-        const dbData = await this.parkingsModel.GetOneFromModel(id);
+        const dbData = await this.model.GetOneFromModel(id);
 
         if (!dbData.properties.district
             || data.geometry.coordinates[0] !== dbData.geometry.coordinates[0]

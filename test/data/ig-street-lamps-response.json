@@ -1,0 +1,243 @@
+{
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44207951,
+                    50.09426238
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [],
+                "id": "ICE-003-042-000-001",
+                "lamppost_id": "Test001",
+                "last_dim_override": null,
+                "state": {
+                    "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
+                    "id": 2
+                },
+                "timestamp": 1542814383861
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44617926,
+                    50.1026806
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [],
+                "id": "ICE-003-042-000-002",
+                "lamppost_id": "Test002",
+                "last_dim_override": null,
+                "state": {
+                    "description": "lost connection (connection status older than 1 hour)",
+                    "id": -1
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44646894,
+                    50.10301092
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": 0,
+                "groups": [],
+                "id": "ICE-003-042-000-003",
+                "lamppost_id": "Test003",
+                "last_dim_override": 1542800571,
+                "state": {
+                    "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
+                    "id": 2
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44669425,
+                    50.10270916
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [],
+                "id": "ICE-003-042-000-004",
+                "lamppost_id": "Test004",
+                "last_dim_override": 1539768355,
+                "state": {
+                    "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
+                    "id": 2
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.4488767,
+                    50.09175111
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Kollarova St.",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-005",
+                "lamppost_id": "800215",
+                "last_dim_override": 1539768346,
+                "state": {
+                    "description": "wrong state \"off\" According to calendar the light should be \"on\" and the manual_override is greater than 0 but the light send status \"off\". When Light change its status it sends updated value to server and when accessing current state in this very moment this event occurs.",
+                    "id": 4
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44852454,
+                    50.09085781
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Karlinske  Namesti South",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-006",
+                "lamppost_id": "800861",
+                "last_dim_override": 1539768338,
+                "state": {
+                    "description": "no state (has connection and the last state received is older than 3 hours)",
+                    "id": 0
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.4495722,
+                    50.09046984
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Kollarova St.",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-007",
+                "lamppost_id": "800220",
+                "last_dim_override": 1539768205,
+                "state": {
+                    "description": "wrong state \"off\" According to calendar the light should be \"on\" and the manual_override is greater than 0 but the light send status \"off\". When Light change its status it sends updated value to server and when accessing current state in this very moment this event occurs.",
+                    "id": 4
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44712833,
+                    50.09170167
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Krizikova St.",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-008",
+                "lamppost_id": "800270",
+                "last_dim_override": 1525184422,
+                "state": {
+                    "description": "wrong state \"off\" According to calendar the light should be \"on\" and the manual_override is greater than 0 but the light send status \"off\". When Light change its status it sends updated value to server and when accessing current state in this very moment this event occurs.",
+                    "id": 4
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.4497825,
+                    50.092283
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Krizikova St.",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-009",
+                "lamppost_id": "800283",
+                "last_dim_override": 1525184422,
+                "state": {
+                    "description": "wrong state \"off\" According to calendar the light should be \"on\" and the manual_override is greater than 0 but the light send status \"off\". When Light change its status it sends updated value to server and when accessing current state in this very moment this event occurs.",
+                    "id": 4
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.45057167,
+                    50.09245537
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [
+                    "Krizikova St.",
+                    "Prague City"
+                ],
+                "id": "ICE-003-042-000-010",
+                "lamppost_id": "800287",
+                "last_dim_override": 1525184422,
+                "state": {
+                    "description": "wrong state \"off\" According to calendar the light should be \"on\" and the manual_override is greater than 0 but the light send status \"off\". When Light change its status it sends updated value to server and when accessing current state in this very moment this event occurs.",
+                    "id": 4
+                },
+                "timestamp": 1542814383862
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}

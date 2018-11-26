@@ -31,6 +31,7 @@ module.exports = {
     MONGO_CONN: process.env.MONGO_CONN,
     NODE_ENV: process.env.NODE_ENV,
     OPEN_STREET_MAP_API_URL: process.env.OPEN_STREET_MAP_API_URL,
+    PARKINGS_PAYMENT_URL: process.env.PARKINGS_PAYMENT_URL,
     RABBIT_CONN: process.env.RABBIT_CONN,
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,

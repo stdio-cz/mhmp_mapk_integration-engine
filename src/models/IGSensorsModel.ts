@@ -1,29 +1,30 @@
 "use strict";
 
+import { IGSensors as schemaObject } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
-import IGSensorsResponseSchema from "../schemas/IGSensorsResponseSchema";
-import ISchema from "../schemas/ISchema";
+import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
 import IModel from "./IModel";
 
 export default class IGSensorsModel extends GeoJsonModel implements IModel {
 
     public name: string;
-    public mongooseModel: mongoose.model;
-    protected schema: ISchema;
+    protected mongooseModel: mongoose.model;
+    protected validator: Validator;
 
     constructor() {
         super();
         this.name = "IGSensors";
-        this.schema = new IGSensorsResponseSchema("elementSchema");
+
         try {
-            this.mongooseModel = mongoose.model("IGSensors");
+            this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
-            const schema = new mongoose.Schema(this.schema.schemaObject, { bufferCommands: false });
+            const schema = new mongoose.Schema(schemaObject, { bufferCommands: false });
             // create $geonear index
             schema.index({ geometry : "2dsphere" });
-            this.mongooseModel = mongoose.model("IGSensors", schema);
+            this.mongooseModel = mongoose.model(this.name, schema);
         }
+        this.validator = new Validator(this.name, schemaObject);
     }
 
     protected updateValues = (result, item) => {

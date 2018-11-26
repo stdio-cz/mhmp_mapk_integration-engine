@@ -1,6 +1,7 @@
 "use strict";
 
-import IGSensorsDataSourceSchema from "../schemas/IGSensorsDataSourceSchema";
+import { IGSensorsDataSource as schemaObject } from "data-platform-schema-definitions";
+import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
 import JSONDataSource from "./JSONDataSource";
@@ -13,10 +14,8 @@ export default class IGSensorsDataSource extends JSONDataSource implements IData
     public name: string;
     /** The object which specifies HTTP request. */
     protected sourceRequestObject: ISourceRequest;
-    /** Schema of the incoming data.
-     * Performs validation based on this schema before any processing of the data in the app.
-     */
-    protected schema: IGSensorsDataSourceSchema;
+    /** Validation helper */
+    protected validator: Validator;
     /** Specifies where to look for the unique identifier of the object to find it in the collection. */
     protected searchPath: string;
     /** Specifies where is the collection of the individual results stored in the returned object. */
@@ -24,7 +23,7 @@ export default class IGSensorsDataSource extends JSONDataSource implements IData
 
     constructor() {
         super();
-        this.name = "IGSensors";
+        this.name = "IGSensorsDataSource";
         this.sourceRequestObject = {
             headers : {
                 Authorization: "Token " + config.datasources.IGToken,
@@ -32,7 +31,7 @@ export default class IGSensorsDataSource extends JSONDataSource implements IData
             method: "GET",
             url: config.datasources.IGSensors,
         };
-        this.schema = new IGSensorsDataSourceSchema();
+        this.validator = new Validator(this.name, schemaObject);
         this.resultsPath = "";
         this.searchPath = "ice_id";
     }

@@ -5,7 +5,9 @@ import CustomError from "./helpers/errors/CustomError";
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
+import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
+import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
 
 const amqp = require("amqplib");
 const log = require("debug")("data-platform:integration-engine");
@@ -55,6 +57,8 @@ class App {
         const parkingsQP = new ParkingsQueueProcessor(ch);
         const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
         const igsensorsQP = new IGSensorsQueueProcessor(ch);
+        const igstreetLampsQP = new IGStreetLampsQueueProcessor(ch);
+        const parkingZonesQP = new ParkingZonesQueueProcessor(ch);
         log("Connected to Queue!");
         conn.on("close", () => {
             handleError(new CustomError("Queue disconnected", false));
@@ -64,6 +68,8 @@ class App {
             parkingsQP.registerQueues(),
             cityDistrictsQP.registerQueues(),
             igsensorsQP.registerQueues(),
+            igstreetLampsQP.registerQueues(),
+            parkingZonesQP.registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

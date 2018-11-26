@@ -8,11 +8,11 @@
 - 1004: Error while updating refresh time.
 - 1005: Error while getting last refreshed time.
 - 1006: Error getting last refresh time from database.
-- 1007: Source data are not valid.
+- 1007: Validation error.
 - 1008: Source data was not found.
 - 1009: Error while removing expired ids.
 - 1010: Error while removing expired elements.
-- 1011: Transformed data are not valid.
+- 1011: 
 - 1012: Retrieving of the open street map nominatim data failed.
 - 1013: Error while getting district by coordinations.
 - 1014: Model data was not found.
