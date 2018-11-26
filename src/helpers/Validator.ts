@@ -56,7 +56,8 @@ export default class Validator {
             await modelInstance.validate();
             return true;
         } catch (error) {
-            throw new CustomError("Validation error in model: " + this.modelName, true, 1007, error);
+            throw new CustomError("Validation error in model: " + this.modelName, true,
+                this.constructor.name, 1007, error);
         }
     }
 

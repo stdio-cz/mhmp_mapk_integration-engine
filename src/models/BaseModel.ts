@@ -32,7 +32,7 @@ export default abstract class BaseModel {
         try {
             const data = await this.mongooseModel.findOne(this.searchPath(id)).exec();
             if (!data) {
-                throw new CustomError("Model data was not found.", true, 1014);
+                throw new CustomError("Model data was not found.", true, this.name, 1014);
             } else {
                 return data;
             }

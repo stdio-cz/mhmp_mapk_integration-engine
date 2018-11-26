@@ -17,7 +17,7 @@ export default abstract class JSONDataSource extends BaseDataSource {
             const body = await request(this.sourceRequestObject);
             return this.GetSubElement(this.resultsPath, JSON.parse(body));
         } catch (err) {
-            throw new CustomError("Retrieving of the source data failed.", true, 1002, err);
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
         }
     }
 

@@ -53,7 +53,7 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
             const res = await this.mongooseModel.findOne(query).exec();
             return (res) ? res.slug : null;
         } catch (err) {
-            throw new CustomError("Error while getting district by coordinations.", true, 1013, err);
+            throw new CustomError("Error while getting district by coordinations.", true, this.name, 1013, err);
         }
     }
 
@@ -120,7 +120,7 @@ export default class CityDistrictsModel extends BaseModel implements IModel {
             // Returns the item saved to the database (stripped of _id and __v)
             return result;
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 

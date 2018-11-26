@@ -20,7 +20,7 @@ export default abstract class BaseQueueProcessor {
             this.channel.assertExchange("topic_logs", "topic", {durable: false});
             this.channel.publish("topic_logs", key, new Buffer(msg));
         } catch (err) {
-            throw new CustomError("Sending the message to exchange failed.", true, 1001, err);
+            throw new CustomError("Sending the message to exchange failed.", true, this.constructor.name, 1001, err);
         }
     }
 

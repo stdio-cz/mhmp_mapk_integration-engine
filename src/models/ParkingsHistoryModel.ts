@@ -65,7 +65,7 @@ export default class ParkingsHistoryModel extends BaseModel implements IModel {
             // Returns the item saved to the database (stripped of _id and __v)
             return result;
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 

@@ -51,7 +51,7 @@ export default class ParkingsWorker {
                 dbData.properties.district = result;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
             }
         }
 
@@ -64,7 +64,7 @@ export default class ParkingsWorker {
                 dbData.properties.address = address;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating adress.", true, 1016, err);
+                throw new CustomError("Error while updating adress.", true, this.constructor.name, 1016, err);
             }
         }
         return dbData;

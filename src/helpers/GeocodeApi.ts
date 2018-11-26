@@ -50,7 +50,8 @@ class GeocodeApi {
             address += resultAddr.country;
             return address;
         } catch (err) {
-            throw new CustomError("Retrieving of the open street map nominatim data failed.", true, 1012, err);
+            throw new CustomError("Retrieving of the open street map nominatim data failed.", true,
+                this.constructor.name, 1012, err);
         }
     }
 

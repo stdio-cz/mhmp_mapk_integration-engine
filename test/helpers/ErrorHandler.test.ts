@@ -33,7 +33,7 @@ describe("ErrorHandler", () => {
     });
 
     it("should handle operational error", async () => {
-        handleError(new CustomError("Test", true, 1));
+        handleError(new CustomError("Test", true, "TestError", 1));
         sinon.assert.notCalled(exitStub);
     });
 
