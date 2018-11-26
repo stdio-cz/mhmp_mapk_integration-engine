@@ -27,8 +27,10 @@ registry_deployment:
     - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
     - docker logout $DOCKER_REGISTRY_URL
   only:
-    refs:
-      - master
+    variables:
+      - $CI_COMMIT_REF_NAME == "master"
+      - $DOCKER_REGISTRY == "true"
+
       
 production_deployment:
   stage: deploy
