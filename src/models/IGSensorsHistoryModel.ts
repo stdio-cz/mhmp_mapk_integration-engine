@@ -12,7 +12,7 @@ const log = require("debug")("data-platform:integration-engine");
 export default class IGSensorsHistoryModel extends BaseModel implements IModel {
 
     public name: string;
-    protected mongooseModel: mongoose.model;
+    protected mongooseModel: mongoose.Model<any>;
     protected validator: Validator;
 
     constructor() {
@@ -65,7 +65,7 @@ export default class IGSensorsHistoryModel extends BaseModel implements IModel {
             // Returns the item saved to the database (stripped of _id and __v)
             return result;
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 

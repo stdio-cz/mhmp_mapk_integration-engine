@@ -50,7 +50,7 @@ export default class ParkingZonesDataSource extends JSONDataSource implements ID
             });
             return filteredResult;
         } catch (err) {
-            throw new CustomError("Retrieving of the source data failed.", true, 1002, err);
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
         }
     }
 

@@ -20,6 +20,7 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
+            log("Configuration loaded: " + JSON.stringify(config));
             await this.database();
             await this.queueProcessors();
             log("Started!");

@@ -10,7 +10,7 @@ const log = require("debug")("data-platform:integration-engine");
 export default abstract class GeoJsonModel extends BaseModel {
 
     /** The Mongoose Model */
-    protected abstract mongooseModel: mongoose.model;
+    protected abstract mongooseModel: mongoose.Model<any>;
     /** Updates values of the object which is already in DB */
     protected abstract updateValues;
     /** Validation helper */
@@ -74,7 +74,7 @@ export default abstract class GeoJsonModel extends BaseModel {
             // Returns the item saved to the database (stripped of _id and __v)
             return result;
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 

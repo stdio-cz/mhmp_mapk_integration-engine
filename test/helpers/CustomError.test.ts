@@ -19,6 +19,7 @@ describe("CustomError", () => {
     let error2: CustomError;
     let error3: CustomError;
     let error4: CustomError;
+    let error5: CustomError;
     let tmpNodeEnv;
 
     before(() => {
@@ -33,25 +34,31 @@ describe("CustomError", () => {
     beforeEach(() => {
         error1 = new CustomError("Test error");
         error2 = new CustomError("Test error", true);
-        error3 = new CustomError("Test error", true, 3);
-        error4 = new CustomError("Test error", true, 4, "Additional info");
+        error3 = new CustomError("Test error", true, "TestError");
+        error4 = new CustomError("Test error", true, "TestError", 4);
+        error5 = new CustomError("Test error", true, "TestError", 5, "Additional info");
     });
 
     it("should properly returns error description as string", async () => {
         expect(error1.toString()).to.be.equal("Test error");
         expect(error2.toString()).to.be.equal("Test error");
-        expect(error3.toString()).to.be.equal("[3] Test error");
-        expect(error4.toString()).to.be.equal("[4] Test error (Additional info)");
+        expect(error3.toString()).to.be.equal("\"TestError\" Test error");
+        expect(error4.toString()).to.be.equal("\"TestError\" [4] Test error");
+        expect(error5.toString()).to.be.equal("\"TestError\" [5] Test error (Additional info)");
     });
 
     it("should properly returns error description as object", async () => {
         expect(error1.toObject()).to.have.property("error_message");
         expect(error2.toObject()).to.have.property("error_message");
         expect(error3.toObject()).to.have.property("error_message");
-        expect(error3.toObject()).to.have.property("error_code");
+        expect(error3.toObject()).to.have.property("error_class_name");
         expect(error4.toObject()).to.have.property("error_message");
+        expect(error4.toObject()).to.have.property("error_class_name");
         expect(error4.toObject()).to.have.property("error_code");
-        expect(error4.toObject()).to.have.property("error_info");
+        expect(error5.toObject()).to.have.property("error_message");
+        expect(error5.toObject()).to.have.property("error_class_name");
+        expect(error5.toObject()).to.have.property("error_code");
+        expect(error5.toObject()).to.have.property("error_info");
     });
 
 });

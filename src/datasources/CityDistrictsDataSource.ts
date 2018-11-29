@@ -54,7 +54,7 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
                 || slug(item.properties.NAZEV_MC, { lower: true }) === inId;
         });
         if (!res) { // If the object with given ID was not found, throw error
-            throw new CustomError("Source data was not found.", true, 1008);
+            throw new CustomError("Source data was not found.", true, this.name, 1008);
         } else { // Return the found object
             return res;
         }
