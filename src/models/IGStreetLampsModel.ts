@@ -9,7 +9,7 @@ import IModel from "./IModel";
 export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
 
     public name: string;
-    protected mongooseModel: mongoose.model;
+    protected mongooseModel: mongoose.Model<any>;
     protected validator: Validator;
 
     constructor() {

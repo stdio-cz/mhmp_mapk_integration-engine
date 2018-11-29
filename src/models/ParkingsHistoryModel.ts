@@ -12,7 +12,7 @@ const log = require("debug")("data-platform:integration-engine");
 export default class ParkingsHistoryModel extends BaseModel implements IModel {
 
     public name: string;
-    protected mongooseModel: mongoose.model;
+    protected mongooseModel: mongoose.Model<any>;
     protected validator: Validator;
 
     constructor() {

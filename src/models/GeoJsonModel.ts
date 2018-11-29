@@ -10,7 +10,7 @@ const log = require("debug")("data-platform:integration-engine");
 export default abstract class GeoJsonModel extends BaseModel {
 
     /** The Mongoose Model */
-    protected abstract mongooseModel: mongoose.model;
+    protected abstract mongooseModel: mongoose.Model<any>;
     /** Updates values of the object which is already in DB */
     protected abstract updateValues;
     /** Validation helper */

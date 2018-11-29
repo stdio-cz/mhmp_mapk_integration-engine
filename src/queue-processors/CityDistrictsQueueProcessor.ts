@@ -14,8 +14,8 @@ export default class CityDistrictsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("city-districts-refreshDataInDB",
-            "*.city-districts.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("tmp-city-districts-refreshDataInDB",
+            "*.tmp-city-districts.refreshDataInDB", this.refreshDataInDB);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<any> => {

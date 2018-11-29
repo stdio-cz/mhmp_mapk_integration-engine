@@ -11,7 +11,7 @@ export default abstract class BaseModel {
     /** Saves transformed element or collection to database and updates refresh timestamp. */
     public abstract SaveToDb;
     /** The Mongoose Model */
-    protected abstract mongooseModel: mongoose.model;
+    protected abstract mongooseModel: mongoose.Model<any>;
     /** Validation helper */
     protected abstract validator: Validator;
     /** Path where to look for ID - identifier to search by */

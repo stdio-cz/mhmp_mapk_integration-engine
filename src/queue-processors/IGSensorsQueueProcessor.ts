@@ -14,10 +14,10 @@ export default class IGSensorsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("igsensors-refreshDataInDB",
-            "*.igsensors.refreshDataInDB", this.refreshDataInDB);
-        await this.registerQueue("igsensors-saveDataToHistory",
-            "*.igsensors.saveDataToHistory", this.saveDataToHistory);
+        await this.registerQueue("tmp-igsensors-refreshDataInDB",
+            "*.tmp-igsensors.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("tmp-igsensors-saveDataToHistory",
+            "*.tmp-igsensors.saveDataToHistory", this.saveDataToHistory);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
@@ -27,7 +27,7 @@ export default class IGSensorsQueueProcessor extends BaseQueueProcessor {
             const res = await igsensorsWorker.refreshDataInDB();
 
             // historization
-            await this.sendMessageToExchange("workers.igsensors.saveDataToHistory", JSON.stringify(res.features));
+            await this.sendMessageToExchange("workers.tmp-igsensors.saveDataToHistory", JSON.stringify(res.features));
 
             this.channel.ack(msg);
             log(" [<] igsensors-refreshDataInDB: done");
