@@ -4,12 +4,12 @@ import { IGSensorsHistory as schemaObject } from "data-platform-schema-definitio
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
-import BaseModel from "./BaseModel";
 import IModel from "./IModel";
+import MongoModel from "./MongoModel";
 
 const log = require("debug")("data-platform:integration-engine");
 
-export default class IGSensorsHistoryModel extends BaseModel implements IModel {
+export default class IGSensorsHistoryModel extends MongoModel implements IModel {
 
     public name: string;
     protected mongooseModel: mongoose.Model<any>;

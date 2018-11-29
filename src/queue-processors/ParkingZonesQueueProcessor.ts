@@ -14,8 +14,8 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("tmp-parking-zones-refreshDataInDB",
-            "*.tmp-parking-zones.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("parking-zones-refreshDataInDB",
+            "*.parking-zones.refreshDataInDB", this.refreshDataInDB);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<any> => {

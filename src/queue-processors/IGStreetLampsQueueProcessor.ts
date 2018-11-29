@@ -14,8 +14,8 @@ export default class IGStreetLampsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("tmp-igstreet-lamps-refreshDataInDB",
-            "*.tmp-igstreet-lamps.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("igstreet-lamps-refreshDataInDB",
+            "*.igstreet-lamps.refreshDataInDB", this.refreshDataInDB);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {

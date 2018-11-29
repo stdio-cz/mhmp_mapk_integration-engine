@@ -3,11 +3,11 @@
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
-import BaseModel from "./BaseModel";
+import MongoModel from "./MongoModel";
 
 const log = require("debug")("data-platform:integration-engine");
 
-export default abstract class GeoJsonModel extends BaseModel {
+export default abstract class GeoJsonModel extends MongoModel {
 
     /** The Mongoose Model */
     protected abstract mongooseModel: mongoose.Model<any>;

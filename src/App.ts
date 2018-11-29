@@ -8,8 +8,9 @@ import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor"
 import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
+import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
-const amqp = require("amqplib");
+const { amqpChannel } = require("./helpers/AMQPConnector");
 const log = require("debug")("data-platform:integration-engine");
 const config = require("./config/ConfigLoader");
 
@@ -53,17 +54,14 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const conn = await amqp.connect(config.RABBIT_CONN);
-        const ch = await conn.createChannel();
+        // TODO pouzivat channel primo v QP
+        const ch = await amqpChannel;
         const parkingsQP = new ParkingsQueueProcessor(ch);
         const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
         const igsensorsQP = new IGSensorsQueueProcessor(ch);
         const igstreetLampsQP = new IGStreetLampsQueueProcessor(ch);
         const parkingZonesQP = new ParkingZonesQueueProcessor(ch);
-        log("Connected to Queue!");
-        conn.on("close", () => {
-            handleError(new CustomError("Queue disconnected", false));
-        });
+        const vehiclePositionsQP = new VehiclePositionsQueueProcessor(ch);
 
         await Promise.all([
             parkingsQP.registerQueues(),
@@ -71,6 +69,7 @@ class App {
             igsensorsQP.registerQueues(),
             igstreetLampsQP.registerQueues(),
             parkingZonesQP.registerQueues(),
+            vehiclePositionsQP.registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

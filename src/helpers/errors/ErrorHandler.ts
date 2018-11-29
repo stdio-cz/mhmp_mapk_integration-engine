@@ -12,7 +12,7 @@ class ErrorHandler {
             errorLog(err.toString());
             return err.toObject();
         } else { // Unexpected non-operational error, handle it!
-            errorLog(err);
+            errorLog(err.toString() || err);
             process.exit(0); // if anything fails, process is killed
         }
 
