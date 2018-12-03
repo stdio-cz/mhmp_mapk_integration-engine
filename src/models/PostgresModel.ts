@@ -25,8 +25,7 @@ export default abstract class PostgresModel extends BaseModel {
      */
     public SaveToDb = async (data: any): Promise<any> => {
         // data validation
-        // TODO
-        // await this.validator.Validate(data.features);
+        await this.validator.Validate(data);
 
         try {
             // TODO je to tady dobre?
