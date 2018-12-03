@@ -20,29 +20,44 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             const attributes = element.$;
             const stops = element.zast;
 
+            // creating startDate and timestamp from zast[0].prij and cpoz
+            const startDate = new Date();
+            let startDatePlain = stops[0].$.prij || stops[0].$.odj;
+            startDatePlain = startDatePlain.split(":");
+            startDate.setHours(parseInt(startDatePlain[0], 10));
+            startDate.setMinutes(parseInt(startDatePlain[1], 10));
+            startDate.setSeconds(0);
+            startDate.setMilliseconds(0);
+            const timestamp = new Date();
+            const timestampPlain = attributes.cpoz.split(":");
+            timestamp.setHours(parseInt(timestampPlain[0], 10));
+            timestamp.setMinutes(parseInt(timestampPlain[1], 10));
+            timestamp.setSeconds(parseInt(timestampPlain[2], 10));
+            timestamp.setMilliseconds(0);
+
+            // check if vehicle has arrivals to stops over midnight
+            if (startDate.getHours() - timestamp.getHours() > 12) {
+                timestamp.setDate(timestamp.getDate() + 1);
+            }
+
             const res = {
                 stops: [],
                 trip: {
-                    line: attributes.lin,
+                    delay_stop_arrival: parseInt(attributes.zpoz_prij, 10),
+                    delay_stop_departure: parseInt(attributes.zpoz_odj, 10),
+                    is_canceled: (attributes.zrus === "true") ? true : false,
+                    is_low_floor: (attributes.np === "true") ? true : false,
+                    last_stop_id_cis: parseInt(attributes.zast, 10),
+                    lat: parseFloat(attributes.lat),
+                    line: parseInt(attributes.lin, 10),
+                    lng: parseFloat(attributes.lng),
+                    route_id_cis: parseInt(attributes.spoj, 10),
+                    route_number: parseInt(attributes.po, 10),
                     route_short_name: attributes.alias,
-                    route_id_cis: attributes.spoj,
-                    route_number: attributes.po,
-                    is_low_floor: attributes.np,
-                    type: attributes.t,
-                    is_canceled: attributes.zrus,
-                    lat: attributes.lat,
-                    lng: attributes.lng,
-                    timestamp: attributes.cpoz,
-                    // Převod na timestamp (pozor, čas 23:59 který přišel v 0:01 bude mít včerejší datum!)
-                    po: attributes.po,
-                    last_stop_id_cis: attributes.zast,
-                    delay_stop_arrival: attributes.zpoz_prij,
-                    delay_stop_departure: attributes.zpoz_odj,
-
-                    // TODO
-                    created: null, // Metadata - čas vytvoření záznamu
-                    trip_id: null, // prázdné, bude dohledáno workerem
-                    last_modify: null, // Metadata - čas poslední úpravy
+                    start_date: startDate.toUTCString(),
+                    timestamp: timestamp.toUTCString(),
+                    tracking: parseInt(attributes.sled, 10),
+                    type: parseInt(attributes.t, 10),
                 },
             };
 
@@ -51,21 +66,48 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 if (stops.length === i) {
                     return cb();
                 }
-                res.stops.push({
-                    stop_id_cis: stops[i].$.zast,
-                    stop_platform: stops[i].$.stan,
-                    time_arrival: stops[i].$.prij,
-                    // ^- Převod na timestamp (pozor, čas 23:59 který přišel v 0:01 bude mít včerejší datum!)
-                    time_departure: stops[i].$.odj,
-                    // ^- Převod na timestamp (pozor, čas 23:59 který přišel v 0:01 bude mít včerejší datum!)
-                    delay_type: stops[i].$.zpoz_typ,
-                    delay_arrival: stops[i].$.zpoz_prij,
-                    delay_departure: stops[i].$.zpoz_odj,
-                    line: attributes.lin,
-                    connection: attributes.spoj,
+                let arrival;
+                let departure;
 
-                    // TODO
-                    created: null, // Metadata - čas vytvoření záznamu
+                // creating arival from stops[i].$.prij
+                if (stops[i].$.prij !== "") {
+                    arrival = new Date();
+                    const arrivalPlain = stops[i].$.prij.split(":");
+                    arrival.setHours(parseInt(arrivalPlain[0], 10));
+                    arrival.setMinutes(parseInt(arrivalPlain[1], 10));
+                    arrival.setSeconds(0);
+                    arrival.setMilliseconds(0);
+                    // check if vehicle has arrivals to stops over midnight
+                    if (startDate.getHours() - arrival.getHours() > 12) {
+                        arrival.setDate(arrival.getDate() + 1);
+                    }
+                }
+                // creating departure from stops[i].$.odj
+                if (stops[i].$.odj !== "") {
+                    departure = new Date();
+                    const departurePlain = stops[i].$.odj.split(":");
+                    departure.setHours(parseInt(departurePlain[0], 10));
+                    departure.setMinutes(parseInt(departurePlain[1], 10));
+                    departure.setSeconds(0);
+                    departure.setMilliseconds(0);
+                    // check if vehicle has arrivals to stops over midnight
+                    if (startDate.getHours() - departure.getHours() > 12) {
+                        departure.setDate(departure.getDate() + 1);
+                    }
+                }
+
+                res.stops.push({
+                    connection: parseInt(attributes.spoj, 10),
+                    delay_arrival: parseInt(stops[i].$.zpoz_prij, 10),
+                    delay_departure: parseInt(stops[i].$.zpoz_odj, 10),
+                    delay_type: parseInt(stops[i].$.zpoz_typ, 10),
+                    line: parseInt(attributes.lin, 10),
+                    stop_id_cis: parseInt(stops[i].$.zast, 10),
+                    stop_order: i,
+                    stop_platform: stops[i].$.stan,
+                    time_arrival: (arrival) ? arrival.toUTCString() : null,
+                    time_departure: (departure) ? departure.toUTCString() : null,
+                    timestamp: timestamp.toUTCString(),
                 });
                 setImmediate(stopsIterator.bind(null, i + 1, cb));
             };

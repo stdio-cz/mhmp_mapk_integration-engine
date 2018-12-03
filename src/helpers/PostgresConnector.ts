@@ -15,6 +15,8 @@ class MySequelize {
                 define: {
                     timestamps: false,
                 },
+                logging: require("debug")("sequelize"), // logging by debug
+                operatorsAliases: false, // disable aliases
                 pool: {
                     acquire: 60000,
                     idle: 30000,

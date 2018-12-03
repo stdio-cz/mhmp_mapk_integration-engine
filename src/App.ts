@@ -1,7 +1,5 @@
 "use strict";
 
-import mongoose = require("mongoose");
-import CustomError from "./helpers/errors/CustomError";
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
@@ -11,6 +9,8 @@ import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProc
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
 const { amqpChannel } = require("./helpers/AMQPConnector");
+const { mongooseConnection } = require("./helpers/MongoConnector");
+const { sequelizeConnection } = require("./helpers/PostgresConnector");
 const log = require("debug")("data-platform:integration-engine");
 const config = require("./config/ConfigLoader");
 
@@ -34,19 +34,8 @@ class App {
      * Starts the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
-        await mongoose.connect(config.MONGO_CONN, {
-            autoReconnect: true,
-            bufferMaxEntries: 0,
-            reconnectInterval: 5000, // Reconnect every 5s
-            reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-            useCreateIndex: true,
-            useFindAndModify: false,
-            useNewUrlParser: true,
-        });
-        log("Connected to DB!");
-        mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false));
-        });
+        await mongooseConnection;
+        await sequelizeConnection;
     }
 
     /**
@@ -54,22 +43,14 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        // TODO pouzivat channel primo v QP
         const ch = await amqpChannel;
-        const parkingsQP = new ParkingsQueueProcessor(ch);
-        const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
-        const igsensorsQP = new IGSensorsQueueProcessor(ch);
-        const igstreetLampsQP = new IGStreetLampsQueueProcessor(ch);
-        const parkingZonesQP = new ParkingZonesQueueProcessor(ch);
-        const vehiclePositionsQP = new VehiclePositionsQueueProcessor(ch);
-
         await Promise.all([
-            parkingsQP.registerQueues(),
-            cityDistrictsQP.registerQueues(),
-            igsensorsQP.registerQueues(),
-            igstreetLampsQP.registerQueues(),
-            parkingZonesQP.registerQueues(),
-            vehiclePositionsQP.registerQueues(),
+            new ParkingsQueueProcessor(ch).registerQueues(),
+            new CityDistrictsQueueProcessor(ch).registerQueues(),
+            new IGSensorsQueueProcessor(ch).registerQueues(),
+            new IGStreetLampsQueueProcessor(ch).registerQueues(),
+            new ParkingZonesQueueProcessor(ch).registerQueues(),
+            new VehiclePositionsQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors
         ]);
     }
