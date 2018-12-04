@@ -1,6 +1,6 @@
 "use strict";
 
-import { IGSensorsHistory as schemaObject } from "data-platform-schema-definitions";
+import { IceGateways } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
@@ -23,9 +23,9 @@ export default class IGSensorsHistoryModel extends MongoModel implements IModel 
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             this.mongooseModel = mongoose.model(this.name,
-                new mongoose.Schema(schemaObject, { bufferCommands: false }));
+                new mongoose.Schema(IceGateways.sensors.history.outputMongooseSchemaObject, { bufferCommands: false }));
         }
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, IceGateways.sensors.history.outputMongooseSchemaObject);
     }
 
     /**

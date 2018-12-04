@@ -1,6 +1,6 @@
 "use strict";
 
-import { IGStreetLampsDataSource as schemaObject } from "data-platform-schema-definitions";
+import { IceGateways } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
@@ -31,7 +31,7 @@ export default class IGStreetLampsDataSource extends JSONDataSource implements I
             method: "GET",
             url: config.datasources.IGStreetLamps,
         };
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, IceGateways.streetLamps.datasourceMongooseSchemaObject);
         this.resultsPath = "";
         this.searchPath = "ice_id";
     }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts as schemaObject } from "data-platform-schema-definitions";
+import { CityDistricts } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
@@ -22,9 +22,9 @@ export default class CityDistrictsModel extends MongoModel implements IModel {
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             this.mongooseModel = mongoose.model(this.name,
-                new mongoose.Schema(schemaObject, { bufferCommands: false }));
+                new mongoose.Schema(CityDistricts.outputMongooseSchemaObject, { bufferCommands: false }));
         }
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, CityDistricts.outputMongooseSchemaObject);
         this.searchPath = (id, multiple = false) => {
             return (multiple)
                 ? (!isNaN(Number(id))) ? { id: { $in: id } } : { slug: { $in: id } }

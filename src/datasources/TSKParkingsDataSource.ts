@@ -1,6 +1,6 @@
 "use strict";
 
-import { TSKParkingsDataSource as schemaObject } from "data-platform-schema-definitions";
+import { Parkings } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
@@ -29,7 +29,7 @@ export default class TSKParkingsDataSource extends JSONDataSource implements IDa
             method: "GET",
             url: config.datasources.TSKParkings,
         };
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, Parkings.datasourceMongooseSchemaObject);
         this.resultsPath = "results";
         this.searchPath = "id";
     }

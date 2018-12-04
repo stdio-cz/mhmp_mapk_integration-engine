@@ -19,7 +19,7 @@ describe("Validator", () => {
     let testData: object;
 
     beforeEach(() => {
-        validator = new Validator("CityDistricts", CityDistricts);
+        validator = new Validator("CityDistricts", CityDistricts.outputMongooseSchemaObject);
         testData = [{
             id: 547310,
             name: "Praha-Čakovice",
