@@ -1,6 +1,6 @@
 "use strict";
 
-import { IceGateways } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
@@ -31,7 +31,7 @@ export default class IGSensorsDataSource extends JSONDataSource implements IData
             method: "GET",
             url: config.datasources.IGSensors,
         };
-        this.validator = new Validator(this.name, IceGateways.sensors.datasourceMongooseSchemaObject);
+        this.validator = new Validator(this.name, IceGatewaySensors.datasourceMongooseSchemaObject);
         this.resultsPath = "";
         this.searchPath = "ice_id";
     }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { IceGateways } from "data-platform-schema-definitions";
+import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
@@ -20,12 +20,12 @@ export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             const schema = new mongoose.Schema(
-                IceGateways.streetLamps.outputMongooseSchemaObject, { bufferCommands: false });
+                IceGatewayStreetLamps.outputMongooseSchemaObject, { bufferCommands: false });
             // create $geonear index
             schema.index({ geometry : "2dsphere" });
             this.mongooseModel = mongoose.model(this.name, schema);
         }
-        this.validator = new Validator(this.name, IceGateways.streetLamps.outputMongooseSchemaObject);
+        this.validator = new Validator(this.name, IceGatewayStreetLamps.outputMongooseSchemaObject);
     }
 
     protected updateValues = (result, item) => {
