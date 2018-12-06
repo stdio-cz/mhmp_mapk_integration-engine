@@ -29,12 +29,10 @@ describe("IGStreetLampsTransformation", () => {
     let transformation;
     let testSourceData;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         transformation = new IGStreetLampsTransformation();
-        beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/ig-street-lamps-datasource.json");
-            testSourceData = JSON.parse(buffer.toString());
-        });
+        const buffer = await fs.readFileAsync(__dirname + "/../data/ig-street-lamps-datasource.json");
+        testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {

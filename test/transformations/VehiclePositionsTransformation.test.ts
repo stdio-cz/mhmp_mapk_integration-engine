@@ -29,12 +29,10 @@ describe("VehiclePositionsTransformation", () => {
     let transformation;
     let testSourceData;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         transformation = new VehiclePositionsTransformation();
-        beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/vehicle-positions-input.json");
-            testSourceData = JSON.parse(buffer.toString());
-        });
+        const buffer = await fs.readFileAsync(__dirname + "/../data/vehicle-positions-input.json");
+        testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {

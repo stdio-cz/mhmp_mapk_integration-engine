@@ -6,6 +6,7 @@ import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor"
 import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
+import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
 const { amqpChannel } = require("./helpers/AMQPConnector");
@@ -51,6 +52,7 @@ class App {
             new IGStreetLampsQueueProcessor(ch).registerQueues(),
             new ParkingZonesQueueProcessor(ch).registerQueues(),
             new VehiclePositionsQueueProcessor(ch).registerQueues(),
+            new RopidGTFSQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

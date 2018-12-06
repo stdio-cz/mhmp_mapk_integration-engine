@@ -12,7 +12,7 @@
 - 1008: Source data was not found.
 - 1009: Error while removing expired ids.
 - 1010: Error while removing expired elements.
-- 1011: 
+- 1011: Error while truncating data.
 - 1012: Retrieving of the open street map nominatim data failed.
 - 1013: Error while getting district by coordinations.
 - 1014: Model data was not found.

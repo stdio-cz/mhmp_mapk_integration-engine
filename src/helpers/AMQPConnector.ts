@@ -10,15 +10,21 @@ const log = require("debug")("data-platform:integration-engine");
 
 class MyAMQP {
 
+    private channel: amqplib.Channel;
+
     public connect = async (): Promise<amqplib.Channel|undefined> => {
         try {
+            if (this.channel) {
+                return this.channel;
+            }
+
             const conn = await amqp.connect(config.RABBIT_CONN);
-            const channel = await conn.createChannel();
+            this.channel = await conn.createChannel();
             log("Connected to Queue!");
             conn.on("close", () => {
                 handleError(new CustomError("Queue disconnected", false));
             });
-            return channel;
+            return this.channel;
         } catch (err) {
             handleError(new CustomError("Error while creating AMQP Channel.", false,
                 this.constructor.name, undefined, err));
