@@ -4,12 +4,12 @@ import { CityDistricts as schemaObject } from "data-platform-schema-definitions"
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
-import BaseModel from "./BaseModel";
 import IModel from "./IModel";
+import MongoModel from "./MongoModel";
 
 const log = require("debug")("data-platform:integration-engine");
 
-export default class CityDistrictsModel extends BaseModel implements IModel {
+export default class CityDistrictsModel extends MongoModel implements IModel {
 
     public name: string;
     protected mongooseModel: mongoose.Model<any>;

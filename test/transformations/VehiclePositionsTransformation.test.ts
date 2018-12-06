@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import ParkingsHistoryTransformation from "../../src/transformations/ParkingsHistoryTransformation";
+import VehiclePositionsTransformation from "../../src/transformations/VehiclePositionsTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,20 +24,20 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("ParkingsHistoryTransformation", () => {
+describe("VehiclePositionsTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new ParkingsHistoryTransformation();
-        const buffer = await fs.readFileAsync(__dirname + "/../data/parkings-response.json");
+        transformation = new VehiclePositionsTransformation();
+        const buffer = await fs.readFileAsync(__dirname + "/../data/vehicle-positions-input.json");
         testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("ParkingsHistory");
+        expect(transformation.name).is.equal("VehiclePositions");
     });
 
     it("should has TransformDataElement method", async () => {
@@ -45,26 +45,20 @@ describe("ParkingsHistoryTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData.features[0]);
-        expect(data).to.have.property("id");
-        expect(data).to.have.property("num_of_free_places");
-        expect(data).to.have.property("num_of_taken_places");
-        expect(data).to.have.property("timestamp");
-        expect(data).to.have.property("total_num_of_places");
-    });
+        const data = await transformation.TransformDataElement(testSourceData.m.spoj[0]);
+        expect(data).to.have.property("stops");
+        expect(data).to.have.property("trip");
+});
 
     it("should has TransformDataCollection method", async () => {
         expect(transformation.TransformDataCollection).not.to.be.undefined;
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData.features);
+        const data = await transformation.TransformDataCollection(testSourceData.m.spoj);
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("id");
-            expect(data[i]).to.have.property("num_of_free_places");
-            expect(data[i]).to.have.property("num_of_taken_places");
-            expect(data[i]).to.have.property("timestamp");
-            expect(data[i]).to.have.property("total_num_of_places");
+            expect(data[i]).to.have.property("stops");
+            expect(data[i]).to.have.property("trips");
         }
     });
 

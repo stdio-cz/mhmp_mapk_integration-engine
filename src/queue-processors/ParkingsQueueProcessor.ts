@@ -14,12 +14,12 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("tmp-parkings-refreshDataInDB",
-            "*.tmp-parkings.refreshDataInDB", this.refreshDataInDB);
-        await this.registerQueue("tmp-parkings-saveDataToHistory",
-            "*.tmp-parkings.saveDataToHistory", this.saveDataToHistory);
-        await this.registerQueue("tmp-parkings-updateAddressAndDistrict",
-            "*.tmp-parkings.updateAddressAndDistrict", this.updateAddressAndDistrict);
+        await this.registerQueue("parkings-refreshDataInDB",
+            "*.parkings.refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue("parkings-saveDataToHistory",
+            "*.parkings.saveDataToHistory", this.saveDataToHistory);
+        await this.registerQueue("parkings-updateAddressAndDistrict",
+            "*.parkings.updateAddressAndDistrict", this.updateAddressAndDistrict);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
@@ -29,13 +29,13 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             const res = await parkingsWorker.refreshDataInDB();
 
             // historization
-            await this.sendMessageToExchange("workers.tmp-parkings.saveDataToHistory", JSON.stringify(res.features));
+            await this.sendMessageToExchange("workers.parkings.saveDataToHistory", JSON.stringify(res.features));
 
             // TODO promyslet jestli je to spravne nebo to dat nekam jinam
             // updating district and address by JS Closure
             const parkings = res.features;
             const promises = parkings.map((p) => {
-                this.sendMessageToExchange("workers.tmp-parkings.updateAddressAndDistrict",
+                this.sendMessageToExchange("workers.parkings.updateAddressAndDistrict",
                     JSON.stringify(p));
             });
             await Promise.all(promises);

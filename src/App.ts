@@ -1,15 +1,17 @@
 "use strict";
 
-import mongoose = require("mongoose");
-import CustomError from "./helpers/errors/CustomError";
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
 import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
+import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
+import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
-const amqp = require("amqplib");
+const { amqpChannel } = require("./helpers/AMQPConnector");
+const { mongooseConnection } = require("./helpers/MongoConnector");
+const { sequelizeConnection } = require("./helpers/PostgresConnector");
 const log = require("debug")("data-platform:integration-engine");
 const config = require("./config/ConfigLoader");
 
@@ -33,19 +35,8 @@ class App {
      * Starts the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
-        await mongoose.connect(config.MONGO_CONN, {
-            autoReconnect: true,
-            bufferMaxEntries: 0,
-            reconnectInterval: 5000, // Reconnect every 5s
-            reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-            useCreateIndex: true,
-            useFindAndModify: false,
-            useNewUrlParser: true,
-        });
-        log("Connected to DB!");
-        mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false));
-        });
+        await mongooseConnection;
+        await sequelizeConnection;
     }
 
     /**
@@ -53,24 +44,15 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const conn = await amqp.connect(config.RABBIT_CONN);
-        const ch = await conn.createChannel();
-        const parkingsQP = new ParkingsQueueProcessor(ch);
-        const cityDistrictsQP = new CityDistrictsQueueProcessor(ch);
-        const igsensorsQP = new IGSensorsQueueProcessor(ch);
-        const igstreetLampsQP = new IGStreetLampsQueueProcessor(ch);
-        const parkingZonesQP = new ParkingZonesQueueProcessor(ch);
-        log("Connected to Queue!");
-        conn.on("close", () => {
-            handleError(new CustomError("Queue disconnected", false));
-        });
-
+        const ch = await amqpChannel;
         await Promise.all([
-            parkingsQP.registerQueues(),
-            cityDistrictsQP.registerQueues(),
-            igsensorsQP.registerQueues(),
-            igstreetLampsQP.registerQueues(),
-            parkingZonesQP.registerQueues(),
+            new ParkingsQueueProcessor(ch).registerQueues(),
+            new CityDistrictsQueueProcessor(ch).registerQueues(),
+            new IGSensorsQueueProcessor(ch).registerQueues(),
+            new IGStreetLampsQueueProcessor(ch).registerQueues(),
+            new ParkingZonesQueueProcessor(ch).registerQueues(),
+            new VehiclePositionsQueueProcessor(ch).registerQueues(),
+            new RopidGTFSQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors
         ]);
     }
