@@ -16,13 +16,18 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
      * Transforms data from data source to output format (JSON)
      */
     public TransformDataElement = async (element): Promise<any> => {
+        // console.log(JSON.stringify(element))
         return new Promise((resolve, reject) => {
             const attributes = element.$;
             const stops = element.zast;
 
+            if (!attributes.cpoz) {
+                resolve(null);
+            }
+
             // creating startDate and timestamp from zast[0].prij and cpoz
             const startDate = new Date();
-            let startDatePlain = stops[0].$.prij || stops[0].$.odj;
+            let startDatePlain = (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj;
             startDatePlain = startDatePlain.split(":");
             startDate.setHours(parseInt(startDatePlain[0], 10));
             startDate.setMinutes(parseInt(startDatePlain[1], 10));
@@ -43,21 +48,35 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             const res = {
                 stops: [],
                 trip: {
-                    delay_stop_arrival: parseInt(attributes.zpoz_prij, 10),
-                    delay_stop_departure: parseInt(attributes.zpoz_odj, 10),
+                    delay_stop_arrival: (attributes.zpoz_prij)
+                        ? parseInt(attributes.zpoz_prij, 10)
+                        : null,
+                    delay_stop_departure: (attributes.zpoz_odj)
+                        ? parseInt(attributes.zpoz_odj, 10)
+                        : null,
                     is_canceled: (attributes.zrus === "true") ? true : false,
                     is_low_floor: (attributes.np === "true") ? true : false,
-                    last_stop_id_cis: parseInt(attributes.zast, 10),
-                    lat: parseFloat(attributes.lat),
+                    last_stop_id_cis: (attributes.zast)
+                        ? parseInt(attributes.zast, 10)
+                        : null,
+                    lat: (attributes.lat)
+                        ? parseFloat(attributes.lat)
+                        : null,
                     line: parseInt(attributes.lin, 10),
-                    lng: parseFloat(attributes.lng),
+                    lng: (attributes.lng)
+                        ? parseFloat(attributes.lng)
+                        : null,
                     route_id_cis: parseInt(attributes.spoj, 10),
                     route_number: parseInt(attributes.po, 10),
                     route_short_name: attributes.alias,
                     start_date: startDate.toUTCString(),
                     timestamp: timestamp.toUTCString(),
-                    tracking: parseInt(attributes.sled, 10),
-                    type: parseInt(attributes.t, 10),
+                    tracking: (attributes.sled)
+                        ? parseInt(attributes.sled, 10)
+                        : null,
+                    type: (attributes.t)
+                        ? parseInt(attributes.t, 10)
+                        : null,
                 },
             };
 
@@ -98,9 +117,15 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
                 res.stops.push({
                     connection: parseInt(attributes.spoj, 10),
-                    delay_arrival: parseInt(stops[i].$.zpoz_prij, 10),
-                    delay_departure: parseInt(stops[i].$.zpoz_odj, 10),
-                    delay_type: parseInt(stops[i].$.zpoz_typ, 10),
+                    delay_arrival: (stops[i].$.zpoz_prij)
+                        ? parseInt(stops[i].$.zpoz_prij, 10)
+                        : null,
+                    delay_departure: (stops[i].$.zpoz_odj)
+                        ? parseInt(stops[i].$.zpoz_odj, 10)
+                        : null,
+                    delay_type: (stops[i].$.zpoz_typ)
+                        ? parseInt(stops[i].$.zpoz_typ, 10)
+                        : null,
                     line: parseInt(attributes.lin, 10),
                     stop_id_cis: parseInt(stops[i].$.zast, 10),
                     stop_order: i,
@@ -133,8 +158,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                     return;
                 }
                 const element = await this.TransformDataElement(collection[i]);
-                res.stops = res.stops.concat(element.stops);
-                res.trips.push(element.trip);
+                if (element) {
+                    res.stops = res.stops.concat(element.stops);
+                    res.trips.push(element.trip);
+                }
                 setImmediate(collectionIterator.bind(null, i + 1, cb));
             };
             collectionIterator(0, () => {
