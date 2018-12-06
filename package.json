@@ -1,6 +1,6 @@
 {
 	"name": "data-platform-integration-engine",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Integration Engine of the Data Platform System",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
