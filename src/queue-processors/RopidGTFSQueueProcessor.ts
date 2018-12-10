@@ -32,7 +32,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             log(" [<] ropid-gtfs-downloadFiles: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 
@@ -46,7 +46,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             log(" [<] ropid-gtfs-transformData: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 
@@ -60,7 +60,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             log(" [<] ropid-gtfs-saveDataToDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

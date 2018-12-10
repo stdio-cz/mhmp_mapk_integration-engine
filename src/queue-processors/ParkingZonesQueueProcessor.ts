@@ -28,7 +28,7 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
             log(" [<] parking-zones-refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

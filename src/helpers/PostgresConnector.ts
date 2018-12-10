@@ -26,8 +26,9 @@ class MySequelize {
                 operatorsAliases: false, // disable aliases
                 pool: {
                     acquire: 60000,
-                    idle: 30000,
+                    idle: 10000,
                     max: 5,
+                    min: 0,
                 },
             });
             log("Connected to PostgresSQL!");

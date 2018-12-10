@@ -33,7 +33,7 @@ export default class IGSensorsQueueProcessor extends BaseQueueProcessor {
             log(" [<] igsensors-refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 
@@ -47,7 +47,7 @@ export default class IGSensorsQueueProcessor extends BaseQueueProcessor {
             log(" [<] igsensors-saveDataToHistory: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

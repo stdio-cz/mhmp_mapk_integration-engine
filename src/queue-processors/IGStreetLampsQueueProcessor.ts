@@ -28,7 +28,7 @@ export default class IGStreetLampsQueueProcessor extends BaseQueueProcessor {
             log(" [<] igstreet-lamps-refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

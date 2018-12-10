@@ -36,7 +36,7 @@ class App {
      */
     private database = async (): Promise<void> => {
         await mongooseConnection;
-        await sequelizeConnection;
+        await sequelizeConnection.authenticate();
     }
 
     /**
