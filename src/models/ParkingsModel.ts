@@ -25,7 +25,7 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
             // create $text index
             schema.index({ "properties.name": "text", "properties.address": "text" },
                 {weights: { "properties.name": 5, "properties.address": 1 }});
-            this.mongooseModel = mongoose.model(this.name, schema);
+            this.mongooseModel = mongoose.model(this.name, schema, Parkings.mongoCollectionName);
         }
         this.validator = new Validator(this.name, Parkings.outputMongooseSchemaObject);
     }

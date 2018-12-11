@@ -23,7 +23,7 @@ export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
                 IceGatewayStreetLamps.outputMongooseSchemaObject, { bufferCommands: false });
             // create $geonear index
             schema.index({ geometry : "2dsphere" });
-            this.mongooseModel = mongoose.model(this.name, schema);
+            this.mongooseModel = mongoose.model(this.name, schema, IceGatewayStreetLamps.mongoCollectionName);
         }
         this.validator = new Validator(this.name, IceGatewayStreetLamps.outputMongooseSchemaObject);
     }

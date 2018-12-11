@@ -34,6 +34,7 @@ module.exports = {
     PARKINGS_PAYMENT_URL: process.env.PARKINGS_PAYMENT_URL,
     POSTGRES_CONN: process.env.POSTGRES_CONN,
     RABBIT_CONN: process.env.RABBIT_CONN,
+    RABBIT_EXCHANGE_NAME: process.env.RABBIT_EXCHANGE_NAME,
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
     datasources: new ConfigLoader("datasources").conf,

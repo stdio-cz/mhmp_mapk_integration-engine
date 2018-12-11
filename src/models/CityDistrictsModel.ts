@@ -7,7 +7,7 @@ import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import MongoModel from "./MongoModel";
 
-const log = require("debug")("data-platform:integration-engine");
+const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class CityDistrictsModel extends MongoModel implements IModel {
 
@@ -22,7 +22,8 @@ export default class CityDistrictsModel extends MongoModel implements IModel {
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             this.mongooseModel = mongoose.model(this.name,
-                new mongoose.Schema(CityDistricts.outputMongooseSchemaObject, { bufferCommands: false }));
+                new mongoose.Schema(CityDistricts.outputMongooseSchemaObject, { bufferCommands: false }),
+                CityDistricts.mongoCollectionName);
         }
         this.validator = new Validator(this.name, CityDistricts.outputMongooseSchemaObject);
         this.searchPath = (id, multiple = false) => {
@@ -72,7 +73,7 @@ export default class CityDistrictsModel extends MongoModel implements IModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                log("CityDistrictsModel::SaveToDB(): Saving or updating data to database.");
+                debugLog("CityDistrictsModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

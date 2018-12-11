@@ -23,7 +23,7 @@ export default class IGSensorsModel extends GeoJsonModel implements IModel {
                 IceGatewaySensors.outputMongooseSchemaObject, { bufferCommands: false });
             // create $geonear index
             schema.index({ geometry : "2dsphere" });
-            this.mongooseModel = mongoose.model(this.name, schema);
+            this.mongooseModel = mongoose.model(this.name, schema, IceGatewaySensors.mongoCollectionName);
         }
         this.validator = new Validator(this.name, IceGatewaySensors.outputMongooseSchemaObject);
     }
