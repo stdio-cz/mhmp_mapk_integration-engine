@@ -28,7 +28,7 @@ export default class CityDistrictsQueueProcessor extends BaseQueueProcessor {
             log(" [<] city-districts-refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

@@ -29,12 +29,10 @@ describe("IGSensorsHistoryTransformation", () => {
     let transformation;
     let testSourceData;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         transformation = new IGSensorsHistoryTransformation();
-        beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
-            testSourceData = JSON.parse(buffer.toString());
-        });
+        const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
+        testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {

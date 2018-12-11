@@ -28,7 +28,7 @@ export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
             log(" [<] vehicle-positions-saveDataToDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

@@ -44,7 +44,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] parkings-refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 
@@ -58,7 +58,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] parkings-saveDataToHistory: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 
@@ -72,7 +72,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] parkings-updateAddressAndDistrict: done");
         } catch (err) {
             handleError(err);
-            this.channel.ack(msg);
+            this.channel.nack(msg);
         }
     }
 

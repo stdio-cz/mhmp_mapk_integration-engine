@@ -1,6 +1,6 @@
 {
 	"name": "data-platform-integration-engine",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Integration Engine of the Data Platform System",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
@@ -37,9 +37,11 @@
 	},
 	"dependencies": {
 		"amqplib": "0.5.2",
+		"basic-ftp": "2.17.0",
 		"csvtojson": "2.0.8",
 		"data-platform-schema-definitions": "file:../schema-definitions",
 		"debug": "3.1.0",
+		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
 		"mongoose": "5.3.6",
 		"pg": "7.6.1",

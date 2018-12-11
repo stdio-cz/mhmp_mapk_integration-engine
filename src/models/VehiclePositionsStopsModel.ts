@@ -8,7 +8,7 @@ import PostgresModel from "./PostgresModel";
 
 const { sequelizeConnection } = require("../helpers/PostgresConnector");
 
-export default class VehiclePositionsStops extends PostgresModel implements IModel {
+export default class VehiclePositionsStopsModel extends PostgresModel implements IModel {
 
     public name: string;
     protected sequelizeModel: Sequelize.Model<any, any>;

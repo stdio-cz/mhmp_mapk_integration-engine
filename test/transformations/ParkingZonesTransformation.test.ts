@@ -30,12 +30,10 @@ describe("ParkingZonesTransformation", () => {
     let transformation;
     let testSourceData;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         transformation = new ParkingZonesTransformation();
-        beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/parking-zones-datasource.json");
-            testSourceData = JSON.parse(buffer.toString());
-        });
+        const buffer = await fs.readFileAsync(__dirname + "/../data/parking-zones-datasource.json");
+        testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {

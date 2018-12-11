@@ -25,10 +25,11 @@ export default abstract class PostgresModel extends BaseModel {
      */
     public SaveToDb = async (data: any): Promise<any> => {
         // data validation
-        await this.validator.Validate(data);
+        if (this.validator) {
+            await this.validator.Validate(data);
+        }
 
         try {
-            // TODO je to tady dobre?
             await this.sequelizeModel.sync();
 
             if (data instanceof Array) {
@@ -38,6 +39,21 @@ export default abstract class PostgresModel extends BaseModel {
             }
         } catch (err) {
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+        }
+    }
+
+    /**
+     * Deletes all data from table.
+     */
+    public Truncate = async (): Promise<any> => {
+        try {
+            await this.sequelizeModel.sync();
+            await this.sequelizeModel.destroy({
+                cascade: false,
+                truncate: true,
+            });
+        } catch (err) {
+            throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
         }
     }
 

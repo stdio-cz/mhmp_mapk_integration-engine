@@ -5,5 +5,11 @@ module.exports = {
     IGToken: "myStringToken",
     ParkingZones: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     ParkingZonesTariffs: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_ZonyStani_p/TARIF.csv",
+    RopidFTP: {
+        host: "",
+        password: "",
+        secure: null,
+        user: "",
+    },
     TSKParkings: "http://www.tsk-praha.cz/tskexport3/json/parkings",
 };

@@ -29,12 +29,10 @@ describe("CityDistrictsTransformation", () => {
     let transformation;
     let testSourceData;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         transformation = new CityDistrictsTransformation();
-        beforeEach(async () => {
-            const buffer = await fs.readFileAsync(__dirname + "/../data/city-districts-datasource.json");
-            testSourceData = JSON.parse(buffer.toString());
-        });
+        const buffer = await fs.readFileAsync(__dirname + "/../data/city-districts-datasource.json");
+        testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {
