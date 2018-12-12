@@ -12,6 +12,7 @@ import StopTimesModel from "../models/RopidGTFS/StopTimesModel";
 import TripsModel from "../models/RopidGTFS/TripsModel";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
 
+const fs = require("fs");
 const { amqpChannel } = require("../helpers/AMQPConnector");
 const config = require("../config/ConfigLoader");
 
@@ -43,9 +44,21 @@ export default class RopidGTFSWorker {
             }
         });
         await Promise.all(promises);
+
+        // send message to checking if process is done
+        try {
+            channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
+            channel.publish(config.RABBIT_EXCHANGE_NAME,
+                "workers." + this.queuePrefix + ".checkingIfDone",
+                new Buffer(JSON.stringify({count: files.length})));
+        } catch (err) {
+            throw new CustomError("Sending the message to exchange failed.", true,
+                this.constructor.name, 1001, err);
+        }
     }
 
     public transformData = async (inputData): Promise<any> => {
+        inputData.data = await this.readFile(inputData.filepath);
         const transformedData = await this.transformation.TransformDataElement(inputData);
         const model = this.getModelByName(transformedData.name);
         await model.Truncate();
@@ -96,4 +109,20 @@ export default class RopidGTFSWorker {
         }
     }
 
+    private readFile = (file: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            const stream = fs.createReadStream(file);
+            const chunks = [];
+
+            stream.on("error", (err) => {
+                reject(err);
+            });
+            stream.on("data", (data) => {
+                chunks.push(data);
+            });
+            stream.on("close", () => {
+                resolve(Buffer.concat(chunks));
+            });
+        });
+    }
 }

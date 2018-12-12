@@ -6,6 +6,7 @@ import RopidGTFSWorker from "../workers/RopidGTFSWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
 const log = require("debug")("data-platform:integration-engine:queue");
+const doneLog = require("debug")("data-platform:integration-engine:queue:done");
 const config = require("../config/ConfigLoader");
 
 export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
@@ -21,10 +22,12 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
     public registerQueues = async (): Promise<any> => {
         await this.registerQueue(this.queuePrefix + ".downloadFiles",
             "*." + this.queuePrefix + ".downloadFiles", this.downloadFiles);
-        await this.registerQueue(this.queuePrefix + ".gtfs-transformData",
+        await this.registerQueue(this.queuePrefix + ".transformData",
             "*." + this.queuePrefix + ".transformData", this.transformData);
-        await this.registerQueue(this.queuePrefix + ".gtfs-saveDataToDB",
+        await this.registerQueue(this.queuePrefix + ".saveDataToDB",
             "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB);
+        await this.registerQueue(this.queuePrefix + ".checkingIfDone",
+            "*." + this.queuePrefix + ".checkingIfDone", this.checkingIfDone);
     }
 
     protected downloadFiles = async (msg: any): Promise<any> => {
@@ -63,6 +66,25 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg);
+        }
+    }
+
+    protected checkingIfDone = async (msg: any): Promise<any> => {
+        try {
+            const qt = await this.channel.checkQueue(this.queuePrefix + ".transformData");
+            const qs = await this.channel.checkQueue(this.queuePrefix + ".saveDataToDB");
+
+            if (qt.messageCount === 0 && qs.messageCount === 0) {
+                this.channel.ack(msg);
+                doneLog(" [<] " + this.queuePrefix + ".checkingIfDone: done");
+            } else {
+                const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+                await delay(5000);
+                this.channel.reject(msg);
+            }
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);
