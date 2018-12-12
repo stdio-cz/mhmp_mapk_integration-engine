@@ -2,9 +2,7 @@ FROM gitlab.oict.cz:4567/data-platform/schema-definitions:latest
 
 USER root
 
-RUN mkdir -p /home/node/app/integration-engine
-
-WORKDIR /home/node/app/integration-engine
+WORKDIR /home/node/app/
 
 COPY . .
 
@@ -14,6 +12,7 @@ RUN ls -la
 
 USER node
 
+RUN npm config set registry http://10.200.0.43:4873
 RUN npm install
 RUN npm run build
 
