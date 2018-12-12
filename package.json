@@ -6,7 +6,6 @@
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"start": "node -r dotenv/config dist/App.js",
-		"postinstall": "tsc",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --timeout 60000 -r ts-node/register -r dotenv/config test/**/*.test.ts --exit",
@@ -39,7 +38,7 @@
 		"amqplib": "0.5.2",
 		"basic-ftp": "2.17.0",
 		"csvtojson": "2.0.8",
-		"data-platform-schema-definitions": "0.0.3",
+		"data-platform-schema-definitions": "0.0.4-578",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
