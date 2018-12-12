@@ -12,7 +12,7 @@ import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQ
 const { amqpChannel } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { sequelizeConnection } = require("./helpers/PostgresConnector");
-const log = require("debug")("data-platform:integration-engine");
+const log = require("debug")("data-platform:integration-engine:info");
 const config = require("./config/ConfigLoader");
 
 class App {
@@ -46,13 +46,13 @@ class App {
     private queueProcessors = async (): Promise<void> => {
         const ch = await amqpChannel;
         await Promise.all([
-            new ParkingsQueueProcessor(ch).registerQueues(),
             new CityDistrictsQueueProcessor(ch).registerQueues(),
             new IGSensorsQueueProcessor(ch).registerQueues(),
             new IGStreetLampsQueueProcessor(ch).registerQueues(),
+            new ParkingsQueueProcessor(ch).registerQueues(),
             new ParkingZonesQueueProcessor(ch).registerQueues(),
-            new VehiclePositionsQueueProcessor(ch).registerQueues(),
             new RopidGTFSQueueProcessor(ch).registerQueues(),
+            new VehiclePositionsQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

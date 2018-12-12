@@ -5,7 +5,7 @@ import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import MongoModel from "./MongoModel";
 
-const log = require("debug")("data-platform:integration-engine");
+const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default abstract class GeoJsonModel extends MongoModel {
 
@@ -41,7 +41,7 @@ export default abstract class GeoJsonModel extends MongoModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                log("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
+                debugLog("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
                 return this.createOutputFeatureCollection(res);
             });
         } else { // If it's a single element

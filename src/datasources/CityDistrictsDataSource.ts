@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistrictsDataSource as schemaObject } from "data-platform-schema-definitions";
+import { CityDistricts } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
@@ -32,7 +32,7 @@ export default class CityDistrictsDataSource extends JSONDataSource implements I
             method: "GET",
             url: config.datasources.CityDistricts,
         };
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, CityDistricts.datasourceMongooseSchemaObject);
         this.resultsPath = "features";
         this.searchPath = "item.properties.KOD_MC";
     }

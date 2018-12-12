@@ -5,7 +5,7 @@ import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
 
 const config = require("../config/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine");
+const log = require("debug")("data-platform:integration-engine:connection");
 
 class MyMongoose {
 

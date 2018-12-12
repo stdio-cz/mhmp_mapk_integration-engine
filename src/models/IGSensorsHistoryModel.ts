@@ -1,13 +1,13 @@
 "use strict";
 
-import { IGSensorsHistory as schemaObject } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import MongoModel from "./MongoModel";
 
-const log = require("debug")("data-platform:integration-engine");
+const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class IGSensorsHistoryModel extends MongoModel implements IModel {
 
@@ -23,9 +23,10 @@ export default class IGSensorsHistoryModel extends MongoModel implements IModel 
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             this.mongooseModel = mongoose.model(this.name,
-                new mongoose.Schema(schemaObject, { bufferCommands: false }));
+                new mongoose.Schema(IceGatewaySensors.history.outputMongooseSchemaObject, { bufferCommands: false }),
+                IceGatewaySensors.history.mongoCollectionName);
         }
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, IceGatewaySensors.history.outputMongooseSchemaObject);
     }
 
     /**
@@ -43,7 +44,7 @@ export default class IGSensorsHistoryModel extends MongoModel implements IModel 
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                log("IGSensorsHistModel::SaveToDB(): Saving or updating data to database.");
+                debugLog("IGSensorsHistModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

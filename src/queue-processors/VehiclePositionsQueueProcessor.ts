@@ -5,27 +5,32 @@ import handleError from "../helpers/errors/ErrorHandler";
 import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine");
+const log = require("debug")("data-platform:integration-engine:queue");
+const config = require("../config/ConfigLoader");
 
 export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
 
+    private queuePrefix: string;
+
     constructor(channel: amqplib.Channel) {
         super(channel);
+        // TODO brat jmeno ze schemat?
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "VehiclePositions";
     }
 
     public registerQueues = async (): Promise<any> => {
-        await this.registerQueue("vehicle-positions-saveDataToDB",
-            "*.vehicle-positions.saveDataToDB", this.saveDataToDB);
+        await this.registerQueue(this.queuePrefix + ".saveDataToDB",
+            "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB);
     }
 
     protected saveDataToDB = async (msg: any): Promise<any> => {
         try {
             const worker = new VehiclePositionsWorker();
-            log(" [>] vehicle-positions-saveDataToDB received some data.");
+            log(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
             const res = await worker.saveDataToDB(JSON.parse(msg.content.toString()).m.spoj);
 
             this.channel.ack(msg);
-            log(" [<] vehicle-positions-saveDataToDB: done");
+            log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);

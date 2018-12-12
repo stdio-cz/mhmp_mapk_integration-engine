@@ -63,14 +63,23 @@ export default class RopidGTFSDataSource extends BaseDataSource implements IData
 
         try {
             await ftpClient.access(config.datasources.RopidFTP);
-            await ftpClient.cd("GTFS");
-            await ftpClient.download(fs.createWriteStream("/tmp/PID_GTFS.zip"), "PID_GTFS.zip");
+            await ftpClient.cd(config.datasources.RopidGTFSPath);
+            await ftpClient.download(fs.createWriteStream("/tmp/PID_GTFS.zip"), config.datasources.RopidGTFSFilename);
             const whitelist = [
                 "agency", "calendar", "calendar_dates",
                 "shapes", "stop_times", "stops", "routes", "trips",
             ];
-            const files = await decompress("/tmp/PID_GTFS.zip", undefined, {
+            const tmpDir = "/tmp/PID_GTFS/";
+            let files = await decompress("/tmp/PID_GTFS.zip", tmpDir, {
                 filter: (file) => whitelist.indexOf(file.path.replace(".txt", "")) !== -1,
+            });
+            files = files.map((file) => {
+                return {
+                    filepath: tmpDir + file.path,
+                    mtime: file.mtime,
+                    name: file.path.replace(".txt", ""),
+                    path: file.path,
+                };
             });
             return files;
         } catch (err) {

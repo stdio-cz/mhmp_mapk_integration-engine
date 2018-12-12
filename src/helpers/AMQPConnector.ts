@@ -6,7 +6,7 @@ import handleError from "./errors/ErrorHandler";
 
 const amqp = require("amqplib");
 const config = require("../config/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine");
+const log = require("debug")("data-platform:integration-engine:connection");
 
 class MyAMQP {
 
