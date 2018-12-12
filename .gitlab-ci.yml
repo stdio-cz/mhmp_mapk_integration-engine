@@ -24,6 +24,7 @@ run_tests:
 registry_deployment:
   stage: deploy
   script:
+    - curl ifconfig.co
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL
     - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
     - docker logout $DOCKER_REGISTRY_URL
