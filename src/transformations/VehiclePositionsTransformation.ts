@@ -3,6 +3,8 @@
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
+const moment = require("moment-timezone");
+
 export default class VehiclePositionsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
@@ -23,11 +25,11 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             return null;
         }
 
-        const now = new Date();
+        const now = new Date(moment.tz("Europe/Prague").format());
         let isOverMidnight = 0;
 
         // creating startDate and timestamp from zast[0].prij and cpoz
-        const startDate = new Date();
+        const startDate = new Date(moment.tz("Europe/Prague").format());
         let startDatePlain = (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj;
         startDatePlain = startDatePlain.split(":");
         startDate.setHours(parseInt(startDatePlain[0], 10));
@@ -39,7 +41,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         isOverMidnight = this.checkMidnight(now, startDate); // returns -1, 1 or 0
         startDate.setDate(startDate.getDate() + isOverMidnight);
 
-        const timestamp = new Date();
+        const timestamp = new Date(moment.tz("Europe/Prague").format());
         const timestampPlain = attributes.cpoz.split(":");
         timestamp.setHours(parseInt(timestampPlain[0], 10));
         timestamp.setMinutes(parseInt(timestampPlain[1], 10));
@@ -91,7 +93,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
             // creating arival from stop.$.prij
             if (stop.$.prij !== "") {
-                arrival = new Date();
+                arrival = new Date(moment.tz("Europe/Prague").format());
                 const arrivalPlain = stop.$.prij.split(":");
                 arrival.setHours(parseInt(arrivalPlain[0], 10));
                 arrival.setMinutes(parseInt(arrivalPlain[1], 10));
@@ -104,7 +106,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             }
             // creating departure from stop.$.odj
             if (stop.$.odj !== "") {
-                departure = new Date();
+                departure = new Date(moment.tz("Europe/Prague").format());
                 const departurePlain = stop.$.odj.split(":");
                 departure.setHours(parseInt(departurePlain[0], 10));
                 departure.setMinutes(parseInt(departurePlain[1], 10));

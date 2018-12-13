@@ -30,7 +30,7 @@ export default class IGStreetLampsQueueProcessor extends BaseQueueProcessor {
             const res = await igstreetLampsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".lamps-refreshDataInDB: done");
+            log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);
