@@ -11,6 +11,8 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
+const config = require("../../src/config/ConfigLoader");
+
 describe("IGSensorsDataSource", () => {
 
     let datasource;
@@ -23,6 +25,10 @@ describe("IGSensorsDataSource", () => {
 
     it("should instantiate", () => {
         expect(datasource).not.to.be.undefined;
+    });
+
+    it("should has correct IGToken", () => {
+        expect(config.datasources.IGToken).to.not.equal("myStringToken");
     });
 
     it("should has GetAll method", () => {
