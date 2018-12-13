@@ -81,8 +81,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
                 this.channel.ack(msg);
                 doneLog(" [<] " + this.queuePrefix + ".checkingIfDone: done");
             } else {
-                const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-                await delay(5000);
+                await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                 this.channel.reject(msg);
             }
         } catch (err) {

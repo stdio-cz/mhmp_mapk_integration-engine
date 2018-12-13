@@ -24,6 +24,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         }
 
         const now = new Date();
+        let isOverMidnight = 0;
 
         // creating startDate and timestamp from zast[0].prij and cpoz
         const startDate = new Date();
@@ -33,9 +34,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         startDate.setMinutes(parseInt(startDatePlain[1], 10));
         startDate.setSeconds(0);
         startDate.setMilliseconds(0);
-        if (now.getHours() - startDate.getHours() < 0) {
-            startDate.setDate(startDate.getDate() - 1);
-        }
+
+        // midnight checking
+        isOverMidnight = this.checkMidnight(now, startDate); // returns -1, 1 or 0
+        startDate.setDate(startDate.getDate() + isOverMidnight);
 
         const timestamp = new Date();
         const timestampPlain = attributes.cpoz.split(":");
@@ -43,9 +45,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         timestamp.setMinutes(parseInt(timestampPlain[1], 10));
         timestamp.setSeconds(parseInt(timestampPlain[2], 10));
         timestamp.setMilliseconds(0);
-        if (now.getHours() - timestamp.getHours() < 0) {
-            timestamp.setDate(timestamp.getDate() - 1);
-        }
+
+        // midnight checking
+        isOverMidnight = this.checkMidnight(now, timestamp); // returns -1, 1 or 0
+        timestamp.setDate(timestamp.getDate() + isOverMidnight);
 
         const res = {
             stops: [],
@@ -94,10 +97,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 arrival.setMinutes(parseInt(arrivalPlain[1], 10));
                 arrival.setSeconds(0);
                 arrival.setMilliseconds(0);
-                // check if vehicle has arrivals to stops over midnight
-                if (now.getHours() - arrival.getHours() < 0) {
-                    arrival.setDate(arrival.getDate() - 1);
-                }
+
+                // midnight checking
+                isOverMidnight = this.checkMidnight(now, arrival); // returns -1, 1 or 0
+                arrival.setDate(arrival.getDate() + isOverMidnight);
             }
             // creating departure from stop.$.odj
             if (stop.$.odj !== "") {
@@ -107,10 +110,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 departure.setMinutes(parseInt(departurePlain[1], 10));
                 departure.setSeconds(0);
                 departure.setMilliseconds(0);
-                // check if vehicle has arrivals to stops over midnight
-                if (now.getHours() - departure.getHours() < 0) {
-                    departure.setDate(departure.getDate() - 1);
-                }
+
+                // midnight checking
+                isOverMidnight = this.checkMidnight(now, departure); // returns -1, 1 or 0
+                departure.setDate(departure.getDate() + isOverMidnight);
             }
 
             res.stops.push({
@@ -166,6 +169,15 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             }
             return res;
         }
+    }
+
+    private checkMidnight = (now: Date, start: Date): number => {
+        if (now.getHours() - start.getHours() <= -(24 - 12)) { // "backwards" 12 hours
+            return -1;
+        } else if (now.getHours() - start.getHours() >= (24 - 6)) { // "forwards" 6 hours
+            return 1;
+        }
+        return 0; // same day
     }
 
 }
