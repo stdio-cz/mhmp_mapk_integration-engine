@@ -16,7 +16,7 @@ export default class VehiclePositionsStopsModel extends PostgresModel implements
 
     constructor() {
         super();
-        this.name = "VehiclePositionsStops";
+        this.name = VehiclePositions.stops.name;
 
         this.sequelizeModel = sequelizeConnection.define(VehiclePositions.stops.pgTableName,
             VehiclePositions.stops.outputSequelizeAttributes);

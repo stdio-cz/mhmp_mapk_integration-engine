@@ -8,7 +8,7 @@ import JSONDataSource from "./JSONDataSource";
 
 const config = require("../config/ConfigLoader");
 
-export default class IGStreetLampsDataSource extends JSONDataSource implements IDataSource {
+export default class IceGatewayStreetLampsDataSource extends JSONDataSource implements IDataSource {
 
     /** The name of the data source. */
     public name: string;
@@ -23,7 +23,7 @@ export default class IGStreetLampsDataSource extends JSONDataSource implements I
 
     constructor() {
         super();
-        this.name = "IGStreetLampsDataSource";
+        this.name = "IceGatewayStreetLampsDataSource";
         this.sourceRequestObject = {
             headers : {
                 Authorization: "Token " + config.datasources.IGToken,

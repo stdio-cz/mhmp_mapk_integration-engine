@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGStreetLampsDataSource from "../../src/datasources/IGStreetLampsDataSource";
+import IceGatewaySensorsDataSource from "../../src/datasources/IceGatewaySensorsDataSource";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -13,13 +13,13 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 
-describe("IGStreetLampsDataSource", () => {
+describe("IceGatewaySensorsDataSource", () => {
 
     let datasource;
     let lampId;
 
     beforeEach(() => {
-        datasource = new IGStreetLampsDataSource();
+        datasource = new IceGatewaySensorsDataSource();
         lampId = "ICE-003-042-000-006";
     });
 
@@ -27,21 +27,21 @@ describe("IGStreetLampsDataSource", () => {
         expect(datasource).not.to.be.undefined;
     });
 
-    it("should has correct IGToken", () => {
-        expect(config.datasources.IGToken).to.not.equal("myStringToken");
+    it("should has correct IceGatewayToken", () => {
+        expect(config.datasources.IceGatewayToken).to.not.equal("myStringToken");
     });
 
     it("should has GetAll method", () => {
         expect(datasource.GetAll).not.to.be.undefined;
     });
 
-    it("should get all ICE Gateway Street Lamps", async () => {
+    it("should get all ICE Gateways", async () => {
         const promise = datasource.GetAll();
         expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
         expect(promise).to.be.fulfilled;
     });
 
-    it("should returns all ICE Gateway Street Lamps", async () => {
+    it("should returns all ICE Gateways", async () => {
         const data = await datasource.GetAll();
         expect(data).to.be.an.instanceOf(Object);
     });
@@ -50,13 +50,13 @@ describe("IGStreetLampsDataSource", () => {
         expect(datasource.GetOne).not.to.be.undefined;
     });
 
-    it("should get one ICE Gateway Street Lamp by id", async () => {
+    it("should get one ICE Gateway by id", async () => {
         const promise = datasource.GetOne(lampId);
         expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
         expect(promise).to.be.fulfilled;
     });
 
-    it("should returns one ICE Gateway Street Lamp by id", async () => {
+    it("should returns one ICE Gateway by id", async () => {
         const data = await datasource.GetOne(lampId);
         expect(data).to.be.an.instanceOf(Object);
     });

@@ -1,6 +1,7 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import { VehiclePositions } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
 import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
@@ -14,8 +15,7 @@ export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
 
     constructor(channel: amqplib.Channel) {
         super(channel);
-        // TODO brat jmeno ze schemat?
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "VehiclePositions";
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
     public registerQueues = async (): Promise<any> => {

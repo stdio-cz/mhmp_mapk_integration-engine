@@ -9,7 +9,7 @@ import MongoModel from "./MongoModel";
 
 const debugLog = require("debug")("data-platform:integration-engine:debug");
 
-export default class IGSensorsHistoryModel extends MongoModel implements IModel {
+export default class IceGatewaySensorsHistoryModel extends MongoModel implements IModel {
 
     public name: string;
     protected mongooseModel: mongoose.Model<any>;
@@ -17,7 +17,7 @@ export default class IGSensorsHistoryModel extends MongoModel implements IModel 
 
     constructor() {
         super();
-        this.name = "IGSensorsHistory";
+        this.name = IceGatewaySensors.history.name;
 
         try {
             this.mongooseModel = mongoose.model(this.name);
@@ -44,7 +44,7 @@ export default class IGSensorsHistoryModel extends MongoModel implements IModel 
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                debugLog("IGSensorsHistModel::SaveToDB(): Saving or updating data to database.");
+                debugLog("IceGatewaySensorsHistoryModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

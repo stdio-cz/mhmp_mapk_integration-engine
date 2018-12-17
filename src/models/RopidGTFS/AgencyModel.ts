@@ -16,7 +16,7 @@ export default class AgencyModel extends PostgresModel implements IModel {
 
     constructor() {
         super();
-        this.name = "RopidGTFSAgency";
+        this.name = RopidGTFS.agency.name;
 
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.agency.pgTableName,
             RopidGTFS.agency.outputSequelizeAttributes);

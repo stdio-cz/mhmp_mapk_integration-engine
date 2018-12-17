@@ -16,7 +16,7 @@ export default class ShapesModel extends PostgresModel implements IModel {
 
     constructor() {
         super();
-        this.name = "RopidGTFSShapes";
+        this.name = RopidGTFS.shapes.name;
 
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.shapes.pgTableName,
             RopidGTFS.shapes.outputSequelizeAttributes);

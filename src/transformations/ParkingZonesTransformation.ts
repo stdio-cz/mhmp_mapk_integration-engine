@@ -1,5 +1,6 @@
 "use strict";
 
+import { ParkingZones } from "data-platform-schema-definitions";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
@@ -14,7 +15,7 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
 
     constructor() {
         super();
-        this.name = "ParkingZones";
+        this.name = ParkingZones.name;
         this.tariffs = null;
     }
 

@@ -16,7 +16,7 @@ export default class StopTimesModel extends PostgresModel implements IModel {
 
     constructor() {
         super();
-        this.name = "RopidGTFSStopTimes";
+        this.name = RopidGTFS.stop_times.name;
 
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stop_times.pgTableName,
             RopidGTFS.stop_times.outputSequelizeAttributes);

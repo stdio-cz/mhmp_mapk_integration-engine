@@ -2,10 +2,11 @@
 
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
-import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
-import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
+import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
+import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
+import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
 import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
@@ -47,10 +48,11 @@ class App {
         const ch = await amqpChannel;
         await Promise.all([
             new CityDistrictsQueueProcessor(ch).registerQueues(),
-            new IGSensorsQueueProcessor(ch).registerQueues(),
-            new IGStreetLampsQueueProcessor(ch).registerQueues(),
+            new IceGatewaySensorsQueueProcessor(ch).registerQueues(),
+            new IceGatewayStreetLampsQueueProcessor(ch).registerQueues(),
             new ParkingsQueueProcessor(ch).registerQueues(),
             new ParkingZonesQueueProcessor(ch).registerQueues(),
+            new PurgeQueueProcessor(ch).registerQueues(),
             new RopidGTFSQueueProcessor(ch).registerQueues(),
             new VehiclePositionsQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors

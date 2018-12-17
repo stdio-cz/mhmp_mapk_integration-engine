@@ -1,15 +1,16 @@
 "use strict";
 
+import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
-export default class IGStreetLampsTransformation extends GeoJsonTransformation implements ITransformation {
+export default class IceGatewayStreetLampsTransformation extends GeoJsonTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "IGStreetLamps";
+        this.name = IceGatewayStreetLamps.name;
     }
 
     /**

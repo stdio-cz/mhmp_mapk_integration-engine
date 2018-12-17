@@ -1,6 +1,7 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import { ParkingZones } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
@@ -14,8 +15,7 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
 
     constructor(channel: amqplib.Channel) {
         super(channel);
-        // TODO brat jmeno ze schemat?
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "ParkingZones";
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + ParkingZones.name.toLowerCase();
     }
 
     public registerQueues = async (): Promise<any> => {

@@ -14,7 +14,7 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
 
     constructor() {
         super();
-        this.name = "Parkings";
+        this.name = Parkings.name;
 
         try {
             this.mongooseModel = mongoose.model("Parkings");

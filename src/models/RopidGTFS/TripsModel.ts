@@ -16,7 +16,7 @@ export default class TripsModel extends PostgresModel implements IModel {
 
     constructor() {
         super();
-        this.name = "RopidGTFSTrips";
+        this.name = RopidGTFS.trips.name;
 
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.trips.pgTableName,
             RopidGTFS.trips.outputSequelizeAttributes);

@@ -1,5 +1,6 @@
 "use strict";
 
+import { VehiclePositions } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
@@ -11,7 +12,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
     constructor() {
         super();
-        this.name = "VehiclePositions";
+        this.name = VehiclePositions.name;
     }
 
     /**

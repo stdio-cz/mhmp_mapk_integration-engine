@@ -1,6 +1,7 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import { RopidGTFS } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
@@ -15,8 +16,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
 
     constructor(channel: amqplib.Channel) {
         super(channel);
-        // TODO brat jmeno ze schemat?
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "RopidGTFS";
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
     public registerQueues = async (): Promise<any> => {

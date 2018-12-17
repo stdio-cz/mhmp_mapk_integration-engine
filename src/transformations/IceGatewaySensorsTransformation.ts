@@ -1,15 +1,16 @@
 "use strict";
 
+import { IceGatewaySensors } from "data-platform-schema-definitions";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
-export default class IGSensorsTransformation extends GeoJsonTransformation implements ITransformation {
+export default class IceGatewaySensorsTransformation extends GeoJsonTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "IGSensors";
+        this.name = IceGatewaySensors.name;
     }
 
     /**

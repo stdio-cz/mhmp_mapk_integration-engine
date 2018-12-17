@@ -14,7 +14,7 @@ export default class ParkingZonesModel extends GeoJsonModel implements IModel {
 
     constructor() {
         super();
-        this.name = "ParkingZones";
+        this.name = ParkingZones.name;
         this.searchPath = (id, multiple = false) => {
             return (multiple)
                 ? { "properties.code": { $in: id } }

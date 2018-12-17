@@ -6,7 +6,7 @@ import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
 import IModel from "./IModel";
 
-export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
+export default class IceGatewayStreetLampsModel extends GeoJsonModel implements IModel {
 
     public name: string;
     protected mongooseModel: mongoose.Model<any>;
@@ -14,7 +14,7 @@ export default class IGStreetLampsModel extends GeoJsonModel implements IModel {
 
     constructor() {
         super();
-        this.name = "IGStreetLamps";
+        this.name = IceGatewayStreetLamps.name;
 
         try {
             this.mongooseModel = mongoose.model(this.name);

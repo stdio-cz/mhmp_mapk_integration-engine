@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { CityDistricts } from "data-platform-schema-definitions";
+import { Parkings } from "data-platform-schema-definitions";
 import "mocha";
 import CustomError from "../../src/helpers/errors/CustomError";
 import Validator from "../../src/helpers/Validator";
@@ -19,17 +19,20 @@ describe("Validator", () => {
     let testData: object;
 
     beforeEach(() => {
-        validator = new Validator("CityDistricts", CityDistricts.outputMongooseSchemaObject);
+        validator = new Validator(Parkings.history.name, Parkings.history.outputMongooseSchemaObject);
         testData = [{
-            id: 547310,
-            name: "Praha-Čakovice",
-            slug: "praha-cakovice",
-            timestamp: 111111111,
-        }, {
-            id: 539791,
-            name: "Praha-Újezd",
-            slug: "praha-ujezd",
-            timestamp: 111111111,
+            id : 534001,
+            num_of_free_places : 91,
+            num_of_taken_places : 1,
+            timestamp : 1545063078063,
+            total_num_of_places : 92,
+        },
+        {
+            id : 534015,
+            num_of_free_places : 43,
+            num_of_taken_places : 126,
+            timestamp : 1545063078065,
+            total_num_of_places : 169,
         }];
     });
 

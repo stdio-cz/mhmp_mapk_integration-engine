@@ -17,7 +17,7 @@ export default class ParkingsHistoryModel extends MongoModel implements IModel {
 
     constructor() {
         super();
-        this.name = "ParkingsHistory";
+        this.name = Parkings.history.name;
 
         try {
             this.mongooseModel = mongoose.model(this.name);

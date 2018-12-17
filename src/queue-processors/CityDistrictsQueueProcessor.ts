@@ -1,6 +1,7 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import { CityDistricts } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
 import CityDistrictsWorker from "../workers/CityDistrictsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
@@ -14,8 +15,7 @@ export default class CityDistrictsQueueProcessor extends BaseQueueProcessor {
 
     constructor(channel: amqplib.Channel) {
         super(channel);
-        // TODO brat jmeno ze schemat?
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "CityDistricts";
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + CityDistricts.name.toLowerCase();
     }
 
     public registerQueues = async (): Promise<any> => {

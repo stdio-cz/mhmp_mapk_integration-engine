@@ -1,5 +1,6 @@
 "use strict";
 
+import { Parkings } from "data-platform-schema-definitions";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
@@ -9,7 +10,7 @@ export default class ParkingsTransformation extends GeoJsonTransformation implem
 
     constructor() {
         super();
-        this.name = "Parkings";
+        this.name = Parkings.name;
     }
 
     /**

@@ -8,7 +8,7 @@ import JSONDataSource from "./JSONDataSource";
 
 const config = require("../config/ConfigLoader");
 
-export default class IGSensorsDataSource extends JSONDataSource implements IDataSource {
+export default class IceGatewaySensorsDataSource extends JSONDataSource implements IDataSource {
 
     /** The name of the data source. */
     public name: string;
@@ -23,7 +23,7 @@ export default class IGSensorsDataSource extends JSONDataSource implements IData
 
     constructor() {
         super();
-        this.name = "IGSensorsDataSource";
+        this.name = "IceGatewaySensorsDataSource";
         this.sourceRequestObject = {
             headers : {
                 Authorization: "Token " + config.datasources.IGToken,

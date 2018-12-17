@@ -1,5 +1,6 @@
 "use strict";
 
+import { Parkings } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
@@ -9,7 +10,7 @@ export default class ParkingsHistoryTransformation extends BaseTransformation im
 
     constructor() {
         super();
-        this.name = "ParkingsHistory";
+        this.name = Parkings.history.name;
     }
 
     /**
