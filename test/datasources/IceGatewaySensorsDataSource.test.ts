@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGSensorsDataSource from "../../src/datasources/IGSensorsDataSource";
+import IceGatewaySensorsDataSource from "../../src/datasources/IceGatewaySensorsDataSource";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -11,18 +11,24 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-describe("IGSensorsDataSource", () => {
+const config = require("../../src/config/ConfigLoader");
+
+describe("IceGatewaySensorsDataSource", () => {
 
     let datasource;
     let lampId;
 
     beforeEach(() => {
-        datasource = new IGSensorsDataSource();
+        datasource = new IceGatewaySensorsDataSource();
         lampId = "ICE-003-042-000-006";
     });
 
     it("should instantiate", () => {
         expect(datasource).not.to.be.undefined;
+    });
+
+    it("should has correct IceGatewayToken", () => {
+        expect(config.datasources.IceGatewayToken).to.not.equal("myStringToken");
     });
 
     it("should has GetAll method", () => {

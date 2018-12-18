@@ -1,9 +1,6 @@
 "use strict";
 
-import {
-    VehiclePositionsTripsAttributes as attributes,
-    VehiclePositionsTripsSchemaObject as schemaObject,
-} from "data-platform-schema-definitions";
+import { VehiclePositions } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
 import Validator from "../helpers/Validator";
 import IModel from "./IModel";
@@ -19,10 +16,11 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
 
     constructor() {
         super();
-        this.name = "VehiclePositionsTrips";
+        this.name = VehiclePositions.trips.name;
 
-        this.sequelizeModel = sequelizeConnection.define("vehicle_positions_trips", attributes);
-        this.validator = new Validator(this.name, schemaObject);
+        this.sequelizeModel = sequelizeConnection.define(VehiclePositions.trips.pgTableName,
+            VehiclePositions.trips.outputSequelizeAttributes);
+        this.validator = new Validator(this.name, VehiclePositions.trips.outputMongooseSchemaObject);
     }
 
 }

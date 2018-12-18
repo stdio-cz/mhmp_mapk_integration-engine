@@ -1,17 +1,18 @@
 "use strict";
 
-import BaseTransformation from "./BaseTransformation";
+import { CityDistricts } from "data-platform-schema-definitions";
+import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
 const slug = require("slugify");
 
-export default class CityDistrictsTransformation extends BaseTransformation implements ITransformation {
+export default class CityDistrictsTransformation extends GeoJsonTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "CityDistricts";
+        this.name = CityDistricts.name;
     }
 
     /**
@@ -19,37 +20,18 @@ export default class CityDistrictsTransformation extends BaseTransformation impl
      */
     public TransformDataElement = async (element): Promise<any> => {
         return {
-            id: parseInt(element.properties.KOD_MC, 10),
-            loc: {
+            geometry: {
                 coordinates: element.geometry.coordinates,
                 type: element.geometry.type,
             },
-            name: element.properties.NAZEV_MC,
-            slug: slug(element.properties.NAZEV_MC, { lower: true }),
-            timestamp: new Date().getTime(),
+            properties: {
+                id: parseInt(element.properties.KOD_MC, 10),
+                name: element.properties.NAZEV_MC,
+                slug: slug(element.properties.NAZEV_MC, { lower: true }),
+                timestamp: new Date().getTime(),
+            },
+            type: element.type,
         };
-    }
-
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = (collection): Promise<any> => {
-        return new Promise((resolve, reject) => {
-            const res = [];
-            // collection JS Closure
-            const collectionIterator = async (i, cb) => {
-                if (collection.length === i) {
-                    cb();
-                    return;
-                }
-                const element = await this.TransformDataElement(collection[i]);
-                res.push(element);
-                setImmediate(collectionIterator.bind(null, i + 1, cb));
-            };
-            collectionIterator(0, () => {
-                resolve(res);
-            });
-        });
     }
 
 }

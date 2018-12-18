@@ -1,6 +1,6 @@
 "use strict";
 
-import { ParkingZones as schemaObject } from "data-platform-schema-definitions";
+import { ParkingZones } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
@@ -14,7 +14,7 @@ export default class ParkingZonesModel extends GeoJsonModel implements IModel {
 
     constructor() {
         super();
-        this.name = "ParkingZones";
+        this.name = ParkingZones.name;
         this.searchPath = (id, multiple = false) => {
             return (multiple)
                 ? { "properties.code": { $in: id } }
@@ -24,12 +24,12 @@ export default class ParkingZonesModel extends GeoJsonModel implements IModel {
         try {
             this.mongooseModel = mongoose.model("ParkingZones");
         } catch (error) {
-            const schema = new mongoose.Schema(schemaObject, { bufferCommands: false });
+            const schema = new mongoose.Schema(ParkingZones.outputMongooseSchemaObject, { bufferCommands: false });
             // create $geonear index
             schema.index({ geometry : "2dsphere" });
-            this.mongooseModel = mongoose.model(this.name, schema);
+            this.mongooseModel = mongoose.model(this.name, schema, ParkingZones.mongoCollectionName);
         }
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, ParkingZones.outputMongooseSchemaObject);
     }
 
     protected updateValues = (result, item) => {

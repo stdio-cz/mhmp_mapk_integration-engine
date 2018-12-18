@@ -12,16 +12,21 @@ import StopTimesModel from "../models/RopidGTFS/StopTimesModel";
 import TripsModel from "../models/RopidGTFS/TripsModel";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
 
+const fs = require("fs");
 const { amqpChannel } = require("../helpers/AMQPConnector");
+const config = require("../config/ConfigLoader");
 
 export default class RopidGTFSWorker {
 
     private datasource: RopidGTFSDataSource;
     private transformation: RopidGTFSTransformation;
+    private queuePrefix: string;
 
     constructor() {
         this.datasource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
+        // TODO brat jmeno ze schemat?
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "RopidGTFS";
     }
 
     public downloadFiles = async (): Promise<void> => {
@@ -29,30 +34,45 @@ export default class RopidGTFSWorker {
         const channel = await amqpChannel;
         const promises = files.map((file) => {
             try {
-                // TODO exchange name to config?
-                channel.assertExchange("topic_logs", "topic", {durable: false});
-                channel.publish("topic_logs", "workers.ropid-gtfs.transformData", new Buffer(JSON.stringify(file)));
+                channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
+                channel.publish(config.RABBIT_EXCHANGE_NAME,
+                    "workers." + this.queuePrefix + ".transformData",
+                    new Buffer(JSON.stringify(file)));
             } catch (err) {
                 throw new CustomError("Sending the message to exchange failed.", true,
                     this.constructor.name, 1001, err);
             }
         });
         await Promise.all(promises);
+
+        // send message to checking if process is done
+        try {
+            channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
+            channel.publish(config.RABBIT_EXCHANGE_NAME,
+                "workers." + this.queuePrefix + ".checkingIfDone",
+                new Buffer(JSON.stringify({count: files.length})));
+        } catch (err) {
+            throw new CustomError("Sending the message to exchange failed.", true,
+                this.constructor.name, 1001, err);
+        }
     }
 
     public transformData = async (inputData): Promise<any> => {
+        inputData.data = await this.readFile(inputData.filepath);
         const transformedData = await this.transformation.TransformDataElement(inputData);
         const model = this.getModelByName(transformedData.name);
         await model.Truncate();
         const channel = await amqpChannel;
         const promises = transformedData.data.map((chunk) => {
             try {
-                // TODO exchange name to config?
-                channel.assertExchange("topic_logs", "topic", {durable: false});
-                channel.publish("topic_logs", "workers.ropid-gtfs.saveDataToDB", new Buffer(JSON.stringify({
-                    data: chunk,
-                    name: transformedData.name,
-                })));
+                channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
+                channel.publish(config.RABBIT_EXCHANGE_NAME,
+                    "workers." + this.queuePrefix + ".saveDataToDB",
+                    new Buffer(JSON.stringify({
+                        data: chunk,
+                        name: transformedData.name,
+                    }),
+                ));
             } catch (err) {
                 throw new CustomError("Sending the message to exchange failed.", true,
                     this.constructor.name, 1001, err);
@@ -89,4 +109,20 @@ export default class RopidGTFSWorker {
         }
     }
 
+    private readFile = (file: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            const stream = fs.createReadStream(file);
+            const chunks = [];
+
+            stream.on("error", (err) => {
+                reject(err);
+            });
+            stream.on("data", (data) => {
+                chunks.push(data);
+            });
+            stream.on("close", () => {
+                resolve(Buffer.concat(chunks));
+            });
+        });
+    }
 }

@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGSensorsHistoryTransformation from "../../src/transformations/IGSensorsHistoryTransformation";
+import IceGatewaySensorsHistoryTransformation from "../../src/transformations/IceGatewaySensorsHistoryTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,20 +24,20 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("IGSensorsHistoryTransformation", () => {
+describe("IceGatewaySensorsHistoryTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new IGSensorsHistoryTransformation();
+        transformation = new IceGatewaySensorsHistoryTransformation();
         const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-response.json");
         testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("IGSensorsHistory");
+        expect(transformation.name).is.equal("IceGatewaySensorsHistory");
     });
 
     it("should has TransformDataElement method", async () => {

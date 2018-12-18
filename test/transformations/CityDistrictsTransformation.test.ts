@@ -46,11 +46,13 @@ describe("CityDistrictsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.TransformDataElement(testSourceData.features[0]);
-        expect(data).to.have.property("id");
-        expect(data).to.have.property("name");
-        expect(data).to.have.property("slug");
-        expect(data).to.have.property("loc");
-        expect(data).to.have.property("timestamp");
+        expect(data).to.have.property("geometry");
+        expect(data).to.have.property("properties");
+        expect(data).to.have.property("type");
+        expect(data.properties).to.have.property("id");
+        expect(data.properties).to.have.property("name");
+        expect(data.properties).to.have.property("slug");
+        expect(data.properties).to.have.property("timestamp");
     });
 
     it("should has TransformDataCollection method", async () => {
@@ -60,11 +62,13 @@ describe("CityDistrictsTransformation", () => {
     it("should properly transform collection", async () => {
         const data = await transformation.TransformDataCollection(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("id");
-            expect(data[i]).to.have.property("name");
-            expect(data[i]).to.have.property("slug");
-            expect(data[i]).to.have.property("loc");
-            expect(data[i]).to.have.property("timestamp");
+            expect(data[i]).to.have.property("geometry");
+            expect(data[i]).to.have.property("properties");
+            expect(data[i]).to.have.property("type");
+            expect(data[i].properties).to.have.property("id");
+            expect(data[i].properties).to.have.property("name");
+            expect(data[i].properties).to.have.property("slug");
+            expect(data[i].properties).to.have.property("timestamp");
         }
     });
 

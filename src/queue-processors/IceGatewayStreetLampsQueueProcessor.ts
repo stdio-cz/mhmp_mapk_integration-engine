@@ -1,21 +1,21 @@
 "use strict";
 
 import * as amqplib from "amqplib";
-import { ParkingZones } from "data-platform-schema-definitions";
+import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
-import ParkingZonesWorker from "../workers/ParkingZonesWorker";
+import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
 const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
-export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
+export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProcessor {
 
     private queuePrefix: string;
 
     constructor(channel: amqplib.Channel) {
         super(channel);
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + ParkingZones.name.toLowerCase();
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + IceGatewayStreetLamps.name.toLowerCase();
     }
 
     public registerQueues = async (): Promise<any> => {
@@ -23,11 +23,11 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
             "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB);
     }
 
-    protected refreshDataInDB = async (msg: any): Promise<any> => {
+    protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
-            const parkingZonesWorker = new ParkingZonesWorker();
+            const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
             log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
-            const res = await parkingZonesWorker.refreshDataInDB();
+            const res = await igstreetLampsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");

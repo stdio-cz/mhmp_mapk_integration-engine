@@ -11,6 +11,8 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
+const config = require("../../src/config/ConfigLoader");
+
 describe("RopidGTFSDataSource", () => {
 
     let datasource;
@@ -21,6 +23,10 @@ describe("RopidGTFSDataSource", () => {
 
     it("should instantiate", () => {
         expect(datasource).not.to.be.undefined;
+    });
+
+    it("should has correct RopidFTP", () => {
+        expect(config.datasources.RopidFTP.host).to.not.equal("");
     });
 
     it("should has GetAll method", () => {

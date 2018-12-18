@@ -1,6 +1,6 @@
 "use strict";
 
-import { IGStreetLampsDataSource as schemaObject } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
 import IDataSource from "./IDataSource";
 import ISourceRequest from "./ISourceRequest";
@@ -8,7 +8,7 @@ import JSONDataSource from "./JSONDataSource";
 
 const config = require("../config/ConfigLoader");
 
-export default class IGStreetLampsDataSource extends JSONDataSource implements IDataSource {
+export default class IceGatewaySensorsDataSource extends JSONDataSource implements IDataSource {
 
     /** The name of the data source. */
     public name: string;
@@ -23,15 +23,15 @@ export default class IGStreetLampsDataSource extends JSONDataSource implements I
 
     constructor() {
         super();
-        this.name = "IGStreetLampsDataSource";
+        this.name = "IceGatewaySensorsDataSource";
         this.sourceRequestObject = {
             headers : {
                 Authorization: "Token " + config.datasources.IGToken,
             },
             method: "GET",
-            url: config.datasources.IGStreetLamps,
+            url: config.datasources.IGSensors,
         };
-        this.validator = new Validator(this.name, schemaObject);
+        this.validator = new Validator(this.name, IceGatewaySensors.datasourceMongooseSchemaObject);
         this.resultsPath = "";
         this.searchPath = "ice_id";
     }

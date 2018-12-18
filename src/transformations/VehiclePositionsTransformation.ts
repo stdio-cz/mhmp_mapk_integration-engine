@@ -1,7 +1,10 @@
 "use strict";
 
+import { VehiclePositions } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
+
+const moment = require("moment-timezone");
 
 export default class VehiclePositionsTransformation extends BaseTransformation implements ITransformation {
 
@@ -9,7 +12,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
     constructor() {
         super();
-        this.name = "VehiclePositions";
+        this.name = VehiclePositions.name;
     }
 
     /**
@@ -23,29 +26,35 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             return null;
         }
 
-        const now = new Date();
+        // const now = new Date(moment.tz("Europe/Prague").format());
+        const now = moment.tz("Europe/Prague");
+        let isOverMidnight = 0;
 
         // creating startDate and timestamp from zast[0].prij and cpoz
-        const startDate = new Date();
+        const startDate = moment.tz("Europe/Prague");
         let startDatePlain = (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj;
         startDatePlain = startDatePlain.split(":");
-        startDate.setHours(parseInt(startDatePlain[0], 10));
-        startDate.setMinutes(parseInt(startDatePlain[1], 10));
-        startDate.setSeconds(0);
-        startDate.setMilliseconds(0);
-        if (now.getHours() - startDate.getHours() < 0) {
-            startDate.setDate(startDate.getDate() - 1);
-        }
+        startDate.hour(parseInt(startDatePlain[0], 10));
+        startDate.minute(parseInt(startDatePlain[1], 10));
+        startDate.second(0);
+        startDate.millisecond(0);
 
-        const timestamp = new Date();
+        // midnight checking
+        isOverMidnight = this.checkMidnight(now, startDate); // returns -1, 1 or 0
+        // startDate.setDate(startDate.getDate() + isOverMidnight);
+        startDate.add(isOverMidnight, "d");
+
+        const timestamp = moment.tz("Europe/Prague");
         const timestampPlain = attributes.cpoz.split(":");
-        timestamp.setHours(parseInt(timestampPlain[0], 10));
-        timestamp.setMinutes(parseInt(timestampPlain[1], 10));
-        timestamp.setSeconds(parseInt(timestampPlain[2], 10));
-        timestamp.setMilliseconds(0);
-        if (now.getHours() - timestamp.getHours() < 0) {
-            timestamp.setDate(timestamp.getDate() - 1);
-        }
+        timestamp.hour(parseInt(timestampPlain[0], 10));
+        timestamp.minute(parseInt(timestampPlain[1], 10));
+        timestamp.second(parseInt(timestampPlain[2], 10));
+        timestamp.millisecond(0);
+
+        // midnight checking
+        isOverMidnight = this.checkMidnight(now, timestamp); // returns -1, 1 or 0
+        // timestamp.setDate(timestamp.getDate() + isOverMidnight);
+        timestamp.add(isOverMidnight, "d");
 
         const res = {
             stops: [],
@@ -71,8 +80,8 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 route_id_cis: parseInt(attributes.spoj, 10),
                 route_number: parseInt(attributes.po, 10),
                 route_short_name: attributes.alias,
-                start_date: startDate.toUTCString(),
-                timestamp: timestamp.toUTCString(),
+                start_date: startDate.utc().format(),
+                timestamp: timestamp.utc().format(),
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
                     : null,
@@ -88,29 +97,31 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
             // creating arival from stop.$.prij
             if (stop.$.prij !== "") {
-                arrival = new Date();
+                arrival = moment.tz("Europe/Prague");
                 const arrivalPlain = stop.$.prij.split(":");
-                arrival.setHours(parseInt(arrivalPlain[0], 10));
-                arrival.setMinutes(parseInt(arrivalPlain[1], 10));
-                arrival.setSeconds(0);
-                arrival.setMilliseconds(0);
-                // check if vehicle has arrivals to stops over midnight
-                if (now.getHours() - arrival.getHours() < 0) {
-                    arrival.setDate(arrival.getDate() - 1);
-                }
+                arrival.hour(parseInt(arrivalPlain[0], 10));
+                arrival.minute(parseInt(arrivalPlain[1], 10));
+                arrival.second(0);
+                arrival.millisecond(0);
+
+                // midnight checking
+                isOverMidnight = this.checkMidnight(now, arrival); // returns -1, 1 or 0
+                // arrival.setDate(arrival.getDate() + isOverMidnight);
+                arrival.add(isOverMidnight, "d");
             }
             // creating departure from stop.$.odj
             if (stop.$.odj !== "") {
-                departure = new Date();
+                departure = moment.tz("Europe/Prague");
                 const departurePlain = stop.$.odj.split(":");
-                departure.setHours(parseInt(departurePlain[0], 10));
-                departure.setMinutes(parseInt(departurePlain[1], 10));
-                departure.setSeconds(0);
-                departure.setMilliseconds(0);
-                // check if vehicle has arrivals to stops over midnight
-                if (now.getHours() - departure.getHours() < 0) {
-                    departure.setDate(departure.getDate() - 1);
-                }
+                departure.hour(parseInt(departurePlain[0], 10));
+                departure.minute(parseInt(departurePlain[1], 10));
+                departure.second(0);
+                departure.millisecond(0);
+
+                // midnight checking
+                isOverMidnight = this.checkMidnight(now, departure); // returns -1, 1 or 0
+                // departure.setDate(departure.getDate() + isOverMidnight);
+                departure.add(isOverMidnight, "d");
             }
 
             res.stops.push({
@@ -128,9 +139,9 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 stop_id_cis: parseInt(stop.$.zast, 10),
                 stop_order: i,
                 stop_platform: stop.$.stan,
-                time_arrival: (arrival) ? arrival.toUTCString() : null,
-                time_departure: (departure) ? departure.toUTCString() : null,
-                timestamp: timestamp.toUTCString(),
+                time_arrival: (arrival) ? arrival.utc().format() : null,
+                time_departure: (departure) ? departure.utc().format() : null,
+                timestamp: timestamp.utc().format(),
             });
         });
 
@@ -166,6 +177,15 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             }
             return res;
         }
+    }
+
+    private checkMidnight = (now, start): number => {
+        if (now.hour() - start.hour() <= -(24 - 12)) { // "backwards" 12 hours
+            return -1;
+        } else if (now.hour() - start.hour() >= (24 - 6)) { // "forwards" 6 hours
+            return 1;
+        }
+        return 0; // same day
     }
 
 }

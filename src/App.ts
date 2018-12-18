@@ -2,17 +2,18 @@
 
 import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
-import IGSensorsQueueProcessor from "./queue-processors/IGSensorsQueueProcessor";
-import IGStreetLampsQueueProcessor from "./queue-processors/IGStreetLampsQueueProcessor";
+import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
+import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
+import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
 import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
 const { amqpChannel } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { sequelizeConnection } = require("./helpers/PostgresConnector");
-const log = require("debug")("data-platform:integration-engine");
+const log = require("debug")("data-platform:integration-engine:info");
 const config = require("./config/ConfigLoader");
 
 class App {
@@ -46,13 +47,14 @@ class App {
     private queueProcessors = async (): Promise<void> => {
         const ch = await amqpChannel;
         await Promise.all([
-            new ParkingsQueueProcessor(ch).registerQueues(),
             new CityDistrictsQueueProcessor(ch).registerQueues(),
-            new IGSensorsQueueProcessor(ch).registerQueues(),
-            new IGStreetLampsQueueProcessor(ch).registerQueues(),
+            new IceGatewaySensorsQueueProcessor(ch).registerQueues(),
+            new IceGatewayStreetLampsQueueProcessor(ch).registerQueues(),
+            new ParkingsQueueProcessor(ch).registerQueues(),
             new ParkingZonesQueueProcessor(ch).registerQueues(),
-            new VehiclePositionsQueueProcessor(ch).registerQueues(),
+            new PurgeQueueProcessor(ch).registerQueues(),
             new RopidGTFSQueueProcessor(ch).registerQueues(),
+            new VehiclePositionsQueueProcessor(ch).registerQueues(),
             // ...ready to register more queue processors
         ]);
     }

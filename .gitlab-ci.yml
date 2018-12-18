@@ -20,7 +20,7 @@ run_tests:
     - curl --silent ifconfig.co
     - echo "$TEST_SECRETS_DATASOURCES_JS" > ${PWD}/datasources.js
     - cat ${PWD}/datasources.js
-    - docker run -v ${PWD}/datasources.js:/home/node/app/integration-engine/src/config/datasources.js:ro -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CONTAINER_IMAGE npm run code-coverage
+    - docker run -v ${PWD}/datasources.js:/home/node/app/src/config/datasources.js:ro -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy

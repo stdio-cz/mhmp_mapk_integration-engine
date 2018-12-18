@@ -1,16 +1,15 @@
 {
 	"name": "data-platform-integration-engine",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Integration Engine of the Data Platform System",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"start": "node -r dotenv/config dist/App.js",
-		"postinstall": "tsc",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
-		"test": "mocha --timeout 60000 -r ts-node/register -r dotenv/config test/**/*.test.ts --exit",
-		"code-coverage": "nyc mocha --timeout 60000 -r ts-node/register -r source-map-support/register -r dotenv/config --recursive test/**/*.test.ts --exit"
+		"test": "mocha --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts --exit",
+		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config --recursive test/**/*.test.ts --exit"
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",
@@ -39,10 +38,11 @@
 		"amqplib": "0.5.2",
 		"basic-ftp": "2.17.0",
 		"csvtojson": "2.0.8",
-		"data-platform-schema-definitions": "file:../schema-definitions",
+		"data-platform-schema-definitions": "0.1.0-612",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
+		"moment-timezone": "0.5.23",
 		"mongoose": "5.3.6",
 		"pg": "7.6.1",
 		"pg-hstore": "2.3.2",

@@ -1,15 +1,16 @@
 "use strict";
 
+import { IceGatewaySensors } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
-export default class IGSensorsHistoryTransformation extends BaseTransformation implements ITransformation {
+export default class IceGatewaySensorsHistoryTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "IGSensorsHistory";
+        this.name = IceGatewaySensors.history.name;
     }
 
     /**

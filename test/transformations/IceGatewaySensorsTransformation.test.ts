@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGStreetLampsTransformation from "../../src/transformations/IGStreetLampsTransformation";
+import IceGatewaySensorsTransformation from "../../src/transformations/IceGatewaySensorsTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -24,20 +24,20 @@ fs.readFileAsync = (filename) => {
     });
 };
 
-describe("IGStreetLampsTransformation", () => {
+describe("IceGatewaySensorsTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new IGStreetLampsTransformation();
-        const buffer = await fs.readFileAsync(__dirname + "/../data/ig-street-lamps-datasource.json");
+        transformation = new IceGatewaySensorsTransformation();
+        const buffer = await fs.readFileAsync(__dirname + "/../data/ig-sensors-datasource.json");
         testSourceData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("IGStreetLamps");
+        expect(transformation.name).is.equal("IceGatewaySensors");
     });
 
     it("should has TransformDataElement method", async () => {
@@ -50,13 +50,7 @@ describe("IGStreetLampsTransformation", () => {
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("id");
-        expect(data.properties).to.have.property("dim_value");
-        expect(data.properties).to.have.property("groups");
-        expect(data.properties).to.have.property("lamppost_id");
-        expect(data.properties).to.have.property("last_dim_override");
-        expect(data.properties).to.have.property("state");
-        expect(data.properties.state).to.have.property("description");
-        expect(data.properties.state).to.have.property("id");
+        expect(data.properties).to.have.property("sensors");
         expect(data.properties).to.have.property("timestamp");
     });
 
@@ -71,13 +65,7 @@ describe("IGStreetLampsTransformation", () => {
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("id");
-            expect(data[i].properties).to.have.property("dim_value");
-            expect(data[i].properties).to.have.property("groups");
-            expect(data[i].properties).to.have.property("lamppost_id");
-            expect(data[i].properties).to.have.property("last_dim_override");
-            expect(data[i].properties).to.have.property("state");
-            expect(data[i].properties.state).to.have.property("description");
-            expect(data[i].properties.state).to.have.property("id");
+            expect(data[i].properties).to.have.property("sensors");
             expect(data[i].properties).to.have.property("timestamp");
         }
     });

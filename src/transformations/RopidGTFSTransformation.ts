@@ -1,5 +1,6 @@
 "use strict";
 
+import { RopidGTFS } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
@@ -11,7 +12,7 @@ export default class RopidGTFSTransformation extends BaseTransformation implemen
 
     constructor() {
         super();
-        this.name = "RopidGTFS";
+        this.name = RopidGTFS.name;
     }
 
     /**

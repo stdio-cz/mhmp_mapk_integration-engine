@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import IGStreetLampsDataSource from "../../src/datasources/IGStreetLampsDataSource";
+import IceGatewayStreetLampsDataSource from "../../src/datasources/IceGatewayStreetLampsDataSource";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -11,18 +11,24 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-describe("IGStreetLampsDataSource", () => {
+const config = require("../../src/config/ConfigLoader");
+
+describe("IceGatewayStreetLampsDataSource", () => {
 
     let datasource;
     let lampId;
 
     beforeEach(() => {
-        datasource = new IGStreetLampsDataSource();
+        datasource = new IceGatewayStreetLampsDataSource();
         lampId = "ICE-003-042-000-006";
     });
 
     it("should instantiate", () => {
         expect(datasource).not.to.be.undefined;
+    });
+
+    it("should has correct IceGatewayToken", () => {
+        expect(config.datasources.IceGatewayToken).to.not.equal("myStringToken");
     });
 
     it("should has GetAll method", () => {
