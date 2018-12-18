@@ -1,5 +1,7 @@
 "use strict";
 
+import { RopidGTFS } from "data-platform-schema-definitions";
+
 import RopidGTFSDataSource from "../datasources/RopidGTFSDataSource";
 import CustomError from "../helpers/errors/CustomError";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
@@ -25,8 +27,7 @@ export default class RopidGTFSWorker {
     constructor() {
         this.datasource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
-        // TODO brat jmeno ze schemat?
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "RopidGTFS";
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
     public downloadFiles = async (): Promise<void> => {
