@@ -4,6 +4,7 @@ import handleError from "./helpers/errors/ErrorHandler";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
 import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
+import MerakiAccessPointsQueueProcessor from "./queue-processors/MerakiAccessPointsQueueProcessor";
 import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
 import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
 import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
@@ -50,6 +51,7 @@ class App {
             new CityDistrictsQueueProcessor(ch).registerQueues(),
             new IceGatewaySensorsQueueProcessor(ch).registerQueues(),
             new IceGatewayStreetLampsQueueProcessor(ch).registerQueues(),
+            new MerakiAccessPointsQueueProcessor(ch).registerQueues(),
             new ParkingsQueueProcessor(ch).registerQueues(),
             new ParkingZonesQueueProcessor(ch).registerQueues(),
             new PurgeQueueProcessor(ch).registerQueues(),
