@@ -1,12 +1,14 @@
 "use strict";
 
 import { ParkingZones } from "data-platform-schema-definitions";
+import CustomError from "../helpers/errors/CustomError";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
 const request = require("request-promise");
 const csvtojson = require("csvtojson");
 const config = require("../config/ConfigLoader");
+const errorLog = require("debug")("data-platform:integration-engine:error");
 
 export default class ParkingZonesTransformation extends GeoJsonTransformation implements ITransformation {
 
@@ -81,93 +83,97 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
     }
 
     private initTariffsEnum = async () => {
-        const body = await request({
-            headers: {},
-            method: "GET",
-            url: config.datasources.ParkingZonesTariffs,
-        });
-        let tariffsEnum = await csvtojson({
-            noheader: false,
-            output: "csv",
-        }).fromString(body);
-        tariffsEnum = tariffsEnum.sort((a, b) => {
-            if (a[1] < b[1]) {
-                return -1;
-            } else if (a[1] > b[1]) {
-                return 1;
-            } else {
-                return a[2] - b[2];
-            }
-        });
+        try {
+            const body = await request({
+                headers: {},
+                method: "GET",
+                url: config.datasources.ParkingZonesTariffs,
+            });
+            let tariffsEnum = await csvtojson({
+                noheader: false,
+                output: "csv",
+            }).fromString(body);
+            tariffsEnum = tariffsEnum.sort((a, b) => {
+                if (a[1] < b[1]) {
+                    return -1;
+                } else if (a[1] > b[1]) {
+                    return 1;
+                } else {
+                    return a[2] - b[2];
+                }
+            });
 
-        const tariffs = [];
+            const tariffs = [];
 
-        // TODO je blokujici?
-        tariffsEnum.map((te) => {
-            te.splice(0, 1);
-            if (!tariffs[te[0]]) {
-                tariffs[te[0]] = {};
-            }
-            if (!tariffs[te[0]][te[1]]) {
-                tariffs[te[0]][te[1]] = new Set();
-            }
-            tariffs[te[0]][te[1]].add(JSON.stringify({
-                divisibility: te[6],
-                from: te[3],
-                max_parking_time: te[5],
-                price_per_hour: te[2],
-                to: te[4],
-            }));
-        });
+            tariffsEnum.map((te) => {
+                te.splice(0, 1);
+                if (!tariffs[te[0]]) {
+                    tariffs[te[0]] = {};
+                }
+                if (!tariffs[te[0]][te[1]]) {
+                    tariffs[te[0]][te[1]] = new Set();
+                }
+                tariffs[te[0]][te[1]].add(JSON.stringify({
+                    divisibility: te[6],
+                    from: te[3],
+                    max_parking_time: te[5],
+                    price_per_hour: te[2],
+                    to: te[4],
+                }));
+            });
 
-        // TODO je blokujici?
-        Object.keys(tariffs).map((key) => {
-            const ary = [];
-            if (tariffs[key]["0"]) {
-                ary.push({
-                    day: { description: "Neděle", id: 0 },
-                    hours: [...tariffs[key]["0"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["1"]) {
-                ary.push({
-                    day: { description: "Pondělí", id: 1 },
-                    hours: [...tariffs[key]["1"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["2"]) {
-                ary.push({
-                    day: { description: "Úterý", id: 2 },
-                    hours: [...tariffs[key]["2"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["3"]) {
-                ary.push({
-                    day: { description: "Středa", id: 3 },
-                    hours: [...tariffs[key]["3"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["4"]) {
-                ary.push({
-                    day: { description: "Čtvrtek", id: 4 },
-                    hours: [...tariffs[key]["4"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["5"]) {
-                ary.push({
-                    day: { description: "Pátek", id: 5 },
-                    hours: [...tariffs[key]["5"]].map((a) => JSON.parse(a)),
-                });
-            }
-            if (tariffs[key]["6"]) {
-                ary.push({
-                    day: { description: "Sobota", id: 6 },
-                    hours: [...tariffs[key]["6"]].map((a) => JSON.parse(a)),
-                });
-            }
-            tariffs[key] = ary;
-        });
-        this.tariffs = tariffs;
+            Object.keys(tariffs).map((key) => {
+                const ary = [];
+                if (tariffs[key]["0"]) {
+                    ary.push({
+                        day: { description: "Neděle", id: 0 },
+                        hours: [...tariffs[key]["0"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["1"]) {
+                    ary.push({
+                        day: { description: "Pondělí", id: 1 },
+                        hours: [...tariffs[key]["1"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["2"]) {
+                    ary.push({
+                        day: { description: "Úterý", id: 2 },
+                        hours: [...tariffs[key]["2"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["3"]) {
+                    ary.push({
+                        day: { description: "Středa", id: 3 },
+                        hours: [...tariffs[key]["3"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["4"]) {
+                    ary.push({
+                        day: { description: "Čtvrtek", id: 4 },
+                        hours: [...tariffs[key]["4"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["5"]) {
+                    ary.push({
+                        day: { description: "Pátek", id: 5 },
+                        hours: [...tariffs[key]["5"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                if (tariffs[key]["6"]) {
+                    ary.push({
+                        day: { description: "Sobota", id: 6 },
+                        hours: [...tariffs[key]["6"]].map((a) => JSON.parse(a)),
+                    });
+                }
+                tariffs[key] = ary;
+            });
+            this.tariffs = tariffs;
+        } catch (err) {
+            this.tariffs = [];
+            errorLog("Retrieving of the Tariff data failed.");
+            errorLog(err);
+        }
     }
 
     /**
