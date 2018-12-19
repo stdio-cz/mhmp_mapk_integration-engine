@@ -1,6 +1,7 @@
 module.exports = {
     CityDistricts: "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
     IGSensors: "https://prague-city.ice-gateway.com/iceapi/v1/iot/data/all/?per_page=200",
+    IGStreetLamp: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
     IGStreetLamps: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",
     IGToken: "myStringToken",
     ParkingZones: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",

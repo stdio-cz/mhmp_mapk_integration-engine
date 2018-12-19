@@ -13,4 +13,7 @@ export default interface ISourceRequest {
 
     /** Object with HTTP headers. */
     headers: object;
+
+    /** Is JSON payload */
+    json?: boolean;
 }
