@@ -19,3 +19,4 @@
 - 1015: Error while updating district.
 - 1016: Error while updating adress.
 - 1017: Error while purging old data.
+- 1018: Error while sending the POST request.

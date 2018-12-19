@@ -1,13 +1,13 @@
 # Datové sady pro prototyp Integračního enginu Datové platformy
 
-Poslední úprava: 17. 12. 2018
+Poslední úprava: 19. 12. 2018
 
 ## Přehled datových sad
 
 - Městské části (CityDistricts)
-- Ice Gateway Senzory (IGSensors)
-- Ice Gateway Lampy (IGStreetLamps)
-- **TODO** Meraki (MerakiAccessPoints)
+- Ice Gateway Senzory (IceGatewaySensors)
+- Ice Gateway Lampy (IceGatewayStreetLamps)
+- Meraki (MerakiAccessPoints)
 - Parkoviště (Parkings)
 - Zóny parkování (ParkingZones)
 - Jízdní řády (RopidGTFS)
@@ -30,7 +30,7 @@ Provizorní datová sada, která v prototypu bude sloužit hlavně pro obohacen�
     - nepřijímá žádná data, pouze update ze zdroje
     - nerozesílá žadné další zprávy
 
-## Ice Gateway Senzory (IGSensors)
+## Ice Gateway Senzory (IceGatewaySensors)
 
 - název: `IceGatewaySensors`
 - schema-definitions: `IceGatewaySensors`
@@ -48,7 +48,7 @@ Provizorní datová sada, která v prototypu bude sloužit hlavně pro obohacen�
     - přijímá data a vkládá do DB
     - nerozesílá žadné další zprávy
 
-## Ice Gateway Lampy (IGStreetLamps)
+## Ice Gateway Lampy (IceGatewayStreetLamps)
 
 - název: `IceGatewayStreetLamps`
 - schema-definitions: `IceGatewayStreetLamps`
@@ -62,10 +62,22 @@ Provizorní datová sada, která v prototypu bude sloužit hlavně pro obohacen�
   - `*.[exchangeName].icegatewaystreetlamps.refreshDataInDB`
     - nepřijímá žádná data, pouze update ze zdroje
     - nerozesílá žadné další zprávy
+  - `*.[exchangeName].icegatewaystreetlamps.setDimValue`
+    - přijímá data ze zprávy a posílá request pro ovládání lampy
+    - nerozesílá žadné další zprávy
 
 ## Meraki (MerakiAccessPoints)
 
-- TODO
+- název: `MerakiAccessPoints`
+- schema-definitions: `MerakiAccessPoints`
+- datový zdroj: data-platform-input-gateway
+- databáze:
+  - typ: Postgres SQL
+  - názvy tabulek: `merakiaccesspoints_observations`, `merakiaccesspoints_tags`
+- RabbitMQ fronty:
+  - `*.[exchangeName].merakiaccesspoints.saveDataToDB`
+    - přijímá data ze zprávy a uloží je do DB
+    - nerozesílá žadné další zprávy
 
 ## Parkoviště (Parkings)
 

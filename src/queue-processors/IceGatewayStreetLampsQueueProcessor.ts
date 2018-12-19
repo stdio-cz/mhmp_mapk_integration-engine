@@ -21,6 +21,8 @@ export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProces
     public registerQueues = async (): Promise<any> => {
         await this.registerQueue(this.queuePrefix + ".refreshDataInDB",
             "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB);
+        await this.registerQueue(this.queuePrefix + ".setDimValue",
+            "*." + this.queuePrefix + ".setDimValue", this.setDimValue);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
@@ -31,6 +33,20 @@ export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProces
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg);
+        }
+    }
+
+    protected setDimValue = async (msg: any): Promise<void> => {
+        try {
+            const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
+            log(" [>] " + this.queuePrefix + ".setDimValue received some data.");
+            const res = await igstreetLampsWorker.setDimValue(JSON.parse(msg.content.toString()));
+
+            this.channel.ack(msg);
+            log(" [<] " + this.queuePrefix + ".setDimValue: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);
