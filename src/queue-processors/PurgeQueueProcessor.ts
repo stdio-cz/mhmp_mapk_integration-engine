@@ -22,6 +22,9 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
             "*." + this.queuePrefix + ".deleteOldVehiclePositionsTrips", this.deleteOldVehiclePositionsTrips);
         await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositionsStops",
             "*." + this.queuePrefix + ".deleteOldVehiclePositionsStops", this.deleteOldVehiclePositionsStops);
+        await this.registerQueue(this.queuePrefix + ".deleteOldMerakiAccessPointsObservations",
+            "*." + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations",
+            this.deleteOldMerakiAccessPointsObservations);
     }
 
     protected deleteOldVehiclePositionsTrips = async (msg: any): Promise<any> => {
@@ -46,6 +49,20 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsStops: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg);
+        }
+    }
+
+    protected deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<any> => {
+        try {
+            const worker = new PurgeWorker();
+            log(" [>] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations received some data.");
+            const res = await worker.deleteOldMerakiAccessPointsObservations();
+
+            this.channel.ack(msg);
+            log(" [<] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);

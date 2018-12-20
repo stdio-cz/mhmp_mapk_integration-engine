@@ -29,6 +29,51 @@ export default class ParkingsHistoryModel extends MongoModel implements IModel {
         this.validator = new Validator(this.name, Parkings.history.outputMongooseSchemaObject);
     }
 
+    public GetAverageTakenPlacesById = async (id: number): Promise<any> => {
+        try {
+            const aggregation = [
+                { $match: { id } },
+                {
+                    $group: {
+                        _id: {
+                            dayOfWeek: {
+                                $dayOfWeek: {
+                                    $toDate: "$timestamp",
+                                },
+                            },
+                            hour: {
+                                $dateToString: {
+                                    date: {
+                                        $toDate: "$timestamp",
+                                    },
+                                    format: "%H",
+                                },
+                            },
+                            parking_id: "$id",
+                        },
+                        avg_taken: {
+                            $avg: "$num_of_taken_places",
+                        },
+                    },
+                },
+                { $sort: { "_id.dayOfWeek": 1, "_id.hour": 1 } },
+            ];
+            const res = await this.mongooseModel.aggregate(aggregation).exec();
+            const transformedResult = {};
+            const promises = res.map((r) => {
+                if (!transformedResult[r._id.dayOfWeek]) {
+                    transformedResult[r._id.dayOfWeek] = {};
+                }
+                transformedResult[r._id.dayOfWeek][r._id.hour] = r.avg_taken;
+
+            });
+            await Promise.all(promises);
+            return transformedResult;
+        } catch (err) {
+            throw new CustomError("Error while getting average taken places.", true, this.name, 1020, err);
+        }
+    }
+
     /**
      * Validates and Saves transformed element or collection to database.
      *
