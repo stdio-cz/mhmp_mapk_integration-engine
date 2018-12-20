@@ -69,4 +69,18 @@ export default class ParkingsWorker {
         }
         return dbData;
     }
+
+    public updateAverageOccupancy = async (data: any): Promise<any> => {
+        const id = data.properties.id;
+        const dbData = await this.model.GetOneFromModel(id);
+
+        try {
+            const result = await this.historyModel.GetAverageTakenPlacesById(id);
+            dbData.properties.average_occupancy = result;
+            const r = await dbData.save();
+        } catch (err) {
+            throw new CustomError("Error while updating average taken places.",
+                true, this.constructor.name, 1019, err);
+        }
+    }
 }

@@ -25,6 +25,8 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             "*." + this.queuePrefix + ".saveDataToHistory", this.saveDataToHistory);
         await this.registerQueue(this.queuePrefix + ".updateAddressAndDistrict",
             "*." + this.queuePrefix + ".updateAddressAndDistrict", this.updateAddressAndDistrict);
+        await this.registerQueue(this.queuePrefix + ".updateAverageOccupancy",
+            "*." + this.queuePrefix + ".updateAverageOccupancy", this.updateAverageOccupancy);
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
@@ -38,10 +40,12 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
                 JSON.stringify(res.features));
 
             // TODO promyslet jestli je to spravne nebo to dat nekam jinam
-            // updating district and address by JS Closure
+            // updating district and address and average occupancy by JS Closure
             const parkings = res.features;
             const promises = parkings.map((p) => {
                 this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
+                    JSON.stringify(p));
+                this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAverageOccupancy",
                     JSON.stringify(p));
             });
             await Promise.all(promises);
@@ -76,6 +80,20 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".updateAddressAndDistrict: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg);
+        }
+    }
+
+    protected updateAverageOccupancy = async (msg: any): Promise<void> => {
+        try {
+            const parkingsWorker = new ParkingsWorker();
+            log(" [>] " + this.queuePrefix + ".updateAverageOccupancy received some data.");
+            await parkingsWorker.updateAverageOccupancy(JSON.parse(msg.content.toString()));
+
+            this.channel.ack(msg);
+            log(" [<] " + this.queuePrefix + ".updateAverageOccupancy: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg);
