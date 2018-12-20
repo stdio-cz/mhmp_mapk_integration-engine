@@ -29,4 +29,15 @@ export default class PurgeWorker {
         }
     }
 
+    public deleteOldMerakiAccessPointsObservations = async (): Promise<void> => {
+        try {
+            const res = await sequelizeConnection.query(
+                "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);",
+            );
+            debugLog(res);
+        } catch (err) {
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+        }
+    }
+
 }
