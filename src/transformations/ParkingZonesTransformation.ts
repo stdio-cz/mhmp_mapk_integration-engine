@@ -57,6 +57,10 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
             type: "Feature",
         };
 
+        if (!this.tariffs) {
+            await this.initTariffsEnum();
+        }
+
         res.properties.tariffs = this.tariffs[res.properties.code];
 
         if (res.geometry.type === "Polygon") {
