@@ -19,6 +19,8 @@ export default class ParkingZonesWorker {
     public refreshDataInDB = async (): Promise<any> => {
         const data = await this.dataSource.GetAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
+        // TODO osetrit mazani
+        await this.model.Truncate();
         await this.model.SaveToDb(transformedData);
         return transformedData;
     }

@@ -2,6 +2,7 @@
 
 import { ParkingZones } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
+import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
 import IModel from "./IModel";
@@ -43,7 +44,37 @@ export default class ParkingZonesModel extends GeoJsonModel implements IModel {
         result.properties.northeast = item.properties.northeast;
         result.properties.southwest = item.properties.southwest;
         result.properties.zps_id = item.properties.zps_id;
+        result.properties.zps_ids = item.properties.zps_ids;
         return result;
+    }
+
+    /**
+     * Overrides GeoJsonModel::SaveOrUpdateOneToDb
+     *
+     * @param item
+     */
+    protected SaveOrUpdateOneToDb = async (item) => {
+        try {
+            // Search for the item in db
+            let result = await this.mongooseModel.findOne(this.searchPath(item.properties.code));
+
+            if (!result) { // If item doesn't exist in the db yet
+                // Create it
+                result = await this.mongooseModel.create(item);
+            } else { // If the item already is in the db
+                // Update its properties to new values according to the new input
+                result = this.updateValues(result, item);
+                // Save the change
+                result = await result.save();
+            }
+            result = result.toObject();
+            delete result._id;
+            delete result.__v;
+            // Returns the item saved to the database (stripped of _id and __v)
+            return result;
+        } catch (err) {
+            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+        }
     }
 
 }

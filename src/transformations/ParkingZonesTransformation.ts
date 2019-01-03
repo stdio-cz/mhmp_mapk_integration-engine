@@ -1,7 +1,6 @@
 "use strict";
 
 import { ParkingZones } from "data-platform-schema-definitions";
-import CustomError from "../helpers/errors/CustomError";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
@@ -58,10 +57,6 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
             type: "Feature",
         };
 
-        if (!this.tariffs) {
-            await this.initTariffsEnum();
-        }
-
         res.properties.tariffs = this.tariffs[res.properties.code];
 
         if (res.geometry.type === "Polygon") {
@@ -80,6 +75,93 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         }
 
         return res;
+    }
+
+    /**
+     * Overrides GeoJsonTransformation::TransformDataCollection
+     */
+    public TransformDataCollection = async (collection): Promise<any> => {
+        const res = {
+            features: [],
+            type: "FeatureCollection",
+        };
+
+        if (!this.tariffs) {
+            await this.initTariffsEnum();
+        }
+
+        const promises = collection.map(async (element) => {
+            const transformed = await this.TransformDataElement(element);
+            res.features.push(transformed);
+            return;
+        });
+
+        await Promise.all(promises);
+
+        const sorted = res.features.sort((a, b) => {
+            if (a.properties.code < b.properties.code) {
+                return -1;
+            } else if (a.properties.code > b.properties.code) {
+                return 1;
+            } else {
+                return a.properties.zps_id - b.properties.zps_id;
+            }
+        });
+
+        // mergingIterator JS Closure
+        const mergingIterator = async (i, cb) => {
+            if (sorted.length === i || !sorted[i + 1]) {
+                return cb();
+            }
+
+            if (sorted[i].properties.code === sorted[i + 1].properties.code) {
+                if (sorted[i].geometry.type === "Polygon") {
+                    sorted[i].geometry.type = "MultiPolygon";
+                    sorted[i].geometry.coordinates = [
+                        sorted[i].geometry.coordinates,
+                        sorted[i + 1].geometry.coordinates,
+                    ];
+                    sorted[i].properties.zps_ids = [
+                        sorted[i].properties.zps_id,
+                        sorted[i + 1].properties.zps_id,
+                    ];
+                    sorted[i].properties.zps_id = null;
+                    sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
+
+                    const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
+                    sorted[i].properties.southwest = minMaxResult.min;
+                    sorted[i].properties.northeast = minMaxResult.max;
+
+                    if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
+                        sorted[i].properties.midpoint = this.middlePoint(sorted[i].properties.southwest,
+                            sorted[i].properties.northeast);
+                    }
+                } else if (sorted[i].geometry.type === "MultiPolygon") {
+                    sorted[i].geometry.coordinates.push(sorted[i + 1].geometry.coordinates);
+                    sorted[i].properties.zps_ids.push(sorted[i + 1].properties.zps_id);
+                    sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
+
+                    const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
+                    sorted[i].properties.southwest = minMaxResult.min;
+                    sorted[i].properties.northeast = minMaxResult.max;
+
+                    if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
+                        sorted[i].properties.midpoint = this.middlePoint(sorted[i].properties.southwest,
+                            sorted[i].properties.northeast);
+                    }
+                }
+                sorted.splice(i + 1, 1);
+                i--;
+            }
+
+            setImmediate(mergingIterator.bind(null, i + 1, cb));
+        };
+        return new Promise((resolve, reject) => {
+            mergingIterator(0, () => {
+                res.features = sorted;
+                resolve(res);
+            });
+        });
     }
 
     private initTariffsEnum = async () => {

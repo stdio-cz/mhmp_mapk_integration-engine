@@ -43,4 +43,15 @@ export default abstract class MongoModel extends BaseModel {
         }
     }
 
+    /**
+     * Deletes all data from table.
+     */
+    public Truncate = async (): Promise<any> => {
+        try {
+            await this.mongooseModel.deleteMany({}).exec();
+        } catch (err) {
+            throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+        }
+    }
+
 }
