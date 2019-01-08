@@ -6,13 +6,14 @@ import ITransformation from "./ITransformation";
 
 const request = require("request-promise");
 const csvtojson = require("csvtojson");
+const lodash = require("lodash");
 const config = require("../config/ConfigLoader");
 const errorLog = require("debug")("data-platform:integration-engine:error");
 
 export default class ParkingZonesTransformation extends GeoJsonTransformation implements ITransformation {
 
     public name: string;
-    private tariffs: any[];
+    private tariffs: {};
 
     constructor() {
         super();
@@ -58,7 +59,7 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         };
 
         if (!this.tariffs) {
-            await this.initTariffsEnum();
+            await this.initTariffs();
         }
 
         res.properties.tariffs = this.tariffs[res.properties.code];
@@ -91,7 +92,7 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         };
 
         if (!this.tariffs) {
-            await this.initTariffsEnum();
+            await this.initTariffs();
         }
 
         const promises = collection.map(async (element) => {
@@ -166,100 +167,6 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
                 resolve(res);
             });
         });
-    }
-
-    private initTariffsEnum = async () => {
-        try {
-            const body = await request({
-                headers: {},
-                method: "GET",
-                url: config.datasources.ParkingZonesTariffs,
-            });
-            let tariffsEnum = await csvtojson({
-                noheader: false,
-                output: "csv",
-            }).fromString(body);
-            tariffsEnum = tariffsEnum.sort((a, b) => {
-                if (a[1] < b[1]) {
-                    return -1;
-                } else if (a[1] > b[1]) {
-                    return 1;
-                } else {
-                    return a[2] - b[2];
-                }
-            });
-
-            const tariffs = [];
-
-            tariffsEnum.map((te) => {
-                te.splice(0, 1);
-                if (!tariffs[te[0]]) {
-                    tariffs[te[0]] = {};
-                }
-                if (!tariffs[te[0]][te[1]]) {
-                    tariffs[te[0]][te[1]] = new Set();
-                }
-                tariffs[te[0]][te[1]].add(JSON.stringify({
-                    divisibility: te[6],
-                    from: te[3],
-                    max_parking_time: te[5],
-                    price_per_hour: te[2],
-                    to: te[4],
-                }));
-            });
-
-            Object.keys(tariffs).map((key) => {
-                const ary = [];
-                if (tariffs[key]["0"]) {
-                    ary.push({
-                        day: { description: "Neděle", id: 0 },
-                        hours: [...tariffs[key]["0"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["1"]) {
-                    ary.push({
-                        day: { description: "Pondělí", id: 1 },
-                        hours: [...tariffs[key]["1"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["2"]) {
-                    ary.push({
-                        day: { description: "Úterý", id: 2 },
-                        hours: [...tariffs[key]["2"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["3"]) {
-                    ary.push({
-                        day: { description: "Středa", id: 3 },
-                        hours: [...tariffs[key]["3"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["4"]) {
-                    ary.push({
-                        day: { description: "Čtvrtek", id: 4 },
-                        hours: [...tariffs[key]["4"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["5"]) {
-                    ary.push({
-                        day: { description: "Pátek", id: 5 },
-                        hours: [...tariffs[key]["5"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                if (tariffs[key]["6"]) {
-                    ary.push({
-                        day: { description: "Sobota", id: 6 },
-                        hours: [...tariffs[key]["6"]].map((a) => JSON.parse(a)),
-                    });
-                }
-                tariffs[key] = ary;
-            });
-            this.tariffs = tariffs;
-        } catch (err) {
-            this.tariffs = [];
-            errorLog("Retrieving of the Tariff data failed.");
-            errorLog(err);
-        }
     }
 
     /**
@@ -355,6 +262,242 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
 
         // Return result
         return [toDeg(lng3), toDeg(lat3)];
+    }
+
+    /**
+     * Tariff processing
+     *
+     */
+    private initTariffs = async () => {
+        try {
+            const body = await request({
+                headers: {},
+                method: "GET",
+                url: config.datasources.ParkingZonesTariffs,
+            });
+            const tariffsArray = await csvtojson({
+                noheader: false,
+            }).fromString(body)
+            .subscribe((json) => {
+                json.TIMEFROM = this.timeToMinutes(json.TIMEFROM);
+                json.TIMETO = this.timeToMinutes(json.TIMETO);
+                delete json.OBJECTID;
+                json.code = json.CODE;
+                delete json.CODE;
+                json.day = json.DAY;
+                delete json.DAY;
+                json.divisibility = parseInt(json.DIVISIBILITY, 10);
+                delete json.DIVISIBILITY;
+                json.time_from = json.TIMEFROM;
+                delete json.TIMEFROM;
+                json.max_parking_time = parseInt(json.MAXPARKINGTIME, 10);
+                delete json.MAXPARKINGTIME;
+                json.price_per_hour = parseFloat(json.PRICEPERHOUR);
+                delete json.PRICEPERHOUR;
+                json.time_to = json.TIMETO;
+                delete json.TIMETO;
+            });
+            this.tariffs = await this.prepareTariffs(tariffsArray);
+        } catch (err) {
+            this.tariffs = [];
+            errorLog("Retrieving of the Tariff data failed.");
+            errorLog(err);
+        }
+    }
+
+    /**
+     * Tariff processing
+     * convert time to minutes
+     * return number of minuts
+     */
+    private timeToMinutes = (value) => {
+        const arr = value.split(":").map((val) => {
+            return Number(val);
+        });
+        return (arr[0] * 60) + arr[1];
+    }
+
+    /**
+     * Tariff processing
+     * prepare to task all zones
+     */
+    private prepareTariffs = async (inputData) => {
+        const cleanOut = {};
+
+        const groupedByCode = lodash.groupBy(inputData, "code");
+        const byCodeDone = await Object.keys(groupedByCode).map(async (item) => {
+            if (!cleanOut[item]) {
+                cleanOut[item] = {};
+            }
+            // task to every "day"
+            const groupedByDay = lodash.groupBy(groupedByCode[item], "day");
+            const byDayDone = Object.keys(groupedByDay).map(async (picked) => {
+                // task to clean
+                let cleanInterval = await this.cleanTariffsForZone(groupedByDay[picked]);
+                // if cleanInterval contain more than one object
+                if (lodash.size(cleanInterval) > 1) {
+                    // task to clean (in some zone necessarily)
+                    cleanInterval = await this.cleanTariffsForZone(cleanInterval);
+                    if (lodash.size(cleanInterval) > 1) {
+                        // add to return out
+                        cleanOut[item][picked] = cleanInterval;
+                    }
+                } else {
+                    // add to return out
+                    cleanOut[item][picked] = cleanInterval;
+                }
+            });
+            await Promise.all(byDayDone);
+
+            const mergedDays = [];
+            await Promise.all([0, 1, 2, 3, 4, 5, 6].map((day) => {
+                if (cleanOut[item][day]) {
+                    const exist = lodash.findIndex(mergedDays, (o) => {
+                        return JSON.stringify(o.intervals) === JSON.stringify(cleanOut[item][day]);
+                    });
+                    if (mergedDays.length === 0) {
+                        mergedDays.push(Object.assign({days: [day]}, {intervals: cleanOut[item][day]}));
+                    } else if (exist !== -1) {
+                        mergedDays[exist].days.push(day);
+                    } else {
+                        mergedDays.push(Object.assign({days: [day]}, {intervals: cleanOut[item][day]}));
+                    }
+                }
+                return Promise.resolve();
+            }));
+            cleanOut[item] = mergedDays;
+        });
+        await Promise.all(byCodeDone);
+        return cleanOut;
+    }
+
+    /**
+     * Tariff processing
+     *
+     */
+    private cleanTariffsForZone = (days) => {
+        // output array
+        const out = [];
+        out[0] = days[0];
+
+        // JS Closure
+        const asyncWhile = async (whileStop, cb) => {
+            // end of while loop
+            if (out[whileStop] === undefined) {
+                return cb();
+            }
+
+            // loop to compare inputs item with outputs
+            days.forEach((day) => {
+                delete day.code;
+                delete day.day;
+                if (day.price_per_hour <= out[whileStop].price_per_hour) {
+                    // if interval is same or in output interval
+                    if (this.inRange(day.time_from, out[whileStop].time_from, out[whileStop].time_to)
+                            && this.inRange(day.time_to, out[whileStop].time_from, out[whileStop].time_to)) {
+                        /* do nothing */
+                    } else if ((day.time_from > out[whileStop].time_to
+                            && this.inRange(day.time_to, out[whileStop].time_from, out[whileStop].time_to))
+                            || (day.time_from < out[whileStop].time_to
+                            && this.inRange(day.time_to, out[whileStop].time_from, out[whileStop].time_to))) {
+                        // join interval on outputs start "new (original)""
+                        out[whileStop].time_from = day.time_from;
+                    } else if ((out[whileStop].time_to < day.time_to
+                            && this.inRange(day.time_from, out[whileStop].time_from, out[whileStop].time_to))
+                            || (day.time_to < out[whileStop].time_to
+                            && this.inRange(day.time_from, out[whileStop].time_from, out[whileStop].time_to))) {
+                        // join interval on end "(original) new"
+                        out[whileStop].time_to = day.time_to;
+                    } else { // add item to outputs interval
+                        // check duplicity
+                        if (!lodash.find(out, day)) {
+                            // add
+                            out.push(day);
+                        }
+                    }
+                } else {
+                    out.forEach((o, l) => {
+                        // if interval exist change price because of condition after for
+                        if (out[l].time_from === day.time_from && out[l].time_to === day.time_to) {
+                            // change price to higher
+                            out[l].price_per_hour = day.price_per_hour;
+                        } else if (this.inRange(day.time_from, out[l].time_from, out[l].time_to)
+                                && this.inRange(day.time_to, out[l].time_from, out[l].time_to)) {
+                            // new interval in some exist intervla (old)(new)(old)
+                            // midle
+                            const last = day;
+                            last.time_from = day.time_to + 1;
+                            last.time_to = out[l].time_to;
+                            // first
+                            out[l].time_to = day.time_from - 1;
+                            // second
+                            out.push(day);
+                            // thirt
+                            out.push(last);
+                        } else if (!this.inRange(day.time_from, out[l].time_from, out[l].time_to)
+                                && this.inRange(day.time_to, out[l].time_from, out[l].time_to)) {
+                            // new interval on start of exist intervla (new)(old)
+                            // start
+                            out[l].time_from = day.time_to - 1;
+                            out.push(day);
+                        } else if (this.inRange(day.time_from, out[l].time_from, out[l].time_to)
+                                && !this.inRange(day.time_to, out[l].time_from, out[l].time_to)) {
+                            // new interval on end of exist intervla (old)(new)
+                            // end
+                            out[l].time_to = day.time_from - 1;
+                            out.push(day);
+                        } else if (!this.inRange(day.time_from, out[l].time_from, out[l].time_to)
+                                && !this.inRange(day.time_to, out[l].time_from, out[l].time_to)) {
+                            // new interval (new)   (old)
+                            // out
+                            out.push(day);
+                        }
+                    });
+                }
+            });
+            // call next iteration
+            setImmediate(asyncWhile.bind(null, whileStop + 1, cb));
+        };
+
+        // return clean intervals as promise
+        return new Promise((resolve, reject) => {
+            // initial call of async while
+            asyncWhile(0, () => {
+                resolve(Object.assign(out));
+            });
+        });
+    }
+
+    /**
+     * Tariff processing
+     * return true if input(val) is in range(from-to)
+     */
+    private inRange = (val, from, to, deviation = false) => {
+
+        if (!deviation) {
+            val = lodash.round(val, -1);
+            from = lodash.round(from, -1);
+            to = lodash.round(to, -1);
+        }
+
+        if (to === 1439) {
+            to = 0;
+        }
+        if (from === 0) {
+            from = 1439;
+        }
+
+        if (from > to) {
+            if (lodash.includes(lodash.range(from, 1441), val)
+                || lodash.includes(lodash.range(0, to), val) || from === val || to === val) {
+                return true;
+            }
+        } else {
+            if (lodash.includes(lodash.range(from, to), val) || from === val || to === val) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

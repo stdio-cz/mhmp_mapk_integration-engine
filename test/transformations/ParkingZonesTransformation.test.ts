@@ -40,31 +40,6 @@ describe("ParkingZonesTransformation", () => {
         expect(transformation.name).not.to.be.undefined;
         expect(transformation.name).is.equal("ParkingZones");
     });
-/*
-    it("test", async () => {
-        const merge = (ranges) => {
-            const result = [];
-            let last;
-            ranges.forEach((r) => {
-                if (!last || r[0] > last[1]) {
-                    result.push(last = r);
-                } else if (r[1] > last[1]) {
-                    last[1] = r[1];
-                }
-            });
-            return result;
-        };
-        const toMinutes = (time) => {
-            const ary = time.split(":");
-            return (parseInt(ary[0], 10) * 60) + (parseInt(ary[1], 10));
-        };
-        const toMinutesInterval = (from, to) => {
-            const f = toMinutes(from);
-            const t = toMinutes(to);
-            return [from, (from < to) ? to : to + 1440];
-        };
-    });
-*/
 
     it("should has TransformDataElement method", async () => {
         expect(transformation.TransformDataElement).not.to.be.undefined;
