@@ -18,28 +18,29 @@ export default class IceGatewaySensorsQueueProcessor extends BaseQueueProcessor 
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + IceGatewaySensors.name.toLowerCase();
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".refreshDataInDB",
-            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB);
+            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 4 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".saveDataToHistory",
-            "*." + this.queuePrefix + ".saveDataToHistory", this.saveDataToHistory);
+            "*." + this.queuePrefix + ".saveDataToHistory", this.saveDataToHistory, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead"});
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const worker = new IceGatewaySensorsWorker();
             log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
-            const res = await worker.refreshDataInDB();
-
-            // historization
-            await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-                JSON.stringify(res.features));
+            await worker.refreshDataInDB();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
@@ -53,7 +54,7 @@ export default class IceGatewaySensorsQueueProcessor extends BaseQueueProcessor 
             log(" [<] " + this.queuePrefix + ".saveDataToHistory: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

@@ -17,55 +17,61 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + "purge";
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositionsTrips",
-            "*." + this.queuePrefix + ".deleteOldVehiclePositionsTrips", this.deleteOldVehiclePositionsTrips);
+            "*." + this.queuePrefix + ".deleteOldVehiclePositionsTrips", this.deleteOldVehiclePositionsTrips, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
         await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositionsStops",
-            "*." + this.queuePrefix + ".deleteOldVehiclePositionsStops", this.deleteOldVehiclePositionsStops);
+            "*." + this.queuePrefix + ".deleteOldVehiclePositionsStops", this.deleteOldVehiclePositionsStops, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
         await this.registerQueue(this.queuePrefix + ".deleteOldMerakiAccessPointsObservations",
             "*." + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations",
-            this.deleteOldMerakiAccessPointsObservations);
+                this.deleteOldMerakiAccessPointsObservations, {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead" });
     }
 
-    protected deleteOldVehiclePositionsTrips = async (msg: any): Promise<any> => {
+    protected deleteOldVehiclePositionsTrips = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
             log(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips received some data.");
-            const res = await worker.deleteOldVehiclePositionsTrips();
+            await worker.deleteOldVehiclePositionsTrips();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
-    protected deleteOldVehiclePositionsStops = async (msg: any): Promise<any> => {
+    protected deleteOldVehiclePositionsStops = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
             log(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsStops received some data.");
-            const res = await worker.deleteOldVehiclePositionsStops();
+            await worker.deleteOldVehiclePositionsStops();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsStops: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
-    protected deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<any> => {
+    protected deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
             log(" [>] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations received some data.");
-            const res = await worker.deleteOldMerakiAccessPointsObservations();
+            await worker.deleteOldMerakiAccessPointsObservations();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

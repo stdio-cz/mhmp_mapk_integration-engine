@@ -18,43 +18,39 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Parkings.name.toLowerCase();
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".refreshDataInDB",
-            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB);
+            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 4 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".saveDataToHistory",
-            "*." + this.queuePrefix + ".saveDataToHistory", this.saveDataToHistory);
+            "*." + this.queuePrefix + ".saveDataToHistory", this.saveDataToHistory, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
         await this.registerQueue(this.queuePrefix + ".updateAddressAndDistrict",
-            "*." + this.queuePrefix + ".updateAddressAndDistrict", this.updateAddressAndDistrict);
+            "*." + this.queuePrefix + ".updateAddressAndDistrict", this.updateAddressAndDistrict, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 4 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".updateAverageOccupancy",
-            "*." + this.queuePrefix + ".updateAverageOccupancy", this.updateAverageOccupancy);
+            "*." + this.queuePrefix + ".updateAverageOccupancy", this.updateAverageOccupancy, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 4 * 60 * 1000 });
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
             log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
-            const res = await parkingsWorker.refreshDataInDB();
-
-            // historization
-            await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-                JSON.stringify(res.features));
-
-            // TODO promyslet jestli je to spravne nebo to dat nekam jinam
-            // updating district and address and average occupancy by JS Closure
-            const parkings = res.features;
-            const promises = parkings.map((p) => {
-                this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
-                    JSON.stringify(p));
-                this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAverageOccupancy",
-                    JSON.stringify(p));
-            });
-            await Promise.all(promises);
+            await parkingsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
@@ -68,7 +64,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] " + this.queuePrefix + ".saveDataToHistory: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
@@ -82,7 +78,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] " + this.queuePrefix + ".updateAddressAndDistrict: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
@@ -96,7 +92,7 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
             log(" [<] " + this.queuePrefix + ".updateAverageOccupancy: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

@@ -19,60 +19,72 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".downloadFiles",
-            "*." + this.queuePrefix + ".downloadFiles", this.downloadFiles);
+            "*." + this.queuePrefix + ".downloadFiles", this.downloadFiles, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".transformData",
-            "*." + this.queuePrefix + ".transformData", this.transformData);
+            "*." + this.queuePrefix + ".transformData", this.transformData, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".saveDataToDB",
-            "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB);
+            "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".checkingIfDone",
-            "*." + this.queuePrefix + ".checkingIfDone", this.checkingIfDone);
+            "*." + this.queuePrefix + ".checkingIfDone", this.checkingIfDone, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
     }
 
-    protected downloadFiles = async (msg: any): Promise<any> => {
+    protected downloadFiles = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
             log(" [>] " + this.queuePrefix + ".downloadFiles received some data.");
-            const res = await worker.downloadFiles();
+            await worker.downloadFiles();
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".downloadFiles: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
-    protected transformData = async (msg: any): Promise<any> => {
+    protected transformData = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
             log(" [>] " + this.queuePrefix + ".transformData received some data.");
-            const res = await worker.transformData(JSON.parse(msg.content.toString()));
+            await worker.transformData(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".transformData: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
-    protected saveDataToDB = async (msg: any): Promise<any> => {
+    protected saveDataToDB = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
             log(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
-            const res = await worker.saveDataToDB(JSON.parse(msg.content.toString()));
+            await worker.saveDataToDB(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
-    protected checkingIfDone = async (msg: any): Promise<any> => {
+    protected checkingIfDone = async (msg: any): Promise<void> => {
         try {
             const qt = await this.channel.checkQueue(this.queuePrefix + ".transformData");
             const qs = await this.channel.checkQueue(this.queuePrefix + ".saveDataToDB");
@@ -86,7 +98,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             }
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

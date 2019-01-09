@@ -3,7 +3,7 @@
 import { RopidGTFS } from "data-platform-schema-definitions";
 
 import RopidGTFSDataSource from "../datasources/RopidGTFSDataSource";
-import CustomError from "../helpers/errors/CustomError";
+import IModel from "../models/IModel";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
 import CalendarDatesModel from "../models/RopidGTFS/CalendarDatesModel";
 import CalendarModel from "../models/RopidGTFS/CalendarModel";
@@ -13,18 +13,19 @@ import StopsModel from "../models/RopidGTFS/StopsModel";
 import StopTimesModel from "../models/RopidGTFS/StopTimesModel";
 import TripsModel from "../models/RopidGTFS/TripsModel";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
+import BaseWorker from "./BaseWorker";
 
 const fs = require("fs");
-const { amqpChannel } = require("../helpers/AMQPConnector");
 const config = require("../config/ConfigLoader");
 
-export default class RopidGTFSWorker {
+export default class RopidGTFSWorker extends BaseWorker {
 
     private datasource: RopidGTFSDataSource;
     private transformation: RopidGTFSTransformation;
     private queuePrefix: string;
 
     constructor() {
+        super();
         this.datasource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
@@ -32,62 +33,42 @@ export default class RopidGTFSWorker {
 
     public downloadFiles = async (): Promise<void> => {
         const files = await this.datasource.GetAll();
-        const channel = await amqpChannel;
+
+        // send messages for transformation
         const promises = files.map((file) => {
-            try {
-                channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
-                channel.publish(config.RABBIT_EXCHANGE_NAME,
-                    "workers." + this.queuePrefix + ".transformData",
-                    new Buffer(JSON.stringify(file)));
-            } catch (err) {
-                throw new CustomError("Sending the message to exchange failed.", true,
-                    this.constructor.name, 1001, err);
-            }
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".transformData",
+                new Buffer(JSON.stringify(file)));
         });
         await Promise.all(promises);
 
         // send message to checking if process is done
-        try {
-            channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
-            channel.publish(config.RABBIT_EXCHANGE_NAME,
-                "workers." + this.queuePrefix + ".checkingIfDone",
-                new Buffer(JSON.stringify({count: files.length})));
-        } catch (err) {
-            throw new CustomError("Sending the message to exchange failed.", true,
-                this.constructor.name, 1001, err);
-        }
+        this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDone",
+            new Buffer(JSON.stringify({count: files.length})));
     }
 
-    public transformData = async (inputData): Promise<any> => {
+    public transformData = async (inputData): Promise<void> => {
         inputData.data = await this.readFile(inputData.filepath);
         const transformedData = await this.transformation.TransformDataElement(inputData);
         const model = this.getModelByName(transformedData.name);
         await model.Truncate();
-        const channel = await amqpChannel;
+
+        // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
-            try {
-                channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
-                channel.publish(config.RABBIT_EXCHANGE_NAME,
-                    "workers." + this.queuePrefix + ".saveDataToDB",
-                    new Buffer(JSON.stringify({
-                        data: chunk,
-                        name: transformedData.name,
-                    }),
-                ));
-            } catch (err) {
-                throw new CustomError("Sending the message to exchange failed.", true,
-                    this.constructor.name, 1001, err);
-            }
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
+                new Buffer(JSON.stringify({
+                    data: chunk,
+                    name: transformedData.name,
+                })));
         });
         await Promise.all(promises);
     }
 
-    public saveDataToDB = async (inputData): Promise<any> => {
+    public saveDataToDB = async (inputData): Promise<void> => {
         const model = this.getModelByName(inputData.name);
         await model.SaveToDb(inputData.data);
     }
 
-    private getModelByName = (name: string) => {
+    private getModelByName = (name: string): IModel => {
         switch (name) {
             case "agency":
                 return new AgencyModel();
@@ -110,7 +91,7 @@ export default class RopidGTFSWorker {
         }
     }
 
-    private readFile = (file: string): Promise<any> => {
+    private readFile = (file: string): Promise<Buffer> => {
         return new Promise((resolve, reject) => {
             const stream = fs.createReadStream(file);
             const chunks = [];

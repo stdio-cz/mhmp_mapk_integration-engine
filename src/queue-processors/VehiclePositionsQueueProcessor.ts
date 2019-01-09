@@ -18,22 +18,24 @@ export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".saveDataToDB",
-            "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB);
+            "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
     }
 
-    protected saveDataToDB = async (msg: any): Promise<any> => {
+    protected saveDataToDB = async (msg: any): Promise<void> => {
         try {
             const worker = new VehiclePositionsWorker();
             log(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
-            const res = await worker.saveDataToDB(JSON.parse(msg.content.toString()).m.spoj);
+            await worker.saveDataToDB(JSON.parse(msg.content.toString()).m.spoj);
 
             this.channel.ack(msg);
             log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

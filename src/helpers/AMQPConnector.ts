@@ -24,11 +24,23 @@ class MyAMQP {
             conn.on("close", () => {
                 handleError(new CustomError("Queue disconnected", false));
             });
+
+            await this.assertDeadQueue(this.channel);
+
             return this.channel;
         } catch (err) {
             handleError(new CustomError("Error while creating AMQP Channel.", false,
                 this.constructor.name, undefined, err));
         }
+    }
+
+    private assertDeadQueue = async (channel: amqplib.Channel): Promise<void> => {
+        channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
+        const q = channel.assertQueue(config.RABBIT_EXCHANGE_NAME + ".deadqueue", {
+            durable: true,
+            messageTtl: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds
+        });
+        channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, "dead");
     }
 }
 
