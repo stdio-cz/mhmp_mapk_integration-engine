@@ -29,8 +29,8 @@ class MyAMQP {
 
             return this.channel;
         } catch (err) {
-            handleError(new CustomError("Error while creating AMQP Channel.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while creating AMQP Channel.", false,
+                this.constructor.name, undefined, err);
         }
     }
 

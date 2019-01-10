@@ -25,8 +25,8 @@ class MyMongoose {
                 handleError(new CustomError("Database disconnected", false));
             });
         } catch (err) {
-            handleError(new CustomError("Error while connecting to MongoDB.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while connecting to MongoDB.", false,
+                this.constructor.name, undefined, err);
         }
     }
 }

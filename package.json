@@ -8,8 +8,8 @@
 		"start": "node -r dotenv/config dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
-		"test": "DEBUG='data-platform*' mocha -b --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config dotenv_config_path=.env.test test/**/*.test.ts test/helpers/**/*.test.ts --exit",
-		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config dotenv_config_path=.env.test test/**/*.test.ts test/helpers/**/*.test.ts --exit"
+		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit",
+		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit"
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",

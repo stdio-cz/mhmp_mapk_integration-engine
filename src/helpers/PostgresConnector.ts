@@ -2,7 +2,6 @@
 
 import * as Sequelize from "sequelize";
 import CustomError from "./errors/CustomError";
-import handleError from "./errors/ErrorHandler";
 
 const config = require("../config/ConfigLoader");
 const log = require("debug")("data-platform:integration-engine:connection");
@@ -34,8 +33,8 @@ class MySequelize {
             log("Connected to PostgresSQL!");
             return this.sequelize;
         } catch (err) {
-            handleError(new CustomError("Error while connecting to PostgresSQL.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while connecting to PostgresSQL.", false,
+                this.constructor.name, undefined, err);
         }
     }
 }
