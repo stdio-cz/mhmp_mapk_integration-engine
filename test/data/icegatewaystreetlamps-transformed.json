@@ -1,0 +1,71 @@
+{
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44207951,
+                    50.09426238
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [],
+                "id": "ICE-003-042-000-001",
+                "lamppost_id": "Test001",
+                "last_dim_override": null,
+                "state": {
+                    "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
+                    "id": 2
+                },
+                "timestamp": 1547051693393
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44617926,
+                    50.1026806
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": null,
+                "groups": [],
+                "id": "ICE-003-042-000-002",
+                "lamppost_id": "Test002",
+                "last_dim_override": null,
+                "state": {
+                    "description": "lost connection (connection status older than 1 hour)",
+                    "id": -1
+                },
+                "timestamp": 1547051693393
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44646894,
+                    50.10301092
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "dim_value": 0,
+                "groups": [],
+                "id": "ICE-003-042-000-003",
+                "lamppost_id": "Test003",
+                "last_dim_override": 1542800571,
+                "state": {
+                    "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
+                    "id": 2
+                },
+                "timestamp": 1547051693393
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}
