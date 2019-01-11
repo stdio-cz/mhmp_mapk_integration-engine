@@ -11,9 +11,9 @@ import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
 import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
-const { amqpChannel } = require("./helpers/AMQPConnector");
+const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
-const { sequelizeConnection } = require("./helpers/PostgresConnector");
+const { PostgresConnector } = require("./helpers/PostgresConnector");
 const log = require("debug")("data-platform:integration-engine:info");
 const config = require("./config/ConfigLoader");
 
@@ -38,7 +38,7 @@ class App {
      */
     private database = async (): Promise<void> => {
         await mongooseConnection;
-        await sequelizeConnection.authenticate();
+        await PostgresConnector.connect();
     }
 
     /**
@@ -46,7 +46,7 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const ch = await amqpChannel;
+        const ch = await AMQPConnector.connect();
         await Promise.all([
             new CityDistrictsQueueProcessor(ch).registerQueues(),
             new IceGatewaySensorsQueueProcessor(ch).registerQueues(),

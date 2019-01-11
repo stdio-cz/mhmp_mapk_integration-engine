@@ -2,14 +2,14 @@
 
 import CustomError from "../helpers/errors/CustomError";
 
-const { sequelizeConnection } = require("../helpers/PostgresConnector");
+const { PostgresConnector } = require("../helpers/PostgresConnector");
 const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class PurgeWorker {
 
     public deleteOldVehiclePositionsTrips = async (): Promise<void> => {
         try {
-            const res = await sequelizeConnection.query(
+            const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_trips','created',48);",
             );
             debugLog(res);
@@ -20,7 +20,7 @@ export default class PurgeWorker {
 
     public deleteOldVehiclePositionsStops = async (): Promise<void> => {
         try {
-            const res = await sequelizeConnection.query(
+            const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_stops','created',48);",
             );
             debugLog(res);
@@ -31,7 +31,7 @@ export default class PurgeWorker {
 
     public deleteOldMerakiAccessPointsObservations = async (): Promise<void> => {
         try {
-            const res = await sequelizeConnection.query(
+            const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);",
             );
             debugLog(res);

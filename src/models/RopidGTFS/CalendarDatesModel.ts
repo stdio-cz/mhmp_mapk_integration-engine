@@ -6,7 +6,7 @@ import Validator from "../../helpers/Validator";
 import IModel from "../IModel";
 import PostgresModel from "../PostgresModel";
 
-const { sequelizeConnection } = require("../../helpers/PostgresConnector");
+const { PostgresConnector } = require("../../helpers/PostgresConnector");
 
 export default class CalendarDatesModel extends PostgresModel implements IModel {
 
@@ -18,7 +18,7 @@ export default class CalendarDatesModel extends PostgresModel implements IModel 
         super();
         this.name = RopidGTFS.calendar_dates.name;
 
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.calendar_dates.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar_dates.pgTableName,
             RopidGTFS.calendar_dates.outputSequelizeAttributes);
         this.sequelizeModel.removeAttribute("id");
         // TODO doplnit validator

@@ -21,6 +21,7 @@ export default class ParkingsWorker extends BaseWorker {
     private historyModel: ParkingsHistoryModel;
     private historyTransformation: ParkingsHistoryTransformation;
     private queuePrefix: string;
+    private cityDistrictsModel: CityDistrictsModel;
 
     constructor() {
         super();
@@ -30,6 +31,7 @@ export default class ParkingsWorker extends BaseWorker {
         this.historyModel = new ParkingsHistoryModel();
         this.historyTransformation = new ParkingsHistoryTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Parkings.name.toLowerCase();
+        this.cityDistrictsModel = new CityDistrictsModel();
     }
 
     public refreshDataInDB = async (): Promise<void> => {
@@ -64,8 +66,7 @@ export default class ParkingsWorker extends BaseWorker {
             || data.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
             || data.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
-                const cityDistricts = new CityDistrictsModel();
-                const result = await cityDistricts.GetDistrictByCoordinations(dbData.geometry.coordinates);
+                const result = await this.cityDistrictsModel.GetDistrictByCoordinations(dbData.geometry.coordinates);
                 dbData.properties.district = result;
                 await dbData.save();
             } catch (err) {

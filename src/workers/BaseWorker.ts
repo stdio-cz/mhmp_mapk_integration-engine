@@ -3,13 +3,13 @@
 import CustomError from "../helpers/errors/CustomError";
 
 const config = require("../config/ConfigLoader");
-const { amqpChannel } = require("../helpers/AMQPConnector");
+const { AMQPConnector } = require("../helpers/AMQPConnector");
 
 export default class BaseWorker {
 
     protected sendMessageToExchange = async (key: string, msg: any, options: object = {}): Promise<any> => {
         try {
-            const channel = await amqpChannel;
+            const channel = await AMQPConnector.getChannel();
             channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
             channel.publish(config.RABBIT_EXCHANGE_NAME, key, new Buffer(msg), options);
         } catch (err) {

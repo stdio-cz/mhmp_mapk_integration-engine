@@ -6,7 +6,7 @@ import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import PostgresModel from "./PostgresModel";
 
-const { sequelizeConnection } = require("../helpers/PostgresConnector");
+const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class VehiclePositionsStopsModel extends PostgresModel implements IModel {
 
@@ -18,7 +18,7 @@ export default class VehiclePositionsStopsModel extends PostgresModel implements
         super();
         this.name = VehiclePositions.stops.name;
 
-        this.sequelizeModel = sequelizeConnection.define(VehiclePositions.stops.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(VehiclePositions.stops.pgTableName,
             VehiclePositions.stops.outputSequelizeAttributes);
         this.validator = new Validator(this.name, VehiclePositions.stops.outputMongooseSchemaObject);
     }

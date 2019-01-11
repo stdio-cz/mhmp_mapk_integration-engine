@@ -8,15 +8,15 @@ const log = require("debug")("data-platform:integration-engine:connection");
 
 class MySequelize {
 
-    private sequelize: Sequelize.Sequelize;
+    private connection: Sequelize.Sequelize;
 
-    public connect = (): Sequelize.Sequelize => {
+    public connect = async (): Promise<Sequelize.Sequelize> => {
         try {
-            if (this.sequelize) {
-                return this.sequelize;
+            if (this.connection) {
+                return this.connection;
             }
 
-            this.sequelize = new Sequelize(config.POSTGRES_CONN, {
+            this.connection = new Sequelize(config.POSTGRES_CONN, {
                 define: {
                     freezeTableName: true,
                     timestamps: false,
@@ -30,13 +30,22 @@ class MySequelize {
                     min: 0,
                 },
             });
+            await this.connection.authenticate();
             log("Connected to PostgresSQL!");
-            return this.sequelize;
+            return this.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to PostgresSQL.", false,
                 this.constructor.name, undefined, err);
         }
     }
+
+    public getConnection = (): Sequelize.Sequelize => {
+        if (!this.connection) {
+            throw new CustomError("Sequelize connection not exists. Firts call connect() method.", false,
+                this.constructor.name, undefined);
+        }
+        return this.connection;
+    }
 }
 
-module.exports.sequelizeConnection = new MySequelize().connect();
+module.exports.PostgresConnector = new MySequelize();

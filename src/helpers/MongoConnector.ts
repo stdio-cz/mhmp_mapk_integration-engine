@@ -20,7 +20,7 @@ class MyMongoose {
                 useFindAndModify: false,
                 useNewUrlParser: true,
             });
-            log("Connected to DB!");
+            log("Connected to MongoDB!");
             mongoose.connection.on("disconnected", () => {
                 handleError(new CustomError("Database disconnected", false));
             });

@@ -34,6 +34,14 @@ class MyAMQP {
         }
     }
 
+    public getChannel = async (): Promise<amqplib.Channel> => {
+        if (!this.channel) {
+            throw new CustomError("AMQP channel not exists. Firts call connect() method.", false,
+                this.constructor.name, undefined);
+        }
+        return this.channel;
+    }
+
     private assertDeadQueue = async (channel: amqplib.Channel): Promise<void> => {
         channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
         const q = channel.assertQueue(config.RABBIT_EXCHANGE_NAME + ".deadqueue", {
@@ -44,4 +52,4 @@ class MyAMQP {
     }
 }
 
-module.exports.amqpChannel = new MyAMQP().connect();
+module.exports.AMQPConnector = new MyAMQP();
