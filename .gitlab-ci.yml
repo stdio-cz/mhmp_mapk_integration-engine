@@ -1,7 +1,8 @@
 variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  MONGO_DB_NAME: "$CI_PROJECT_NAME-$CI_PIPELINE_ID"
+  MONGO_DB_NAME: "$"
+  MONGO_CONN: mongodb://localhost/CI_PROJECT_NAME-$CI_PIPELINE_ID
 
 stages:
   - build
@@ -18,10 +19,11 @@ build_image:
 run_tests:
   stage: test
   script:
+    - echo "MONGO_CONN: $MONGO_CONN"
     - curl --silent ifconfig.co
     - echo "$TEST_SECRETS_DATASOURCES_JS" > ${PWD}/datasources.js
     - cat ${PWD}/datasources.js
-    - docker run -v ${PWD}/datasources.js:/home/node/app/src/config/datasources.js:ro -e MONGO_CONN=mongodb://localhost/$MONGO_DB_NAME?authSource=admin -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CONTAINER_IMAGE npm run code-coverage
+    - docker run -v ${PWD}/datasources.js:/home/node/app/src/config/datasources.js:ro -e MONGO_CONN=$MONGO_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
