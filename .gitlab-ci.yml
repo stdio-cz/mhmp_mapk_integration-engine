@@ -19,8 +19,6 @@ run_tests:
   stage: test
   script:
     - echo "Mongo $MONGO_CONN"
-    - mongo $MONGO_CONN --eval 'db.cicd.insert({"isRunning":"yes"});'
-    - docker run -e MONGO_CONN=$MONGO_CONN $CONTAINER_IMAGE echo $MONGO_CONN; mongo $MONGO_CONN --eval 'db.cicd.insert({"isRunning":"yes"});'
     - curl --silent ifconfig.co
     - echo "$TEST_SECRETS_DATASOURCES_JS" > ${PWD}/datasources.js
     - cat ${PWD}/datasources.js
