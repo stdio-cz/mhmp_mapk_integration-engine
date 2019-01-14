@@ -1,7 +1,7 @@
 variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  MONGO_CONN: mongodb://localhost/$CI_PROJECT_NAME-$CI_PIPELINE_ID
+  MONGO_CONN: mongodb://runner-mongo-test/$CI_PROJECT_NAME-$CI_PIPELINE_ID
 
 stages:
   - build
