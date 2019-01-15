@@ -3,7 +3,6 @@
 "use strict";
 
 import "mocha";
-import * as path from "path";
 import ParkingZonesTransformation from "../../src/transformations/ParkingZonesTransformation";
 
 const chai = require("chai");
@@ -34,11 +33,14 @@ describe("ParkingZonesTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let testTariffData;
 
     beforeEach(async () => {
         transformation = new ParkingZonesTransformation();
-        const buffer = await readFile(__dirname + "/../data/parkingzones-datasource.json");
-        testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        let buffer = await fs.readFileAsync(__dirname + "/../data/parking-zones-datasource.json");
+        testSourceData = JSON.parse(buffer.toString());
+        buffer = await fs.readFileAsync(__dirname + "/../data/parkingzones_tariffs-datasource.json");
+        testTariffData = JSON.parse(buffer.toString());
     });
 
     it("should has name", async () => {
@@ -50,7 +52,12 @@ describe("ParkingZonesTransformation", () => {
         expect(transformation.TransformDataElement).not.to.be.undefined;
     });
 
+    it("should has setTariffs method", async () => {
+        expect(transformation.setTariffs).not.to.be.undefined;
+    });
+
     it("should properly transform element", async () => {
+        await transformation.setTariffs(testTariffData);
         const data = await transformation.TransformDataElement(testSourceData.features[0]);
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
@@ -73,6 +80,7 @@ describe("ParkingZonesTransformation", () => {
     });
 
     it("should properly transform collection", async () => {
+        await transformation.setTariffs(testTariffData);
         const data = await transformation.TransformDataCollection(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
