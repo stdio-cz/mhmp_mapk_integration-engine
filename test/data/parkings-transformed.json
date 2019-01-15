@@ -1,0 +1,71 @@
+{
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    14.492015,
+                    50.032074
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": 534017,
+                "name": "Chodov",
+                "num_of_free_places": 4,
+                "num_of_taken_places": 649,
+                "parking_type": {
+                    "description": "P+R parkoviště",
+                    "id": 1
+                },
+                "timestamp": 1542022789000,
+                "total_num_of_places": 653
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.517204,
+                    50.076397
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": 534015,
+                "name": "Depo Hostivař",
+                "num_of_free_places": 2,
+                "num_of_taken_places": 167,
+                "parking_type": {
+                    "description": "P+R parkoviště",
+                    "id": 1
+                },
+                "timestamp": 1542022818000,
+                "total_num_of_places": 169
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.441252,
+                    50.109318
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": 534002,
+                "name": "Holešovice",
+                "num_of_free_places": 4,
+                "num_of_taken_places": 70,
+                "parking_type": {
+                    "description": "P+R parkoviště",
+                    "id": 1
+                },
+                "timestamp": 1542022969000,
+                "total_num_of_places": 74
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}

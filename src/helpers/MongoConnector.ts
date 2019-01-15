@@ -20,13 +20,13 @@ class MyMongoose {
                 useFindAndModify: false,
                 useNewUrlParser: true,
             });
-            log("Connected to DB!");
+            log("Connected to MongoDB!");
             mongoose.connection.on("disconnected", () => {
                 handleError(new CustomError("Database disconnected", false));
             });
         } catch (err) {
-            handleError(new CustomError("Error while connecting to MongoDB.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while connecting to MongoDB.", false,
+                this.constructor.name, undefined, err);
         }
     }
 }

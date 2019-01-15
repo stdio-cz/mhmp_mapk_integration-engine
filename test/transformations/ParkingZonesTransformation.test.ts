@@ -12,14 +12,19 @@ const fs = require("fs");
 
 chai.use(chaiAsPromised);
 
-fs.readFileAsync = (filename) => {
+const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {
-        fs.readFile(filename, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
+        const stream = fs.createReadStream(file);
+        const chunks = [];
+
+        stream.on("error", (err) => {
+            reject(err);
+        });
+        stream.on("data", (data) => {
+            chunks.push(data);
+        });
+        stream.on("close", () => {
+            resolve(Buffer.concat(chunks));
         });
     });
 };
@@ -32,9 +37,9 @@ describe("ParkingZonesTransformation", () => {
 
     beforeEach(async () => {
         transformation = new ParkingZonesTransformation();
-        let buffer = await fs.readFileAsync(__dirname + "/../data/parking-zones-datasource.json");
+        let buffer = await readFile(__dirname + "/../data/parkingzones-datasource.json");
         testSourceData = JSON.parse(buffer.toString());
-        buffer = await fs.readFileAsync(__dirname + "/../data/parkingzones_tariffs-datasource.json");
+        buffer = await readFile(__dirname + "/../data/parkingzones_tariffs-datasource.json");
         testTariffData = JSON.parse(buffer.toString());
     });
 

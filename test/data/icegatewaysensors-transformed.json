@@ -1,0 +1,157 @@
+{
+    "features": [
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44207951,
+                    50.09426238
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": "ICE-003-042-000-001",
+                "sensors": [
+                    {
+                        "sensor_type": "weather.pressure",
+                        "max": 1011.8,
+                        "created_at": 1542111448,
+                        "avg": 1011.55,
+                        "validity": 0,
+                        "min": 1011.4
+                    },
+                    {
+                        "sensor_type": "weather.humidity",
+                        "max": 75.2,
+                        "created_at": 1542111448,
+                        "avg": 74.41,
+                        "validity": 0,
+                        "min": 73.6
+                    },
+                    {
+                        "sensor_type": "weather.gas.O3",
+                        "max": 0.009,
+                        "created_at": 1542111448,
+                        "avg": 0.0061,
+                        "validity": 0,
+                        "min": 0.001
+                    },
+                    {
+                        "sensor_type": "weather.gas.SO2",
+                        "max": 0.023,
+                        "created_at": 1542111448,
+                        "avg": 0.0199,
+                        "validity": 0,
+                        "min": 0.018
+                    },
+                    {
+                        "sensor_type": "weather.gas.CO",
+                        "max": 0.272,
+                        "created_at": 1542111448,
+                        "avg": 0.2643,
+                        "validity": 0,
+                        "min": 0.253
+                    },
+                    {
+                        "sensor_type": "weather.gas.NO2",
+                        "max": 0.02,
+                        "created_at": 1542111448,
+                        "avg": 0.0169,
+                        "validity": 0,
+                        "min": 0.015
+                    },
+                    {
+                        "sensor_type": "weather.particulate.PM2.5",
+                        "max": 3,
+                        "created_at": 1542111448,
+                        "avg": 3,
+                        "validity": 0,
+                        "min": 3
+                    },
+                    {
+                        "sensor_type": "weather.particulate.PM10",
+                        "max": 21.7,
+                        "created_at": 1542111448,
+                        "avg": 21.7,
+                        "validity": 0,
+                        "min": 21.7
+                    }
+                ],
+                "timestamp": 1547051633837
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44617926,
+                    50.1026806
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": "ICE-003-042-000-002",
+                "sensors": [
+                    {
+                        "sensor_type": "weather.gas.CO2",
+                        "max": 1072.3724,
+                        "created_at": 1542096641,
+                        "avg": 943.9508,
+                        "validity": 0,
+                        "min": 823.3434
+                    }
+                ],
+                "timestamp": 1547051633837
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.44646894,
+                    50.10301092
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": "ICE-003-042-000-003",
+                "sensors": [
+                    {
+                        "sensor_type": "weather.temperature",
+                        "max": 23.18,
+                        "created_at": 1542112149,
+                        "avg": 23.15,
+                        "validity": 0,
+                        "min": 23.14
+                    }
+                ],
+                "timestamp": 1547051633837
+            },
+            "type": "Feature"
+        },
+        {
+            "geometry": {
+                "coordinates": [
+                    14.4464904,
+                    50.10267372
+                ],
+                "type": "Point"
+            },
+            "properties": {
+                "id": "ICE-003-042-000-004",
+                "sensors": [
+                    {
+                        "sensor_type": "noise",
+                        "max": 67.2,
+                        "created_at": 1542111776,
+                        "avg": 48.83,
+                        "validity": 0,
+                        "min": 32.8
+                    }
+                ],
+                "timestamp": 1547051633837
+            },
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}

@@ -7,7 +7,7 @@ import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import PostgresModel from "./PostgresModel";
 
-const { sequelizeConnection } = require("../helpers/PostgresConnector");
+const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class MerakiAccessPointsTagsModel extends PostgresModel implements IModel {
 
@@ -19,7 +19,7 @@ export default class MerakiAccessPointsTagsModel extends PostgresModel implement
         super();
         this.name = MerakiAccessPoints.tags.name;
 
-        this.sequelizeModel = sequelizeConnection.define(MerakiAccessPoints.tags.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(MerakiAccessPoints.tags.pgTableName,
             MerakiAccessPoints.tags.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

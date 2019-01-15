@@ -20,19 +20,19 @@ const config = require("../config/ConfigLoader");
 
 export default class RopidGTFSWorker extends BaseWorker {
 
-    private datasource: RopidGTFSDataSource;
+    private dataSource: RopidGTFSDataSource;
     private transformation: RopidGTFSTransformation;
     private queuePrefix: string;
 
     constructor() {
         super();
-        this.datasource = new RopidGTFSDataSource();
+        this.dataSource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
     public downloadFiles = async (): Promise<void> => {
-        const files = await this.datasource.GetAll();
+        const files = await this.dataSource.GetAll();
 
         // send messages for transformation
         const promises = files.map((file) => {
