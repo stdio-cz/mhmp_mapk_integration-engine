@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import { MerakiAccessPoints } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import MerakiAccessPointsWorker from "../workers/MerakiAccessPointsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class MerakiAccessPointsQueueProcessor extends BaseQueueProcessor {
@@ -28,11 +28,11 @@ export default class MerakiAccessPointsQueueProcessor extends BaseQueueProcessor
     protected saveDataToDB = async (msg: any): Promise<void> => {
         try {
             const worker = new MerakiAccessPointsWorker();
-            log(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
             await worker.saveDataToDB(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".saveDataToDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

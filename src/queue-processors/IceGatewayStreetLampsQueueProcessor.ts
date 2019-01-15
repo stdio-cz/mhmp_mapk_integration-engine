@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProcessor {
@@ -33,11 +33,11 @@ export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProces
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
-            log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
             await igstreetLampsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -47,11 +47,11 @@ export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProces
     protected setDimValue = async (msg: any): Promise<void> => {
         try {
             const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
-            log(" [>] " + this.queuePrefix + ".setDimValue received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".setDimValue received some data.");
             await igstreetLampsWorker.setDimValue(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".setDimValue: done");
+            log.debug(" [<] " + this.queuePrefix + ".setDimValue: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

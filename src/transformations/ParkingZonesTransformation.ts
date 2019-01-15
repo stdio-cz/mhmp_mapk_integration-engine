@@ -1,12 +1,12 @@
 "use strict";
 
 import { ParkingZones } from "data-platform-schema-definitions";
+import log from "../helpers/Logger";
 import GeoJsonTransformation from "./GeoJsonTransformation";
 import ITransformation from "./ITransformation";
 
 const lodash = require("lodash");
 const config = require("../config/ConfigLoader");
-const warningLog = require("debug")("data-platform:integration-engine:warning");
 
 export default class ParkingZonesTransformation extends GeoJsonTransformation implements ITransformation {
 
@@ -62,7 +62,7 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         };
 
         if (!this.tariffs) {
-            warningLog("Warning! The parking zones tariffs havn't been set.");
+            log.warn("Warning! The parking zones tariffs havn't been set.");
         }
 
         res.properties.tariffs = this.tariffs[res.properties.code];
@@ -95,7 +95,7 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         };
 
         if (!this.tariffs) {
-            warningLog("Warning! The parking zones tariffs havn't been set.");
+            log.warn("Warning! The parking zones tariffs havn't been set.");
         }
 
         const promises = collection.map(async (element) => {

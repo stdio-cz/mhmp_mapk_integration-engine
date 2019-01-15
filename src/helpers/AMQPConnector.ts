@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
+import log from "./Logger";
 
 const amqp = require("amqplib");
 const config = require("../config/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine:connection");
 
 class MyAMQP {
 
@@ -20,7 +20,7 @@ class MyAMQP {
 
             const conn = await amqp.connect(config.RABBIT_CONN);
             this.channel = await conn.createChannel();
-            log("Connected to Queue!");
+            log.info("Connected to Queue!");
             conn.on("close", () => {
                 handleError(new CustomError("Queue disconnected", false));
             });

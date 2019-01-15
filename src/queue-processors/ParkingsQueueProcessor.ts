@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import { Parkings } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import ParkingsWorker from "../workers/ParkingsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class ParkingsQueueProcessor extends BaseQueueProcessor {
@@ -43,11 +43,11 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
             await parkingsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -57,11 +57,11 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected saveDataToHistory = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] " + this.queuePrefix + ".saveDataToHistory received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".saveDataToHistory received some data.");
             await parkingsWorker.saveDataToHistory(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".saveDataToHistory: done");
+            log.debug(" [<] " + this.queuePrefix + ".saveDataToHistory: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -71,11 +71,11 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected updateAddressAndDistrict = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] " + this.queuePrefix + ".updateAddressAndDistrict received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".updateAddressAndDistrict received some data.");
             await parkingsWorker.updateAddressAndDistrict(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".updateAddressAndDistrict: done");
+            log.debug(" [<] " + this.queuePrefix + ".updateAddressAndDistrict: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -85,11 +85,11 @@ export default class ParkingsQueueProcessor extends BaseQueueProcessor {
     protected updateAverageOccupancy = async (msg: any): Promise<void> => {
         try {
             const parkingsWorker = new ParkingsWorker();
-            log(" [>] " + this.queuePrefix + ".updateAverageOccupancy received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".updateAverageOccupancy received some data.");
             await parkingsWorker.updateAverageOccupancy(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".updateAverageOccupancy: done");
+            log.debug(" [<] " + this.queuePrefix + ".updateAverageOccupancy: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

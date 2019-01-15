@@ -1,8 +1,8 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import log from "../helpers/Logger";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default abstract class BaseQueueProcessor {
@@ -22,7 +22,7 @@ export default abstract class BaseQueueProcessor {
         const q = await this.channel.assertQueue(name, {...queueOptions, ...{durable: true}});
         this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
         this.channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, key);
-        log(" [*] Waiting for messages in %s.", name);
+        log.debug(" [*] Waiting for messages in " + name + ".");
         this.channel.consume(name, processor, {noAck: false});
     }
 

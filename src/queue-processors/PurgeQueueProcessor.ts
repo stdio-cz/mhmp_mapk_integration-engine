@@ -2,10 +2,10 @@
 
 import * as amqplib from "amqplib";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import PurgeWorker from "../workers/PurgeWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class PurgeQueueProcessor extends BaseQueueProcessor {
@@ -36,11 +36,11 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
     protected deleteOldVehiclePositionsTrips = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
-            log(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips received some data.");
             await worker.deleteOldVehiclePositionsTrips();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips: done");
+            log.debug(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -50,11 +50,11 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
     protected deleteOldVehiclePositionsStops = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
-            log(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsStops received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsStops received some data.");
             await worker.deleteOldVehiclePositionsStops();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsStops: done");
+            log.debug(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsStops: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -64,11 +64,11 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
     protected deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
-            log(" [>] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations received some data.");
             await worker.deleteOldMerakiAccessPointsObservations();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations: done");
+            log.debug(" [<] " + this.queuePrefix + ".deleteOldMerakiAccessPointsObservations: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

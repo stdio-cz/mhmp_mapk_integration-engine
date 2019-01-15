@@ -1,6 +1,7 @@
 "use strict";
 
 import handleError from "./helpers/errors/ErrorHandler";
+import log from "./helpers/Logger";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
 import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
@@ -14,7 +15,6 @@ import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQ
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { PostgresConnector } = require("./helpers/PostgresConnector");
-const log = require("debug")("data-platform:integration-engine:info");
 const config = require("./config/ConfigLoader");
 
 class App {
@@ -24,10 +24,10 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
-            log("Configuration loaded: " + JSON.stringify(config));
+            log.debug("Configuration loaded: " + JSON.stringify(config));
             await this.database();
             await this.queueProcessors();
-            log("Started!");
+            log.info("Started!");
         } catch (err) {
             handleError(err);
         }

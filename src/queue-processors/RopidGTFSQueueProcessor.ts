@@ -3,11 +3,10 @@
 import * as amqplib from "amqplib";
 import { RopidGTFS } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
-const doneLog = require("debug")("data-platform:integration-engine:queue:done");
 const config = require("../config/ConfigLoader");
 
 export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
@@ -45,11 +44,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
     protected downloadFiles = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
-            log(" [>] " + this.queuePrefix + ".downloadFiles received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".downloadFiles received some data.");
             await worker.downloadFiles();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".downloadFiles: done");
+            log.debug(" [<] " + this.queuePrefix + ".downloadFiles: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -59,11 +58,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
     protected transformData = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
-            log(" [>] " + this.queuePrefix + ".transformData received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".transformData received some data.");
             await worker.transformData(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".transformData: done");
+            log.debug(" [<] " + this.queuePrefix + ".transformData: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -73,11 +72,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
     protected saveDataToDB = async (msg: any): Promise<void> => {
         try {
             const worker = new RopidGTFSWorker();
-            log(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".saveDataToDB received some data.");
             await worker.saveDataToDB(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".saveDataToDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".saveDataToDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -91,7 +90,7 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
 
             if (qt.messageCount === 0 && qs.messageCount === 0) {
                 this.channel.ack(msg);
-                doneLog(" [<] " + this.queuePrefix + ".checkingIfDone: done");
+                log.debug(" [<] " + this.queuePrefix + ".checkingIfDone: done");
             } else {
                 await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                 this.channel.reject(msg);

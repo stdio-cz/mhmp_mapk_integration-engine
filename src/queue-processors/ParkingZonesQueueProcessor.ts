@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import { ParkingZones } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
@@ -29,11 +29,11 @@ export default class ParkingZonesQueueProcessor extends BaseQueueProcessor {
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const parkingZonesWorker = new ParkingZonesWorker();
-            log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
+            log.debug(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
             await parkingZonesWorker.refreshDataInDB();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

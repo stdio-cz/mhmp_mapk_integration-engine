@@ -3,11 +3,10 @@
 import { IceGatewaySensors } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import MongoModel from "./MongoModel";
-
-const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class IceGatewaySensorsHistoryModel extends MongoModel implements IModel {
 
@@ -44,7 +43,7 @@ export default class IceGatewaySensorsHistoryModel extends MongoModel implements
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                debugLog("IceGatewaySensorsHistoryModel::SaveToDB(): Saving or updating data to database.");
+                log.debug("IceGatewaySensorsHistoryModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

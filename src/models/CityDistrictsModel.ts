@@ -7,8 +7,6 @@ import Validator from "../helpers/Validator";
 import GeoJsonModel from "./GeoJsonModel";
 import IModel from "./IModel";
 
-const debugLog = require("debug")("data-platform:integration-engine:debug");
-
 export default class CityDistrictsModel extends GeoJsonModel implements IModel {
 
     public name: string;

@@ -1,9 +1,9 @@
 "use strict";
 
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 
 const { PostgresConnector } = require("../helpers/PostgresConnector");
-const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class PurgeWorker {
 
@@ -12,7 +12,7 @@ export default class PurgeWorker {
             const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_trips','created',48);",
             );
-            debugLog(res);
+            log.debug(res);
         } catch (err) {
             throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
         }
@@ -23,7 +23,7 @@ export default class PurgeWorker {
             const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_stops','created',48);",
             );
-            debugLog(res);
+            log.debug(res);
         } catch (err) {
             throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
         }
@@ -34,7 +34,7 @@ export default class PurgeWorker {
             const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);",
             );
-            debugLog(res);
+            log.debug(res);
         } catch (err) {
             throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
         }
