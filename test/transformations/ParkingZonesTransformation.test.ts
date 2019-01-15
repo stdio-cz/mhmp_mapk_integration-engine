@@ -37,9 +37,9 @@ describe("ParkingZonesTransformation", () => {
 
     beforeEach(async () => {
         transformation = new ParkingZonesTransformation();
-        let buffer = await fs.readFileAsync(__dirname + "/../data/parking-zones-datasource.json");
+        let buffer = await readFile(__dirname + "/../data/parkingzones-datasource.json");
         testSourceData = JSON.parse(buffer.toString());
-        buffer = await fs.readFileAsync(__dirname + "/../data/parkingzones_tariffs-datasource.json");
+        buffer = await readFile(__dirname + "/../data/parkingzones_tariffs-datasource.json");
         testTariffData = JSON.parse(buffer.toString());
     });
 
