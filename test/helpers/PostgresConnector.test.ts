@@ -6,7 +6,8 @@
 "use strict";
 
 import "mocha";
-const { sequelizeConnection } = require("../../src/helpers/PostgresConnector");
+import CustomError from "../../src/helpers/errors/CustomError";
+const { PostgresConnector } = require("../../src/helpers/PostgresConnector");
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -16,9 +17,26 @@ chai.use(chaiAsPromised);
 
 describe("PostgresConnector", () => {
 
-    it("should connect to PostgreSQL and return Sequelize connection", async () => {
-        expect(sequelizeConnection).to.be.an.instanceof(Object);
-        await expect(sequelizeConnection.authenticate()).to.be.fulfilled;
+    it("should has connect method", async () => {
+        expect(PostgresConnector.connect).not.to.be.undefined;
+    });
+
+    it("should has getConnection method", async () => {
+        expect(PostgresConnector.getConnection).not.to.be.undefined;
+    });
+
+    it("should throws Error if not connect method was not called", () => {
+        expect(PostgresConnector.getConnection).to.throw(CustomError);
+    });
+
+    it("should connects to RabbitMQ and returns channel", async () => {
+        const ch = await PostgresConnector.connect();
+        expect(ch).to.be.an.instanceof(Object);
+    });
+
+    it("should returns channel", async () => {
+        await PostgresConnector.connect();
+        expect(PostgresConnector.getConnection()).to.be.an.instanceof(Object);
     });
 
 });

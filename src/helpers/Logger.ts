@@ -31,7 +31,7 @@ class Logger {
 
     public debug = (logText: string): boolean => {
         if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.DEBUG) {
-            debugLog(logText);
+            debugLog("[DEBUG] " + logText);
             return true;
         }
         return false;
@@ -39,7 +39,7 @@ class Logger {
 
     public info = (logText: string): boolean => {
         if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.INFO) {
-            infoLog(logText);
+            infoLog("[INFO] " + logText);
             return true;
         }
         return false;
@@ -47,7 +47,7 @@ class Logger {
 
     public warn = (logText: string): boolean => {
         if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.WARN) {
-            warnLog(logText);
+            warnLog("[WARN] " + logText);
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class Logger {
 
     public error = (logText: string): boolean => {
         if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.ERROR) {
-            errorLog(logText);
+            errorLog("[ERROR] " + logText);
             return true;
         }
         return false;
@@ -63,7 +63,7 @@ class Logger {
 
     public fatal = (logText: string): boolean => {
         if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.FATAL) {
-            fatalLog(logText);
+            fatalLog("[FATAL] " + logText);
             return true;
         }
         return false;
