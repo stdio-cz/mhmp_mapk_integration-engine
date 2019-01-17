@@ -1,6 +1,4 @@
 variables:
-  DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
-  CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
   MONGO_CONN: mongodb://runner-mongo-test/$CI_PROJECT_NAME-$CI_PIPELINE_ID
 
 stages:
@@ -13,23 +11,22 @@ build_image:
   stage: build
   script:
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build -t $CONTAINER_IMAGE:latest -t $CONTAINER_IMAGE:$CI_PIPELINE_ID .
+    - docker build -t $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID .
 
 run_tests:
   stage: test
   script:
-    - echo "Mongo $MONGO_CONN"
     - curl --silent ifconfig.co
     - echo "$TEST_SECRETS_DATASOURCES_JS" > ${PWD}/datasources.js
     - cat ${PWD}/datasources.js
-    - docker run --net testnet -v ${PWD}/datasources.js:/home/node/app/src/config/datasources.js:ro -e MONGO_CONN=$MONGO_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CONTAINER_IMAGE npm run code-coverage
+    - docker run --net testnet -v ${PWD}/datasources.js:/home/node/app/src/config/datasources.js:ro -e MONGO_CONN=$MONGO_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL=$OPEN_STREET_MAP_API_URL $CI_REGISTRY_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
   script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY_URL
-    - docker push $CONTAINER_IMAGE:latest && docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
-    - docker logout $DOCKER_REGISTRY_URL
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE:latest && docker push $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
+    - docker logout $CI_REGISTRY
   only:
     variables:
       - $CI_COMMIT_REF_NAME == "master"
@@ -38,5 +35,5 @@ registry_deployment:
 remove_images:
   stage: clean
   script:
-    - docker rmi -f $CONTAINER_IMAGE:$CI_PIPELINE_ID
+    - docker rmi -f $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
   when: always
