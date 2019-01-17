@@ -3,10 +3,10 @@
 import * as amqplib from "amqplib";
 import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
 import BaseQueueProcessor from "./BaseQueueProcessor";
 
-const log = require("debug")("data-platform:integration-engine:queue");
 const config = require("../config/ConfigLoader");
 
 export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProcessor {
@@ -18,38 +18,43 @@ export default class IceGatewayStreetLampsQueueProcessor extends BaseQueueProces
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + IceGatewayStreetLamps.name.toLowerCase();
     }
 
-    public registerQueues = async (): Promise<any> => {
+    public registerQueues = async (): Promise<void> => {
         await this.registerQueue(this.queuePrefix + ".refreshDataInDB",
-            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB);
+            "*." + this.queuePrefix + ".refreshDataInDB", this.refreshDataInDB, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 14 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".setDimValue",
-            "*." + this.queuePrefix + ".setDimValue", this.setDimValue);
+            "*." + this.queuePrefix + ".setDimValue", this.setDimValue, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
     }
 
     protected refreshDataInDB = async (msg: any): Promise<void> => {
         try {
             const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
-            log(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
-            const res = await igstreetLampsWorker.refreshDataInDB();
+            log.debug(" [>] " + this.queuePrefix + ".refreshDataInDB received some data.");
+            await igstreetLampsWorker.refreshDataInDB();
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
+            log.debug(" [<] " + this.queuePrefix + ".refreshDataInDB: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 
     protected setDimValue = async (msg: any): Promise<void> => {
         try {
             const igstreetLampsWorker = new IceGatewayStreetLampsWorker();
-            log(" [>] " + this.queuePrefix + ".setDimValue received some data.");
-            const res = await igstreetLampsWorker.setDimValue(JSON.parse(msg.content.toString()));
+            log.debug(" [>] " + this.queuePrefix + ".setDimValue received some data.");
+            await igstreetLampsWorker.setDimValue(JSON.parse(msg.content.toString()));
 
             this.channel.ack(msg);
-            log(" [<] " + this.queuePrefix + ".setDimValue: done");
+            log.debug(" [<] " + this.queuePrefix + ".setDimValue: done");
         } catch (err) {
             handleError(err);
-            this.channel.nack(msg);
+            this.channel.nack(msg, false, false);
         }
     }
 

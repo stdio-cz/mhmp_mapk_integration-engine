@@ -1,6 +1,7 @@
 "use strict";
 
 import handleError from "./helpers/errors/ErrorHandler";
+import log from "./helpers/Logger";
 import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
 import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
 import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
@@ -11,10 +12,9 @@ import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
 import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
 import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
 
-const { amqpChannel } = require("./helpers/AMQPConnector");
+const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
-const { sequelizeConnection } = require("./helpers/PostgresConnector");
-const log = require("debug")("data-platform:integration-engine:info");
+const { PostgresConnector } = require("./helpers/PostgresConnector");
 const config = require("./config/ConfigLoader");
 
 class App {
@@ -24,10 +24,10 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
-            log("Configuration loaded: " + JSON.stringify(config));
+            log.debug("Configuration loaded: " + JSON.stringify(config));
             await this.database();
             await this.queueProcessors();
-            log("Started!");
+            log.info("Started!");
         } catch (err) {
             handleError(err);
         }
@@ -38,7 +38,7 @@ class App {
      */
     private database = async (): Promise<void> => {
         await mongooseConnection;
-        await sequelizeConnection.authenticate();
+        await PostgresConnector.connect();
     }
 
     /**
@@ -46,7 +46,7 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const ch = await amqpChannel;
+        const ch = await AMQPConnector.connect();
         await Promise.all([
             new CityDistrictsQueueProcessor(ch).registerQueues(),
             new IceGatewaySensorsQueueProcessor(ch).registerQueues(),

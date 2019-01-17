@@ -2,27 +2,26 @@
 
 import * as Sequelize from "sequelize";
 import CustomError from "./errors/CustomError";
-import handleError from "./errors/ErrorHandler";
+import log from "./Logger";
 
 const config = require("../config/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine:connection");
 
 class MySequelize {
 
-    private sequelize: Sequelize.Sequelize;
+    private connection: Sequelize.Sequelize;
 
-    public connect = (): Sequelize.Sequelize => {
+    public connect = async (): Promise<Sequelize.Sequelize> => {
         try {
-            if (this.sequelize) {
-                return this.sequelize;
+            if (this.connection) {
+                return this.connection;
             }
 
-            this.sequelize = new Sequelize(config.POSTGRES_CONN, {
+            this.connection = new Sequelize(config.POSTGRES_CONN, {
                 define: {
                     freezeTableName: true,
                     timestamps: false,
                 },
-                logging: require("debug")("sequelize"), // logging by debug
+                logging: log.debug, // logging by Logger::debug
                 operatorsAliases: false, // disable aliases
                 pool: {
                     acquire: 60000,
@@ -31,13 +30,22 @@ class MySequelize {
                     min: 0,
                 },
             });
-            log("Connected to PostgresSQL!");
-            return this.sequelize;
+            await this.connection.authenticate();
+            log.info("Connected to PostgresSQL!");
+            return this.connection;
         } catch (err) {
-            handleError(new CustomError("Error while connecting to PostgresSQL.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while connecting to PostgresSQL.", false,
+                this.constructor.name, undefined, err);
         }
+    }
+
+    public getConnection = (): Sequelize.Sequelize => {
+        if (!this.connection) {
+            throw new CustomError("Sequelize connection not exists. Firts call connect() method.", false,
+                this.constructor.name, undefined);
+        }
+        return this.connection;
     }
 }
 
-module.exports.sequelizeConnection = new MySequelize().connect();
+module.exports.PostgresConnector = new MySequelize();

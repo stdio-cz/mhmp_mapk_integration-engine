@@ -2,8 +2,8 @@
 
 "use strict";
 
-import { Parkings } from "data-platform-schema-definitions";
 import "mocha";
+import { SchemaDefinition } from "mongoose";
 import CustomError from "../../src/helpers/errors/CustomError";
 import Validator from "../../src/helpers/Validator";
 
@@ -16,10 +16,17 @@ chai.use(chaiAsPromised);
 describe("Validator", () => {
 
     let validator: Validator;
+    let testMSO: SchemaDefinition;
     let testData: object;
 
     beforeEach(() => {
-        validator = new Validator(Parkings.history.name, Parkings.history.outputMongooseSchemaObject);
+        testMSO = {
+            id: { type: Number, required: true },
+            num_of_free_places: { type: Number, required: true },
+            num_of_taken_places: { type: Number, required: true },
+            timestamp: { type: Number, required: true },
+            total_num_of_places: { type: Number, required: true },
+        };
         testData = [{
             id : 534001,
             num_of_free_places : 91,
@@ -34,6 +41,7 @@ describe("Validator", () => {
             timestamp : 1545063078065,
             total_num_of_places : 169,
         }];
+        validator = new Validator("Test", testMSO);
     });
 
     it("should has Validate method", async () => {

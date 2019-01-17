@@ -17,7 +17,7 @@ export default class ParkingsModel extends GeoJsonModel implements IModel {
         this.name = Parkings.name;
 
         try {
-            this.mongooseModel = mongoose.model("Parkings");
+            this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
             const schema = new mongoose.Schema(Parkings.outputMongooseSchemaObject, { bufferCommands: false });
             // create $geonear index

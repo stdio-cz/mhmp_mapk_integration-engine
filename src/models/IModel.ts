@@ -7,4 +7,7 @@ export default interface IModel {
 
     /** Validates and Saves transformed element or collection to database. */
     SaveToDb(data);
+
+    /** Deletes all data from table. */
+    Truncate?();
 }

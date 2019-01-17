@@ -28,6 +28,7 @@ class ConfigLoader {
 }
 
 module.exports = {
+    LOG_LEVEL: process.env.LOG_LEVEL,
     MONGO_CONN: process.env.MONGO_CONN,
     NODE_ENV: process.env.NODE_ENV,
     OPEN_STREET_MAP_API_URL: process.env.OPEN_STREET_MAP_API_URL,

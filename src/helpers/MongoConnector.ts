@@ -3,9 +3,9 @@
 import mongoose = require("mongoose");
 import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
+import log from "./Logger";
 
 const config = require("../config/ConfigLoader");
-const log = require("debug")("data-platform:integration-engine:connection");
 
 class MyMongoose {
 
@@ -20,13 +20,13 @@ class MyMongoose {
                 useFindAndModify: false,
                 useNewUrlParser: true,
             });
-            log("Connected to DB!");
+            log.info("Connected to MongoDB!");
             mongoose.connection.on("disconnected", () => {
                 handleError(new CustomError("Database disconnected", false));
             });
         } catch (err) {
-            handleError(new CustomError("Error while connecting to MongoDB.", false,
-                this.constructor.name, undefined, err));
+            throw new CustomError("Error while connecting to MongoDB.", false,
+                this.constructor.name, undefined, err);
         }
     }
 }

@@ -3,11 +3,10 @@
 import { Parkings } from "data-platform-schema-definitions";
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import IModel from "./IModel";
 import MongoModel from "./MongoModel";
-
-const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default class ParkingsHistoryModel extends MongoModel implements IModel {
 
@@ -89,7 +88,7 @@ export default class ParkingsHistoryModel extends MongoModel implements IModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                debugLog("ParkingsHistModel::SaveToDB(): Saving or updating data to database.");
+                log.debug("ParkingsHistModel::SaveToDB(): Saving or updating data to database.");
                 return res;
             });
         } else { // If it's a single element

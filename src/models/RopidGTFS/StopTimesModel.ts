@@ -6,7 +6,7 @@ import Validator from "../../helpers/Validator";
 import IModel from "../IModel";
 import PostgresModel from "../PostgresModel";
 
-const { sequelizeConnection } = require("../../helpers/PostgresConnector");
+const { PostgresConnector } = require("../../helpers/PostgresConnector");
 
 export default class StopTimesModel extends PostgresModel implements IModel {
 
@@ -18,7 +18,7 @@ export default class StopTimesModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.stop_times.name;
 
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stop_times.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stop_times.pgTableName,
             RopidGTFS.stop_times.outputSequelizeAttributes);
         this.sequelizeModel.removeAttribute("id");
         // TODO doplnit validator

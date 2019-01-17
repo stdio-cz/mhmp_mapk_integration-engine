@@ -2,10 +2,9 @@
 
 import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import MongoModel from "./MongoModel";
-
-const debugLog = require("debug")("data-platform:integration-engine:debug");
 
 export default abstract class GeoJsonModel extends MongoModel {
 
@@ -41,7 +40,7 @@ export default abstract class GeoJsonModel extends MongoModel {
                 return this.SaveOrUpdateOneToDb(item);
             });
             return Promise.all(promises).then(async (res) => {
-                debugLog("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
+                log.debug("GeoJsonModel::SaveToDB(): Saving or updating data to database.");
                 return this.createOutputFeatureCollection(res);
             });
         } else { // If it's a single element

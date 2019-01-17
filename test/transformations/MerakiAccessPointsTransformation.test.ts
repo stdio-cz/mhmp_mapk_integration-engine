@@ -12,14 +12,19 @@ const fs = require("fs");
 
 chai.use(chaiAsPromised);
 
-fs.readFileAsync = (filename) => {
+const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {
-        fs.readFile(filename, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
+        const stream = fs.createReadStream(file);
+        const chunks = [];
+
+        stream.on("error", (err) => {
+            reject(err);
+        });
+        stream.on("data", (data) => {
+            chunks.push(data);
+        });
+        stream.on("close", () => {
+            resolve(Buffer.concat(chunks));
         });
     });
 };
@@ -31,8 +36,8 @@ describe("MerakiAccessPointsTransformation", () => {
 
     beforeEach(async () => {
         transformation = new MerakiAccessPointsTransformation();
-        const buffer = await fs.readFileAsync(__dirname + "/../data/meraki-access-points-input.json");
-        testSourceData = JSON.parse(buffer.toString());
+        const buffer = await readFile(__dirname + "/../data/merakiaccesspoints-input.json");
+        testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {

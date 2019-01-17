@@ -1,9 +1,9 @@
 "use strict";
 
+import log from "./Logger";
+
 const fs = require("fs");
 const request = require("request");
-const log = require("debug")("RdfExportUtils");
-const errorLog = require("debug")("error");
 const config = require("../config/ConfigLoader");
 
 /**
@@ -18,7 +18,7 @@ class RdfExportUtils {
      * POST /[dataset-name]/data
      */
     public UploadRdfDatasetToEndpoint = (files) => {
-        log("Uploading RDF files...");
+        log.debug("Uploading RDF files...");
 
         const options = {
             formData: {
@@ -47,10 +47,10 @@ class RdfExportUtils {
                     // sending to server
                     request(options, (error, response, body) => {
                         if (!error && response.statusCode === 200) {
-                            log(file.name + " dataset successfully uploaded to endpoint.");
+                            log.debug(file.name + " dataset successfully uploaded to endpoint.");
                             resolve({ file: file.name, result: JSON.parse(body) });
                         } else {
-                            errorLog(response.statusCode);
+                            log.error(response.statusCode);
                             reject(error || response.statusCode);
                         }
                     });
@@ -74,16 +74,16 @@ class RdfExportUtils {
                 // sending to server
                 request(options, (error, response, body) => {
                     if (!error && response.statusCode === 200) {
-                        log("All datasets successfully uploaded to endpoint.");
+                        log.debug("All datasets successfully uploaded to endpoint.");
                         this.generateVoidFile(eachDatasetResult);
                     } else {
-                        errorLog(error || response.statusCode);
+                        log.error(error || response.statusCode);
                     }
                 });
             });
 
         }).catch((err) => {
-            errorLog(err);
+            log.error(err);
         });
     }
 
@@ -92,7 +92,7 @@ class RdfExportUtils {
      * POST /metadata/data
      */
     protected generateVoidFile = (results) => {
-        log("Generating void dataset...");
+        log.debug("Generating void dataset...");
 
         const text = "\n"
             + "\n"
@@ -390,9 +390,9 @@ class RdfExportUtils {
                     // sending new dataset to server
                     request(options, (error, response, body) => {
                         if (!error && response.statusCode === 200) {
-                            log("Void dataset successfully uploaded to endpoint.");
+                            log.debug("Void dataset successfully uploaded to endpoint.");
                         } else {
-                            errorLog(error || response.statusCode);
+                            log.error(error || response.statusCode);
                         }
                     });
                 });
@@ -418,10 +418,10 @@ class RdfExportUtils {
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
                 if (error) {
-                    errorLog(error);
+                    log.error(error);
                     reject(error);
                 } else {
-                    log(name + " dataset successfully cleared.");
+                    log.debug(name + " dataset successfully cleared.");
                     resolve();
                 }
             });
