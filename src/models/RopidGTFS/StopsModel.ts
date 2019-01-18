@@ -18,7 +18,7 @@ export default class StopsModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.stops.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stops.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stops.tmpPgTableName,
             RopidGTFS.stops.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

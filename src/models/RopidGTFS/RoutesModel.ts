@@ -18,7 +18,7 @@ export default class RoutesModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.routes.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.routes.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.routes.tmpPgTableName,
             RopidGTFS.routes.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

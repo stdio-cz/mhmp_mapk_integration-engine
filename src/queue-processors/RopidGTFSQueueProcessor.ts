@@ -2,6 +2,7 @@
 
 import * as amqplib from "amqplib";
 import { RopidGTFS } from "data-platform-schema-definitions";
+import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
@@ -19,6 +20,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<void> => {
+        await this.registerQueue(this.queuePrefix + ".checkForNewData",
+            "*." + this.queuePrefix + ".checkForNewData", this.checkForNewData, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
         await this.registerQueue(this.queuePrefix + ".downloadFiles",
             "*." + this.queuePrefix + ".downloadFiles", this.downloadFiles, {
                 deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
@@ -39,6 +45,20 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
                 deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                 deadLetterRoutingKey: "dead",
                 messageTtl: 23 * 60 * 60 * 1000 });
+    }
+
+    protected checkForNewData = async (msg: any): Promise<void> => {
+        try {
+            const worker = new RopidGTFSWorker();
+            log.debug(" [>] " + this.queuePrefix + ".checkForNewData received some data.");
+            await worker.checkForNewData();
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".checkForNewData: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
     }
 
     protected downloadFiles = async (msg: any): Promise<void> => {
@@ -87,9 +107,16 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
         try {
             const qt = await this.channel.checkQueue(this.queuePrefix + ".transformData");
             const qs = await this.channel.checkQueue(this.queuePrefix + ".saveDataToDB");
+            const worker = new RopidGTFSWorker();
 
             if (qt.messageCount === 0 && qs.messageCount === 0) {
-                this.channel.ack(msg);
+                if (await worker.checkSavedRowsAndReplaceTables()) {
+                    this.channel.ack(msg);
+                } else {
+                    handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
+                        this.constructor.name, 1021));
+                    this.channel.nack(msg, false, false);
+                }
                 log.debug(" [<] " + this.queuePrefix + ".checkingIfDone: done");
             } else {
                 await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds

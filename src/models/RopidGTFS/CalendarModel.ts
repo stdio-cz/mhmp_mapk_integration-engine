@@ -18,7 +18,7 @@ export default class CalendarModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.calendar.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar.tmpPgTableName,
             RopidGTFS.calendar.outputSequelizeAttributes);
         this.sequelizeModel.removeAttribute("id");
         // TODO doplnit validator
