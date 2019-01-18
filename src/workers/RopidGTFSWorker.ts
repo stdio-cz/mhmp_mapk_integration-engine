@@ -7,6 +7,7 @@ import IModel from "../models/IModel";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
 import CalendarDatesModel from "../models/RopidGTFS/CalendarDatesModel";
 import CalendarModel from "../models/RopidGTFS/CalendarModel";
+import MetadataModel from "../models/RopidGTFS/MetadataModel";
 import RoutesModel from "../models/RopidGTFS/RoutesModel";
 import ShapesModel from "../models/RopidGTFS/ShapesModel";
 import StopsModel from "../models/RopidGTFS/StopsModel";
@@ -22,17 +23,34 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     private dataSource: RopidGTFSDataSource;
     private transformation: RopidGTFSTransformation;
+    private metaModel: MetadataModel;
     private queuePrefix: string;
 
     constructor() {
         super();
         this.dataSource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
+        this.metaModel = new MetadataModel();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
+    public checkForNewData = async (): Promise<void> => {
+        const serverLastModified = await this.dataSource.getLastModified();
+        const dbLastModified = await this.metaModel.getLastModified();
+        if (serverLastModified !== dbLastModified) {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadFiles",
+                new Buffer("Just do it!"));
+        }
+    }
+
     public downloadFiles = async (): Promise<void> => {
-        const files = await this.dataSource.GetAll();
+        const data = await this.dataSource.GetAll();
+        const files = data.files;
+        const lastModified = data.last_modified;
+        await this.metaModel.SaveToDb({
+            key: "last_modified",
+            type: "DATASET_INFO",
+            value: lastModified });
 
         // send messages for transformation
         const promises = files.map((file) => {
@@ -52,6 +70,12 @@ export default class RopidGTFSWorker extends BaseWorker {
         const model = this.getModelByName(transformedData.name);
         await model.Truncate();
 
+        // save meta
+        await this.metaModel.SaveToDb({
+            key: transformedData.name,
+            type: "TABLE_TOTAL_COUNT",
+            value: transformedData.total });
+
         // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
@@ -66,6 +90,10 @@ export default class RopidGTFSWorker extends BaseWorker {
     public saveDataToDB = async (inputData): Promise<void> => {
         const model = this.getModelByName(inputData.name);
         await model.SaveToDb(inputData.data);
+    }
+
+    public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
+        return await this.metaModel.checkSavedRowsAndReplaceTables();
     }
 
     private getModelByName = (name: string): IModel => {

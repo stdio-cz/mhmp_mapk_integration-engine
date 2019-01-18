@@ -13,6 +13,7 @@ const config = require("../config/ConfigLoader");
 const ftp = require("basic-ftp");
 const decompress = require("decompress");
 const fs = require("fs");
+const moment = require("moment");
 
 /**
  * TODO rozdelit na HTTP a FTP data source
@@ -51,6 +52,20 @@ export default class RopidGTFSDataSource extends BaseDataSource implements IData
         return data;
     }
 
+    public getLastModified = async (): Promise<string> => {
+        const ftpClient = new ftp.Client();
+        // ftpClient.ftp.verbose = true;
+
+        try {
+            await ftpClient.access(config.datasources.RopidFTP);
+            await ftpClient.cd(config.datasources.RopidGTFSPath);
+            const lastModified = await ftpClient.lastMod(config.datasources.RopidGTFSFilename);
+            return moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString();
+        } catch (err) {
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
+        }
+    }
+
     /**
      * Method that connects to remote data endpoint and gets the raw data.
      *
@@ -64,6 +79,7 @@ export default class RopidGTFSDataSource extends BaseDataSource implements IData
         try {
             await ftpClient.access(config.datasources.RopidFTP);
             await ftpClient.cd(config.datasources.RopidGTFSPath);
+            const lastModified = await ftpClient.lastMod(config.datasources.RopidGTFSFilename);
             await ftpClient.download(fs.createWriteStream("/tmp/PID_GTFS.zip"), config.datasources.RopidGTFSFilename);
             const whitelist = [
                 "agency", "calendar", "calendar_dates",
@@ -81,7 +97,7 @@ export default class RopidGTFSDataSource extends BaseDataSource implements IData
                     path: file.path,
                 };
             });
-            return files;
+            return { files, last_modified: moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString() };
         } catch (err) {
             throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
         }

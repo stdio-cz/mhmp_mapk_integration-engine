@@ -18,7 +18,7 @@ export default class ShapesModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.shapes.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.shapes.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.shapes.tmpPgTableName,
             RopidGTFS.shapes.outputSequelizeAttributes);
         this.sequelizeModel.removeAttribute("id");
         // TODO doplnit validator

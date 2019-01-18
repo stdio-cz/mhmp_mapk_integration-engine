@@ -25,12 +25,16 @@ describe("RopidGTFSDataSource", () => {
         expect(datasource).not.to.be.undefined;
     });
 
-    it("should has correct RopidFTP", () => {
+    it("should has correct Ropid FTP", () => {
         expect(config.datasources.RopidFTP.host).to.not.equal("");
     });
 
     it("should has GetAll method", () => {
         expect(datasource.GetAll).not.to.be.undefined;
+    });
+
+    it("should has getLastModified method", () => {
+        expect(datasource.getLastModified).not.to.be.undefined;
     });
 
     it("should get all files from Ropid FTP", async () => {
@@ -42,6 +46,16 @@ describe("RopidGTFSDataSource", () => {
     it("should returns all files from Ropid FTP", async () => {
         const data = await datasource.GetAll();
         expect(data).to.be.an.instanceOf(Object);
+        expect(data).to.have.property("files");
+        expect(data).to.have.property("last_modified");
+    });
+
+    it("should returns last modified of the all files from Ropid FTP", async () => {
+        const data = await datasource.getLastModified();
+        expect(data).to.be.a("string");
+        const date = new Date(data);
+        expect(new Date(data)).to.be.an.instanceOf(Date);
+        expect(data).to.equal(date.toISOString());
     });
 
 });

@@ -23,6 +23,7 @@ export default class RopidGTFSTransformation extends BaseTransformation implemen
             noheader: false,
         }).fromString(Buffer.from(element.data).toString("utf8"));
         // chunk into smaller sub arrays
+        const total = parsed.length;
         const chunks = [];
         let i = 0;
         const n = parsed.length;
@@ -32,6 +33,7 @@ export default class RopidGTFSTransformation extends BaseTransformation implemen
         return {
             data: chunks,
             name: element.path.replace(".txt", ""),
+            total,
         };
     }
 
