@@ -4,13 +4,13 @@ import { RopidGTFS } from "data-platform-schema-definitions";
 import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
-export default class RopidGTFSStopsTransformation extends BaseTransformation implements ITransformation {
+export default class RopidGTFSCisStopsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = "RopidGTFSStops"; // RopidGTFS.name;
+        this.name = "RopidGTFSCisStops"; // RopidGTFS.name;
     }
 
     /**

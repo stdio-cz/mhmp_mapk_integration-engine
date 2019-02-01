@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import RopidGTFSStopsTransformation from "../../src/transformations/RopidGTFSStopsTransformation";
+import RopidGTFSCisStopsTransformation from "../../src/transformations/RopidGTFSCisStopsTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -29,20 +29,20 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("RopidGTFSStopsTransformation", () => {
+describe("RopidGTFSCisStopsTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new RopidGTFSStopsTransformation();
+        transformation = new RopidGTFSCisStopsTransformation();
         const buffer = await readFile(__dirname + "/../data/ropidgtfsstops-datasource.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("RopidGTFSStops");
+        expect(transformation.name).is.equal("RopidGTFSCisStops");
     });
 
     it("should has TransformDataCollection method", async () => {

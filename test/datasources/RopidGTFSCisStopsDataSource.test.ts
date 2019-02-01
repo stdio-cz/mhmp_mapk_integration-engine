@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import RopidGTFSStopsDataSource from "../../src/datasources/RopidGTFSStopsDataSource";
+import RopidGTFSCisStopsDataSource from "../../src/datasources/RopidGTFSCisStopsDataSource";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -13,12 +13,12 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 
-describe("RopidGTFSStopsDataSource", () => {
+describe("RopidGTFSCisStopsDataSource", () => {
 
     let datasource;
 
     beforeEach(() => {
-        datasource = new RopidGTFSStopsDataSource();
+        datasource = new RopidGTFSCisStopsDataSource();
     });
 
     it("should instantiate", () => {

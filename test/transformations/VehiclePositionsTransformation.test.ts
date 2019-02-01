@@ -51,9 +51,10 @@ describe("VehiclePositionsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.TransformDataElement(testSourceData.m.spoj[0]);
+        expect(data).to.have.property("position");
         expect(data).to.have.property("stops");
         expect(data).to.have.property("trip");
-});
+    });
 
     it("should has TransformDataCollection method", async () => {
         expect(transformation.TransformDataCollection).not.to.be.undefined;
@@ -62,6 +63,7 @@ describe("VehiclePositionsTransformation", () => {
     it("should properly transform collection", async () => {
         const data = await transformation.TransformDataCollection(testSourceData.m.spoj);
         for (let i = 0, imax = data.length; i < imax; i++) {
+            expect(data[i]).to.have.property("positions");
             expect(data[i]).to.have.property("stops");
             expect(data[i]).to.have.property("trips");
         }

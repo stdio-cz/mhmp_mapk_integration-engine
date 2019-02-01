@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-// import { RopidGTFSStopsDataSource as schemaObject } from "data-platform-schema-definitions";
+// import { RopidGTFSCisStopsDataSource as schemaObject } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import BaseDataSource from "./BaseDataSource";
@@ -16,7 +16,7 @@ const fs = require("fs");
 /**
  * TODO rozdelit na HTTP a FTP data source
  */
-export default class RopidGTFSStopsDataSource extends BaseDataSource implements IDataSource {
+export default class RopidGTFSCisStopsDataSource extends BaseDataSource implements IDataSource {
 
     /** The name of the data source. */
     public name: string;
@@ -31,7 +31,7 @@ export default class RopidGTFSStopsDataSource extends BaseDataSource implements 
 
     constructor() {
         super();
-        this.name = "RopidGTFSStopsDataSource";
+        this.name = "RopidGTFSCisStopsDataSource";
         this.sourceRequestObject = null;
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);
@@ -62,11 +62,11 @@ export default class RopidGTFSStopsDataSource extends BaseDataSource implements 
 
         try {
             await ftpClient.access(config.datasources.RopidFTP);
-            await ftpClient.cd(config.datasources.RopidGTFSStopsPath);
-            await ftpClient.download(fs.createWriteStream("/tmp/" + config.datasources.RopidGTFSStopsFilename),
-                config.datasources.RopidGTFSStopsFilename);
+            await ftpClient.cd(config.datasources.RopidGTFSCisStopsPath);
+            await ftpClient.download(fs.createWriteStream("/tmp/" + config.datasources.RopidGTFSCisStopsFilename),
+                config.datasources.RopidGTFSCisStopsFilename);
 
-            const buffer = await this.readFile("/tmp/" + config.datasources.RopidGTFSStopsFilename);
+            const buffer = await this.readFile("/tmp/" + config.datasources.RopidGTFSCisStopsFilename);
             const result = Buffer.from(buffer).toString("utf8");
             return this.GetSubElement(this.resultsPath, JSON.parse(result));
         } catch (err) {
