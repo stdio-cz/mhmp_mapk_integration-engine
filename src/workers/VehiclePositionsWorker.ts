@@ -1,5 +1,6 @@
 "use strict";
 
+import VehiclePositionsPositionsModel from "../models/VehiclePositionsPositionsModel";
 import VehiclePositionsStopsModel from "../models/VehiclePositionsStopsModel";
 import VehiclePositionsTripsModel from "../models/VehiclePositionsTripsModel";
 import VehiclePositionsTransformation from "../transformations/VehiclePositionsTransformation";
@@ -7,12 +8,14 @@ import BaseWorker from "./BaseWorker";
 
 export default class VehiclePositionsWorker extends BaseWorker {
 
+    private modelPositions: VehiclePositionsPositionsModel;
     private modelStops: VehiclePositionsStopsModel;
     private modelTrips: VehiclePositionsTripsModel;
     private transformation: VehiclePositionsTransformation;
 
     constructor() {
         super();
+        this.modelPositions = new VehiclePositionsPositionsModel();
         this.modelStops = new VehiclePositionsStopsModel();
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
@@ -20,6 +23,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
 
     public saveDataToDB = async (inputData): Promise<void> => {
         const transformedData = await this.transformation.TransformDataCollection(inputData);
+        await this.modelPositions.SaveToDb(transformedData.positions);
         await this.modelStops.SaveToDb(transformedData.stops);
         await this.modelTrips.SaveToDb(transformedData.trips);
     }

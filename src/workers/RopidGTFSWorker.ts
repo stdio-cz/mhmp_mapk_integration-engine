@@ -2,17 +2,21 @@
 
 import { RopidGTFS } from "data-platform-schema-definitions";
 
+import RopidGTFSCisStopsDataSource from "../datasources/RopidGTFSCisStopsDataSource";
 import RopidGTFSDataSource from "../datasources/RopidGTFSDataSource";
 import IModel from "../models/IModel";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
 import CalendarDatesModel from "../models/RopidGTFS/CalendarDatesModel";
 import CalendarModel from "../models/RopidGTFS/CalendarModel";
+import CisStopGroupsModel from "../models/RopidGTFS/CisStopGroupsModel";
+import CisStopsModel from "../models/RopidGTFS/CisStopsModel";
 import MetadataModel from "../models/RopidGTFS/MetadataModel";
 import RoutesModel from "../models/RopidGTFS/RoutesModel";
 import ShapesModel from "../models/RopidGTFS/ShapesModel";
 import StopsModel from "../models/RopidGTFS/StopsModel";
 import StopTimesModel from "../models/RopidGTFS/StopTimesModel";
 import TripsModel from "../models/RopidGTFS/TripsModel";
+import RopidGTFSCisStopsTransformation from "../transformations/RopidGTFSCisStopsTransformation";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -24,6 +28,10 @@ export default class RopidGTFSWorker extends BaseWorker {
     private dataSource: RopidGTFSDataSource;
     private transformation: RopidGTFSTransformation;
     private metaModel: MetadataModel;
+    private dataSourceCisStops: RopidGTFSCisStopsDataSource;
+    private transformationCisStops: RopidGTFSCisStopsTransformation;
+    private cisStopGroupsModel: CisStopGroupsModel;
+    private cisStopsModel: CisStopsModel;
     private queuePrefix: string;
 
     constructor() {
@@ -31,6 +39,10 @@ export default class RopidGTFSWorker extends BaseWorker {
         this.dataSource = new RopidGTFSDataSource();
         this.transformation = new RopidGTFSTransformation();
         this.metaModel = new MetadataModel();
+        this.dataSourceCisStops = new RopidGTFSCisStopsDataSource();
+        this.transformationCisStops = new RopidGTFSCisStopsTransformation();
+        this.cisStopGroupsModel = new CisStopGroupsModel();
+        this.cisStopsModel = new CisStopsModel();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
@@ -94,6 +106,15 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
         return await this.metaModel.checkSavedRowsAndReplaceTables();
+    }
+
+    public downloadCisStops = async (): Promise<void> => {
+        const data = await this.dataSourceCisStops.GetAll();
+        const transformedData = await this.transformationCisStops.TransformDataCollection(data);
+        await this.cisStopGroupsModel.Truncate();
+        await this.cisStopGroupsModel.SaveToDb(transformedData.cis_stop_groups);
+        await this.cisStopsModel.Truncate();
+        await this.cisStopsModel.SaveToDb(transformedData.cis_stops);
     }
 
     private getModelByName = (name: string): IModel => {

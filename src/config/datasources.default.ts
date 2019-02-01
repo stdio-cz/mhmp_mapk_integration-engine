@@ -12,9 +12,9 @@ module.exports = {
         secure: null,
         user: "",
     },
+    RopidGTFSCisStopsFilename: "Stops.Min.json",
+    RopidGTFSCisStopsPath: "PUBLIC/ZASTAVKY/JSON/",
     RopidGTFSFilename: "PID_GTFS.zip",
     RopidGTFSPath: "GTFS/",
-    RopidGTFSStopsFilename: "Stops.Min.json",
-    RopidGTFSStopsPath: "PUBLIC/ZASTAVKY/JSON/",
     TSKParkings: "http://www.tsk-praha.cz/tskexport3/json/parkings",
 };

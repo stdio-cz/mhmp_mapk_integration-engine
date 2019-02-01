@@ -45,6 +45,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
                 deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                 deadLetterRoutingKey: "dead",
                 messageTtl: 23 * 60 * 60 * 1000 });
+        await this.registerQueue(this.queuePrefix + ".downloadCisStops",
+            "*." + this.queuePrefix + ".downloadCisStops", this.downloadCisStops, {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000 });
     }
 
     protected checkForNewData = async (msg: any): Promise<void> => {
@@ -128,4 +133,17 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
         }
     }
 
+    protected downloadCisStops = async (msg: any): Promise<void> => {
+        try {
+            const worker = new RopidGTFSWorker();
+            log.debug(" [>] " + this.queuePrefix + ".downloadCisStops received some data.");
+            await worker.downloadCisStops();
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".downloadCisStops: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
 }

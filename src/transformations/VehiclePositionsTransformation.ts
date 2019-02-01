@@ -56,9 +56,12 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         // timestamp.setDate(timestamp.getDate() + isOverMidnight);
         timestamp.add(isOverMidnight, "d");
 
+        // primary key -> start_timestamp, cis_id, cis_short_name, cis_number
+        const primaryKey = startDate.utc().format()
+            + "_" + attributes.lin + "_" + attributes.alias + "_" + attributes.spoj;
+
         const res = {
-            stops: [],
-            trip: {
+            position: {
                 delay_stop_arrival: (attributes.zpoz_prij)
                     ? parseInt(attributes.zpoz_prij, 10)
                     : null,
@@ -66,28 +69,35 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                     ? parseInt(attributes.zpoz_odj, 10)
                     : null,
                 is_canceled: (attributes.zrus === "true") ? true : false,
-                is_low_floor: (attributes.np === "true") ? true : false,
-                last_stop_id_cis: (attributes.zast)
-                    ? parseInt(attributes.zast, 10)
-                    : null,
                 lat: (attributes.lat)
                     ? parseFloat(attributes.lat)
                     : null,
-                line: parseInt(attributes.lin, 10),
                 lng: (attributes.lng)
                     ? parseFloat(attributes.lng)
                     : null,
-                route_id_cis: parseInt(attributes.spoj, 10),
-                route_number: parseInt(attributes.po, 10),
-                route_short_name: attributes.alias,
-                start_date: startDate.utc().format(),
-                timestamp: timestamp.utc().format(),
+                origin_time: attributes.cpoz,
+                origin_timestamp: timestamp.utc().format(),
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
                     : null,
-                type: (attributes.t)
+                trips_id: primaryKey,
+            },
+            stops: [],
+            trip: {
+                cis_id: parseInt(attributes.lin, 10),
+                cis_number: parseInt(attributes.spoj, 10),
+                cis_order: parseInt(attributes.po, 10),
+                cis_short_name: attributes.alias,
+                id: primaryKey,
+                modified: moment.tz("Europe/Prague").utc().format(),
+                start_cis_stop_id: parseInt(stops[0].$.zast, 10),
+                start_cis_stop_platform_code: stops[0].$.stan,
+                start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
+                start_timestamp: startDate.utc().format(),
+                vehicle_type: (attributes.t)
                     ? parseInt(attributes.t, 10)
                     : null,
+                wheelchair_accessible: (attributes.np === "true") ? true : false,
             },
         };
 
@@ -125,7 +135,11 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             }
 
             res.stops.push({
-                connection: parseInt(attributes.spoj, 10),
+                arrival_time: (arrival) ? stop.$.prij : null,
+                arrival_timestamp: (arrival) ? arrival.utc().format() : null,
+                cis_stop_id: parseInt(stop.$.zast, 10),
+                cis_stop_platform_code: stop.$.stan,
+                cis_stop_sequence: i + 1,
                 delay_arrival: (stop.$.zpoz_prij)
                     ? parseInt(stop.$.zpoz_prij, 10)
                     : null,
@@ -135,13 +149,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 delay_type: (stop.$.zpoz_typ)
                     ? parseInt(stop.$.zpoz_typ, 10)
                     : null,
-                line: parseInt(attributes.lin, 10),
-                stop_id_cis: parseInt(stop.$.zast, 10),
-                stop_order: i,
-                stop_platform: stop.$.stan,
-                time_arrival: (arrival) ? arrival.utc().format() : null,
-                time_departure: (departure) ? departure.utc().format() : null,
-                timestamp: timestamp.utc().format(),
+                departure_time: (departure) ? stop.$.odj : null,
+                departure_timestamp: (departure) ? departure.utc().format() : null,
+                modified: moment.tz("Europe/Prague").utc().format(),
+                trips_id: primaryKey,
             });
         });
 
@@ -154,6 +165,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
      */
     public TransformDataCollection = async (collection): Promise<any> => {
         const res = {
+            positions: [],
             stops: [],
             trips: [],
         };
@@ -162,6 +174,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             const promises = collection.map(async (element, i) => {
                 const elemRes = await this.TransformDataElement(element);
                 if (elemRes) {
+                    res.positions.push(elemRes.position);
                     res.stops = res.stops.concat(elemRes.stops);
                     res.trips.push(elemRes.trip);
                 }
@@ -172,6 +185,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
         } else {
             const elemRes = await this.TransformDataElement(collection);
             if (elemRes) {
+                res.positions.push(elemRes.position);
                 res.stops = res.stops.concat(elemRes.stops);
                 res.trips.push(elemRes.trip);
             }

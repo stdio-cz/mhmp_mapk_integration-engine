@@ -23,6 +23,8 @@ describe("RopidGTFSWorker", () => {
     let queuePrefix;
     let testData;
     let testTransformedData;
+    let testDataCis;
+    let testTransformedDataCis;
     let modelTruncateStub;
     let modelSaveStub;
 
@@ -34,6 +36,8 @@ describe("RopidGTFSWorker", () => {
             last_modified: "2019-01-18T03:22:09.000Z",
         };
         testTransformedData = {data: [1], filepath: 11, name: "fake"};
+        testDataCis = [];
+        testTransformedDataCis = {cis_stop_grous: [1], cis_stops: [2]};
 
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({define: sandbox.stub()}));
@@ -62,6 +66,15 @@ describe("RopidGTFSWorker", () => {
         modelSaveStub = sandbox.stub();
         sandbox.stub(worker, "getModelByName")
             .callsFake(() => Object.assign({Truncate: modelTruncateStub, SaveToDb: modelSaveStub}));
+
+        sandbox.stub(worker.dataSourceCisStops, "GetAll")
+            .callsFake(() => testDataCis);
+        sandbox.stub(worker.transformationCisStops, "TransformDataCollection")
+            .callsFake(() => testTransformedDataCis);
+        sandbox.stub(worker.cisStopGroupsModel, "Truncate");
+        sandbox.stub(worker.cisStopGroupsModel, "SaveToDb");
+        sandbox.stub(worker.cisStopsModel, "Truncate");
+        sandbox.stub(worker.cisStopsModel, "SaveToDb");
     });
 
     afterEach(() => {
@@ -128,6 +141,24 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {
         await worker.checkSavedRowsAndReplaceTables();
         sandbox.assert.calledOnce(worker.metaModel.checkSavedRowsAndReplaceTables);
+    });
+
+    it("should calls the correct methods by downloadCisStops method", async () => {
+        await worker.downloadCisStops();
+        sandbox.assert.calledOnce(worker.dataSourceCisStops.GetAll);
+        sandbox.assert.calledOnce(worker.transformationCisStops.TransformDataCollection);
+        sandbox.assert.calledOnce(worker.cisStopGroupsModel.Truncate);
+        sandbox.assert.calledOnce(worker.cisStopGroupsModel.SaveToDb);
+        sandbox.assert.calledOnce(worker.cisStopsModel.Truncate);
+        sandbox.assert.calledOnce(worker.cisStopsModel.SaveToDb);
+        sandbox.assert.callOrder(
+            worker.dataSourceCisStops.GetAll,
+            worker.transformationCisStops.TransformDataCollection,
+            worker.cisStopGroupsModel.Truncate,
+            worker.cisStopGroupsModel.SaveToDb,
+            worker.cisStopsModel.Truncate,
+            worker.cisStopsModel.SaveToDb);
+        sandbox.assert.calledThrice(PostgresConnector.getConnection);
     });
 
 });
