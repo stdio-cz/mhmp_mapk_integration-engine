@@ -23,7 +23,15 @@ export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
             "*." + this.queuePrefix + ".saveDataToDB", this.saveDataToDB, {
                 deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                 deadLetterRoutingKey: "dead" });
-    }
+        await this.registerQueue(this.queuePrefix + ".getTripsWithoutGTFSTripId",
+            "*." + this.queuePrefix + ".getTripsWithoutGTFSTripId", this.getTripsWithoutGTFSTripId, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
+        await this.registerQueue(this.queuePrefix + ".updateGTFSTripId",
+            "*." + this.queuePrefix + ".updateGTFSTripId", this.updateGTFSTripId, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead" });
+            }
 
     protected saveDataToDB = async (msg: any): Promise<void> => {
         try {
@@ -39,4 +47,31 @@ export default class VehiclePositionsQueueProcessor extends BaseQueueProcessor {
         }
     }
 
+    protected getTripsWithoutGTFSTripId = async (msg: any): Promise<void> => {
+        try {
+            const worker = new VehiclePositionsWorker();
+            log.debug(" [>] " + this.queuePrefix + ".getTripsWithoutGTFSTripId received some data.");
+            await worker.getTripsWithoutGTFSTripId();
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".getTripsWithoutGTFSTripId: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
+
+    protected updateGTFSTripId = async (msg: any): Promise<void> => {
+        try {
+            const worker = new VehiclePositionsWorker();
+            log.debug(" [>] " + this.queuePrefix + ".updateGTFSTripId received some data.");
+            await worker.updateGTFSTripId(JSON.parse(msg.content.toString()));
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".updateGTFSTripId: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
 }

@@ -23,3 +23,4 @@
 - 1019: Error while updating average occupancy.
 - 1020: Error while getting average taken places.
 - 1021: Error while checking RopidGTFS saved rows.
+- 1022: Error while updating gtfs_trip_id
