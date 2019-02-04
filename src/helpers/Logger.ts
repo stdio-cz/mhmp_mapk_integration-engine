@@ -20,13 +20,22 @@ class Logger {
     constructor() {
         this.logLevels = {
             ALL: 0,
-            DEBUG: 1,
-            ERROR: 4,
-            FATAL: 5,
-            INFO: 2,
-            OFF: 6,
-            WARN: 3,
+            DEBUG: 2,
+            ERROR: 5,
+            FATAL: 6,
+            INFO: 3,
+            OFF: 7,
+            SILLY: 1,
+            WARN: 4,
         };
+    }
+
+    public silly = (logText: string): boolean => {
+        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.SILLY) {
+            debugLog("[SILLY] " + logText);
+            return true;
+        }
+        return false;
     }
 
     public debug = (logText: string): boolean => {

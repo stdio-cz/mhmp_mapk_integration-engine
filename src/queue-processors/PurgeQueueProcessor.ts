@@ -18,12 +18,8 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
     }
 
     public registerQueues = async (): Promise<void> => {
-        await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositionsTrips",
-            "*." + this.queuePrefix + ".deleteOldVehiclePositionsTrips", this.deleteOldVehiclePositionsTrips, {
-                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                deadLetterRoutingKey: "dead" });
-        await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositionsStops",
-            "*." + this.queuePrefix + ".deleteOldVehiclePositionsStops", this.deleteOldVehiclePositionsStops, {
+        await this.registerQueue(this.queuePrefix + ".deleteOldVehiclePositions",
+            "*." + this.queuePrefix + ".deleteOldVehiclePositions", this.deleteOldVehiclePositions, {
                 deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                 deadLetterRoutingKey: "dead" });
         await this.registerQueue(this.queuePrefix + ".deleteOldMerakiAccessPointsObservations",
@@ -33,28 +29,14 @@ export default class PurgeQueueProcessor extends BaseQueueProcessor {
                     deadLetterRoutingKey: "dead" });
     }
 
-    protected deleteOldVehiclePositionsTrips = async (msg: any): Promise<void> => {
+    protected deleteOldVehiclePositions = async (msg: any): Promise<void> => {
         try {
             const worker = new PurgeWorker();
-            log.debug(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips received some data.");
-            await worker.deleteOldVehiclePositionsTrips();
+            log.debug(" [>] " + this.queuePrefix + ".deleteOldVehiclePositions received some data.");
+            await worker.deleteOldVehiclePositions();
 
             this.channel.ack(msg);
-            log.debug(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsTrips: done");
-        } catch (err) {
-            handleError(err);
-            this.channel.nack(msg, false, false);
-        }
-    }
-
-    protected deleteOldVehiclePositionsStops = async (msg: any): Promise<void> => {
-        try {
-            const worker = new PurgeWorker();
-            log.debug(" [>] " + this.queuePrefix + ".deleteOldVehiclePositionsStops received some data.");
-            await worker.deleteOldVehiclePositionsStops();
-
-            this.channel.ack(msg);
-            log.debug(" [<] " + this.queuePrefix + ".deleteOldVehiclePositionsStops: done");
+            log.debug(" [<] " + this.queuePrefix + ".deleteOldVehiclePositions: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

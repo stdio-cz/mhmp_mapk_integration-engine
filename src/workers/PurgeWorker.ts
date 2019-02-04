@@ -7,21 +7,18 @@ const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class PurgeWorker {
 
-    public deleteOldVehiclePositionsTrips = async (): Promise<void> => {
+    public deleteOldVehiclePositions = async (): Promise<void> => {
         try {
-            const res = await PostgresConnector.getConnection().query(
+            let res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_trips','created',48);",
             );
             log.debug(res);
-        } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
-        }
-    }
-
-    public deleteOldVehiclePositionsStops = async (): Promise<void> => {
-        try {
-            const res = await PostgresConnector.getConnection().query(
+            res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_stops','created',48);",
+            );
+            log.debug(res);
+            res = await PostgresConnector.getConnection().query(
+                "SELECT * FROM retention('vehiclepositions_positions','created',48);",
             );
             log.debug(res);
         } catch (err) {
