@@ -32,18 +32,9 @@ describe("PurgeWorker", () => {
         sandbox.restore();
     });
 
-    it("should calls the correct methods by deleteOldVehiclePositionsTrips method", async () => {
-        await worker.deleteOldVehiclePositionsTrips();
-        sandbox.assert.calledOnce(queryStub);
-        sandbox.assert.calledWith(queryStub,
-            "SELECT * FROM retention('vehiclepositions_trips','created',48);");
-    });
-
-    it("should calls the correct methods by deleteOldVehiclePositionsStops method", async () => {
-        await worker.deleteOldVehiclePositionsStops();
-        sandbox.assert.calledOnce(queryStub);
-        sandbox.assert.calledWith(queryStub,
-            "SELECT * FROM retention('vehiclepositions_stops','created',48);");
+    it("should calls the correct methods by deleteOldVehiclePositions method", async () => {
+        await worker.deleteOldVehiclePositions();
+        sandbox.assert.calledThrice(queryStub);
     });
 
     it("should calls the correct methods by deleteOldMerakiAccessPointsObservations method", async () => {
