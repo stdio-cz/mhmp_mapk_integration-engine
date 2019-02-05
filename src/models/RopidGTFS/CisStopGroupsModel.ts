@@ -18,7 +18,7 @@ export default class CisStopGroupsModel extends PostgresModel implements IModel 
         super();
         this.name = RopidGTFS.cis_stop_groups.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.cis_stop_groups.pgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.cis_stop_groups.tmpPgTableName,
             RopidGTFS.cis_stop_groups.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

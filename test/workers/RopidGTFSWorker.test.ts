@@ -36,8 +36,8 @@ describe("RopidGTFSWorker", () => {
             last_modified: "2019-01-18T03:22:09.000Z",
         };
         testTransformedData = {data: [1], filepath: 11, name: "fake"};
-        testDataCis = [];
-        testTransformedDataCis = {cis_stop_grous: [1], cis_stops: [2]};
+        testDataCis = {data: [], last_modified: null};
+        testTransformedDataCis = {cis_stop_groups: [1], cis_stops: [2]};
 
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({define: sandbox.stub()}));
@@ -50,7 +50,7 @@ describe("RopidGTFSWorker", () => {
             .callsFake(() => testData);
 
         sandbox.stub(worker.metaModel, "getLastModified")
-            .callsFake(() => "2019-01-18T03:24:09.000Z");
+            .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
         sandbox.stub(worker.metaModel, "SaveToDb");
         sandbox.stub(worker.metaModel, "checkSavedRowsAndReplaceTables")
             .callsFake(() => true);
@@ -69,6 +69,8 @@ describe("RopidGTFSWorker", () => {
 
         sandbox.stub(worker.dataSourceCisStops, "GetAll")
             .callsFake(() => testDataCis);
+        sandbox.stub(worker.dataSourceCisStops, "getLastModified")
+            .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
         sandbox.stub(worker.transformationCisStops, "TransformDataCollection")
             .callsFake(() => testTransformedDataCis);
         sandbox.stub(worker.cisStopGroupsModel, "Truncate");
@@ -84,10 +86,13 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by checkForNewData method", async () => {
         await worker.checkForNewData();
         sandbox.assert.calledOnce(worker.dataSource.getLastModified);
-        sandbox.assert.calledOnce(worker.metaModel.getLastModified);
-        sandbox.assert.calledOnce(worker.sendMessageToExchange);
+        sandbox.assert.calledOnce(worker.dataSourceCisStops.getLastModified);
+        sandbox.assert.calledTwice(worker.metaModel.getLastModified);
+        sandbox.assert.calledTwice(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
             worker.dataSource.getLastModified,
+            worker.metaModel.getLastModified,
+            worker.dataSourceCisStops.getLastModified,
             worker.metaModel.getLastModified,
             worker.sendMessageToExchange);
     });
@@ -146,18 +151,25 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by downloadCisStops method", async () => {
         await worker.downloadCisStops();
         sandbox.assert.calledOnce(worker.dataSourceCisStops.GetAll);
+        sandbox.assert.calledOnce(worker.metaModel.getLastModified);
+        sandbox.assert.calledTwice(worker.metaModel.SaveToDb);
         sandbox.assert.calledOnce(worker.transformationCisStops.TransformDataCollection);
         sandbox.assert.calledOnce(worker.cisStopGroupsModel.Truncate);
         sandbox.assert.calledOnce(worker.cisStopGroupsModel.SaveToDb);
         sandbox.assert.calledOnce(worker.cisStopsModel.Truncate);
         sandbox.assert.calledOnce(worker.cisStopsModel.SaveToDb);
+        sandbox.assert.calledOnce(worker.metaModel.checkSavedRowsAndReplaceTables);
         sandbox.assert.callOrder(
             worker.dataSourceCisStops.GetAll,
+            worker.metaModel.getLastModified,
+            worker.metaModel.SaveToDb,
+            worker.metaModel.SaveToDb,
             worker.transformationCisStops.TransformDataCollection,
             worker.cisStopGroupsModel.Truncate,
             worker.cisStopGroupsModel.SaveToDb,
             worker.cisStopsModel.Truncate,
-            worker.cisStopsModel.SaveToDb);
+            worker.cisStopsModel.SaveToDb,
+            worker.metaModel.checkSavedRowsAndReplaceTables);
         sandbox.assert.calledThrice(PostgresConnector.getConnection);
     });
 

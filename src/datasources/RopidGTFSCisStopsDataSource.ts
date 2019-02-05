@@ -4,6 +4,7 @@ import * as path from "path";
 
 // import { RopidGTFSCisStopsDataSource as schemaObject } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import BaseDataSource from "./BaseDataSource";
 import IDataSource from "./IDataSource";
@@ -12,6 +13,7 @@ import ISourceRequest from "./ISourceRequest";
 const config = require("../config/ConfigLoader");
 const ftp = require("basic-ftp");
 const fs = require("fs");
+const moment = require("moment");
 
 /**
  * TODO rozdelit na HTTP a FTP data source
@@ -50,6 +52,21 @@ export default class RopidGTFSCisStopsDataSource extends BaseDataSource implemen
         return data;
     }
 
+    public getLastModified = async (): Promise<string> => {
+        const ftpClient = new ftp.Client();
+        ftpClient.ftp.log = log.verbose;
+        ftpClient.ftp.verbose = true;
+
+        try {
+            await ftpClient.access(config.datasources.RopidFTP);
+            await ftpClient.cd(config.datasources.RopidGTFSCisStopsPath);
+            const lastModified = await ftpClient.lastMod(config.datasources.RopidGTFSCisStopsFilename);
+            return moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString();
+        } catch (err) {
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
+        }
+    }
+
     /**
      * Method that connects to remote data endpoint and gets the raw data.
      *
@@ -58,17 +75,22 @@ export default class RopidGTFSCisStopsDataSource extends BaseDataSource implemen
     protected GetRawData = async (): Promise<any> => {
 
         const ftpClient = new ftp.Client();
-        // ftpClient.ftp.verbose = true;
+        ftpClient.ftp.log = log.verbose;
+        ftpClient.ftp.verbose = true;
 
         try {
             await ftpClient.access(config.datasources.RopidFTP);
             await ftpClient.cd(config.datasources.RopidGTFSCisStopsPath);
+            const lastModified = await ftpClient.lastMod(config.datasources.RopidGTFSCisStopsFilename);
             await ftpClient.download(fs.createWriteStream("/tmp/" + config.datasources.RopidGTFSCisStopsFilename),
                 config.datasources.RopidGTFSCisStopsFilename);
 
             const buffer = await this.readFile("/tmp/" + config.datasources.RopidGTFSCisStopsFilename);
             const result = Buffer.from(buffer).toString("utf8");
-            return this.GetSubElement(this.resultsPath, JSON.parse(result));
+            return {
+                data: this.GetSubElement(this.resultsPath, JSON.parse(result)),
+                last_modified: moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString(),
+            };
         } catch (err) {
             throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
         }

@@ -19,42 +19,54 @@ export default class MetadataModel extends PostgresModel implements IModel {
         super();
         this.name = RopidGTFS.metadata.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.metadata.tmpPgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.metadata.pgTableName,
             RopidGTFS.metadata.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);
     }
 
-    public getLastModified = async (): Promise<string|null> => {
-        const connection = PostgresConnector.getConnection();
+    public getLastModified = async (dataset: string): Promise<any|null> => {
         try {
-            const lastMod = await connection.query(
-                "SELECT * "
-                + "FROM " + RopidGTFS.metadata.pgTableName + " "
-                + "WHERE key = 'last_modified' AND type = 'DATASET_INFO';",
-                { type: connection.QueryTypes.SELECT });
-            return lastMod[0].value;
+            const lastMod = await this.sequelizeModel.findOne({
+                order: [["version", "DESC"]],
+                where: {
+                    dataset,
+                    key: "last_modified",
+                    type: "DATASET_INFO",
+                },
+            });
+            return (lastMod) ? {
+                    lastModified: (lastMod.dataValues) ? lastMod.dataValues.value : null,
+                    version: (lastMod.dataValues) ? lastMod.dataValues.version : 1,
+                } : {
+                    lastModified: null,
+                    version: 0,
+                };
         } catch (err) {
             log.warn(err);
             return null;
         }
     }
 
-    public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
-        const metaSum = await this.getTotalFromMeta();
-        const tableSum = await this.getTotalFromTables();
+    public checkSavedRowsAndReplaceTables = async (dataset: string, version: number): Promise<boolean> => {
+        const metaSum = await this.getTotalFromMeta(dataset, version);
+        const tableSum = await this.getTotalFromTables(dataset, version);
         if (metaSum === tableSum) {
             const connection = PostgresConnector.getConnection();
             const t = await connection.transaction();
             try {
-                const tables = await connection.query(
-                    "SELECT key as tn "
-                    + "FROM " + RopidGTFS.metadata.tmpPgTableName + " "
-                    + "WHERE type = 'TABLE_TOTAL_COUNT';",
-                    { type: connection.QueryTypes.SELECT, transaction: t });
+                const tables = await this.sequelizeModel.findAll({
+                    attributes: [["key", "tn"]],
+                    transaction: t,
+                    where: {
+                        dataset,
+                        type: "TABLE_TOTAL_COUNT",
+                        version,
+                    },
+                });
                 const promises = tables.map((table) => {
-                    const tableName = RopidGTFS[table.tn].pgTableName;
-                    const tmpTableName = RopidGTFS[table.tn].tmpPgTableName;
+                    const tableName = RopidGTFS[table.dataValues.tn].pgTableName;
+                    const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
                     return connection.query(
                         "ALTER TABLE IF EXISTS " + tableName + " RENAME TO old_" + tableName + "; "
                         + "ALTER TABLE IF EXISTS " + tmpTableName + " RENAME TO " + tableName + "; "
@@ -62,13 +74,13 @@ export default class MetadataModel extends PostgresModel implements IModel {
                         { transaction: t });
                 });
                 await Promise.all(promises);
-                const metaTableName = RopidGTFS.metadata.pgTableName;
-                const metaTmpTableName = RopidGTFS.metadata.tmpPgTableName;
-                await connection.query(
-                        "ALTER TABLE IF EXISTS " + metaTableName + " RENAME TO old_" + metaTableName + "; "
-                        + "ALTER TABLE IF EXISTS " + metaTmpTableName + " RENAME TO " + metaTableName + "; "
-                        + "DROP TABLE IF EXISTS old_" + metaTableName + ";",
-                        { transaction: t });
+                await this.sequelizeModel.destroy({
+                    transaction: t,
+                    where: {
+                        dataset,
+                        version: { [Sequelize.Op.ne]: version },
+                    },
+                });
                 t.commit();
                 return true;
             } catch (err) {
@@ -80,20 +92,34 @@ export default class MetadataModel extends PostgresModel implements IModel {
         return false;
     }
 
-    private getTotalFromMeta = async (): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-        let result = await connection.query(
-            "SELECT sum(CAST (value as INTEGER)) as total "
-            + "FROM " + RopidGTFS.metadata.tmpPgTableName + " "
-            + "WHERE type = 'TABLE_TOTAL_COUNT';",
-            { type: Sequelize.QueryTypes.SELECT });
-        result = result[0].total;
-        log.debug(this.name + " Total from metadata: " + result);
-        return result;
+    private getTotalFromMeta = async (dataset: string, version: number): Promise<any> => {
+        const result = await this.sequelizeModel.findAll({
+            attributes: [[Sequelize.fn("SUM", Sequelize.cast(Sequelize.col("value"), "INTEGER")), "total"]],
+            where: {
+                dataset,
+                type: "TABLE_TOTAL_COUNT",
+                version,
+            },
+        });
+        log.debug(this.name + " Total from metadata: " + result[0].dataValues.total);
+        return result[0].dataValues.total;
     }
 
-    private getTotalFromTables = async (): Promise<any> => {
+    private getTotalFromTables = async (dataset: string, version: number): Promise<any> => {
         const connection = PostgresConnector.getConnection();
+
+        const tables = await this.sequelizeModel.findAll({
+            attributes: [["key", "tn"]],
+            where: {
+                dataset,
+                type: "TABLE_TOTAL_COUNT",
+                version,
+            },
+        });
+        const tablesArray = [];
+        tables.map((table) => {
+            tablesArray.push("'" + RopidGTFS[table.dataValues.tn].tmpPgTableName + "'");
+        });
 
         await connection.query(
             "CREATE OR REPLACE FUNCTION "
@@ -110,18 +136,17 @@ export default class MetadataModel extends PostgresModel implements IModel {
             + "$body$ "
             + "LANGUAGE plpgsql; ", { type: Sequelize.QueryTypes.SELECT});
 
-        let result = await connection.query(
+        const result = await connection.query(
             "SELECT SUM(count_rows(table_schema, table_name)) as total "
             + "FROM information_schema.tables "
             + "WHERE "
             + "table_schema NOT IN ('pg_catalog', 'information_schema') "
             + "AND table_type = 'BASE TABLE' "
-            + "AND table_name like ('" + RopidGTFS.metadata.tmpPgTableName.replace("metadata", "") + "%') "
-            + "AND table_name <> '" + RopidGTFS.metadata.tmpPgTableName + "' ",
+            + "AND table_name in (" + tablesArray.join(",") + "); ",
             { type: Sequelize.QueryTypes.SELECT});
-        result = result[0].total;
-        log.debug(this.name + " Total from tables: " + result);
-        return result;
+
+        log.debug(this.name + " Total from tables: " + result[0].total);
+        return result[0].total;
     }
 
 }

@@ -2,6 +2,7 @@
 
 import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import BaseModel from "./BaseModel";
 
@@ -38,6 +39,7 @@ export default abstract class PostgresModel extends BaseModel {
                 return await this.sequelizeModel.create(data);
             }
         } catch (err) {
+            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }

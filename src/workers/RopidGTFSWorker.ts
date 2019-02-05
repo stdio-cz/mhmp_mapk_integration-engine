@@ -47,10 +47,19 @@ export default class RopidGTFSWorker extends BaseWorker {
     }
 
     public checkForNewData = async (): Promise<void> => {
+        // checking PID_GTFS dataset
         const serverLastModified = await this.dataSource.getLastModified();
-        const dbLastModified = await this.metaModel.getLastModified();
-        if (serverLastModified !== dbLastModified) {
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        if (serverLastModified !== dbLastModified.lastModified) {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadFiles",
+                new Buffer("Just do it!"));
+        }
+
+        // checking CIS_STOPS dataset
+        const CISserverLastModified = await this.dataSourceCisStops.getLastModified();
+        const CISdbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
+        if (CISserverLastModified !== CISdbLastModified.lastModified) {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadCisStops",
                 new Buffer("Just do it!"));
         }
     }
@@ -59,10 +68,13 @@ export default class RopidGTFSWorker extends BaseWorker {
         const data = await this.dataSource.GetAll();
         const files = data.files;
         const lastModified = data.last_modified;
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         await this.metaModel.SaveToDb({
+            dataset: "PID_GTFS",
             key: "last_modified",
             type: "DATASET_INFO",
-            value: lastModified });
+            value: lastModified,
+            version: dbLastModified.version + 1 });
 
         // send messages for transformation
         const promises = files.map((file) => {
@@ -82,11 +94,15 @@ export default class RopidGTFSWorker extends BaseWorker {
         const model = this.getModelByName(transformedData.name);
         await model.Truncate();
 
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+
         // save meta
         await this.metaModel.SaveToDb({
+            dataset: "PID_GTFS",
             key: transformedData.name,
             type: "TABLE_TOTAL_COUNT",
-            value: transformedData.total });
+            value: transformedData.total,
+            version: dbLastModified.version });
 
         // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
@@ -105,16 +121,39 @@ export default class RopidGTFSWorker extends BaseWorker {
     }
 
     public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
-        return await this.metaModel.checkSavedRowsAndReplaceTables();
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        return await this.metaModel.checkSavedRowsAndReplaceTables("PID_GTFS", dbLastModified.version);
     }
 
     public downloadCisStops = async (): Promise<void> => {
         const data = await this.dataSourceCisStops.GetAll();
-        const transformedData = await this.transformationCisStops.TransformDataCollection(data);
+        const lastModified = data.last_modified;
+        const dbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
+        await this.metaModel.SaveToDb({
+            dataset: "CIS_STOPS",
+            key: "last_modified",
+            type: "DATASET_INFO",
+            value: lastModified,
+            version: dbLastModified.version + 1 });
+
+        const transformedData = await this.transformationCisStops.TransformDataCollection(data.data);
+        // save meta
+        await this.metaModel.SaveToDb([{
+            dataset: "CIS_STOPS",
+            key: "cis_stop_groups",
+            type: "TABLE_TOTAL_COUNT",
+            value: transformedData.cis_stop_groups.length,
+            version: dbLastModified.version + 1 }, {
+            dataset: "CIS_STOPS",
+            key: "cis_stops",
+            type: "TABLE_TOTAL_COUNT",
+            value: transformedData.cis_stops.length,
+            version: dbLastModified.version + 1 }]);
         await this.cisStopGroupsModel.Truncate();
         await this.cisStopGroupsModel.SaveToDb(transformedData.cis_stop_groups);
         await this.cisStopsModel.Truncate();
         await this.cisStopsModel.SaveToDb(transformedData.cis_stops);
+        await this.metaModel.checkSavedRowsAndReplaceTables("CIS_STOPS", dbLastModified.version + 1);
     }
 
     private getModelByName = (name: string): IModel => {
