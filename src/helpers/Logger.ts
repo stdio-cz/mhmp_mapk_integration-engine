@@ -1,5 +1,6 @@
 "use strict";
 
+const verboseLog = require("debug")("data-platform:integration-engine:verbose");
 const debugLog = require("debug")("data-platform:integration-engine:debug");
 const infoLog = require("debug")("data-platform:integration-engine:info");
 const warnLog = require("debug")("data-platform:integration-engine:warning");
@@ -25,14 +26,14 @@ class Logger {
             FATAL: 6,
             INFO: 3,
             OFF: 7,
-            SILLY: 1,
+            VERBOSE: 1,
             WARN: 4,
         };
     }
 
-    public silly = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.SILLY) {
-            debugLog("[SILLY] " + logText);
+    public verbose = (logText: string): boolean => {
+        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.VERBOSE) {
+            verboseLog("[VERBOSE] " + logText);
             return true;
         }
         return false;

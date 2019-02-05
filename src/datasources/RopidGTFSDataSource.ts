@@ -4,6 +4,7 @@ import * as path from "path";
 
 // import { RopidGTFSDataSource as schemaObject } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import BaseDataSource from "./BaseDataSource";
 import IDataSource from "./IDataSource";
@@ -54,7 +55,8 @@ export default class RopidGTFSDataSource extends BaseDataSource implements IData
 
     public getLastModified = async (): Promise<string> => {
         const ftpClient = new ftp.Client();
-        // ftpClient.ftp.verbose = true;
+        ftpClient.ftp.log = log.verbose;
+        ftpClient.ftp.verbose = true;
 
         try {
             await ftpClient.access(config.datasources.RopidFTP);

@@ -21,7 +21,7 @@ class MySequelize {
                     freezeTableName: true,
                     timestamps: false,
                 },
-                logging: log.silly, // logging by Logger::debug
+                logging: log.verbose, // logging by Logger::verbose
                 operatorsAliases: false, // disable aliases
                 pool: {
                     acquire: 60000,
