@@ -12,13 +12,16 @@ export default class StopsModel extends PostgresModel implements IModel {
 
     public name: string;
     protected sequelizeModel: Sequelize.Model<any, any>;
+    protected tmpSequelizeModel: Sequelize.Model<any, any>;
     protected validator: Validator;
 
     constructor() {
         super();
         this.name = RopidGTFS.stops.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stops.tmpPgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stops.pgTableName,
+            RopidGTFS.stops.outputSequelizeAttributes);
+        this.tmpSequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.stops.tmpPgTableName,
             RopidGTFS.stops.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

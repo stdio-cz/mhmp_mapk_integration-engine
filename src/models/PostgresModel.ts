@@ -12,11 +12,14 @@ export default abstract class PostgresModel extends BaseModel {
     public abstract name: string;
     /** The Sequelize Model */
     protected abstract sequelizeModel: Sequelize.Model<any, any>;
+    /** The Sequelize Model */
+    protected tmpSequelizeModel: Sequelize.Model<any, any>;
     /** Validation helper */
     protected abstract validator: Validator;
 
     constructor() {
         super();
+        this.tmpSequelizeModel = null;
     }
 
     /**
@@ -24,19 +27,20 @@ export default abstract class PostgresModel extends BaseModel {
      *
      * @param data Whole FeatureCollection to be saved into DB, or single item to be saved
      */
-    public SaveToDb = async (data: any): Promise<any> => {
+    public SaveToDb = async (data: any, tmp: boolean = false): Promise<any> => {
         // data validation
         if (this.validator) {
             await this.validator.Validate(data);
         }
 
+        const model = (!tmp) ? this.sequelizeModel : this.tmpSequelizeModel;
         try {
-            await this.sequelizeModel.sync();
+            await model.sync();
 
             if (data instanceof Array) {
-                return await this.sequelizeModel.bulkCreate(data);
+                return await model.bulkCreate(data);
             } else {
-                return await this.sequelizeModel.create(data);
+                return await model.create(data);
             }
         } catch (err) {
             log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
@@ -47,15 +51,26 @@ export default abstract class PostgresModel extends BaseModel {
     /**
      * Deletes all data from table.
      */
-    public Truncate = async (): Promise<any> => {
+    public Truncate = async (tmp: boolean = false): Promise<any> => {
+        const model = (!tmp) ? this.sequelizeModel : this.tmpSequelizeModel;
         try {
-            await this.sequelizeModel.sync();
-            await this.sequelizeModel.destroy({
+            await model.sync();
+            await model.destroy({
                 cascade: false,
                 truncate: true,
             });
         } catch (err) {
             throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+        }
+    }
+
+    public FindAndCountAll = async (opts: any, tmp: boolean = false): Promise<any> => {
+        const model = (!tmp) ? this.sequelizeModel : this.tmpSequelizeModel;
+        try {
+            await model.sync();
+            return await model.findAndCountAll(opts);
+        } catch (err) {
+            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
         }
     }
 

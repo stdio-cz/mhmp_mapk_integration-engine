@@ -10,6 +10,7 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const sinon = require("sinon");
 const { PostgresConnector } = require("../../src/helpers/PostgresConnector");
+const { mongooseConnection } = require("../../src/helpers/MongoConnector");
 
 chai.use(chaiAsPromised);
 
@@ -20,6 +21,17 @@ describe("VehiclePositionsWorker", () => {
     let sequelizeModelStub;
     let testData;
 
+    before(async () => {
+        await mongooseConnection;
+        await PostgresConnector.connect();
+        worker = new VehiclePositionsWorker();
+    });
+
+    it("test", async () => {
+        await worker.updateDelay({ trip_id: "399_239_190103" });
+    });
+
+/*
     beforeEach(() => {
         testData = [{
             cis_short_name: "999",
@@ -83,5 +95,5 @@ describe("VehiclePositionsWorker", () => {
         await worker.updateGTFSTripId();
         sandbox.assert.calledOnce(worker.modelTrips.findAndUpdateGTFSTripId);
     });
-
+*/
 });

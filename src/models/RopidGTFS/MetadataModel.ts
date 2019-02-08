@@ -44,7 +44,10 @@ export default class MetadataModel extends PostgresModel implements IModel {
                 };
         } catch (err) {
             log.warn(err);
-            return null;
+            return {
+                lastModified: null,
+                version: 0,
+            };
         }
     }
 
@@ -107,7 +110,6 @@ export default class MetadataModel extends PostgresModel implements IModel {
 
     private getTotalFromTables = async (dataset: string, version: number): Promise<any> => {
         const connection = PostgresConnector.getConnection();
-
         const tables = await this.sequelizeModel.findAll({
             attributes: [["key", "tn"]],
             where: {

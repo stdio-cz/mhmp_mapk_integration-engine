@@ -6,8 +6,10 @@ export default interface IModel {
     name: string;
 
     /** Validates and Saves transformed element or collection to database. */
-    SaveToDb(data);
+    SaveToDb(data, tmp);
 
     /** Deletes all data from table. */
-    Truncate?();
+    Truncate?(tmp);
+
+    FindAndCountAll?(opts);
 }

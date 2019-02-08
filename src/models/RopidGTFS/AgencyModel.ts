@@ -12,15 +12,18 @@ export default class AgencyModel extends PostgresModel implements IModel {
 
     public name: string;
     protected sequelizeModel: Sequelize.Model<any, any>;
+    protected tmpSequelizeModel: Sequelize.Model<any, any>;
     protected validator: Validator;
 
     constructor() {
         super();
         this.name = RopidGTFS.agency.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.agency.tmpPgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.agency.pgTableName,
             RopidGTFS.agency.outputSequelizeAttributes);
-        // TODO doplnit validator
+        this.tmpSequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.agency.tmpPgTableName,
+            RopidGTFS.agency.outputSequelizeAttributes);
+            // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);
     }
 
