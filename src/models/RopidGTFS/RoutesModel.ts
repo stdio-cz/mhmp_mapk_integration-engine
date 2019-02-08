@@ -12,13 +12,16 @@ export default class RoutesModel extends PostgresModel implements IModel {
 
     public name: string;
     protected sequelizeModel: Sequelize.Model<any, any>;
+    protected tmpSequelizeModel: Sequelize.Model<any, any>;
     protected validator: Validator;
 
     constructor() {
         super();
         this.name = RopidGTFS.routes.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.routes.tmpPgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.routes.pgTableName,
+            RopidGTFS.routes.outputSequelizeAttributes);
+        this.tmpSequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.routes.tmpPgTableName,
             RopidGTFS.routes.outputSequelizeAttributes);
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);

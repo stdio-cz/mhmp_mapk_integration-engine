@@ -12,15 +12,19 @@ export default class CalendarModel extends PostgresModel implements IModel {
 
     public name: string;
     protected sequelizeModel: Sequelize.Model<any, any>;
+    protected tmpSequelizeModel: Sequelize.Model<any, any>;
     protected validator: Validator;
 
     constructor() {
         super();
         this.name = RopidGTFS.calendar.name;
 
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar.tmpPgTableName,
+        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar.pgTableName,
             RopidGTFS.calendar.outputSequelizeAttributes);
         this.sequelizeModel.removeAttribute("id");
+        this.tmpSequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.calendar.tmpPgTableName,
+            RopidGTFS.calendar.outputSequelizeAttributes);
+        this.tmpSequelizeModel.removeAttribute("id");
         // TODO doplnit validator
         this.validator = null; // new Validator(this.name, schemaObject);
     }

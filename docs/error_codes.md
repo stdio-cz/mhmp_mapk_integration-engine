@@ -24,3 +24,4 @@
 - 1020: Error while getting average taken places.
 - 1021: Error while checking RopidGTFS saved rows.
 - 1022: Error while updating gtfs_trip_id
+- 1023: Error while getting from database.

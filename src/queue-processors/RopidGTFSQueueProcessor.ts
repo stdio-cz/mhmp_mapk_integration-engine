@@ -50,6 +50,16 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 23 * 60 * 60 * 1000 });
+        await this.registerQueue(this.queuePrefix + ".refreshDataForDelayCalculation",
+            "*." + this.queuePrefix + ".refreshDataForDelayCalculation", this.refreshDataForDelayCalculation, {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000 });
+        await this.registerQueue(this.queuePrefix + ".saveDataForDelayCalculation",
+            "*." + this.queuePrefix + ".saveDataForDelayCalculation", this.saveDataForDelayCalculation, {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000 });
     }
 
     protected checkForNewData = async (msg: any): Promise<void> => {
@@ -141,6 +151,34 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
 
             this.channel.ack(msg);
             log.debug(" [<] " + this.queuePrefix + ".downloadCisStops: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
+
+    protected refreshDataForDelayCalculation = async (msg: any): Promise<void> => {
+        try {
+            const worker = new RopidGTFSWorker();
+            log.debug(" [>] " + this.queuePrefix + ".refreshDataForDelayCalculation received some data.");
+            await worker.refreshDataForDelayCalculation();
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".refreshDataForDelayCalculation: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
+
+    protected saveDataForDelayCalculation = async (msg: any): Promise<void> => {
+        try {
+            const worker = new RopidGTFSWorker();
+            log.debug(" [>] " + this.queuePrefix + ".saveDataForDelayCalculation received some data.");
+            await worker.saveDataForDelayCalculation(JSON.parse(msg.content.toString()));
+
+            this.channel.ack(msg);
+            log.debug(" [<] " + this.queuePrefix + ".saveDataForDelayCalculation: done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
