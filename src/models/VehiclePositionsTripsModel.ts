@@ -29,7 +29,7 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
     /**
      * Overrides PostgresModel::SaveToDb
      */
-    public SaveToDb = async (data: any): Promise<any> => {
+    public SaveToDb = async (data: any): Promise<{inserted: any[], updated: any[]}> => {
         // data validation
         if (this.validator) {
             await this.validator.Validate(data);
@@ -37,33 +37,41 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
 
         try {
             await this.sequelizeModel.sync();
+            const i = []; // inserted
+            const u = []; // updated
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
                     const res = await this.sequelizeModel.upsert(d);
-                    return (res)
-                        ? {
+                    if (res) {
+                        i.push({
                             cis_short_name: d.cis_short_name,
                             id: d.id,
                             start_cis_stop_id: d.start_cis_stop_id,
                             start_cis_stop_platform_code: d.start_cis_stop_platform_code,
                             start_timestamp: d.start_timestamp,
-                        }
-                        : null;
+                        });
+                    } else {
+                        u.push(d.id);
+                    }
+                    return;
                 });
-                const results = await Promise.all(promises);
-                return results.filter((r) => r !== null);
+                await Promise.all(promises);
+                return { inserted: i, updated: u };
             } else {
                 const res = await this.sequelizeModel.upsert(data);
-                return (res)
-                    ? [{
+                if (res) {
+                    i.push({
                         cis_short_name: data.cis_short_name,
                         id: data.id,
                         start_cis_stop_id: data.start_cis_stop_id,
                         start_cis_stop_platform_code: data.start_cis_stop_platform_code,
                         start_timestamp: data.start_timestamp,
-                    }]
-                    : [null];
+                    });
+                } else {
+                    u.push(data.id);
+                }
+                return { inserted: i, updated: u };
             }
         } catch (err) {
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);

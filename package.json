@@ -1,6 +1,6 @@
 {
 	"name": "data-platform-integration-engine",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Integration Engine of the Data Platform System",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
@@ -8,7 +8,7 @@
 		"start": "node -r dotenv/config dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
-		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/w*/Veh*.test.ts --exit",
+		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit",
 		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit"
 	},
 	"keywords": [],
@@ -39,7 +39,7 @@
 		"basic-ftp": "2.17.0",
 		"cheap-ruler": "2.5.1",
 		"csvtojson": "2.0.8",
-		"data-platform-schema-definitions": "../schema-definitions/data-platform-schema-definitions-0.1.2.tgz",
+		"data-platform-schema-definitions": "0.1.2-1137",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",

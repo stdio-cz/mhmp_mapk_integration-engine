@@ -11,8 +11,6 @@ import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
 const turf = require("@turf/turf");
-const moment = require("moment");
-const momentTimezone = require("moment-timezone");
 
 export default class VehiclePositionsWorker extends BaseWorker {
 
@@ -37,62 +35,92 @@ export default class VehiclePositionsWorker extends BaseWorker {
         const transformedData = await this.transformation.TransformDataCollection(inputData);
         await this.modelPositions.SaveToDb(transformedData.positions);
         await this.modelStops.SaveToDb(transformedData.stops);
-        const newRows = await this.modelTrips.SaveToDb(transformedData.trips);
+        const rows = await this.modelTrips.SaveToDb(transformedData.trips);
 
         // send message for update GTFSTripIds
-        const promises = newRows.map((trip) => {
+        let promises = rows.inserted.map((trip) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
-                JSON.stringify(trip));
+                new Buffer(JSON.stringify(trip)));
         });
         await Promise.all(promises);
-    }
-
-    public getTripsWithoutGTFSTripId = async (): Promise<void> => {
-        const toUpdate = await this.modelTrips.getTripsWithoutGTFSTripId();
-
-        // send messages for updating district and address and average occupancy
-        const promises = toUpdate.map((tripToUpdate) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
-                JSON.stringify(tripToUpdate));
+        // send message for update delay
+        promises = rows.updated.map((trip) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
+                new Buffer(trip));
         });
         await Promise.all(promises);
     }
 
     public updateGTFSTripId = async (data: any): Promise<void> => {
         await this.modelTrips.findAndUpdateGTFSTripId(data);
+        await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
+            new Buffer(data.id));
     }
 
-    public updateDelay = async (data: any): Promise<void> => {
+    /**
+     * TODO Is this method needed?
+     */
+    public getTripsWithoutGTFSTripId = async (): Promise<void> => {
+        const toUpdate = await this.modelTrips.getTripsWithoutGTFSTripId();
 
-        const gtfs = await this.delayComputationTripsModel.GetOneFromModel("360_57_181209");
+        // send messages for updating district and address and average occupancy
+        const promises = toUpdate.map((tripToUpdate) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
+                new Buffer(JSON.stringify(tripToUpdate)));
+        });
+        await Promise.all(promises);
+    }
 
-        // init validation
-        if (gtfs === undefined) {
-            throw new CustomError("TODO 1", true, this.constructor.name, 1);
+    public updateDelay = async (tripId: string): Promise<void> => {
+        const positionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripId);
+
+        if (positionsToUpdate.length === 0) {
+            return;
         }
+
+        const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
+        const gtfs = await this.delayComputationTripsModel.GetOneFromModel(gtfsTripId);
         const tripShapePoints = gtfs.shape_points;
-        if (tripShapePoints.length < 1) {
-            throw new CustomError("TODO 2", true, this.constructor.name, 2);
-        }
+        let newLastDelay = null;
 
-        const currentPosition = {
-            geometry: {
-                coordinates: [14.34764, 49.69957],
-                type: "Point",
-            },
-            properties: {
-                origin_time: "00:54:16",
-                origin_timestamp: "2019-02-06 23:44:17+00",
-            },
-            type: "Feature",
-        };
+        const promises = positionsToUpdate.map(async (position, key) => {
+            if (position.delay === null || newLastDelay !== null) {
+                const currentPosition = {
+                    geometry: {
+                        coordinates: [position.lng, position.lat],
+                        type: "Point",
+                    },
+                    properties: {
+                        origin_time: position.origin_time,
+                        origin_timestamp: position.origin_timestamp,
+                    },
+                    type: "Feature",
+                };
+                const lastPosition = (key > 0)
+                    ? {
+                        geometry: {
+                            coordinates: [positionsToUpdate[key - 1].lng, positionsToUpdate[key - 1].lat],
+                            type: "Point",
+                        },
+                        properties: {
+                            time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
+                        },
+                        type: "Feature",
+                    }
+                    : null;
 
-        const lastPosition = null;
-
-        // CORE processing
-        const estimatedPoint = this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
-
-        console.log(JSON.stringify(estimatedPoint, null, 4))
+                // CORE processing
+                const estimatedPoint = this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
+                newLastDelay = estimatedPoint.properties.time_delay;
+                return this.modelPositions.updateDelay(position.id, position.origin_time,
+                    estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
+                    estimatedPoint.properties.next_stop_id);
+            } else {
+                newLastDelay = null;
+                return Promise.resolve();
+            }
+        });
+        await Promise.all(promises);
     }
 
     private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition) => {
@@ -180,8 +208,11 @@ export default class VehiclePositionsWorker extends BaseWorker {
 
                 let timeDelay = originTimeSecond - closestPts[j].time_scheduled_seconds;
 
-                if (timeDelay < 12 * 60 * 60 && originTimeSecond < 12 * 60 * 60) {
+                if (timeDelay > (12 * 60 * 60) && originTimeSecond > (12 * 60 * 60)) {
                     originTimeSecond += (24 * 60 * 60);
+                }
+                if (timeDelay < (-1 * 12 * 60 * 60) && originTimeSecond < (-1 * 12 * 60 * 60)) {
+                    originTimeSecond -= (24 * 60 * 60);
                 }
 
                 timeDelay = originTimeSecond - closestPts[j].time_scheduled_seconds;
