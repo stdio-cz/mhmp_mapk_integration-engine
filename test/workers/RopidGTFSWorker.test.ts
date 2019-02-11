@@ -170,7 +170,7 @@ describe("RopidGTFSWorker", () => {
             worker.cisStopsModel.Truncate,
             worker.cisStopsModel.SaveToDb,
             worker.metaModel.checkSavedRowsAndReplaceTables);
-        sandbox.assert.calledThrice(PostgresConnector.getConnection);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
 });

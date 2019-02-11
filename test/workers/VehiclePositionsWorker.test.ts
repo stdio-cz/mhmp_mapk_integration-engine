@@ -10,7 +10,6 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const sinon = require("sinon");
 const { PostgresConnector } = require("../../src/helpers/PostgresConnector");
-const { mongooseConnection } = require("../../src/helpers/MongoConnector");
 
 chai.use(chaiAsPromised);
 
@@ -21,25 +20,14 @@ describe("VehiclePositionsWorker", () => {
     let sequelizeModelStub;
     let testData;
 
-    before(async () => {
-        await mongooseConnection;
-        await PostgresConnector.connect();
-        worker = new VehiclePositionsWorker();
-    });
-
-    it("test", async () => {
-        await worker.updateDelay({ trip_id: "399_239_190103" });
-    });
-
-/*
     beforeEach(() => {
-        testData = [{
+        testData = {inserted: [{
             cis_short_name: "999",
             id: "999",
             start_cis_stop_id: "999",
             start_cis_stop_platform_code: "a",
             start_timestamp: "",
-        }];
+        }], updated: []};
 
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         sequelizeModelStub = Object.assign({removeAttribute: sandbox.stub()});
@@ -50,13 +38,20 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.transformation, "TransformDataCollection")
             .callsFake(() => Object.assign({ positions: [], stops: [], trips: [] }));
         sandbox.stub(worker.modelPositions, "SaveToDb");
+        sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
+            .callsFake(() => [{gtfs_trip_id: "0000", delay: null}]);
+        sandbox.stub(worker.modelPositions, "updateDelay");
         sandbox.stub(worker.modelStops, "SaveToDb");
         sandbox.stub(worker.modelTrips, "SaveToDb")
             .callsFake(() => testData);
         sandbox.stub(worker.modelTrips, "getTripsWithoutGTFSTripId")
-            .callsFake(() => testData);
+            .callsFake(() => testData.inserted);
         sandbox.stub(worker.modelTrips, "findAndUpdateGTFSTripId");
         sandbox.stub(worker, "sendMessageToExchange");
+        sandbox.stub(worker.delayComputationTripsModel, "GetOneFromModel")
+            .callsFake(() => Object.assign({shape_points: []}));
+        sandbox.stub(worker, "getEstimatedPoint")
+            .callsFake(() => Object.assign({properties: {time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00"}}));
     });
 
     afterEach(() => {
@@ -92,8 +87,17 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId();
+        await worker.updateGTFSTripId({id: 0});
         sandbox.assert.calledOnce(worker.modelTrips.findAndUpdateGTFSTripId);
+        sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
-*/
+
+    it("should calls the correct methods by updateDelay method", async () => {
+        await worker.updateDelay();
+        sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
+        sandbox.assert.calledOnce(worker.delayComputationTripsModel.GetOneFromModel);
+        sandbox.assert.calledOnce(worker.getEstimatedPoint);
+        sandbox.assert.calledOnce(worker.modelPositions.updateDelay);
+    });
+
 });

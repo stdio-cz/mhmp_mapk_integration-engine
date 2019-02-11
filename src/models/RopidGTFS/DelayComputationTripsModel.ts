@@ -46,16 +46,9 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
 
         // If the data to be saved is the whole collection (contains geoJSON features)
         if (data instanceof Array) {
-            /*
-            const promises = data.map((item) => {
-                return this.SaveOrUpdateOneToDb(item);
-            });
-            return Promise.all(promises).then(async (res) => {
-                log.debug(this.name + "::SaveToDB(): Saving or updating data to database.");
-                return res;
-            });
-            */
-            return await this.mongooseModel.insertMany(data);
+            const res = await this.mongooseModel.insertMany(data);
+            log.debug(this.name + "::SaveToDB(): Saving or updating data to database.");
+            return res;
         } else { // If it's a single element
             return await this.SaveOrUpdateOneToDb(data);
         }

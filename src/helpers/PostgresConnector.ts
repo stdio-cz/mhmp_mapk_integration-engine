@@ -26,7 +26,7 @@ class MySequelize {
                 pool: {
                     acquire: 60000,
                     idle: 10000,
-                    max: 85,
+                    max: 25,
                     min: 0,
                 },
             });
