@@ -224,7 +224,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
                 const timeRealDiff = (closestPts[j].time_scheduled_seconds + timeDelay) - timeProposed;
 
                 // we look for the best fitting point
-                if (timeRealDiff < minTimeRealDiff) {
+                if (Math.abs(timeRealDiff) < Math.abs(minTimeRealDiff)) {
                     minTimeRealDiff = timeRealDiff;
 
                     // save it for result
