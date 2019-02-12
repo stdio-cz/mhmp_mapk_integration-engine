@@ -269,7 +269,7 @@ export default class RopidGTFSWorker extends BaseWorker {
                 return Promise.resolve();
             }
         });
-        // await this.delayComputationTripsModel.Truncate();
+        await this.delayComputationTripsModel.Truncate(true);
         // send message to checking if process is done
         await Promise.all(promises);
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDoneDelayCalculation",
