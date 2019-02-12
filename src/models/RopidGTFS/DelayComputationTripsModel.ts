@@ -12,6 +12,7 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
 
     public name: string;
     protected mongooseModel: mongoose.Model<any>;
+    protected tmpMongooseModel: mongoose.Model<any>;
     protected validator: Validator;
 
     constructor() {
@@ -26,6 +27,14 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
                     { bufferCommands: false }),
                 RopidGTFS.delayComputationTrips.mongoCollectionName);
         }
+        try {
+            this.tmpMongooseModel = mongoose.model("tmp" + this.name);
+        } catch (error) {
+            this.tmpMongooseModel = mongoose.model("tmp" + this.name,
+                new mongoose.Schema(RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
+                    { bufferCommands: false }),
+                "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName);
+        }
         this.validator = new Validator(this.name, RopidGTFS.delayComputationTrips.outputMongooseSchemaObject);
         this.searchPath = (id, multiple = false) => {
             return (multiple)
@@ -35,18 +44,41 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
         this.select = "-_id -__v";
     }
 
+    public replaceTables = async (): Promise<void> => {
+        try {
+            await mongoose.connection.db.collection(RopidGTFS.delayComputationTrips.mongoCollectionName)
+                .rename("old_" + RopidGTFS.delayComputationTrips.mongoCollectionName);
+        } catch (err) {
+            log.warn("Collection " + RopidGTFS.delayComputationTrips.mongoCollectionName + "does not exist.");
+        }
+        try {
+            await mongoose.connection.db.collection("tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName)
+                .rename(RopidGTFS.delayComputationTrips.mongoCollectionName);
+        } catch (err) {
+            log.warn("Collection tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName + "does not exist.");
+        }
+        try {
+            await mongoose.connection.db.collection("old_" + RopidGTFS.delayComputationTrips.mongoCollectionName)
+                .drop();
+        } catch (err) {
+            log.warn("Collection old_" + RopidGTFS.delayComputationTrips.mongoCollectionName + "does not exist.");
+        }
+    }
+
     /**
      * Validates and Saves transformed element or collection to database.
      *
      * @param data Whole FeatureCollection to be saved into DB, or single item to be saved
      */
-    public SaveToDb = async (data) => {
+    public SaveToDb = async (data, tmp: boolean = false) => {
         // data validation
         // await this.validator.Validate(data);
 
+        const model = (!tmp) ? this.mongooseModel : this.tmpMongooseModel;
+
         // If the data to be saved is the whole collection (contains geoJSON features)
         if (data instanceof Array) {
-            const res = await this.mongooseModel.insertMany(data);
+            const res = await model.insertMany(data);
             log.debug(this.name + "::SaveToDB(): Saving or updating data to database.");
             return res;
         } else { // If it's a single element
@@ -59,9 +91,11 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
      *
      * @param item
      */
-    protected SaveOrUpdateOneToDb = async (item) => {
+    protected SaveOrUpdateOneToDb = async (item, tmp: boolean = false) => {
+        const model = (!tmp) ? this.mongooseModel : this.tmpMongooseModel;
+
         try {
-            let result = await this.mongooseModel.create(item);
+            let result = await model.create(item);
             result = result.toObject();
             delete result._id;
             delete result.__v;
