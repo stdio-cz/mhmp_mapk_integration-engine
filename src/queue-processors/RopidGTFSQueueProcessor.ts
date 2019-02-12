@@ -60,6 +60,11 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 23 * 60 * 60 * 1000 });
+        await this.registerQueue(this.queuePrefix + ".checkingIfDoneDelayCalculation",
+            "*." + this.queuePrefix + ".checkingIfDoneDelayCalculation", this.checkingIfDoneDelayCalculation, {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+                messageTtl: 23 * 60 * 60 * 1000 });
     }
 
     protected checkForNewData = async (msg: any): Promise<void> => {
@@ -179,6 +184,30 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
 
             this.channel.ack(msg);
             log.debug(" [<] " + this.queuePrefix + ".saveDataForDelayCalculation: done");
+        } catch (err) {
+            handleError(err);
+            this.channel.nack(msg, false, false);
+        }
+    }
+
+    protected checkingIfDoneDelayCalculation = async (msg: any): Promise<void> => {
+        try {
+            const qs = await this.channel.checkQueue(this.queuePrefix + ".saveDataForDelayCalculation");
+            const worker = new RopidGTFSWorker();
+
+            if (qs.messageCount === 0) {
+                if (await worker.checkSavedRowsAndReplaceTablesForDelayCalculation()) {
+                    this.channel.ack(msg);
+                } else {
+                    handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
+                        this.constructor.name, 1021));
+                    this.channel.nack(msg, false, false);
+                }
+                log.debug(" [<] " + this.queuePrefix + ".checkingIfDoneDelayCalculation: done");
+            } else {
+                await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
+                this.channel.reject(msg);
+            }
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);

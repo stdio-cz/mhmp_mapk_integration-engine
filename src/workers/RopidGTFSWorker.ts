@@ -130,7 +130,13 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
-        return await this.metaModel.checkSavedRowsAndReplaceTables("PID_GTFS", dbLastModified.version);
+        const result = await this.metaModel.checkSavedRowsAndReplaceTables("PID_GTFS", dbLastModified.version);
+        if (result) {
+            // send message to refresh data for delay calculation
+            await this.sendMessageToExchange("workers." + this.queuePrefix + ".refreshDataForDelayCalculation",
+                new Buffer("Just do it!"));
+        }
+        return result;
     }
 
     public downloadCisStops = async (): Promise<void> => {
@@ -263,13 +269,21 @@ export default class RopidGTFSWorker extends BaseWorker {
                 return Promise.resolve();
             }
         });
-        await this.delayComputationTripsModel.Truncate();
+        // await this.delayComputationTripsModel.Truncate();
+        // send message to checking if process is done
         await Promise.all(promises);
+        await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDoneDelayCalculation",
+            new Buffer("Just Do It!"));
         log.debug(" >> END");
     }
 
     public saveDataForDelayCalculation = async (trip): Promise<void> => {
-        await this.delayComputationTripsModel.SaveToDb(trip);
+        await this.delayComputationTripsModel.SaveToDb(trip, true);
+    }
+
+    public checkSavedRowsAndReplaceTablesForDelayCalculation = async (): Promise<boolean> => {
+        await this.delayComputationTripsModel.replaceTables();
+        return true;
     }
 
     private getModelByName = (name: string): IModel => {
