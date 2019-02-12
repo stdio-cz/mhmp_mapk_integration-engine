@@ -130,6 +130,8 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             const worker = new RopidGTFSWorker();
 
             if (qt.messageCount === 0 && qs.messageCount === 0) {
+                // for sure all messages are dispatched
+                await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
                 if (await worker.checkSavedRowsAndReplaceTables()) {
                     this.channel.ack(msg);
                 } else {
@@ -196,6 +198,8 @@ export default class RopidGTFSQueueProcessor extends BaseQueueProcessor {
             const worker = new RopidGTFSWorker();
 
             if (qs.messageCount === 0) {
+                // for sure all messages are dispatched
+                await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
                 if (await worker.checkSavedRowsAndReplaceTablesForDelayCalculation()) {
                     this.channel.ack(msg);
                 } else {

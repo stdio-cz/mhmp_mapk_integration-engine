@@ -87,6 +87,18 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
     }
 
     /**
+     * Overrides MongoModel::Truncate
+     */
+    public Truncate = async (tmp: boolean = false): Promise<any> => {
+        const model = (!tmp) ? this.mongooseModel : this.tmpMongooseModel;
+        try {
+            await model.deleteMany({}).exec();
+        } catch (err) {
+            throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+        }
+    }
+
+    /**
      * Saves or updates element to database.
      *
      * @param item
