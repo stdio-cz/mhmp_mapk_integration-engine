@@ -19,20 +19,21 @@ export default class DelayComputationTripsModel extends MongoModel implements IM
         super();
         this.name = RopidGTFS.delayComputationTrips.name;
 
+        const schema = new mongoose.Schema(RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
+            { bufferCommands: false });
+        // creating index on "trip.trip_id"
+        schema.index({ "trip.trip_id": 1 });
+
         try {
             this.mongooseModel = mongoose.model(this.name);
         } catch (error) {
-            this.mongooseModel = mongoose.model(this.name,
-                new mongoose.Schema(RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
-                    { bufferCommands: false }),
+            this.mongooseModel = mongoose.model(this.name, schema,
                 RopidGTFS.delayComputationTrips.mongoCollectionName);
         }
         try {
             this.tmpMongooseModel = mongoose.model("tmp" + this.name);
         } catch (error) {
-            this.tmpMongooseModel = mongoose.model("tmp" + this.name,
-                new mongoose.Schema(RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
-                    { bufferCommands: false }),
+            this.tmpMongooseModel = mongoose.model("tmp" + this.name, schema,
                 "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName);
         }
         this.validator = new Validator(this.name, RopidGTFS.delayComputationTrips.outputMongooseSchemaObject);
