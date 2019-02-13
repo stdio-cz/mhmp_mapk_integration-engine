@@ -11,6 +11,7 @@ import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
 const turf = require("@turf/turf");
+const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class VehiclePositionsWorker extends BaseWorker {
 
@@ -83,6 +84,9 @@ export default class VehiclePositionsWorker extends BaseWorker {
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
 
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+
         const promises = positionsToUpdate.map(async (position, key) => {
             if (position.delay === null || newLastDelay !== null) {
                 const currentPosition = {
@@ -116,7 +120,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
                         || estimatedPoint.properties.time_delay !== null) {
                     return this.modelPositions.updateDelay(position.id, position.origin_time,
                         estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                        estimatedPoint.properties.next_stop_id);
+                        estimatedPoint.properties.next_stop_id, t);
                 } else {
                     return Promise.resolve();
                 }
@@ -126,6 +130,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
             }
         });
         await Promise.all(promises);
+        t.commit();
     }
 
     private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition) => {
