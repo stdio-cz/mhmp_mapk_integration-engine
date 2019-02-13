@@ -112,7 +112,8 @@ export default class VehiclePositionsWorker extends BaseWorker {
                 // CORE processing
                 const estimatedPoint = this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
                 newLastDelay = estimatedPoint.properties.time_delay;
-                if (estimatedPoint.properties.time_delay) {
+                if (estimatedPoint.properties.time_delay !== undefined
+                        || estimatedPoint.properties.time_delay !== null) {
                     return this.modelPositions.updateDelay(position.id, position.origin_time,
                         estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
                         estimatedPoint.properties.next_stop_id);
