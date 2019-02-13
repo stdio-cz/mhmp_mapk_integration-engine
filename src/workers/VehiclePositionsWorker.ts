@@ -112,9 +112,13 @@ export default class VehiclePositionsWorker extends BaseWorker {
                 // CORE processing
                 const estimatedPoint = this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
                 newLastDelay = estimatedPoint.properties.time_delay;
-                return this.modelPositions.updateDelay(position.id, position.origin_time,
-                    estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                    estimatedPoint.properties.next_stop_id);
+                if (estimatedPoint.properties.time_delay) {
+                    return this.modelPositions.updateDelay(position.id, position.origin_time,
+                        estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
+                        estimatedPoint.properties.next_stop_id);
+                } else {
+                    return Promise.resolve();
+                }
             } else {
                 newLastDelay = null;
                 return Promise.resolve();
@@ -184,23 +188,9 @@ export default class VehiclePositionsWorker extends BaseWorker {
 
             // want to find minimum difference of our prediction, where the bus should be
             let minTimeRealDiff = Infinity;
-            const overMidnight: boolean = tripShapePoints.some((i) => i.time_scheduled_seconds >= (24 * 60 * 60));
             for (let j = 0, jmax = closestPts.length; j < jmax; j++) {
 
                 // bus delay to this point
-                // TODO kontrola pres pulnoc && timestamp < 12
-/*
-                let originTimeSecond = moment(currentPosition.properties.origin_timestamp)
-                    .diff(moment().startOf("day"), "seconds");
-*/
-/*
-                const t = momentTimezone(currentPosition.properties.origin_timestamp).tz("Europe/Prague").format();
-                const otArray = t.split("T")[1].split(":");
-                let originTimeSecond = parseInt(otArray[0], 10) * 3600
-                    + parseInt(otArray[1], 10) * 60
-                    + parseInt(otArray[2], 10)
-                    + parseInt(t.split("T")[1].split("+")[1].split(":")[0], 10) * 60;
-*/
                 const otArray = currentPosition.properties.origin_time.split(":");
                 let originTimeSecond = parseInt(otArray[0], 10) * 3600
                     + parseInt(otArray[1], 10) * 60
