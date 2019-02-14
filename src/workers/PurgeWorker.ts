@@ -7,7 +7,7 @@ const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class PurgeWorker {
 
-    public deleteOldVehiclePositions = async (): Promise<void> => {
+    public deleteOldVehiclePositions = async (msg: any): Promise<void> => {
         try {
             let res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('vehiclepositions_trips','created',48);",
@@ -26,7 +26,7 @@ export default class PurgeWorker {
         }
     }
 
-    public deleteOldMerakiAccessPointsObservations = async (): Promise<void> => {
+    public deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<void> => {
         try {
             const res = await PostgresConnector.getConnection().query(
                 "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);",

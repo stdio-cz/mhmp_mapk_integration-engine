@@ -47,21 +47,28 @@ export default class VehiclePositionsPositionsModel extends PostgresModel implem
         return results;
     }
 
-    public updateDelay = async (tripsId, originTime, delay, gtfsShapeDistTraveled, gtfsNextStopId, t): Promise<any> => {
-        return await this.sequelizeModel.update({
-                delay,
-                gtfs_next_stop_id: gtfsNextStopId,
-                gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
-            },
-            {
-                transaction: t,
-                where: {
-                    origin_time: originTime,
-                    tracking: { [Sequelize.Op.ne]: 0 },
-                    trips_id: tripsId,
+    public updateDelay = async (tripsId, originTime, delay, gtfsShapeDistTraveled, gtfsNextStopId): Promise<any> => {
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+        try {
+            await this.sequelizeModel.update({
+                    delay,
+                    gtfs_next_stop_id: gtfsNextStopId,
+                    gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
                 },
-            },
-          );
+                {
+                    transaction: t,
+                    where: {
+                        origin_time: originTime,
+                        tracking: { [Sequelize.Op.ne]: 0 },
+                        trips_id: tripsId,
+                    },
+                },
+            );
+            return await t.commit();
+        } catch (err) {
+            return await t.rollback();
+        }
     }
 
 }

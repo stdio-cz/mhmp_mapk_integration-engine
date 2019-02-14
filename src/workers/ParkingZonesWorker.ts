@@ -21,7 +21,7 @@ export default class ParkingZonesWorker extends BaseWorker {
         this.transformation = new ParkingZonesTransformation();
     }
 
-    public refreshDataInDB = async (): Promise<void> => {
+    public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.GetAll();
         await this.transformation.setTariffs(await this.dataSourceTariffs.GetAll());
         const transformedData = await this.transformation.TransformDataCollection(data);

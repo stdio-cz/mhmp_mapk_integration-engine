@@ -32,7 +32,10 @@ describe("VehiclePositionsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         sequelizeModelStub = Object.assign({removeAttribute: sandbox.stub()});
         sandbox.stub(PostgresConnector, "getConnection")
-            .callsFake(() => Object.assign({define: sandbox.stub().callsFake(() => sequelizeModelStub)}));
+            .callsFake(() => Object.assign({
+                define: sandbox.stub().callsFake(() => sequelizeModelStub),
+                transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
+            }));
 
         worker = new VehiclePositionsWorker();
         sandbox.stub(worker.transformation, "TransformDataCollection")
@@ -44,8 +47,6 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelStops, "SaveToDb");
         sandbox.stub(worker.modelTrips, "SaveToDb")
             .callsFake(() => testData);
-        sandbox.stub(worker.modelTrips, "getTripsWithoutGTFSTripId")
-            .callsFake(() => testData.inserted);
         sandbox.stub(worker.modelTrips, "findAndUpdateGTFSTripId");
         sandbox.stub(worker, "sendMessageToExchange");
         sandbox.stub(worker.delayComputationTripsModel, "GetOneFromModel")
@@ -59,41 +60,29 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB();
+        await worker.saveDataToDB({content: new Buffer(JSON.stringify({m: {spoj: {}}}))});
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
         sandbox.assert.calledOnce(worker.modelPositions.SaveToDb);
         sandbox.assert.calledWith(worker.modelPositions.SaveToDb, []);
-        sandbox.assert.calledOnce(worker.modelStops.SaveToDb);
-        sandbox.assert.calledWith(worker.modelStops.SaveToDb, []);
         sandbox.assert.calledOnce(worker.modelTrips.SaveToDb);
         sandbox.assert.calledWith(worker.modelTrips.SaveToDb, []);
-        sandbox.assert.calledOnce(worker.sendMessageToExchange);
+        sandbox.assert.calledTwice(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
             worker.transformation.TransformDataCollection,
             worker.modelPositions.SaveToDb,
-            worker.modelStops.SaveToDb,
             worker.modelTrips.SaveToDb,
             worker.sendMessageToExchange);
         sandbox.assert.calledThrice(PostgresConnector.getConnection);
     });
 
-    it("should calls the correct methods by getTripsWithoutGTFSTripId method", async () => {
-        await worker.getTripsWithoutGTFSTripId();
-        sandbox.assert.calledOnce(worker.modelTrips.getTripsWithoutGTFSTripId);
-        sandbox.assert.calledOnce(worker.sendMessageToExchange);
-        sandbox.assert.callOrder(
-            worker.modelTrips.getTripsWithoutGTFSTripId);
-        sandbox.assert.calledThrice(PostgresConnector.getConnection);
-    });
-
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId({id: 0});
+        await worker.updateGTFSTripId({content: new Buffer(JSON.stringify({id: 0}))});
         sandbox.assert.calledOnce(worker.modelTrips.findAndUpdateGTFSTripId);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by updateDelay method", async () => {
-        await worker.updateDelay();
+        await worker.updateDelay({content: new Buffer("0")});
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.GetOneFromModel);
         sandbox.assert.calledOnce(worker.getEstimatedPoint);
