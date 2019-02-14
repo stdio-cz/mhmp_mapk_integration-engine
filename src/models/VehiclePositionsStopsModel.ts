@@ -34,6 +34,8 @@ export default class VehiclePositionsStopsModel extends PostgresModel implements
             await this.validator.Validate(data);
         }
 
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
         try {
             await this.sequelizeModel.sync();
 
@@ -43,9 +45,11 @@ export default class VehiclePositionsStopsModel extends PostgresModel implements
                 });
                 await Promise.all(promises);
             } else {
-                return await this.sequelizeModel.upsert(data);
+                await this.sequelizeModel.upsert(data);
             }
+            return await t.commit();
         } catch (err) {
+            await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }

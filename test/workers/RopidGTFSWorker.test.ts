@@ -117,7 +117,7 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by transformData method", async () => {
-        await worker.transformData(testData.files[0]);
+        await worker.transformData({content: new Buffer(JSON.stringify(testData.files[0]))});
         sandbox.assert.calledOnce(worker.readFile);
         sandbox.assert.calledOnce(worker.transformation.TransformDataElement);
         sandbox.assert.calledWith(worker.transformation.TransformDataElement, testData.files[0]);
@@ -136,7 +136,7 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB(testTransformedData);
+        await worker.saveDataToDB({content: new Buffer(JSON.stringify(testTransformedData))});
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelSaveStub);

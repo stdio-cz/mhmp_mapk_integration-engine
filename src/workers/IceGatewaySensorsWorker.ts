@@ -29,18 +29,19 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + IceGatewaySensors.name.toLowerCase();
     }
 
-    public refreshDataInDB = async (): Promise<void> => {
+    public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.GetAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            JSON.stringify(transformedData.features), { persistent: true });
+            new Buffer(JSON.stringify(transformedData.features)), { persistent: true });
     }
 
-    public saveDataToHistory = async (data: any): Promise<void> => {
-        const transformedData = await this.historyTransformation.TransformDataCollection(data);
+    public saveDataToHistory = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.historyTransformation.TransformDataCollection(inputData);
         await this.historyModel.SaveToDb(transformedData);
     }
 

@@ -23,13 +23,14 @@ export default class IceGatewayStreetLampsWorker extends BaseWorker {
         this.transformation = new IceGatewayStreetLampsTransformation();
     }
 
-    public refreshDataInDB = async (): Promise<void> => {
+    public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.GetAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
     }
 
-    public setDimValue = async (inputData: any): Promise<void> => {
+    public setDimValue = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
         try {
             const requestObject: ISourceRequest = {
                 body: {

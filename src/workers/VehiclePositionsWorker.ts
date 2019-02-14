@@ -11,7 +11,6 @@ import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
 const turf = require("@turf/turf");
-const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class VehiclePositionsWorker extends BaseWorker {
 
@@ -32,11 +31,17 @@ export default class VehiclePositionsWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
-    public saveDataToDB = async (inputData): Promise<void> => {
+    public saveDataToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString()).m.spoj;
         const transformedData = await this.transformation.TransformDataCollection(inputData);
+        // positions saving
         await this.modelPositions.SaveToDb(transformedData.positions);
-        await this.modelStops.SaveToDb(transformedData.stops);
+        // trips saving
         const rows = await this.modelTrips.SaveToDb(transformedData.trips);
+
+        // send message for save stops
+        await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveStopsToDB",
+            new Buffer(JSON.stringify(transformedData.stops)));
 
         // send message for update GTFSTripIds
         let promises = rows.inserted.map((trip) => {
@@ -52,27 +57,20 @@ export default class VehiclePositionsWorker extends BaseWorker {
         await Promise.all(promises);
     }
 
-    public updateGTFSTripId = async (data: any): Promise<void> => {
-        await this.modelTrips.findAndUpdateGTFSTripId(data);
+    public saveStopsToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        await this.modelStops.SaveToDb(inputData);
+    }
+
+    public updateGTFSTripId = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        await this.modelTrips.findAndUpdateGTFSTripId(inputData);
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-            new Buffer(data.id));
+            new Buffer(inputData.id));
     }
 
-    /**
-     * TODO Is this method needed?
-     */
-    public getTripsWithoutGTFSTripId = async (): Promise<void> => {
-        const toUpdate = await this.modelTrips.getTripsWithoutGTFSTripId();
-
-        // send messages for updating district and address and average occupancy
-        const promises = toUpdate.map((tripToUpdate) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
-                new Buffer(JSON.stringify(tripToUpdate)));
-        });
-        await Promise.all(promises);
-    }
-
-    public updateDelay = async (tripId: string): Promise<void> => {
+    public updateDelay = async (msg: any): Promise<void> => {
+        const tripId = msg.content.toString();
         const positionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripId);
 
         if (positionsToUpdate.length === 0) {
@@ -83,9 +81,6 @@ export default class VehiclePositionsWorker extends BaseWorker {
         const gtfs = await this.delayComputationTripsModel.GetOneFromModel(gtfsTripId);
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
-
-        const connection = PostgresConnector.getConnection();
-        const t = await connection.transaction();
 
         const promises = positionsToUpdate.map(async (position, key) => {
             if (position.delay === null || newLastDelay !== null) {
@@ -117,10 +112,10 @@ export default class VehiclePositionsWorker extends BaseWorker {
                 const estimatedPoint = this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
                 newLastDelay = estimatedPoint.properties.time_delay;
                 if (estimatedPoint.properties.time_delay !== undefined
-                        || estimatedPoint.properties.time_delay !== null) {
+                        && estimatedPoint.properties.time_delay !== null) {
                     return this.modelPositions.updateDelay(position.id, position.origin_time,
                         estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                        estimatedPoint.properties.next_stop_id, t);
+                        estimatedPoint.properties.next_stop_id);
                 } else {
                     return Promise.resolve();
                 }
@@ -130,7 +125,6 @@ export default class VehiclePositionsWorker extends BaseWorker {
             }
         });
         await Promise.all(promises);
-        t.commit();
     }
 
     private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition) => {

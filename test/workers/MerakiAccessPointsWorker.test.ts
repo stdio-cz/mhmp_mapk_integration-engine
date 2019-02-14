@@ -36,7 +36,7 @@ describe("MerakiAccessPointsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB();
+        await worker.saveDataToDB({content: new Buffer(JSON.stringify({}))});
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
         sandbox.assert.calledOnce(worker.modelObservations.SaveToDb);
         sandbox.assert.calledWith(worker.modelObservations.SaveToDb, []);

@@ -47,7 +47,7 @@ describe("IceGatewaySensorsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory();
+        await worker.saveDataToHistory({content: new Buffer(JSON.stringify({}))});
         sandbox.assert.calledOnce(worker.historyTransformation.TransformDataCollection);
         sandbox.assert.calledOnce(worker.historyModel.SaveToDb);
         sandbox.assert.callOrder(

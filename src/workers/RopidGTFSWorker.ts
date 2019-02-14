@@ -26,7 +26,6 @@ const fs = require("fs");
 const config = require("../config/ConfigLoader");
 const turf = require("@turf/turf");
 const cheapruler = require("cheap-ruler");
-const moment = require("moment");
 const ruler = cheapruler(50);
 
 export default class RopidGTFSWorker extends BaseWorker {
@@ -54,7 +53,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
-    public checkForNewData = async (): Promise<void> => {
+    public checkForNewData = async (msg: any): Promise<void> => {
         // checking PID_GTFS dataset
         const serverLastModified = await this.dataSource.getLastModified();
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
@@ -72,7 +71,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         }
     }
 
-    public downloadFiles = async (): Promise<void> => {
+    public downloadFiles = async (msg: any): Promise<void> => {
         const data = await this.dataSource.GetAll();
         const files = data.files;
         const lastModified = data.last_modified;
@@ -96,7 +95,8 @@ export default class RopidGTFSWorker extends BaseWorker {
             new Buffer(JSON.stringify({count: files.length})));
     }
 
-    public transformData = async (inputData): Promise<void> => {
+    public transformData = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
         inputData.data = await this.readFile(inputData.filepath);
         const transformedData = await this.transformation.TransformDataElement(inputData);
         const model = this.getModelByName(transformedData.name);
@@ -123,12 +123,13 @@ export default class RopidGTFSWorker extends BaseWorker {
         await Promise.all(promises);
     }
 
-    public saveDataToDB = async (inputData): Promise<void> => {
+    public saveDataToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
         await model.SaveToDb(inputData.data, true);
     }
 
-    public checkSavedRowsAndReplaceTables = async (): Promise<boolean> => {
+    public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         const result = await this.metaModel.checkSavedRowsAndReplaceTables("PID_GTFS", dbLastModified.version);
         if (result) {
@@ -139,7 +140,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         return result;
     }
 
-    public downloadCisStops = async (): Promise<void> => {
+    public downloadCisStops = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCisStops.GetAll();
         const lastModified = data.last_modified;
         const dbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
@@ -170,7 +171,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         await this.metaModel.checkSavedRowsAndReplaceTables("CIS_STOPS", dbLastModified.version + 1);
     }
 
-    public refreshDataForDelayCalculation = async (): Promise<void> => {
+    public refreshDataForDelayCalculation = async (msg: any): Promise<void> => {
         let gtfs = await this.getGTFSDataForDelayCalculationFromModels();
 
         log.debug(" >> GTFS processing...");
@@ -277,11 +278,12 @@ export default class RopidGTFSWorker extends BaseWorker {
         log.debug(" >> END");
     }
 
-    public saveDataForDelayCalculation = async (trip): Promise<void> => {
+    public saveDataForDelayCalculation = async (msg: any): Promise<void> => {
+        const trip = JSON.parse(msg.content.toString());
         await this.delayComputationTripsModel.SaveToDb(trip, true);
     }
 
-    public checkSavedRowsAndReplaceTablesForDelayCalculation = async (): Promise<boolean> => {
+    public checkSavedRowsAndReplaceTablesForDelayCalculation = async (msg: any): Promise<boolean> => {
         await this.delayComputationTripsModel.replaceTables();
         return true;
     }

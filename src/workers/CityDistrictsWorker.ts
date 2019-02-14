@@ -18,7 +18,7 @@ export default class CityDistrictsWorker extends BaseWorker {
         this.transformation = new CityDistrictsTransformation();
     }
 
-    public refreshDataInDB = async (): Promise<void> => {
+    public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.GetAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);

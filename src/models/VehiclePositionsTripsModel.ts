@@ -78,19 +78,6 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
         }
     }
 
-    public getTripsWithoutGTFSTripId = async (): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-
-        const results = await connection.query(
-            "SELECT id, cis_short_name, start_timestamp, start_cis_stop_id, start_cis_stop_platform_code "
-            + "FROM " + VehiclePositions.trips.pgTableName + " "
-            + "WHERE gtfs_trip_id IS NULL;",
-            { type: Sequelize.QueryTypes.SELECT });
-
-        log.debug(this.name + " Total trips without gtfs_trip_id: " + results.length);
-        return results;
-    }
-
     public findAndUpdateGTFSTripId = async (trip: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const startdate = moment(trip.start_timestamp);

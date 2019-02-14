@@ -2,20 +2,13 @@
 
 import handleError from "./helpers/errors/ErrorHandler";
 import log from "./helpers/Logger";
-import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
-import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
-import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
-import MerakiAccessPointsQueueProcessor from "./queue-processors/MerakiAccessPointsQueueProcessor";
-import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
-import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
-import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
-import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
-import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
+import GenericQueueProcessor from "./queue-processors/GenericQueueProcessor";
 
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { PostgresConnector } = require("./helpers/PostgresConnector");
 const config = require("./config/ConfigLoader");
+const queuesDefinitions = require("./definitions/queuesDefinition");
 
 class App {
 
@@ -47,18 +40,33 @@ class App {
      */
     private queueProcessors = async (): Promise<void> => {
         const ch = await AMQPConnector.connect();
-        await Promise.all([
-            new CityDistrictsQueueProcessor(ch).registerQueues(),
-            new IceGatewaySensorsQueueProcessor(ch).registerQueues(),
-            new IceGatewayStreetLampsQueueProcessor(ch).registerQueues(),
-            new MerakiAccessPointsQueueProcessor(ch).registerQueues(),
-            new ParkingsQueueProcessor(ch).registerQueues(),
-            new ParkingZonesQueueProcessor(ch).registerQueues(),
-            new PurgeQueueProcessor(ch).registerQueues(),
-            new RopidGTFSQueueProcessor(ch).registerQueues(),
-            new VehiclePositionsQueueProcessor(ch).registerQueues(),
-            // ...ready to register more queue processors
-        ]);
+
+        // TODO add to config or definitions
+        const blacklist = {
+            // MerakiAccessPoints: [], // all queues
+            // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues
+        };
+
+        // filtering queue definitions by blacklist
+        let filteredQueuesDefinitions = queuesDefinitions;
+        Object.keys(blacklist).map((b) => {
+            if (blacklist[b].length === 0) {
+                filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
+            } else {
+                blacklist[b].map((d) => {
+                    filteredQueuesDefinitions = filteredQueuesDefinitions.map((a) => {
+                        a.queues = a.queues.filter((c) => c.name !== d);
+                        return a;
+                    });
+                });
+            }
+        });
+
+        // use generic queue processor for register (filtered) queues
+        const promises = filteredQueuesDefinitions.map((queueDefinition) => {
+            return new GenericQueueProcessor(ch, queueDefinition).registerQueues();
+        });
+        await Promise.all(promises);
     }
 
 }

@@ -6,6 +6,8 @@ import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import BaseModel from "./BaseModel";
 
+const { PostgresConnector } = require("../helpers/PostgresConnector");
+
 export default abstract class PostgresModel extends BaseModel {
 
     /** Model name */
@@ -34,16 +36,22 @@ export default abstract class PostgresModel extends BaseModel {
         }
 
         const model = (!tmp) ? this.sequelizeModel : this.tmpSequelizeModel;
+
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+
         try {
             await model.sync();
 
             if (data instanceof Array) {
-                return await model.bulkCreate(data);
+                await model.bulkCreate(data, {transaction: t});
             } else {
-                return await model.create(data);
+                await model.create(data, {transaction: t});
             }
+            return await t.commit();
         } catch (err) {
             log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
@@ -53,13 +61,20 @@ export default abstract class PostgresModel extends BaseModel {
      */
     public Truncate = async (tmp: boolean = false): Promise<any> => {
         const model = (!tmp) ? this.sequelizeModel : this.tmpSequelizeModel;
+
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+
         try {
             await model.sync();
             await model.destroy({
                 cascade: false,
+                transaction: t,
                 truncate: true,
             });
+            return await t.commit();
         } catch (err) {
+            await t.rollback();
             throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
         }
     }
