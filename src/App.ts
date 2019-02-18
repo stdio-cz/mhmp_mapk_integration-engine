@@ -2,7 +2,7 @@
 
 import handleError from "./helpers/errors/ErrorHandler";
 import log from "./helpers/Logger";
-import GenericQueueProcessor from "./queue-processors/GenericQueueProcessor";
+import QueueProcessor from "./queue-processors/QueueProcessor";
 
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
@@ -43,8 +43,16 @@ class App {
 
         // TODO add to config or definitions
         const blacklist = {
-            // MerakiAccessPoints: [], // all queues
-            // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues
+            // MerakiAccessPoints: [], // all queues of the dataset
+            // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues of the dataset
+            // CityDistricts: [],
+            // IceGatewaySensors: [],
+            // IceGatewayStreetLamps: [],
+            // MerakiAccessPoints: [],
+            // ParkingZones: [],
+            // Parkings: [],
+            // RopidGTFS: [],
+            // VehiclePositions: [],
         };
 
         // filtering queue definitions by blacklist
@@ -64,7 +72,7 @@ class App {
 
         // use generic queue processor for register (filtered) queues
         const promises = filteredQueuesDefinitions.map((queueDefinition) => {
-            return new GenericQueueProcessor(ch, queueDefinition).registerQueues();
+            return new QueueProcessor(ch, queueDefinition).registerQueues();
         });
         await Promise.all(promises);
     }

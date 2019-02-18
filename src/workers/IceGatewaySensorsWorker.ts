@@ -1,7 +1,10 @@
 "use strict";
 
 import { IceGatewaySensors } from "data-platform-schema-definitions";
-import IceGatewaySensorsDataSource from "../datasources/IceGatewaySensorsDataSource";
+import DataSource from "../datasources/DataSource";
+import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
+import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
+import Validator from "../helpers/Validator";
 import IceGatewaySensorsHistoryModel from "../models/IceGatewaySensorsHistoryModel";
 import IceGatewaySensorsModel from "../models/IceGatewaySensorsModel";
 import IceGatewaySensorsHistoryTransformation from "../transformations/IceGatewaySensorsHistoryTransformation";
@@ -13,7 +16,7 @@ const config = require("../config/ConfigLoader");
 export default class IceGatewaySensorsWorker extends BaseWorker {
 
     private model: IceGatewaySensorsModel;
-    private dataSource: IceGatewaySensorsDataSource;
+    private dataSource: DataSource;
     private transformation: IceGatewaySensorsTransformation;
     private historyModel: IceGatewaySensorsHistoryModel;
     private historyTransformation: IceGatewaySensorsHistoryTransformation;
@@ -21,8 +24,17 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
 
     constructor() {
         super();
+        this.dataSource = new DataSource(IceGatewaySensors.name + "DataSource",
+            new HTTPProtocolStrategy({
+                headers : {
+                    Authorization: "Token " + config.datasources.IGToken,
+                },
+                method: "GET",
+                url: config.datasources.IGSensors,
+            }),
+            new JSONDataTypeStrategy({resultsPath: ""}),
+            new Validator(IceGatewaySensors.name + "DataSource", IceGatewaySensors.datasourceMongooseSchemaObject));
         this.model = new IceGatewaySensorsModel();
-        this.dataSource = new IceGatewaySensorsDataSource();
         this.transformation = new IceGatewaySensorsTransformation();
         this.historyModel = new IceGatewaySensorsHistoryModel();
         this.historyTransformation = new IceGatewaySensorsHistoryTransformation();
@@ -30,7 +42,7 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await this.dataSource.GetAll();
+        const data = await this.dataSource.getAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
 

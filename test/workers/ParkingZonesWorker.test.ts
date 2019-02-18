@@ -20,8 +20,8 @@ describe("ParkingZonesWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         worker = new ParkingZonesWorker();
-        sandbox.stub(worker.dataSource, "GetAll");
-        sandbox.stub(worker.dataSourceTariffs, "GetAll")
+        sandbox.stub(worker.dataSource, "getAll");
+        sandbox.stub(worker.dataSourceTariffs, "getAll")
             .callsFake(() => []);
         sandbox.stub(worker.transformation, "setTariffs");
         sandbox.stub(worker.transformation, "TransformDataCollection");
@@ -34,14 +34,14 @@ describe("ParkingZonesWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.GetAll);
-        sandbox.assert.calledOnce(worker.dataSourceTariffs.GetAll);
+        sandbox.assert.calledOnce(worker.dataSource.getAll);
+        sandbox.assert.calledOnce(worker.dataSourceTariffs.getAll);
         sandbox.assert.calledOnce(worker.transformation.setTariffs);
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
         sandbox.assert.calledOnce(worker.model.SaveToDb);
         sandbox.assert.callOrder(
-            worker.dataSource.GetAll,
-            worker.dataSourceTariffs.GetAll,
+            worker.dataSource.getAll,
+            worker.dataSourceTariffs.getAll,
             worker.transformation.setTariffs,
             worker.transformation.TransformDataCollection,
             worker.model.SaveToDb);

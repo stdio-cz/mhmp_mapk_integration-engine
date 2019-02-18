@@ -20,7 +20,7 @@ describe("IceGatewaySensorsWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         worker = new IceGatewaySensorsWorker();
-        sandbox.stub(worker.dataSource, "GetAll");
+        sandbox.stub(worker.dataSource, "getAll");
         sandbox.stub(worker.transformation, "TransformDataCollection")
             .callsFake(() => Object.assign({ features: [], type: "" }));
         sandbox.stub(worker.model, "SaveToDb");
@@ -35,12 +35,12 @@ describe("IceGatewaySensorsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.GetAll);
+        sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
         sandbox.assert.calledOnce(worker.model.SaveToDb);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
-            worker.dataSource.GetAll,
+            worker.dataSource.getAll,
             worker.transformation.TransformDataCollection,
             worker.model.SaveToDb,
             worker.sendMessageToExchange);
