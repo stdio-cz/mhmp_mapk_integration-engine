@@ -2,8 +2,9 @@
 
 import { RopidGTFS } from "data-platform-schema-definitions";
 
-import RopidGTFSCisStopsDataSource from "../datasources/RopidGTFSCisStopsDataSource";
-import RopidGTFSDataSource from "../datasources/RopidGTFSDataSource";
+import DataSource from "../datasources/DataSource";
+import FTPProtocolStrategy from "../datasources/FTPProtocolStrategy";
+import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import log from "../helpers/Logger";
 import IModel from "../models/IModel";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
@@ -30,10 +31,10 @@ const ruler = cheapruler(50);
 
 export default class RopidGTFSWorker extends BaseWorker {
 
-    private dataSource: RopidGTFSDataSource;
+    private dataSource: DataSource;
     private transformation: RopidGTFSTransformation;
     private metaModel: MetadataModel;
-    private dataSourceCisStops: RopidGTFSCisStopsDataSource;
+    private dataSourceCisStops: DataSource;
     private transformationCisStops: RopidGTFSCisStopsTransformation;
     private cisStopGroupsModel: CisStopGroupsModel;
     private cisStopsModel: CisStopsModel;
@@ -42,10 +43,29 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     constructor() {
         super();
-        this.dataSource = new RopidGTFSDataSource();
+        this.dataSource = new DataSource(RopidGTFS.name + "DataSource",
+            new FTPProtocolStrategy({
+                filename: config.datasources.RopidGTFSFilename,
+                isCompressed: true,
+                path: config.datasources.RopidGTFSPath,
+                url: config.datasources.RopidFTP,
+                whitelistedFiles: [
+                    "agency.txt", "calendar.txt", "calendar_dates.txt",
+                    "shapes.txt", "stop_times.txt", "stops.txt", "routes.txt", "trips.txt",
+                ],
+            }),
+            new JSONDataTypeStrategy({resultsPath: ""}),
+            null);
         this.transformation = new RopidGTFSTransformation();
         this.metaModel = new MetadataModel();
-        this.dataSourceCisStops = new RopidGTFSCisStopsDataSource();
+        this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
+            new FTPProtocolStrategy({
+                filename: config.datasources.RopidGTFSCisStopsFilename,
+                path: config.datasources.RopidGTFSCisStopsPath,
+                url: config.datasources.RopidFTP,
+            }),
+            new JSONDataTypeStrategy({resultsPath: "stopGroups"}),
+            null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new CisStopGroupsModel();
         this.cisStopsModel = new CisStopsModel();
@@ -72,9 +92,8 @@ export default class RopidGTFSWorker extends BaseWorker {
     }
 
     public downloadFiles = async (msg: any): Promise<void> => {
-        const data = await this.dataSource.GetAll();
-        const files = data.files;
-        const lastModified = data.last_modified;
+        const files = await this.dataSource.getAll();
+        const lastModified = await this.dataSource.getLastModified();
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         await this.metaModel.SaveToDb({
             dataset: "PID_GTFS",
@@ -141,8 +160,8 @@ export default class RopidGTFSWorker extends BaseWorker {
     }
 
     public downloadCisStops = async (msg: any): Promise<void> => {
-        const data = await this.dataSourceCisStops.GetAll();
-        const lastModified = data.last_modified;
+        const data = await this.dataSourceCisStops.getAll();
+        const lastModified = await this.dataSourceCisStops.getLastModified();
         const dbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
         await this.metaModel.SaveToDb({
             dataset: "CIS_STOPS",
@@ -151,7 +170,7 @@ export default class RopidGTFSWorker extends BaseWorker {
             value: lastModified,
             version: dbLastModified.version + 1 });
 
-        const transformedData = await this.transformationCisStops.TransformDataCollection(data.data);
+        const transformedData = await this.transformationCisStops.TransformDataCollection(data);
         // save meta
         await this.metaModel.SaveToDb([{
             dataset: "CIS_STOPS",
@@ -450,18 +469,6 @@ export default class RopidGTFSWorker extends BaseWorker {
                 + parseInt(dtArray[1], 10) * 60 // minutes
                 + parseInt(dtArray[2], 10); // seconds
 
-            /*
-            const arrivalTimeSeconds =
-                moment(gtfs.stop_times[i].arrival_time, "H:mm:ss").diff(moment().startOf("day"), "seconds");
-            gtfs.stop_times[i].arrival_time_seconds = (!isNaN(arrivalTimeSeconds))
-                ? arrivalTimeSeconds
-                : null;
-            const departureTimeSeconds =
-                moment(gtfs.stop_times[i].departure_time, "H:mm:ss").diff(moment().startOf("day"), "seconds");
-            gtfs.stop_times[i].departure_time_seconds = (!isNaN(departureTimeSeconds))
-                ? departureTimeSeconds
-                : null;
-            */
             // ADD stop_times TO trip_id
             tmpGtfs.trips_stop_times[gtfs.stop_times[i].trip_id].push(gtfs.stop_times[i]);
             // ADD stop_times TO stops FOR THAT trip_id

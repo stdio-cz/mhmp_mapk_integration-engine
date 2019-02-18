@@ -1,9 +1,12 @@
 "use strict";
 
 import { Parkings } from "data-platform-schema-definitions";
-import TSKParkingsDataSource from "../datasources/TSKParkingsDataSource";
+import DataSource from "../datasources/DataSource";
+import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
+import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import CustomError from "../helpers/errors/CustomError";
 import GeocodeApi from "../helpers/GeocodeApi";
+import Validator from "../helpers/Validator";
 import CityDistrictsModel from "../models/CityDistrictsModel";
 import ParkingsHistoryModel from "../models/ParkingsHistoryModel";
 import ParkingsModel from "../models/ParkingsModel";
@@ -16,7 +19,7 @@ const config = require("../config/ConfigLoader");
 export default class ParkingsWorker extends BaseWorker {
 
     private model: ParkingsModel;
-    private dataSource: TSKParkingsDataSource;
+    private dataSource: DataSource;
     private transformation: ParkingsTransformation;
     private historyModel: ParkingsHistoryModel;
     private historyTransformation: ParkingsHistoryTransformation;
@@ -26,7 +29,14 @@ export default class ParkingsWorker extends BaseWorker {
     constructor() {
         super();
         this.model = new ParkingsModel();
-        this.dataSource = new TSKParkingsDataSource();
+        this.dataSource = new DataSource(Parkings.name + "DataSource",
+            new HTTPProtocolStrategy({
+                headers : {},
+                method: "GET",
+                url: config.datasources.TSKParkings,
+            }),
+            new JSONDataTypeStrategy({resultsPath: "results"}),
+            new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.transformation = new ParkingsTransformation();
         this.historyModel = new ParkingsHistoryModel();
         this.historyTransformation = new ParkingsHistoryTransformation();
@@ -35,7 +45,7 @@ export default class ParkingsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await this.dataSource.GetAll();
+        const data = await this.dataSource.getAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
         await this.model.SaveToDb(transformedData);
 

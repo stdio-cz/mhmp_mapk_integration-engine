@@ -38,7 +38,7 @@ describe("ParkingsWorker", () => {
 
         worker = new ParkingsWorker();
 
-        sandbox.stub(worker.dataSource, "GetAll")
+        sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
         sandbox.stub(worker.transformation, "TransformDataCollection")
             .callsFake(() => testTransformedData);
@@ -62,7 +62,7 @@ describe("ParkingsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.GetAll);
+        sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
         sandbox.assert.calledWith(worker.transformation.TransformDataCollection, testData);
         sandbox.assert.calledOnce(worker.model.SaveToDb);
@@ -80,7 +80,7 @@ describe("ParkingsWorker", () => {
                 new Buffer(JSON.stringify(f)));
         });
         sandbox.assert.callOrder(
-            worker.dataSource.GetAll,
+            worker.dataSource.getAll,
             worker.transformation.TransformDataCollection,
             worker.model.SaveToDb,
             worker.sendMessageToExchange);
