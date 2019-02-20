@@ -1,8 +1,8 @@
 "use strict";
 
-import { VehiclePositions } from "data-platform-schema-definitions";
-import CustomError from "../helpers/errors/CustomError";
-import DelayComputationTripsModel from "../models/RopidGTFS/DelayComputationTripsModel";
+import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
+import Validator from "../helpers/Validator";
+import MongoModel from "../models/MongoModel";
 import VehiclePositionsPositionsModel from "../models/VehiclePositionsPositionsModel";
 import VehiclePositionsStopsModel from "../models/VehiclePositionsStopsModel";
 import VehiclePositionsTripsModel from "../models/VehiclePositionsTripsModel";
@@ -18,7 +18,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
     private modelStops: VehiclePositionsStopsModel;
     private modelTrips: VehiclePositionsTripsModel;
     private transformation: VehiclePositionsTransformation;
-    private delayComputationTripsModel: DelayComputationTripsModel;
+    private delayComputationTripsModel: MongoModel;
     private queuePrefix: string;
 
     constructor() {
@@ -27,7 +27,20 @@ export default class VehiclePositionsWorker extends BaseWorker {
         this.modelStops = new VehiclePositionsStopsModel();
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
-        this.delayComputationTripsModel = new DelayComputationTripsModel();
+        this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
+                identifierPath: "trip.trip_id",
+                modelIndexes: [{ "trip.trip_id": 1 }],
+                mongoCollectionName: RopidGTFS.delayComputationTrips.mongoCollectionName,
+                outputMongooseSchemaObject: RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
+                savingType: "insertOnly",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "trip.trip_id": { $in: id } }
+                    : { "trip.trip_id": id },
+                tmpMongoCollectionName: "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName,
+            },
+            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
+                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
+        );
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
@@ -78,7 +91,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
         }
 
         const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
-        const gtfs = await this.delayComputationTripsModel.GetOneFromModel(gtfsTripId);
+        const gtfs = await this.delayComputationTripsModel.findOneById(gtfsTripId);
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
 

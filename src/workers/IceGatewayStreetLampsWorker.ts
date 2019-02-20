@@ -7,7 +7,7 @@ import { IHTTPSettings } from "../datasources/IProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
-import IceGatewayStreetLampsModel from "../models/IceGatewayStreetLampsModel";
+import MongoModel from "../models/MongoModel";
 import IceGatewayStreetLampsTransformation from "../transformations/IceGatewayStreetLampsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -16,9 +16,9 @@ const config = require("../config/ConfigLoader");
 
 export default class IceGatewayStreetLampsWorker extends BaseWorker {
 
-    private model: IceGatewayStreetLampsModel;
     private dataSource: DataSource;
     private transformation: IceGatewayStreetLampsTransformation;
+    private model: MongoModel;
 
     constructor() {
         super();
@@ -33,14 +33,36 @@ export default class IceGatewayStreetLampsWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: ""}),
             new Validator(IceGatewayStreetLamps.name + "DataSource",
                 IceGatewayStreetLamps.datasourceMongooseSchemaObject));
-        this.model = new IceGatewayStreetLampsModel();
+        this.model = new MongoModel(IceGatewayStreetLamps.name + "Model", {
+                identifierPath: "properties.id",
+                modelIndexes: [{ geometry : "2dsphere" }],
+                mongoCollectionName: IceGatewayStreetLamps.mongoCollectionName,
+                outputMongooseSchemaObject: IceGatewayStreetLamps.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+                updateValues: (a, b) => {
+                    a.properties.dim_value = b.properties.dim_value;
+                    a.properties.groups = b.properties.groups;
+                    a.properties.lamppost_id = b.properties.lamppost_id;
+                    a.properties.last_dim_override = b.properties.last_dim_override;
+                    a.properties.state = b.properties.state;
+                    a.properties.timestamp = b.properties.timestamp;
+                    return a;
+                },
+            },
+            new Validator(IceGatewayStreetLamps.name + "ModelValidator",
+                IceGatewayStreetLamps.outputMongooseSchemaObject),
+        );
         this.transformation = new IceGatewayStreetLampsTransformation();
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
         const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.SaveToDb(transformedData);
+        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
     }
 
     public setDimValue = async (msg: any): Promise<void> => {

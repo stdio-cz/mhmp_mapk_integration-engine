@@ -6,13 +6,14 @@ import DataSource from "../datasources/DataSource";
 import FTPProtocolStrategy from "../datasources/FTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import log from "../helpers/Logger";
+import Validator from "../helpers/Validator";
 import IModel from "../models/IModel";
+import MongoModel from "../models/MongoModel";
 import AgencyModel from "../models/RopidGTFS/AgencyModel";
 import CalendarDatesModel from "../models/RopidGTFS/CalendarDatesModel";
 import CalendarModel from "../models/RopidGTFS/CalendarModel";
 import CisStopGroupsModel from "../models/RopidGTFS/CisStopGroupsModel";
 import CisStopsModel from "../models/RopidGTFS/CisStopsModel";
-import DelayComputationTripsModel from "../models/RopidGTFS/DelayComputationTripsModel";
 import MetadataModel from "../models/RopidGTFS/MetadataModel";
 import RoutesModel from "../models/RopidGTFS/RoutesModel";
 import ShapesModel from "../models/RopidGTFS/ShapesModel";
@@ -38,7 +39,7 @@ export default class RopidGTFSWorker extends BaseWorker {
     private transformationCisStops: RopidGTFSCisStopsTransformation;
     private cisStopGroupsModel: CisStopGroupsModel;
     private cisStopsModel: CisStopsModel;
-    private delayComputationTripsModel: DelayComputationTripsModel;
+    private delayComputationTripsModel: MongoModel;
     private queuePrefix: string;
 
     constructor() {
@@ -69,7 +70,20 @@ export default class RopidGTFSWorker extends BaseWorker {
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new CisStopGroupsModel();
         this.cisStopsModel = new CisStopsModel();
-        this.delayComputationTripsModel = new DelayComputationTripsModel();
+        this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
+                identifierPath: "trip.trip_id",
+                modelIndexes: [{ "trip.trip_id": 1 }],
+                mongoCollectionName: RopidGTFS.delayComputationTrips.mongoCollectionName,
+                outputMongooseSchemaObject: RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
+                savingType: "insertOnly",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "trip.trip_id": { $in: id } }
+                    : { "trip.trip_id": id },
+                tmpMongoCollectionName: "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName,
+            },
+            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
+                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
+        );
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
@@ -289,7 +303,7 @@ export default class RopidGTFSWorker extends BaseWorker {
                 return Promise.resolve();
             }
         });
-        await this.delayComputationTripsModel.Truncate(true);
+        await this.delayComputationTripsModel.truncate(true);
         // send message to checking if process is done
         await Promise.all(promises);
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDoneDelayCalculation",
@@ -299,11 +313,11 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     public saveDataForDelayCalculation = async (msg: any): Promise<void> => {
         const trip = JSON.parse(msg.content.toString());
-        await this.delayComputationTripsModel.SaveToDb(trip, true);
+        await this.delayComputationTripsModel.save(trip, true);
     }
 
     public checkSavedRowsAndReplaceTablesForDelayCalculation = async (msg: any): Promise<boolean> => {
-        await this.delayComputationTripsModel.replaceTables();
+        await this.delayComputationTripsModel.replaceOriginalCollectionByTemporaryCollection();
         return true;
     }
 

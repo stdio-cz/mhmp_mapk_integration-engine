@@ -2,8 +2,11 @@
 
 export default interface ITransformation {
 
+    /** Transformation name */
     name: string;
-    TransformDataElement(element): Promise<any>;
-    TransformDataCollection(collection): Promise<any>;
+    /** Transform one single element from input format (from data source) to output format */
+    TransformDataElement(element: object): Promise<any>;
+    /** Transform the whole collection */
+    TransformDataCollection(collection: object[]): Promise<any>;
 
 }
