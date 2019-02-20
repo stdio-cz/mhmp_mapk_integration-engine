@@ -26,7 +26,7 @@ export default class JSONDataTypeStrategy implements IDataTypeStrategy {
             if (typeof data === "string") {
                 data = JSON.parse(data);
             }
-            let parsed = this.GetSubElement(this.resultsPath, data);
+            let parsed = this.getSubElement(this.resultsPath, data);
             if (this.filter) {
                 parsed = parsed.filter(this.filter);
             }
@@ -43,7 +43,7 @@ export default class JSONDataTypeStrategy implements IDataTypeStrategy {
      * @param {object} obj Raw data.
      * @returns {object|array} Filtered data.
      */
-    protected GetSubElement = (path: string, obj: any): any => {
+    protected getSubElement = (path: string, obj: any): any => {
         if (path === "") {
             return obj;
         } else {

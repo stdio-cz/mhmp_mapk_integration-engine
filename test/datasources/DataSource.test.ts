@@ -22,6 +22,8 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 
+// TODO tohle je spis test dostupnosti datovych zdroju
+// -> napsat test jen pro tridu DataSource
 describe("DataSources", () => {
 
     describe("CityDistricts", () => {

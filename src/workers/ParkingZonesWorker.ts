@@ -6,7 +6,7 @@ import DataSource from "../datasources/DataSource";
 import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import Validator from "../helpers/Validator";
-import ParkingZonesModel from "../models/ParkingZonesModel";
+import MongoModel from "../models/MongoModel";
 import ParkingZonesTransformation from "../transformations/ParkingZonesTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -14,10 +14,10 @@ const config = require("../config/ConfigLoader");
 
 export default class ParkingZonesWorker extends BaseWorker {
 
-    private model: ParkingZonesModel;
     private dataSource: DataSource;
     private dataSourceTariffs: DataSource;
     private transformation: ParkingZonesTransformation;
+    private model: MongoModel;
 
     constructor() {
         super();
@@ -61,7 +61,33 @@ export default class ParkingZonesWorker extends BaseWorker {
                 },
             }),
             new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
-        this.model = new ParkingZonesModel();
+        this.model = new MongoModel(ParkingZones.name + "Model", {
+                identifierPath: "properties.code",
+                modelIndexes: [{ geometry : "2dsphere" }],
+                mongoCollectionName: ParkingZones.mongoCollectionName,
+                outputMongooseSchemaObject: ParkingZones.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.code": { $in: id } }
+                    : { "properties.code": id },
+                updateValues: (a, b) => {
+                    a.properties.name = b.properties.name;
+                    a.properties.number_of_places = b.properties.number_of_places;
+                    a.properties.payment_link = b.properties.payment_link;
+                    a.properties.tariffs = b.properties.tariffs;
+                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.type = b.properties.type;
+                    a.properties.midpoint = b.properties.midpoint;
+                    a.properties.northeast = b.properties.northeast;
+                    a.properties.southwest = b.properties.southwest;
+                    a.properties.zps_id = b.properties.zps_id;
+                    a.properties.zps_ids = b.properties.zps_ids;
+                    return a;
+                },
+            },
+            new Validator(ParkingZones.name + "ModelValidator", ParkingZones.outputMongooseSchemaObject),
+        );
         this.transformation = new ParkingZonesTransformation();
     }
 
@@ -69,7 +95,7 @@ export default class ParkingZonesWorker extends BaseWorker {
         const data = await this.dataSource.getAll();
         await this.transformation.setTariffs(await this.dataSourceTariffs.getAll());
         const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.SaveToDb(transformedData);
+        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
     }
 
     private timeToMinutes = (value: string): number => {

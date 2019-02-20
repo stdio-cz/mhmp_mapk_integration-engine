@@ -51,6 +51,7 @@ class App {
             // MerakiAccessPoints: [],
             // ParkingZones: [],
             // Parkings: [],
+            // Purge: [],
             // RopidGTFS: [],
             // VehiclePositions: [],
         };
