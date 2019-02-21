@@ -4,9 +4,9 @@ import mongoose = require("mongoose");
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
-import { IModel2, IMongooseSettings } from "./IModel2";
+import { IModel, IMongooseSettings } from "./IModel";
 
-export default class MongoModel implements IModel2 {
+export default class MongoModel implements IModel {
 
     /** Model name */
     public name: string;
@@ -68,7 +68,11 @@ export default class MongoModel implements IModel2 {
 
     public save = async (data: any, useTmpTable: boolean = false): Promise<any> => {
         // data validation
-        await this.validator.Validate(data);
+        if (this.validator) {
+            await this.validator.Validate(data);
+        } else {
+            log.warn("Model validator is not set.");
+        }
 
         const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
 

@@ -48,7 +48,7 @@ describe("RopidGTFSWorker", () => {
 
         sandbox.stub(worker.metaModel, "getLastModified")
             .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
-        sandbox.stub(worker.metaModel, "SaveToDb");
+        sandbox.stub(worker.metaModel, "save");
         sandbox.stub(worker.metaModel, "checkSavedRowsAndReplaceTables")
             .callsFake(() => true);
 
@@ -62,7 +62,7 @@ describe("RopidGTFSWorker", () => {
         modelTruncateStub = sandbox.stub();
         modelSaveStub = sandbox.stub();
         sandbox.stub(worker, "getModelByName")
-            .callsFake(() => Object.assign({Truncate: modelTruncateStub, SaveToDb: modelSaveStub}));
+            .callsFake(() => Object.assign({truncate: modelTruncateStub, save: modelSaveStub}));
 
         sandbox.stub(worker.dataSourceCisStops, "getAll")
             .callsFake(() => testDataCis);
@@ -70,10 +70,10 @@ describe("RopidGTFSWorker", () => {
             .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
         sandbox.stub(worker.transformationCisStops, "TransformDataCollection")
             .callsFake(() => testTransformedDataCis);
-        sandbox.stub(worker.cisStopGroupsModel, "Truncate");
-        sandbox.stub(worker.cisStopGroupsModel, "SaveToDb");
-        sandbox.stub(worker.cisStopsModel, "Truncate");
-        sandbox.stub(worker.cisStopsModel, "SaveToDb");
+        sandbox.stub(worker.cisStopGroupsModel, "truncate");
+        sandbox.stub(worker.cisStopGroupsModel, "save");
+        sandbox.stub(worker.cisStopsModel, "truncate");
+        sandbox.stub(worker.cisStopsModel, "save");
     });
 
     afterEach(() => {
@@ -97,7 +97,7 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by downloadFiles method", async () => {
         await worker.downloadFiles();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
-        sandbox.assert.calledOnce(worker.metaModel.SaveToDb);
+        sandbox.assert.calledOnce(worker.metaModel.save);
         sandbox.assert.callCount(worker.sendMessageToExchange, 3);
         testData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
@@ -109,7 +109,7 @@ describe("RopidGTFSWorker", () => {
             new Buffer(JSON.stringify({count: testData.length})));
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
-            worker.metaModel.SaveToDb,
+            worker.metaModel.save,
             worker.sendMessageToExchange);
     });
 
@@ -121,7 +121,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelTruncateStub);
-        sandbox.assert.calledOnce(worker.metaModel.SaveToDb);
+        sandbox.assert.calledOnce(worker.metaModel.save);
         testTransformedData.data.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".saveDataToDB",
@@ -149,23 +149,23 @@ describe("RopidGTFSWorker", () => {
         await worker.downloadCisStops();
         sandbox.assert.calledOnce(worker.dataSourceCisStops.getAll);
         sandbox.assert.calledOnce(worker.metaModel.getLastModified);
-        sandbox.assert.calledTwice(worker.metaModel.SaveToDb);
+        sandbox.assert.calledTwice(worker.metaModel.save);
         sandbox.assert.calledOnce(worker.transformationCisStops.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.cisStopGroupsModel.Truncate);
-        sandbox.assert.calledOnce(worker.cisStopGroupsModel.SaveToDb);
-        sandbox.assert.calledOnce(worker.cisStopsModel.Truncate);
-        sandbox.assert.calledOnce(worker.cisStopsModel.SaveToDb);
+        sandbox.assert.calledOnce(worker.cisStopGroupsModel.truncate);
+        sandbox.assert.calledOnce(worker.cisStopGroupsModel.save);
+        sandbox.assert.calledOnce(worker.cisStopsModel.truncate);
+        sandbox.assert.calledOnce(worker.cisStopsModel.save);
         sandbox.assert.calledOnce(worker.metaModel.checkSavedRowsAndReplaceTables);
         sandbox.assert.callOrder(
             worker.dataSourceCisStops.getAll,
             worker.metaModel.getLastModified,
-            worker.metaModel.SaveToDb,
-            worker.metaModel.SaveToDb,
+            worker.metaModel.save,
+            worker.metaModel.save,
             worker.transformationCisStops.TransformDataCollection,
-            worker.cisStopGroupsModel.Truncate,
-            worker.cisStopGroupsModel.SaveToDb,
-            worker.cisStopsModel.Truncate,
-            worker.cisStopsModel.SaveToDb,
+            worker.cisStopGroupsModel.truncate,
+            worker.cisStopGroupsModel.save,
+            worker.cisStopsModel.truncate,
+            worker.cisStopsModel.save,
             worker.metaModel.checkSavedRowsAndReplaceTables);
         sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });

@@ -7,19 +7,9 @@ import FTPProtocolStrategy from "../datasources/FTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
-import IModel from "../models/IModel";
 import MongoModel from "../models/MongoModel";
-import AgencyModel from "../models/RopidGTFS/AgencyModel";
-import CalendarDatesModel from "../models/RopidGTFS/CalendarDatesModel";
-import CalendarModel from "../models/RopidGTFS/CalendarModel";
-import CisStopGroupsModel from "../models/RopidGTFS/CisStopGroupsModel";
-import CisStopsModel from "../models/RopidGTFS/CisStopsModel";
-import MetadataModel from "../models/RopidGTFS/MetadataModel";
-import RoutesModel from "../models/RopidGTFS/RoutesModel";
-import ShapesModel from "../models/RopidGTFS/ShapesModel";
-import StopsModel from "../models/RopidGTFS/StopsModel";
-import StopTimesModel from "../models/RopidGTFS/StopTimesModel";
-import TripsModel from "../models/RopidGTFS/TripsModel";
+import PostgresModel from "../models/PostgresModel";
+import RopidGTFSMetadataModel from "../models/RopidGTFSMetadataModel";
 import RopidGTFSCisStopsTransformation from "../transformations/RopidGTFSCisStopsTransformation";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
 import BaseWorker from "./BaseWorker";
@@ -34,11 +24,11 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     private dataSource: DataSource;
     private transformation: RopidGTFSTransformation;
-    private metaModel: MetadataModel;
+    private metaModel: RopidGTFSMetadataModel;
     private dataSourceCisStops: DataSource;
     private transformationCisStops: RopidGTFSCisStopsTransformation;
-    private cisStopGroupsModel: CisStopGroupsModel;
-    private cisStopsModel: CisStopsModel;
+    private cisStopGroupsModel: PostgresModel;
+    private cisStopsModel: PostgresModel;
     private delayComputationTripsModel: MongoModel;
     private queuePrefix: string;
 
@@ -58,7 +48,7 @@ export default class RopidGTFSWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: ""}),
             null);
         this.transformation = new RopidGTFSTransformation();
-        this.metaModel = new MetadataModel();
+        this.metaModel = new RopidGTFSMetadataModel();
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
                 filename: config.datasources.RopidGTFSCisStopsFilename,
@@ -68,8 +58,22 @@ export default class RopidGTFSWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: "stopGroups"}),
             null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
-        this.cisStopGroupsModel = new CisStopGroupsModel();
-        this.cisStopsModel = new CisStopsModel();
+        this.cisStopGroupsModel = new PostgresModel(RopidGTFS.cis_stop_groups.name + "Model", {
+                outputSequelizeAttributes: RopidGTFS.cis_stop_groups.outputSequelizeAttributes,
+                pgTableName: RopidGTFS.cis_stop_groups.pgTableName,
+                savingType: "insertOnly",
+                tmpPgTableName: RopidGTFS.cis_stop_groups.tmpPgTableName,
+            },
+            null,
+        );
+        this.cisStopsModel = new PostgresModel(RopidGTFS.cis_stops.name + "Model", {
+                outputSequelizeAttributes: RopidGTFS.cis_stops.outputSequelizeAttributes,
+                pgTableName: RopidGTFS.cis_stops.pgTableName,
+                savingType: "insertOnly",
+                tmpPgTableName: RopidGTFS.cis_stops.tmpPgTableName,
+            },
+            null,
+        );
         this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
                 identifierPath: "trip.trip_id",
                 modelIndexes: [{ "trip.trip_id": 1 }],
@@ -109,7 +113,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         const files = await this.dataSource.getAll();
         const lastModified = await this.dataSource.getLastModified();
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
-        await this.metaModel.SaveToDb({
+        await this.metaModel.save({
             dataset: "PID_GTFS",
             key: "last_modified",
             type: "DATASET_INFO",
@@ -133,12 +137,12 @@ export default class RopidGTFSWorker extends BaseWorker {
         inputData.data = await this.readFile(inputData.filepath);
         const transformedData = await this.transformation.TransformDataElement(inputData);
         const model = this.getModelByName(transformedData.name);
-        await model.Truncate(true);
+        await model.truncate(true);
 
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
 
         // save meta
-        await this.metaModel.SaveToDb({
+        await this.metaModel.save({
             dataset: "PID_GTFS",
             key: transformedData.name,
             type: "TABLE_TOTAL_COUNT",
@@ -159,7 +163,7 @@ export default class RopidGTFSWorker extends BaseWorker {
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
-        await model.SaveToDb(inputData.data, true);
+        await model.save(inputData.data, true);
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
@@ -177,7 +181,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         const data = await this.dataSourceCisStops.getAll();
         const lastModified = await this.dataSourceCisStops.getLastModified();
         const dbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
-        await this.metaModel.SaveToDb({
+        await this.metaModel.save({
             dataset: "CIS_STOPS",
             key: "last_modified",
             type: "DATASET_INFO",
@@ -186,7 +190,7 @@ export default class RopidGTFSWorker extends BaseWorker {
 
         const transformedData = await this.transformationCisStops.TransformDataCollection(data);
         // save meta
-        await this.metaModel.SaveToDb([{
+        await this.metaModel.save([{
             dataset: "CIS_STOPS",
             key: "cis_stop_groups",
             type: "TABLE_TOTAL_COUNT",
@@ -197,10 +201,10 @@ export default class RopidGTFSWorker extends BaseWorker {
             type: "TABLE_TOTAL_COUNT",
             value: transformedData.cis_stops.length,
             version: dbLastModified.version + 1 }]);
-        await this.cisStopGroupsModel.Truncate(true);
-        await this.cisStopGroupsModel.SaveToDb(transformedData.cis_stop_groups, true);
-        await this.cisStopsModel.Truncate(true);
-        await this.cisStopsModel.SaveToDb(transformedData.cis_stops, true);
+        await this.cisStopGroupsModel.truncate(true);
+        await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
+        await this.cisStopsModel.truncate(true);
+        await this.cisStopsModel.save(transformedData.cis_stops, true);
         await this.metaModel.checkSavedRowsAndReplaceTables("CIS_STOPS", dbLastModified.version + 1);
     }
 
@@ -321,27 +325,18 @@ export default class RopidGTFSWorker extends BaseWorker {
         return true;
     }
 
-    private getModelByName = (name: string): IModel => {
-        switch (name) {
-            case "agency":
-                return new AgencyModel();
-            case "calendar":
-                return new CalendarModel();
-            case "calendar_dates":
-                return new CalendarDatesModel();
-            case "shapes":
-                return new ShapesModel();
-            case "stop_times":
-                return new StopTimesModel();
-            case "routes":
-                return new RoutesModel();
-            case "stops":
-                return new StopsModel();
-            case "trips":
-                return new TripsModel();
-            default:
-                return null;
+    private getModelByName = (name: string): PostgresModel => {
+        if (RopidGTFS[name].name) {
+            return new PostgresModel(RopidGTFS[name].name + "Model", {
+                    outputSequelizeAttributes: RopidGTFS[name].outputSequelizeAttributes,
+                    pgTableName: RopidGTFS[name].pgTableName,
+                    savingType: "insertOnly",
+                    tmpPgTableName: RopidGTFS[name].tmpPgTableName,
+                },
+                null,
+            );
         }
+        return null;
     }
 
     private readFile = (file: string): Promise<Buffer> => {
@@ -373,7 +368,7 @@ export default class RopidGTFSWorker extends BaseWorker {
 
         const promises = models.map(async (m) => {
             const model = this.getModelByName(m.name);
-            const res = await model.FindAndCountAll({ order: m.order, raw: true });
+            const res = await model.findAndCountAll({ order: m.order, raw: true });
             gtfs[m.name] = res.rows;
             return;
         });

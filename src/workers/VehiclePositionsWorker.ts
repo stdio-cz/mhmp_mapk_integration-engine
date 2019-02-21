@@ -3,8 +3,8 @@
 import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
+import PostgresModel from "../models/PostgresModel";
 import VehiclePositionsPositionsModel from "../models/VehiclePositionsPositionsModel";
-import VehiclePositionsStopsModel from "../models/VehiclePositionsStopsModel";
 import VehiclePositionsTripsModel from "../models/VehiclePositionsTripsModel";
 import VehiclePositionsTransformation from "../transformations/VehiclePositionsTransformation";
 import BaseWorker from "./BaseWorker";
@@ -15,7 +15,7 @@ const turf = require("@turf/turf");
 export default class VehiclePositionsWorker extends BaseWorker {
 
     private modelPositions: VehiclePositionsPositionsModel;
-    private modelStops: VehiclePositionsStopsModel;
+    private modelStops: PostgresModel;
     private modelTrips: VehiclePositionsTripsModel;
     private transformation: VehiclePositionsTransformation;
     private delayComputationTripsModel: MongoModel;
@@ -24,7 +24,14 @@ export default class VehiclePositionsWorker extends BaseWorker {
     constructor() {
         super();
         this.modelPositions = new VehiclePositionsPositionsModel();
-        this.modelStops = new VehiclePositionsStopsModel();
+        this.modelStops = new PostgresModel(VehiclePositions.stops.name + "Model", {
+                outputSequelizeAttributes: VehiclePositions.stops.outputSequelizeAttributes,
+                pgTableName: VehiclePositions.stops.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(VehiclePositions.stops.name + "ModelValidator",
+                VehiclePositions.stops.outputMongooseSchemaObject),
+        );
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
         this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
@@ -48,9 +55,9 @@ export default class VehiclePositionsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString()).m.spoj;
         const transformedData = await this.transformation.TransformDataCollection(inputData);
         // positions saving
-        await this.modelPositions.SaveToDb(transformedData.positions);
+        await this.modelPositions.save(transformedData.positions);
         // trips saving
-        const rows = await this.modelTrips.SaveToDb(transformedData.trips);
+        const rows = await this.modelTrips.save(transformedData.trips);
 
         // send message for save stops
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveStopsToDB",
@@ -72,7 +79,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
 
     public saveStopsToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        await this.modelStops.SaveToDb(inputData);
+        await this.modelStops.save(inputData);
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {

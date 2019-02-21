@@ -3,33 +3,43 @@
 import { VehiclePositions } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
 import Validator from "../helpers/Validator";
-import IModel from "./IModel";
+import { IModel } from "./IModel";
 import PostgresModel from "./PostgresModel";
 
 const { PostgresConnector } = require("../helpers/PostgresConnector");
 
 export default class VehiclePositionsPositionsModel extends PostgresModel implements IModel {
 
+    /** Model name */
     public name: string;
+    /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;
+    /** The Sequelize Model for temporary table */
+    protected tmpSequelizeModel: Sequelize.Model<any, any> | null;
+    /** Validation helper */
     protected validator: Validator;
+    /** Type/Strategy of saving the data */
+    protected savingType: "insertOnly" | "insertOrUpdate";
 
     constructor() {
-        super();
-        this.name = VehiclePositions.positions.name;
-
-        this.sequelizeModel = PostgresConnector.getConnection().define(VehiclePositions.positions.pgTableName,
-            VehiclePositions.positions.outputSequelizeAttributes, {
-                indexes: [{
-                    fields: ["trips_id"],
-                    name: "vehiclepositions_positions_trips_id",
-                }, {
-                    fields: ["origin_time"],
-                    name: "vehiclepositions_positions_origin_time",
-                }],
-            });
-        this.sequelizeModel.removeAttribute("id");
-        this.validator = new Validator(this.name, VehiclePositions.positions.outputMongooseSchemaObject);
+        super(VehiclePositions.positions.name + "Model", {
+                attributesToRemove: [ "id" ],
+                outputSequelizeAttributes: VehiclePositions.positions.outputSequelizeAttributes,
+                pgTableName: VehiclePositions.positions.pgTableName,
+                savingType: "insertOnly",
+                sequelizeAdditionalSettings: {
+                    indexes: [{
+                        fields: ["trips_id"],
+                        name: "vehiclepositions_positions_trips_id",
+                    }, {
+                        fields: ["origin_time"],
+                        name: "vehiclepositions_positions_origin_time",
+                    }],
+                },
+            },
+            new Validator(VehiclePositions.positions.name + "ModelValidator",
+                VehiclePositions.positions.outputMongooseSchemaObject),
+        );
     }
 
     public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
