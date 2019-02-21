@@ -1,53 +1,34 @@
 "use strict";
 
-export default interface IModel {
+import { SchemaDefinition } from "mongoose";
+import * as Sequelize from "sequelize";
 
-    /** Model name */
+export interface ISequelizeSettings {
+    attributesToRemove?: string[];
+    outputSequelizeAttributes: Sequelize.DefineModelAttributes<any>;
+    pgTableName: string;
+    savingType: "insertOnly" | "insertOrUpdate";
+    sequelizeAdditionalSettings?: object;
+    tmpPgTableName?: string;
+}
+
+export interface IMongooseSettings {
+    identifierPath?: string;
+    modelIndexes?: any[];
+    mongoCollectionName: string;
+    outputMongooseSchemaObject: SchemaDefinition;
+    resultsPath?: string;
+    savingType: "insertOnly" | "insertOrUpdate";
+    updateValues?: (dbData: any, newData: any) => any;
+    searchPath?: (id: any, multiple: boolean) => any;
+    select?: string;
+    tmpMongoCollectionName?: string;
+}
+
+export interface IModel {
+
     name: string;
+    save: (data: any, useTmpTable: boolean) => Promise<any>;
+    truncate: (useTmpTable: boolean) => Promise<any>;
 
-    /** Validates and Saves transformed element or collection to database. */
-    SaveToDb(data, tmp);
-
-    /** Deletes all data from table. */
-    Truncate?(tmp);
-
-    FindAndCountAll?(opts);
-
-/*
-    -- MONGO --
-    model name
-    model schema
-    model indexes
-    collection name
-    has tmp collection
-        tmp collection name
-        method replace/rename collections
-    validator
-    search path
-    results path
-    select
-    is insert only or insert or update
-    method save
-        method update values
-    method truncate
-    method get one or find
-
-    -- POSTGRESQL --
-    model name
-    table name
-    table attributes
-        (attributes to remove)
-    table additional settings
-        e.g. indexes
-    validator
-    is insert only or insert or update
-    method save
-        method update values
-    method truncate
-
-    VehiclePositionsTripsModel
-    VehiclePositionsPositionsModel
-    MerakiAccessPointsTagsModel
-    MetadataModel
-*/
 }

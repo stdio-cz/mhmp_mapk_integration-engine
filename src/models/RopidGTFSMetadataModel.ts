@@ -2,27 +2,34 @@
 
 import { RopidGTFS } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
-import log from "../../helpers/Logger";
-import Validator from "../../helpers/Validator";
-import IModel from "../IModel";
-import PostgresModel from "../PostgresModel";
+import log from "../helpers/Logger";
+import Validator from "../helpers/Validator";
+import { IModel } from "./IModel";
+import PostgresModel from "./PostgresModel";
 
-const { PostgresConnector } = require("../../helpers/PostgresConnector");
+const { PostgresConnector } = require("../helpers/PostgresConnector");
 
-export default class MetadataModel extends PostgresModel implements IModel {
+export default class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
+    /** Model name */
     public name: string;
+    /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;
+    /** The Sequelize Model for temporary table */
+    protected tmpSequelizeModel: Sequelize.Model<any, any> | null;
+    /** Validation helper */
     protected validator: Validator;
+    /** Type/Strategy of saving the data */
+    protected savingType: "insertOnly" | "insertOrUpdate";
 
     constructor() {
-        super();
-        this.name = RopidGTFS.metadata.name;
-
-        this.sequelizeModel = PostgresConnector.getConnection().define(RopidGTFS.metadata.pgTableName,
-            RopidGTFS.metadata.outputSequelizeAttributes);
-        // TODO doplnit validator
-        this.validator = null; // new Validator(this.name, schemaObject);
+        super(RopidGTFS.metadata.name + "Model", {
+                outputSequelizeAttributes: RopidGTFS.metadata.outputSequelizeAttributes,
+                pgTableName: RopidGTFS.metadata.pgTableName,
+                savingType: "insertOnly",
+            },
+            null,
+        );
     }
 
     public getLastModified = async (dataset: string): Promise<any|null> => {

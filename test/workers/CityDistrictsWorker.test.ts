@@ -21,8 +21,9 @@ describe("CityDistrictsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         worker = new CityDistrictsWorker();
         sandbox.stub(worker.dataSource, "getAll");
-        sandbox.stub(worker.transformation, "TransformDataCollection");
-        sandbox.stub(worker.model, "SaveToDb");
+        sandbox.stub(worker.transformation, "TransformDataCollection")
+            .callsFake(() => Object.assign({features: [], type: ""}));
+        sandbox.stub(worker.model, "save");
     });
 
     afterEach(() => {
@@ -33,11 +34,11 @@ describe("CityDistrictsWorker", () => {
         await worker.refreshDataInDB();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.model.SaveToDb);
+        sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
             worker.transformation.TransformDataCollection,
-            worker.model.SaveToDb);
+            worker.model.save);
     });
 
 });
