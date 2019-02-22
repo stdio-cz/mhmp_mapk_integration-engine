@@ -120,7 +120,7 @@
                         "max": 23.18,
                         "created_at": 1542112149,
                         "avg": 23.15,
-                        "validity": 0,
+                        "validity": 1,
                         "min": 23.14
                     }
                 ],

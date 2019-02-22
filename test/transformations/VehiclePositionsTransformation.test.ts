@@ -45,28 +45,22 @@ describe("VehiclePositionsTransformation", () => {
         expect(transformation.name).is.equal("VehiclePositions");
     });
 
-    it("should has TransformDataElement method", async () => {
-        expect(transformation.TransformDataElement).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData.m.spoj[0]);
-        expect(data).to.have.property("position");
+        const data = await transformation.transform(testSourceData.m.spoj[0]);
+        expect(data).to.have.property("positions");
         expect(data).to.have.property("stops");
-        expect(data).to.have.property("trip");
-    });
-
-    it("should has TransformDataCollection method", async () => {
-        expect(transformation.TransformDataCollection).not.to.be.undefined;
+        expect(data).to.have.property("trips");
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData.m.spoj);
-        for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("positions");
-            expect(data[i]).to.have.property("stops");
-            expect(data[i]).to.have.property("trips");
-        }
+        const data = await transformation.transform(testSourceData.m.spoj);
+        expect(data).to.have.property("positions");
+        expect(data).to.have.property("stops");
+        expect(data).to.have.property("trips");
     });
 
 });

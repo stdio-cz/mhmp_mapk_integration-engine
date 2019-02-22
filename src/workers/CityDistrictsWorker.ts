@@ -5,7 +5,7 @@ import DataSource from "../datasources/DataSource";
 import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import Validator from "../helpers/Validator";
-import CityDistrictsModel from "../models/CityDistrictsModel";
+import MongoModel from "../models/MongoModel";
 import CityDistrictsTransformation from "../transformations/CityDistrictsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -13,7 +13,7 @@ const config = require("../config/ConfigLoader");
 
 export default class CityDistrictsWorker extends BaseWorker {
 
-    private model: CityDistrictsModel;
+    private model: MongoModel;
     private dataSource: DataSource;
     private transformation: CityDistrictsTransformation;
 
@@ -26,15 +26,33 @@ export default class CityDistrictsWorker extends BaseWorker {
                 url: config.datasources.CityDistricts,
             }),
             new JSONDataTypeStrategy({resultsPath: "features"}),
-            new Validator(CityDistricts.name + "DataSource", CityDistricts.datasourceMongooseSchemaObject));
-        this.model = new CityDistrictsModel();
+            new Validator(CityDistricts.name + "DataSourceValidator", CityDistricts.datasourceMongooseSchemaObject));
+        this.model = new MongoModel(CityDistricts.name + "Model", {
+                identifierPath: "properties.id",
+                mongoCollectionName: CityDistricts.mongoCollectionName,
+                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+                updateValues: (a, b) => {
+                    a.geometry.coordinates = b.geometry.coordinates;
+                    a.properties.name = b.properties.name;
+                    a.properties.slug = b.properties.slug;
+                    a.properties.timestamp = b.properties.timestamp;
+                    return a;
+                },
+            },
+            new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
+        );
         this.transformation = new CityDistrictsTransformation();
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.SaveToDb(transformedData);
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
     }
 
 }

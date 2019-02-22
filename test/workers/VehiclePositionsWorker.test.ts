@@ -38,18 +38,18 @@ describe("VehiclePositionsWorker", () => {
             }));
 
         worker = new VehiclePositionsWorker();
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ positions: [], stops: [], trips: [] }));
-        sandbox.stub(worker.modelPositions, "SaveToDb");
+        sandbox.stub(worker.modelPositions, "save");
         sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
             .callsFake(() => [{gtfs_trip_id: "0000", delay: null}]);
         sandbox.stub(worker.modelPositions, "updateDelay");
-        sandbox.stub(worker.modelStops, "SaveToDb");
-        sandbox.stub(worker.modelTrips, "SaveToDb")
+        sandbox.stub(worker.modelStops, "save");
+        sandbox.stub(worker.modelTrips, "save")
             .callsFake(() => testData);
         sandbox.stub(worker.modelTrips, "findAndUpdateGTFSTripId");
         sandbox.stub(worker, "sendMessageToExchange");
-        sandbox.stub(worker.delayComputationTripsModel, "GetOneFromModel")
+        sandbox.stub(worker.delayComputationTripsModel, "findOneById")
             .callsFake(() => Object.assign({shape_points: []}));
         sandbox.stub(worker, "getEstimatedPoint")
             .callsFake(() => Object.assign({properties: {time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00"}}));
@@ -61,16 +61,16 @@ describe("VehiclePositionsWorker", () => {
 
     it("should calls the correct methods by saveDataToDB method", async () => {
         await worker.saveDataToDB({content: new Buffer(JSON.stringify({m: {spoj: {}}}))});
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.modelPositions.SaveToDb);
-        sandbox.assert.calledWith(worker.modelPositions.SaveToDb, []);
-        sandbox.assert.calledOnce(worker.modelTrips.SaveToDb);
-        sandbox.assert.calledWith(worker.modelTrips.SaveToDb, []);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledOnce(worker.modelPositions.save);
+        sandbox.assert.calledWith(worker.modelPositions.save, []);
+        sandbox.assert.calledOnce(worker.modelTrips.save);
+        sandbox.assert.calledWith(worker.modelTrips.save, []);
         sandbox.assert.calledTwice(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
-            worker.transformation.TransformDataCollection,
-            worker.modelPositions.SaveToDb,
-            worker.modelTrips.SaveToDb,
+            worker.transformation.transform,
+            worker.modelPositions.save,
+            worker.modelTrips.save,
             worker.sendMessageToExchange);
         sandbox.assert.calledThrice(PostgresConnector.getConnection);
     });
@@ -84,7 +84,7 @@ describe("VehiclePositionsWorker", () => {
     it("should calls the correct methods by updateDelay method", async () => {
         await worker.updateDelay({content: new Buffer("0")});
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
-        sandbox.assert.calledOnce(worker.delayComputationTripsModel.GetOneFromModel);
+        sandbox.assert.calledOnce(worker.delayComputationTripsModel.findOneById);
         sandbox.assert.calledOnce(worker.getEstimatedPoint);
         sandbox.assert.calledOnce(worker.modelPositions.updateDelay);
     });

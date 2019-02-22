@@ -24,8 +24,9 @@ describe("ParkingZonesWorker", () => {
         sandbox.stub(worker.dataSourceTariffs, "getAll")
             .callsFake(() => []);
         sandbox.stub(worker.transformation, "setTariffs");
-        sandbox.stub(worker.transformation, "TransformDataCollection");
-        sandbox.stub(worker.model, "SaveToDb");
+        sandbox.stub(worker.transformation, "transform")
+            .callsFake(() => Object.assign({features: [], type: ""}));
+        sandbox.stub(worker.model, "save");
     });
 
     afterEach(() => {
@@ -37,14 +38,14 @@ describe("ParkingZonesWorker", () => {
         sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledOnce(worker.dataSourceTariffs.getAll);
         sandbox.assert.calledOnce(worker.transformation.setTariffs);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.model.SaveToDb);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
             worker.dataSourceTariffs.getAll,
             worker.transformation.setTariffs,
-            worker.transformation.TransformDataCollection,
-            worker.model.SaveToDb);
+            worker.transformation.transform,
+            worker.model.save);
     });
 
 });

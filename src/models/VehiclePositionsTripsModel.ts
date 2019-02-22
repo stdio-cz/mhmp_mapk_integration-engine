@@ -5,7 +5,7 @@ import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
-import IModel from "./IModel";
+import { IModel } from "./IModel";
 import PostgresModel from "./PostgresModel";
 
 const { PostgresConnector } = require("../helpers/PostgresConnector");
@@ -13,36 +13,49 @@ const moment = require("moment");
 
 export default class VehiclePositionsTripsModel extends PostgresModel implements IModel {
 
+    /** Model name */
     public name: string;
+    /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;
+    /** The Sequelize Model for temporary table */
+    protected tmpSequelizeModel: Sequelize.Model<any, any> | null;
+    /** Validation helper */
     protected validator: Validator;
+    /** Type/Strategy of saving the data */
+    protected savingType: "insertOnly" | "insertOrUpdate";
 
     constructor() {
-        super();
-        this.name = VehiclePositions.trips.name;
-
-        this.sequelizeModel = PostgresConnector.getConnection().define(VehiclePositions.trips.pgTableName,
-            VehiclePositions.trips.outputSequelizeAttributes);
-        this.validator = new Validator(this.name, VehiclePositions.trips.outputMongooseSchemaObject);
+        super(VehiclePositions.trips.name + "Model", {
+                outputSequelizeAttributes: VehiclePositions.trips.outputSequelizeAttributes,
+                pgTableName: VehiclePositions.trips.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(VehiclePositions.trips.name + "ModelValidator",
+                VehiclePositions.trips.outputMongooseSchemaObject),
+        );
     }
 
     /**
-     * Overrides PostgresModel::SaveToDb
+     * Overrides PostgresModel::save
      */
-    public SaveToDb = async (data: any): Promise<{inserted: any[], updated: any[]}> => {
+    public save = async (data: any, useTmpTable: boolean = false): Promise<any> => {
         // data validation
         if (this.validator) {
             await this.validator.Validate(data);
+        } else {
+            log.warn("Model validator is not set.");
         }
 
+        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+
         try {
-            await this.sequelizeModel.sync();
+            await model.sync();
             const i = []; // inserted
             const u = []; // updated
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const res = await this.sequelizeModel.upsert(d);
+                    const res = await model.upsert(d);
                     if (res) {
                         i.push({
                             cis_short_name: d.cis_short_name,
@@ -59,7 +72,7 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
                 await Promise.all(promises);
                 return { inserted: i, updated: u };
             } else {
-                const res = await this.sequelizeModel.upsert(data);
+                const res = await model.upsert(data);
                 if (res) {
                     i.push({
                         cis_short_name: data.cis_short_name,
@@ -122,6 +135,8 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
             + ");",
             { type: Sequelize.QueryTypes.SELECT });
 
+        // TODO dat si bacha na posileny spoje
+        // gtfs_trip_id obsahuje POS, rozlisit podle cis_order
         if (result[0]) {
             await this.sequelizeModel.update(result[0], { where: {
                 id: trip.id,
