@@ -32,7 +32,7 @@ export default class MerakiAccessPointsWorker extends BaseWorker {
 
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.transformation.TransformDataCollection(inputData);
+        const transformedData = await this.transformation.transform(inputData);
         await this.modelObservations.save(transformedData.observations);
         await this.modelTags.save(transformedData.tags);
     }

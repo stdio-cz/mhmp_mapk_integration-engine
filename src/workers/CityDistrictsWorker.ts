@@ -51,8 +51,8 @@ export default class CityDistrictsWorker extends BaseWorker {
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
     }
 
 }

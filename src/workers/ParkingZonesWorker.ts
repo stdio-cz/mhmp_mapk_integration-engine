@@ -94,8 +94,8 @@ export default class ParkingZonesWorker extends BaseWorker {
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
         await this.transformation.setTariffs(await this.dataSourceTariffs.getAll());
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
     }
 
     private timeToMinutes = (value: string): number => {

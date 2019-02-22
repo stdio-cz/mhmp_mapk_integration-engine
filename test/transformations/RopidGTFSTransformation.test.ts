@@ -45,12 +45,12 @@ describe("RopidGTFSTransformation", () => {
         expect(transformation.name).is.equal("RopidGTFS");
     });
 
-    it("should has TransformDataElement method", async () => {
-        expect(transformation.TransformDataElement).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData);
+        const data = await transformation.transform(testSourceData);
         expect(data).to.have.property("name");
         expect(data).to.have.property("data");
         expect(data).to.have.property("total");

@@ -10,27 +10,35 @@ export default class RopidGTFSCisStopsTransformation extends BaseTransformation 
 
     constructor() {
         super();
-        this.name = "RopidGTFSCisStops"; // RopidGTFS.name;
+        this.name = RopidGTFS.name + "CisStops";
     }
 
     /**
-     * Transforms data from data source to output format (JSON)
+     * Overrides BaseTransformation::transform
      */
-    public TransformDataElement = async (element): Promise<any> => {
-        // not used
-    }
-
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
         const res = {
             cis_stop_groups: [],
             cis_stops: [],
         };
 
-        collection.map((stopGroup) => {
-            res.cis_stop_groups.push({
+        const promises = data.map(async (stopGroup) => {
+            const promisesStops = stopGroup.stops.map((stop) => {
+                return {
+                    altIdosName: stop.altIdosName,
+                    cis: stopGroup.cis,
+                    id: stop.id,
+                    jtskX: stop.jtskX,
+                    jtskY: stop.jtskY,
+                    lat: stop.lat,
+                    lon: stop.lon,
+                    platform: stop.platform,
+                    wheelchairAccess: stop.wheelchairAccess,
+                    zone: stop.zone,
+                };
+            });
+            res.cis_stops.push(...await Promise.all(promisesStops));
+            return {
                 avgJtskX: stopGroup.avgJtskX,
                 avgJtskY: stopGroup.avgJtskY,
                 avgLat: stopGroup.avgLat,
@@ -44,23 +52,15 @@ export default class RopidGTFSCisStopsTransformation extends BaseTransformation 
                 name: stopGroup.name,
                 node: stopGroup.node,
                 uniqueName: stopGroup.uniqueName,
-            });
-            stopGroup.stops.map((stop) => {
-                res.cis_stops.push({
-                    altIdosName: stop.altIdosName,
-                    cis: stopGroup.cis,
-                    id: stop.id,
-                    jtskX: stop.jtskX,
-                    jtskY: stop.jtskY,
-                    lat: stop.lat,
-                    lon: stop.lon,
-                    platform: stop.platform,
-                    wheelchairAccess: stop.wheelchairAccess,
-                    zone: stop.zone,
-                });
-            });
+            };
         });
+        res.cis_stop_groups = await Promise.all(promises);
         return res;
+    }
+
+    protected transformElement = async (element: any): Promise<any> => {
+        // Nothing to do.
+        return;
     }
 
 }

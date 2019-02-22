@@ -16,9 +16,39 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
     }
 
     /**
-     * Transforms data from data source to output format (JSON)
+     * Overrides BaseTransformation::transform
      */
-    public TransformDataElement = async (element): Promise<any> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
+        const res = {
+            positions: [],
+            stops: [],
+            trips: [],
+        };
+
+        if (data instanceof Array) {
+            const promises = data.map(async (element, i) => {
+                const elemRes = await this.transformElement(element);
+                if (elemRes) {
+                    res.positions.push(elemRes.position);
+                    res.stops = res.stops.concat(elemRes.stops);
+                    res.trips.push(elemRes.trip);
+                }
+                return;
+            });
+            await Promise.all(promises);
+            return res;
+        } else {
+            const elemRes = await this.transformElement(data);
+            if (elemRes) {
+                res.positions.push(elemRes.position);
+                res.stops = res.stops.concat(elemRes.stops);
+                res.trips.push(elemRes.trip);
+            }
+            return res;
+        }
+    }
+
+    protected transformElement = async (element: any): Promise<any> => {
         const attributes = element.$;
         const stops = element.zast;
 
@@ -26,7 +56,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             return null;
         }
 
-        // const now = new Date(moment.tz("Europe/Prague").format());
         const now = moment.tz("Europe/Prague");
         let isOverMidnight = 0;
 
@@ -41,7 +70,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
         // midnight checking
         isOverMidnight = this.checkMidnight(now, startDate); // returns -1, 1 or 0
-        // startDate.setDate(startDate.getDate() + isOverMidnight);
         startDate.add(isOverMidnight, "d");
 
         const timestamp = moment.tz("Europe/Prague");
@@ -53,7 +81,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
         // midnight checking
         isOverMidnight = this.checkMidnight(now, timestamp); // returns -1, 1 or 0
-        // timestamp.setDate(timestamp.getDate() + isOverMidnight);
         timestamp.add(isOverMidnight, "d");
 
         // primary key -> start_timestamp, cis_id, cis_short_name, cis_number
@@ -101,7 +128,7 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             },
         };
 
-        const promises = stops.map((stop, i) => {
+        const promises = stops.map(async (stop, i) => {
             let arrival;
             let departure;
 
@@ -116,7 +143,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
                 // midnight checking
                 isOverMidnight = this.checkMidnight(now, arrival); // returns -1, 1 or 0
-                // arrival.setDate(arrival.getDate() + isOverMidnight);
                 arrival.add(isOverMidnight, "d");
             }
             // creating departure from stop.$.odj
@@ -130,11 +156,10 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
                 // midnight checking
                 isOverMidnight = this.checkMidnight(now, departure); // returns -1, 1 or 0
-                // departure.setDate(departure.getDate() + isOverMidnight);
                 departure.add(isOverMidnight, "d");
             }
 
-            res.stops.push({
+            return {
                 arrival_time: (arrival) ? stop.$.prij : null,
                 arrival_timestamp: (arrival) ? arrival.utc().format() : null,
                 cis_stop_id: parseInt(stop.$.zast, 10),
@@ -153,44 +178,11 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 departure_timestamp: (departure) ? departure.utc().format() : null,
                 modified: moment.tz("Europe/Prague").utc().format(),
                 trips_id: primaryKey,
-            });
+            };
         });
+        res.stops = await Promise.all(promises);
 
-        await Promise.all(promises);
         return res;
-    }
-
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
-        const res = {
-            positions: [],
-            stops: [],
-            trips: [],
-        };
-
-        if (collection instanceof Array) {
-            const promises = collection.map(async (element, i) => {
-                const elemRes = await this.TransformDataElement(element);
-                if (elemRes) {
-                    res.positions.push(elemRes.position);
-                    res.stops = res.stops.concat(elemRes.stops);
-                    res.trips.push(elemRes.trip);
-                }
-                return;
-            });
-            await Promise.all(promises);
-            return res;
-        } else {
-            const elemRes = await this.TransformDataElement(collection);
-            if (elemRes) {
-                res.positions.push(elemRes.position);
-                res.stops = res.stops.concat(elemRes.stops);
-                res.trips.push(elemRes.trip);
-            }
-            return res;
-        }
     }
 
     private checkMidnight = (now, start): number => {

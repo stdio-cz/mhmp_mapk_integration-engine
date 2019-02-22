@@ -46,12 +46,12 @@ describe("ParkingsTransformation", () => {
         expect(transformation.name).is.equal("Parkings");
     });
 
-    it("should has TransformDataElement method", async () => {
-        expect(transformation.TransformDataElement).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData.results[0]);
+        const data = await transformation.transform(testSourceData.results[0]);
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
@@ -66,12 +66,8 @@ describe("ParkingsTransformation", () => {
         expect(data.properties).to.have.property("total_num_of_places");
     });
 
-    it("should has TransformDataCollection method", async () => {
-        expect(transformation.TransformDataCollection).not.to.be.undefined;
-    });
-
     it("should properly transform collection", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData.results);
+        const data = await transformation.transform(testSourceData.results);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");

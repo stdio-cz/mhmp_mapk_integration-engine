@@ -45,23 +45,19 @@ describe("IceGatewaySensorsHistoryTransformation", () => {
         expect(transformation.name).is.equal("IceGatewaySensorsHistory");
     });
 
-    it("should has TransformDataElement method", async () => {
-        expect(transformation.TransformDataElement).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData.features[0]);
+        const data = await transformation.transform(testSourceData.features[0]);
         expect(data).to.have.property("id");
         expect(data).to.have.property("sensors");
         expect(data).to.have.property("timestamp");
     });
 
-    it("should has TransformDataCollection method", async () => {
-        expect(transformation.TransformDataCollection).not.to.be.undefined;
-    });
-
     it("should properly transform collection", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData.features);
+        const data = await transformation.transform(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("id");
             expect(data[i]).to.have.property("sensors");

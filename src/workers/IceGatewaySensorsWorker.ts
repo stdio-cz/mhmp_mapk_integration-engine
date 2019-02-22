@@ -66,18 +66,17 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            // TODO dat pryc pridavani GeoJSON obalky ve transformaci
-            new Buffer(JSON.stringify(transformedData.features)), { persistent: true });
+            new Buffer(JSON.stringify(transformedData)), { persistent: true });
     }
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.TransformDataCollection(inputData);
+        const transformedData = await this.historyTransformation.transform(inputData);
         await this.historyModel.save(transformedData);
     }
 

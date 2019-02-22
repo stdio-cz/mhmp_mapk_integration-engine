@@ -24,7 +24,7 @@ describe("MerakiAccessPointsWorker", () => {
             .callsFake(() => Object.assign({define: sandbox.stub()}));
 
         worker = new MerakiAccessPointsWorker();
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ observations: [], tags: [] }));
         sandbox.stub(worker.modelObservations, "save");
         sandbox.stub(worker.modelTags, "save");
@@ -37,13 +37,13 @@ describe("MerakiAccessPointsWorker", () => {
 
     it("should calls the correct methods by saveDataToDB method", async () => {
         await worker.saveDataToDB({content: new Buffer(JSON.stringify({}))});
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
+        sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.modelObservations.save);
         sandbox.assert.calledWith(worker.modelObservations.save, []);
         sandbox.assert.calledOnce(worker.modelTags.save);
         sandbox.assert.calledWith(worker.modelTags.save, []);
         sandbox.assert.callOrder(
-            worker.transformation.TransformDataCollection,
+            worker.transformation.transform,
             worker.modelObservations.save,
             worker.modelTags.save);
         sandbox.assert.calledTwice(PostgresConnector.getConnection);
