@@ -14,33 +14,26 @@ export default class MerakiAccessPointsTransformation extends BaseTransformation
     }
 
     /**
-     * Transforms data from data source to output format (JSON)
+     * Overrides BaseTransformation::transform
      */
-    public TransformDataElement = async (element): Promise<any> => {
-        // not used
-    }
-
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
         const res = {
             observations: [],
             tags: [],
         };
 
-        const tagsPromises = collection.data.apTags.map((tag) => {
+        const tagsPromises = data.data.apTags.map(async (tag) => {
             if (tag !== "") {
                 res.tags.push({
-                    ap_mac: collection.data.apMac,
+                    ap_mac: data.data.apMac,
                     tag,
                 });
             }
         });
 
-        const obsPromises = collection.data.observations.map((observation) => {
+        const obsPromises = data.data.observations.map(async (observation) => {
             res.observations.push({
-                ap_mac: collection.data.apMac,
+                ap_mac: data.data.apMac,
                 client_mac: observation.clientMac,
                 ipv4: (observation.ipv4) ? observation.ipv4 : null,
                 ipv6: (observation.ipv6) ? observation.ipv6 : null,
@@ -55,7 +48,7 @@ export default class MerakiAccessPointsTransformation extends BaseTransformation
                 rssi: (observation.rssi) ? observation.rssi : null,
                 ssid: (observation.ssid) ? observation.ssid : null,
                 timestamp: new Date(observation.seenEpoch * 1000).toUTCString(),
-                type: collection.type,
+                type: data.type,
                 unc: (observation.location && observation.location.unc)
                     ? observation.location.unc
                     : null,
@@ -65,6 +58,11 @@ export default class MerakiAccessPointsTransformation extends BaseTransformation
         await Promise.all(tagsPromises);
         await Promise.all(obsPromises);
         return res;
+    }
+
+    protected transformElement = async (element: any): Promise<any> => {
+        // Nothing to do.
+        return;
     }
 
 }

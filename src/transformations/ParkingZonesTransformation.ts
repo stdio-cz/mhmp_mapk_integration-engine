@@ -2,13 +2,13 @@
 
 import { ParkingZones } from "data-platform-schema-definitions";
 import log from "../helpers/Logger";
-import GeoJsonTransformation from "./GeoJsonTransformation";
+import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
 const lodash = require("lodash");
 const config = require("../config/ConfigLoader");
 
-export default class ParkingZonesTransformation extends GeoJsonTransformation implements ITransformation {
+export default class ParkingZonesTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
     private tariffs: any;
@@ -25,14 +25,94 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
     }
 
     /**
-     * Transforms data from data source to output format (geoJSON Feature)
+     * Overrides BaseTransformation::transform
      */
-    public TransformDataElement = async (element): Promise<any> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
+        if (!this.tariffs) {
+            log.warn("Warning! The parking zones tariffs havn't been set.");
+        }
+
+        if (data instanceof Array) {
+            const promises = data.map((element) => {
+                return this.transformElement(element);
+            });
+            const res = await Promise.all(promises);
+
+            const sorted = res.sort((a, b) => {
+                if (a.properties.code < b.properties.code) {
+                    return -1;
+                } else if (a.properties.code > b.properties.code) {
+                    return 1;
+                } else {
+                    return a.properties.zps_id - b.properties.zps_id;
+                }
+            });
+
+            // mergingIterator JS Closure
+            const mergingIterator = async (i, cb) => {
+                if (sorted.length === i || !sorted[i + 1]) {
+                    return cb();
+                }
+
+                if (sorted[i].properties.code === sorted[i + 1].properties.code) {
+                    if (sorted[i].geometry.type === "Polygon") {
+                        sorted[i].geometry.type = "MultiPolygon";
+                        sorted[i].geometry.coordinates = [
+                            sorted[i].geometry.coordinates,
+                            sorted[i + 1].geometry.coordinates,
+                        ];
+                        sorted[i].properties.zps_ids = [
+                            sorted[i].properties.zps_id,
+                            sorted[i + 1].properties.zps_id,
+                        ];
+                        sorted[i].properties.zps_id = null;
+                        sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
+
+                        const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
+                        sorted[i].properties.southwest = minMaxResult.min;
+                        sorted[i].properties.northeast = minMaxResult.max;
+
+                        if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
+                            sorted[i].properties.midpoint = this.findMiddlePoint(sorted[i].properties.southwest,
+                                sorted[i].properties.northeast);
+                        }
+                    } else if (sorted[i].geometry.type === "MultiPolygon") {
+                        sorted[i].geometry.coordinates.push(sorted[i + 1].geometry.coordinates);
+                        sorted[i].properties.zps_ids.push(sorted[i + 1].properties.zps_id);
+                        sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
+
+                        const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
+                        sorted[i].properties.southwest = minMaxResult.min;
+                        sorted[i].properties.northeast = minMaxResult.max;
+
+                        if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
+                            sorted[i].properties.midpoint = this.findMiddlePoint(sorted[i].properties.southwest,
+                                sorted[i].properties.northeast);
+                        }
+                    }
+                    sorted.splice(i + 1, 1);
+                    i--;
+                }
+
+                setImmediate(mergingIterator.bind(null, i + 1, cb));
+            };
+            return new Promise((resolve, reject) => {
+                mergingIterator(0, () => {
+                    resolve(sorted);
+                });
+            });
+        } else {
+            return this.transformElement(data);
+        }
+    }
+
+    protected transformElement = async (element: any): Promise<any> => {
         const types = {
             1: "Rezidentní úsek",
             2: "Smíšený úsek",
             3: "Návštěvnický úsek",
         };
+
         const res = {
             geometry: {
                 coordinates: element.geometry.coordinates,
@@ -46,7 +126,9 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
                     : element.properties.TARIFTAB,
                 northeast: null,
                 number_of_places: parseInt(element.properties.PS_ZPS, 10),
-                payment_link: config.PARKINGS_PAYMENT_URL + "?shortname=" + element.properties.TARIFTAB,
+                payment_link: (element.properties.TARIFTAB)
+                    ? config.PARKINGS_PAYMENT_URL + "?shortname=" + element.properties.TARIFTAB
+                    : null,
                 southwest: null,
                 tariffs: [],
                 timestamp: new Date().getTime(),
@@ -83,93 +165,6 @@ export default class ParkingZonesTransformation extends GeoJsonTransformation im
         }
 
         return res;
-    }
-
-    /**
-     * Overrides GeoJsonTransformation::TransformDataCollection
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
-        const res = {
-            features: [],
-            type: "FeatureCollection",
-        };
-
-        if (!this.tariffs) {
-            log.warn("Warning! The parking zones tariffs havn't been set.");
-        }
-
-        const promises = collection.map(async (element) => {
-            const transformed = await this.TransformDataElement(element);
-            res.features.push(transformed);
-            return;
-        });
-
-        await Promise.all(promises);
-
-        const sorted = res.features.sort((a, b) => {
-            if (a.properties.code < b.properties.code) {
-                return -1;
-            } else if (a.properties.code > b.properties.code) {
-                return 1;
-            } else {
-                return a.properties.zps_id - b.properties.zps_id;
-            }
-        });
-
-        // mergingIterator JS Closure
-        const mergingIterator = async (i, cb) => {
-            if (sorted.length === i || !sorted[i + 1]) {
-                return cb();
-            }
-
-            if (sorted[i].properties.code === sorted[i + 1].properties.code) {
-                if (sorted[i].geometry.type === "Polygon") {
-                    sorted[i].geometry.type = "MultiPolygon";
-                    sorted[i].geometry.coordinates = [
-                        sorted[i].geometry.coordinates,
-                        sorted[i + 1].geometry.coordinates,
-                    ];
-                    sorted[i].properties.zps_ids = [
-                        sorted[i].properties.zps_id,
-                        sorted[i + 1].properties.zps_id,
-                    ];
-                    sorted[i].properties.zps_id = null;
-                    sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
-
-                    const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
-                    sorted[i].properties.southwest = minMaxResult.min;
-                    sorted[i].properties.northeast = minMaxResult.max;
-
-                    if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
-                        sorted[i].properties.midpoint = this.findMiddlePoint(sorted[i].properties.southwest,
-                            sorted[i].properties.northeast);
-                    }
-                } else if (sorted[i].geometry.type === "MultiPolygon") {
-                    sorted[i].geometry.coordinates.push(sorted[i + 1].geometry.coordinates);
-                    sorted[i].properties.zps_ids.push(sorted[i + 1].properties.zps_id);
-                    sorted[i].properties.number_of_places += sorted[i + 1].properties.number_of_places;
-
-                    const minMaxResult = await this.filterAndFindMinMaxMulti(sorted[i].geometry.coordinates);
-                    sorted[i].properties.southwest = minMaxResult.min;
-                    sorted[i].properties.northeast = minMaxResult.max;
-
-                    if (sorted[i].properties.southwest && sorted[i].properties.northeast) {
-                        sorted[i].properties.midpoint = this.findMiddlePoint(sorted[i].properties.southwest,
-                            sorted[i].properties.northeast);
-                    }
-                }
-                sorted.splice(i + 1, 1);
-                i--;
-            }
-
-            setImmediate(mergingIterator.bind(null, i + 1, cb));
-        };
-        return new Promise((resolve, reject) => {
-            mergingIterator(0, () => {
-                res.features = sorted;
-                resolve(res);
-            });
-        });
     }
 
     /**

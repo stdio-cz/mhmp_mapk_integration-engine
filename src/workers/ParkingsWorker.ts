@@ -84,15 +84,15 @@ export default class ParkingsWorker extends BaseWorker {
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.save(transformedData.features); // TODO dat pryc pridavani GeoJSON obalky ve transformaci
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(transformedData.features)), { persistent: true });
+            new Buffer(JSON.stringify(transformedData)), { persistent: true });
 
         // send messages for updating district and address and average occupancy
-        const promises = transformedData.features.map((p) => {
+        const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
                 new Buffer(JSON.stringify(p)));
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAverageOccupancy",
@@ -103,7 +103,7 @@ export default class ParkingsWorker extends BaseWorker {
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.TransformDataCollection(inputData);
+        const transformedData = await this.historyTransformation.transform(inputData);
         await this.historyModel.save(transformedData);
     }
 

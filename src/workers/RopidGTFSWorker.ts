@@ -135,7 +135,7 @@ export default class RopidGTFSWorker extends BaseWorker {
     public transformData = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         inputData.data = await this.readFile(inputData.filepath);
-        const transformedData = await this.transformation.TransformDataElement(inputData);
+        const transformedData = await this.transformation.transform(inputData);
         const model = this.getModelByName(transformedData.name);
         await model.truncate(true);
 
@@ -188,7 +188,7 @@ export default class RopidGTFSWorker extends BaseWorker {
             value: lastModified,
             version: dbLastModified.version + 1 });
 
-        const transformedData = await this.transformationCisStops.TransformDataCollection(data);
+        const transformedData = await this.transformationCisStops.transform(data);
         // save meta
         await this.metaModel.save([{
             dataset: "CIS_STOPS",

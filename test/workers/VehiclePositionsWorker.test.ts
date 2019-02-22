@@ -38,7 +38,7 @@ describe("VehiclePositionsWorker", () => {
             }));
 
         worker = new VehiclePositionsWorker();
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ positions: [], stops: [], trips: [] }));
         sandbox.stub(worker.modelPositions, "save");
         sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
@@ -61,14 +61,14 @@ describe("VehiclePositionsWorker", () => {
 
     it("should calls the correct methods by saveDataToDB method", async () => {
         await worker.saveDataToDB({content: new Buffer(JSON.stringify({m: {spoj: {}}}))});
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
+        sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.modelPositions.save);
         sandbox.assert.calledWith(worker.modelPositions.save, []);
         sandbox.assert.calledOnce(worker.modelTrips.save);
         sandbox.assert.calledWith(worker.modelTrips.save, []);
         sandbox.assert.calledTwice(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
-            worker.transformation.TransformDataCollection,
+            worker.transformation.transform,
             worker.modelPositions.save,
             worker.modelTrips.save,
             worker.sendMessageToExchange);

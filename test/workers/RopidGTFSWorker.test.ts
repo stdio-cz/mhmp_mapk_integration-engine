@@ -52,7 +52,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.stub(worker.metaModel, "checkSavedRowsAndReplaceTables")
             .callsFake(() => true);
 
-        sandbox.stub(worker.transformation, "TransformDataElement")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
 
         sandbox.stub(worker, "sendMessageToExchange");
@@ -68,7 +68,7 @@ describe("RopidGTFSWorker", () => {
             .callsFake(() => testDataCis);
         sandbox.stub(worker.dataSourceCisStops, "getLastModified")
             .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
-        sandbox.stub(worker.transformationCisStops, "TransformDataCollection")
+        sandbox.stub(worker.transformationCisStops, "transform")
             .callsFake(() => testTransformedDataCis);
         sandbox.stub(worker.cisStopGroupsModel, "truncate");
         sandbox.stub(worker.cisStopGroupsModel, "save");
@@ -116,8 +116,8 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by transformData method", async () => {
         await worker.transformData({content: new Buffer(JSON.stringify(testData[0]))});
         sandbox.assert.calledOnce(worker.readFile);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataElement);
-        sandbox.assert.calledWith(worker.transformation.TransformDataElement, testData[0]);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledWith(worker.transformation.transform, testData[0]);
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelTruncateStub);
@@ -150,7 +150,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceCisStops.getAll);
         sandbox.assert.calledOnce(worker.metaModel.getLastModified);
         sandbox.assert.calledTwice(worker.metaModel.save);
-        sandbox.assert.calledOnce(worker.transformationCisStops.TransformDataCollection);
+        sandbox.assert.calledOnce(worker.transformationCisStops.transform);
         sandbox.assert.calledOnce(worker.cisStopGroupsModel.truncate);
         sandbox.assert.calledOnce(worker.cisStopGroupsModel.save);
         sandbox.assert.calledOnce(worker.cisStopsModel.truncate);
@@ -161,7 +161,7 @@ describe("RopidGTFSWorker", () => {
             worker.metaModel.getLastModified,
             worker.metaModel.save,
             worker.metaModel.save,
-            worker.transformationCisStops.TransformDataCollection,
+            worker.transformationCisStops.transform,
             worker.cisStopGroupsModel.truncate,
             worker.cisStopGroupsModel.save,
             worker.cisStopsModel.truncate,

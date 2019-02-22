@@ -135,6 +135,8 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
             + ");",
             { type: Sequelize.QueryTypes.SELECT });
 
+        // TODO dat si bacha na posileny spoje
+        // gtfs_trip_id obsahuje POS, rozlisit podle cis_order
         if (result[0]) {
             await this.sequelizeModel.update(result[0], { where: {
                 id: trip.id,

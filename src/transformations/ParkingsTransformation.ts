@@ -1,10 +1,10 @@
 "use strict";
 
 import { Parkings } from "data-platform-schema-definitions";
-import GeoJsonTransformation from "./GeoJsonTransformation";
+import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
-export default class ParkingsTransformation extends GeoJsonTransformation implements ITransformation {
+export default class ParkingsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
@@ -13,10 +13,7 @@ export default class ParkingsTransformation extends GeoJsonTransformation implem
         this.name = Parkings.name;
     }
 
-    /**
-     * Transforms data from data source to output format (geoJSON Feature)
-     */
-    public TransformDataElement = async (element): Promise<any> => {
+    public transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.lng), parseFloat(element.lat) ],

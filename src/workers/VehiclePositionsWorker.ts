@@ -53,7 +53,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
 
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString()).m.spoj;
-        const transformedData = await this.transformation.TransformDataCollection(inputData);
+        const transformedData = await this.transformation.transform(inputData);
         // positions saving
         await this.modelPositions.save(transformedData.positions);
         // trips saving

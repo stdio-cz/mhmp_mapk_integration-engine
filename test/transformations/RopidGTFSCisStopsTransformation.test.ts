@@ -45,12 +45,12 @@ describe("RopidGTFSCisStopsTransformation", () => {
         expect(transformation.name).is.equal("RopidGTFSCisStops");
     });
 
-    it("should has TransformDataCollection method", async () => {
-        expect(transformation.TransformDataCollection).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData);
+        const data = await transformation.transform(testSourceData);
         expect(data).to.have.property("cis_stop_groups");
         expect(data).to.have.property("cis_stops");
     });

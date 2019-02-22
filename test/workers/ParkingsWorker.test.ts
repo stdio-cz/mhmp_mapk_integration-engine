@@ -31,7 +31,7 @@ describe("ParkingsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
 
         testData = [1, 2];
-        testTransformedData = { features: [1, 2], type: "" };
+        testTransformedData = [1, 2];
         testTransformedHistoryData = [1, 2];
         data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
         data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
@@ -40,10 +40,10 @@ describe("ParkingsWorker", () => {
 
         sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
         sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.historyTransformation, "TransformDataCollection")
+        sandbox.stub(worker.historyTransformation, "transform")
             .callsFake(() => testTransformedHistoryData);
         sandbox.stub(worker.historyModel, "save");
         sandbox.stub(worker.historyModel, "aggregate")
@@ -64,15 +64,15 @@ describe("ParkingsWorker", () => {
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledWith(worker.transformation.TransformDataCollection, testData);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledWith(worker.transformation.transform, testData);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.calledWith(worker.model.save, testTransformedHistoryData);
         sandbox.assert.callCount(worker.sendMessageToExchange, 5);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(testTransformedData.features)));
-        testTransformedData.features.map((f) => {
+            new Buffer(JSON.stringify(testTransformedData)));
+        testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAddressAndDistrict",
                 new Buffer(JSON.stringify(f)));
@@ -82,19 +82,19 @@ describe("ParkingsWorker", () => {
         });
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
-            worker.transformation.TransformDataCollection,
+            worker.transformation.transform,
             worker.model.save,
             worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
         await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
-        sandbox.assert.calledOnce(worker.historyTransformation.TransformDataCollection);
-        sandbox.assert.calledWith(worker.historyTransformation.TransformDataCollection, testTransformedData);
+        sandbox.assert.calledOnce(worker.historyTransformation.transform);
+        sandbox.assert.calledWith(worker.historyTransformation.transform, testTransformedData);
         sandbox.assert.calledOnce(worker.historyModel.save);
         sandbox.assert.calledWith(worker.historyModel.save, testTransformedHistoryData);
         sandbox.assert.callOrder(
-            worker.historyTransformation.TransformDataCollection,
+            worker.historyTransformation.transform,
             worker.historyModel.save,
         );
     });

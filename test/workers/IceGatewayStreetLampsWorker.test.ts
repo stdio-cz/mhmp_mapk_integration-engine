@@ -22,7 +22,7 @@ describe("IceGatewayStreetLampsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         worker = new IceGatewayStreetLampsWorker();
         sandbox.stub(worker.dataSource, "getAll");
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({features: [], type: ""}));
         sandbox.stub(worker.model, "save");
         sandbox.stub(worker, "sendMessageToExchange");
@@ -36,11 +36,11 @@ describe("IceGatewayStreetLampsWorker", () => {
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
+        sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
-            worker.transformation.TransformDataCollection,
+            worker.transformation.transform,
             worker.model.save);
     });
 
