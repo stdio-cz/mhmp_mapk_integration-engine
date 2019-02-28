@@ -24,8 +24,8 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
 
     public getData = async (): Promise<any> => {
         const ftpClient = new ftp.Client();
-        ftpClient.ftp.log = log.verbose;
-        ftpClient.ftp.verbose = true;
+        ftpClient.ftp.log = log.silly;
+        ftpClient.ftp.silly = true;
 
         try {
             await ftpClient.access(this.connectionSettings.url);
@@ -77,8 +77,8 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
 
     public getLastModified = async (): Promise<string> => {
         const ftpClient = new ftp.Client();
-        ftpClient.ftp.log = log.verbose;
-        ftpClient.ftp.verbose = true;
+        ftpClient.ftp.log = log.silly;
+        ftpClient.ftp.silly = true;
 
         try {
             await ftpClient.access(this.connectionSettings.url);
