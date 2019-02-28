@@ -251,7 +251,7 @@ const definitions: IQueueDefinition[] = [
                                     this.constructor.name, 1021));
                                 channel.nack(msg, false, false);
                             }
-                            log.debug(" [<] " + queuePrefix + ".checkingIfDone: done");
+                            log.verbose(" [<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
                             await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                             channel.reject(msg);
@@ -318,7 +318,7 @@ const definitions: IQueueDefinition[] = [
                                     this.constructor.name, 1021));
                                 channel.nack(msg, false, false);
                             }
-                            log.debug(" [<] " + queuePrefix + ".checkingIfDoneDelayCalculation: done");
+                            log.verbose(" [<] " + queuePrefix + ".checkingIfDoneDelayCalculation: done");
                         } else {
                             await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                             channel.reject(msg);

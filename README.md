@@ -8,16 +8,20 @@ Developed by http://operatorict.cz
 
 ## Prerequisites
 
-- node.js
-- mongo
+- NodeJS
+- MongoDB
+- PostgreSQL
 - npm
 - data-platform-schema-definitions module
 
 ## Installation
 
-Download repository `data-platform-schema-definitions` to the same directory as the directory of this repository and name it `schema-definitions/`. For the better understanding the dependency is visible in the `package.json` at the line `"data-platform-schema-definitions": "file:../schema-definitions",`.
+Install Node, MongoDB and PostgreSQL.
 
-Install Node, MongoDB
+Create the `.npmrc` file and type to it the url to the OICT private npm proxy registry:
+```
+registry=http://<url_to_oict_registry>
+```
 
 Install all npm modules using command:
 ```

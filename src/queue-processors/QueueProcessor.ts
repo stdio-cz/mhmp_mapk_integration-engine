@@ -44,12 +44,12 @@ export default class QueueProcessor {
      */
     protected defaultProcessor = async (msg: any, name: string, worker: () => Promise<void>): Promise<void> => {
         try {
-            log.debug(" [>] " + this.definition.queuePrefix + "." + name + ": received some data.");
+            log.verbose(" [>] " + this.definition.queuePrefix + "." + name + ": received some data.");
 
             await worker();
 
             this.channel.ack(msg);
-            log.debug(" [<] " + this.definition.queuePrefix + "." + name + ": done");
+            log.verbose(" [<] " + this.definition.queuePrefix + "." + name + ": done");
         } catch (err) {
             handleError(err);
             this.channel.nack(msg, false, false);
@@ -65,7 +65,7 @@ export default class QueueProcessor {
         const q = await this.channel.assertQueue(name, {...queueOptions, ...{durable: true}});
         this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
         this.channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, key);
-        log.debug(" [*] Waiting for messages in " + name + ".");
+        log.verbose(" [*] Waiting for messages in " + name + ".");
         this.channel.consume(name, processor, {noAck: false});
     }
 
