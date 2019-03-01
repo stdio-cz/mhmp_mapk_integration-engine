@@ -17,4 +17,5 @@ module.exports = {
     RopidGTFSFilename: "PID_GTFS.zip",
     RopidGTFSPath: "GTFS/",
     TSKParkings: "http://www.tsk-praha.cz/tskexport3/json/parkings",
+    TSKTrafficCameras: "http://www.tsk-praha.cz/tskexport3/json/cameras",
 };

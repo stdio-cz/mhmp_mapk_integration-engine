@@ -2,8 +2,8 @@
 
 import {
     CityDistricts, IceGatewaySensors, IceGatewayStreetLamps,
-    MerakiAccessPoints, Parkings, ParkingZones, RopidGTFS, VehiclePositions,
-} from "data-platform-schema-definitions";
+    MerakiAccessPoints, Parkings, ParkingZones, RopidGTFS, TrafficCameras, VehiclePositions,
+    } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
@@ -15,6 +15,7 @@ import ParkingsWorker from "../workers/ParkingsWorker";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
 import PurgeWorker from "../workers/PurgeWorker";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
+import TrafficCamerasWorker from "../workers/TrafficCamerasWorker";
 import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
 import IQueueDefinition from "./IQueueDefinition";
 
@@ -251,7 +252,7 @@ const definitions: IQueueDefinition[] = [
                                     this.constructor.name, 1021));
                                 channel.nack(msg, false, false);
                             }
-                            log.verbose(" [<] " + queuePrefix + ".checkingIfDone: done");
+                            log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
                             await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                             channel.reject(msg);
@@ -318,7 +319,7 @@ const definitions: IQueueDefinition[] = [
                                     this.constructor.name, 1021));
                                 channel.nack(msg, false, false);
                             }
-                            log.verbose(" [<] " + queuePrefix + ".checkingIfDoneDelayCalculation: done");
+                            log.verbose("[<] " + queuePrefix + ".checkingIfDoneDelayCalculation: done");
                         } else {
                             await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
                             channel.reject(msg);
@@ -378,6 +379,41 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: VehiclePositionsWorker,
                 workerMethod: "updateDelay",
+            },
+        ],
+    },
+    {
+        name: TrafficCameras.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TrafficCameras.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "updateAddressAndDistrict",
             },
         ],
     },
