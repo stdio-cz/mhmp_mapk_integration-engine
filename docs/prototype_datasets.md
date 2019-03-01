@@ -12,6 +12,7 @@ Poslední úprava: 28. 2. 2019
 - Zóny parkování (ParkingZones)
 - Jízdní řády (RopidGTFS)
 - Polohy vozů (VehiclePositions)
+- Dopravní kamery (TrafficCameras)
 
 ## Městské části (CityDistricts)
 
@@ -186,4 +187,26 @@ Provizorní datová sada, která v prototypu bude sloužit hlavně pro obohacen�
     - nerozesílá žadné další zprávy
   - `*.[exchangeName].vehiclepositions.updateDelay`
     - přijímá data ze zprávy, dopočítá zpoždění a uloží ho
+    - nerozesílá žadné další zprávy
+
+## Dopravní kamery (TrafficCameras)
+
+- název: `TrafficCameras`
+- schema-definitions: `TrafficCameras`
+- datový zdroj: tsk-praha.cz
+- obnova dat: 1x za 2 minuty
+- historizace: ano
+- databáze:
+  - typ: MongoDB
+  - názvy kolekcí: `trafficcameras`, `trafficcameras_history`
+- RabbitMQ fronty:
+  - `*.[exchangeName].trafficcameras.refreshDataInDB`
+    - nepřijímá žádná data, pouze update ze zdroje
+    - po zpracování odešle zprávu k uložení historie
+    - po zpracování odešle zprávy k obohacení dat o adresu a MČ
+  - `*.[exchangeName].trafficcameras.saveDataToHistory`
+    - přijímá data a vkládá do DB
+    - nerozesílá žadné další zprávy
+  - `*.[exchangeName].trafficcameras.updateAddressAndDistrict`
+    - přijímá data a obohacuje záznamy o adresu a MČ
     - nerozesílá žadné další zprávy

@@ -53,6 +53,7 @@ class App {
             // Parkings: [],
             // Purge: [],
             // RopidGTFS: [],
+            // TrafficCameras: [],
             // VehiclePositions: [],
         };
 
