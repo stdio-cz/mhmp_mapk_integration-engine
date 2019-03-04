@@ -1,8 +1,8 @@
 "use strict";
 
 import {
-    CityDistricts, IceGatewaySensors, IceGatewayStreetLamps,
-    MerakiAccessPoints, Parkings, ParkingZones, RopidGTFS, TrafficCameras, VehiclePositions,
+    CityDistricts, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints, Parkings, ParkingZones,
+    RopidGTFS, SharedCars, TrafficCameras, VehiclePositions,
     } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
@@ -15,6 +15,7 @@ import ParkingsWorker from "../workers/ParkingsWorker";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
 import PurgeWorker from "../workers/PurgeWorker";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
+import SharedCarsWorker from "../workers/SharedCarsWorker";
 import TrafficCamerasWorker from "../workers/TrafficCamerasWorker";
 import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
 import IQueueDefinition from "./IQueueDefinition";
@@ -341,6 +342,57 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
+        name: SharedCars.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SharedCars.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: SharedCarsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: TrafficCameras.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TrafficCameras.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: TrafficCamerasWorker,
+                workerMethod: "updateAddressAndDistrict",
+            },
+        ],
+    },
+    {
         name: VehiclePositions.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase(),
         queues: [
@@ -379,41 +431,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: VehiclePositionsWorker,
                 workerMethod: "updateDelay",
-            },
-        ],
-    },
-    {
-        name: TrafficCameras.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TrafficCameras.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
-                },
-                worker: TrafficCamerasWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: TrafficCamerasWorker,
-                workerMethod: "saveDataToHistory",
-            },
-            {
-                name: "updateAddressAndDistrict",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
-                },
-                worker: TrafficCamerasWorker,
-                workerMethod: "updateAddressAndDistrict",
             },
         ],
     },

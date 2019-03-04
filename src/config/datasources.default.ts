@@ -1,5 +1,11 @@
 module.exports = {
+    CeskyCarsharingSharedCars: "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
+    CeskyCarsharingSharedCarsEndpointCredentials: {
+        guid: "",
+        password: "",
+    },
     CityDistricts: "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
+    HoppyGoSharedCars: "https://www.hoppygo.com/api/v1/exports/cars_search",
     IGSensors: "https://prague-city.ice-gateway.com/iceapi/v1/iot/data/all/?per_page=200",
     IGStreetLamp: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
     IGStreetLamps: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",

@@ -4,7 +4,7 @@
 
 import {
     CityDistricts, IceGatewaySensors, IceGatewayStreetLamps,
-    Parkings, ParkingZones, RopidGTFS, TrafficCameras,
+    Parkings, ParkingZones, RopidGTFS, SharedCars, TrafficCameras,
 } from "data-platform-schema-definitions";
 import "mocha";
 import CSVDataTypeStrategy from "../../src/datasources/CSVDataTypeStrategy";
@@ -278,6 +278,67 @@ describe("DataSources", () => {
                 }),
                 new JSONDataTypeStrategy({resultsPath: "results"}),
                 new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("CeskyCarsharingSharedCars", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(SharedCars.ceskyCarsharing.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    body: JSON.stringify(config.datasources.CeskyCarsharingSharedCarsEndpointCredentials),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    method: "POST",
+                    url: config.datasources.CeskyCarsharingSharedCars,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "cars"}),
+                new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
+                    SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("HoppyGoSharedCars", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
+            hoppyGoDataType.setFilter((item) => item.localization !== null);
+            datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.HoppyGoSharedCars,
+                }),
+                hoppyGoDataType,
+                new Validator(SharedCars.hoppyGo.name + "DataSource",
+                    SharedCars.hoppyGo.datasourceMongooseSchemaObject));
         });
 
         it("should returns all objects", async () => {
