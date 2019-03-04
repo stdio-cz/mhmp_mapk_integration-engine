@@ -3,8 +3,8 @@
 "use strict";
 
 import {
-    CityDistricts, IceGatewaySensors, IceGatewayStreetLamps,
-    Parkings, ParkingZones, RopidGTFS, SharedCars, TrafficCameras,
+    CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, Parkings, ParkingZones,
+    Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras,
 } from "data-platform-schema-definitions";
 import "mocha";
 import CSVDataTypeStrategy from "../../src/datasources/CSVDataTypeStrategy";
@@ -349,6 +349,89 @@ describe("DataSources", () => {
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
+        });
+
+    });
+
+    describe("Gardens", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(Gardens.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {
+                        Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                    },
+                    method: "GET",
+                    url: config.datasources.Gardens,
+                }),
+                new JSONDataTypeStrategy({resultsPath: ""}),
+                new Validator(Gardens.name + "DataSource", Gardens.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("Playgrounds", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(Playgrounds.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.Playgrounds,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "items"}),
+                new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("PublicToilets", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(PublicToilets.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.PublicToilets,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "features"}),
+                new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.not.null;
         });
 
     });

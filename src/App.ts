@@ -46,11 +46,14 @@ class App {
             // MerakiAccessPoints: [], // all queues of the dataset
             // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues of the dataset
             // CityDistricts: [],
+            // Gardens: [],
             // IceGatewaySensors: [],
             // IceGatewayStreetLamps: [],
             // MerakiAccessPoints: [],
             // ParkingZones: [],
             // Parkings: [],
+            // Playgrounds: [],
+            // PublicToilets: [],
             // Purge: [],
             // RopidGTFS: [],
             // SharedCars: [],

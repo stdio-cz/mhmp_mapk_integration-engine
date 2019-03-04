@@ -1,18 +1,21 @@
 "use strict";
 
 import {
-    CityDistricts, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints, Parkings, ParkingZones,
-    RopidGTFS, SharedCars, TrafficCameras, VehiclePositions,
+    CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints, Parkings, ParkingZones,
+    Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras, VehiclePositions,
     } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
 import CityDistrictsWorker from "../workers/CityDistrictsWorker";
+import GardensWorker from "../workers/GardensWorker";
 import IceGatewaySensorsWorker from "../workers/IceGatewaySensorsWorker";
 import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
 import MerakiAccessPointsWorker from "../workers/MerakiAccessPointsWorker";
 import ParkingsWorker from "../workers/ParkingsWorker";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
+import PlaygroundsWorker from "../workers/PlaygroundsWorker";
+import PublicToiletsWorker from "../workers/PublicToiletsWorker";
 import PurgeWorker from "../workers/PurgeWorker";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
 import SharedCarsWorker from "../workers/SharedCarsWorker";
@@ -36,6 +39,22 @@ const definitions: IQueueDefinition[] = [
                     messageTtl: 15 * 24 * 60 * 60 * 1000,
                 },
                 worker: CityDistrictsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: Gardens.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Gardens.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: GardensWorker,
                 workerMethod: "refreshDataInDB",
             },
         ],
@@ -163,6 +182,58 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: ParkingZonesWorker,
                 workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: Playgrounds.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Playgrounds.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: PlaygroundsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: PlaygroundsWorker,
+                workerMethod: "updateAddressAndDistrict",
+            },
+        ],
+    },
+    {
+        name: PublicToilets.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + PublicToilets.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: PublicToiletsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: PublicToiletsWorker,
+                workerMethod: "updateAddressAndDistrict",
             },
         ],
     },

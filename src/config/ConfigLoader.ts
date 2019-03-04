@@ -30,6 +30,7 @@ class ConfigLoader {
 module.exports = {
     HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
+    MOJEPRAHA_ENDPOINT_APIKEY: process.env.MOJEPRAHA_ENDPOINT_APIKEY,
     MONGO_CONN: process.env.MONGO_CONN,
     NODE_ENV: process.env.NODE_ENV,
     OPEN_STREET_MAP_API_URL: process.env.OPEN_STREET_MAP_API_URL,
