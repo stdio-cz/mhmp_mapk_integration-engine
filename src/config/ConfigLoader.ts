@@ -28,6 +28,7 @@ class ConfigLoader {
 }
 
 module.exports = {
+    HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     MONGO_CONN: process.env.MONGO_CONN,
     NODE_ENV: process.env.NODE_ENV,

@@ -21,15 +21,15 @@ export default class ParkingZonesWorker extends BaseWorker {
 
     constructor() {
         super();
-        const zonesProtocol = new JSONDataTypeStrategy({resultsPath: "features"});
-        zonesProtocol.setFilter((item) => item.properties.TARIFTAB !== null);
+        const zonesDataType = new JSONDataTypeStrategy({resultsPath: "features"});
+        zonesDataType.setFilter((item) => item.properties.TARIFTAB !== null);
         this.dataSource = new DataSource(ParkingZones.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
                 method: "GET",
                 url: config.datasources.ParkingZones,
             }),
-            zonesProtocol,
+            zonesDataType,
             new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject));
         this.dataSourceTariffs = new DataSource("ParkingZonesTariffsDataSource",
             new HTTPProtocolStrategy({

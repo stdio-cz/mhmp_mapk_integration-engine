@@ -2,7 +2,7 @@
 
 export interface IHTTPSettings {
     /** (optional) Data to send with request, e.g. credentials */
-    body?: object;
+    body?: any;
 
     /** Object with HTTP headers. */
     headers: object;

@@ -71,6 +71,7 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
             }
             return result;
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }
@@ -86,6 +87,7 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
             const lastModified = await ftpClient.lastMod(this.connectionSettings.filename);
             return (lastModified) ? moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString() : null;
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }

@@ -1,6 +1,7 @@
 "use strict";
 
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import { IHTTPSettings, IProtocolStrategy } from "./IProtocolStrategy";
 
 const request = require("request-promise");
@@ -22,6 +23,7 @@ export default class HTTPProtocolStrategy implements IProtocolStrategy {
         try {
             return request(this.connectionSettings);
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }
@@ -33,7 +35,8 @@ export default class HTTPProtocolStrategy implements IProtocolStrategy {
             const res = await request(this.connectionSettings);
             return (res["last-modified"]) ? moment(res["last-modified"]).toISOString() : null;
         } catch (err) {
-            throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
+            log.error(err);
+            return null;
         }
     }
 
