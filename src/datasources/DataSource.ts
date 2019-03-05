@@ -53,7 +53,20 @@ export default class DataSource implements IDataSource {
     protected getRawData = async (): Promise<any> => {
         const body = await this.protocolStrategy.getData();
         const content = await this.dataTypeStrategy.parseData(body);
+        if (this.isEmpty(content)) {
+            log.warn("Data source returned empty data.");
+        }
         return content;
     }
 
+    private isEmpty = (content: any): boolean => {
+        if (!content) {
+            return true;
+        } else if (content instanceof Array && content.length === 0) {
+            return true;
+        } else if (content instanceof Object && Object.keys(content).length === 0) {
+            return true;
+        }
+        return false;
+    }
 }
