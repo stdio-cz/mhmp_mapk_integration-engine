@@ -45,11 +45,13 @@ class App {
         const blacklist = {
             // MerakiAccessPoints: [], // all queues of the dataset
             // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues of the dataset
+            // AirQualityStations: [],
             // CityDistricts: [],
             // Gardens: [],
             // IceGatewaySensors: [],
             // IceGatewayStreetLamps: [],
             // MerakiAccessPoints: [],
+            // Meteosensors: [],
             // ParkingZones: [],
             // Parkings: [],
             // Playgrounds: [],

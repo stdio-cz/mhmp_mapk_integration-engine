@@ -1,17 +1,20 @@
 "use strict";
 
 import {
-    CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras, VehiclePositions,
+    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints,
+    Meteosensors, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras,
+    VehiclePositions,
     } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
+import AirQualityStationsWorker from "../workers/AirQualityStationsWorker";
 import CityDistrictsWorker from "../workers/CityDistrictsWorker";
 import GardensWorker from "../workers/GardensWorker";
 import IceGatewaySensorsWorker from "../workers/IceGatewaySensorsWorker";
 import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
 import MerakiAccessPointsWorker from "../workers/MerakiAccessPointsWorker";
+import MeteosensorsWorker from "../workers/MeteosensorsWorker";
 import ParkingsWorker from "../workers/ParkingsWorker";
 import ParkingZonesWorker from "../workers/ParkingZonesWorker";
 import PlaygroundsWorker from "../workers/PlaygroundsWorker";
@@ -27,6 +30,41 @@ const config = require("../config/ConfigLoader");
 const { AMQPConnector } = require("../helpers/AMQPConnector");
 
 const definitions: IQueueDefinition[] = [
+    {
+        name: AirQualityStations.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000,
+                },
+                worker: AirQualityStationsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: AirQualityStationsWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000,
+                },
+                worker: AirQualityStationsWorker,
+                workerMethod: "updateDistrict",
+            },
+        ],
+    },
     {
         name: CityDistricts.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + CityDistricts.name.toLowerCase(),
@@ -121,6 +159,41 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MerakiAccessPointsWorker,
                 workerMethod: "saveDataToDB",
+            },
+        ],
+    },
+    {
+        name: Meteosensors.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Meteosensors.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000,
+                },
+                worker: MeteosensorsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MeteosensorsWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000,
+                },
+                worker: MeteosensorsWorker,
+                workerMethod: "updateDistrict",
             },
         ],
     },

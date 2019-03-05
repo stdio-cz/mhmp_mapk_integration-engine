@@ -1,0 +1,769 @@
+[
+    {
+       "geometry": {
+          "coordinates": [
+             14.380116,
+             50.084385
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ABREA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 8.4
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 5.083
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 9
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 6-Břevnov",
+          "timestamp": 1551717263585
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.51745,
+             50.030172
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ACHOA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 6.5
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 5.708
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 7
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 4-Chodov",
+          "timestamp": 1551717263585
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.442049,
+             50.094238
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "AKALA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 24.9
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 13.25
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 34
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 8-Karlín",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.467578,
+             50.122189
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "AKOBA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 8.4
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 97
+                   },
+                   "type": "O3"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 8.917
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 21
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 8-Kobylisy",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.430673,
+             50.072388
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ALEGA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 15.9
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 8,
+                      "value": 247.875
+                   },
+                   "type": "CO"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 14.292
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 24
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 4
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 2-Legerova (hot spot)",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.257226,
+             50.107087
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ALERA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 5.4
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 11.458
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 28
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 3
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Letiště Praha",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.445933,
+             50.007304
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ALIBA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 1.3
+                   },
+                   "type": "SO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 5.9
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 5.292
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 3.1
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 14.5
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 4-Libuš",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.53782,
+             50.062298
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "APRUA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 33.5
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 11.75
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 22
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 10-Průmyslová",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.42922,
+             50.088065
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "AREPA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 14.7
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 9.458
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 16
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 1-n. Republiky",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.309517,
+             50.030419
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ARERA",
+          "measurement": {
+             "AQ_hourly_index": 3,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 6.7
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 18.125
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 41
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 6
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 5-Řeporyje",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.442692,
+             50.081483
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ARIEA",
+          "measurement": {
+             "AQ_hourly_index": 0,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 1.3
+                   },
+                   "type": "SO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 97.4
+                   },
+                   "type": "O3"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 8.292
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 25
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 24
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 2-Riegrovy sady",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.398141,
+             50.073137
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ASMIA",
+          "measurement": {
+             "AQ_hourly_index": 0,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 20.875
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 46
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 44
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 5-Smíchov",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.472661,
+             50.07515
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ASROA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 7.5
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 9.083
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 20
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 3
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 10-Šrobárova",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.331413,
+             50.04613
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ASTOA",
+          "measurement": {
+             "AQ_hourly_index": 1,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 7.917
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 18
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 12
+                   },
+                   "type": "PM2_5"
+                }
+             ]
+          },
+          "name": "Praha 5-Stodůlky",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.384639,
+             50.126528
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "ASUCA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 99
+                   },
+                   "type": "O3"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 7.917
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 22
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 6-Suchdol",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.446152,
+             50.06643
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "AVRSA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 16.375
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 29
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 10-Vršovice",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    },
+    {
+       "geometry": {
+          "coordinates": [
+             14.503096,
+             50.111082
+          ],
+          "type": "Point"
+       },
+       "properties": {
+          "code": "AVYNA",
+          "measurement": {
+             "AQ_hourly_index": 2,
+             "components": [
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 21.2
+                   },
+                   "type": "NO2"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 84
+                   },
+                   "type": "O3"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 24,
+                      "value": 15.083
+                   },
+                   "type": "PM10"
+                },
+                {
+                   "averaged_time": {
+                      "averaged_hours": 1,
+                      "value": 34
+                   },
+                   "type": "PM10"
+                }
+             ]
+          },
+          "name": "Praha 9-Vysočany",
+          "timestamp": 1551717263586
+       },
+       "type": "Feature"
+    }
+]

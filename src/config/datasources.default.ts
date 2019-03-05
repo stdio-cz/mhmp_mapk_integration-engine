@@ -1,4 +1,5 @@
 module.exports = {
+    AirQualityStations: "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/AIMdata_hourly.xml",
     CeskyCarsharingSharedCars: "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
     CeskyCarsharingSharedCarsEndpointCredentials: {
         guid: "",
@@ -25,6 +26,7 @@ module.exports = {
     RopidGTFSCisStopsPath: "PUBLIC/ZASTAVKY/JSON/",
     RopidGTFSFilename: "PID_GTFS.zip",
     RopidGTFSPath: "GTFS/",
+    TSKMeteosensors: "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     TSKParkings: "http://www.tsk-praha.cz/tskexport3/json/parkings",
     TSKTrafficCameras: "http://www.tsk-praha.cz/tskexport3/json/cameras",
 };

@@ -3,8 +3,8 @@
 "use strict";
 
 import {
-    CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras,
+    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
+    Meteosensors, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras,
 } from "data-platform-schema-definitions";
 import "mocha";
 import CSVDataTypeStrategy from "../../src/datasources/CSVDataTypeStrategy";
@@ -12,6 +12,7 @@ import DataSource from "../../src/datasources/DataSource";
 import FTPProtocolStrategy from "../../src/datasources/FTPProtocolStrategy";
 import HTTPProtocolStrategy from "../../src/datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../../src/datasources/JSONDataTypeStrategy";
+import XMLDataTypeStrategy from "../../src/datasources/XMLDataTypeStrategy";
 import Validator from "../../src/helpers/Validator";
 
 const chai = require("chai");
@@ -432,6 +433,66 @@ describe("DataSources", () => {
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
+        });
+
+    });
+
+    describe("AirQualityStations", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            const stationsDataType = new XMLDataTypeStrategy({
+                resultsPath: "AQ_hourly_index.Data.station",
+                xml2jsParams: { explicitArray: false, trim: true },
+            });
+            stationsDataType.setFilter((item) => item.code[0].indexOf("A") === 0);
+            datasource = new DataSource(AirQualityStations.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.AirQualityStations,
+                }),
+                stationsDataType,
+                new Validator(AirQualityStations.name + "DataSource",
+                    AirQualityStations.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+    });
+
+    describe("TSKMeteosensors", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(Meteosensors.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.TSKMeteosensors,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "results"}),
+                new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
         });
 
     });
