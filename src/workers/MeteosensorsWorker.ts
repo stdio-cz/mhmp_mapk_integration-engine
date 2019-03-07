@@ -7,7 +7,6 @@ import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
-import MeteosensorsHistoryTransformation from "../transformations/MeteosensorsHistoryTransformation";
 import MeteosensorsTransformation from "../transformations/MeteosensorsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -18,7 +17,6 @@ export default class MeteosensorsWorker extends BaseWorker {
     private dataSource: DataSource;
     private transformation: MeteosensorsTransformation;
     private model: MongoModel;
-    private historyTransformation: MeteosensorsHistoryTransformation;
     private historyModel: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
@@ -66,7 +64,6 @@ export default class MeteosensorsWorker extends BaseWorker {
             new Validator(Meteosensors.history.name + "ModelValidator",
                 Meteosensors.history.outputMongooseSchemaObject),
         );
-        this.historyTransformation = new MeteosensorsHistoryTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Meteosensors.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
@@ -101,7 +98,7 @@ export default class MeteosensorsWorker extends BaseWorker {
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.transform(inputData);
+        const transformedData = await this.transformation.transformHistory(inputData);
         await this.historyModel.save(transformedData);
     }
 

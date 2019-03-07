@@ -41,9 +41,9 @@ describe("AirQualityStationsWorker", () => {
             .callsFake(() => testData);
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
-        sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.historyTransformation, "transform")
+        sandbox.stub(worker.transformation, "transformHistory")
             .callsFake(() => testTransformedHistoryData);
+        sandbox.stub(worker.model, "save");
         sandbox.stub(worker.historyModel, "save");
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase();
@@ -82,12 +82,12 @@ describe("AirQualityStationsWorker", () => {
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
         await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
-        sandbox.assert.calledOnce(worker.historyTransformation.transform);
-        sandbox.assert.calledWith(worker.historyTransformation.transform, testTransformedData);
+        sandbox.assert.calledOnce(worker.transformation.transformHistory);
+        sandbox.assert.calledWith(worker.transformation.transformHistory, testTransformedData);
         sandbox.assert.calledOnce(worker.historyModel.save);
         sandbox.assert.calledWith(worker.historyModel.save, testTransformedHistoryData);
         sandbox.assert.callOrder(
-            worker.historyTransformation.transform,
+            worker.transformation.transformHistory,
             worker.historyModel.save,
         );
     });

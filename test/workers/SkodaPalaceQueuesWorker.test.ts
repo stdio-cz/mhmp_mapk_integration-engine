@@ -2,9 +2,9 @@
 
 "use strict";
 
-import { Meteosensors } from "data-platform-schema-definitions";
+import { SkodaPalaceQueues } from "data-platform-schema-definitions";
 import "mocha";
-import MeteosensorsWorker from "../../src/workers/MeteosensorsWorker";
+import SkodaPalaceQueuesWorker from "../../src/workers/SkodaPalaceQueuesWorker";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -15,7 +15,7 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 
-describe("MeteosensorsWorker", () => {
+describe("SkodaPalaceQueuesWorker", () => {
 
     let worker;
     let sandbox;
@@ -23,7 +23,6 @@ describe("MeteosensorsWorker", () => {
     let testData;
     let testTransformedData;
     let testTransformedHistoryData;
-    let data0;
     let data1;
 
     beforeEach(() => {
@@ -32,10 +31,9 @@ describe("MeteosensorsWorker", () => {
         testData = [1, 2];
         testTransformedData = [1, 2];
         testTransformedHistoryData = [1, 2];
-        data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
         data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
 
-        worker = new MeteosensorsWorker();
+        worker = new SkodaPalaceQueuesWorker();
 
         sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
@@ -45,12 +43,12 @@ describe("MeteosensorsWorker", () => {
             .callsFake(() => testTransformedHistoryData);
         sandbox.stub(worker.model, "save");
         sandbox.stub(worker.historyModel, "save");
+        sandbox.stub(worker.historyModel, "aggregate")
+            .callsFake(() => []);
         sandbox.stub(worker, "sendMessageToExchange");
-        queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Meteosensors.name.toLowerCase();
+        queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + SkodaPalaceQueues.name.toLowerCase();
         sandbox.stub(worker.model, "findOneById")
             .callsFake(() => data1);
-
-        sandbox.stub(worker.cityDistrictsModel, "findOne");
     });
 
     afterEach(() => {
@@ -64,15 +62,10 @@ describe("MeteosensorsWorker", () => {
         sandbox.assert.calledWith(worker.transformation.transform, testData);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.calledWith(worker.model.save, testTransformedHistoryData);
-        sandbox.assert.calledThrice(worker.sendMessageToExchange);
+        sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveDataToHistory",
             new Buffer(JSON.stringify(testTransformedData)));
-        testTransformedData.map((f) => {
-            sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(f)));
-        });
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
             worker.transformation.transform,
@@ -90,32 +83,6 @@ describe("MeteosensorsWorker", () => {
             worker.transformation.transformHistory,
             worker.historyModel.save,
         );
-    });
-
-    it("should calls the correct methods by updateDistrict method (different geo)", async () => {
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
-        sandbox.assert.calledOnce(worker.model.findOneById);
-        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
-
-        sandbox.assert.calledOnce(worker.cityDistrictsModel.findOne);
-        sandbox.assert.calledOnce(data1.save);
-    });
-
-    it("should calls the correct methods by updateDistrict method (same geo)", async () => {
-        data1 = {
-            geometry: {coordinates: [0, 0]},
-            properties: {
-                address: "a",
-                district: "praha-0",
-                id: 1},
-            save: sandbox.stub().resolves(true),
-        };
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
-        sandbox.assert.calledOnce(worker.model.findOneById);
-        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
-
-        sandbox.assert.notCalled(worker.cityDistrictsModel.findOne);
-        sandbox.assert.notCalled(data1.save);
     });
 
 });

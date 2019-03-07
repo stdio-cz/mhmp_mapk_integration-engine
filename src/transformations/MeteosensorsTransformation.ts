@@ -13,7 +13,7 @@ export default class MeteosensorsTransformation extends BaseTransformation imple
         this.name = Meteosensors.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.lng), parseFloat(element.lat) ],
@@ -51,6 +51,20 @@ export default class MeteosensorsTransformation extends BaseTransformation imple
         if (element.windSpeed && !isNaN(parseFloat(element.windSpeed))) {
             res.properties.wind_speed = parseFloat(element.windSpeed);
         }
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const res = {
+            air_temperature: element.properties.air_temperature,
+            humidity: element.properties.humidity,
+            id: element.properties.id,
+            last_updated: element.properties.last_updated,
+            road_temperature: element.properties.road_temperature,
+            timestamp: element.properties.timestamp,
+            wind_direction: element.properties.wind_direction,
+            wind_speed: element.properties.wind_speed,
+        };
         return res;
     }
 

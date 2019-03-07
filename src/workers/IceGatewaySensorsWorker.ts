@@ -6,7 +6,6 @@ import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
-import IceGatewaySensorsHistoryTransformation from "../transformations/IceGatewaySensorsHistoryTransformation";
 import IceGatewaySensorsTransformation from "../transformations/IceGatewaySensorsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -18,7 +17,6 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
     private model: MongoModel;
     private transformation: IceGatewaySensorsTransformation;
     private historyModel: MongoModel;
-    private historyTransformation: IceGatewaySensorsHistoryTransformation;
     private queuePrefix: string;
 
     constructor() {
@@ -60,7 +58,6 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
             new Validator(IceGatewaySensors.history.name + "ModelValidator",
                 IceGatewaySensors.history.outputMongooseSchemaObject),
         );
-        this.historyTransformation = new IceGatewaySensorsHistoryTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + IceGatewaySensors.name.toLowerCase();
     }
 
@@ -76,7 +73,7 @@ export default class IceGatewaySensorsWorker extends BaseWorker {
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.transform(inputData);
+        const transformedData = await this.transformation.transformHistory(inputData);
         await this.historyModel.save(transformedData);
     }
 

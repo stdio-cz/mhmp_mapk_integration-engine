@@ -13,7 +13,7 @@ export default class ParkingsTransformation extends BaseTransformation implement
         this.name = Parkings.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.lng), parseFloat(element.lat) ],
@@ -40,6 +40,20 @@ export default class ParkingsTransformation extends BaseTransformation implement
             },
             type: "Feature",
         };
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const res = {
+            id: element.properties.id,
+            num_of_free_places: element.properties.num_of_free_places,
+            num_of_taken_places: element.properties.num_of_taken_places,
+            timestamp: new Date().getTime(),
+            total_num_of_places: element.properties.total_num_of_places,
+        };
+        if (!res.total_num_of_places) { // null || undefined || 0
+            return null;
+        }
         return res;
     }
 

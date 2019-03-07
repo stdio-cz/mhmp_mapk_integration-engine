@@ -15,7 +15,7 @@ export default class CityDistrictsTransformation extends BaseTransformation impl
         this.name = CityDistricts.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         return {
             geometry: {
                 coordinates: element.geometry.coordinates,

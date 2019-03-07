@@ -13,7 +13,7 @@ export default class GardensTransformation extends BaseTransformation implements
         this.name = Gardens.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: element.coordinates,

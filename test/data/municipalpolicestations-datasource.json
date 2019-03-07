@@ -1,0 +1,1902 @@
+[
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.431439393000062,
+             50.082655990000035
+          ]
+       },
+       "properties": {
+          "OBJECTID": 1,
+          "ID": 1,
+          "NKU": "Nové Město",
+          "NVPK": "Opletalova",
+          "CPOP": 19,
+          "POZN": "OŘ MP Praha 1",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.432794760000036,
+             50.091623395000056
+          ]
+       },
+       "properties": {
+          "OBJECTID": 2,
+          "ID": 1,
+          "NKU": "Staré Město",
+          "NVPK": "Lodecká",
+          "CPOP": 2,
+          "POZN": "Přestupky",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.417930154000032,
+             50.08711535400005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 3,
+          "ID": 1,
+          "NKU": "Staré Město",
+          "NVPK": "Mariánské náměstí",
+          "CPOP": 2,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.42042450100007,
+             50.08357635100003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 4,
+          "ID": 1,
+          "NKU": "Staré Město",
+          "NVPK": "Uhelný trh",
+          "CPOP": 10,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.405819234000035,
+             50.08852827000004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 5,
+          "ID": 1,
+          "NKU": "Malá Strana",
+          "NVPK": "Letenská",
+          "CPOP": 23,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.408402800000033,
+             50.08649365800005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 6,
+          "ID": 1,
+          "NKU": "Malá Strana",
+          "NVPK": "Hroznová",
+          "CPOP": 5,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.440868353000042,
+             50.075450912000065
+          ]
+       },
+       "properties": {
+          "OBJECTID": 7,
+          "ID": 2,
+          "NKU": "Vinohrady",
+          "NVPK": "Korunní",
+          "CPOP": 15,
+          "POZN": "OŘ MP Praha 2",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.420626320000054,
+             50.06419909700003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 8,
+          "ID": 2,
+          "NKU": "Vyšehrad",
+          "NVPK": "K Rotundě",
+          "CPOP": 3,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.45617469800004,
+             50.08375810800004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 9,
+          "ID": 3,
+          "NKU": "Žižkov",
+          "NVPK": "Lupáčova",
+          "CPOP": 14,
+          "POZN": "OŘ MP Praha 3",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.454946703000076,
+             50.07757738400005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 10,
+          "ID": 3,
+          "NKU": "Vinohrady",
+          "NVPK": "Vinohradská",
+          "CPOP": 153,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.452541196000027,
+             50.07694615500003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 11,
+          "ID": 3,
+          "NKU": "Vinohrady",
+          "NVPK": "Řipská",
+          "CPOP": 26,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.441052268000021,
+             50.06260624200007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 12,
+          "ID": 4,
+          "NKU": "Nusle",
+          "NVPK": "Táborská",
+          "CPOP": 36,
+          "POZN": "OŘ MP Praha 4",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.451642496000034,
+             50.023827235000056
+          ]
+       },
+       "properties": {
+          "OBJECTID": 13,
+          "ID": 4,
+          "NKU": "Krč",
+          "NVPK": "Štúrova",
+          "CPOP": 12,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.489973359000032,
+             50.047354804000065
+          ]
+       },
+       "properties": {
+          "OBJECTID": 14,
+          "ID": 4,
+          "NKU": "Záběhlice",
+          "NVPK": "Hlavní",
+          "CPOP": 114,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.433114527000043,
+             50.02470108500006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 15,
+          "ID": 4,
+          "NKU": "Lhotka",
+          "NVPK": "Novodvorská",
+          "CPOP": 151,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.483285279000029,
+             50.01279611700005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 16,
+          "ID": 4,
+          "NKU": "Kunratice",
+          "NVPK": "Kostelní náměstí",
+          "CPOP": 34,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.449292532000072,
+             50.04375874500005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 17,
+          "ID": 4,
+          "NKU": " Krč",
+          "NVPK": "Budějovická",
+          "CPOP": 64,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.397968518000027,
+             50.074029014000075
+          ]
+       },
+       "properties": {
+          "OBJECTID": 18,
+          "ID": 5,
+          "NKU": "Smíchov",
+          "NVPK": "Kobrova",
+          "CPOP": 8,
+          "POZN": "OŘ MP Praha 5",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.389578011000026,
+             50.00890879200006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 19,
+          "ID": 5,
+          "NKU": "Velká Chuchle",
+          "NVPK": "Radotínská",
+          "CPOP": 69,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.374915819000023,
+             50.03316633400004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 20,
+          "ID": 5,
+          "NKU": "Hlubočepy",
+          "NVPK": "Krškova",
+          "CPOP": 807,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.35604743500005,
+             49.98168590500006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 21,
+          "ID": 5,
+          "NKU": "Radotín",
+          "NVPK": "U Starého stadionu",
+          "CPOP": 13,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.354286570000056,
+             50.01901178600008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 22,
+          "ID": 5,
+          "NKU": "Slivenec",
+          "NVPK": "K Lochkovu",
+          "CPOP": 6,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.353317761000028,
+             50.00257205200006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 23,
+          "ID": 5,
+          "NKU": "Lochkov",
+          "NVPK": "Cementářská",
+          "CPOP": 192,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.384412951000058,
+             49.96975854800007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 24,
+          "ID": 5,
+          "NKU": "Zbraslav",
+          "NVPK": "Žabovřeská",
+          "CPOP": 1227,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.40333958900004,
+             50.10396512700004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 25,
+          "ID": 6,
+          "NKU": "Bubeneč",
+          "NVPK": "Českomalínská",
+          "CPOP": 25,
+          "POZN": "OŘ MP Praha 6",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.325692608000054,
+             50.11095305900005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 26,
+          "ID": 6,
+          "NKU": "Nebušice",
+          "NVPK": "K Vizerce",
+          "CPOP": 128,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.309866482000075,
+             50.09018922300004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 27,
+          "ID": 6,
+          "NKU": "Ruzyně",
+          "NVPK": "Vlastina",
+          "CPOP": 34,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.366930275000072,
+             50.08422477900007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 28,
+          "ID": 6,
+          "NKU": "Břevnov",
+          "NVPK": "Bělohorská",
+          "CPOP": 110,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.37377596500005,
+             50.12520054200007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 29,
+          "ID": 6,
+          "NKU": "Lysolaje",
+          "NVPK": "Kovárenská",
+          "CPOP": 45,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.379671902000041,
+             50.13605695100006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 30,
+          "ID": 6,
+          "NKU": "Suchdol",
+          "NVPK": "Suchdolské náměstí",
+          "CPOP": 3,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.374662340000043,
+             50.107140868000045
+          ]
+       },
+       "properties": {
+          "OBJECTID": 31,
+          "ID": 6,
+          "NKU": "Dejvice",
+          "NVPK": "Hermelínská",
+          "CPOP": 6,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.443541441000036,
+             50.10852880300007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 32,
+          "ID": 7,
+          "NKU": "Holešovice",
+          "NVPK": "Argentinská",
+          "CPOP": 17,
+          "POZN": "OŘ MP Praha 7",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.436889958000052,
+             50.09893522600004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 33,
+          "ID": 7,
+          "NKU": "Holešovice",
+          "NVPK": "Bubenská",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.44933003400007,
+             50.12976423100008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 34,
+          "ID": 8,
+          "NKU": "Kobylisy",
+          "NVPK": "Balabánova",
+          "CPOP": 2,
+          "POZN": "OŘ MP Praha 8",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.485329614000023,
+             50.144966975000045
+          ]
+       },
+       "properties": {
+          "OBJECTID": 35,
+          "ID": 8,
+          "NKU": "Ďáblice",
+          "NVPK": "Ďáblická",
+          "CPOP": 14,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.485829496000065,
+             50.16506042000003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 36,
+          "ID": 8,
+          "NKU": "Březiněves",
+          "NVPK": "U parku",
+          "CPOP": 3,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.44287637800005,
+             50.14547503400007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 37,
+          "ID": 8,
+          "NKU": "Dolní Chabry",
+          "NVPK": "Spořická",
+          "CPOP": 34,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.472768096000038,
+             50.11297895000007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 38,
+          "ID": 8,
+          "NKU": "Libeň",
+          "NVPK": "Primátorská",
+          "CPOP": 34,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.445032378000064,
+             50.09249275900004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 39,
+          "ID": 8,
+          "NKU": "Karlín",
+          "NVPK": "Sokolovská",
+          "CPOP": 56,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.428816071000028,
+             50.14090727400003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 40,
+          "ID": 8,
+          "NKU": "Čimice",
+          "NVPK": "Čimická",
+          "CPOP": 61,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.49420526700004,
+             50.12067804600008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 41,
+          "ID": 9,
+          "NKU": "Prosek",
+          "NVPK": "Veltruská",
+          "CPOP": 576,
+          "POZN": "OŘ MP Praha 9",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.515169231000073,
+             50.13767942900006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 42,
+          "ID": 9,
+          "NKU": "Letňany",
+          "NVPK": "Bechyňská",
+          "CPOP": 639,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.55063008600007,
+             50.132687255000064
+          ]
+       },
+       "properties": {
+          "OBJECTID": 43,
+          "ID": 9,
+          "NKU": "Kbely",
+          "NVPK": "Tauferova",
+          "CPOP": 2,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.528705570000056,
+             50.15419227700005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 44,
+          "ID": 9,
+          "NKU": "Čakovice",
+          "NVPK": "Bělomlýnská",
+          "CPOP": 16,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.577484948000063,
+             50.143900115000065
+          ]
+       },
+       "properties": {
+          "OBJECTID": 45,
+          "ID": 9,
+          "NKU": "Vinoř",
+          "NVPK": "Bohdanečská",
+          "CPOP": 97,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.572493567000038,
+             50.12525053500008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 46,
+          "ID": 9,
+          "NKU": "Satalice",
+          "NVPK": "K Cihelně",
+          "CPOP": 59,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.499531791000038,
+             50.092817678000074
+          ]
+       },
+       "properties": {
+          "OBJECTID": 47,
+          "ID": 9,
+          "NKU": "Hrdlořezy",
+          "NVPK": "V Třešňovce",
+          "CPOP": 2,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.509441641000024,
+             50.08355165800003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 48,
+          "ID": 10,
+          "NKU": "Malešice",
+          "NVPK": "Počernická",
+          "CPOP": 95,
+          "POZN": "OŘ MP Praha 10",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.476775288000056,
+             50.07151970700005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 49,
+          "ID": 10,
+          "NKU": "Vršovice",
+          "NVPK": "Litevská",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.470150616000069,
+             50.06388672000003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 50,
+          "ID": 10,
+          "NKU": "Michle",
+          "NVPK": "Sedmidomky",
+          "CPOP": 14,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.495105325000054,
+             50.06360089000003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 51,
+          "ID": 10,
+          "NKU": "Strašnice",
+          "NVPK": "V Korytech",
+          "CPOP": 8,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.514889607000043,
+             50.03471391100004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 52,
+          "ID": 11,
+          "NKU": "Chodov",
+          "NVPK": "Markušova",
+          "CPOP": 18,
+          "POZN": "OŘ MP Praha 11",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.490830422000045,
+             50.032278725000026
+          ]
+       },
+       "properties": {
+          "OBJECTID": 53,
+          "ID": 11,
+          "NKU": "Chodov",
+          "NVPK": "Roztylská",
+          "CPOP": 19,
+          "POZN": "Okr OC Chodov",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.522710533000065,
+             50.02059967200006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 54,
+          "ID": 11,
+          "NKU": "Praha-Újezd",
+          "NVPK": "Vodnická",
+          "CPOP": 44,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.513985432000027,
+             50.01139542000004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 55,
+          "ID": 11,
+          "NKU": "Šeberov",
+          "NVPK": "K Hrnčířům",
+          "CPOP": 160,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.422048915000062,
+             50.001066843000046
+          ]
+       },
+       "properties": {
+          "OBJECTID": 56,
+          "ID": 12,
+          "NKU": "Modřany",
+          "NVPK": "Násirovo náměstí",
+          "CPOP": 1,
+          "POZN": "OŘ MP Praha 12",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.461691938000058,
+             50.00487620100006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 57,
+          "ID": 12,
+          "NKU": "Libuš",
+          "NVPK": "Zahrádecká",
+          "CPOP": 13,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.431754416000047,
+             49.97283466400006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 58,
+          "ID": 12,
+          "NKU": "Točná",
+          "NVPK": "náměstí Antonína Pecáka",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.411796674000072,
+             49.98723600100004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 59,
+          "ID": 12,
+          "NKU": "Komořany",
+          "NVPK": "Palmetová",
+          "CPOP": 3,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.41264482500003,
+             50.001715285000046
+          ]
+       },
+       "properties": {
+          "OBJECTID": 60,
+          "ID": 12,
+          "NKU": "Modřany",
+          "NVPK": "Písková",
+          "CPOP": 23,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.314240496000025,
+             50.05307468900003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 61,
+          "ID": 13,
+          "NKU": "Stodůlky",
+          "NVPK": "Lýskova",
+          "CPOP": 38,
+          "POZN": "OŘ MP Praha 13",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.287614946000076,
+             50.063539356000035
+          ]
+       },
+       "properties": {
+          "OBJECTID": 62,
+          "ID": 13,
+          "NKU": "Zličín",
+          "NVPK": "Křivatcova",
+          "CPOP": 416,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.303507152000066,
+             50.065421480000055
+          ]
+       },
+       "properties": {
+          "OBJECTID": 63,
+          "ID": 13,
+          "NKU": "Řepy",
+          "NVPK": "Makovského",
+          "CPOP": 1227,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.31468277600004,
+             50.03191389800003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 64,
+          "ID": 13,
+          "NKU": "Řeporyje",
+          "NVPK": "Ebrova",
+          "CPOP": 2,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.338443157000029,
+             50.03802759200005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 65,
+          "ID": 13,
+          "NKU": "Stodůlky",
+          "NVPK": "Prusíkova",
+          "CPOP": 16,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.344380886000067,
+             50.050482610000074
+          ]
+       },
+       "properties": {
+          "OBJECTID": 66,
+          "ID": 13,
+          "NKU": "Stodůlky",
+          "NVPK": "Sluneční náměstí",
+          "CPOP": 13,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.561730321000027,
+             50.10541622900007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 67,
+          "ID": 14,
+          "NKU": "Černý Most",
+          "NVPK": "Vlčkova",
+          "CPOP": 12,
+          "POZN": "OŘ MP Praha 14",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.67245414000007,
+             50.09287174100007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 68,
+          "ID": 14,
+          "NKU": "Klánovice",
+          "NVPK": "V pátém",
+          "CPOP": 234,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.577862690000075,
+             50.08890023500004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 69,
+          "ID": 14,
+          "NKU": "Dolní Počernice",
+          "NVPK": "Stará obec",
+          "CPOP": 10,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.595855254000071,
+             50.11232686400007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 70,
+          "ID": 14,
+          "NKU": "Horní Počernice",
+          "NVPK": "Na Chvalské tvrzi",
+          "CPOP": 4,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.636970230000031,
+             50.06132713000005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 71,
+          "ID": 14,
+          "NKU": "Koloděje",
+          "NVPK": "K Jízdárně",
+          "CPOP": 9,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.54394824700006,
+             50.09772445500005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 72,
+          "ID": 14,
+          "NKU": "Kyje",
+          "NVPK": "Šimanovská",
+          "CPOP": 47,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.58223373900006,
+             50.10299877400007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 73,
+          "ID": 14,
+          "NKU": "Černý Most",
+          "NVPK": "Kpt. Stránského",
+          "CPOP": 25,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.52597916700006,
+             50.051262404000056
+          ]
+       },
+       "properties": {
+          "OBJECTID": 74,
+          "ID": 15,
+          "NKU": "Hostivař",
+          "NVPK": "Hostivařská",
+          "CPOP": 3,
+          "POZN": "OŘ MP Praha 15",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.598404681000034,
+             50.03155827000006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 75,
+          "ID": 15,
+          "NKU": "Uhříněves",
+          "NVPK": "Nové náměstí",
+          "CPOP": 21,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.58793299000007,
+             50.06114718200007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 76,
+          "ID": 15,
+          "NKU": "Dubeč",
+          "NVPK": "Za pavilonem",
+          "CPOP": 666,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.62805475700003,
+             50.01324372800008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 77,
+          "ID": 15,
+          "NKU": "Kolovraty",
+          "NVPK": "K Poště",
+          "CPOP": 751,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.635189472000036,
+             50.03647366600006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 78,
+          "ID": 15,
+          "NKU": "Královice",
+          "NVPK": "K Nedvězí",
+          "CPOP": 66,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.557171321000055,
+             50.05864559500003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 79,
+          "ID": 15,
+          "NKU": "Hostivař",
+          "NVPK": "Dolnoměcholupská",
+          "CPOP": 37,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.653386083000044,
+             50.01777154200005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 80,
+          "ID": 15,
+          "NKU": "Nedvězí",
+          "NVPK": "Potocká",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.549595663000048,
+             50.07137172600005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 81,
+          "ID": 15,
+          "NKU": "Štěrboholy",
+          "NVPK": "Ústřední",
+          "CPOP": 527,
+          "POZN": "Okr",
+          "COR": 14
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.427720549000071,
+             50.06514228000003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 82,
+          "ID": 2,
+          "NKU": "Nusle",
+          "NVPK": "Jaromírova",
+          "CPOP": 23,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.353240353000047,
+             50.08779771600007
+          ]
+       },
+       "properties": {
+          "OBJECTID": 83,
+          "ID": 6,
+          "NKU": "Větrník",
+          "NVPK": "Za Zahradou",
+          "CPOP": 3,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.394610123000064,
+             50.13717944800004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 84,
+          "ID": 7,
+          "NKU": "Troja",
+          "NVPK": "V zámcích",
+          "CPOP": 56,
+          "POZN": "MP Praha 7, jízdní oddíl",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.443198018000032,
+             50.01937845500004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 85,
+          "ID": 12,
+          "NKU": "Lhotka",
+          "NVPK": "Čechtická",
+          "CPOP": 6,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.683552932000055,
+             50.07158024800003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 86,
+          "ID": 14,
+          "NKU": "Újezd nad Lesy",
+          "NVPK": "Žárovická",
+          "CPOP": 2732,
+          "POZN": "Okr¨",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.556418749000045,
+             50.035995598000056
+          ]
+       },
+       "properties": {
+          "OBJECTID": 87,
+          "ID": 15,
+          "NKU": "Petrovice",
+          "NVPK": "Edisonova",
+          "CPOP": 429,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.563506869000037,
+             50.02334095300006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 88,
+          "ID": 15,
+          "NKU": "Křeslice",
+          "NVPK": "Štychova",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.556543585000043,
+             50.04711791500006
+          ]
+       },
+       "properties": {
+          "OBJECTID": 89,
+          "ID": 15,
+          "NKU": "Horní Měcholupy",
+          "NVPK": "Boloňská",
+          "CPOP": 1,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.68269947400006,
+             50.09239440500005
+          ]
+       },
+       "properties": {
+          "OBJECTID": 90,
+          "ID": 16,
+          "NKU": "Klánovice",
+          "NVPK": "V soudním",
+          "CPOP": 0,
+          "POZN": "Útvar psovodů",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.396876000000077,
+             50.002817992000075
+          ]
+       },
+       "properties": {
+          "OBJECTID": 91,
+          "ID": 17,
+          "NKU": "Lahovice",
+          "NVPK": "K Sádkám",
+          "CPOP": 141,
+          "POZN": "Útvar poříční",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.518422244000021,
+             50.07475567700004
+          ]
+       },
+       "properties": {
+          "OBJECTID": 92,
+          "ID": 20,
+          "NKU": "Hostivař",
+          "NVPK": "Sazečská",
+          "CPOP": 1,
+          "POZN": "Hlídkový útvar - Depo Hostivař",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.291040371000065,
+             50.05387011200003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 93,
+          "ID": 20,
+          "NKU": "Zličín",
+          "NVPK": "Na Radosti",
+          "CPOP": 51,
+          "POZN": "Stanice metra Zličín",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.266780959000073,
+             50.106948259000035
+          ]
+       },
+       "properties": {
+          "OBJECTID": 94,
+          "ID": 20,
+          "NKU": "Ruzyně",
+          "NVPK": "Aviatická",
+          "CPOP": 6,
+          "POZN": "Letiště Václava Havla",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.455070224000053,
+             50.07527131400008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 95,
+          "ID": 0,
+          "NKU": "Vinohrady",
+          "NVPK": "Korunní",
+          "CPOP": 98,
+          "POZN": "Ředitelství MP Praha",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.426928031000045,
+             50.078915047000066
+          ]
+       },
+       "properties": {
+          "OBJECTID": 96,
+          "ID": 1,
+          "NKU": "Nové Město",
+          "NVPK": "Ve Smečkách",
+          "CPOP": 17,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.615406090000022,
+             50.08092354900003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 97,
+          "ID": 14,
+          "NKU": "Běchovice",
+          "NVPK": "Českobrodská",
+          "CPOP": 8,
+          "POZN": "Okr",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.428301044000023,
+             50.07413609000008
+          ]
+       },
+       "properties": {
+          "OBJECTID": 98,
+          "ID": 0,
+          "NKU": "Vinohrady",
+          "NVPK": "Na Bojišti",
+          "CPOP": 5,
+          "POZN": "HÚ - Centrální dispečink - odtahy",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.397059643000034,
+             50.00222159000003
+          ]
+       },
+       "properties": {
+          "OBJECTID": 99,
+          "ID": 0,
+          "NKU": "Lahovice",
+          "NVPK": "K Zahradám",
+          "CPOP": 116,
+          "POZN": "HÚ - skupina TAXI",
+          "COR": null
+       }
+    },
+    {
+       "type": "Feature",
+       "geometry": {
+          "type": "Point",
+          "coordinates": [
+             14.298440648000053,
+             50.116418329000055
+          ]
+       },
+       "properties": {
+          "OBJECTID": 100,
+          "ID": 6,
+          "NKU": "Přední Kopanina",
+          "NVPK": "K Padesátníku",
+          "CPOP": 10,
+          "POZN": "Okr",
+          "COR": null
+       }
+    }
+ ]

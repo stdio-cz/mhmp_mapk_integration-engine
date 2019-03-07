@@ -13,7 +13,7 @@ export default class PlaygroundsTransformation extends BaseTransformation implem
         this.name = Playgrounds.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: element.geometry,
             properties: {

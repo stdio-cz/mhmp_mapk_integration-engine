@@ -80,4 +80,42 @@ describe("TrafficCamerasTransformation", () => {
         }
     });
 
+    describe("history", () => {
+
+        let testTransformedData;
+
+        beforeEach(async () => {
+            transformation = new TrafficCamerasTransformation();
+            const buffer = await readFile(__dirname + "/../data/trafficcameras-transformed.json");
+            testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        });
+
+        it("should has transformHistory method", async () => {
+            expect(transformation.transformHistory).not.to.be.undefined;
+        });
+
+        it("should properly transform element", async () => {
+            const data = await transformation.transformHistory(testTransformedData[0]);
+            expect(data).to.have.property("id");
+            expect(data).to.have.property("image");
+            expect(data.image).to.have.property("file_size");
+            expect(data.image).to.have.property("url");
+            expect(data).to.have.property("last_updated");
+            expect(data).to.have.property("timestamp");
+        });
+
+        it("should properly transform collection", async () => {
+            const data = await transformation.transformHistory(testTransformedData);
+            for (let i = 0, imax = data.length; i < imax; i++) {
+                expect(data[i]).to.have.property("id");
+                expect(data[i]).to.have.property("image");
+                expect(data[i].image).to.have.property("file_size");
+                expect(data[i].image).to.have.property("url");
+                expect(data[i]).to.have.property("last_updated");
+                expect(data[i]).to.have.property("timestamp");
+            }
+        });
+
+    });
+
 });

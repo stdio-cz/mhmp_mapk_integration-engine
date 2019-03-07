@@ -15,7 +15,7 @@ export default class TrafficCamerasTransformation extends BaseTransformation imp
         this.name = TrafficCameras.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.lng), parseFloat(element.lat) ],
@@ -63,6 +63,16 @@ export default class TrafficCamerasTransformation extends BaseTransformation imp
             res.properties.image.data = "data:" + response.headers["content-type"] + ";base64,"
                 + imageData;
         }
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const res = {
+            id: element.properties.id,
+            image: element.properties.image,
+            last_updated: element.properties.last_updated,
+            timestamp: new Date().getTime(),
+        };
         return res;
     }
 

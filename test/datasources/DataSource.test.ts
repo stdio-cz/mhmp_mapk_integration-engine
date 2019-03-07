@@ -3,8 +3,9 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    Meteosensors, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedCars, TrafficCameras,
+    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, Meteosensors,
+    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
+    RopidGTFS, SharedCars, SkodaPalaceQueues, TrafficCameras, WasteCollectionYards,
 } from "data-platform-schema-definitions";
 import "mocha";
 import CSVDataTypeStrategy from "../../src/datasources/CSVDataTypeStrategy";
@@ -493,6 +494,125 @@ describe("DataSources", () => {
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
+        });
+
+    });
+
+    describe("MunicipalAuthorities", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(MunicipalAuthorities.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {
+                        Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                    },
+                    method: "GET",
+                    url: config.datasources.MunicipalAuthorities,
+                }),
+                new JSONDataTypeStrategy({resultsPath: ""}),
+                new Validator(MunicipalAuthorities.name + "DataSource",
+                    MunicipalAuthorities.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("SkodaPalaceQueues", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(SkodaPalaceQueues.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.SkodaPalaceQueues,
+                }),
+                new XMLDataTypeStrategy({
+                    resultsPath: "html.body.div",
+                    xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
+                }),
+                new Validator(SkodaPalaceQueues.name + "DataSource",
+                    SkodaPalaceQueues.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("WasteCollectionYards", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            const yardsDataType = new JSONDataTypeStrategy({resultsPath: "features"});
+            yardsDataType.setFilter((item) => item.properties.PLATNOST !== 0);
+            datasource = new DataSource(WasteCollectionYards.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.WasteCollectionYards,
+                }),
+                yardsDataType,
+                new Validator(WasteCollectionYards.name + "DataSource",
+                    WasteCollectionYards.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+    });
+
+    describe("MunicipalPoliceStations", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(MunicipalPoliceStations.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.MunicipalPoliceStations,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "features"}),
+                new Validator(MunicipalPoliceStations.name + "DataSource",
+                    MunicipalPoliceStations.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.not.null;
         });
 
     });

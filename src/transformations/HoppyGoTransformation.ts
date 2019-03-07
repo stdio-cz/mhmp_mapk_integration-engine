@@ -15,7 +15,7 @@ export default class SharedCarsTransformation extends BaseTransformation impleme
         this.name = SharedCars.hoppyGo.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const [lat, lon] = element.localization.split(",");
         const res = {
             geometry: {

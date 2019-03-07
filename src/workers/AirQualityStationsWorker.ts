@@ -7,7 +7,6 @@ import XMLDataTypeStrategy from "../datasources/XMLDataTypeStrategy";
 import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
-import AirQualityStationsHistoryTransformation from "../transformations/AirQualityStationsHistoryTransformation";
 import AirQualityStationsTransformation from "../transformations/AirQualityStationsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -18,7 +17,6 @@ export default class AirQualityStationsWorker extends BaseWorker {
     private dataSource: DataSource;
     private transformation: AirQualityStationsTransformation;
     private model: MongoModel;
-    private historyTransformation: AirQualityStationsHistoryTransformation;
     private historyModel: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
@@ -68,7 +66,6 @@ export default class AirQualityStationsWorker extends BaseWorker {
             new Validator(AirQualityStations.history.name + "ModelValidator",
                 AirQualityStations.history.outputMongooseSchemaObject),
         );
-        this.historyTransformation = new AirQualityStationsHistoryTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
@@ -103,7 +100,7 @@ export default class AirQualityStationsWorker extends BaseWorker {
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.transform(inputData);
+        const transformedData = await this.transformation.transformHistory(inputData);
         await this.historyModel.save(transformedData);
     }
 
