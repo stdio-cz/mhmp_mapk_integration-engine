@@ -13,7 +13,7 @@ export default class IceGatewaySensorsTransformation extends BaseTransformation 
         this.name = IceGatewaySensors.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.longitude), parseFloat(element.latitude) ],
@@ -55,6 +55,19 @@ export default class IceGatewaySensorsTransformation extends BaseTransformation 
         };
         /// first call of the recursion
         parseSensors(element.sensors, res.properties.sensors);
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const filteredSensors = element.properties.sensors.filter((s) => s.validity === 0);
+        const res = {
+            id: element.properties.id,
+            sensors: filteredSensors,
+            timestamp: element.properties.timestamp,
+        };
+        if (res.sensors.length === 0) {
+            return null;
+        }
         return res;
     }
 

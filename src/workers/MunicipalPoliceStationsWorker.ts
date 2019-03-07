@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, TrafficCameras } from "data-platform-schema-definitions";
+import { CityDistricts, MunicipalPoliceStations } from "data-platform-schema-definitions";
 import DataSource from "../datasources/DataSource";
 import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
@@ -8,62 +8,55 @@ import CustomError from "../helpers/errors/CustomError";
 import GeocodeApi from "../helpers/GeocodeApi";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
-import TrafficCamerasTransformation from "../transformations/TrafficCamerasTransformation";
+import MunicipalPoliceStationsTransformation from "../transformations/MunicipalPoliceStationsTransformation";
 import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
 
-export default class TrafficCamerasWorker extends BaseWorker {
+export default class MunicipalPoliceStationsWorker extends BaseWorker {
 
     private dataSource: DataSource;
-    private transformation: TrafficCamerasTransformation;
+    private transformation: MunicipalPoliceStationsTransformation;
     private model: MongoModel;
-    private historyModel: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
 
     constructor() {
         super();
-        this.dataSource = new DataSource(TrafficCameras.name + "DataSource",
+        this.dataSource = new DataSource(MunicipalPoliceStations.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
                 method: "GET",
-                url: config.datasources.TSKTrafficCameras,
+                url: config.datasources.MunicipalPoliceStations,
             }),
-            new JSONDataTypeStrategy({resultsPath: "results"}),
-            new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
-        this.model = new MongoModel(TrafficCameras.name + "Model", {
+            new JSONDataTypeStrategy({resultsPath: "features"}),
+            new Validator(MunicipalPoliceStations.name + "DataSource",
+                MunicipalPoliceStations.datasourceMongooseSchemaObject));
+
+        this.model = new MongoModel(MunicipalPoliceStations.name + "Model", {
                 identifierPath: "properties.id",
                 modelIndexes: [{ geometry : "2dsphere" },
-                    { "properties.name": "text", "properties.address": "text" },
-                        { weights: { "properties.name": 5, "properties.address": 1 }}],
-                mongoCollectionName: TrafficCameras.mongoCollectionName,
-                outputMongooseSchemaObject: TrafficCameras.outputMongooseSchemaObject,
+                    { "properties.address": "text", "properties.cadastral_area": "text" },
+                    { weights: { "properties.address": 1, "properties.cadastral_area": 1 }}],
+                mongoCollectionName: MunicipalPoliceStations.mongoCollectionName,
+                outputMongooseSchemaObject: MunicipalPoliceStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
                 savingType: "insertOrUpdate",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },
                 updateValues: (a, b) => {
-                    a.properties.image = b.properties.image;
-                    a.properties.last_updated = b.properties.last_updated;
-                    a.properties.name = b.properties.name;
+                    a.properties.cadastral_area = b.properties.cadastral_area;
+                    a.properties.note = b.properties.note;
                     a.properties.timestamp = b.properties.timestamp;
                     return a;
                 },
             },
-            new Validator(TrafficCameras.name + "ModelValidator", TrafficCameras.outputMongooseSchemaObject),
+            new Validator(MunicipalPoliceStations.name + "ModelValidator",
+                MunicipalPoliceStations.outputMongooseSchemaObject),
         );
-        this.transformation = new TrafficCamerasTransformation();
-        this.historyModel = new MongoModel(TrafficCameras.history.name + "Model", {
-                mongoCollectionName: TrafficCameras.history.mongoCollectionName,
-                outputMongooseSchemaObject: TrafficCameras.history.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-            },
-            new Validator(TrafficCameras.history.name + "ModelValidator",
-                TrafficCameras.history.outputMongooseSchemaObject),
-        );
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + TrafficCameras.name.toLowerCase();
+        this.transformation = new MunicipalPoliceStationsTransformation();
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MunicipalPoliceStations.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
                 mongoCollectionName: CityDistricts.mongoCollectionName,
@@ -83,22 +76,12 @@ export default class TrafficCamerasWorker extends BaseWorker {
         const transformedData = await this.transformation.transform(data);
         await this.model.save(transformedData);
 
-        // send message for historization
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(transformedData)), { persistent: true });
-
         // send messages for updating district and address and average occupancy
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
                 new Buffer(JSON.stringify(p)));
         });
         await Promise.all(promises);
-    }
-
-    public saveDataToHistory = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.transformation.transformHistory(inputData);
-        await this.historyModel.save(transformedData);
     }
 
     public updateAddressAndDistrict = async (msg: any): Promise<void> => {

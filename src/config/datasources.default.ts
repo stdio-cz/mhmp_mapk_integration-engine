@@ -12,6 +12,8 @@ module.exports = {
     IGStreetLamp: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
     IGStreetLamps: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",
     IGToken: "myStringToken",
+    MunicipalAuthorities: "https://www.mojepraha.eu/api/municipal-authorities",
+    MunicipalPoliceStations: "http://opendata.iprpraha.cz/CUR/FSB/BEZ_ObjektMPP_b/WGS_84/BEZ_ObjektMPP_b.json",
     ParkingZones: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     ParkingZonesTariffs: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_ZonyStani_p/TARIF.csv",
     Playgrounds: "http://www.hristepraha.cz/api/get-all-items?type=hriste",
@@ -26,7 +28,9 @@ module.exports = {
     RopidGTFSCisStopsPath: "PUBLIC/ZASTAVKY/JSON/",
     RopidGTFSFilename: "PID_GTFS.zip",
     RopidGTFSPath: "GTFS/",
+    SkodaPalaceQueues: "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
     TSKMeteosensors: "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     TSKParkings: "http://www.tsk-praha.cz/tskexport3/json/parkings",
     TSKTrafficCameras: "http://www.tsk-praha.cz/tskexport3/json/cameras",
+    WasteCollectionYards: "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",
 };

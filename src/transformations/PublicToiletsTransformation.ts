@@ -13,7 +13,7 @@ export default class PublicToiletsTransformation extends BaseTransformation impl
         this.name = PublicToilets.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: element.geometry,
             properties: {

@@ -3,7 +3,8 @@
 "use strict";
 
 import "mocha";
-import IceGatewaySensorsHistoryTransformation from "../../src/transformations/IceGatewaySensorsHistoryTransformation";
+import * as path from "path";
+import MunicipalAuthoritiesTransformation from "../../src/transformations/MunicipalAuthoritiesTransformation";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -29,20 +30,20 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("IceGatewaySensorsHistoryTransformation", () => {
+describe("MunicipalAuthoritiesTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new IceGatewaySensorsHistoryTransformation();
-        const buffer = await readFile(__dirname + "/../data/icegatewaysensors-transformed.json");
+        transformation = new MunicipalAuthoritiesTransformation();
+        const buffer = await readFile(__dirname + "/../data/municipalauthorities-datasource.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("IceGatewaySensorsHistory");
+        expect(transformation.name).is.equal("MunicipalAuthorities");
     });
 
     it("should has transform method", async () => {
@@ -50,18 +51,24 @@ describe("IceGatewaySensorsHistoryTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData.features[0]);
-        expect(data).to.have.property("id");
-        expect(data).to.have.property("sensors");
-        expect(data).to.have.property("timestamp");
+        const data = await transformation.transform(testSourceData[0]);
+        expect(data).to.have.property("geometry");
+        expect(data).to.have.property("properties");
+        expect(data).to.have.property("type");
+        expect(data.properties).to.have.property("id");
+        expect(data.properties).to.have.property("name");
+        expect(data.properties).to.have.property("timestamp");
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.transform(testSourceData.features);
+        const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("id");
-            expect(data[i]).to.have.property("sensors");
-            expect(data[i]).to.have.property("timestamp");
+            expect(data[i]).to.have.property("geometry");
+            expect(data[i]).to.have.property("properties");
+            expect(data[i]).to.have.property("type");
+            expect(data[i].properties).to.have.property("id");
+            expect(data[i].properties).to.have.property("name");
+            expect(data[i].properties).to.have.property("timestamp");
         }
     });
 

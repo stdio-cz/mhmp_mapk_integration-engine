@@ -13,7 +13,7 @@ export default class SharedCarsTransformation extends BaseTransformation impleme
         this.name = SharedCars.ceskyCarsharing.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.longitude), parseFloat(element.latitude) ],

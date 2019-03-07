@@ -72,4 +72,36 @@ describe("AirQualityStationsTransformation", () => {
         }
     });
 
+    describe("history", () => {
+
+        let testTransformedData;
+
+        beforeEach(async () => {
+            transformation = new AirQualityStationsTransformation();
+            const buffer = await readFile(__dirname + "/../data/airqualitystations-transformed.json");
+            testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        });
+
+        it("should has transformHistory method", async () => {
+            expect(transformation.transformHistory).not.to.be.undefined;
+        });
+
+        it("should properly transform element", async () => {
+            const data = await transformation.transformHistory(testTransformedData[0]);
+            expect(data).to.have.property("code");
+            expect(data).to.have.property("measurement");
+            expect(data).to.have.property("timestamp");
+        });
+
+        it("should properly transform collection", async () => {
+            const data = await transformation.transformHistory(testTransformedData);
+            for (let i = 0, imax = data.length; i < imax; i++) {
+                expect(data[i]).to.have.property("code");
+                expect(data[i]).to.have.property("measurement");
+                expect(data[i]).to.have.property("timestamp");
+            }
+        });
+
+    });
+
 });

@@ -13,7 +13,7 @@ export default class AirQualityStationsTransformation extends BaseTransformation
         this.name = AirQualityStations.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.wgs84_longitude), parseFloat(element.wgs84_latitude)],
@@ -49,6 +49,15 @@ export default class AirQualityStationsTransformation extends BaseTransformation
             });
             res.properties.measurement.components = await Promise.all(components);
         }
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const res = {
+            code: element.properties.code,
+            measurement: element.properties.measurement,
+            timestamp: element.properties.timestamp,
+        };
         return res;
     }
 

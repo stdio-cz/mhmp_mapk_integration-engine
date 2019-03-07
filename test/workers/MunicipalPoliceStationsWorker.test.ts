@@ -2,9 +2,10 @@
 
 "use strict";
 
-import { Meteosensors } from "data-platform-schema-definitions";
+import { MunicipalPoliceStations } from "data-platform-schema-definitions";
 import "mocha";
-import MeteosensorsWorker from "../../src/workers/MeteosensorsWorker";
+import GeocodeApi from "../../src/helpers/GeocodeApi";
+import MunicipalPoliceStationsWorker from "../../src/workers/MunicipalPoliceStationsWorker";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -15,14 +16,13 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 
-describe("MeteosensorsWorker", () => {
+describe("MunicipalPoliceStationsWorker", () => {
 
     let worker;
     let sandbox;
     let queuePrefix;
     let testData;
     let testTransformedData;
-    let testTransformedHistoryData;
     let data0;
     let data1;
 
@@ -31,26 +31,23 @@ describe("MeteosensorsWorker", () => {
 
         testData = [1, 2];
         testTransformedData = [1, 2];
-        testTransformedHistoryData = [1, 2];
         data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
         data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
 
-        worker = new MeteosensorsWorker();
+        worker = new MunicipalPoliceStationsWorker();
 
         sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
-        sandbox.stub(worker.transformation, "transformHistory")
-            .callsFake(() => testTransformedHistoryData);
         sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.historyModel, "save");
         sandbox.stub(worker, "sendMessageToExchange");
-        queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Meteosensors.name.toLowerCase();
+        queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MunicipalPoliceStations.name.toLowerCase();
         sandbox.stub(worker.model, "findOneById")
             .callsFake(() => data1);
 
         sandbox.stub(worker.cityDistrictsModel, "findOne");
+        sandbox.stub(GeocodeApi, "getAddressByLatLng");
     });
 
     afterEach(() => {
@@ -63,14 +60,10 @@ describe("MeteosensorsWorker", () => {
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledWith(worker.transformation.transform, testData);
         sandbox.assert.calledOnce(worker.model.save);
-        sandbox.assert.calledWith(worker.model.save, testTransformedHistoryData);
-        sandbox.assert.calledThrice(worker.sendMessageToExchange);
-        sandbox.assert.calledWith(worker.sendMessageToExchange,
-            "workers." + queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(testTransformedData)));
+        sandbox.assert.calledTwice(worker.sendMessageToExchange);
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".updateDistrict",
+                "workers." + queuePrefix + ".updateAddressAndDistrict",
                 new Buffer(JSON.stringify(f)));
         });
         sandbox.assert.callOrder(
@@ -80,28 +73,17 @@ describe("MeteosensorsWorker", () => {
             worker.sendMessageToExchange);
     });
 
-    it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
-        sandbox.assert.calledOnce(worker.transformation.transformHistory);
-        sandbox.assert.calledWith(worker.transformation.transformHistory, testTransformedData);
-        sandbox.assert.calledOnce(worker.historyModel.save);
-        sandbox.assert.calledWith(worker.historyModel.save, testTransformedHistoryData);
-        sandbox.assert.callOrder(
-            worker.transformation.transformHistory,
-            worker.historyModel.save,
-        );
-    });
-
-    it("should calls the correct methods by updateDistrict method (different geo)", async () => {
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
+    it("should calls the correct methods by updateAddressAndDistrict method (different geo)", async () => {
+        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
         sandbox.assert.calledOnce(worker.cityDistrictsModel.findOne);
-        sandbox.assert.calledOnce(data1.save);
+        sandbox.assert.calledOnce(GeocodeApi.getAddressByLatLng);
+        sandbox.assert.calledTwice(data1.save);
     });
 
-    it("should calls the correct methods by updateDistrict method (same geo)", async () => {
+    it("should calls the correct methods by updateAddressAndDistrict method (same geo)", async () => {
         data1 = {
             geometry: {coordinates: [0, 0]},
             properties: {
@@ -110,11 +92,12 @@ describe("MeteosensorsWorker", () => {
                 id: 1},
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
         sandbox.assert.notCalled(worker.cityDistrictsModel.findOne);
+        sandbox.assert.notCalled(GeocodeApi.getAddressByLatLng);
         sandbox.assert.notCalled(data1.save);
     });
 

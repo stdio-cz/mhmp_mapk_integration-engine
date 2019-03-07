@@ -52,6 +52,8 @@ class App {
             // IceGatewayStreetLamps: [],
             // MerakiAccessPoints: [],
             // Meteosensors: [],
+            // MunicipalAuthorities: [],
+            // MunicipalPoliceStations: [],
             // ParkingZones: [],
             // Parkings: [],
             // Playgrounds: [],
@@ -59,8 +61,10 @@ class App {
             // Purge: [],
             // RopidGTFS: [],
             // SharedCars: [],
+            // SkodaPalaceQueues: [],
             // TrafficCameras: [],
             // VehiclePositions: [],
+            // WasteCollectionYards: [],
         };
 
         // filtering queue definitions by blacklist
