@@ -3,8 +3,8 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, Meteosensors,
-    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
+    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
+    Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
     RopidGTFS, SharedCars, SkodaPalaceQueues, TrafficCameras, WasteCollectionYards,
 } from "data-platform-schema-definitions";
 import "mocha";
@@ -603,6 +603,40 @@ describe("DataSources", () => {
                 new JSONDataTypeStrategy({resultsPath: "features"}),
                 new Validator(MunicipalPoliceStations.name + "DataSource",
                     MunicipalPoliceStations.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+    });
+
+    describe("MedicalInstitutions", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(MedicalInstitutions.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    encoding: null,
+                    headers : {},
+                    isCompressed: true,
+                    method: "GET",
+                    rejectUnauthorized: false,
+                    url: config.datasources.MedicalInstitutions,
+                    whitelistedFiles: [
+                        "lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv",
+                    ],
+                }),
+                new JSONDataTypeStrategy({resultsPath: ""}),
+                new Validator(MedicalInstitutions.name + "DataSource",
+                    MedicalInstitutions.datasourceMongooseSchemaObject));
         });
 
         it("should returns all objects", async () => {

@@ -76,7 +76,7 @@ export default class MunicipalPoliceStationsWorker extends BaseWorker {
         const transformedData = await this.transformation.transform(data);
         await this.model.save(transformedData);
 
-        // send messages for updating district and address and average occupancy
+        // send messages for updating district and address
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
                 new Buffer(JSON.stringify(p)));

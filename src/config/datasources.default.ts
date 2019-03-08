@@ -12,6 +12,7 @@ module.exports = {
     IGStreetLamp: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
     IGStreetLamps: "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",
     IGToken: "myStringToken",
+    MedicalInstitutions: "https://opendata.sukl.cz/soubory/SODERECEPT/LEKARNYAKTUALNI.zip",
     MunicipalAuthorities: "https://www.mojepraha.eu/api/municipal-authorities",
     MunicipalPoliceStations: "http://opendata.iprpraha.cz/CUR/FSB/BEZ_ObjektMPP_b/WGS_84/BEZ_ObjektMPP_b.json",
     ParkingZones: "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
