@@ -87,6 +87,11 @@ export default class MongoModel implements IModel {
         }
     }
 
+    public update = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
+        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
+        return model.updateOne(this.searchPath(id), data, { runValidators: true }).exec();
+    }
+
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
         const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
         try {

@@ -15,6 +15,11 @@ export interface IHTTPSettings {
 
     /** Url of the data source. */
     url: string;
+
+    encoding?: any;
+    rejectUnauthorized?: boolean;
+    isCompressed?: boolean;
+    whitelistedFiles?: string[];
 }
 
 export interface IFTPSettings {

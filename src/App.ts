@@ -50,6 +50,7 @@ class App {
             // Gardens: [],
             // IceGatewaySensors: [],
             // IceGatewayStreetLamps: [],
+            // MedicalInstitutions: [],
             // MerakiAccessPoints: [],
             // Meteosensors: [],
             // MunicipalAuthorities: [],

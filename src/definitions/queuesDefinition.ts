@@ -1,9 +1,10 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MerakiAccessPoints,
-    Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
-    RopidGTFS, SharedCars, SkodaPalaceQueues, TrafficCameras, VehiclePositions, WasteCollectionYards,
+    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
+    MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
+    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, TrafficCameras, VehiclePositions,
+    WasteCollectionYards,
     } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
@@ -13,6 +14,7 @@ import CityDistrictsWorker from "../workers/CityDistrictsWorker";
 import GardensWorker from "../workers/GardensWorker";
 import IceGatewaySensorsWorker from "../workers/IceGatewaySensorsWorker";
 import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
+import MedicalInstitutionsWorker from "../workers/MedicalInstitutionsWorker";
 import MerakiAccessPointsWorker from "../workers/MerakiAccessPointsWorker";
 import MeteosensorsWorker from "../workers/MeteosensorsWorker";
 import MunicipalAuthoritiesWorker from "../workers/MunicipalAuthoritiesWorker";
@@ -148,6 +150,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: IceGatewayStreetLampsWorker,
                 workerMethod: "setDimValue",
+            },
+        ],
+    },
+    {
+        name: MedicalInstitutions.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MedicalInstitutions.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 25 * 24 * 60 * 1000,
+                },
+                worker: MedicalInstitutionsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateGeoAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 25 * 24 * 60 * 1000,
+                },
+                worker: MedicalInstitutionsWorker,
+                workerMethod: "updateGeoAndDistrict",
             },
         ],
     },
