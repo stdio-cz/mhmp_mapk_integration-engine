@@ -10,7 +10,7 @@
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exclude test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
 		"datasources-test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
-		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit"
+		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exclude test/datasources/DataSourcesAvailabilityChecking.test.ts --exit"
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",
