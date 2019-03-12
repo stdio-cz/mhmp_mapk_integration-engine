@@ -17,8 +17,6 @@ describe("ConfigLoader", () => {
     it("should properly load config files", async () => {
         // datasources config file
         expect(config.datasources.TSKParkings).to.be.equal("http://www.tsk-praha.cz/tskexport3/json/parkings");
-        // refreshtimes config file
-        expect(config.refreshtimes.Parkings).to.be.equal(5);
         // env variables
         expect(config.MONGO_CONN).is.not.null;
     });

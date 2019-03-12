@@ -43,5 +43,5 @@ module.exports = {
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
     datasources: new ConfigLoader("datasources").conf,
-    refreshtimes: new ConfigLoader("refreshtimes").conf,
+    queuesBlacklist: new ConfigLoader("queuesBlacklist").conf,
 };
