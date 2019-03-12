@@ -8,7 +8,8 @@
 		"start": "node -r dotenv/config dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
-		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit",
+		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exclude test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
+		"datasources-test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
 		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exit"
 	},
 	"keywords": [],
@@ -39,7 +40,7 @@
 		"basic-ftp": "2.17.0",
 		"cheap-ruler": "2.5.1",
 		"csvtojson": "2.0.8",
-		"data-platform-schema-definitions": "0.1.4-1245",
+		"data-platform-schema-definitions": "0.1.4-1263",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",

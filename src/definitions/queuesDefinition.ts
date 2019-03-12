@@ -3,8 +3,8 @@
 import {
     AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
     MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, TrafficCameras, VehiclePositions,
-    WasteCollectionYards,
+    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations,
+    TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
@@ -27,6 +27,7 @@ import PurgeWorker from "../workers/PurgeWorker";
 import RopidGTFSWorker from "../workers/RopidGTFSWorker";
 import SharedCarsWorker from "../workers/SharedCarsWorker";
 import SkodaPalaceQueuesWorker from "../workers/SkodaPalaceQueuesWorker";
+import SortedWasteStationsWorker from "../workers/SortedWasteStationsWorker";
 import TrafficCamerasWorker from "../workers/TrafficCamerasWorker";
 import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
 import WasteCollectionYardsWorker from "../workers/WasteCollectionYardsWorker";
@@ -597,6 +598,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: SkodaPalaceQueuesWorker,
                 workerMethod: "saveDataToHistory",
+            },
+        ],
+    },
+    {
+        name: SortedWasteStations.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SortedWasteStations.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 15 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 15 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateDistrict",
             },
         ],
     },

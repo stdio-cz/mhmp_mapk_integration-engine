@@ -50,9 +50,9 @@ describe("MedicalInstitutionsTransformation", () => {
     });
 
     it("should properly transform collection", async () => {
-        testSourceData[0].data = await readFile(testSourceData[0].filepath);
-        testSourceData[1].data = await readFile(testSourceData[1].filepath);
-        testSourceData[2].data = await readFile(testSourceData[2].filepath);
+        testSourceData[0].data = await readFile(__dirname + "/../data/medicalinstitutions/lekarny_prac_doba.csv");
+        testSourceData[1].data = await readFile(__dirname + "/../data/medicalinstitutions/lekarny_seznam.csv");
+        testSourceData[2].data = await readFile(__dirname + "/../data/medicalinstitutions/lekarny_typ.csv");
         const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
