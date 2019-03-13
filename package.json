@@ -21,6 +21,7 @@
 	},
 	"devDependencies": {
 		"@types/debug": "0.0.31",
+		"@types/ioredis": "4.0.10",
 		"@types/node": "10.12.0",
 		"@types/chai": "4.1.7",
 		"@types/mocha": "5.2.5",
@@ -45,6 +46,7 @@
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
 		"iconv-lite": "0.4.24",
+		"ioredis": "4.6.2",
 		"moment-timezone": "0.5.23",
 		"mongoose": "5.3.6",
 		"pg": "7.6.1",

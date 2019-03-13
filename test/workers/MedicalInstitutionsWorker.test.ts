@@ -15,6 +15,7 @@ const sinon = require("sinon");
 chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
+const { RedisConnector } = require("../../src/helpers/RedisConnector");
 
 describe("MedicalInstitutionsWorker", () => {
 
@@ -28,6 +29,7 @@ describe("MedicalInstitutionsWorker", () => {
 
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox.stub(RedisConnector, "getConnection");
 
         testData = [{data: 1, filepath: 11}, {data: 2, filepath: 22}];
         testTransformedData = [1, 2];
@@ -39,10 +41,10 @@ describe("MedicalInstitutionsWorker", () => {
 
         sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
-        sandbox.stub(worker, "readFile")
-            .callsFake(() => testData[0].data);
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
+        sandbox.stub(worker.redisModel, "getData")
+            .callsFake(() => testData[0].data);
         sandbox.stub(worker.model, "save");
         sandbox.stub(worker.model, "update");
         sandbox.stub(worker, "sendMessageToExchange");

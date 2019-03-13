@@ -7,6 +7,7 @@ import QueueProcessor from "./queue-processors/QueueProcessor";
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { PostgresConnector } = require("./helpers/PostgresConnector");
+const { RedisConnector } = require("./helpers/RedisConnector");
 const config = require("./config/ConfigLoader");
 const queuesDefinitions = require("./definitions/queuesDefinition");
 
@@ -32,6 +33,7 @@ class App {
     private database = async (): Promise<void> => {
         await mongooseConnection;
         await PostgresConnector.connect();
+        await RedisConnector.connect();
     }
 
     /**

@@ -18,7 +18,7 @@ export default class RopidGTFSTransformation extends BaseTransformation implemen
     protected transformElement = async (element: any): Promise<any> => {
         const parsed = await csvtojson({
             noheader: false,
-        }).fromString(Buffer.from(element.data).toString("utf8"));
+        }).fromString(Buffer.from(element.data, "hex").toString("utf8"));
 
         // chunk into smaller sub arrays
         const total = parsed.length;

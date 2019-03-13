@@ -34,7 +34,7 @@ class MyAMQP {
         }
     }
 
-    public getChannel = async (): Promise<amqplib.Channel> => {
+    public getChannel = (): amqplib.Channel => {
         if (!this.channel) {
             throw new CustomError("AMQP channel not exists. Firts call connect() method.", false,
                 this.constructor.name, undefined);

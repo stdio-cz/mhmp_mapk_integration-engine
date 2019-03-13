@@ -25,6 +25,14 @@ export interface IMongooseSettings {
     tmpMongoCollectionName?: string;
 }
 
+export interface IRedisSettings {
+    isKeyConstructedFromData: boolean;
+    prefix: string;
+    tmpPrefix?: string;
+    encodeDataBeforeSave?: (raw: any) => any;
+    decodeDataAfterGet?: (encoded: any) => any;
+}
+
 export interface IModel {
 
     name: string;

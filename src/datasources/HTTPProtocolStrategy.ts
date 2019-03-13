@@ -3,6 +3,7 @@
 import * as path from "path";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
+import RedisModel from "../models/RedisModel";
 import { IHTTPSettings, IProtocolStrategy } from "./IProtocolStrategy";
 
 const decompress = require("decompress");
@@ -26,23 +27,28 @@ export default class HTTPProtocolStrategy implements IProtocolStrategy {
             let result = await request(this.connectionSettings);
 
             if (this.connectionSettings.isCompressed) {
-                const tmpDir = "/tmp/" + path.parse(this.connectionSettings.url).name + "/";
-                const files = await decompress(result, tmpDir, {
+                const prefix = path.parse(this.connectionSettings.url).name + "/";
+                const files = await decompress(result, {
                     filter: (this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,
                 });
-                result = files.map((file) => {
+                const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
+                        isKeyConstructedFromData: false,
+                        prefix: "",
+                    },
+                null);
+                result = await Promise.all(files.map(async (file) => {
+                    await redisModel.save(prefix + file.path, file.data.toString("hex"));
                     return {
-                        filepath: tmpDir + file.path,
+                        filepath: prefix + file.path,
                         mtime: file.mtime,
                         name: path.parse(file.path).name,
                         path: file.path,
                     };
-                });
+                }));
             }
-
             return result;
         } catch (err) {
             log.error(err);
