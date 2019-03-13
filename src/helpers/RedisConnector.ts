@@ -19,7 +19,8 @@ class MyRedis {
             this.connection = new Redis(config.REDIS_CONN);
 
             this.connection.on("error", (err) => {
-                handleError(new CustomError("Database disconnected", false, this.constructor.name, null, err));
+                throw new CustomError("Error while connecting to Redis.", false,
+                    this.constructor.name, undefined, err);
             });
             this.connection.on("connect", () => {
                 log.info("Connected to Redis!");
