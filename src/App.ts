@@ -7,6 +7,7 @@ import QueueProcessor from "./queue-processors/QueueProcessor";
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { PostgresConnector } = require("./helpers/PostgresConnector");
+const { RedisConnector } = require("./helpers/RedisConnector");
 const config = require("./config/ConfigLoader");
 const queuesDefinitions = require("./definitions/queuesDefinition");
 
@@ -32,6 +33,7 @@ class App {
     private database = async (): Promise<void> => {
         await mongooseConnection;
         await PostgresConnector.connect();
+        await RedisConnector.connect();
     }
 
     /**
@@ -41,28 +43,13 @@ class App {
     private queueProcessors = async (): Promise<void> => {
         const ch = await AMQPConnector.connect();
 
-        // TODO add to config or definitions
-        const blacklist = {
-            // MerakiAccessPoints: [], // all queues of the dataset
-            // Parkings: ["saveDataToHistory", "updateAverageOccupancy"], // only mentioned queues of the dataset
-            // CityDistricts: [],
-            // IceGatewaySensors: [],
-            // IceGatewayStreetLamps: [],
-            // MerakiAccessPoints: [],
-            // ParkingZones: [],
-            // Parkings: [],
-            // Purge: [],
-            // RopidGTFS: [],
-            // VehiclePositions: [],
-        };
-
         // filtering queue definitions by blacklist
         let filteredQueuesDefinitions = queuesDefinitions;
-        Object.keys(blacklist).map((b) => {
-            if (blacklist[b].length === 0) {
+        Object.keys(config.queuesBlacklist).map((b) => {
+            if (config.queuesBlacklist[b].length === 0) {
                 filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
             } else {
-                blacklist[b].map((d) => {
+                config.queuesBlacklist[b].map((d) => {
                     filteredQueuesDefinitions = filteredQueuesDefinitions.map((a) => {
                         a.queues = a.queues.filter((c) => c.name !== d);
                         return a;

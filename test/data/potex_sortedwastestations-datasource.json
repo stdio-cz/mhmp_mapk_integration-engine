@@ -1,0 +1,1906 @@
+[
+    {
+       "title": "Benice",
+       "address": "roh Květnového povstání a Okrasná",
+       "city": "Benice",
+       "lat": "50.0098614",
+       "lng": "14.6023819"
+    },
+    {
+       "title": "Albert Průhonice",
+       "address": "Albert, Komerční zóna, parking",
+       "city": "Čestlice - Průhonice",
+       "lat": "50.0040417",
+       "lng": "14.5731253"
+    },
+    {
+       "title": "Elektroworld Průhonice",
+       "address": "U Makra 123",
+       "city": "Čestlice - Průhonice",
+       "lat": "50.0059603",
+       "lng": "14.5744864"
+    },
+    {
+       "title": "KIKA Průhonice",
+       "address": "Pražská 135",
+       "city": "Čestlice - Průhonice",
+       "lat": "50.0069294",
+       "lng": "14.575165"
+    },
+    {
+       "title": "LIDL Průhonice",
+       "address": "LIDL, Uhříněveská 850",
+       "city": "Čestlice - Průhonice",
+       "lat": "50.0038958",
+       "lng": "14.56624"
+    },
+    {
+       "title": "Dobřejovice",
+       "address": "Na Návsi, parking před OÚ",
+       "city": "Dobřejovice",
+       "lat": "49.9820803",
+       "lng": "14.5796172"
+    },
+    {
+       "title": "Hostivice",
+       "address": "Sběrný dvůr, Jiráskova 100",
+       "city": "Hostivice",
+       "lat": "50.0835072",
+       "lng": "14.2335969"
+    },
+    {
+       "title": "Jesenice 1",
+       "address": "Albert, Budějovická",
+       "city": "Jesenice",
+       "lat": "49.96535",
+       "lng": "14.5182722"
+    },
+    {
+       "title": "Jesenice 2",
+       "address": "OÚ, parking",
+       "city": "Jesenice",
+       "lat": "49.9665786",
+       "lng": "14.5173956"
+    },
+    {
+       "title": "Kocanda",
+       "address": "Benzinka Avia, Pražská 111",
+       "city": "Jesenice",
+       "lat": "49.9702533",
+       "lng": "14.5382414"
+    },
+    {
+       "title": "Dolní Počernice",
+       "address": "ÚMČ ve dvoře, Národních hrdinů",
+       "city": "Praha - Dolní Počernice",
+       "lat": "50.088508",
+       "lng": "14.5777317"
+    },
+    {
+       "title": "Kunratice",
+       "address": "Vídeňská x K Betáni",
+       "city": "Praha - Kunratice",
+       "lat": "50.0082169",
+       "lng": "14.4792072"
+    },
+    {
+       "title": "Nebušice",
+       "address": "ÚMČ, K Noskovně",
+       "city": "Nebušice",
+       "lat": "50.1110492",
+       "lng": "14.3250794"
+    },
+    {
+       "title": "Nedvězí",
+       "address": "Rokytná",
+       "city": "Praha - Nedvězí",
+       "lat": "50.0174114",
+       "lng": "14.6515375"
+    },
+    {
+       "title": "Přední Kopanina",
+       "address": "K Padesátníku",
+       "city": "Praha - Přední Kopanina",
+       "lat": "50.1165761",
+       "lng": "14.2987353"
+    },
+    {
+       "title": "Satalice",
+       "address": "Za Školkou",
+       "city": "Praha - Satalice",
+       "lat": "50.1262981",
+       "lng": "14.5682581"
+    },
+    {
+       "title": "Zbraslav 1",
+       "address": "Albert, Elišky Přemyslovny 1269",
+       "city": "Praha - Zbraslav",
+       "lat": "49.9680631",
+       "lng": "14.3869894"
+    },
+    {
+       "title": "Zbraslav 2",
+       "address": "u Dětského domova Ch. Masarykové, U Včely",
+       "city": "Praha - Zbraslav",
+       "lat": "49.9692081",
+       "lng": "14.3877297"
+    },
+    {
+       "title": "Zbraslav 3",
+       "address": "Nad Kamínkou",
+       "city": "Praha - Zbraslav",
+       "lat": "49.9647403",
+       "lng": "14.3841342"
+    },
+    {
+       "title": "Zličín",
+       "address": "GLOBUS, Sárská, parking",
+       "city": "Praha - Zličín",
+       "lat": "50.0529508",
+       "lng": "14.2943825"
+    },
+    {
+       "title": "Nové Město",
+       "address": "Senovážné náměstí, v části u Senovážné ulice",
+       "city": "Praha 1",
+       "lat": "50.0857108",
+       "lng": "14.4301144"
+    },
+    {
+       "title": "Vinohrady 1",
+       "address": "Vinohradská, hřbitovy u vstupu",
+       "city": "Praha 3",
+       "lat": "50.0783461",
+       "lng": "14.4678644"
+    },
+    {
+       "title": "Vinohrady 2",
+       "address": "Želivského x Vinohradská",
+       "city": "Praha 3",
+       "lat": "50.078595",
+       "lng": "14.4726414"
+    },
+    {
+       "title": "Vinohrady 3",
+       "address": "Soběslavská 40",
+       "city": "Praha 3",
+       "lat": "50.077412",
+       "lng": "14.4729567"
+    },
+    {
+       "title": "Žižkov",
+       "address": "Koněvova 13 x Rokycanova",
+       "city": "Praha 3",
+       "lat": "50.0874258",
+       "lng": "14.4548472"
+    },
+    {
+       "title": "Žižkov 1",
+       "address": "Koněvova 164 x Za žižkovskou vozovnou",
+       "city": "Praha 3",
+       "lat": "50.0918722",
+       "lng": "14.4785597"
+    },
+    {
+       "title": "Žižkov 2",
+       "address": "Olšanské nám. 8",
+       "city": "Praha 3",
+       "lat": "50.0824347",
+       "lng": "14.4590011"
+    },
+    {
+       "title": "Žižkov 3",
+       "address": "Na Ohradě 2 x Koněvova ",
+       "city": "Praha 3",
+       "lat": "50.0907633",
+       "lng": "14.4692856"
+    },
+    {
+       "title": "Žižkov 4",
+       "address": "Koněvova 184",
+       "city": "Praha 3",
+       "lat": "50.0920956",
+       "lng": "14.4809706"
+    },
+    {
+       "title": "Žižkov 5",
+       "address": "Basilejské náměstí",
+       "city": "Praha 3",
+       "lat": "50.0867658",
+       "lng": "14.4700986"
+    },
+    {
+       "title": "Žižkov 6",
+       "address": "Olšanská 7",
+       "city": "Praha 3",
+       "lat": "50.083764",
+       "lng": "14.4677886"
+    },
+    {
+       "title": "Žižkov 7",
+       "address": "Z kněžské louky",
+       "city": "Praha 3",
+       "lat": "50.0923231",
+       "lng": "14.4925211"
+    },
+    {
+       "title": "Krč 1",
+       "address": "Budějovická x Antala Staška",
+       "city": "Praha 4",
+       "lat": "50.0436981",
+       "lng": "14.4510411"
+    },
+    {
+       "title": "Krč 2",
+       "address": "Na Strži x Neveklovská",
+       "city": "Praha 4",
+       "lat": "50.0485783",
+       "lng": "14.4401536"
+    },
+    {
+       "title": "Krč 3",
+       "address": "Milevská x Pujmanové",
+       "city": "Praha 4",
+       "lat": "50.0486508",
+       "lng": "14.4351978"
+    },
+    {
+       "title": "Lhotka 1",
+       "address": "Albert, Novodvorská 149",
+       "city": "Praha 4",
+       "lat": "50.0246878",
+       "lng": "14.4350653"
+    },
+    {
+       "title": "Lhotka 2",
+       "address": "Albert, Štůrova 20",
+       "city": "Praha 4",
+       "lat": "50.0260839",
+       "lng": "14.4519103"
+    },
+    {
+       "title": "Michle",
+       "address": "Michelská, parkoviště",
+       "city": "Praha 4",
+       "lat": "50.0515392",
+       "lng": "14.4556731"
+    },
+    {
+       "title": "Novodvorská",
+       "address": "Jílovská, u lékárny ",
+       "city": "Praha 4",
+       "lat": "50.0241022",
+       "lng": "14.4339378"
+    },
+    {
+       "title": "Nusle ",
+       "address": "Kloboučnická, zast. bus Kloboučnická",
+       "city": "Praha 4",
+       "lat": "50.0614761",
+       "lng": "14.4496106"
+    },
+    {
+       "title": "Podolí",
+       "address": "Dvorecká x Jeremenkova",
+       "city": "Praha 4",
+       "lat": "50.0453331",
+       "lng": "14.4207811"
+    },
+    {
+       "title": "Spořilov",
+       "address": "Hlavní , Albert + pošta",
+       "city": "Praha 4",
+       "lat": "50.0471717",
+       "lng": "14.4881158"
+    },
+    {
+       "title": "Šeberov",
+       "address": "Parking u fotbalového hřiště",
+       "city": "Praha 4",
+       "lat": "50.0101122",
+       "lng": "14.5144347"
+    },
+    {
+       "title": "Barrandov",
+       "address": "Geologická x Silurská",
+       "city": "Praha 5",
+       "lat": "50.0346922",
+       "lng": "14.3864767"
+    },
+    {
+       "title": "Jinonice",
+       "address": "Pekařská",
+       "city": "Praha 5",
+       "lat": "50.0545364",
+       "lng": "14.3517247"
+    },
+    {
+       "title": "Smíchov 1",
+       "address": "Za ženskými domovy - hlídané parkoviště",
+       "city": "Praha 5",
+       "lat": "50.0679939",
+       "lng": "14.4033019"
+    },
+    {
+       "title": "Dejvice",
+       "address": "Dejvická x Václavkova",
+       "city": "Praha 6",
+       "lat": "50.0975833",
+       "lng": "14.4018142"
+    },
+    {
+       "title": "Dejvice 1",
+       "address": "Šárecká, Albert",
+       "city": "Praha 6",
+       "lat": "50.1123719",
+       "lng": "14.3798344"
+    },
+    {
+       "title": "Vokovice",
+       "address": "Evropská 73, BILLA",
+       "city": "Praha 6",
+       "lat": "50.0978611",
+       "lng": "14.3592619"
+    },
+    {
+       "title": "Holešovice ",
+       "address": "Holešovická tržnice, z ulice Jateční",
+       "city": "Praha 7",
+       "lat": "50.1004906",
+       "lng": "14.4445897"
+    },
+    {
+       "title": "Bohnice 1",
+       "address": "NC Krakov, Lodžská, bus stop Krakov",
+       "city": "Praha 8",
+       "lat": "50.1280717",
+       "lng": "14.4173225"
+    },
+    {
+       "title": "Bohnice 2",
+       "address": "NC Odra, Lodžská",
+       "city": "Praha 8",
+       "lat": "50.131095",
+       "lng": "14.4227583"
+    },
+    {
+       "title": "Bohnice 3",
+       "address": "Zhořelecká, bus stop Sídliště Bohnice",
+       "city": "Praha 8",
+       "lat": "50.1317361",
+       "lng": "14.4094094"
+    },
+    {
+       "title": "Bohnice 4",
+       "address": "Čimická, bus stop, u čísla 769/96",
+       "city": "Praha 8",
+       "lat": "50.12983",
+       "lng": "14.4311175"
+    },
+    {
+       "title": "Bohnice 5",
+       "address": "Vratislavská x Čimická 96 ",
+       "city": "Praha 8",
+       "lat": "50.1295944",
+       "lng": "14.4236564"
+    },
+    {
+       "title": "Čimice 1",
+       "address": "K Mlýnu, konečná bus",
+       "city": "Praha 8",
+       "lat": "50.1440417",
+       "lng": "14.4318447"
+    },
+    {
+       "title": "Čimice 2",
+       "address": "Na Zámkách, bus stop Čimice",
+       "city": "Praha 8",
+       "lat": "50.1413983",
+       "lng": "14.4295128"
+    },
+    {
+       "title": "Ďáblice 1",
+       "address": "Květnová 52, proti ÚMČ",
+       "city": "Praha 8",
+       "lat": "50.1423397",
+       "lng": "14.4771469"
+    },
+    {
+       "title": "Ďáblice 2",
+       "address": "U Parkánu, bus stop Ďáblice",
+       "city": "Praha 8",
+       "lat": "50.1482422",
+       "lng": "14.4862786"
+    },
+    {
+       "title": "Kobylisy 1",
+       "address": "Ďáblická, bus smyčka Sídliště Ďáblice",
+       "city": "Praha 8",
+       "lat": "50.1326594",
+       "lng": "14.4789769"
+    },
+    {
+       "title": "Kobylisy 2",
+       "address": "Chabařovická, u tříděného odpadu",
+       "city": "Praha 8",
+       "lat": "50.1309411",
+       "lng": "14.4761414"
+    },
+    {
+       "title": "Kobylisy 3",
+       "address": "Žernosecká, BILLA",
+       "city": "Praha 8",
+       "lat": "50.1328808",
+       "lng": "14.4702575"
+    },
+    {
+       "title": "Kobylisy 4",
+       "address": "Hovorčovická x Mirovická, ZŠ + OA",
+       "city": "Praha 8",
+       "lat": "50.1277075",
+       "lng": "14.4450931"
+    },
+    {
+       "title": "Kobylisy 5",
+       "address": "OC Sokolníky, Přemyšlenská, Albert",
+       "city": "Praha 8",
+       "lat": "50.1268419",
+       "lng": "14.4510489"
+    },
+    {
+       "title": "Kotlaska - Hloubětín",
+       "address": "ALBERT, U Libeňského pivovaru x Kotlaska",
+       "city": "Praha 8",
+       "lat": "50.1067208",
+       "lng": "14.4754531"
+    },
+    {
+       "title": "Ládví",
+       "address": "Opálkova, Albert",
+       "city": "Praha 8",
+       "lat": "50.1269067",
+       "lng": "14.4678247"
+    },
+    {
+       "title": "Troja",
+       "address": "Na Kazance",
+       "city": "Praha 8",
+       "lat": "50.1165378",
+       "lng": "14.4235697"
+    },
+    {
+       "title": "Čakovice Globus",
+       "address": "Kostelecká 823, Globus parkoviště",
+       "city": "Praha 9",
+       "lat": "50.1510808",
+       "lng": "14.5077972"
+    },
+    {
+       "title": "Hloubětín",
+       "address": "Kardašovská",
+       "city": "Praha 9",
+       "lat": "50.1060614",
+       "lng": "14.5469058"
+    },
+    {
+       "title": "Letňany 1",
+       "address": "OC TESCO, parkoviště",
+       "city": "Praha 9",
+       "lat": "50.1359353",
+       "lng": "14.5014597"
+    },
+    {
+       "title": "Letňany 2",
+       "address": "TESCO, u benzínové pumpy",
+       "city": "Praha 9",
+       "lat": "50.137285",
+       "lng": "14.4987084"
+    },
+    {
+       "title": "Letňany 3",
+       "address": "Baumax parking",
+       "city": "Praha 9",
+       "lat": "50.1393947",
+       "lng": "14.4991567"
+    },
+    {
+       "title": "Prosek 2",
+       "address": "PENNY Market, Prosecká 82",
+       "city": "Praha 9",
+       "lat": "50.12184",
+       "lng": "14.5071492"
+    },
+    {
+       "title": "Prosek 1",
+       "address": "BILLA, Vysočanská",
+       "city": "Praha 9",
+       "lat": "50.1195344",
+       "lng": "14.5006264"
+    },
+    {
+       "title": "Střížkov",
+       "address": "Poliklinika Prosek, Lovosická 440",
+       "city": "Praha 9",
+       "lat": "50.127825",
+       "lng": "14.4900681"
+    },
+    {
+       "title": "Malešice 2",
+       "address": "Praha Malešice, Počernická - u pošty",
+       "city": "Praha 10",
+       "lat": "50.08340454",
+       "lng": "14.50737953"
+    },
+    {
+       "title": "Malešice 1",
+       "address": "Malešické náměstí x U Tvrze",
+       "city": "Praha 10",
+       "lat": "50.0851297",
+       "lng": "14.5110219"
+    },
+    {
+       "title": "Vršovice 1",
+       "address": "U Slavie, pod schody, Mc Donald",
+       "city": "Praha 10",
+       "lat": "50.0681664",
+       "lng": "14.4699175"
+    },
+    {
+       "title": "Vršovice 2",
+       "address": "Vršovické náměstí x Sportovní",
+       "city": "Praha 10",
+       "lat": "50.0687253",
+       "lng": "14.4534314"
+    },
+    {
+       "title": "Vršovice 3",
+       "address": "Murmanská x Kubánské náměstí",
+       "city": "Praha 10",
+       "lat": "50.0719992",
+       "lng": "14.4803769"
+    },
+    {
+       "title": "Vršovice 4",
+       "address": "Litevská x Jakutská",
+       "city": "Praha 10",
+       "lat": "50.0726700",
+       "lng": "14.4763836"
+    },
+    {
+       "title": "Záběhlice",
+       "address": "Jabloňová",
+       "city": "Praha 10",
+       "lat": "50.0563956",
+       "lng": "14.4974822"
+    },
+    {
+       "title": "Záběhlice 1",
+       "address": "PENNY Švehlova x Pražská x Strašnická",
+       "city": "Praha 10",
+       "lat": "50.05813",
+       "lng": "14.5119061"
+    },
+    {
+       "title": "Záběhlice 2",
+       "address": "Jasmínová x Práčská",
+       "city": "Praha 10",
+       "lat": "50.0544758",
+       "lng": "14.5120698"
+    },
+    {
+       "title": "Zahradní Město",
+       "address": "OC Cíl, Topolová 2915/16",
+       "city": "Praha 10",
+       "lat": "50.0568089",
+       "lng": "14.5071083"
+    },
+    {
+       "title": "Chodov 1",
+       "address": "OC Chrpa, Krejnická 2021/1",
+       "city": "Praha 11",
+       "lat": "50.0331675",
+       "lng": "14.4821594"
+    },
+    {
+       "title": "Chodov 2",
+       "address": "OC Slunečnice, Vojtíškova",
+       "city": "Praha 11",
+       "lat": "50.0257703",
+       "lng": "14.4932228"
+    },
+    {
+       "title": "Chodov 3",
+       "address": "Albert, Leopoldova 1683/23",
+       "city": "Praha 11",
+       "lat": "50.0375961",
+       "lng": "14.5074919"
+    },
+    {
+       "title": "Chodov 4",
+       "address": "Tesco Brandlova",
+       "city": "Praha 11",
+       "lat": "50.0319992",
+       "lng": "14.5138272"
+    },
+    {
+       "title": "Roztyly",
+       "address": "Tomíčkova 2287/9",
+       "city": "Praha 11",
+       "lat": "50.0388922",
+       "lng": "14.4778978"
+    },
+    {
+       "title": "Kamýk 1",
+       "address": "Durychova, OC Jasná, Albert",
+       "city": "Praha 12",
+       "lat": "50.0167467",
+       "lng": "14.4430814"
+    },
+    {
+       "title": "Kamýk 2",
+       "address": "OC Obzor, Albert, Novodvorská",
+       "city": "Praha 12",
+       "lat": "50.0093589",
+       "lng": "14.4551203"
+    },
+    {
+       "title": "Modřany",
+       "address": "Obchodní náměstí, Albert",
+       "city": "Praha 12",
+       "lat": "50.0050594",
+       "lng": "14.40472"
+    },
+    {
+       "title": "Luka",
+       "address": "Metro, Mukařovského",
+       "city": "Praha 13",
+       "lat": "50.0450375",
+       "lng": "14.3217928"
+    },
+    {
+       "title": "Černý most 1",
+       "address": "Chlumecká, CČM",
+       "city": "Praha 14",
+       "lat": "50.1087678",
+       "lng": "14.5826558"
+    },
+    {
+       "title": "Černý most 3 - Elektroworld",
+       "address": "Chlumecká 1531",
+       "city": "Praha 14",
+       "lat": "50.1088731",
+       "lng": "14.5714808"
+    },
+    {
+       "title": "Černý most 5 - Bratří Venclíků",
+       "address": "Černý most, Bratří Venclíků x Cíglerova, Albert",
+       "city": "Praha 14",
+       "lat": "50.1060375",
+       "lng": "14.5587594"
+    },
+    {
+       "title": "Jahodnice",
+       "address": "Interspar, Českobrodská",
+       "city": "Praha 14",
+       "lat": "50.0872558",
+       "lng": "14.5635206"
+    },
+    {
+       "title": "Dolní Měcholupy",
+       "address": "Ke Dráze, u č. 536/7",
+       "city": "Praha 15",
+       "lat": "50.0556517",
+       "lng": "14.5595642"
+    },
+    {
+       "title": "Dubeč",
+       "address": "Starodubečská, před TESCO",
+       "city": "Praha 15",
+       "lat": "50.0615169",
+       "lng": "14.5889603"
+    },
+    {
+       "title": "Dubeček",
+       "address": "Tesco, K Vilkám x K Pastvinám (u hřbitova)",
+       "city": "Praha 15",
+       "lat": "50.0533511",
+       "lng": "14.5801211"
+    },
+    {
+       "title": "Horní Měcholupy",
+       "address": "Veronské náměstí - Albert + KIK",
+       "city": "Praha 15",
+       "lat": "50.04015",
+       "lng": "14.55976"
+    },
+    {
+       "title": "Petrovice",
+       "address": "Morseova x Belova - parkoviště",
+       "city": "Praha 10",
+       "lat": "50.0351031",
+       "lng": "14.5581917"
+    },
+    {
+       "title": "Štěrboholy",
+       "address": "EUROPARK, Nákupní 3, parking",
+       "city": "Praha 15",
+       "lat": "50.0714778",
+       "lng": "14.5418256"
+    },
+    {
+       "title": "Bílá Hora",
+       "address": "Bělohorská, konečná Tram, Bílá Hora",
+       "city": "Praha 17",
+       "lat": "50.0755328",
+       "lng": "14.3254436"
+    },
+    {
+       "title": "Řepy 1",
+       "address": "Čistovická x Třanovského",
+       "city": "Praha 17",
+       "lat": "50.0743081",
+       "lng": "14.3174844"
+    },
+    {
+       "title": "Řepy 2",
+       "address": "BILLA, Makovského",
+       "city": "Praha 17",
+       "lat": "50.0651517",
+       "lng": "14.3109269"
+    },
+    {
+       "title": "Řepy 3",
+       "address": "Šímova, komplex Bílý Beránek",
+       "city": "Praha 17",
+       "lat": "50.0649039",
+       "lng": "14.3165456"
+    },
+    {
+       "title": "Řepy 4",
+       "address": "Španielova, před školou",
+       "city": "Praha 17",
+       "lat": "50.0690953",
+       "lng": "14.3048356"
+    },
+    {
+       "title": "Řepy 5",
+       "address": "Žalanského, bus stop u PENNY",
+       "city": "Praha 17",
+       "lat": "50.0688925",
+       "lng": "14.2954639"
+    },
+    {
+       "title": "Horní Počernice 1",
+       "address": "Mezilesí, Náchodská, benzinka",
+       "city": "Praha 20",
+       "lat": "50.1131272",
+       "lng": "14.6020958"
+    },
+    {
+       "title": "Horní Počernice 2",
+       "address": "Chodovická x Beluňská, Albert",
+       "city": "Praha 20",
+       "lat": "50.1123875",
+       "lng": "14.6178136"
+    },
+    {
+       "title": "Klánovice",
+       "address": "NC Pohoda",
+       "city": "Praha 21",
+       "lat": "50.0917772",
+       "lng": "14.66768"
+    },
+    {
+       "title": "Hájek, Uhříněves",
+       "address": "Pod Markétou x Předpolní",
+       "city": "Praha 22",
+       "lat": "50.0516658",
+       "lng": "14.6278747"
+    },
+    {
+       "title": "Kolovraty 1",
+       "address": "Kostel, Ulice Mírová",
+       "city": "Praha 22",
+       "lat": "50.0103269",
+       "lng": "14.6292217"
+    },
+    {
+       "title": "Kolovraty 2",
+       "address": "Albíny Hochové 15",
+       "city": "Praha 22",
+       "lat": "50.0144133",
+       "lng": "14.625685"
+    },
+    {
+       "title": "Pitkovice",
+       "address": "V Pitkovičkách",
+       "city": "Praha 22",
+       "lat": "50.0228728",
+       "lng": "14.5783033"
+    },
+    {
+       "title": "Uhříněves 1",
+       "address": "NORMA, bus stop Nové náměstí",
+       "city": "Praha 22",
+       "lat": "50.0322592",
+       "lng": "14.5969611"
+    },
+    {
+       "title": "Uhříněves 2",
+       "address": "Pstružná x Fr. Diviše, hospůdka Jezera",
+       "city": "Praha 22",
+       "lat": "50.0347236",
+       "lng": "14.5848097"
+    },
+    {
+       "title": "Dolní Jirčany",
+       "address": "Hlavní x K Lůžku",
+       "city": "Psáry",
+       "lat": "49.9482575",
+       "lng": "14.5203594"
+    },
+    {
+       "title": "Psáry 1",
+       "address": "Slepá - sběrný dvůr",
+       "city": "Psáry",
+       "lat": "49.9420006",
+       "lng": "14.5146342"
+    },
+    {
+       "title": "Psáry 2",
+       "address": "Sportovní",
+       "city": "Psáry",
+       "lat": "49.9360861",
+       "lng": "14.5122742"
+    },
+    {
+       "title": "Říčany 1",
+       "address": "TESCO, Černokostelecká 2270/22, parking",
+       "city": "Říčany",
+       "lat": "50.002455",
+       "lng": "14.6593744"
+    },
+    {
+       "title": "Říčany 2",
+       "address": "Komenského náměstí 1619/2, za budovou Městské policie",
+       "city": "Říčany",
+       "lat": "49.9914547",
+       "lng": "14.6635550"
+    },
+    {
+       "title": "Želivec",
+       "address": "TESCO, Pražská ul.",
+       "city": "Sulice",
+       "lat": "49.9209878",
+       "lng": "14.5790725"
+    },
+    {
+       "title": "Šestajovice",
+       "address": "Želivského, za Obecním úřadem",
+       "city": "Šestajovice",
+       "lat": "50.1100775",
+       "lng": "14.6784622"
+    },
+    {
+       "title": "Úvaly",
+       "address": "PENNY market, Škvorecká 1762",
+       "city": "Úvaly",
+       "lat": "50.0694233",
+       "lng": "14.7328014"
+    },
+    {
+       "title": "Velké Popovice",
+       "address": "Parkoviště u pivovaru",
+       "city": "Velké Popovice",
+       "lat": "49.9218364",
+       "lng": "14.63614"
+    },
+    {
+       "title": "Vestec",
+       "address": "Hypermarket Albert, Vídeňská 178",
+       "city": "Vestec",
+       "lat": "49.9822683",
+       "lng": "14.4966108"
+    },
+    {
+       "title": "Zbraslav 4",
+       "address": "Na Baních",
+       "city": "Praha - Zbraslav",
+       "lat": "49.9587206",
+       "lng": "14.3830075"
+    },
+    {
+       "title": "Dolní Počernice 1",
+       "address": "Českobrodská x U Konečné",
+       "city": "Praha - Dolní Počernice",
+       "lat": "50.0851803",
+       "lng": "14.5774442"
+    },
+    {
+       "title": "Řepy 6",
+       "address": "Reinerova",
+       "city": "Praha 17",
+       "lat": "50.0742067",
+       "lng": "14.3087097"
+    },
+    {
+       "title": "Řepy 7",
+       "address": "Makovského, u NC Ovus",
+       "city": "Praha 17",
+       "lat": "50.0647192",
+       "lng": "14.3090906"
+    },
+    {
+       "title": "Černý most 6",
+       "address": "Ocelkova",
+       "city": "Praha 14",
+       "lat": "50.1017461",
+       "lng": "14.5704644"
+    },
+    {
+       "title": "Černý most 7",
+       "address": "Slévačská",
+       "city": "Praha 14",
+       "lat": "50.1032586",
+       "lng": "14.5486278"
+    },
+    {
+       "title": "Kyje",
+       "address": "Rožmberská",
+       "city": "Praha 14",
+       "lat": "50.0932231",
+       "lng": "14.5404789"
+    },
+    {
+       "title": "Vysočany",
+       "address": "Galerie Fénix, Sokolovská",
+       "city": "Praha 9",
+       "lat": "50.1097347",
+       "lng": "14.5006758"
+    },
+    {
+       "title": "Karlín 1",
+       "address": "Ke Štvanici x Sokolovská",
+       "city": "Praha 8",
+       "lat": "50.0905494",
+       "lng": "14.4391247"
+    },
+    {
+       "title": "Ďáblice 3",
+       "address": "Střekovská x Střelničná",
+       "city": "Praha 8",
+       "lat": "50.1279081",
+       "lng": "14.4756639"
+    },
+    {
+       "title": "Ďáblice 4",
+       "address": "Horňátecká x Klapkova",
+       "city": "Praha 8",
+       "lat": "50.1330192",
+       "lng": "14.4532869"
+    },
+    {
+       "title": "Bohnice 6",
+       "address": "Čimická x Lindavská",
+       "city": "Praha 8",
+       "lat": "50.1288547",
+       "lng": "14.4314561"
+    },
+    {
+       "title": "Bohnice 7",
+       "address": "Sosnovecká x Hnězdenská",
+       "city": "Praha 8",
+       "lat": "50.1270031",
+       "lng": "14.4221150"
+    },
+    {
+       "title": "Bohnice 8",
+       "address": "Mazurská x Pomořanská",
+       "city": "Praha 8",
+       "lat": "50.1271492",
+       "lng": "14.4140617"
+    },
+    {
+       "title": "Dolní Chabry",
+       "address": "Ústecká x Ulčova",
+       "city": "Dolní Chabry",
+       "lat": "50.1391186",
+       "lng": "14.4519442"
+    },
+    {
+       "title": "Dobrovíz",
+       "address": "Brigádnická",
+       "city": "Dobrovíz",
+       "lat": "50.1145667",
+       "lng": "14.2187225"
+    },
+    {
+       "title": "Dobrovíz 1",
+       "address": "K Letišti",
+       "city": "Dobrovíz",
+       "lat": "50.1174789",
+       "lng": "14.2179444"
+    },
+    {
+       "title": "MŠ Jahodnice",
+       "address": "Kostlivého 1218",
+       "city": "Praha 14",
+       "lat": "50.0851406",
+       "lng": "14.5541797"
+    },
+    {
+       "title": "ZŠ Špitálská",
+       "address": "Špitálská 794/1",
+       "city": "Praha 9",
+       "lat": "50.1097094",
+       "lng": "14.5042867"
+    },
+    {
+       "title": "Fotbalové hřiště Xaverov",
+       "address": "Božanovská",
+       "city": "Praha 9",
+       "lat": "50.1103031",
+       "lng": "14.5985342"
+    },
+    {
+       "title": "Squash, Sportovní centrum Pro6",
+       "address": "Za Černým Mostem 1519",
+       "city": "Praha 14",
+       "lat": "50.1087372",
+       "lng": "14.5568164"
+    },
+    {
+       "title": "Uhříněves 3",
+       "address": "K Netlukám",
+       "city": "Praha 22",
+       "lat": "50.0331972",
+       "lng": "14.6096078"
+    },
+    {
+       "title": "Uhříněves 4",
+       "address": "Lnářská 907/12",
+       "city": "Praha 22",
+       "lat": "50.0265367",
+       "lng": "14.5998714"
+    },
+    {
+       "title": "Makro - Černý Most",
+       "address": "Skorkovská",
+       "city": "Praha 14",
+       "lat": "50.1110886",
+       "lng": "14.5774506"
+    },
+    {
+       "title": "Makro - Stodůlky",
+       "address": "Jeremiášova",
+       "city": "Praha 13",
+       "lat": "50.0408933",
+       "lng": "14.3171342"
+    },
+    {
+       "title": "Černý most 4",
+       "address": "Breitcetlova 876/1 x Dygrýnova",
+       "city": "Praha 14",
+       "lat": "50.1042031",
+       "lng": "14.5732058"
+    },
+    {
+       "title": "Černý most 8",
+       "address": "Františkova 911/17 x Bobkova",
+       "city": "Praha 14",
+       "lat": "50.1061564",
+       "lng": "14.5802092"
+    },
+    {
+       "title": "Nedvězí 2",
+       "address": "Slámova 82/9",
+       "city": "Praha - Nedvězí",
+       "lat": "50.0167047",
+       "lng": "14.6553500"
+    },
+    {
+       "title": "Dolní Chabry 1",
+       "address": "Spořická 249/38",
+       "city": "Dolní Chabry",
+       "lat": "50.1461572",
+       "lng": "14.4460250"
+    },
+    {
+       "title": "Dolní Chabry 2",
+       "address": "Měděnecká 36/6",
+       "city": "Dolní Chabry",
+       "lat": "50.1496106",
+       "lng": "14.4450661"
+    },
+    {
+       "title": "Billa - Stodůlky",
+       "address": "Jeremiášova",
+       "city": "Praha 13",
+       "lat": "50.0434456",
+       "lng": "14.3151186"
+    },
+    {
+       "title": "Chodov 5",
+       "address": "Brandlova x Hněvkovského",
+       "city": "Praha 11",
+       "lat": "50.0332142",
+       "lng": "14.5195322"
+    },
+    {
+       "title": "Chodov 6",
+       "address": "Křejpského",
+       "city": "Praha 11",
+       "lat": "50.0259836",
+       "lng": "14.5147231"
+    },
+    {
+       "title": "Chodov 7",
+       "address": "Modletická x Ke Kateřinkám",
+       "city": "Praha 11",
+       "lat": "50.0246833",
+       "lng": "14.5149242"
+    },
+    {
+       "title": "Háje",
+       "address": "Matúškova",
+       "city": "Praha 11",
+       "lat": "50.0370322",
+       "lng": "14.5150275"
+    },
+    {
+       "title": "Chodov 8",
+       "address": "Květnového vítězství x Valentova",
+       "city": "Praha 11",
+       "lat": "50.0335642",
+       "lng": "14.5050497"
+    },
+    {
+       "title": "Podolí 1",
+       "address": "Jeremenkova 725/90",
+       "city": "Praha 4",
+       "lat": "50.0434153",
+       "lng": "14.4305917"
+    },
+    {
+       "title": "Nusle 1",
+       "address": "Lomnického",
+       "city": "Praha 4",
+       "lat": "50.0569483",
+       "lng": "14.4307231"
+    },
+    {
+       "title": "Nusle 2",
+       "address": "Ctiradova 440/2",
+       "city": "Praha 4",
+       "lat": "50.0656111",
+       "lng": "14.4414453"
+    },
+    {
+       "title": "Nové Butovice 1",
+       "address": "Ovčí hájek",
+       "city": "Praha 13",
+       "lat": "50.0474400",
+       "lng": "14.3497672"
+    },
+    {
+       "title": "Stodůlky",
+       "address": "Ke skalce 408/4",
+       "city": "Praha 13",
+       "lat": "50.0515208",
+       "lng": "14.3179081"
+    },
+    {
+       "title": "Nové Butovice 2",
+       "address": "Běhounkova 2457/41",
+       "city": "Praha 13",
+       "lat": "50.0538094",
+       "lng": "14.3399261"
+    },
+    {
+       "title": "Stodůlky 1",
+       "address": "Kettnerova",
+       "city": "Praha 13",
+       "lat": "50.0475592",
+       "lng": "14.3197747"
+    },
+    {
+       "title": "Stodůlky 2",
+       "address": "K zahrádkám",
+       "city": "Praha 13",
+       "lat": "50.0492517",
+       "lng": "14.3310186"
+    },
+    {
+       "title": "Petrovice 1",
+       "address": "Edisonova",
+       "city": "Praha 10",
+       "lat": "50.0353767",
+       "lng": "14.5522942"
+    },
+    {
+       "title": "Letňany 4",
+       "address": "Ivančická",
+       "city": "Praha 9",
+       "lat": "50.1420044",
+       "lng": "14.5112483"
+    },
+    {
+       "title": "Letňany",
+       "address": "Frýdecká x Fryčovická",
+       "city": "Praha 9",
+       "lat": "50.1384861",
+       "lng": "14.5075067"
+    },
+    {
+       "title": "Modřany 1",
+       "address": "Vazovova x Levského",
+       "city": "Praha 12",
+       "lat": "50.0055900",
+       "lng": "14.4361733"
+    },
+    {
+       "title": "Kamýk",
+       "address": "U Kamýku",
+       "city": "Praha 12",
+       "lat": "50.0169239",
+       "lng": "14.4348228"
+    },
+    {
+       "title": "Modřany 2",
+       "address": "Botevova 2",
+       "city": "Praha 12",
+       "lat": "50.0088356",
+       "lng": "14.4171431"
+    },
+    {
+       "title": "Kamýk 3",
+       "address": "Pavlíkova (Novodvorská)",
+       "city": "Praha 12",
+       "lat": "50.0112522",
+       "lng": "14.4542419"
+    },
+    {
+       "title": "Modřany 3",
+       "address": "Pavelkova (Čs. exilu)",
+       "city": "Praha 12",
+       "lat": "50.0002103",
+       "lng": "14.4284914"
+    },
+    {
+       "title": "Modřany 4",
+       "address": "Daškova 1",
+       "city": "Praha 12",
+       "lat": "50.0132478",
+       "lng": "14.4257139"
+    },
+    {
+       "title": "Libuš",
+       "address": "Libušská",
+       "city": "Praha - Libuš",
+       "lat": "50.0012697",
+       "lng": "14.4666928"
+    },
+    {
+       "title": "Horní Počernice",
+       "address": "Spojenců 1293/33",
+       "city": "Praha 20",
+       "lat": "50.1104739",
+       "lng": "14.6053133"
+    },
+    {
+       "title": "Horní Počernice 3",
+       "address": "Ve Žlíbku x Komárovská",
+       "city": "Praha 20",
+       "lat": "50.1093533",
+       "lng": "14.6233581"
+    },
+    {
+       "title": "Petřiny",
+       "address": "Na Větrníku 1604/41",
+       "city": "Praha 6",
+       "lat": "50.0883625",
+       "lng": "14.3538536"
+    },
+    {
+       "title": "Veleslavín",
+       "address": "Lomená",
+       "city": "Praha 6",
+       "lat": "50.0930006",
+       "lng": "14.3798186"
+    },
+    {
+       "title": "Kamýk 4",
+       "address": "Generála Šišky",
+       "city": "Praha 12",
+       "lat": "50.0062036",
+       "lng": "14.4529653"
+    },
+    {
+       "title": "Kamýk 5",
+       "address": "Hasova",
+       "city": "Praha 12",
+       "lat": "50.0122153",
+       "lng": "14.4278114"
+    },
+    {
+       "title": "Zbraslav 5",
+       "address": "Žitavského 514",
+       "city": "Praha - Zbraslav",
+       "lat": "49.9716761",
+       "lng": "14.3951664"
+    },
+    {
+       "title": "Park Hostivař",
+       "address": "Švehlova 1391/32",
+       "city": "Praha 10",
+       "lat": "50.0536239",
+       "lng": "14.5166475"
+    },
+    {
+       "title": "Nusle 3",
+       "address": "Sekaninova 328",
+       "city": "Praha 4",
+       "lat": "50.0663731",
+       "lng": "14.4314875"
+    },
+    {
+       "title": "Vinohrady 4",
+       "address": "Jičínská x Slezská",
+       "city": "Praha 3",
+       "lat": "50.0767164",
+       "lng": "14.4609581"
+    },
+    {
+       "title": "Petrovice 2",
+       "address": "Novopetrovická",
+       "city": "Praha 10",
+       "lat": "50.0341464",
+       "lng": "14.5636297"
+    },
+    {
+       "title": "Holešovice 1",
+       "address": "Kostelní",
+       "city": "Praha 7",
+       "lat": "50.0972206",
+       "lng": "14.4265764"
+    },
+    {
+       "title": "Holešovice 2",
+       "address": "U Výstaviště",
+       "city": "Praha 7",
+       "lat": "50.1049722",
+       "lng": "14.4324814"
+    },
+    {
+       "title": "Vršovice 5",
+       "address": "Sámova",
+       "city": "Praha 10",
+       "lat": "50.0672989",
+       "lng": "14.4470450"
+    },
+    {
+       "title": "Libeň",
+       "address": "Vosmíkových",
+       "city": "Praha 8",
+       "lat": "50.1151211",
+       "lng": "14.4713642"
+    },
+    {
+       "title": "Modřany 5",
+       "address": "Hasova",
+       "city": "Praha 12",
+       "lat": "50.0138508",
+       "lng": "14.4266372"
+    },
+    {
+       "title": "Vokovice 1",
+       "address": "Vokovická",
+       "city": "Praha 6",
+       "lat": "50.0963178",
+       "lng": "14.3470583"
+    },
+    {
+       "title": "Liboc",
+       "address": "Divoká Šárka",
+       "city": "Praha 6",
+       "lat": "50.0927914",
+       "lng": "14.3242375"
+    },
+    {
+       "title": "Hlubočepy",
+       "address": "K Barrandovu",
+       "city": "Praha 5",
+       "lat": "50.0325344",
+       "lng": "14.3821189"
+    },
+    {
+       "title": "Smíchov 2",
+       "address": "U Zámečnice 136/10",
+       "city": "Praha 5",
+       "lat": "50.0704169",
+       "lng": "14.3690728"
+    },
+    {
+       "title": "Smíchov 3",
+       "address": "Plzeňská",
+       "city": "Praha 5",
+       "lat": "50.0655411",
+       "lng": "14.3250147"
+    },
+    {
+       "title": "Košíře",
+       "address": "Ke Kotlářce",
+       "city": "Praha 5",
+       "lat": "50.0700142",
+       "lng": "14.3611333"
+    },
+    {
+       "title": "Hlubočepy 1",
+       "address": "Pražského",
+       "city": "Praha 5",
+       "lat": "50.0370344",
+       "lng": "14.3843828"
+    },
+    {
+       "title": "Hlubočepy 2",
+       "address": "Tréglova",
+       "city": "Praha 5",
+       "lat": "50.0348189",
+       "lng": "14.3757836"
+    },
+    {
+       "title": "Smíchov 4",
+       "address": "U Klikovky",
+       "city": "Praha 5",
+       "lat": "50.0723244",
+       "lng": "14.3736889"
+    },
+    {
+       "title": "Stodůlky",
+       "address": "U Kříže",
+       "city": "Praha 5",
+       "lat": "50.0540067",
+       "lng": "14.3678000"
+    },
+    {
+       "title": "Košíře 1",
+       "address": "Vrchlického",
+       "city": "Praha 5",
+       "lat": "50.0697214",
+       "lng": "14.3760397"
+    },
+    {
+       "title": "Košíře 2",
+       "address": "Duškova",
+       "city": "Praha 5",
+       "lat": "50.0709575",
+       "lng": "14.3905236"
+    },
+    {
+       "title": "Smíchov 5",
+       "address": "Za ženskými domovy",
+       "city": "Praha 5",
+       "lat": "50.0682306",
+       "lng": "14.4035217"
+    },
+    {
+       "title": "Hlubočepy 3",
+       "address": "Werichova",
+       "city": "Praha 5",
+       "lat": "50.0364411",
+       "lng": "14.3718769"
+    },
+    {
+       "title": "Hlubočepy 4",
+       "address": "Lamačova",
+       "city": "Praha 5",
+       "lat": "50.0364411",
+       "lng": "14.3718769"
+    },
+    {
+       "title": "Košíře 3",
+       "address": "Ke Kotlářce",
+       "city": "Praha 5",
+       "lat": "50.0691869",
+       "lng": "14.3566164"
+    },
+    {
+       "title": "Smíchov 6",
+       "address": "Holečkova",
+       "city": "Praha 5",
+       "lat": "50.0714628",
+       "lng": "14.3836881"
+    },
+    {
+       "title": "Hlubočepy 5",
+       "address": "Hogerova",
+       "city": "Praha 5",
+       "lat": "50.0315042",
+       "lng": "14.3745283"
+    },
+    {
+       "title": "Hlubočepy 6",
+       "address": "Barrandovská",
+       "city": "Praha 5",
+       "lat": "50.0332994",
+       "lng": "14.3971581"
+    },
+    {
+       "title": "Vokovice 2",
+       "address": "Arabská",
+       "city": "Praha 6",
+       "lat": "50.0985344",
+       "lng": "14.3586989"
+    },
+    {
+       "title": "Stodůlky 3",
+       "address": "Bašteckého x Janského",
+       "city": "Praha 13",
+       "lat": "50.0393094",
+       "lng": "14.3358467"
+    },
+    {
+       "title": "Stodůlky 4",
+       "address": "Hábova",
+       "city": "Praha 13",
+       "lat": "50.0464347",
+       "lng": "14.3105856"
+    },
+    {
+       "title": "Stodůlky 5",
+       "address": "Bellušova 47",
+       "city": "Praha 13",
+       "lat": "50.0431711",
+       "lng": "14.3255108"
+    },
+    {
+       "title": "Stodůlky 6",
+       "address": "Bellušova 66",
+       "city": "Praha 13",
+       "lat": "50.0414089",
+       "lng": "14.3244458"
+    },
+    {
+       "title": "Stodůlky 7",
+       "address": "Petržílkova x Nušlova",
+       "city": "Praha 13",
+       "lat": "50.0515881",
+       "lng": "14.3480197"
+    },
+    {
+       "title": "Stodůlky 8",
+       "address": "Husníkova x V Hůrkách",
+       "city": "Praha 13",
+       "lat": "50.0488319",
+       "lng": "14.3419997"
+    },
+    {
+       "title": "Stodůlky 9",
+       "address": "Běhounkova 25",
+       "city": "Praha 13",
+       "lat": "50.0541494",
+       "lng": "14.3432347"
+    },
+    {
+       "title": "Stodůlky 10",
+       "address": "Modrá",
+       "city": "Praha 13",
+       "lat": "50.0465661",
+       "lng": "14.3376183"
+    },
+    {
+       "title": "Stodůlky 11",
+       "address": "Fantova 20",
+       "city": "Praha 13",
+       "lat": "50.0439953",
+       "lng": "14.3162303"
+    },
+    {
+       "title": "Troja 1",
+       "address": "Velká skála x Vřesová",
+       "city": "Praha 8",
+       "lat": "50.1265578",
+       "lng": "14.4320508"
+    },
+    {
+       "title": "Bohnice 9",
+       "address": "Dolákova x Hackerova",
+       "city": "Praha 8",
+       "lat": "50.1337611",
+       "lng": "14.4070794"
+    },
+    {
+       "title": "Kobylisy 6",
+       "address": "Frýdlantská x Sebuzínská",
+       "city": "Praha 8",
+       "lat": "50.1298986",
+       "lng": "14.4795636"
+    },
+    {
+       "title": "Kobylisy 7",
+       "address": "Písečná 38",
+       "city": "Praha 8",
+       "lat": "50.1253033",
+       "lng": "14.4455733"
+    },
+    {
+       "title": "Kobylisy 8",
+       "address": "Písečná x Čimická",
+       "city": "Praha 8",
+       "lat": "50.1253661",
+       "lng": "14.4421053"
+    },
+    {
+       "title": "Kobylisy 9",
+       "address": "Střekovská x Střelničná",
+       "city": "Praha 8",
+       "lat": "50.1279075",
+       "lng": "14.4756528"
+    },
+    {
+       "title": "Kobylisy",
+       "address": "Tanvaldská 1348/4",
+       "city": "Praha 8",
+       "lat": "50.1288542",
+       "lng": "14.4766761"
+    },
+    {
+       "title": "1 Kobylisy",
+       "address": "Bojasova x Žernosecká",
+       "city": "Praha 8",
+       "lat": "50.1323875",
+       "lng": "14.4654469"
+    },
+    {
+       "title": "Čimice 3",
+       "address": "Křivenecká x Mlazická",
+       "city": "Praha 8",
+       "lat": "50.1417156",
+       "lng": "14.4343722"
+    },
+    {
+       "title": "Bohnice",
+       "address": "Ratibořská x Radomská",
+       "city": "Praha 8",
+       "lat": "50.1310017",
+       "lng": "14.415733"
+    },
+    {
+       "title": "Karlín 2",
+       "address": "Sokolovská \"M\" Florenc",
+       "city": "Praha 8",
+       "lat": "50.0910831",
+       "lng": "14.4391747"
+    },
+    {
+       "title": "Karlín 3",
+       "address": "U Sluncové",
+       "city": "Praha 8",
+       "lat": "50.0935508",
+       "lng": "14.4642978"
+    },
+    {
+       "title": "Karlín 4",
+       "address": "Molákova x Za Invalidovnou",
+       "city": "Praha 8",
+       "lat": "50.0944542",
+       "lng": "14.4635158"
+    },
+    {
+       "title": "Karlín 5",
+       "address": "Za Invalidovnou x Sokolovská",
+       "city": "Praha 8",
+       "lat": "50.0965464",
+       "lng": "14.4624778"
+    },
+    {
+       "title": "Skalka",
+       "address": "Přetlucká",
+       "city": "Praha 10",
+       "lat": "50.0700842",
+       "lng": "14.5113111"
+    },
+    {
+       "title": "Hanspaulka",
+       "address": "Na Pískách Tesco",
+       "city": "Praha 6",
+       "lat": "50.1042231",
+       "lng": "14.3728975"
+    },
+    {
+       "title": "Benice 1",
+       "address": "U Císařské cesty naproti domu 227",
+       "city": "Benice",
+       "lat": "50.0157917",
+       "lng": "14.6055942"
+    },
+    {
+       "title": "Radotín",
+       "address": "PENNY",
+       "city": "Radotín",
+       "lat": "49.9859803",
+       "lng": "14.3704681"
+    },
+    {
+       "title": "Řepy 8",
+       "address": "Žalanského PENNY",
+       "city": "Praha 17",
+       "lat": "50.0689092",
+       "lng": "14.2965067"
+    },
+    {
+       "title": "Chodov 9",
+       "address": "Türkova u PIZZA Go Home",
+       "city": "Praha 11",
+       "lat": "50.0391603",
+       "lng": "14.4917525"
+    },
+    {
+       "title": "Opatov 1",
+       "address": "Šalounova",
+       "city": "Praha 11",
+       "lat": "50.0252850",
+       "lng": "14.5101975"
+    },
+    {
+       "title": "Jinočany 1",
+       "address": "Ševčíkova",
+       "city": "Jinočany",
+       "lat": "50.0326492",
+       "lng": "14.2687906"
+    },
+    {
+       "title": "Jinočany 2",
+       "address": "Ke školce",
+       "city": "Jinočany",
+       "lat": "50.0342531",
+       "lng": "14.2682467"
+    },
+    {
+       "title": "Háje 1",
+       "address": "Anny Dráblíkové",
+       "city": "Praha 11",
+       "lat": "50.0329781",
+       "lng": "14.5289628"
+    },
+    {
+       "title": "Chodov 15",
+       "address": "Brodského x Mírového hnutí",
+       "city": "Praha 11",
+       "lat": "50.0387072",
+       "lng": "14.5041986"
+    },
+    {
+       "title": "Chodov 11",
+       "address": "Donovalská 30 x Ke stáčírně",
+       "city": "Praha 11",
+       "lat": "50.0368917",
+       "lng": "14.5083506"
+    },
+    {
+       "title": "Chodov 12",
+       "address": "Donovalská x Brodského",
+       "city": "Praha 11",
+       "lat": "50.0368581",
+       "lng": "14.5048075"
+    },
+    {
+       "title": "Háje 2",
+       "address": "Matůškova x Boháčova",
+       "city": "Praha 11",
+       "lat": "50.0377994",
+       "lng": "14.5194364"
+    },
+    {
+       "title": "Chodov 13",
+       "address": "Majerského x Leopoldova",
+       "city": "Praha 11",
+       "lat": "50.0396289",
+       "lng": "14.5068406"
+    },
+    {
+       "title": "Háje 3",
+       "address": "Mendelova x Kropáčkova",
+       "city": "Praha 11",
+       "lat": "50.0327669",
+       "lng": "14.5330497"
+    },
+    {
+       "title": "Chodov 14",
+       "address": "Opatovská x Bajkonurská",
+       "city": "Praha 11",
+       "lat": "50.0303497",
+       "lng": "14.5286511"
+    },
+    {
+       "title": "Chodov 10",
+       "address": "Kloknerova 10",
+       "city": "Praha 11",
+       "lat": "50.03500825",
+       "lng": "14.4866903"
+    },
+    {
+       "title": "Chodov 16",
+       "address": "Tererova 1347/1",
+       "city": "Praha 11",
+       "lat": "50.0237983",
+       "lng": "14.5227783"
+    },
+    {
+       "title": "Chodov 17",
+       "address": "Radimovická 1657/ 35",
+       "city": "Praha 11",
+       "lat": "50.0224131",
+       "lng": "14.5142919"
+    },
+    {
+       "title": "Háje 4",
+       "address": "Novomeského x Jurkovičova",
+       "city": "Praha 11",
+       "lat": "50.0266481",
+       "lng": "14.5280597"
+    },
+    {
+       "title": "Chodov 18",
+       "address": "Jarníkova 24",
+       "city": "Praha 11",
+       "lat": "50.0262078",
+       "lng": "14.4918969"
+    },
+    {
+       "title": "Chodov 19",
+       "address": "Hráského x Šustova",
+       "city": "Praha 11",
+       "lat": "50.0275958",
+       "lng": "14.4908992"
+    },
+    {
+       "title": "Háje 5",
+       "address": "Dubnova x Hekrova",
+       "city": "Praha 11",
+       "lat": "50.0383097",
+       "lng": "14.5156156"
+    },
+    {
+       "title": "Kunratice 2",
+       "address": "OC Kunratice",
+       "city": "Praha - Kunratice",
+       "lat": "50.0114847",
+       "lng": "14.4758514"
+    },
+    {
+       "title": "Nusle 4",
+       "address": "Nuselská 20",
+       "city": "Praha 4",
+       "lat": "50.0629664",
+       "lng": "14.4434731"
+    },
+    {
+       "title": "Kamýk 6",
+       "address": "Vosátkova BILLA",
+       "city": "Praha 12",
+       "lat": "50.0150439",
+       "lng": "14.4375814"
+    },
+    {
+       "title": "Dolní Počernice 2",
+       "address": "BILLA",
+       "city": "Praha - Dolní Počernice",
+       "lat": "50.0846072",
+       "lng": "14.5802722"
+    },
+    {
+       "title": "Český Brod",
+       "address": "BILLA",
+       "city": "Český Brod",
+       "lat": "50.0744917",
+       "lng": "14.8638581"
+    },
+    {
+       "title": "Čelákovice",
+       "address": "Obchodní zóna",
+       "city": "Čelákovice",
+       "lat": "50.1555903",
+       "lng": "14.7426292"
+    }
+ ]

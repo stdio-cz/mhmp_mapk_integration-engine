@@ -1,8 +1,12 @@
 "use strict";
 
+import * as path from "path";
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
+import RedisModel from "../models/RedisModel";
 import { IHTTPSettings, IProtocolStrategy } from "./IProtocolStrategy";
 
+const decompress = require("decompress");
 const request = require("request-promise");
 const moment = require("moment");
 
@@ -20,8 +24,34 @@ export default class HTTPProtocolStrategy implements IProtocolStrategy {
 
     public getData = async (): Promise<any> => {
         try {
-            return request(this.connectionSettings);
+            let result = await request(this.connectionSettings);
+
+            if (this.connectionSettings.isCompressed) {
+                const prefix = path.parse(this.connectionSettings.url).name + "/";
+                const files = await decompress(result, {
+                    filter: (this.connectionSettings.whitelistedFiles.length)
+                        ? (file) => this.connectionSettings.whitelistedFiles
+                            .indexOf(file.path) !== -1
+                        : (file) => file,
+                });
+                const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
+                        isKeyConstructedFromData: false,
+                        prefix: "",
+                    },
+                null);
+                result = await Promise.all(files.map(async (file) => {
+                    await redisModel.save(prefix + file.path, file.data.toString("hex"));
+                    return {
+                        filepath: prefix + file.path,
+                        mtime: file.mtime,
+                        name: path.parse(file.path).name,
+                        path: file.path,
+                    };
+                }));
+            }
+            return result;
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }
@@ -33,7 +63,8 @@ export default class HTTPProtocolStrategy implements IProtocolStrategy {
             const res = await request(this.connectionSettings);
             return (res["last-modified"]) ? moment(res["last-modified"]).toISOString() : null;
         } catch (err) {
-            throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
+            log.error(err);
+            return null;
         }
     }
 

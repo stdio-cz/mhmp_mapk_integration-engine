@@ -71,7 +71,7 @@ export default class MongoModel implements IModel {
         if (this.validator) {
             await this.validator.Validate(data);
         } else {
-            log.warn("Model validator is not set.");
+            log.warn(this.name + ": Model validator is not set.");
         }
 
         const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
@@ -85,6 +85,11 @@ export default class MongoModel implements IModel {
                 throw new CustomError("The model saving type was not specified. Data was not saved.",
                     true, this.name, 1024);
         }
+    }
+
+    public update = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
+        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
+        return model.updateOne(this.searchPath(id), data, { runValidators: true }).exec();
     }
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {

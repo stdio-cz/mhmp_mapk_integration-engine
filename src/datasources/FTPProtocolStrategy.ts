@@ -3,6 +3,7 @@
 import * as path from "path";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
+import RedisModel from "../models/RedisModel";
 import { IFTPSettings, IProtocolStrategy } from "./IProtocolStrategy";
 
 const decompress = require("decompress");
@@ -36,21 +37,27 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
             let result = null;
 
             if (this.connectionSettings.isCompressed) {
-                const tmpDir = "/tmp/" + path.parse(this.connectionSettings.filename).name + "/";
-                const files = await decompress("/tmp/" + this.connectionSettings.filename, tmpDir, {
+                const prefix = path.parse(this.connectionSettings.filename).name + "/";
+                const files = await decompress("/tmp/" + this.connectionSettings.filename, {
                     filter: (this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,
                 });
-                result = files.map((file) => {
+                const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
+                        isKeyConstructedFromData: false,
+                        prefix: "",
+                    },
+                null);
+                result = await Promise.all(files.map(async (file) => {
+                    await redisModel.save(prefix + file.path, file.data.toString("hex"));
                     return {
-                        filepath: tmpDir + file.path,
+                        filepath: prefix + file.path,
                         mtime: file.mtime,
                         name: path.parse(file.path).name,
                         path: file.path,
                     };
-                });
+                }));
             } else if (this.connectionSettings.hasSubFiles) {
                 result = await this.readDir("/tmp/" + this.connectionSettings.filename);
                 if (this.connectionSettings.whitelistedFiles.length) {
@@ -71,6 +78,7 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
             }
             return result;
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }
@@ -86,6 +94,7 @@ export default class FTPProtocolStrategy implements IProtocolStrategy {
             const lastModified = await ftpClient.lastMod(this.connectionSettings.filename);
             return (lastModified) ? moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString() : null;
         } catch (err) {
+            log.error(err);
             throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
         }
     }

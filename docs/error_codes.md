@@ -26,3 +26,5 @@
 - 1022: Error while updating gtfs_trip_id
 - 1023: Error while getting from database.
 - 1024: The model saving type was not specified. Data was not saved.
+- 1025: Method is not implemented.
+- 1026: Sorted Waste Containers were not set. Use method setContaners().

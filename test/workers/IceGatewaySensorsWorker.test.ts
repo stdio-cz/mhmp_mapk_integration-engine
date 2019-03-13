@@ -23,8 +23,8 @@ describe("IceGatewaySensorsWorker", () => {
         sandbox.stub(worker.dataSource, "getAll");
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ features: [], type: "" }));
+        sandbox.stub(worker.transformation, "transformHistory");
         sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.historyTransformation, "transform");
         sandbox.stub(worker.historyModel, "save");
         sandbox.stub(worker, "sendMessageToExchange");
     });
@@ -48,10 +48,10 @@ describe("IceGatewaySensorsWorker", () => {
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
         await worker.saveDataToHistory({content: new Buffer(JSON.stringify({}))});
-        sandbox.assert.calledOnce(worker.historyTransformation.transform);
+        sandbox.assert.calledOnce(worker.transformation.transformHistory);
         sandbox.assert.calledOnce(worker.historyModel.save);
         sandbox.assert.callOrder(
-            worker.historyTransformation.transform,
+            worker.transformation.transformHistory,
             worker.historyModel.save);
     });
 

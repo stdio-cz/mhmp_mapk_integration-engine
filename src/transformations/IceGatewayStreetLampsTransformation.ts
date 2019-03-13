@@ -13,7 +13,7 @@ export default class IceGatewayStreetLampsTransformation extends BaseTransformat
         this.name = IceGatewayStreetLamps.name;
     }
 
-    public transformElement = async (element: any): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const states = {
             "-1": "lost connection (connection status older than 1 hour)",
             "-2": "short-circuit (has connection and the last state non \"off\" is \"short\")",

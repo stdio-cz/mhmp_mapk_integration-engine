@@ -2,7 +2,7 @@
 
 export interface IHTTPSettings {
     /** (optional) Data to send with request, e.g. credentials */
-    body?: object;
+    body?: any;
 
     /** Object with HTTP headers. */
     headers: object;
@@ -15,6 +15,11 @@ export interface IHTTPSettings {
 
     /** Url of the data source. */
     url: string;
+
+    encoding?: any;
+    rejectUnauthorized?: boolean;
+    isCompressed?: boolean;
+    whitelistedFiles?: string[];
 }
 
 export interface IFTPSettings {

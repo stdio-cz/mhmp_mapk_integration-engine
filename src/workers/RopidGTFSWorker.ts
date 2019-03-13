@@ -6,15 +6,13 @@ import DataSource from "../datasources/DataSource";
 import FTPProtocolStrategy from "../datasources/FTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import log from "../helpers/Logger";
-import Validator from "../helpers/Validator";
-import MongoModel from "../models/MongoModel";
 import PostgresModel from "../models/PostgresModel";
+import RedisModel from "../models/RedisModel";
 import RopidGTFSMetadataModel from "../models/RopidGTFSMetadataModel";
 import RopidGTFSCisStopsTransformation from "../transformations/RopidGTFSCisStopsTransformation";
 import RopidGTFSTransformation from "../transformations/RopidGTFSTransformation";
 import BaseWorker from "./BaseWorker";
 
-const fs = require("fs");
 const config = require("../config/ConfigLoader");
 const turf = require("@turf/turf");
 const cheapruler = require("cheap-ruler");
@@ -24,12 +22,13 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     private dataSource: DataSource;
     private transformation: RopidGTFSTransformation;
+    private redisModel: RedisModel;
     private metaModel: RopidGTFSMetadataModel;
     private dataSourceCisStops: DataSource;
     private transformationCisStops: RopidGTFSCisStopsTransformation;
     private cisStopGroupsModel: PostgresModel;
     private cisStopsModel: PostgresModel;
-    private delayComputationTripsModel: MongoModel;
+    private delayComputationTripsModel: RedisModel;
     private queuePrefix: string;
 
     constructor() {
@@ -48,6 +47,11 @@ export default class RopidGTFSWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: ""}),
             null);
         this.transformation = new RopidGTFSTransformation();
+        this.redisModel = new RedisModel(RopidGTFS.name + "Model", {
+                isKeyConstructedFromData: false,
+                prefix: "",
+            },
+        null);
         this.metaModel = new RopidGTFSMetadataModel();
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
@@ -74,20 +78,13 @@ export default class RopidGTFSWorker extends BaseWorker {
             },
             null,
         );
-        this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
-                identifierPath: "trip.trip_id",
-                modelIndexes: [{ "trip.trip_id": 1 }],
-                mongoCollectionName: RopidGTFS.delayComputationTrips.mongoCollectionName,
-                outputMongooseSchemaObject: RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "trip.trip_id": { $in: id } }
-                    : { "trip.trip_id": id },
-                tmpMongoCollectionName: "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName,
+        this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
+                decodeDataAfterGet: JSON.parse,
+                encodeDataBeforeSave: JSON.stringify,
+                isKeyConstructedFromData: true,
+                prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
             },
-            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
-                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
-        );
+        null);
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
@@ -134,7 +131,7 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     public transformData = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        inputData.data = await this.readFile(inputData.filepath);
+        inputData.data = await this.redisModel.getData(inputData.filepath);
         const transformedData = await this.transformation.transform(inputData);
         const model = this.getModelByName(transformedData.name);
         await model.truncate(true);
@@ -226,6 +223,7 @@ export default class RopidGTFSWorker extends BaseWorker {
         const totalCount = Object.keys(gtfs.trips).length;
         let j = 0;
         let chunk = [];
+        // TODO optimalizovat
         const promises = Object.keys(gtfs.trips).map((t) => {
             if (j % Math.round(totalCount / (100 / 2)) === 0 ) {
                 log.debug("   progress " + Math.round(j / totalCount * 100) + "%");
@@ -298,7 +296,7 @@ export default class RopidGTFSWorker extends BaseWorker {
             chunk.push(trip);
             j++;
 
-            if (j % 200 === 0 || j === totalCount) {
+            if (j % 150 === 0 || j === totalCount) {
                 const buffer = new Buffer(JSON.stringify(chunk));
                 chunk = [];
                 return this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataForDelayCalculation",
@@ -307,7 +305,9 @@ export default class RopidGTFSWorker extends BaseWorker {
                 return Promise.resolve();
             }
         });
-        await this.delayComputationTripsModel.truncate(true);
+        // TODO mela by se nejdriv zavolat metoda truncate?
+        // await this.delayComputationTripsModel.truncate(true);
+
         // send message to checking if process is done
         await Promise.all(promises);
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDoneDelayCalculation",
@@ -316,12 +316,13 @@ export default class RopidGTFSWorker extends BaseWorker {
     }
 
     public saveDataForDelayCalculation = async (msg: any): Promise<void> => {
-        const trip = JSON.parse(msg.content.toString());
-        await this.delayComputationTripsModel.save(trip, true);
+        const trips = JSON.parse(msg.content.toString());
+        await this.delayComputationTripsModel.save("trip.trip_id", trips);
     }
 
     public checkSavedRowsAndReplaceTablesForDelayCalculation = async (msg: any): Promise<boolean> => {
-        await this.delayComputationTripsModel.replaceOriginalCollectionByTemporaryCollection();
+        // TODO je tohle potreba?
+        // await this.delayComputationTripsModel.replaceOriginalCollectionByTemporaryCollection();
         return true;
     }
 
@@ -337,23 +338,6 @@ export default class RopidGTFSWorker extends BaseWorker {
             );
         }
         return null;
-    }
-
-    private readFile = (file: string): Promise<Buffer> => {
-        return new Promise((resolve, reject) => {
-            const stream = fs.createReadStream(file);
-            const chunks = [];
-
-            stream.on("error", (err) => {
-                reject(err);
-            });
-            stream.on("data", (data) => {
-                chunks.push(data);
-            });
-            stream.on("close", () => {
-                resolve(Buffer.concat(chunks));
-            });
-        });
     }
 
     private getGTFSDataForDelayCalculationFromModels = async (): Promise<any> => {

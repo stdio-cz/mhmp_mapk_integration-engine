@@ -2,6 +2,7 @@
 
 import { model, Model, Schema, SchemaDefinition } from "mongoose";
 import CustomError from "./errors/CustomError";
+import log from "./Logger";
 
 /**
  * Helper class for validation by mongoose model.
@@ -56,6 +57,7 @@ export default class Validator {
             await modelInstance.validate();
             return true;
         } catch (error) {
+            log.error(error);
             throw new CustomError("Validation error in model: " + this.modelName, true,
                 this.constructor.name, 1007, error);
         }

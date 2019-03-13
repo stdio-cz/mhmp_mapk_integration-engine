@@ -23,4 +23,10 @@ describe("GeocodeApi", () => {
         expect(data).to.equal("Dělnická 213/10, 17000 Praha-Holešovice, Česko");
     });
 
+    it("should returns lat lng by address using Open Street Map API", async () => {
+        const data = await GeocodeApi.getGeoByAddress("Dělnická 213/10", "Praha");
+        expect(data).to.be.a("array");
+        expect(data).to.deep.equal([ 14.4461163, 50.1028934 ]);
+    });
+
 });

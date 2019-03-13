@@ -8,7 +8,6 @@ import CustomError from "../helpers/errors/CustomError";
 import GeocodeApi from "../helpers/GeocodeApi";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
-import ParkingsHistoryTransformation from "../transformations/ParkingsHistoryTransformation";
 import ParkingsTransformation from "../transformations/ParkingsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -19,7 +18,6 @@ export default class ParkingsWorker extends BaseWorker {
     private dataSource: DataSource;
     private transformation: ParkingsTransformation;
     private model: MongoModel;
-    private historyTransformation: ParkingsHistoryTransformation;
     private historyModel: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
@@ -66,7 +64,6 @@ export default class ParkingsWorker extends BaseWorker {
             },
             new Validator(Parkings.history.name + "ModelValidator", Parkings.history.outputMongooseSchemaObject),
         );
-        this.historyTransformation = new ParkingsHistoryTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Parkings.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
@@ -103,7 +100,7 @@ export default class ParkingsWorker extends BaseWorker {
 
     public saveDataToHistory = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.historyTransformation.transform(inputData);
+        const transformedData = await this.transformation.transformHistory(inputData);
         await this.historyModel.save(transformedData);
     }
 
