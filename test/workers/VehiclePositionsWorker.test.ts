@@ -10,6 +10,7 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const sinon = require("sinon");
 const { PostgresConnector } = require("../../src/helpers/PostgresConnector");
+const { RedisConnector } = require("../../src/helpers/RedisConnector");
 
 chai.use(chaiAsPromised);
 
@@ -36,6 +37,7 @@ describe("VehiclePositionsWorker", () => {
                 define: sandbox.stub().callsFake(() => sequelizeModelStub),
                 transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
             }));
+        sandbox.stub(RedisConnector, "getConnection");
 
         worker = new VehiclePositionsWorker();
         sandbox.stub(worker.transformation, "transform")
@@ -49,7 +51,7 @@ describe("VehiclePositionsWorker", () => {
             .callsFake(() => testData);
         sandbox.stub(worker.modelTrips, "findAndUpdateGTFSTripId");
         sandbox.stub(worker, "sendMessageToExchange");
-        sandbox.stub(worker.delayComputationTripsModel, "findOneById")
+        sandbox.stub(worker.delayComputationTripsModel, "getData")
             .callsFake(() => Object.assign({shape_points: []}));
         sandbox.stub(worker, "getEstimatedPoint")
             .callsFake(() => Object.assign({properties: {time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00"}}));
@@ -84,7 +86,7 @@ describe("VehiclePositionsWorker", () => {
     it("should calls the correct methods by updateDelay method", async () => {
         await worker.updateDelay({content: new Buffer("0")});
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
-        sandbox.assert.calledOnce(worker.delayComputationTripsModel.findOneById);
+        sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
         sandbox.assert.calledOnce(worker.getEstimatedPoint);
         sandbox.assert.calledOnce(worker.modelPositions.updateDelay);
     });

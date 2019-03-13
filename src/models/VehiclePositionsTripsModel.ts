@@ -43,7 +43,7 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
         if (this.validator) {
             await this.validator.Validate(data);
         } else {
-            log.warn("Model validator is not set.");
+            log.warn(this.name + ": Model validator is not set.");
         }
 
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;

@@ -2,8 +2,8 @@
 
 import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
 import Validator from "../helpers/Validator";
-import MongoModel from "../models/MongoModel";
 import PostgresModel from "../models/PostgresModel";
+import RedisModel from "../models/RedisModel";
 import VehiclePositionsPositionsModel from "../models/VehiclePositionsPositionsModel";
 import VehiclePositionsTripsModel from "../models/VehiclePositionsTripsModel";
 import VehiclePositionsTransformation from "../transformations/VehiclePositionsTransformation";
@@ -18,7 +18,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
     private modelStops: PostgresModel;
     private modelTrips: VehiclePositionsTripsModel;
     private transformation: VehiclePositionsTransformation;
-    private delayComputationTripsModel: MongoModel;
+    private delayComputationTripsModel: RedisModel;
     private queuePrefix: string;
 
     constructor() {
@@ -34,20 +34,13 @@ export default class VehiclePositionsWorker extends BaseWorker {
         );
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
-        this.delayComputationTripsModel = new MongoModel(RopidGTFS.delayComputationTrips.name + "Model", {
-                identifierPath: "trip.trip_id",
-                modelIndexes: [{ "trip.trip_id": 1 }],
-                mongoCollectionName: RopidGTFS.delayComputationTrips.mongoCollectionName,
-                outputMongooseSchemaObject: RopidGTFS.delayComputationTrips.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "trip.trip_id": { $in: id } }
-                    : { "trip.trip_id": id },
-                tmpMongoCollectionName: "tmp_" + RopidGTFS.delayComputationTrips.mongoCollectionName,
+        this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
+                decodeDataAfterGet: JSON.parse,
+                encodeDataBeforeSave: JSON.stringify,
+                isKeyConstructedFromData: true,
+                prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
             },
-            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
-                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
-        );
+        null);
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
@@ -98,7 +91,7 @@ export default class VehiclePositionsWorker extends BaseWorker {
         }
 
         const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
-        const gtfs = await this.delayComputationTripsModel.findOneById(gtfsTripId);
+        const gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
 
@@ -150,8 +143,8 @@ export default class VehiclePositionsWorker extends BaseWorker {
     private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition) => {
 
         const pt = currentPosition;
-        // init radius around GPS position ( 100 meters radius, 16 points polygon aka circle)
-        const radius = turf.circle(pt, 0.1, {steps: 16});
+        // init radius around GPS position ( 200 meters radius, 16 points polygon aka circle)
+        const radius = turf.circle(pt, 0.2, {steps: 16});
 
         const ptsInRadius = [];
         let segmentIndex = 0;

@@ -106,7 +106,7 @@ export default class MedicalInstitutionsTransformation extends BaseTransformatio
     private transformFile = async (file: any): Promise<any> => {
         return csvtojson({
             delimiter: ";", noheader: false,
-        }).fromString(iconv.decode(Buffer.from(file.data), "win1250"));
+        }).fromString(iconv.decode(Buffer.from(file.data, "hex"), "win1250"));
     }
 
     private getDayLabel = (day: string): string => {

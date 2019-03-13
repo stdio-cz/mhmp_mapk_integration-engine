@@ -8,16 +8,17 @@ import CustomError from "../helpers/errors/CustomError";
 import GeocodeApi from "../helpers/GeocodeApi";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
+import RedisModel from "../models/RedisModel";
 import MedicalInstitutionsTransformation from "../transformations/MedicalInstitutionsTransformation";
 import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
-const fs = require("fs");
 
 export default class MedicalInstitutionsWorker extends BaseWorker {
 
     private dataSource: DataSource;
     private transformation: MedicalInstitutionsTransformation;
+    private redisModel: RedisModel;
     private model: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
@@ -39,7 +40,11 @@ export default class MedicalInstitutionsWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: ""}),
             new Validator(MedicalInstitutions.name + "DataSource",
                 MedicalInstitutions.datasourceMongooseSchemaObject));
-
+        this.redisModel = new RedisModel(MedicalInstitutions.name + "Model", {
+                isKeyConstructedFromData: false,
+                prefix: "",
+            },
+            null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
                 identifierPath: "properties.id",
                 modelIndexes: [{ geometry : "2dsphere" },
@@ -88,7 +93,7 @@ export default class MedicalInstitutionsWorker extends BaseWorker {
         const data = await this.dataSource.getAll();
 
         const inputData = data.map(async (d) => {
-            d.data = await this.readFile(d.filepath);
+            d.data = await this.redisModel.getData(d.filepath);
             return d;
         });
         const transformedData = await this.transformation.transform(await Promise.all(inputData));
@@ -140,20 +145,4 @@ export default class MedicalInstitutionsWorker extends BaseWorker {
         }
     }
 
-    private readFile = (file: string): Promise<Buffer> => {
-        return new Promise((resolve, reject) => {
-            const stream = fs.createReadStream(file);
-            const chunks = [];
-
-            stream.on("error", (err) => {
-                reject(err);
-            });
-            stream.on("data", (data) => {
-                chunks.push(data);
-            });
-            stream.on("close", () => {
-                resolve(Buffer.concat(chunks));
-            });
-        });
-    }
 }

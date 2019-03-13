@@ -15,6 +15,7 @@ chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
 const { PostgresConnector } = require("../../src/helpers/PostgresConnector");
+const { RedisConnector } = require("../../src/helpers/RedisConnector");
 
 describe("RopidGTFSWorker", () => {
 
@@ -38,6 +39,7 @@ describe("RopidGTFSWorker", () => {
 
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({define: sandbox.stub()}));
+        sandbox.stub(RedisConnector, "getConnection");
 
         worker = new RopidGTFSWorker();
 
@@ -57,7 +59,7 @@ describe("RopidGTFSWorker", () => {
 
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
-        sandbox.stub(worker, "readFile")
+        sandbox.stub(worker.redisModel, "getData")
             .callsFake(() => testData[0].data);
         modelTruncateStub = sandbox.stub();
         modelSaveStub = sandbox.stub();
@@ -115,7 +117,6 @@ describe("RopidGTFSWorker", () => {
 
     it("should calls the correct methods by transformData method", async () => {
         await worker.transformData({content: new Buffer(JSON.stringify(testData[0]))});
-        sandbox.assert.calledOnce(worker.readFile);
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledWith(worker.transformation.transform, testData[0]);
         sandbox.assert.calledOnce(worker.getModelByName);

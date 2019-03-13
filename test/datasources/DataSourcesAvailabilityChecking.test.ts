@@ -23,8 +23,13 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 const config = require("../../src/config/ConfigLoader");
+const { RedisConnector } = require("../../src/helpers/RedisConnector");
 
 describe("DataSourcesAvailabilityChecking", () => {
+
+    before(async () => {
+        await RedisConnector.connect();
+    });
 
     describe("CityDistricts", () => {
 
