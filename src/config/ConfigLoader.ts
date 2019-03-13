@@ -40,6 +40,7 @@ module.exports = {
     POSTGRES_CONN: process.env.POSTGRES_CONN,
     RABBIT_CONN: process.env.RABBIT_CONN,
     RABBIT_EXCHANGE_NAME: process.env.RABBIT_EXCHANGE_NAME,
+    REDIS_CONN: process.env.REDIS_CONN,
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
     datasources: new ConfigLoader("datasources").conf,

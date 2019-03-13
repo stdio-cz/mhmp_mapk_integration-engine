@@ -1,6 +1,6 @@
 variables:
   MONGO_CONN: mongodb://$MONGO_HOST/$CI_PROJECT_NAME-$CI_PIPELINE_ID
-  POSTGRES_CONN: postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$CI_PROJECT_NAME
+  POSTGRES_DB: $CI_PROJECT_NAME
   REDIS_CONN: redis://$REDIS_HOST/
 
 stages:
@@ -18,8 +18,9 @@ build_image:
 run_tests:
   stage: test
   script:
-    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || psql -h $POSTGRES_HOST -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_DB"
-    - docker run --net testnet -e MONGO_CONN=$MONGO_CONN -e POSTGRES_CONN=$POSTGRES_CONN -e REDIS_CONN=$REDIS_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH -e OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE $CI_REGISTRY_IMAGE npm run code-coverage
+    - export POSTGRES_DB="${POSTGRES_DB/-/_}"
+    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "CREATE DATABASE $POSTGRES_DB"
+    - docker run --net testnet -e MONGO_CONN=$MONGO_CONN -e POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB -e REDIS_CONN=$REDIS_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH -e OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE $CI_REGISTRY_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy

@@ -26,12 +26,12 @@ describe("RedisConnector", () => {
         expect(RedisConnector.getConnection).to.throw(CustomError);
     });
 
-    it("should connects to RabbitMQ and returns channel", async () => {
+    it("should connects to Redis and returns connection", async () => {
         const ch = await RedisConnector.connect();
         expect(ch).to.be.an.instanceof(Object);
     });
 
-    it("should returns channel", async () => {
+    it("should returns connection", async () => {
         await RedisConnector.connect();
         expect(RedisConnector.getConnection()).to.be.an.instanceof(Object);
     });
