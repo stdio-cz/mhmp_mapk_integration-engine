@@ -2,6 +2,7 @@
 
 import { RopidGTFS } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
+import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import Validator from "../helpers/Validator";
 import { IModel } from "./IModel";
@@ -58,48 +59,92 @@ export default class RopidGTFSMetadataModel extends PostgresModel implements IMo
         }
     }
 
-    public checkSavedRowsAndReplaceTables = async (dataset: string, version: number): Promise<boolean> => {
+    public checkSavedRows = async (dataset: string, version: number): Promise<void> => {
         const metaSum = await this.getTotalFromMeta(dataset, version);
         const tableSum = await this.getTotalFromTables(dataset, version);
-        if (metaSum === tableSum) {
-            const connection = PostgresConnector.getConnection();
-            const t = await connection.transaction();
-            try {
-                const tables = await this.sequelizeModel.findAll({
-                    attributes: [["key", "tn"]],
-                    transaction: t,
-                    where: {
-                        dataset,
-                        type: "TABLE_TOTAL_COUNT",
-                        version,
-                    },
-                });
-                const promises = tables.map((table) => {
-                    const tableName = RopidGTFS[table.dataValues.tn].pgTableName;
-                    const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
-                    return connection.query(
-                        "ALTER TABLE IF EXISTS " + tableName + " RENAME TO old_" + tableName + "; "
-                        + "ALTER TABLE IF EXISTS " + tmpTableName + " RENAME TO " + tableName + "; "
-                        + "DROP TABLE IF EXISTS old_" + tableName + "; ",
-                        { transaction: t });
-                });
-                await Promise.all(promises);
-                await this.sequelizeModel.destroy({
-                    transaction: t,
-                    where: {
-                        dataset,
-                        version: { [Sequelize.Op.ne]: version },
-                    },
-                });
-                t.commit();
-                return true;
-            } catch (err) {
-                log.error(err);
-                t.rollback();
-                return false;
-            }
+        if (metaSum !== tableSum) {
+            throw new CustomError(this.name + ": checkSavedRows() failed.", true);
         }
-        return false;
+    }
+
+    public replaceTables = async (dataset: string, version: number): Promise<boolean> => {
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+        try {
+            const tables = await this.sequelizeModel.findAll({
+                attributes: [["key", "tn"]],
+                transaction: t,
+                where: {
+                    dataset,
+                    type: "TABLE_TOTAL_COUNT",
+                    version,
+                },
+            });
+            const promises = tables.map((table) => {
+                const tableName = RopidGTFS[table.dataValues.tn].pgTableName;
+                const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
+                return connection.query(
+                    "ALTER TABLE IF EXISTS " + tableName + " RENAME TO old_" + tableName + "; "
+                    + "ALTER TABLE IF EXISTS " + tmpTableName + " RENAME TO " + tableName + "; "
+                    + "DROP TABLE IF EXISTS old_" + tableName + "; ",
+                    { transaction: t });
+            });
+            await Promise.all(promises);
+            await this.sequelizeModel.destroy({
+                transaction: t,
+                where: {
+                    dataset,
+                    version: { [Sequelize.Op.and]: [
+                        { [Sequelize.Op.ne]: version },
+                        { [Sequelize.Op.ne]: -1 },
+                    ]},
+                },
+            });
+            t.commit();
+            return true;
+        } catch (err) {
+            log.error(err);
+            t.rollback();
+            throw new CustomError(this.name + ": replaceTables() failed.", true, null, null, err);
+        }
+    }
+
+    public rollbackFailedSaving = async (dataset: string, version: number): Promise<any> => {
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+        const tables = await this.sequelizeModel.findAll({
+            attributes: [["key", "tn"]],
+            transaction: t,
+            where: {
+                dataset,
+                type: "TABLE_TOTAL_COUNT",
+                version,
+            },
+        });
+        const promises = tables.map((table) => {
+            const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
+            return connection.query(
+                "TRUNCATE TABLE " + tmpTableName + "; ",
+                { transaction: t });
+        });
+        await Promise.all(promises);
+        await this.sequelizeModel.destroy({
+            transaction: t,
+            where: {
+                dataset,
+                version: { [Sequelize.Op.and]: [
+                    { [Sequelize.Op.eq]: version },
+                    { [Sequelize.Op.ne]: -1 },
+                ]},
+            },
+        });
+        await this.save({
+            dataset,
+            key: "failed",
+            type: "DATASET_INFO",
+            value: new Date().toISOString(),
+            version: -1 });
+        t.commit();
     }
 
     private getTotalFromMeta = async (dataset: string, version: number): Promise<any> => {

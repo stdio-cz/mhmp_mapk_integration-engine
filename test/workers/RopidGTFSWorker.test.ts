@@ -51,8 +51,9 @@ describe("RopidGTFSWorker", () => {
         sandbox.stub(worker.metaModel, "getLastModified")
             .callsFake(() => Object.assign({lastModified: "2019-01-18T03:24:09.000Z", version: 0}));
         sandbox.stub(worker.metaModel, "save");
-        sandbox.stub(worker.metaModel, "checkSavedRowsAndReplaceTables")
-            .callsFake(() => true);
+        sandbox.stub(worker.metaModel, "checkSavedRows");
+        sandbox.stub(worker.metaModel, "replaceTables");
+        sandbox.stub(worker.metaModel, "rollbackFailedSaving");
 
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
@@ -143,7 +144,9 @@ describe("RopidGTFSWorker", () => {
 
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {
         await worker.checkSavedRowsAndReplaceTables();
-        sandbox.assert.calledOnce(worker.metaModel.checkSavedRowsAndReplaceTables);
+        sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
+        sandbox.assert.calledOnce(worker.metaModel.replaceTables);
+        sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by downloadCisStops method", async () => {
@@ -156,7 +159,8 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(worker.cisStopGroupsModel.save);
         sandbox.assert.calledOnce(worker.cisStopsModel.truncate);
         sandbox.assert.calledOnce(worker.cisStopsModel.save);
-        sandbox.assert.calledOnce(worker.metaModel.checkSavedRowsAndReplaceTables);
+        sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
+        sandbox.assert.calledOnce(worker.metaModel.replaceTables);
         sandbox.assert.callOrder(
             worker.dataSourceCisStops.getAll,
             worker.metaModel.getLastModified,
@@ -167,7 +171,8 @@ describe("RopidGTFSWorker", () => {
             worker.cisStopGroupsModel.save,
             worker.cisStopsModel.truncate,
             worker.cisStopsModel.save,
-            worker.metaModel.checkSavedRowsAndReplaceTables);
+            worker.metaModel.checkSavedRows,
+            worker.metaModel.replaceTables);
         sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 

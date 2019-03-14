@@ -521,43 +521,6 @@ const definitions: IQueueDefinition[] = [
                 worker: RopidGTFSWorker,
                 workerMethod: "saveDataForDelayCalculation",
             },
-            {
-                customProcessFunction: async (msg: any) => {
-                    const channel = await AMQPConnector.getChannel();
-                    const queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
-                    try {
-                        const qs = await channel.checkQueue(queuePrefix + ".saveDataForDelayCalculation");
-                        const worker = new RopidGTFSWorker();
-
-                        if (qs.messageCount === 0) {
-                            // for sure all messages are dispatched
-                            await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
-                            if (await worker.checkSavedRowsAndReplaceTablesForDelayCalculation(msg)) {
-                                channel.ack(msg);
-                            } else {
-                                handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    this.constructor.name, 1021));
-                                channel.nack(msg, false, false);
-                            }
-                            log.verbose("[<] " + queuePrefix + ".checkingIfDoneDelayCalculation: done");
-                        } else {
-                            await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
-                            channel.reject(msg);
-                        }
-                    } catch (err) {
-                        handleError(err);
-                        channel.nack(msg, false, false);
-                    }
-                },
-                name: "checkingIfDoneDelayCalculation",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
-                },
-                worker: null,
-                workerMethod: null,
-            },
         ],
     },
     {

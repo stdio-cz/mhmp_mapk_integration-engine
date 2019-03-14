@@ -165,13 +165,17 @@ export default class RopidGTFSWorker extends BaseWorker {
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
-        const result = await this.metaModel.checkSavedRowsAndReplaceTables("PID_GTFS", dbLastModified.version);
-        if (result) {
-            // send message to refresh data for delay calculation
+        try {
+            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
+            await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".refreshDataForDelayCalculation",
                 new Buffer("Just do it!"));
+            return true;
+        } catch (err) {
+            log.error(err);
+            await this.metaModel.rollbackFailedSaving("PID_GTFS", dbLastModified.version);
+            return false;
         }
-        return result;
     }
 
     public downloadCisStops = async (msg: any): Promise<void> => {
@@ -202,7 +206,13 @@ export default class RopidGTFSWorker extends BaseWorker {
         await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
         await this.cisStopsModel.truncate(true);
         await this.cisStopsModel.save(transformedData.cis_stops, true);
-        await this.metaModel.checkSavedRowsAndReplaceTables("CIS_STOPS", dbLastModified.version + 1);
+        try {
+            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
+            await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
+        } catch (err) {
+            log.error(err);
+            await this.metaModel.rollbackFailedSaving("CIS_STOPS", dbLastModified.version + 1);
+        }
     }
 
     public refreshDataForDelayCalculation = async (msg: any): Promise<void> => {
@@ -305,25 +315,14 @@ export default class RopidGTFSWorker extends BaseWorker {
                 return Promise.resolve();
             }
         });
-        // TODO mela by se nejdriv zavolat metoda truncate?
-        // await this.delayComputationTripsModel.truncate(true);
-
         // send message to checking if process is done
         await Promise.all(promises);
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDoneDelayCalculation",
-            new Buffer("Just Do It!"));
         log.debug(" >> END");
     }
 
     public saveDataForDelayCalculation = async (msg: any): Promise<void> => {
         const trips = JSON.parse(msg.content.toString());
         await this.delayComputationTripsModel.save("trip.trip_id", trips);
-    }
-
-    public checkSavedRowsAndReplaceTablesForDelayCalculation = async (msg: any): Promise<boolean> => {
-        // TODO je tohle potreba?
-        // await this.delayComputationTripsModel.replaceOriginalCollectionByTemporaryCollection();
-        return true;
     }
 
     private getModelByName = (name: string): PostgresModel => {
