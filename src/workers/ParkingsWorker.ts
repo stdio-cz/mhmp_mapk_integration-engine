@@ -12,6 +12,7 @@ import ParkingsTransformation from "../transformations/ParkingsTransformation";
 import BaseWorker from "./BaseWorker";
 
 const config = require("../config/ConfigLoader");
+const moment = require("moment");
 
 export default class ParkingsWorker extends BaseWorker {
 
@@ -149,16 +150,15 @@ export default class ParkingsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.properties.id;
         const dbData = await this.model.findOneById(id);
+        const timestampMonthAgo = moment().subtract(1, "months").unix();
 
         const aggregation = [
-            { $match: { id } },
+            { $match: { $and: [ { id }, { timestamp: { $gte: timestampMonthAgo }} ] }},
             {
                 $group: {
                     _id: {
                         dayOfWeek: {
-                            $dayOfWeek: {
-                                $toDate: "$timestamp",
-                            },
+                            $subtract: [ {$dayOfWeek: { $toDate: "$timestamp" }}, 1 ],
                         },
                         hour: {
                             $dateToString: {
@@ -181,14 +181,11 @@ export default class ParkingsWorker extends BaseWorker {
         try {
             const result = await this.historyModel.aggregate(aggregation);
             const transformedResult = {};
-            const promises = result.map((r) => {
-                return new Promise((resolve, reject) => {
-                    if (!transformedResult[r._id.dayOfWeek]) {
-                        transformedResult[r._id.dayOfWeek] = {};
-                    }
-                    transformedResult[r._id.dayOfWeek][r._id.hour] = r.avg_taken;
-                    resolve();
-                });
+            const promises = result.map(async (r) => {
+                if (!transformedResult[r._id.dayOfWeek]) {
+                    transformedResult[r._id.dayOfWeek] = {};
+                }
+                transformedResult[r._id.dayOfWeek][r._id.hour] = (r.avg_taken) ? r.avg_taken : null;
             });
             await Promise.all(promises);
             dbData.properties.average_occupancy = transformedResult;
