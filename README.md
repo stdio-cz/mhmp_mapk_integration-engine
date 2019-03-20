@@ -33,7 +33,7 @@ npm install
 
 Configuration is split to environment (.env file) options and other specific options (e.g. datasources).
 
-The specific configuration files are in the `src/config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.js` -> `datasources.js`. The default and specific configuration files are merged by the rule: specific options overrides default options.
+The specific configuration files are in the `config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.json` -> `datasources.json`. The default and specific configuration files are merged by the rule: specific options overrides default options.
 
 Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`) or with the `.env` file. Example of the `.env` file is saved as `.env.template`.
 

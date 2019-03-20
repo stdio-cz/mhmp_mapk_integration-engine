@@ -1,5 +1,7 @@
 "use strict";
 
+import * as path from "path";
+
 /**
  * Helper for loading and merging default and specific config files.
  */
@@ -17,10 +19,10 @@ class ConfigLoader {
         let conf: object = {};
         let defaultConf: object = {};
         try {
-            conf = require("./" + filename);
-            defaultConf = require("./" + filename + ".default");
+            conf = require(path.resolve(__dirname, "../../config/", filename + ".json"));
+            defaultConf = require(path.resolve(__dirname, "../../config/", filename + ".default.json"));
         } catch (err) {
-            defaultConf = require("./" + filename + ".default");
+            defaultConf = require(path.resolve(__dirname, "../../config/", filename + ".default.json"));
         }
         /// merging objects defaultConf and conf for export
         this.conf = { ...defaultConf, ...conf };
