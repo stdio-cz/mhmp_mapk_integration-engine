@@ -1,9 +1,13 @@
 "use strict";
 
-import IceGatewayStreetLampsDataSource from "../datasources/IceGatewayStreetLampsDataSource";
-import ISourceRequest from "../datasources/ISourceRequest";
+import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
+import DataSource from "../datasources/DataSource";
+import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
+import { IHTTPSettings } from "../datasources/IProtocolStrategy";
+import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
 import CustomError from "../helpers/errors/CustomError";
-import IceGatewayStreetLampsModel from "../models/IceGatewayStreetLampsModel";
+import Validator from "../helpers/Validator";
+import MongoModel from "../models/MongoModel";
 import IceGatewayStreetLampsTransformation from "../transformations/IceGatewayStreetLampsTransformation";
 import BaseWorker from "./BaseWorker";
 
@@ -12,26 +16,59 @@ const config = require("../config/ConfigLoader");
 
 export default class IceGatewayStreetLampsWorker extends BaseWorker {
 
-    private model: IceGatewayStreetLampsModel;
-    private dataSource: IceGatewayStreetLampsDataSource;
+    private dataSource: DataSource;
     private transformation: IceGatewayStreetLampsTransformation;
+    private model: MongoModel;
 
     constructor() {
         super();
-        this.model = new IceGatewayStreetLampsModel();
-        this.dataSource = new IceGatewayStreetLampsDataSource();
+        this.dataSource = new DataSource(IceGatewayStreetLamps.name + "DataSource",
+            new HTTPProtocolStrategy({
+                headers : {
+                    Authorization: "Token " + config.datasources.IGToken,
+                },
+                method: "GET",
+                url: config.datasources.IGStreetLamps,
+            }),
+            new JSONDataTypeStrategy({resultsPath: ""}),
+            new Validator(IceGatewayStreetLamps.name + "DataSource",
+                IceGatewayStreetLamps.datasourceMongooseSchemaObject));
+        this.model = new MongoModel(IceGatewayStreetLamps.name + "Model", {
+                identifierPath: "properties.id",
+                modelIndexes: [{ geometry : "2dsphere" }],
+                mongoCollectionName: IceGatewayStreetLamps.mongoCollectionName,
+                outputMongooseSchemaObject: IceGatewayStreetLamps.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+                updateValues: (a, b) => {
+                    a.properties.dim_value = b.properties.dim_value;
+                    a.properties.groups = b.properties.groups;
+                    a.properties.lamppost_id = b.properties.lamppost_id;
+                    a.properties.last_dim_override = b.properties.last_dim_override;
+                    a.properties.state = b.properties.state;
+                    a.properties.timestamp = b.properties.timestamp;
+                    return a;
+                },
+            },
+            new Validator(IceGatewayStreetLamps.name + "ModelValidator",
+                IceGatewayStreetLamps.outputMongooseSchemaObject),
+        );
         this.transformation = new IceGatewayStreetLampsTransformation();
     }
 
-    public refreshDataInDB = async (): Promise<void> => {
-        const data = await this.dataSource.GetAll();
-        const transformedData = await this.transformation.TransformDataCollection(data);
-        await this.model.SaveToDb(transformedData);
+    public refreshDataInDB = async (msg: any): Promise<void> => {
+        const data = await this.dataSource.getAll();
+        const transformedData = await this.transformation.transform(data);
+        await this.model.save(transformedData);
     }
 
-    public setDimValue = async (inputData: any): Promise<void> => {
+    public setDimValue = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
         try {
-            const requestObject: ISourceRequest = {
+            const requestObject: IHTTPSettings = {
                 body: {
                     value: inputData.value,
                 },

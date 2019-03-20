@@ -16,9 +16,39 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
     }
 
     /**
-     * Transforms data from data source to output format (JSON)
+     * Overrides BaseTransformation::transform
      */
-    public TransformDataElement = async (element): Promise<any> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
+        const res = {
+            positions: [],
+            stops: [],
+            trips: [],
+        };
+
+        if (data instanceof Array) {
+            const promises = data.map(async (element, i) => {
+                const elemRes = await this.transformElement(element);
+                if (elemRes) {
+                    res.positions.push(elemRes.position);
+                    res.stops = res.stops.concat(elemRes.stops);
+                    res.trips.push(elemRes.trip);
+                }
+                return;
+            });
+            await Promise.all(promises);
+            return res;
+        } else {
+            const elemRes = await this.transformElement(data);
+            if (elemRes) {
+                res.positions.push(elemRes.position);
+                res.stops = res.stops.concat(elemRes.stops);
+                res.trips.push(elemRes.trip);
+            }
+            return res;
+        }
+    }
+
+    protected transformElement = async (element: any): Promise<any> => {
         const attributes = element.$;
         const stops = element.zast;
 
@@ -26,7 +56,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
             return null;
         }
 
-        // const now = new Date(moment.tz("Europe/Prague").format());
         const now = moment.tz("Europe/Prague");
         let isOverMidnight = 0;
 
@@ -41,7 +70,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
         // midnight checking
         isOverMidnight = this.checkMidnight(now, startDate); // returns -1, 1 or 0
-        // startDate.setDate(startDate.getDate() + isOverMidnight);
         startDate.add(isOverMidnight, "d");
 
         const timestamp = moment.tz("Europe/Prague");
@@ -53,12 +81,14 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
         // midnight checking
         isOverMidnight = this.checkMidnight(now, timestamp); // returns -1, 1 or 0
-        // timestamp.setDate(timestamp.getDate() + isOverMidnight);
         timestamp.add(isOverMidnight, "d");
 
+        // primary key -> start_timestamp, cis_id, cis_short_name, cis_number
+        const primaryKey = startDate.utc().format()
+            + "_" + attributes.lin + "_" + attributes.alias + "_" + attributes.spoj;
+
         const res = {
-            stops: [],
-            trip: {
+            position: {
                 delay_stop_arrival: (attributes.zpoz_prij)
                     ? parseInt(attributes.zpoz_prij, 10)
                     : null,
@@ -66,32 +96,39 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                     ? parseInt(attributes.zpoz_odj, 10)
                     : null,
                 is_canceled: (attributes.zrus === "true") ? true : false,
-                is_low_floor: (attributes.np === "true") ? true : false,
-                last_stop_id_cis: (attributes.zast)
-                    ? parseInt(attributes.zast, 10)
-                    : null,
                 lat: (attributes.lat)
                     ? parseFloat(attributes.lat)
                     : null,
-                line: parseInt(attributes.lin, 10),
                 lng: (attributes.lng)
                     ? parseFloat(attributes.lng)
                     : null,
-                route_id_cis: parseInt(attributes.spoj, 10),
-                route_number: parseInt(attributes.po, 10),
-                route_short_name: attributes.alias,
-                start_date: startDate.utc().format(),
-                timestamp: timestamp.utc().format(),
+                origin_time: attributes.cpoz,
+                origin_timestamp: timestamp.utc().format(),
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
                     : null,
-                type: (attributes.t)
+                trips_id: primaryKey,
+            },
+            stops: [],
+            trip: {
+                cis_id: parseInt(attributes.lin, 10),
+                cis_number: parseInt(attributes.spoj, 10),
+                cis_order: parseInt(attributes.po, 10),
+                cis_short_name: attributes.alias,
+                id: primaryKey,
+                modified: moment.tz("Europe/Prague").utc().format(),
+                start_cis_stop_id: parseInt(stops[0].$.zast, 10),
+                start_cis_stop_platform_code: stops[0].$.stan,
+                start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
+                start_timestamp: startDate.utc().format(),
+                vehicle_type: (attributes.t)
                     ? parseInt(attributes.t, 10)
                     : null,
+                wheelchair_accessible: (attributes.np === "true") ? true : false,
             },
         };
 
-        const promises = stops.map((stop, i) => {
+        const promises = stops.map(async (stop, i) => {
             let arrival;
             let departure;
 
@@ -106,7 +143,6 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
                 // midnight checking
                 isOverMidnight = this.checkMidnight(now, arrival); // returns -1, 1 or 0
-                // arrival.setDate(arrival.getDate() + isOverMidnight);
                 arrival.add(isOverMidnight, "d");
             }
             // creating departure from stop.$.odj
@@ -120,12 +156,15 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
 
                 // midnight checking
                 isOverMidnight = this.checkMidnight(now, departure); // returns -1, 1 or 0
-                // departure.setDate(departure.getDate() + isOverMidnight);
                 departure.add(isOverMidnight, "d");
             }
 
-            res.stops.push({
-                connection: parseInt(attributes.spoj, 10),
+            return {
+                arrival_time: (arrival) ? stop.$.prij : null,
+                arrival_timestamp: (arrival) ? arrival.utc().format() : null,
+                cis_stop_id: parseInt(stop.$.zast, 10),
+                cis_stop_platform_code: stop.$.stan,
+                cis_stop_sequence: i + 1,
                 delay_arrival: (stop.$.zpoz_prij)
                     ? parseInt(stop.$.zpoz_prij, 10)
                     : null,
@@ -135,48 +174,15 @@ export default class VehiclePositionsTransformation extends BaseTransformation i
                 delay_type: (stop.$.zpoz_typ)
                     ? parseInt(stop.$.zpoz_typ, 10)
                     : null,
-                line: parseInt(attributes.lin, 10),
-                stop_id_cis: parseInt(stop.$.zast, 10),
-                stop_order: i,
-                stop_platform: stop.$.stan,
-                time_arrival: (arrival) ? arrival.utc().format() : null,
-                time_departure: (departure) ? departure.utc().format() : null,
-                timestamp: timestamp.utc().format(),
-            });
+                departure_time: (departure) ? stop.$.odj : null,
+                departure_timestamp: (departure) ? departure.utc().format() : null,
+                modified: moment.tz("Europe/Prague").utc().format(),
+                trips_id: primaryKey,
+            };
         });
+        res.stops = await Promise.all(promises);
 
-        await Promise.all(promises);
         return res;
-    }
-
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
-        const res = {
-            stops: [],
-            trips: [],
-        };
-
-        if (collection instanceof Array) {
-            const promises = collection.map(async (element, i) => {
-                const elemRes = await this.TransformDataElement(element);
-                if (elemRes) {
-                    res.stops = res.stops.concat(elemRes.stops);
-                    res.trips.push(elemRes.trip);
-                }
-                return;
-            });
-            await Promise.all(promises);
-            return res;
-        } else {
-            const elemRes = await this.TransformDataElement(collection);
-            if (elemRes) {
-                res.stops = res.stops.concat(elemRes.stops);
-                res.trips.push(elemRes.trip);
-            }
-            return res;
-        }
     }
 
     private checkMidnight = (now, start): number => {

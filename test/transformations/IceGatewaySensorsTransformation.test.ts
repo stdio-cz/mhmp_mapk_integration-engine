@@ -45,12 +45,12 @@ describe("IceGatewaySensorsTransformation", () => {
         expect(transformation.name).is.equal("IceGatewaySensors");
     });
 
-    it("should has TransformDataElement method", async () => {
-        expect(transformation.TransformDataElement).not.to.be.undefined;
+    it("should has transform method", async () => {
+        expect(transformation.transform).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.TransformDataElement(testSourceData[0]);
+        const data = await transformation.transform(testSourceData[0]);
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
@@ -59,12 +59,8 @@ describe("IceGatewaySensorsTransformation", () => {
         expect(data.properties).to.have.property("timestamp");
     });
 
-    it("should has TransformDataCollection method", async () => {
-        expect(transformation.TransformDataCollection).not.to.be.undefined;
-    });
-
     it("should properly transform collection", async () => {
-        const data = await transformation.TransformDataCollection(testSourceData);
+        const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");
@@ -73,6 +69,38 @@ describe("IceGatewaySensorsTransformation", () => {
             expect(data[i].properties).to.have.property("sensors");
             expect(data[i].properties).to.have.property("timestamp");
         }
+    });
+
+    describe("history", () => {
+
+        let testTransformedData;
+
+        beforeEach(async () => {
+            transformation = new IceGatewaySensorsTransformation();
+            const buffer = await readFile(__dirname + "/../data/icegatewaysensors-transformed.json");
+            testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        });
+
+        it("should has transformHistory method", async () => {
+            expect(transformation.transformHistory).not.to.be.undefined;
+        });
+
+        it("should properly transform element", async () => {
+            const data = await transformation.transformHistory(testTransformedData[0]);
+            expect(data).to.have.property("id");
+            expect(data).to.have.property("sensors");
+            expect(data).to.have.property("timestamp");
+        });
+
+        it("should properly transform collection", async () => {
+            const data = await transformation.transformHistory(testTransformedData);
+            for (let i = 0, imax = data.length; i < imax; i++) {
+                expect(data[i]).to.have.property("id");
+                expect(data[i]).to.have.property("sensors");
+                expect(data[i]).to.have.property("timestamp");
+            }
+        });
+
     });
 
 });

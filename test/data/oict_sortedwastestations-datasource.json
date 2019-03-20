@@ -1,0 +1,2502 @@
+[
+    {
+       "slug": "namesti-omladiny",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.380667,
+          50.011886
+       ],
+       "address": "Náměstí Omladiny",
+       "unique_id": "diakonie-broumov_namesti-omladiny",
+       "district": "praha-velka-chuchle",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "prusikova",
+       "description": "u Alberta",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.338374,
+          50.037552
+       ],
+       "address": "Prusíkova",
+       "unique_id": "diakonie-broumov_prusikova",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "zakovska-x-starodvorska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.372475,
+          50.125278
+       ],
+       "address": "Žákovská X Starodvorská",
+       "unique_id": "diakonie-broumov_zakovska-x-starodvorska",
+       "district": "praha-lysolaje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "v-sudech-14882",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.344484,
+          49.992602
+       ],
+       "address": "V Sudech 1488/2",
+       "unique_id": "diakonie-broumov_v-sudech-14882",
+       "district": "praha-16",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "piskovcova-x-prosecka",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.497847,
+          50.117646
+       ],
+       "address": "Pískovcová X Prosecká",
+       "unique_id": "diakonie-broumov_piskovcova-x-prosecka",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "pastevcu-483",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.522576,
+          50.018176
+       ],
+       "address": "Pastevců 483",
+       "unique_id": "diakonie-broumov_pastevcu-483",
+       "district": "praha-ujezd",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "perucka-254210",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.4393825,
+          50.0680388
+       ],
+       "address": "Perucká 2542/10",
+       "unique_id": "diakonie-broumov_perucka-254210",
+       "district": "praha-2",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "pod-vidouli",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.363923,
+          50.052515
+       ],
+       "address": "Pod Vidoulí",
+       "unique_id": "diakonie-broumov_pod-vidouli",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jankovska",
+       "description": "u hřbitova",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.440583,
+          50.04639
+       ],
+       "address": "Jankovská",
+       "unique_id": "diakonie-broumov_jankovska",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "u-hraze",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.48609,
+          50.070177
+       ],
+       "address": "U Hráze",
+       "unique_id": "diakonie-broumov_u-hraze",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "milanska",
+       "description": "u plaveckého stadionu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.557781,
+          50.045623
+       ],
+       "address": "Milánská",
+       "unique_id": "diakonie-broumov_milanska",
+       "district": "praha-15",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "durychova",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.451557,
+          50.018939
+       ],
+       "address": "Durychova",
+       "unique_id": "diakonie-broumov_durychova",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "nambratri-synku",
+       "description": "u konečné tramvajové zastávky",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.441269,
+          50.064818
+       ],
+       "address": "Nám.Bratří Synků",
+       "unique_id": "diakonie-broumov_nambratri-synku",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "zakryta",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.473996,
+          50.04892
+       ],
+       "address": "Zakrytá",
+       "unique_id": "diakonie-broumov_zakryta",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "proslunena-x-v-nasypu",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.401997,
+          50.044944
+       ],
+       "address": "Prosluněná X V Násypu",
+       "unique_id": "diakonie-broumov_proslunena-x-v-nasypu",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "archeologicka-x-bronzova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.33078,
+          50.044274
+       ],
+       "address": "Archeologická X Bronzová",
+       "unique_id": "diakonie-broumov_archeologicka-x-bronzova",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jilemnicka",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.555054,
+          50.145816
+       ],
+       "address": "Jilemnická",
+       "unique_id": "diakonie-broumov_jilemnicka",
+       "district": "praha-vinor",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "ostromecska-x-jeseniova",
+       "description": "u kostela Sv. Anny",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.461068,
+          50.087041
+       ],
+       "address": "Ostromečská x Jeseniova",
+       "unique_id": "diakonie-broumov_ostromecska-x-jeseniova",
+       "district": "praha-3",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "zivoninska",
+       "description": "u polikliniky Medicur",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.67946,
+          50.071063
+       ],
+       "address": "Živonínská",
+       "unique_id": "diakonie-broumov_zivoninska",
+       "district": "praha-21",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hlavni",
+       "description": "u Veřejné ubytovny Spořilov",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.489454,
+          50.047449
+       ],
+       "address": "Hlavní",
+       "unique_id": "diakonie-broumov_hlavni",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "becovska-939",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.591059,
+          50.039735
+       ],
+       "address": "Bečovská 939",
+       "unique_id": "diakonie-broumov_becovska-939",
+       "district": "praha-22",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "klikata-123890c",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.372394,
+          50.059139
+       ],
+       "address": "Klikatá 1238/90c",
+       "unique_id": "diakonie-broumov_klikata-123890c",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "lovosicka",
+       "description": "u polikliniky Prosek",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.490134,
+          50.128055
+       ],
+       "address": "Lovosická",
+       "unique_id": "diakonie-broumov_lovosicka",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "predskolni",
+       "description": "v areálu základní školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.4806019,
+          50.01231
+       ],
+       "address": "Předškolní",
+       "unique_id": "diakonie-broumov_predskolni",
+       "district": "praha-kunratice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "smichovska",
+       "description": "u hřbitova",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.31615,
+          50.03567
+       ],
+       "address": "Smíchovská",
+       "unique_id": "diakonie-broumov_smichovska",
+       "district": "praha-reporyje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "novovysocanska-x-u-nove-skoly",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.489942,
+          50.100366
+       ],
+       "address": "Novovysočanská X U Nové školy",
+       "unique_id": "diakonie-broumov_novovysocanska-x-u-nove-skoly",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "zalesanska",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.668544,
+          50.07242
+       ],
+       "address": "Zálešanská",
+       "unique_id": "diakonie-broumov_zalesanska",
+       "district": "praha-21",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "bellusova-181937",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.325393,
+          50.042114
+       ],
+       "address": "Bellušová 1819/37",
+       "unique_id": "diakonie-broumov_bellusova-181937",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "podkovarska-35",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.51293,
+          50.104239
+       ],
+       "address": "Podkovářská 35",
+       "unique_id": "diakonie-broumov_podkovarska-35",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hlubocepska-x-michnovska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.397582,
+          50.040154
+       ],
+       "address": "Hlubočepská X Michnovská",
+       "unique_id": "diakonie-broumov_hlubocepska-x-michnovska",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "teplarenska-5",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.531909,
+          50.085624
+       ],
+       "address": "Teplárenská 5",
+       "unique_id": "diakonie-broumov_teplarenska-5",
+       "district": "praha-14",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "telovychovna",
+       "description": "u železničního přejezdu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.310608,
+          50.031807
+       ],
+       "address": "Tělovýchovná",
+       "unique_id": "diakonie-broumov_telovychovna",
+       "district": "praha-reporyje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "pod-lysinami",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.412425,
+          50.021364
+       ],
+       "address": "Pod Lysinami",
+       "unique_id": "diakonie-broumov_pod-lysinami",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "fantova-36",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.317108,
+          50.045771
+       ],
+       "address": "Fantova 36",
+       "unique_id": "diakonie-broumov_fantova-36",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hilmarova",
+       "description": "na parkovišti obchodu Billa",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.378196,
+          50.034449
+       ],
+       "address": "Hilmarova",
+       "unique_id": "diakonie-broumov_hilmarova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "voctarova",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.466314,
+          50.102557
+       ],
+       "address": "Voctářova",
+       "unique_id": "diakonie-broumov_voctarova",
+       "district": "praha-8",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "ostruzinova",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.498453,
+          50.058108
+       ],
+       "address": "Ostružinová",
+       "unique_id": "diakonie-broumov_ostruzinova",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "namesti-14rijna-x-preslova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.40632,
+          50.073711
+       ],
+       "address": "Náměstí 14.října X Preslova",
+       "unique_id": "diakonie-broumov_namesti-14rijna-x-preslova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "holeckova-x-kmochova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.395544,
+          50.074214
+       ],
+       "address": "Holečkova X Kmochova",
+       "unique_id": "diakonie-broumov_holeckova-x-kmochova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "pod-sancemi-4441",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.5027028,
+          50.0981595
+       ],
+       "address": "Pod Šancemi 444/1",
+       "unique_id": "diakonie-broumov_pod-sancemi-4441",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "sturova-x-v-stihlach",
+       "description": "u parkoviště",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.452354,
+          50.01983
+       ],
+       "address": "Štúrova X V Štíhlách",
+       "unique_id": "diakonie-broumov_sturova-x-v-stihlach",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "ceskolipska-x-novoborska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.499301,
+          50.125816
+       ],
+       "address": "Českolipská X Novoborská",
+       "unique_id": "diakonie-broumov_ceskolipska-x-novoborska",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "za-valem",
+       "description": "naproti restauraci V Zeleném údolí",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.465411,
+          50.020826
+       ],
+       "address": "Za Valem",
+       "unique_id": "diakonie-broumov_za-valem",
+       "district": "praha-kunratice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "k-cihelne-420",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.5853909,
+          50.122851
+       ],
+       "address": "K Cihelně 420",
+       "unique_id": "diakonie-broumov_k-cihelne-420",
+       "district": "praha-satalice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "sokolovska",
+       "description": "u polikliniky Vysočany",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.494314,
+          50.108486
+       ],
+       "address": "Sokolovská",
+       "unique_id": "diakonie-broumov_sokolovska",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "kubanske-namesti",
+       "description": "u tramvajové zastávky Kubánské náměstí",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.477364,
+          50.070536
+       ],
+       "address": "Kubánské náměstí",
+       "unique_id": "diakonie-broumov_kubanske-namesti",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "topolova-x-jablonova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.507078,
+          50.056338
+       ],
+       "address": "Topolová X Jabloňova",
+       "unique_id": "diakonie-broumov_topolova-x-jablonova",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "galerie-harfa",
+       "description": "v podzemních garážích nákupního centra P-2",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.489696,
+          50.10378
+       ],
+       "address": "Galerie Harfa",
+       "unique_id": "diakonie-broumov_galerie-harfa",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "nadrazni",
+       "description": "u tramvajové zastávky Plzeňka",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.40811,
+          50.064753
+       ],
+       "address": "Nádražní",
+       "unique_id": "diakonie-broumov_nadrazni",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "na-bambouzku",
+       "description": "u mateřské školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.358925,
+          49.959483
+       ],
+       "address": "Na Bambouzku",
+       "unique_id": "diakonie-broumov_na-bambouzku",
+       "district": "praha-lipence",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "probostska-1",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.375389,
+          50.097349
+       ],
+       "address": "Proboštská 1",
+       "unique_id": "diakonie-broumov_probostska-1",
+       "district": "praha-6",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "obloukova-6",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.457669,
+          50.06572
+       ],
+       "address": "Oblouková 6",
+       "unique_id": "diakonie-broumov_obloukova-6",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "v-cibulkach",
+       "description": "u autobusové zastávky Cibulka",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.36371,
+          50.065469
+       ],
+       "address": "V Cibulkách",
+       "unique_id": "diakonie-broumov_v-cibulkach",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "michelska-x-u-plynarny",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.453176,
+          50.054612
+       ],
+       "address": "Michelská x U Plynárny",
+       "unique_id": "diakonie-broumov_michelska-x-u-plynarny",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "nad-klamovkou",
+       "description": "u základní školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.377541,
+          50.07326
+       ],
+       "address": "Nad Klamovkou",
+       "unique_id": "diakonie-broumov_nad-klamovkou",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "vrsovicka-63",
+       "description": "u Ministerstva životního prostředí",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.467201,
+          50.06959
+       ],
+       "address": "Vršovická 63",
+       "unique_id": "diakonie-broumov_vrsovicka-63",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jana-ruzicky",
+       "description": "u kotelny",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.489234,
+          50.021765
+       ],
+       "address": "Jana Růžičky",
+       "unique_id": "diakonie-broumov_jana-ruzicky",
+       "district": "praha-kunratice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "branicka-x-mezivrsi",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.412583,
+          50.036588
+       ],
+       "address": "Bránická X Mezivrší",
+       "unique_id": "diakonie-broumov_branicka-x-mezivrsi",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "dobronicka-892",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.468101,
+          50.011612
+       ],
+       "address": "Dobronická 892",
+       "unique_id": "diakonie-broumov_dobronicka-892",
+       "district": "praha-kunratice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "k-homolce",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.359243,
+          50.017508
+       ],
+       "address": "K Homolce",
+       "unique_id": "diakonie-broumov_k-homolce",
+       "district": "praha-slivenec",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "prouzova-6",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.503293,
+          50.11033
+       ],
+       "address": "Prouzova 6",
+       "unique_id": "diakonie-broumov_prouzova-6",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "staroklanovicka",
+       "description": "u Městského úřadu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.661018,
+          50.077229
+       ],
+       "address": "Staroklánovická",
+       "unique_id": "diakonie-broumov_staroklanovicka",
+       "district": "praha-21",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "treglova",
+       "description": "u polikliniky",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.374112,
+          50.033469
+       ],
+       "address": "Tréglova",
+       "unique_id": "diakonie-broumov_treglova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "podnikatelska",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.614776,
+          50.08814
+       ],
+       "address": "Podnikatelská",
+       "unique_id": "diakonie-broumov_podnikatelska",
+       "district": "praha-bechovice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "mohylova-x-piskova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.334888,
+          50.044444
+       ],
+       "address": "Mohylová X Píškova",
+       "unique_id": "diakonie-broumov_mohylova-x-piskova",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jablonecka",
+       "description": "u kavárny knoflík",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.500307,
+          50.121156
+       ],
+       "address": "Jablonecká",
+       "unique_id": "diakonie-broumov_jablonecka",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "behounkova-25",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.342348,
+          50.054369
+       ],
+       "address": "Běhounkova 25",
+       "unique_id": "diakonie-broumov_behounkova-25",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "lamacova-x-lohniskeho",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.372361,
+          50.036683
+       ],
+       "address": "Lamačova X Lohniského",
+       "unique_id": "diakonie-broumov_lamacova-x-lohniskeho",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "vyletni",
+       "description": "u trafostanice",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.464019,
+          50.003954
+       ],
+       "address": "Výletní",
+       "unique_id": "diakonie-broumov_vyletni",
+       "district": "praha-libus",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "srbinska",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.492456,
+          50.069136
+       ],
+       "address": "Srbínská",
+       "unique_id": "diakonie-broumov_srbinska",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "kurandove-x-hogrova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.378872,
+          50.033077
+       ],
+       "address": "Kurandové X Högrova",
+       "unique_id": "diakonie-broumov_kurandove-x-hogrova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hurbanova-25",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.457271,
+          50.024323
+       ],
+       "address": "Hurbanova 25",
+       "unique_id": "diakonie-broumov_hurbanova-25",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "libusska",
+       "description": "u pošty",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.46211,
+          50.009298
+       ],
+       "address": "Libušská",
+       "unique_id": "diakonie-broumov_libusska",
+       "district": "praha-libus",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "rubensova",
+       "description": "u restaurace Skalka",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.509278,
+          50.068384
+       ],
+       "address": "Rubensova",
+       "unique_id": "diakonie-broumov_rubensova",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "nedasovska",
+       "description": "na parkovišti u bowligu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.292264,
+          50.059941
+       ],
+       "address": "Nedašovská",
+       "unique_id": "diakonie-broumov_nedasovska",
+       "district": "praha-zlicin",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "na-kacence",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.543965,
+          50.157401
+       ],
+       "address": "Na Kačence",
+       "unique_id": "diakonie-broumov_na-kacence",
+       "district": "praha-cakovice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "chvalkovicka-3",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.609494,
+          50.115321
+       ],
+       "address": "Chvalkovická 3",
+       "unique_id": "diakonie-broumov_chvalkovicka-3",
+       "district": "praha-20",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "chodovska",
+       "description": "U Kauflandu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.471271,
+          50.056489
+       ],
+       "address": "Chodovská",
+       "unique_id": "diakonie-broumov_chodovska",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "bohusovicka",
+       "description": "u supermarketu Norma",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.491171,
+          50.123432
+       ],
+       "address": "Bohušovická",
+       "unique_id": "diakonie-broumov_bohusovicka",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "horsovska-x-drahovska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.30337,
+          50.031061
+       ],
+       "address": "Horšovská X Drahovská",
+       "unique_id": "diakonie-broumov_horsovska-x-drahovska",
+       "district": "praha-reporyje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "heranova-x-vackova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.312868,
+          50.044966
+       ],
+       "address": "Heranova X Vackova",
+       "unique_id": "diakonie-broumov_heranova-x-vackova",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "karlstejnska-x-u-detskeho-hriste",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.360434,
+          50.054127
+       ],
+       "address": "Karlštejnská X U Dětského hřiště",
+       "unique_id": "diakonie-broumov_karlstejnska-x-u-detskeho-hriste",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "kotorska",
+       "description": "vedle OC Arkády Pankrác",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.437226,
+          50.052006
+       ],
+       "address": "Kotorská",
+       "unique_id": "diakonie-broumov_kotorska",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hostinskeho-16182",
+       "description": "u mateřské školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.314805,
+          50.045706
+       ],
+       "address": "Hostinského 1618/2",
+       "unique_id": "diakonie-broumov_hostinskeho-16182",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "vsestarska-x-lovcicka",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.660166,
+          50.099231
+       ],
+       "address": "Všestarská X Lovčická",
+       "unique_id": "diakonie-broumov_vsestarska-x-lovcicka",
+       "district": "praha-klanovice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "v-krepelkach-x-na-navrati",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.481249,
+          50.168871
+       ],
+       "address": "V Křepelkách X Na Návrati",
+       "unique_id": "diakonie-broumov_v-krepelkach-x-na-navrati",
+       "district": "praha-brezineves",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "naskove",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.361359,
+          50.063217
+       ],
+       "address": "Naskové",
+       "unique_id": "diakonie-broumov_naskove",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "podolska-x-prava",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.420235,
+          50.055903
+       ],
+       "address": "Podolská X Pravá",
+       "unique_id": "diakonie-broumov_podolska-x-prava",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "drtinova",
+       "description": "u polikliniky Kartouzská",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.401813,
+          50.074749
+       ],
+       "address": "Drtinova",
+       "unique_id": "diakonie-broumov_drtinova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "mladoboleslavska",
+       "description": "u supermarketu Norma",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.580286,
+          50.146657
+       ],
+       "address": "Mladoboleslavská",
+       "unique_id": "diakonie-broumov_mladoboleslavska",
+       "district": "praha-vinor",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "tristolicna-x-pod-lipkami",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.379651,
+          50.074467
+       ],
+       "address": "Třístoličná X Pod Lipkami",
+       "unique_id": "diakonie-broumov_tristolicna-x-pod-lipkami",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "chudenicka-2",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.517191,
+          50.045747
+       ],
+       "address": "Chudenická 2",
+       "unique_id": "diakonie-broumov_chudenicka-2",
+       "district": "praha-15",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "pocernicka",
+       "description": "u restaurace Půda",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.507041,
+          50.083128
+       ],
+       "address": "Počernická",
+       "unique_id": "diakonie-broumov_pocernicka",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "chlumecka",
+       "description": "u IKEA",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.58787,
+          50.104666
+       ],
+       "address": "Chlumecká",
+       "unique_id": "diakonie-broumov_chlumecka",
+       "district": "praha-14",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "u-parku",
+       "description": "u Městského úřadu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.484551,
+          50.165055
+       ],
+       "address": "U Parku",
+       "unique_id": "diakonie-broumov_u-parku",
+       "district": "praha-brezineves",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "v-olsinach",
+       "description": "u metra",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.491813,
+          50.072641
+       ],
+       "address": "V Olšinách",
+       "unique_id": "diakonie-broumov_v-olsinach",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jestedska",
+       "description": "u Městské policie",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.4831686,
+          50.0144511
+       ],
+       "address": "Ještědská",
+       "unique_id": "diakonie-broumov_jestedska",
+       "district": "praha-kunratice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "sidliste-19",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.352708,
+          49.979985
+       ],
+       "address": "Sídliště 19",
+       "unique_id": "diakonie-broumov_sidliste-19",
+       "district": "praha-16",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "janskeho-93",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.338963,
+          50.039624
+       ],
+       "address": "Janského 93",
+       "unique_id": "diakonie-broumov_janskeho-93",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "na-lise",
+       "description": "u Mateřské školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.465239,
+          50.046971
+       ],
+       "address": "Na Líše",
+       "unique_id": "diakonie-broumov_na-lise",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "na-betonce",
+       "description": "poblíž supermarketu Albert",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.360466,
+          49.984042
+       ],
+       "address": "Na Betonce",
+       "unique_id": "diakonie-broumov_na-betonce",
+       "district": "praha-16",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "vernericka",
+       "description": "u pošty",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.498009,
+          50.123292
+       ],
+       "address": "Verneřická",
+       "unique_id": "diakonie-broumov_vernericka",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "veltruska",
+       "description": "u restaurace Královka",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.492899,
+          50.121679
+       ],
+       "address": "Veltruská",
+       "unique_id": "diakonie-broumov_veltruska",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "peroutkova-x-xaveriova",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.384566,
+          50.063006
+       ],
+       "address": "Peroutkova X Xaveriová",
+       "unique_id": "diakonie-broumov_peroutkova-x-xaveriova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "oplanska",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.646813,
+          50.07671
+       ],
+       "address": "Oplanská",
+       "unique_id": "diakonie-broumov_oplanska",
+       "district": "praha-21",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jilovska",
+       "description": "u autobusové zastávky",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.42983,
+          50.02662
+       ],
+       "address": "Jílovská",
+       "unique_id": "diakonie-broumov_jilovska",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "radounova-x-krtenska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.312017,
+          50.037675
+       ],
+       "address": "Radouňova X Krteňská",
+       "unique_id": "diakonie-broumov_radounova-x-krtenska",
+       "district": "praha-reporyje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "jablonova-x-v-korytech",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.494015,
+          50.056716
+       ],
+       "address": "Jabloňová X V Korytech",
+       "unique_id": "diakonie-broumov_jablonova-x-v-korytech",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "klicovska",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.507617,
+          50.117341
+       ],
+       "address": "Klíčovská",
+       "unique_id": "diakonie-broumov_klicovska",
+       "district": "praha-9",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "seydlerova-x-v-hurkach",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.346265,
+          50.050096
+       ],
+       "address": "Seydlerova X V Hůrkách",
+       "unique_id": "diakonie-broumov_seydlerova-x-v-hurkach",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "mezi-hrbitovy",
+       "description": "parkoviště u hřbitova",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.523243,
+          50.159235
+       ],
+       "address": "Mezi Hřbitovy",
+       "unique_id": "diakonie-broumov_mezi-hrbitovy",
+       "district": "praha-cakovice",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "hostivarska-30",
+       "description": "",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.529372,
+          50.052429
+       ],
+       "address": "Hostivařská 30",
+       "unique_id": "diakonie-broumov_hostivarska-30",
+       "district": "praha-15",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "josefa-bibrdlika",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.545712,
+          50.014243
+       ],
+       "address": "Josefa Bibrdlíka",
+       "unique_id": "diakonie-broumov_josefa-bibrdlika",
+       "district": "praha-ujezd",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "azalkova-x-prazska",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.521826,
+          50.05734
+       ],
+       "address": "Azalková X Pražská",
+       "unique_id": "diakonie-broumov_azalkova-x-prazska",
+       "district": "praha-15",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "v-lipach",
+       "description": "za obchodem",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.641465,
+          50.061604
+       ],
+       "address": "V Lipách",
+       "unique_id": "diakonie-broumov_v-lipach",
+       "district": "praha-kolodeje",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "namesti-pod-lipou",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.355668,
+          50.029713
+       ],
+       "address": "Náměstí Pod Lípou",
+       "unique_id": "diakonie-broumov_namesti-pod-lipou",
+       "district": "praha-slivenec",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "cernokostelecka",
+       "description": "u supermarketu Albert",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.498876,
+          50.077578
+       ],
+       "address": "Černokostelecká",
+       "unique_id": "diakonie-broumov_cernokostelecka",
+       "district": "praha-10",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "roztylske-namesti",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.475869,
+          50.046934
+       ],
+       "address": "Roztylské náměstí",
+       "unique_id": "diakonie-broumov_roztylske-namesti",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "generala-sisky",
+       "description": "ve sběrném dvoře",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.437386,
+          50.004715
+       ],
+       "address": "Generála Šišky",
+       "unique_id": "diakonie-broumov_generala-sisky",
+       "district": "praha-12",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "borovanskeho",
+       "description": "u podchodu do základní školy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.342385,
+          50.038616
+       ],
+       "address": "Borovanského",
+       "unique_id": "diakonie-broumov_borovanskeho",
+       "district": "praha-13",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "u-modre-skoly",
+       "description": "u komunitního centra Matky Terezy",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.52431,
+          50.029971
+       ],
+       "address": "U Modré školy",
+       "unique_id": "diakonie-broumov_u-modre-skoly",
+       "district": "praha-11",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "zahradnickova",
+       "description": "u stanoviště separace",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.352537,
+          50.06863
+       ],
+       "address": "Zahradníčkova",
+       "unique_id": "diakonie-broumov_zahradnickova",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "vyrobni",
+       "description": "v areálu městského úřadu",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.551195,
+          50.072378
+       ],
+       "address": "Výrobní",
+       "unique_id": "diakonie-broumov_vyrobni",
+       "district": "praha-sterboholy",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "na-veseli-x-soudni",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.441264,
+          50.057195
+       ],
+       "address": "Na Veselí x Soudní",
+       "unique_id": "diakonie-broumov_na-veseli-x-soudni",
+       "district": "praha-4",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    },
+    {
+       "slug": "peroutkova-x-na-vaclavce",
+       "description": "na křižovatce ulic",
+       "company": {
+          "phone": "224 316 800, 491 524 342",
+          "email": "diakonie@diakoniebroumov.org",
+          "web": "http://www.diakoniebroumov.org",
+          "name": "Diakonie Broumov"
+       },
+       "coordinates": [
+          14.389336,
+          50.065129
+       ],
+       "address": "Peroutkova X Na Václavce",
+       "unique_id": "diakonie-broumov_peroutkova-x-na-vaclavce",
+       "district": "praha-5",
+       "cleaning_frequency": "0",
+       "accessibility": "volně",
+       "trash_type": "Textil"
+    }
+ ]

@@ -8,16 +8,21 @@ Developed by http://operatorict.cz
 
 ## Prerequisites
 
-- node.js
-- mongo
+- NodeJS
+- MongoDB
+- PostgreSQL
+- Redis
 - npm
 - data-platform-schema-definitions module
 
 ## Installation
 
-Download repository `data-platform-schema-definitions` to the same directory as the directory of this repository and name it `schema-definitions/`. For the better understanding the dependency is visible in the `package.json` at the line `"data-platform-schema-definitions": "file:../schema-definitions",`.
+Install Node, MongoDB, PostgreSQL and Redis.
 
-Install Node, MongoDB
+Create the `.npmrc` file and type to it the url to the OICT private npm proxy registry:
+```
+registry=http://<url_to_oict_registry>
+```
 
 Install all npm modules using command:
 ```
@@ -28,7 +33,7 @@ npm install
 
 Configuration is split to environment (.env file) options and other specific options (e.g. datasources).
 
-The specific configuration files are in the `src/config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.js` -> `datasources.js`. The default and specific configuration files are merged by the rule: specific options overrides default options.
+The specific configuration files are in the `config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.json` -> `datasources.json`. The default and specific configuration files are merged by the rule: specific options overrides default options.
 
 Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`) or with the `.env` file. Example of the `.env` file is saved as `.env.template`.
 
@@ -60,6 +65,13 @@ C:\Program Files\MongoDB\Server\*.*\bin\mongod.exe
 on Windows
 
 
+## Migrating PostgreSQL database
+
+Before start the PostgreSQL database has to be created and migrated. In this case is used `db-migrate` from the `data-platform-schema-definitions` module.
+
+For more informations see [`data-platform-schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
+
+
 ## Run
 
 ```
@@ -79,9 +91,9 @@ npm test
 ```
 from the application's root directory. All tests should pass.
 
-To run all DataSources tests defined in /test/datasources directory run this command :
+To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.test.ts file run this command:
 ```
-npm run datasourcesTest
+npm run datasources-test
 ```
 from the application's root directory. **This kind of tests sends the report email while tests fails.**
 

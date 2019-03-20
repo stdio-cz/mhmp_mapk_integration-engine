@@ -1,10 +1,10 @@
 "use strict";
 
 import { IceGatewaySensors } from "data-platform-schema-definitions";
-import GeoJsonTransformation from "./GeoJsonTransformation";
+import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
-export default class IceGatewaySensorsTransformation extends GeoJsonTransformation implements ITransformation {
+export default class IceGatewaySensorsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
@@ -13,10 +13,7 @@ export default class IceGatewaySensorsTransformation extends GeoJsonTransformati
         this.name = IceGatewaySensors.name;
     }
 
-    /**
-     * Transforms data from data source to output format (geoJSON Feature)
-     */
-    public TransformDataElement = async (element): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
                 coordinates: [ parseFloat(element.longitude), parseFloat(element.latitude) ],
@@ -30,7 +27,6 @@ export default class IceGatewaySensorsTransformation extends GeoJsonTransformati
             type: "Feature",
         };
 
-        // TODO je to spravne? prepsat do async/await?
         /// Parsing sensors to array using recursion.
         const parseSensors = (obj: any, ary: any[], name?: string) => {
             /// if object contains validity then sensor is push to ary and recursion ends
@@ -59,6 +55,19 @@ export default class IceGatewaySensorsTransformation extends GeoJsonTransformati
         };
         /// first call of the recursion
         parseSensors(element.sensors, res.properties.sensors);
+        return res;
+    }
+
+    protected transformHistoryElement = async (element: any): Promise<any> => {
+        const filteredSensors = element.properties.sensors.filter((s) => s.validity === 0);
+        const res = {
+            id: element.properties.id,
+            sensors: filteredSensors,
+            timestamp: element.properties.timestamp,
+        };
+        if (res.sensors.length === 0) {
+            return null;
+        }
         return res;
     }
 

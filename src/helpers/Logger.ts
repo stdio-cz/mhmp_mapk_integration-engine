@@ -1,73 +1,47 @@
 "use strict";
 
-const debugLog = require("debug")("data-platform:integration-engine:debug");
-const infoLog = require("debug")("data-platform:integration-engine:info");
-const warnLog = require("debug")("data-platform:integration-engine:warning");
-const errorLog = require("debug")("data-platform:integration-engine:error");
-const fatalLog = require("debug")("data-platform:integration-engine:fatal-error");
-
 const config = require("../config/ConfigLoader");
+const sillyLog = require("debug")("data-platform:integration-engine:silly");
+const debugLog = require("debug")("data-platform:integration-engine:debug");
+const winston = require("winston");
+const { combine, timestamp, printf, colorize, align } = winston.format;
+
+const logFormat = (info: any) => {
+    return `[${info.timestamp}] [${info.level}]: ${info.message}`;
+};
+
+const logLevelToSet = config.LOG_LEVEL ? config.LOG_LEVEL.toLowerCase() : "info";
 
 /**
- * Defines methods which determines the importance of the log messages.
- * Each method returns true or false based on the LOG_LEVEL value.
+ * Winston logger setup
  */
-class Logger {
+const setFormat = combine(
+        timestamp(),
+        colorize(),
+        align(),
+        printf(logFormat),
+    );
 
-    /** Define standard log levels */
-    private logLevels: any;
+const logger = winston.createLogger({
+    format: setFormat,
+    transports: [
+      new winston.transports.Console({ level: logLevelToSet }),
+    ],
+});
 
-    constructor() {
-        this.logLevels = {
-            ALL: 0,
-            DEBUG: 1,
-            ERROR: 4,
-            FATAL: 5,
-            INFO: 2,
-            OFF: 6,
-            WARN: 3,
-        };
-    }
+const winstonDebugLog = logger.debug;
+const winstonSillyLog = logger.silly;
 
-    public debug = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.DEBUG) {
-            debugLog("[DEBUG] " + logText);
-            return true;
-        }
-        return false;
-    }
+// Log all "SILLY" logs also to debug module
+logger.silly = (logText: any) => {
+    sillyLog(logText);
+    winstonSillyLog(logText);
+};
 
-    public info = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.INFO) {
-            infoLog("[INFO] " + logText);
-            return true;
-        }
-        return false;
-    }
+// Log all "DEBUG" logs also to debug module
+logger.debug = (logText: any) => {
+    debugLog(logText);
+    winstonDebugLog(logText);
+};
 
-    public warn = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.WARN) {
-            warnLog("[WARN] " + logText);
-            return true;
-        }
-        return false;
-    }
-
-    public error = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.ERROR) {
-            errorLog("[ERROR] " + logText);
-            return true;
-        }
-        return false;
-    }
-
-    public fatal = (logText: string): boolean => {
-        if (config.LOG_LEVEL === undefined || this.logLevels[config.LOG_LEVEL] <= this.logLevels.FATAL) {
-            fatalLog("[FATAL] " + logText);
-            return true;
-        }
-        return false;
-    }
-}
-
-export default new Logger();
+export default logger;

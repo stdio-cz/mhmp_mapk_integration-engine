@@ -1,8 +1,5 @@
 /// <reference path="../../node_modules/@types/node/index.d.ts" />
 
-// gitlab connection to PostgreSQL not tunneled yet
-
-/*
 "use strict";
 
 import "mocha";
@@ -40,4 +37,3 @@ describe("PostgresConnector", () => {
     });
 
 });
-*/

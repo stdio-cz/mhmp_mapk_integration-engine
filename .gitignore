@@ -2,6 +2,5 @@ node_modules/
 dist/
 package-lock.json
 .env
-src/config/*.ts
-!src/config/ConfigLoader.ts
-!src/config/*.default.ts
+config/*.json
+!config/*.default.json

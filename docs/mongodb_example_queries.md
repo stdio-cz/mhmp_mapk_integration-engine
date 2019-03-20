@@ -7,11 +7,7 @@
 ```
 db.parkings_history.aggregate(
     [
-        {
-            $match: {
-                id: 534015
-            }
-        },
+        { $match: { $and: [ { id: 534015 }, { timestamp: { $gte: 1550220133 }} ] }},
         {
             "$group": {
                 "_id": {
@@ -25,9 +21,7 @@ db.parkings_history.aggregate(
                         }
                     },
                     "dayOfWeek": {
-                        "$dayOfWeek": {
-                            "$toDate": "$timestamp"
-                        }
+                        "$subtract": [ {"$dayOfWeek": { "$toDate": "$timestamp" }}, 1 ]
                     }
                 },
                 "avg_taken": {

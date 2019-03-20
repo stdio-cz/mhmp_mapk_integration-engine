@@ -31,28 +31,29 @@ describe("ParkingsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
 
         testData = [1, 2];
-        testTransformedData = { features: [1, 2], type: "" };
+        testTransformedData = [1, 2];
         testTransformedHistoryData = [1, 2];
         data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
         data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
 
         worker = new ParkingsWorker();
 
-        sandbox.stub(worker.dataSource, "GetAll")
+        sandbox.stub(worker.dataSource, "getAll")
             .callsFake(() => testData);
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
-        sandbox.stub(worker.model, "SaveToDb");
-        sandbox.stub(worker.historyTransformation, "TransformDataCollection")
+        sandbox.stub(worker.transformation, "transformHistory")
             .callsFake(() => testTransformedHistoryData);
-        sandbox.stub(worker.historyModel, "SaveToDb");
-        sandbox.stub(worker.historyModel, "GetAverageTakenPlacesById");
+        sandbox.stub(worker.model, "save");
+        sandbox.stub(worker.historyModel, "save");
+        sandbox.stub(worker.historyModel, "aggregate")
+            .callsFake(() => []);
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Parkings.name.toLowerCase();
-        sandbox.stub(worker.model, "GetOneFromModel")
+        sandbox.stub(worker.model, "findOneById")
             .callsFake(() => data1);
 
-        sandbox.stub(worker.cityDistrictsModel, "GetDistrictByCoordinations");
+        sandbox.stub(worker.cityDistrictsModel, "findOne");
         sandbox.stub(GeocodeApi, "getAddressByLatLng");
     });
 
@@ -62,48 +63,48 @@ describe("ParkingsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.GetAll);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledWith(worker.transformation.TransformDataCollection, testData);
-        sandbox.assert.calledOnce(worker.model.SaveToDb);
-        sandbox.assert.calledWith(worker.model.SaveToDb, testTransformedData);
+        sandbox.assert.calledOnce(worker.dataSource.getAll);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledWith(worker.transformation.transform, testData);
+        sandbox.assert.calledOnce(worker.model.save);
+        sandbox.assert.calledWith(worker.model.save, testTransformedHistoryData);
         sandbox.assert.callCount(worker.sendMessageToExchange, 5);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveDataToHistory",
-            JSON.stringify(testTransformedData.features));
-        testTransformedData.features.map((f) => {
+            new Buffer(JSON.stringify(testTransformedData)));
+        testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAddressAndDistrict",
-                JSON.stringify(f));
+                new Buffer(JSON.stringify(f)));
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAverageOccupancy",
-                JSON.stringify(f));
+                new Buffer(JSON.stringify(f)));
         });
         sandbox.assert.callOrder(
-            worker.dataSource.GetAll,
-            worker.transformation.TransformDataCollection,
-            worker.model.SaveToDb,
+            worker.dataSource.getAll,
+            worker.transformation.transform,
+            worker.model.save,
             worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory(testTransformedData);
-        sandbox.assert.calledOnce(worker.historyTransformation.TransformDataCollection);
-        sandbox.assert.calledWith(worker.historyTransformation.TransformDataCollection, testTransformedData);
-        sandbox.assert.calledOnce(worker.historyModel.SaveToDb);
-        sandbox.assert.calledWith(worker.historyModel.SaveToDb, testTransformedHistoryData);
+        await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
+        sandbox.assert.calledOnce(worker.transformation.transformHistory);
+        sandbox.assert.calledWith(worker.transformation.transformHistory, testTransformedData);
+        sandbox.assert.calledOnce(worker.historyModel.save);
+        sandbox.assert.calledWith(worker.historyModel.save, testTransformedHistoryData);
         sandbox.assert.callOrder(
-            worker.historyTransformation.TransformDataCollection,
-            worker.historyModel.SaveToDb,
+            worker.transformation.transformHistory,
+            worker.historyModel.save,
         );
     });
 
     it("should calls the correct methods by updateAddressAndDistrict method (different geo)", async () => {
-        await worker.updateAddressAndDistrict(data0);
-        sandbox.assert.calledOnce(worker.model.GetOneFromModel);
-        sandbox.assert.calledWith(worker.model.GetOneFromModel, data0.properties.id);
+        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        sandbox.assert.calledOnce(worker.model.findOneById);
+        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
-        sandbox.assert.calledOnce(worker.cityDistrictsModel.GetDistrictByCoordinations);
+        sandbox.assert.calledOnce(worker.cityDistrictsModel.findOne);
         sandbox.assert.calledOnce(GeocodeApi.getAddressByLatLng);
         sandbox.assert.calledTwice(data1.save);
     });
@@ -117,20 +118,20 @@ describe("ParkingsWorker", () => {
                 id: 1},
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateAddressAndDistrict(data0);
-        sandbox.assert.calledOnce(worker.model.GetOneFromModel);
-        sandbox.assert.calledWith(worker.model.GetOneFromModel, data0.properties.id);
+        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        sandbox.assert.calledOnce(worker.model.findOneById);
+        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
-        sandbox.assert.notCalled(worker.cityDistrictsModel.GetDistrictByCoordinations);
+        sandbox.assert.notCalled(worker.cityDistrictsModel.findOne);
         sandbox.assert.notCalled(GeocodeApi.getAddressByLatLng);
         sandbox.assert.notCalled(data1.save);
     });
 
     it("should calls the correct methods by updateAverageOccupancy method", async () => {
-        await worker.updateAverageOccupancy(data0);
-        sandbox.assert.calledOnce(worker.model.GetOneFromModel);
-        sandbox.assert.calledWith(worker.model.GetOneFromModel, data0.properties.id);
-        sandbox.assert.calledOnce(worker.historyModel.GetAverageTakenPlacesById);
+        await worker.updateAverageOccupancy({content: new Buffer(JSON.stringify(data0))});
+        sandbox.assert.calledOnce(worker.model.findOneById);
+        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
+        sandbox.assert.calledOnce(worker.historyModel.aggregate);
         sandbox.assert.calledOnce(data1.save);
     });
 

@@ -11,7 +11,7 @@ class ErrorHandler {
             log.error(err.toString());
             return err.toObject();
         } else { // Unexpected non-operational error, handle it!
-            log.fatal(err.toString());
+            log.error(err.toString());
             process.exit(0); // if anything fails, process is killed
         }
 

@@ -1,10 +1,10 @@
 "use strict";
 
 import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
-import GeoJsonTransformation from "./GeoJsonTransformation";
+import BaseTransformation from "./BaseTransformation";
 import ITransformation from "./ITransformation";
 
-export default class IceGatewayStreetLampsTransformation extends GeoJsonTransformation implements ITransformation {
+export default class IceGatewayStreetLampsTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
@@ -13,10 +13,7 @@ export default class IceGatewayStreetLampsTransformation extends GeoJsonTransfor
         this.name = IceGatewayStreetLamps.name;
     }
 
-    /**
-     * Transforms data from data source to output format (geoJSON Feature)
-     */
-    public TransformDataElement = async (element): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const states = {
             "-1": "lost connection (connection status older than 1 hour)",
             "-2": "short-circuit (has connection and the last state non \"off\" is \"short\")",

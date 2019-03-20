@@ -2,20 +2,14 @@
 
 import handleError from "./helpers/errors/ErrorHandler";
 import log from "./helpers/Logger";
-import CityDistrictsQueueProcessor from "./queue-processors/CityDistrictsQueueProcessor";
-import IceGatewaySensorsQueueProcessor from "./queue-processors/IceGatewaySensorsQueueProcessor";
-import IceGatewayStreetLampsQueueProcessor from "./queue-processors/IceGatewayStreetLampsQueueProcessor";
-import MerakiAccessPointsQueueProcessor from "./queue-processors/MerakiAccessPointsQueueProcessor";
-import ParkingsQueueProcessor from "./queue-processors/ParkingsQueueProcessor";
-import ParkingZonesQueueProcessor from "./queue-processors/ParkingZonesQueueProcessor";
-import PurgeQueueProcessor from "./queue-processors/PurgeQueueProcessor";
-import RopidGTFSQueueProcessor from "./queue-processors/RopidGTFSQueueProcessor";
-import VehiclePositionsQueueProcessor from "./queue-processors/VehiclePositionsQueueProcessor";
+import QueueProcessor from "./queue-processors/QueueProcessor";
 
 const { AMQPConnector } = require("./helpers/AMQPConnector");
 const { mongooseConnection } = require("./helpers/MongoConnector");
 const { PostgresConnector } = require("./helpers/PostgresConnector");
+const { RedisConnector } = require("./helpers/RedisConnector");
 const config = require("./config/ConfigLoader");
+const queuesDefinitions = require("./definitions/queuesDefinition");
 
 class App {
 
@@ -39,6 +33,7 @@ class App {
     private database = async (): Promise<void> => {
         await mongooseConnection;
         await PostgresConnector.connect();
+        await RedisConnector.connect();
     }
 
     /**
@@ -47,18 +42,27 @@ class App {
      */
     private queueProcessors = async (): Promise<void> => {
         const ch = await AMQPConnector.connect();
-        await Promise.all([
-            new CityDistrictsQueueProcessor(ch).registerQueues(),
-            new IceGatewaySensorsQueueProcessor(ch).registerQueues(),
-            new IceGatewayStreetLampsQueueProcessor(ch).registerQueues(),
-            new MerakiAccessPointsQueueProcessor(ch).registerQueues(),
-            new ParkingsQueueProcessor(ch).registerQueues(),
-            new ParkingZonesQueueProcessor(ch).registerQueues(),
-            new PurgeQueueProcessor(ch).registerQueues(),
-            new RopidGTFSQueueProcessor(ch).registerQueues(),
-            new VehiclePositionsQueueProcessor(ch).registerQueues(),
-            // ...ready to register more queue processors
-        ]);
+
+        // filtering queue definitions by blacklist
+        let filteredQueuesDefinitions = queuesDefinitions;
+        Object.keys(config.queuesBlacklist).map((b) => {
+            if (config.queuesBlacklist[b].length === 0) {
+                filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
+            } else {
+                config.queuesBlacklist[b].map((d) => {
+                    filteredQueuesDefinitions = filteredQueuesDefinitions.map((a) => {
+                        a.queues = a.queues.filter((c) => c.name !== d);
+                        return a;
+                    });
+                });
+            }
+        });
+
+        // use generic queue processor for register (filtered) queues
+        const promises = filteredQueuesDefinitions.map((queueDefinition) => {
+            return new QueueProcessor(ch, queueDefinition).registerQueues();
+        });
+        await Promise.all(promises);
     }
 
 }

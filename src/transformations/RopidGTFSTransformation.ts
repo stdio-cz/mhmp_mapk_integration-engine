@@ -15,48 +15,27 @@ export default class RopidGTFSTransformation extends BaseTransformation implemen
         this.name = RopidGTFS.name;
     }
 
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataElement = async (element): Promise<any> => {
+    protected transformElement = async (element: any): Promise<any> => {
         const parsed = await csvtojson({
             noheader: false,
-        }).fromString(Buffer.from(element.data).toString("utf8"));
+        }).fromString(Buffer.from(element.data, "hex").toString("utf8"));
+
         // chunk into smaller sub arrays
-        const chunks = [];
+        const total = parsed.length;
         let i = 0;
         const n = parsed.length;
+        const chunks = [];
         while (i < n) {
-            chunks.push(parsed.slice(i, i += 1000));
+            chunks.push(new Promise((r, j) => {
+                r(parsed.slice(i, i += 1000));
+            }));
         }
-        return {
-            data: chunks,
-            name: element.path.replace(".txt", ""),
-        };
-    }
 
-    /**
-     * Transforms data from data source to output format (JSON)
-     */
-    public TransformDataCollection = async (collection): Promise<any> => {
-        return new Promise((resolve, reject) => {
-            const res = [];
-            // collection JS Closure
-            const collectionIterator = async (i, cb) => {
-                if (collection.length === i) {
-                    cb();
-                    return;
-                }
-                const element = await this.TransformDataElement(collection[i]);
-                if (element) {
-                    res.push(element);
-                }
-                setImmediate(collectionIterator.bind(null, i + 1, cb));
-            };
-            collectionIterator(0, () => {
-                resolve(res);
-            });
-        });
+        return {
+            data: await Promise.all(chunks),
+            name: element.name,
+            total,
+        };
     }
 
 }

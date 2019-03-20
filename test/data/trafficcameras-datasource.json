@@ -1,0 +1,397 @@
+{
+    "desc": "Seznam všech kamer",
+    "results": [
+        {
+            "id": 404032,
+            "imgFileSize": 21127,
+            "lastUpdated": 1551185711000,
+            "lat": 50.059193,
+            "lng": 14.432778,
+            "name": "5.května"
+        },
+        {
+            "id": 606748,
+            "imgFileSize": 19178,
+            "lastUpdated": 1551185717000,
+            "lat": 50.124226,
+            "lng": 14.455956,
+            "name": "DP - Kobylisy C - BUS MHD DP"
+        },
+        {
+            "id": 606746,
+            "imgFileSize": 15646,
+            "lastUpdated": 1551185728000,
+            "lat": 50.124203,
+            "lng": 14.455908,
+            "name": "DP - Kobylisy C - BUS směr Prosek"
+        },
+        {
+            "id": 606744,
+            "imgFileSize": 20589,
+            "lastUpdated": 1551185716000,
+            "lat": 50.124935,
+            "lng": 14.457204,
+            "name": "DP - Kobylisy C - Střelničná"
+        },
+        {
+            "id": 606734,
+            "imgFileSize": 16432,
+            "lastUpdated": 1551185728000,
+            "lat": 50.126045,
+            "lng": 14.457039,
+            "name": "DP - Kobylisy C - přehledový záběr odjezd BUS MHD"
+        },
+        {
+            "id": 603125,
+            "imgFileSize": 21191,
+            "lastUpdated": 1551185728000,
+            "lat": 50.12569,
+            "lng": 14.469692,
+            "name": "DP - Ládví BUS Střelničná"
+        },
+        {
+            "id": 607307,
+            "imgFileSize": 13439,
+            "lastUpdated": 1549619881000,
+            "lat": 50.10631,
+            "lng": 14.559801,
+            "name": "DP - Rajská zahrada sever - Chlumecká"
+        },
+        {
+            "id": 607514,
+            "imgFileSize": 13312,
+            "lastUpdated": 1551185727000,
+            "lat": 50.108982,
+            "lng": 14.580528,
+            "name": "DP - Černý Most/BUS Dálková doprava ČSAD Chlumecká"
+        },
+        {
+            "id": 106022,
+            "imgFileSize": 22526,
+            "lastUpdated": 1551185712000,
+            "lat": 50.09312,
+            "lng": 14.296895,
+            "name": "Evropská - K Letišti VO"
+        },
+        {
+            "id": 106031,
+            "imgFileSize": 26360,
+            "lastUpdated": 1551185712000,
+            "lat": 50.092087,
+            "lng": 14.322034,
+            "name": "Evropská - Vlastina VO"
+        },
+        {
+            "id": 106045,
+            "imgFileSize": 16144,
+            "lastUpdated": 1551185719000,
+            "lat": 50.086792,
+            "lng": 14.340928,
+            "name": "Heyrovského nám. VO"
+        },
+        {
+            "id": 415003,
+            "imgFileSize": 15718,
+            "lastUpdated": 1551185713000,
+            "lat": 50.052044,
+            "lng": 14.529848,
+            "name": "Hostivařská - Švehlova VO"
+        },
+        {
+            "id": 404033,
+            "imgFileSize": 23715,
+            "lastUpdated": 1551185711000,
+            "lat": 50.062244,
+            "lng": 14.432184,
+            "name": "Hotel Corinthia - web"
+        },
+        {
+            "id": 500078,
+            "imgFileSize": 13934,
+            "lastUpdated": 1551185731000,
+            "lat": 50.092793,
+            "lng": 14.398512,
+            "name": "Mariánské hradby"
+        },
+        {
+            "id": 107009,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185670000,
+            "lat": 50.108532,
+            "lng": 14.444606,
+            "name": "Merkurie, Argentinská 38"
+        },
+        {
+            "id": 117004,
+            "imgFileSize": 20363,
+            "lastUpdated": 1551185710000,
+            "lat": 50.065243,
+            "lng": 14.2997055,
+            "name": "Na chobotě"
+        },
+        {
+            "id": 404001,
+            "imgFileSize": 18936,
+            "lastUpdated": 1551185709000,
+            "lat": 50.063427,
+            "lng": 14.441175,
+            "name": "Nám.bří Synků 8"
+        },
+        {
+            "id": 303020,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185642000,
+            "lat": 50.08204,
+            "lng": 14.459573,
+            "name": "Olšanské náměstí VO - web"
+        },
+        {
+            "id": 404014,
+            "imgFileSize": 12802,
+            "lastUpdated": 1551185711000,
+            "lat": 50.058617,
+            "lng": 14.419712,
+            "name": "Podolské nábřeží VO"
+        },
+        {
+            "id": 205009,
+            "imgFileSize": 19225,
+            "lastUpdated": 1551185710000,
+            "lat": 50.069435,
+            "lng": 14.375368,
+            "name": "Pošta Plzeňská 139"
+        },
+        {
+            "id": 500063,
+            "imgFileSize": 22529,
+            "lastUpdated": 1551185715000,
+            "lat": 50.10069,
+            "lng": 14.443173,
+            "name": "TSK - Argentinská - Jateční"
+        },
+        {
+            "id": 500065,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185644000,
+            "lat": 50.10742,
+            "lng": 14.443483,
+            "name": "TSK - Argentinská - Plynární"
+        },
+        {
+            "id": 500019,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185627000,
+            "lat": 50.073017,
+            "lng": 14.470001,
+            "name": "TSK - Bělocerkevská"
+        },
+        {
+            "id": 500006,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185717000,
+            "lat": 50.07665,
+            "lng": 14.431772,
+            "name": "TSK - Demínka (Anglická - Škrétova)"
+        },
+        {
+            "id": 500106,
+            "imgFileSize": 13898,
+            "lastUpdated": 1551185726000,
+            "lat": 50.10517,
+            "lng": 14.502747,
+            "name": "TSK - Freyova - Ocelářská"
+        },
+        {
+            "id": 500021,
+            "imgFileSize": 12907,
+            "lastUpdated": 1551185731000,
+            "lat": 50.078114,
+            "lng": 14.473157,
+            "name": "TSK - J. Želivského"
+        },
+        {
+            "id": 500045,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185679000,
+            "lat": 50.075134,
+            "lng": 14.413737,
+            "name": "TSK - Jiráskův most"
+        },
+        {
+            "id": 500027,
+            "imgFileSize": 20911,
+            "lastUpdated": 1551185724000,
+            "lat": 50.07716,
+            "lng": 14.419309,
+            "name": "TSK - Karlovo nám. - Odborů"
+        },
+        {
+            "id": 500072,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185631000,
+            "lat": 50.099056,
+            "lng": 14.422045,
+            "name": "TSK - Korunovační"
+        },
+        {
+            "id": 500007,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185696000,
+            "lat": 50.07666,
+            "lng": 14.430275,
+            "name": "TSK - Legerova - Anglická"
+        },
+        {
+            "id": 500004,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185632000,
+            "lat": 50.073074,
+            "lng": 14.430213,
+            "name": "TSK - Legerova - Rumunská"
+        },
+        {
+            "id": 500222,
+            "imgFileSize": 14727,
+            "lastUpdated": 1551185730000,
+            "lat": 50.071922,
+            "lng": 14.400757,
+            "name": "TSK - Radlická k Plzeňské"
+        },
+        {
+            "id": 500025,
+            "imgFileSize": 16658,
+            "lastUpdated": 1551185724000,
+            "lat": 50.07529,
+            "lng": 14.437901,
+            "name": "TSK - Slezská"
+        },
+        {
+            "id": 500472,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185630000,
+            "lat": 50.045364,
+            "lng": 14.409376,
+            "name": "TSK - Strakonická - Barrandovský most"
+        },
+        {
+            "id": 500066,
+            "imgFileSize": 16695,
+            "lastUpdated": 1551185714000,
+            "lat": 50.114986,
+            "lng": 14.44611,
+            "name": "TSK - V Holešovičkách do centra"
+        },
+        {
+            "id": 500067,
+            "imgFileSize": 18551,
+            "lastUpdated": 1551185725000,
+            "lat": 50.114998,
+            "lng": 14.446114,
+            "name": "TSK - V Holešovičkách z centra"
+        },
+        {
+            "id": 500020,
+            "imgFileSize": 17421,
+            "lastUpdated": 1551185723000,
+            "lat": 50.077705,
+            "lng": 14.473341,
+            "name": "TSK - Votická"
+        },
+        {
+            "id": 500043,
+            "imgFileSize": 13439,
+            "lastUpdated": 1551185652000,
+            "lat": 50.066864,
+            "lng": 14.414938,
+            "name": "TSK - Výtoň"
+        },
+        {
+            "id": 500009,
+            "imgFileSize": 14496,
+            "lastUpdated": 1551185715000,
+            "lat": 50.083565,
+            "lng": 14.435376,
+            "name": "TSK - Wilsonova k P-2"
+        },
+        {
+            "id": 500010,
+            "imgFileSize": 12619,
+            "lastUpdated": 1551185721000,
+            "lat": 50.083584,
+            "lng": 14.435308,
+            "name": "TSK - Wilsonova k P-7"
+        },
+        {
+            "id": 500005,
+            "imgFileSize": 20484,
+            "lastUpdated": 1551185715000,
+            "lat": 50.075047,
+            "lng": 14.429208,
+            "name": "TSK - náměstí I. P. Pavlova"
+        },
+        {
+            "id": 500105,
+            "imgFileSize": 13439,
+            "lastUpdated": 1549619883000,
+            "lat": 50.101166,
+            "lng": 14.5029125,
+            "name": "TSK - Českomoravská - Freyova 2. (Harfa)"
+        },
+        {
+            "id": 205023,
+            "imgFileSize": 19524,
+            "lastUpdated": 1551185712000,
+            "lat": 50.073902,
+            "lng": 14.403616,
+            "name": "TSK Štefánikova 23 - web"
+        },
+        {
+            "id": 107015,
+            "imgFileSize": 14900,
+            "lastUpdated": 1551185709000,
+            "lat": 50.101326,
+            "lng": 14.432661,
+            "name": "Veletržní, Duk.hrdinů 45"
+        },
+        {
+            "id": 106013,
+            "imgFileSize": 13483,
+            "lastUpdated": 1551185710000,
+            "lat": 50.07856,
+            "lng": 14.344854,
+            "name": "Vypich VO"
+        },
+        {
+            "id": 106040,
+            "imgFileSize": 9522,
+            "lastUpdated": 1551185712000,
+            "lat": 50.101086,
+            "lng": 14.39195,
+            "name": "Zikova - Vítězné náměstí - web"
+        },
+        {
+            "id": 101165,
+            "imgFileSize": 22976,
+            "lastUpdated": 1551185714000,
+            "lat": 50.093258,
+            "lng": 14.416703,
+            "name": "Čechův most VO"
+        },
+        {
+            "id": 410027,
+            "imgFileSize": 16538,
+            "lastUpdated": 1551185714000,
+            "lat": 50.0773,
+            "lng": 14.507262,
+            "name": "Černokostelecká - Úvalská VO"
+        },
+        {
+            "id": 607520,
+            "imgFileSize": 12679,
+            "lastUpdated": 1551185717000,
+            "lat": 50.1086,
+            "lng": 14.5764065,
+            "name": "Černý most - Chlumecká"
+        }
+    ]
+}

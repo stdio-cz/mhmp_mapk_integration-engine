@@ -20,12 +20,12 @@ describe("IceGatewaySensorsWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         worker = new IceGatewaySensorsWorker();
-        sandbox.stub(worker.dataSource, "GetAll");
-        sandbox.stub(worker.transformation, "TransformDataCollection")
+        sandbox.stub(worker.dataSource, "getAll");
+        sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ features: [], type: "" }));
-        sandbox.stub(worker.model, "SaveToDb");
-        sandbox.stub(worker.historyTransformation, "TransformDataCollection");
-        sandbox.stub(worker.historyModel, "SaveToDb");
+        sandbox.stub(worker.transformation, "transformHistory");
+        sandbox.stub(worker.model, "save");
+        sandbox.stub(worker.historyModel, "save");
         sandbox.stub(worker, "sendMessageToExchange");
     });
 
@@ -35,24 +35,24 @@ describe("IceGatewaySensorsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.GetAll);
-        sandbox.assert.calledOnce(worker.transformation.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.model.SaveToDb);
+        sandbox.assert.calledOnce(worker.dataSource.getAll);
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
-            worker.dataSource.GetAll,
-            worker.transformation.TransformDataCollection,
-            worker.model.SaveToDb,
+            worker.dataSource.getAll,
+            worker.transformation.transform,
+            worker.model.save,
             worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory();
-        sandbox.assert.calledOnce(worker.historyTransformation.TransformDataCollection);
-        sandbox.assert.calledOnce(worker.historyModel.SaveToDb);
+        await worker.saveDataToHistory({content: new Buffer(JSON.stringify({}))});
+        sandbox.assert.calledOnce(worker.transformation.transformHistory);
+        sandbox.assert.calledOnce(worker.historyModel.save);
         sandbox.assert.callOrder(
-            worker.historyTransformation.TransformDataCollection,
-            worker.historyModel.SaveToDb);
+            worker.transformation.transformHistory,
+            worker.historyModel.save);
     });
 
 });

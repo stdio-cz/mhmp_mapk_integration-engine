@@ -2,8 +2,9 @@
 
 export default interface ITransformation {
 
+    /** Transformation name */
     name: string;
-    TransformDataElement(element): Promise<any>;
-    TransformDataCollection(collection): Promise<any>;
+    /** Transform the whole collection */
+    transform: (collection: any|any[]) => Promise<any|any[]>;
 
 }
