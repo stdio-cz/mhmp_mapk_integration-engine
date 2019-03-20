@@ -11,12 +11,13 @@ Developed by http://operatorict.cz
 - NodeJS
 - MongoDB
 - PostgreSQL
+- Redis
 - npm
 - data-platform-schema-definitions module
 
 ## Installation
 
-Install Node, MongoDB and PostgreSQL.
+Install Node, MongoDB, PostgreSQL and Redis.
 
 Create the `.npmrc` file and type to it the url to the OICT private npm proxy registry:
 ```
@@ -64,6 +65,13 @@ C:\Program Files\MongoDB\Server\*.*\bin\mongod.exe
 on Windows
 
 
+## Migrating PostgreSQL database
+
+Before start the PostgreSQL database has to be created and migrated. In this case is used `db-migrate` from the `data-platform-schema-definitions` module.
+
+For more informations see [`data-platform-schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
+
+
 ## Run
 
 ```
@@ -83,9 +91,9 @@ npm test
 ```
 from the application's root directory. All tests should pass.
 
-To run all DataSources tests defined in /test/datasources directory run this command :
+To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.test.ts file run this command:
 ```
-npm run datasourcesTest
+npm run datasources-test
 ```
 from the application's root directory. **This kind of tests sends the report email while tests fails.**
 

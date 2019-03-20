@@ -49,7 +49,6 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
 
         try {
-            await model.sync();
             const i = []; // inserted
             const u = []; // updated
 

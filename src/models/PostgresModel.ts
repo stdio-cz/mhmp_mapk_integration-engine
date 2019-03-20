@@ -58,8 +58,6 @@ export default class PostgresModel implements IModel {
 
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
 
-        await model.sync();
-
         switch (this.savingType) {
             case "insertOnly":
                 return this.insertOnly(model, data);
@@ -80,7 +78,6 @@ export default class PostgresModel implements IModel {
         const t = await connection.transaction();
 
         try {
-            await model.sync();
             await model.destroy({
                 cascade: false,
                 transaction: t,
@@ -96,7 +93,6 @@ export default class PostgresModel implements IModel {
     public find = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
         try {
-            await model.sync();
             return await model.findAll(opts);
         } catch (err) {
             throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
@@ -106,7 +102,6 @@ export default class PostgresModel implements IModel {
     public findOne = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
         try {
-            await model.sync();
             return await model.findOne(opts);
         } catch (err) {
             throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
@@ -116,7 +111,6 @@ export default class PostgresModel implements IModel {
     public findAndCountAll = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
         const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
         try {
-            await model.sync();
             return await model.findAndCountAll(opts);
         } catch (err) {
             throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
