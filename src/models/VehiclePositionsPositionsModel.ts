@@ -45,6 +45,7 @@ export default class VehiclePositionsPositionsModel extends PostgresModel implem
     public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
         const connection = PostgresConnector.getConnection();
 
+        // TODO zbavit se raw query
         const results = await connection.query(
             "SELECT a.id, a.gtfs_trip_id, b.tracking, b.is_canceled, b.lat, b.lng, b.origin_time, "
             + "b.origin_timestamp, b.delay_stop_arrival, b.delay_stop_departure, b.delay, "

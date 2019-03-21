@@ -46,7 +46,12 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        let model = this.sequelizeModel;
+        if (useTmpTable) {
+            model = this.tmpSequelizeModel;
+            /// synchronizing only tmp model
+            await model.sync();
+        }
 
         try {
             const i = []; // inserted
@@ -94,6 +99,7 @@ export default class VehiclePositionsTripsModel extends PostgresModel implements
         const connection = PostgresConnector.getConnection();
         const startdate = moment(trip.start_timestamp);
 
+        // TODO zbavit se raw query
         const result = await connection.query(
             "SELECT ropidgtfs_trips.trip_id as gtfs_trip_id, "
             + "    ropidgtfs_routes.route_id as gtfs_route_id, "
