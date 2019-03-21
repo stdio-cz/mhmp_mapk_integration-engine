@@ -202,11 +202,11 @@ export default class RopidGTFSWorker extends BaseWorker {
             type: "TABLE_TOTAL_COUNT",
             value: transformedData.cis_stops.length,
             version: dbLastModified.version + 1 }]);
-        await this.cisStopGroupsModel.truncate(true);
-        await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
-        await this.cisStopsModel.truncate(true);
-        await this.cisStopsModel.save(transformedData.cis_stops, true);
         try {
+            await this.cisStopGroupsModel.truncate(true);
+            await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
+            await this.cisStopsModel.truncate(true);
+            await this.cisStopsModel.save(transformedData.cis_stops, true);
             await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
             await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
         } catch (err) {

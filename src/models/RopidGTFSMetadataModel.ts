@@ -112,22 +112,6 @@ export default class RopidGTFSMetadataModel extends PostgresModel implements IMo
     public rollbackFailedSaving = async (dataset: string, version: number): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
-        const tables = await this.sequelizeModel.findAll({
-            attributes: [["key", "tn"]],
-            transaction: t,
-            where: {
-                dataset,
-                type: "TABLE_TOTAL_COUNT",
-                version,
-            },
-        });
-        const promises = tables.map((table) => {
-            const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
-            return connection.query(
-                "TRUNCATE TABLE " + tmpTableName + "; ",
-                { transaction: t });
-        });
-        await Promise.all(promises);
         await this.sequelizeModel.destroy({
             transaction: t,
             where: {
@@ -175,21 +159,7 @@ export default class RopidGTFSMetadataModel extends PostgresModel implements IMo
             tablesArray.push("'" + RopidGTFS[table.dataValues.tn].tmpPgTableName + "'");
         });
 
-        await connection.query(
-            "CREATE OR REPLACE FUNCTION "
-            + "count_rows(schema text, tablename text) RETURNS integer as "
-            + "$body$ "
-            + "DECLARE "
-            + "result integer; "
-            + "query varchar; "
-            + "BEGIN "
-            + "query := 'SELECT count(1) FROM ' || schema || '.' || tablename; "
-            + "execute query into result; "
-            + "return result; "
-            + "END; "
-            + "$body$ "
-            + "LANGUAGE plpgsql; ", { type: Sequelize.QueryTypes.SELECT});
-
+        // TODO zbavit se raw query
         const result = await connection.query(
             "SELECT SUM(count_rows(table_schema, table_name)) as total "
             + "FROM information_schema.tables "

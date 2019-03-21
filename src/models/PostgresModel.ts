@@ -56,7 +56,12 @@ export default class PostgresModel implements IModel {
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        let model = this.sequelizeModel;
+        if (useTmpTable) {
+            model = this.tmpSequelizeModel;
+            /// synchronizing only tmp model
+            await model.sync();
+        }
 
         switch (this.savingType) {
             case "insertOnly":
@@ -72,7 +77,12 @@ export default class PostgresModel implements IModel {
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
 
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        let model = this.sequelizeModel;
+        if (useTmpTable) {
+            model = this.tmpSequelizeModel;
+            /// synchronizing only tmp model
+            await model.sync();
+        }
 
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
