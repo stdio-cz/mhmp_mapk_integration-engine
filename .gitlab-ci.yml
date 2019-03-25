@@ -1,40 +1,42 @@
+image: docker:stable
+
 variables:
-  MONGO_CONN: mongodb://$MONGO_HOST/$CI_PROJECT_NAME-$CI_PIPELINE_ID
-  POSTGRES_DB: $CI_PROJECT_NAME
-  REDIS_CONN: redis://$REDIS_HOST/
+  POSTGRES_HOST: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASS: test-pass
+  POSTGRES_DB: testdb
 
 stages:
-  - build
   - test
-  - deploy
-  - clean
-
-build_image:
-  stage: build
-  script:
-    - echo $CI_COMMIT_SHA > commitsha
-    - docker build -t $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID .
+  - build
 
 run_tests:
   stage: test
+  image: node:8
+  services:
+    - postgres:10.6
+    - mongo:4.0.4
+    - redis:5.0-alpine
   script:
-    - export POSTGRES_DB="${POSTGRES_DB/-/_}"
-    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "CREATE DATABASE $POSTGRES_DB"
-    - docker run --net testnet -e MONGO_CONN=$MONGO_CONN -e POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB -e REDIS_CONN=$REDIS_CONN -e NODE_ENV=test -e OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH -e OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE $CI_REGISTRY_IMAGE npm run code-coverage
+    - export NODE_ENV=development
+    - npm install
+    - npm run build
+    - export MONGO_CONN=mongodb://mongo/testdb 
+    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB 
+    - export REDIS_CONN=redis://redis/
+    - export NODE_ENV=test 
+    - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
+    - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE 
+    - npm run code-coverage
 
 registry_deployment:
-  stage: deploy
+  stage: build
   script:
+    - echo $CI_COMMIT_SHA > commitsha
+    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE:latest && docker push $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
-    - docker logout $CI_REGISTRY
   only:
     variables:
       - $CI_COMMIT_REF_NAME == "master"
       - $DOCKER_REGISTRY == "true"
-
-remove_images:
-  stage: clean
-  script:
-    - docker rmi -f $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
-  when: always
