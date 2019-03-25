@@ -1,10 +1,10 @@
 "use strict";
 
 import { ParkingZones } from "data-platform-schema-definitions";
-import CSVDataTypeStrategy from "../datasources/CSVDataTypeStrategy";
 import DataSource from "../datasources/DataSource";
 import HTTPProtocolStrategy from "../datasources/HTTPProtocolStrategy";
 import JSONDataTypeStrategy from "../datasources/JSONDataTypeStrategy";
+import CustomError from "../helpers/errors/CustomError";
 import Validator from "../helpers/Validator";
 import MongoModel from "../models/MongoModel";
 import ParkingZonesTransformation from "../transformations/ParkingZonesTransformation";
@@ -18,6 +18,7 @@ export default class ParkingZonesWorker extends BaseWorker {
     private dataSourceTariffs: DataSource;
     private transformation: ParkingZonesTransformation;
     private model: MongoModel;
+    private queuePrefix: string;
 
     constructor() {
         super();
@@ -32,34 +33,8 @@ export default class ParkingZonesWorker extends BaseWorker {
             zonesDataType,
             new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject));
         this.dataSourceTariffs = new DataSource("ParkingZonesTariffsDataSource",
-            new HTTPProtocolStrategy({
-                headers: {},
-                method: "GET",
-                url: config.datasources.ParkingZonesTariffs,
-            }),
-            new CSVDataTypeStrategy({
-                csvtojsonParams: { noheader: false },
-                subscribe: (json: any) => {
-                    json.TIMEFROM = this.timeToMinutes(json.TIMEFROM);
-                    json.TIMETO = this.timeToMinutes(json.TIMETO);
-                    delete json.OBJECTID;
-                    json.code = json.CODE;
-                    delete json.CODE;
-                    json.day = json.DAY;
-                    delete json.DAY;
-                    json.divisibility = parseInt(json.DIVISIBILITY, 10);
-                    delete json.DIVISIBILITY;
-                    json.time_from = json.TIMEFROM;
-                    delete json.TIMEFROM;
-                    json.max_parking_time = parseInt(json.MAXPARKINGTIME, 10);
-                    delete json.MAXPARKINGTIME;
-                    json.price_per_hour = parseFloat(json.PRICEPERHOUR);
-                    delete json.PRICEPERHOUR;
-                    json.time_to = json.TIMETO;
-                    delete json.TIMETO;
-                    return json;
-                },
-            }),
+            null,
+            new JSONDataTypeStrategy({resultsPath: "dailyTariff"}),
             new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
         this.model = new MongoModel(ParkingZones.name + "Model", {
                 identifierPath: "properties.code",
@@ -89,20 +64,47 @@ export default class ParkingZonesWorker extends BaseWorker {
             new Validator(ParkingZones.name + "ModelValidator", ParkingZones.outputMongooseSchemaObject),
         );
         this.transformation = new ParkingZonesTransformation();
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + ParkingZones.name.toLowerCase();
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
-        await this.transformation.setTariffs(await this.dataSourceTariffs.getAll());
         const transformedData = await this.transformation.transform(data);
         await this.model.save(transformedData);
-    }
 
-    private timeToMinutes = (value: string): number => {
-        const arr = value.split(":").map((val) => {
-            return Number(val);
+        // send messages for updating tariffs
+        const promises = transformedData.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateTariffs",
+                new Buffer(JSON.stringify(p.properties.code)));
         });
-        return (arr[0] * 60) + arr[1];
+        await Promise.all(promises);
+}
+
+    public updateTariffs = async (msg: any): Promise<void> => {
+        const code = JSON.parse(msg.content.toString());
+
+        this.dataSourceTariffs.setProtocolStrategy(new HTTPProtocolStrategy({
+                headers : {
+                    authorization: config.datasources.ParkingZonseTariffsAuth,
+                },
+                json: true,
+                method: "GET",
+                url: config.datasources.ParkingZonseTariffs + code,
+            }));
+
+        try {
+            const data = await this.dataSourceTariffs.getAll();
+            const transformedData = await this.transformation.transformTariffs(code, data);
+
+            await this.model.update(code, {
+                $set: {
+                    "properties.tariffs": transformedData.tariffs,
+                    "properties.tariffs_text": transformedData.tariffsText,
+                },
+            });
+        } catch (err) {
+            throw new CustomError("Error while updating parking zone tariffs.", true, this.constructor.name, 1027, err);
+        }
     }
 
 }
