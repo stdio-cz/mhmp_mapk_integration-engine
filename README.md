@@ -1,8 +1,8 @@
 [![coverage report](http://gitlab.oict.cz/data-platform/integration-engine/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/integration-engine/commits/master)
 
-# Data Platform Integration Engine
+# Golemio Integration Engine
 
-Integration Engine of the Data Platform System.
+Integration Engine of the Golemio data platform.
 
 Developed by http://operatorict.cz
 
@@ -95,7 +95,7 @@ To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.te
 ```
 npm run datasources-test
 ```
-from the application's root directory. **This kind of tests sends the report email while tests fails.**
+from the application's root directory.
 
 
 ## Problems?

@@ -6,35 +6,32 @@ import {
     Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "data-platform-schema-definitions";
-import CustomError from "../helpers/errors/CustomError";
-import handleError from "../helpers/errors/ErrorHandler";
-import log from "../helpers/Logger";
-import AirQualityStationsWorker from "../workers/AirQualityStationsWorker";
-import CityDistrictsWorker from "../workers/CityDistrictsWorker";
-import GardensWorker from "../workers/GardensWorker";
-import IceGatewaySensorsWorker from "../workers/IceGatewaySensorsWorker";
-import IceGatewayStreetLampsWorker from "../workers/IceGatewayStreetLampsWorker";
-import MedicalInstitutionsWorker from "../workers/MedicalInstitutionsWorker";
-import MerakiAccessPointsWorker from "../workers/MerakiAccessPointsWorker";
-import MeteosensorsWorker from "../workers/MeteosensorsWorker";
-import MunicipalAuthoritiesWorker from "../workers/MunicipalAuthoritiesWorker";
-import MunicipalPoliceStationsWorker from "../workers/MunicipalPoliceStationsWorker";
-import ParkingsWorker from "../workers/ParkingsWorker";
-import ParkingZonesWorker from "../workers/ParkingZonesWorker";
-import PlaygroundsWorker from "../workers/PlaygroundsWorker";
-import PublicToiletsWorker from "../workers/PublicToiletsWorker";
-import PurgeWorker from "../workers/PurgeWorker";
-import RopidGTFSWorker from "../workers/RopidGTFSWorker";
-import SharedCarsWorker from "../workers/SharedCarsWorker";
-import SkodaPalaceQueuesWorker from "../workers/SkodaPalaceQueuesWorker";
-import SortedWasteStationsWorker from "../workers/SortedWasteStationsWorker";
-import TrafficCamerasWorker from "../workers/TrafficCamerasWorker";
-import VehiclePositionsWorker from "../workers/VehiclePositionsWorker";
-import WasteCollectionYardsWorker from "../workers/WasteCollectionYardsWorker";
-import IQueueDefinition from "./IQueueDefinition";
-
-const config = require("../config/ConfigLoader");
-const { AMQPConnector } = require("../helpers/AMQPConnector");
+import { config } from "../core/config";
+import { AMQPConnector, log } from "../core/helpers";
+import { CustomError, handleError } from "../core/helpers/errors";
+import { IQueueDefinition } from "../core/queueprocessors";
+import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { CityDistrictsWorker } from "../modules/citydistricts";
+import { GardensWorker } from "../modules/gardens";
+import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
+import { IceGatewayStreetLampsWorker } from "../modules/icegatewaystreetlamps";
+import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
+import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
+import { MeteosensorsWorker } from "../modules/meteosensors";
+import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
+import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
+import { ParkingsWorker } from "../modules/parkings";
+import { ParkingZonesWorker } from "../modules/parkingzones";
+import { PlaygroundsWorker } from "../modules/playgrounds";
+import { PublicToiletsWorker } from "../modules/publictoilets";
+import { PurgeWorker } from "../modules/purge";
+import { RopidGTFSWorker } from "../modules/ropidgtfs";
+import { SharedCarsWorker } from "../modules/sharedcars";
+import { SkodaPalaceQueuesWorker } from "../modules/skodapalacequeues";
+import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
+import { TrafficCamerasWorker } from "../modules/trafficcameras";
+import { VehiclePositionsWorker } from "../modules/vehiclepositions";
+import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 
 const definitions: IQueueDefinition[] = [
     {
@@ -714,4 +711,4 @@ const definitions: IQueueDefinition[] = [
 */
 ];
 
-module.exports = definitions;
+export { definitions as queuesDefinition };

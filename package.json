@@ -1,16 +1,18 @@
 {
-	"name": "data-platform-integration-engine",
-	"version": "0.0.8",
-	"description": "Integration Engine of the Data Platform System",
+	"name": "golemio-integration-engine",
+	"version": "0.1.0",
+	"description": "Integration Engine of the Golemio data platform.",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"start": "node -r dotenv/config dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
-		"test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exclude test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
-		"datasources-test": "DEBUG='data-platform*' mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/datasources/DataSourcesAvailabilityChecking.test.ts --exit",
-		"code-coverage": "DEBUG='data-platform*' nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/**/*.test.ts test/helpers/**/*.test.ts --exclude test/datasources/DataSourcesAvailabilityChecking.test.ts --exit"
+		"test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/core/helpers/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit",
+		"core-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/core/helpers/**/*.test.ts --exit",
+		"modules-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/modules/**/*.test.ts --exit",
+		"datasources-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/DataSourcesAvailabilityChecking.test.ts --exit",
+		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/core/**/*.test.ts test/core/helpers/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit"
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",
