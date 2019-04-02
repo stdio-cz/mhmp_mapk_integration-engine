@@ -2,10 +2,15 @@
 
 import * as path from "path";
 
+/// Path to config files directory
+const FILES_DIR = "../../../config/";
+/// Config files extension
+const FILES_EXT = ".json";
+
 /**
  * Helper for loading and merging default and specific config files.
  */
-class ConfigLoader {
+export class ConfigLoader {
 
     /** Object with configurations */
     public conf: any;
@@ -19,10 +24,14 @@ class ConfigLoader {
         let conf: any = {};
         let defaultConf: any = {};
         try {
-            conf = require(path.resolve(__dirname, "../../../config/", filename + ".json"));
-            defaultConf = require(path.resolve(__dirname, "../../../config/", filename + ".default.json"));
+            try {
+                conf = require(path.join(__dirname, FILES_DIR, filename + FILES_EXT));
+                defaultConf = require(path.join(__dirname, FILES_DIR, filename + ".default" + FILES_EXT));
+            } catch (err) {
+                defaultConf = require(path.join(__dirname, FILES_DIR, filename + ".default" + FILES_EXT));
+            }
         } catch (err) {
-            defaultConf = require(path.resolve(__dirname, "../../../config/", filename + ".default.json"));
+            throw new Error(`Default config '${filename}' was not found.`);
         }
         /// merging objects defaultConf and conf for export
         this.conf = { ...defaultConf, ...conf };

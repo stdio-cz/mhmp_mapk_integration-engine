@@ -27,28 +27,30 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;
+        const tmpDir = this.connectionSettings.tmpDir;
 
         try {
             await ftpClient.access(this.connectionSettings.url);
             await ftpClient.cd(this.connectionSettings.path);
-            await ftpClient.download(fs.createWriteStream("/tmp/" + this.connectionSettings.filename),
+            await ftpClient.download(fs.createWriteStream(path.join(tmpDir, this.connectionSettings.filename)),
                 this.connectionSettings.filename);
 
             let result = null;
+            const prefix = path.parse(this.connectionSettings.filename).name + "/";
+            const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
+                    isKeyConstructedFromData: false,
+                    prefix: "",
+                },
+                null);
 
             if (this.connectionSettings.isCompressed) {
-                const prefix = path.parse(this.connectionSettings.filename).name + "/";
-                const files = await decompress("/tmp/" + this.connectionSettings.filename, {
-                    filter: (this.connectionSettings.whitelistedFiles.length)
+                const files = await decompress(path.join(tmpDir, this.connectionSettings.filename), {
+                    filter: (this.connectionSettings.whitelistedFiles
+                            && this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,
                 });
-                const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
-                        isKeyConstructedFromData: false,
-                        prefix: "",
-                    },
-                null);
                 result = await Promise.all(files.map(async (file) => {
                     await redisModel.save(prefix + file.path, file.data.toString("hex"));
                     return {
@@ -59,21 +61,22 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
                     };
                 }));
             } else if (this.connectionSettings.hasSubFiles) {
-                result = await this.readDir("/tmp/" + this.connectionSettings.filename);
-                if (this.connectionSettings.whitelistedFiles.length) {
-                    result = result.filter((file) => this.connectionSettings.whitelistedFiles
-                        .indexOf(file.path) !== -1);
+                let files = await this.readDir(path.join(tmpDir, this.connectionSettings.filename));
+                if (this.connectionSettings.whitelistedFiles && this.connectionSettings.whitelistedFiles.length) {
+                    files = files.filter((file) => this.connectionSettings.whitelistedFiles
+                        .indexOf(file) !== -1);
                 }
-            } else if (this.connectionSettings.onlySavedToTmpDir) {
-                const stat = await this.readFileStat("/tmp/" + this.connectionSettings.filename);
-                result = {
-                    filepath: "/tmp/" + this.connectionSettings.filename,
-                    mtime: stat.mtime,
-                    name: path.parse(this.connectionSettings.filename).name,
-                    path: "/tmp/",
-                };
+                result = await Promise.all(files.map(async (file) => {
+                    const data = await this.readFile(path.join(tmpDir, prefix, file));
+                    await redisModel.save(prefix + file, data.toString("hex"));
+                    return {
+                        filepath: prefix + file,
+                        name: path.parse(file).name,
+                        path: file,
+                    };
+                }));
             } else {
-                const buffer = await this.readFile("/tmp/" + this.connectionSettings.filename);
+                const buffer = await this.readFile(path.join(tmpDir, this.connectionSettings.filename));
                 result = Buffer.from(buffer).toString("utf8");
             }
             return result;
@@ -123,17 +126,6 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
                     return reject(err);
                 }
                 return resolve(files);
-            });
-        });
-    }
-
-    private readFileStat = (filePath: string): Promise<any> => {
-        return new Promise((resolve, reject) => {
-            fs.stat(filePath, (err, stats) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(stats);
             });
         });
     }

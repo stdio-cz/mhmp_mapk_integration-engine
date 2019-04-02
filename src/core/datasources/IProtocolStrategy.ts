@@ -28,15 +28,17 @@ export interface IFTPSettings {
     filename: string;
 
     /** Url of the ftp host. */
-    url: string;
+    url: string | { host: string, password: string, secure?: boolean, user: string };
 
     /** Path to file. */
     path: string;
 
+    /** Tmp directory */
+    tmpDir: string;
+
     isCompressed?: boolean;
     hasSubFiles?: boolean;
     whitelistedFiles?: string[];
-    onlySavedToTmpDir?: boolean;
 }
 
 export interface IProtocolStrategy {

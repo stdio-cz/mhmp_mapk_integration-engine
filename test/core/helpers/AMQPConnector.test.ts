@@ -2,8 +2,6 @@
 
 "use strict";
 
-// gitlab connection to RabbitMQ not tunneled yet
-/*
 import "mocha";
 import { AMQPConnector } from "../../../src/core/helpers";
 import { CustomError } from "../../../src/core/helpers/errors";
@@ -14,7 +12,8 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-describe("AMQPConnector", () => {
+// TODO gitlab connection to RabbitMQ not tunneled yet
+describe.skip("AMQPConnector", () => {
 
     it("should has connect method", async () => {
         expect(AMQPConnector.connect).not.to.be.undefined;
@@ -25,7 +24,7 @@ describe("AMQPConnector", () => {
     });
 
     it("should throws Error if not connect method was not called", async () => {
-        expect(AMQPConnector.getChannel()).to.be.rejected;
+        expect(AMQPConnector.getChannel).to.throw(CustomError);
     });
 
     it("should connects to RabbitMQ and returns channel", async () => {
@@ -39,4 +38,3 @@ describe("AMQPConnector", () => {
     });
 
 });
-*/

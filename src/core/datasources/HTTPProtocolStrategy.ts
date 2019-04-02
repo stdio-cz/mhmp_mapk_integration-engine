@@ -29,7 +29,8 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
             if (this.connectionSettings.isCompressed) {
                 const prefix = path.parse(this.connectionSettings.url).name + "/";
                 const files = await decompress(result, {
-                    filter: (this.connectionSettings.whitelistedFiles.length)
+                    filter: (this.connectionSettings.whitelistedFiles
+                            && this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,

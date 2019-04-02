@@ -52,6 +52,14 @@ describe("Validator", () => {
         await expect(validator.Validate(testData)).to.be.fulfilled;
     });
 
+    it("should should validates empty data", async () => {
+        await expect(validator.Validate([])).to.be.fulfilled;
+    });
+
+    it("should should validates one object", async () => {
+        await expect(validator.Validate(testData[0])).to.be.fulfilled;
+    });
+
     it("should throw error if the data are not valid", async () => {
         delete testData[1].timestamp;
         await expect(validator.Validate(testData)).to.be.rejectedWith(CustomError);

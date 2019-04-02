@@ -3,6 +3,7 @@
 "use strict";
 
 import "mocha";
+import { config } from "../../../src/core/config";
 import { GeocodeApi } from "../../../src/core/helpers";
 
 const chai = require("chai");
@@ -23,10 +24,18 @@ describe("GeocodeApi", () => {
         expect(data).to.equal("Dělnická 213/10, 17000 Praha-Holešovice, Česko");
     });
 
+    it("should throws error if getting address by lat lng using Open Street Map API failed", async () => {
+        expect(GeocodeApi.getAddressByLatLng(null, null)).to.be.rejected;
+    });
+
     it("should returns lat lng by address using Open Street Map API", async () => {
         const data = await GeocodeApi.getGeoByAddress("Dělnická 213/10", "Praha");
         expect(data).to.be.a("array");
         expect(data).to.deep.equal([ 14.4461163, 50.1028934 ]);
+    });
+
+    it("should throws error if getting address by lat lng using Open Street Map API failed", async () => {
+        expect(GeocodeApi.getGeoByAddress("aaa", "bbb")).to.be.rejected;
     });
 
 });

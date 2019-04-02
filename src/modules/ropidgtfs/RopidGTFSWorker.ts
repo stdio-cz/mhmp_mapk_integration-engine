@@ -35,6 +35,7 @@ export class RopidGTFSWorker extends BaseWorker {
                 filename: config.datasources.RopidGTFSFilename,
                 isCompressed: true,
                 path: config.datasources.RopidGTFSPath,
+                tmpDir: "/tmp/",
                 url: config.datasources.RopidFTP,
                 whitelistedFiles: [
                     "agency.txt", "calendar.txt", "calendar_dates.txt",
@@ -54,6 +55,7 @@ export class RopidGTFSWorker extends BaseWorker {
             new FTPProtocolStrategy({
                 filename: config.datasources.RopidGTFSCisStopsFilename,
                 path: config.datasources.RopidGTFSCisStopsPath,
+                tmpDir: "/tmp/",
                 url: config.datasources.RopidFTP,
             }),
             new JSONDataTypeStrategy({resultsPath: "stopGroups"}),
