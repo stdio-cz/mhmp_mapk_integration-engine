@@ -22,6 +22,7 @@ describe("FTPProtocolStrategy", () => {
     let sandbox;
     let downloadStub;
     let lastmodStub;
+    let now;
 
     before(async () => {
         await RedisConnector.connect();
@@ -30,9 +31,10 @@ describe("FTPProtocolStrategy", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox();
 
+        now = new Date();
         sandbox.stub(fs, "createWriteStream");
         downloadStub = sandbox.stub();
-        lastmodStub = sandbox.stub().callsFake(() => "Tue, 12 Mar 2019 17:32:09 GMT");
+        lastmodStub = sandbox.stub().callsFake(() => now);
         sandbox.stub(ftp, "Client").callsFake(() => Object.assign({
             access: sandbox.stub(),
             cd: sandbox.stub(),
@@ -122,7 +124,7 @@ describe("FTPProtocolStrategy", () => {
 
     it("should properly get last modified", async () => {
         const res = await strategy.getLastModified();
-        expect(res).to.be.equal("2019-12-20T16:32:00.000Z");
+        expect(res).to.be.equal(now.toISOString());
     });
 
     it("should return null if last modified is not provided", async () => {
