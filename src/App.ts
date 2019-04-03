@@ -1,15 +1,10 @@
 "use strict";
 
-import handleError from "./helpers/errors/ErrorHandler";
-import log from "./helpers/Logger";
-import QueueProcessor from "./queue-processors/QueueProcessor";
-
-const { AMQPConnector } = require("./helpers/AMQPConnector");
-const { mongooseConnection } = require("./helpers/MongoConnector");
-const { PostgresConnector } = require("./helpers/PostgresConnector");
-const { RedisConnector } = require("./helpers/RedisConnector");
-const config = require("./config/ConfigLoader");
-const queuesDefinitions = require("./definitions/queuesDefinition");
+import { config } from "./core/config";
+import { AMQPConnector, log, mongooseConnection, PostgresConnector, RedisConnector } from "./core/helpers";
+import { handleError } from "./core/helpers/errors";
+import { QueueProcessor } from "./core/queueprocessors";
+import { queuesDefinition } from "./definitions";
 
 class App {
 
@@ -18,7 +13,6 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
-            log.debug("Configuration loaded: " + JSON.stringify(config));
             await this.database();
             await this.queueProcessors();
             log.info("Started!");
@@ -44,7 +38,7 @@ class App {
         const ch = await AMQPConnector.connect();
 
         // filtering queue definitions by blacklist
-        let filteredQueuesDefinitions = queuesDefinitions;
+        let filteredQueuesDefinitions = queuesDefinition;
         Object.keys(config.queuesBlacklist).map((b) => {
             if (config.queuesBlacklist[b].length === 0) {
                 filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
