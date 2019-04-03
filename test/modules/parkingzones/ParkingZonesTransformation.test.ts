@@ -53,11 +53,10 @@ describe("ParkingZonesTransformation", () => {
     });
 
     it("should has setTariffs method", async () => {
-        expect(transformation.setTariffs).not.to.be.undefined;
+        expect(transformation.transformTariffs).not.to.be.undefined;
     });
 
     it("should properly transform element", async () => {
-        await transformation.setTariffs(testTariffData);
         const data = await transformation.transform(testSourceData.features[0]);
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
@@ -69,14 +68,12 @@ describe("ParkingZonesTransformation", () => {
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("number_of_places");
         expect(data.properties).to.have.property("payment_link");
-        expect(data.properties).to.have.property("tariffs");
         expect(data.properties).to.have.property("timestamp");
         expect(data.properties).to.have.property("type");
         expect(data.properties).to.have.property("zps_id");
     });
 
     it("should properly transform collection", async () => {
-        await transformation.setTariffs(testTariffData);
         const data = await transformation.transform(testSourceData.features);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
@@ -89,11 +86,16 @@ describe("ParkingZonesTransformation", () => {
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("number_of_places");
             expect(data[i].properties).to.have.property("payment_link");
-            expect(data[i].properties).to.have.property("tariffs");
             expect(data[i].properties).to.have.property("timestamp");
             expect(data[i].properties).to.have.property("type");
             expect(data[i].properties).to.have.property("zps_id");
         }
+    });
+
+    it("should properly transform tariffs", async () => {
+        const data = await transformation.transformTariffs("test", testTariffData);
+        expect(data).to.have.property("tariffs");
+        expect(data).to.have.property("tariffsText");
     });
 
 });

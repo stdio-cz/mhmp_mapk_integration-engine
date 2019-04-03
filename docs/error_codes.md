@@ -28,3 +28,4 @@
 - 1024: The model saving type was not specified. Data was not saved.
 - 1025: Method is not implemented.
 - 1026: Sorted Waste Containers were not set. Use method setContaners().
+- 1027: Error while updating parking zone tariffs.

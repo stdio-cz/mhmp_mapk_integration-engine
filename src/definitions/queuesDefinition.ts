@@ -328,6 +328,16 @@ const definitions: IQueueDefinition[] = [
                 worker: ParkingZonesWorker,
                 workerMethod: "refreshDataInDB",
             },
+            {
+                name: "updateTariffs",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000,
+                },
+                worker: ParkingZonesWorker,
+                workerMethod: "updateTariffs",
+            },
         ],
     },
     {
