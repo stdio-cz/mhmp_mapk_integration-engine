@@ -32,21 +32,35 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
             type: "Feature",
         };
         if (element.measurement) {
-            const components = element.measurement.component.map(async (c, i) => {
-                const averagedTime = {
-                    averaged_hours: (element.measurement.averaged_time[i].averaged_hours)
-                        ? parseInt(element.measurement.averaged_time[i].averaged_hours, 10)
-                        : null,
-                    value: (element.measurement.averaged_time[i].value)
-                        ? parseFloat(element.measurement.averaged_time[i].value)
-                        : null,
-                };
-                return {
-                    averaged_time: averagedTime,
-                    type: c,
-                };
-            });
-            res.properties.measurement.components = await Promise.all(components);
+            if (element.measurement.component instanceof Array) {
+                const components = element.measurement.component.map(async (c, i) => {
+                    const averagedTime = {
+                        averaged_hours: (element.measurement.averaged_time[i].averaged_hours)
+                            ? parseInt(element.measurement.averaged_time[i].averaged_hours, 10)
+                            : null,
+                        value: (element.measurement.averaged_time[i].value)
+                            ? parseFloat(element.measurement.averaged_time[i].value)
+                            : null,
+                    };
+                    return {
+                        averaged_time: averagedTime,
+                        type: c,
+                    };
+                });
+                res.properties.measurement.components = await Promise.all(components);
+            } else {
+                res.properties.measurement.components = [{
+                    averaged_time: {
+                        averaged_hours: (element.measurement.averaged_time.averaged_hours)
+                            ? parseInt(element.measurement.averaged_time.averaged_hours, 10)
+                            : null,
+                        value: (element.measurement.averaged_time.value)
+                            ? parseFloat(element.measurement.averaged_time.value)
+                            : null,
+                    },
+                    type: element.measurement.component,
+                }];
+            }
         }
         return res;
     }
