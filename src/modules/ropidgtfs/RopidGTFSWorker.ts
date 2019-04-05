@@ -3,7 +3,7 @@
 import { RopidGTFS } from "data-platform-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, FTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { log } from "../../core/helpers";
+import { log, Validator } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
@@ -49,7 +49,7 @@ export class RopidGTFSWorker extends BaseWorker {
                 isKeyConstructedFromData: false,
                 prefix: "",
             },
-        null);
+            null);
         this.metaModel = new RopidGTFSMetadataModel();
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
@@ -67,7 +67,8 @@ export class RopidGTFSWorker extends BaseWorker {
                 savingType: "insertOnly",
                 tmpPgTableName: RopidGTFS.cis_stop_groups.tmpPgTableName,
             },
-            null,
+            new Validator(RopidGTFS.cis_stop_groups.name + "ModelValidator",
+                RopidGTFS.cis_stop_groups.outputMongooseSchemaObject),
         );
         this.cisStopsModel = new PostgresModel(RopidGTFS.cis_stops.name + "Model", {
                 outputSequelizeAttributes: RopidGTFS.cis_stops.outputSequelizeAttributes,
@@ -75,7 +76,8 @@ export class RopidGTFSWorker extends BaseWorker {
                 savingType: "insertOnly",
                 tmpPgTableName: RopidGTFS.cis_stops.tmpPgTableName,
             },
-            null,
+            new Validator(RopidGTFS.cis_stops.name + "ModelValidator",
+                RopidGTFS.cis_stops.outputMongooseSchemaObject),
         );
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
                 decodeDataAfterGet: JSON.parse,
@@ -83,7 +85,9 @@ export class RopidGTFSWorker extends BaseWorker {
                 isKeyConstructedFromData: true,
                 prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
             },
-        null);
+            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
+                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
+        );
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
     }
 
@@ -332,7 +336,8 @@ export class RopidGTFSWorker extends BaseWorker {
                     savingType: "insertOnly",
                     tmpPgTableName: RopidGTFS[name].tmpPgTableName,
                 },
-                null,
+                new Validator(RopidGTFS[name].name + "ModelValidator",
+                    RopidGTFS[name].outputMongooseSchemaObject),
             );
         }
         return null;
@@ -350,7 +355,13 @@ export class RopidGTFSWorker extends BaseWorker {
 
         const promises = models.map(async (m) => {
             const model = this.getModelByName(m.name);
-            const res = await model.findAndCountAll({ order: m.order, raw: true });
+            const res = await model.findAndCountAll({
+                // exclude audit columns
+                attributes: { exclude: [
+                    "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by"] },
+                order: m.order,
+                raw: true,
+            });
             gtfs[m.name] = res.rows;
             return;
         });
