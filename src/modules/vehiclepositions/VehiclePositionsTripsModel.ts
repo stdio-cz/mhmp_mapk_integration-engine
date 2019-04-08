@@ -121,7 +121,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             + ") "
             + "AND stop_sequence = 1 "
             + "AND ropidgtfs_stop_times.departure_time "
-            + "  = TO_CHAR(('" + startdate.utc().format() + "' at time zone 'cet'), 'FMHH24:MI:SS') "
+            + "  = TO_CHAR(('" + startdate.utc().format() + "' at time zone 'Europe/Prague'), 'FMHH24:MI:SS') "
             + "AND ropidgtfs_trips.service_id IN ( "
             + "SELECT service_id FROM ropidgtfs_calendar "
             + "WHERE "
