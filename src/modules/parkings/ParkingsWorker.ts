@@ -52,6 +52,7 @@ export class ParkingsWorker extends BaseWorker {
                     a.properties.num_of_taken_places = b.properties.num_of_taken_places;
                     a.properties.total_num_of_places = b.properties.total_num_of_places;
                     a.properties.parking_type = b.properties.parking_type;
+                    a.properties.payment_link = b.properties.payment_link;
                     a.properties.timestamp = b.properties.timestamp;
                     return a;
                 },
