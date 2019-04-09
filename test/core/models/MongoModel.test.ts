@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { CityDistricts } from "data-platform-schema-definitions";
+import { CityDistricts } from "golemio-schema-definitions";
 import "mocha";
 import { mongooseConnection } from "../../../src/core/helpers";
 import { Validator } from "../../../src/core/helpers";

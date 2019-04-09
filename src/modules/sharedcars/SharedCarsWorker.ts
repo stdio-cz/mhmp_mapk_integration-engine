@@ -1,12 +1,15 @@
 "use strict";
 
-import { SharedCars } from "data-platform-schema-definitions";
+import { SharedCars } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { CeskyCarsharingTransformation, HoppyGoTransformation } from "./";
+
+const cheapruler = require("cheap-ruler");
+const ruler = cheapruler(50);
 
 export class SharedCarsWorker extends BaseWorker {
 
@@ -78,7 +81,14 @@ export class SharedCarsWorker extends BaseWorker {
             this.ceskyCarsharingTransformation.transform(data[0]),
             this.hoppyGoTransformation.transform(data[1]),
         ]);
-        await this.model.save(transformedData[0].concat(transformedData[1]));
+
+        // filter the objects 18 km far from the center of Prague
+        const filteredData = transformedData[0].concat(transformedData[1]).filter((item) => {
+            // distance from center of Prague
+            const distance = ruler.distance([14.463401734828949, 50.06081863605803], item.geometry.coordinates);
+            return distance < 18;
+        });
+        await this.model.save(filteredData);
     }
 
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { SortedWasteStations } from "data-platform-schema-definitions";
+import { SortedWasteStations } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class OICTSortedWasteStationsTransformation extends BaseTransformation implements ITransformation {

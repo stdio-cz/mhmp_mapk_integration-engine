@@ -1,6 +1,6 @@
 "use strict";
 
-import { MedicalInstitutions } from "data-platform-schema-definitions";
+import { MedicalInstitutions } from "golemio-schema-definitions";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
@@ -8,13 +8,13 @@ const slug = require("slugify");
 const csvtojson = require("csvtojson");
 const iconv = require("iconv-lite");
 
-export class MedicalInstitutionsTransformation extends BaseTransformation implements ITransformation {
+export class PharmaciesTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
 
     constructor() {
         super();
-        this.name = MedicalInstitutions.name;
+        this.name = MedicalInstitutions.pharmacies.name;
     }
 
     /**
@@ -93,6 +93,7 @@ export class MedicalInstitutionsTransformation extends BaseTransformation implem
                 timestamp: new Date().getTime(),
                 type: {
                     description: null,
+                    group: "pharmacies",
                     id: element.TYP_LEKARNY,
                 },
                 web: (element.WWW) ? element.WWW.trim().split(",") : [],
@@ -120,4 +121,5 @@ export class MedicalInstitutionsTransformation extends BaseTransformation implem
             case "SVATEK": return "Svátek";
         }
     }
+
 }

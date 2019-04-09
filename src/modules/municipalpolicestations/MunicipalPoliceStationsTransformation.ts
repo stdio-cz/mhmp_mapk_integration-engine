@@ -1,6 +1,6 @@
 "use strict";
 
-import { MunicipalPoliceStations } from "data-platform-schema-definitions";
+import { MunicipalPoliceStations } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");

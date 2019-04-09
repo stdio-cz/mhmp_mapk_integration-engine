@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
+import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { Validator } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";

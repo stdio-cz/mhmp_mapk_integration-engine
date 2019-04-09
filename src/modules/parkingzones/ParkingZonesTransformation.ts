@@ -1,6 +1,6 @@
 "use strict";
 
-import { ParkingZones } from "data-platform-schema-definitions";
+import { ParkingZones } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
@@ -86,6 +86,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
             };
             return new Promise((resolve, reject) => {
                 mergingIterator(0, () => {
+
                     resolve(sorted);
                 });
             });
@@ -155,7 +156,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
                 northeast: null,
                 number_of_places: parseInt(element.properties.PS_ZPS, 10),
                 payment_link: (element.properties.TARIFTAB)
-                    ? config.PARKINGS_PAYMENT_URL + "?shortname=" + element.properties.TARIFTAB
+                    ? config.PARKING_ZONES_PAYMENT_URL + "?shortname=" + element.properties.TARIFTAB
                     : null,
                 southwest: null,
                 tariffs: [],

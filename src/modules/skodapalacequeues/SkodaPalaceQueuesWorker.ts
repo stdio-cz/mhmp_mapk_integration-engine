@@ -1,6 +1,6 @@
 "use strict";
 
-import {  SkodaPalaceQueues } from "data-platform-schema-definitions";
+import {  SkodaPalaceQueues } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, XMLDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
@@ -46,6 +46,7 @@ export class SkodaPalaceQueuesWorker extends BaseWorker {
         );
         this.transformation = new SkodaPalaceQueuesTransformation();
         this.historyModel = new MongoModel(SkodaPalaceQueues.history.name + "Model", {
+                identifierPath: "municipal_authority_id",
                 mongoCollectionName: SkodaPalaceQueues.history.mongoCollectionName,
                 outputMongooseSchemaObject: SkodaPalaceQueues.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",

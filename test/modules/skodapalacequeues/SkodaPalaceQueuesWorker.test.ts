@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { SkodaPalaceQueues } from "data-platform-schema-definitions";
+import { SkodaPalaceQueues } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { SkodaPalaceQueuesWorker } from "../../../src/modules/skodapalacequeues";

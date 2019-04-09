@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { MedicalInstitutionsTransformation } from "../../../src/modules/medicalinstitutions";
+import { HealthCareTransformation } from "../../../src/modules/medicalinstitutions";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -29,20 +29,20 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("MedicalInstitutionsTransformation", () => {
+describe("HealthCareTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new MedicalInstitutionsTransformation();
-        const buffer = await readFile(__dirname + "/../../data/medicalinstitutions-data.json");
+        transformation = new HealthCareTransformation();
+        const buffer = await readFile(__dirname + "/../../data/medicalinstitutions_healthcare-datasource.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("MedicalInstitutions");
+        expect(transformation.name).is.equal("HealthCare");
     });
 
     it("should has transform method", async () => {
@@ -50,9 +50,6 @@ describe("MedicalInstitutionsTransformation", () => {
     });
 
     it("should properly transform collection", async () => {
-        testSourceData[0].data = await readFile(__dirname + "/../../data/medicalinstitutions/lekarny_prac_doba.csv");
-        testSourceData[1].data = await readFile(__dirname + "/../../data/medicalinstitutions/lekarny_seznam.csv");
-        testSourceData[2].data = await readFile(__dirname + "/../../data/medicalinstitutions/lekarny_typ.csv");
         const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");

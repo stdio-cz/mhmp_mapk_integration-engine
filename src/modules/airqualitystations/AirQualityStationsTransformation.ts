@@ -1,6 +1,6 @@
 "use strict";
 
-import { AirQualityStations } from "data-platform-schema-definitions";
+import { AirQualityStations } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class AirQualityStationsTransformation extends BaseTransformation implements ITransformation {
