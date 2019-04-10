@@ -17,6 +17,8 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
     protected validator: Validator;
     /** Type/Strategy of saving the data */
     protected savingType: "insertOnly" | "insertOrUpdate";
+    /** Associated vehiclepositions_trips Model for updating the delay */
+    protected tripsModel: Sequelize.Model<any, any>;
 
     constructor() {
         super(VehiclePositions.positions.name + "Model", {
@@ -37,23 +39,44 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             new Validator(VehiclePositions.positions.name + "ModelValidator",
                 VehiclePositions.positions.outputMongooseSchemaObject),
         );
+        this.tripsModel = PostgresConnector.getConnection().define(VehiclePositions.trips.pgTableName,
+            VehiclePositions.trips.outputSequelizeAttributes, {});
+        this.tripsModel.hasMany(this.sequelizeModel, {foreignKey: "trips_id", sourceKey: "id"});
     }
 
     public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-
-        // TODO zbavit se raw query
-        const results = await connection.query(
-            "SELECT DISTINCT ON (b.origin_time) "
-            + "a.id, a.gtfs_trip_id, b.tracking, b.is_canceled, b.lat, b.lng, b.origin_time, "
-            + "b.origin_timestamp, b.delay_stop_arrival, b.delay_stop_departure, b.delay, "
-            + "b.gtfs_shape_dist_traveled, b.gtfs_next_stop_id, b.created "
-            + "FROM " + VehiclePositions.trips.pgTableName + " a "
-            + "RIGHT JOIN " + VehiclePositions.positions.pgTableName + " b ON a.id = b.trips_id "
-            + "WHERE a.id = '" + tripId + "' AND b.tracking <> 0 AND a.gtfs_trip_id IS NOT NULL "
-            + "ORDER BY b.origin_time, b.created ASC;",
-            { type: Sequelize.QueryTypes.SELECT });
-        return results;
+        const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
+        const results = await this.tripsModel.findAll({
+            attributes: [
+                Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
+                "id", "gtfs_trip_id",
+            ],
+            include: [{
+                attributes: [ "lat", "lng", "origin_time", "origin_timestamp", "delay" ],
+                model: this.sequelizeModel,
+                where: { tracking: { [Sequelize.Op.ne]: 0 } },
+            }],
+            order: [
+                [{ model: this.sequelizeModel }, "origin_time" ],
+                [{ model: this.sequelizeModel }, "created_at", "ASC"],
+            ],
+            raw: true,
+            where: {
+                gtfs_trip_id: { [Sequelize.Op.ne]: null },
+                id: tripId,
+            },
+        });
+        return results.map((r) => {
+            return {
+                delay: r["vehiclepositions_positions.delay"],
+                gtfs_trip_id: r.gtfs_trip_id,
+                id: r.id,
+                lat: r["vehiclepositions_positions.lat"],
+                lng: r["vehiclepositions_positions.lng"],
+                origin_time: r["vehiclepositions_positions.origin_time"],
+                origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
+            };
+        });
     }
 
     public updateDelay = async (tripsId, originTime, delay, gtfsShapeDistTraveled, gtfsNextStopId): Promise<any> => {

@@ -8,15 +8,15 @@ export class PurgeWorker {
     public deleteOldVehiclePositions = async (msg: any): Promise<void> => {
         try {
             let res = await PostgresConnector.getConnection().query(
-                "SELECT * FROM retention('vehiclepositions_trips','created',48);",
+                "SELECT * FROM retention('vehiclepositions_trips','created_at',48);",
             );
             log.debug(res);
             res = await PostgresConnector.getConnection().query(
-                "SELECT * FROM retention('vehiclepositions_stops','created',48);",
+                "SELECT * FROM retention('vehiclepositions_stops','created_at',48);",
             );
             log.debug(res);
             res = await PostgresConnector.getConnection().query(
-                "SELECT * FROM retention('vehiclepositions_positions','created',48);",
+                "SELECT * FROM retention('vehiclepositions_positions','created_at',48);",
             );
             log.debug(res);
         } catch (err) {

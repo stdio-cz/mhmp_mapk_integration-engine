@@ -18,7 +18,8 @@ class MySequelize {
             this.connection = new Sequelize(config.POSTGRES_CONN, {
                 define: {
                     freezeTableName: true,
-                    timestamps: false,
+                    timestamps: true, // adds createdAt and updatedAt
+                    underscored: true, // automatically set field option for all attributes to snake cased name
                 },
                 logging: log.silly, // logging by Logger::silly
                 operatorsAliases: false, // disable aliases
