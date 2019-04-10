@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts } from "data-platform-schema-definitions";
+import { CityDistricts } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
@@ -26,6 +26,7 @@ export class CityDistrictsWorker extends BaseWorker {
             new Validator(CityDistricts.name + "DataSourceValidator", CityDistricts.datasourceMongooseSchemaObject));
         this.model = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
+                modelIndexes: [{ "properties.slug": 1 }],
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",

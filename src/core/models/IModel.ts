@@ -13,7 +13,7 @@ export interface ISequelizeSettings {
 }
 
 export interface IMongooseSettings {
-    identifierPath?: string;
+    identifierPath: string;
     modelIndexes?: any[];
     mongoCollectionName: string;
     outputMongooseSchemaObject: SchemaDefinition;

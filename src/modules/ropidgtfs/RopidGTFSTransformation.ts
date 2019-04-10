@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS } from "data-platform-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const csvtojson = require("csvtojson");

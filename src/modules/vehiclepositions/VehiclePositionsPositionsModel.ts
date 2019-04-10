@@ -1,6 +1,6 @@
 "use strict";
 
-import { VehiclePositions } from "data-platform-schema-definitions";
+import { VehiclePositions } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
 import { PostgresConnector, Validator } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
@@ -45,14 +45,21 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
     }
 
     public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
+        const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
         const results = await this.tripsModel.findAll({
-            attributes: [ "id", "gtfs_trip_id" ],
+            attributes: [
+                Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
+                "id", "gtfs_trip_id",
+            ],
             include: [{
                 attributes: [ "lat", "lng", "origin_time", "origin_timestamp", "delay" ],
                 model: this.sequelizeModel,
                 where: { tracking: { [Sequelize.Op.ne]: 0 } },
             }],
-            order: [[{ model: this.sequelizeModel }, "created_at", "ASC"]],
+            order: [
+                [{ model: this.sequelizeModel }, "origin_time" ],
+                [{ model: this.sequelizeModel }, "created_at", "ASC"],
+            ],
             raw: true,
             where: {
                 gtfs_trip_id: { [Sequelize.Op.ne]: null },

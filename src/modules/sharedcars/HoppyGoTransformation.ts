@@ -1,6 +1,6 @@
 "use strict";
 
-import { SharedCars } from "data-platform-schema-definitions";
+import { SharedCars } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 

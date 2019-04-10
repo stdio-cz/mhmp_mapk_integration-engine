@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, SortedWasteStations } from "data-platform-schema-definitions";
+import { CityDistricts, SortedWasteStations } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { log, Validator } from "../../core/helpers";

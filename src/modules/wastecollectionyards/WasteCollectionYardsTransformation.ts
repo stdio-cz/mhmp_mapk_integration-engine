@@ -1,6 +1,6 @@
 "use strict";
 
-import { WasteCollectionYards } from "data-platform-schema-definitions";
+import { WasteCollectionYards } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");

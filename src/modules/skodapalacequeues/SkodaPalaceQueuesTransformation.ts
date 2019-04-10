@@ -1,6 +1,6 @@
 "use strict";
 
-import { SkodaPalaceQueues } from "data-platform-schema-definitions";
+import { SkodaPalaceQueues } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");

@@ -6,7 +6,7 @@ import {
     AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
     Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
     RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations, TrafficCameras, WasteCollectionYards,
-} from "data-platform-schema-definitions";
+} from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../src/core/config";
 import {
@@ -117,13 +117,6 @@ describe("DataSourcesAvailabilityChecking", () => {
         let datasource;
         let datasourceTariffs;
 
-        const timeToMinutes = (value: string): number => {
-            const arr = value.split(":").map((val) => {
-                return Number(val);
-            });
-            return (arr[0] * 60) + arr[1];
-        };
-
         beforeEach(() => {
             const zonesProtocol = new JSONDataTypeStrategy({resultsPath: "features"});
             zonesProtocol.setFilter((item) => item.properties.TARIFTAB !== null);
@@ -137,33 +130,14 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject));
             datasourceTariffs = new DataSource("ParkingZonesTariffsDataSource",
                 new HTTPProtocolStrategy({
-                    headers: {},
-                    method: "GET",
-                    url: config.datasources.ParkingZonesTariffs,
-                }),
-                new CSVDataTypeStrategy({
-                    csvtojsonParams: { noheader: false },
-                    subscribe: (json: any) => {
-                        json.TIMEFROM = timeToMinutes(json.TIMEFROM);
-                        json.TIMETO = timeToMinutes(json.TIMETO);
-                        delete json.OBJECTID;
-                        json.code = json.CODE;
-                        delete json.CODE;
-                        json.day = json.DAY;
-                        delete json.DAY;
-                        json.divisibility = parseInt(json.DIVISIBILITY, 10);
-                        delete json.DIVISIBILITY;
-                        json.time_from = json.TIMEFROM;
-                        delete json.TIMEFROM;
-                        json.max_parking_time = parseInt(json.MAXPARKINGTIME, 10);
-                        delete json.MAXPARKINGTIME;
-                        json.price_per_hour = parseFloat(json.PRICEPERHOUR);
-                        delete json.PRICEPERHOUR;
-                        json.time_to = json.TIMETO;
-                        delete json.TIMETO;
-                        return json;
+                    headers : {
+                        authorization: config.datasources.ParkingZonesTariffsAuth,
                     },
+                    json: true,
+                    method: "GET",
+                    url: config.datasources.ParkingZonesTariffs + "P1-0133",
                 }),
+                new JSONDataTypeStrategy({resultsPath: "dailyTariff"}),
                 new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
         });
 
@@ -184,7 +158,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns tariffs last modified", async () => {
             const data = await datasourceTariffs.getLastModified();
-            expect(data).to.be.a.string;
+            expect(data).to.be.null;
         });
     });
 
@@ -620,33 +594,77 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("MedicalInstitutions", () => {
 
-        let datasource;
+        let pharmaciesDatasource;
+        let healthCareDatasource;
 
         beforeEach(() => {
-            datasource = new DataSource(MedicalInstitutions.name + "DataSource",
+            pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
                 new HTTPProtocolStrategy({
                     encoding: null,
                     headers : {},
                     isCompressed: true,
                     method: "GET",
                     rejectUnauthorized: false,
-                    url: config.datasources.MedicalInstitutions,
+                    url: config.datasources.MedicalInstitutionsPharmacies,
                     whitelistedFiles: [
                         "lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv",
                     ],
                 }),
                 new JSONDataTypeStrategy({resultsPath: ""}),
-                new Validator(MedicalInstitutions.name + "DataSource",
-                    MedicalInstitutions.datasourceMongooseSchemaObject));
+                new Validator(MedicalInstitutions.pharmacies.name + "DataSource",
+                    MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject));
+            const hcDataTypeStrategy = new CSVDataTypeStrategy({
+                csvtojsonParams: { noheader: false },
+                subscribe: ((json: any) => {
+                    delete json.poskytovatel_ič;
+                    delete json.poskytovatel_právní_forma_osoba;
+                    delete json.poskytovatel_právní_forma;
+                    delete json.sídlo_adresa_kód_kraje;
+                    delete json.sídlo_adresa_název_kraje;
+                    delete json.sídlo_adresa_kód_okresu;
+                    delete json.sídlo_adresa_název_okresu;
+                    delete json.sídlo_adresa_psč;
+                    delete json.sídlo_adresa_název_obce;
+                    delete json.sídlo_adresa_název_ulice;
+                    delete json.sídlo_adresa_číslo_domovní;
+                    return json;
+                }),
+            });
+            hcDataTypeStrategy.setFilter((item) => {
+                return item.adresa_kód_kraje === "CZ010"
+                    && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
+                    "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                    "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+            });
+            healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers : {},
+                        method: "GET",
+                        url: config.datasources.MedicalInstitutionsHealthCare,
+                    }),
+                    hcDataTypeStrategy,
+                    new Validator(MedicalInstitutions.healthCare.name + "DataSource",
+                        MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
         });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
+        it("should returns all pharmacies objects", async () => {
+            const data = await pharmaciesDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
+        it("should returns pharmacies last modified", async () => {
+            const data = await pharmaciesDatasource.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+        it("should returns all health care objects", async () => {
+            const data = await healthCareDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns health care last modified", async () => {
+            const data = await healthCareDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
 

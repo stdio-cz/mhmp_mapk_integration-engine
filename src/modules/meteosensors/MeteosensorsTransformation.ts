@@ -1,6 +1,6 @@
 "use strict";
 
-import { Meteosensors } from "data-platform-schema-definitions";
+import { Meteosensors } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class MeteosensorsTransformation extends BaseTransformation implements ITransformation {

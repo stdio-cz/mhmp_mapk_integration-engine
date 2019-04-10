@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS } from "data-platform-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, FTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { log, Validator } from "../../core/helpers";

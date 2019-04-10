@@ -1,6 +1,6 @@
 "use strict";
 
-import { MerakiAccessPoints } from "data-platform-schema-definitions";
+import { MerakiAccessPoints } from "golemio-schema-definitions";
 import { Validator } from "../../core/helpers";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";

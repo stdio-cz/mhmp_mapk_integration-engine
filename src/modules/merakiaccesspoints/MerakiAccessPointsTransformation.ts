@@ -1,6 +1,6 @@
 "use strict";
 
-import { MerakiAccessPoints } from "data-platform-schema-definitions";
+import { MerakiAccessPoints } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class MerakiAccessPointsTransformation extends BaseTransformation implements ITransformation {

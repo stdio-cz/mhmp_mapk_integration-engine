@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { AirQualityStations } from "data-platform-schema-definitions";
+import { AirQualityStations } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { AirQualityStationsWorker } from "../../../src/modules/airqualitystations";

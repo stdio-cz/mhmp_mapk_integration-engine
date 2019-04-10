@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, TrafficCameras } from "data-platform-schema-definitions";
+import { CityDistricts, TrafficCameras } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi, Validator } from "../../core/helpers";
@@ -20,13 +20,16 @@ export class TrafficCamerasWorker extends BaseWorker {
 
     constructor() {
         super();
+        const dataTypeStrategy = new JSONDataTypeStrategy({resultsPath: "results"});
+        // filter items with lastUpdated lower than ten days
+        dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (10 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(TrafficCameras.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
                 method: "GET",
                 url: config.datasources.TSKTrafficCameras,
             }),
-            new JSONDataTypeStrategy({resultsPath: "results"}),
+            dataTypeStrategy,
             new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
         this.model = new MongoModel(TrafficCameras.name + "Model", {
                 identifierPath: "properties.id",
@@ -52,6 +55,7 @@ export class TrafficCamerasWorker extends BaseWorker {
         );
         this.transformation = new TrafficCamerasTransformation();
         this.historyModel = new MongoModel(TrafficCameras.history.name + "Model", {
+                identifierPath: "id",
                 mongoCollectionName: TrafficCameras.history.mongoCollectionName,
                 outputMongooseSchemaObject: TrafficCameras.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",

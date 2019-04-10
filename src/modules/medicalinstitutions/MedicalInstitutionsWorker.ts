@@ -1,18 +1,20 @@
 "use strict";
 
-import { CityDistricts, MedicalInstitutions } from "data-platform-schema-definitions";
+import { CityDistricts, MedicalInstitutions } from "golemio-schema-definitions";
 import { config } from "../../core/config";
-import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
+import { CSVDataTypeStrategy, DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { MongoModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import { MedicalInstitutionsTransformation } from "./";
+import { HealthCareTransformation, PharmaciesTransformation } from "./";
 
 export class MedicalInstitutionsWorker extends BaseWorker {
 
-    private dataSource: DataSource;
-    private transformation: MedicalInstitutionsTransformation;
+    private pharmaciesDatasource: DataSource;
+    private healthCareDatasource: DataSource;
+    private pharmaciesTransformation: PharmaciesTransformation;
+    private healthCareTransformation: HealthCareTransformation;
     private redisModel: RedisModel;
     private model: MongoModel;
     private queuePrefix: string;
@@ -20,21 +22,54 @@ export class MedicalInstitutionsWorker extends BaseWorker {
 
     constructor() {
         super();
-        this.dataSource = new DataSource(MedicalInstitutions.name + "DataSource",
+        this.pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
             new HTTPProtocolStrategy({
                 encoding: null,
                 headers : {},
                 isCompressed: true,
                 method: "GET",
                 rejectUnauthorized: false,
-                url: config.datasources.MedicalInstitutions,
+                url: config.datasources.MedicalInstitutionsPharmacies,
                 whitelistedFiles: [
                     "lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv",
                 ],
             }),
             new JSONDataTypeStrategy({resultsPath: ""}),
-            new Validator(MedicalInstitutions.name + "DataSource",
-                MedicalInstitutions.datasourceMongooseSchemaObject));
+            new Validator(MedicalInstitutions.pharmacies.name + "DataSource",
+                MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject));
+        const hcDataTypeStrategy = new CSVDataTypeStrategy({
+            csvtojsonParams: { noheader: false },
+            subscribe: ((json: any) => {
+                delete json.poskytovatel_ič;
+                delete json.poskytovatel_právní_forma_osoba;
+                delete json.poskytovatel_právní_forma;
+                delete json.sídlo_adresa_kód_kraje;
+                delete json.sídlo_adresa_název_kraje;
+                delete json.sídlo_adresa_kód_okresu;
+                delete json.sídlo_adresa_název_okresu;
+                delete json.sídlo_adresa_psč;
+                delete json.sídlo_adresa_název_obce;
+                delete json.sídlo_adresa_název_ulice;
+                delete json.sídlo_adresa_číslo_domovní;
+                return json;
+            }),
+        });
+        hcDataTypeStrategy.setFilter((item) => {
+            return item.adresa_kód_kraje === "CZ010"
+                && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
+                "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+        });
+        this.healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {},
+                    method: "GET",
+                    url: config.datasources.MedicalInstitutionsHealthCare,
+                }),
+                hcDataTypeStrategy,
+                new Validator(MedicalInstitutions.healthCare.name + "DataSource",
+                    MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
         this.redisModel = new RedisModel(MedicalInstitutions.name + "Model", {
                 isKeyConstructedFromData: false,
                 prefix: "",
@@ -42,7 +77,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ "properties.type.group": 1 },
+                    { geometry : "2dsphere" },
                     { "properties.name": "text", "properties.address": "text" },
                     { weights: { "properties.name": 5, "properties.address": 1 }}],
                 mongoCollectionName: MedicalInstitutions.mongoCollectionName,
@@ -68,7 +104,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
             new Validator(MedicalInstitutions.name + "ModelValidator",
                 MedicalInstitutions.outputMongooseSchemaObject),
         );
-        this.transformation = new MedicalInstitutionsTransformation();
+        this.healthCareTransformation = new HealthCareTransformation();
+        this.pharmaciesTransformation = new PharmaciesTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MedicalInstitutions.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
@@ -85,13 +122,21 @@ export class MedicalInstitutionsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await this.dataSource.getAll();
+        const data = await Promise.all([
+            this.pharmaciesDatasource.getAll(),
+            this.healthCareDatasource.getAll(),
+        ]);
 
-        const inputData = data.map(async (d) => {
+        const inputData = data[0].map(async (d) => {
             d.data = await this.redisModel.getData(d.filepath);
             return d;
         });
-        const transformedData = await this.transformation.transform(await Promise.all(inputData));
+
+        let transformedData = await Promise.all([
+            this.pharmaciesTransformation.transform(await Promise.all(inputData)),
+            this.healthCareTransformation.transform(data[1]),
+        ]);
+        transformedData = transformedData[0].concat(transformedData[1]);
         await this.model.save(transformedData);
 
         // send messages for updating district and geo

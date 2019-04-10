@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, PublicToilets } from "data-platform-schema-definitions";
+import { CityDistricts, PublicToilets } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi, Validator } from "../../core/helpers";

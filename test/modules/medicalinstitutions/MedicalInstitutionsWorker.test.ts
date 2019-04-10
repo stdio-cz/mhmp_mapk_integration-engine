@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { MedicalInstitutions } from "data-platform-schema-definitions";
+import { MedicalInstitutions } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { GeocodeApi, RedisConnector } from "../../../src/core/helpers";
@@ -37,9 +37,13 @@ describe("MedicalInstitutionsWorker", () => {
 
         worker = new MedicalInstitutionsWorker();
 
-        sandbox.stub(worker.dataSource, "getAll")
+        sandbox.stub(worker.pharmaciesDatasource, "getAll")
             .callsFake(() => testData);
-        sandbox.stub(worker.transformation, "transform")
+        sandbox.stub(worker.pharmaciesTransformation, "transform")
+            .callsFake(() => testTransformedData);
+        sandbox.stub(worker.healthCareDatasource, "getAll")
+            .callsFake(() => testData);
+        sandbox.stub(worker.healthCareTransformation, "transform")
             .callsFake(() => testTransformedData);
         sandbox.stub(worker.redisModel, "getData")
             .callsFake(() => testData[0].data);
@@ -60,19 +64,24 @@ describe("MedicalInstitutionsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-        sandbox.assert.calledOnce(worker.dataSource.getAll);
-        sandbox.assert.calledOnce(worker.transformation.transform);
-        sandbox.assert.calledWith(worker.transformation.transform, testData);
+        sandbox.assert.calledOnce(worker.pharmaciesDatasource.getAll);
+        sandbox.assert.calledOnce(worker.pharmaciesTransformation.transform);
+        sandbox.assert.calledWith(worker.pharmaciesTransformation.transform, testData);
+        sandbox.assert.calledOnce(worker.healthCareDatasource.getAll);
+        sandbox.assert.calledOnce(worker.healthCareTransformation.transform);
+        sandbox.assert.calledWith(worker.healthCareTransformation.transform, testData);
         sandbox.assert.calledOnce(worker.model.save);
-        sandbox.assert.calledTwice(worker.sendMessageToExchange);
+        sandbox.assert.callCount(worker.sendMessageToExchange, 4);
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateGeoAndDistrict",
                 new Buffer(JSON.stringify(f)));
         });
         sandbox.assert.callOrder(
-            worker.dataSource.getAll,
-            worker.transformation.transform,
+            worker.pharmaciesDatasource.getAll,
+            worker.healthCareDatasource.getAll,
+            worker.pharmaciesTransformation.transform,
+            worker.healthCareTransformation.transform,
             worker.model.save,
             worker.sendMessageToExchange);
     });

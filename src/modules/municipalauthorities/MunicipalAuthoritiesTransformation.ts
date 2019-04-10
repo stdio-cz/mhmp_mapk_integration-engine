@@ -1,6 +1,6 @@
 "use strict";
 
-import { MunicipalAuthorities } from "data-platform-schema-definitions";
+import { MunicipalAuthorities } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 

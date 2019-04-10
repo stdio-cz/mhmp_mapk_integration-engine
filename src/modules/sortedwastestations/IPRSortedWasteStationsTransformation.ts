@@ -1,6 +1,6 @@
 "use strict";
 
-import { SortedWasteStations } from "data-platform-schema-definitions";
+import { SortedWasteStations } from "golemio-schema-definitions";
 import { CustomError } from "../../core/helpers/errors";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
