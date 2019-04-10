@@ -44,13 +44,14 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
 
         // TODO zbavit se raw query
         const results = await connection.query(
-            "SELECT a.id, a.gtfs_trip_id, b.tracking, b.is_canceled, b.lat, b.lng, b.origin_time, "
+            "SELECT DISTINCT ON (b.origin_time) "
+            + "a.id, a.gtfs_trip_id, b.tracking, b.is_canceled, b.lat, b.lng, b.origin_time, "
             + "b.origin_timestamp, b.delay_stop_arrival, b.delay_stop_departure, b.delay, "
             + "b.gtfs_shape_dist_traveled, b.gtfs_next_stop_id, b.created "
             + "FROM " + VehiclePositions.trips.pgTableName + " a "
             + "RIGHT JOIN " + VehiclePositions.positions.pgTableName + " b ON a.id = b.trips_id "
             + "WHERE a.id = '" + tripId + "' AND b.tracking <> 0 AND a.gtfs_trip_id IS NOT NULL "
-            + "ORDER BY b.created ASC;",
+            + "ORDER BY b.origin_time, b.created ASC;",
             { type: Sequelize.QueryTypes.SELECT });
         return results;
     }
