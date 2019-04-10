@@ -3,6 +3,7 @@
 import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { Validator } from "../../core/helpers";
+import { CustomError } from "../../core/helpers/errors";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
@@ -92,6 +93,12 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
         const gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
+
+        if (!gtfs) {
+            throw new CustomError("Delay Computation data (Redis) was not found. "
+                + "(gtfsTripId = " + gtfsTripId + ")", true);
+        }
+
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
 
