@@ -77,7 +77,7 @@
 			"node_modules"
 		],
 		"reporter": [
-			"text-summary",
+			"text",
 			"lcov"
 		],
 		"all": true,
