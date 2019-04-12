@@ -72,7 +72,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                     MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
         this.redisModel = new RedisModel(MedicalInstitutions.name + "Model", {
                 isKeyConstructedFromData: false,
-                prefix: "",
+                prefix: "files",
             },
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {

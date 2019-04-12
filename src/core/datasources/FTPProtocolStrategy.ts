@@ -39,7 +39,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
             const prefix = path.parse(this.connectionSettings.filename).name + "/";
             const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
                     isKeyConstructedFromData: false,
-                    prefix: "",
+                    prefix: "files",
                 },
                 null);
 

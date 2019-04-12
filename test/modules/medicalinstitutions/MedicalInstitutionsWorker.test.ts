@@ -5,7 +5,8 @@
 import { MedicalInstitutions } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
-import { GeocodeApi, RedisConnector } from "../../../src/core/helpers";
+import { RedisConnector } from "../../../src/core/connectors";
+import { GeocodeApi } from "../../../src/core/helpers";
 import { MedicalInstitutionsWorker } from "../../../src/modules/medicalinstitutions";
 
 const chai = require("chai");

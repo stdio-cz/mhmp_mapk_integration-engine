@@ -2,8 +2,8 @@
 
 import * as amqplib from "amqplib";
 import { config } from "../config";
-import { log } from "./";
-import { CustomError, handleError } from "./errors";
+import { log } from "../helpers";
+import { CustomError, handleError } from "../helpers/errors";
 
 const amqp = require("amqplib");
 

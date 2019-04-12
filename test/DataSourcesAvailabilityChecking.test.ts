@@ -9,11 +9,12 @@ import {
 } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../src/core/config";
+import { RedisConnector } from "../src/core/connectors";
 import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../src/core/datasources";
-import { RedisConnector, Validator } from "../src/core/helpers";
+import { Validator } from "../src/core/helpers";
 
 const chai = require("chai");
 const expect = chai.expect;

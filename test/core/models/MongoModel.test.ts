@@ -4,7 +4,7 @@
 
 import { CityDistricts } from "golemio-schema-definitions";
 import "mocha";
-import { mongooseConnection } from "../../../src/core/helpers";
+import { mongooseConnection } from "../../../src/core/connectors";
 import { Validator } from "../../../src/core/helpers";
 import { MongoModel } from "../../../src/core/models";
 
@@ -14,7 +14,7 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-describe("MongoModel", () => {
+describe.skip("MongoModel", () => {
 
     let model: MongoModel;
 

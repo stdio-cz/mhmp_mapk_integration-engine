@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { PostgresConnector, RedisConnector } from "../../../src/core/helpers";
+import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { VehiclePositionsWorker } from "../../../src/modules/vehiclepositions";
 
 const chai = require("chai");

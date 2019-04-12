@@ -1,11 +1,10 @@
 "use strict";
 
 import * as Sequelize from "sequelize";
+import { PostgresConnector } from "../../../src/core/connectors";
 import { log, Validator } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, ISequelizeSettings } from "./";
-
-const { PostgresConnector } = require("../../core/helpers/PostgresConnector");
 
 export class PostgresModel implements IModel {
 
@@ -24,11 +23,11 @@ export class PostgresModel implements IModel {
         this.name = name;
 
         this.sequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
-            settings.outputSequelizeAttributes, settings.sequelizeAdditionalSettings);
+            settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "public"});
 
-        if (settings.tmpPgTableName) {
-            this.tmpSequelizeModel = PostgresConnector.getConnection().define(settings.tmpPgTableName,
-                settings.outputSequelizeAttributes, settings.sequelizeAdditionalSettings);
+        if (settings.hasTmpTable) {
+            this.tmpSequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
+                settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "tmp"});
         } else {
             this.tmpSequelizeModel = null;
         }

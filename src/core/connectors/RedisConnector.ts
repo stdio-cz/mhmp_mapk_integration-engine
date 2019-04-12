@@ -2,8 +2,8 @@
 
 import * as Redis from "ioredis";
 import { config } from "../config";
-import { log } from "./";
-import { CustomError } from "./errors";
+import { log } from "../helpers";
+import { CustomError } from "../helpers/errors";
 
 class MyRedis {
 

@@ -72,10 +72,13 @@
 		"exclude": [
 			"**/*.d.ts",
 			"dist",
-			"**/*.test.ts"
+			"**/*.test.ts",
+			"coverage",
+			"node_modules"
 		],
 		"reporter": [
-			"text-summary"
+			"text-summary",
+			"lcov"
 		],
 		"all": true,
 		"lines": 0,

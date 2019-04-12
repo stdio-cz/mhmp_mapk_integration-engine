@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { AMQPConnector } from "../../../src/core/helpers";
+import { AMQPConnector } from "../../../src/core/connectors";
 import { CustomError } from "../../../src/core/helpers/errors";
 
 const chai = require("chai");

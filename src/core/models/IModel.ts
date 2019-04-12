@@ -9,7 +9,7 @@ export interface ISequelizeSettings {
     pgTableName: string;
     savingType: "insertOnly" | "insertOrUpdate";
     sequelizeAdditionalSettings?: object;
-    tmpPgTableName?: string;
+    hasTmpTable?: boolean;
 }
 
 export interface IMongooseSettings {

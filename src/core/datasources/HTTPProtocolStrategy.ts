@@ -37,7 +37,7 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
                 });
                 const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
                         isKeyConstructedFromData: false,
-                        prefix: "",
+                        prefix: "files",
                     },
                 null);
                 result = await Promise.all(files.map(async (file) => {

@@ -3,3 +3,5 @@ dist/
 .env
 config/*.json
 !config/*.default.json
+.nyc_output
+coverage

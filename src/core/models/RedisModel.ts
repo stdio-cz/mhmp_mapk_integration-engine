@@ -1,11 +1,10 @@
 "use strict";
 
 import * as Redis from "ioredis";
+import { RedisConnector } from "../../../src/core/connectors";
 import { log, Validator } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, IRedisSettings } from "./";
-
-const { RedisConnector } = require("../helpers/RedisConnector");
 
 export class RedisModel implements IModel {
 
@@ -15,9 +14,9 @@ export class RedisModel implements IModel {
     protected connection: Redis.Redis;
     /** Defines key construction */
     protected isKeyConstructedFromData: boolean;
-    /**  */
+    /** Function for encoding data (typically to string) before saving to Redis */
     protected encodeDataBeforeSave: (raw: any) => any;
-    /**  */
+    /** Function for decoding data (typically from string) after getting from Redis */
     protected decodeDataAfterGet: (encoded: any) => any;
     /** Key prefix to identify model */
     protected prefix: string;
@@ -32,7 +31,7 @@ export class RedisModel implements IModel {
         this.isKeyConstructedFromData = settings.isKeyConstructedFromData;
         this.prefix = settings.prefix;
         this.tmpPrefix = settings.tmpPrefix;
-        this.validator = validator; // not used yet
+        this.validator = validator;
 
         this.encodeDataBeforeSave = (settings.encodeDataBeforeSave)
             ? settings.encodeDataBeforeSave
@@ -46,39 +45,56 @@ export class RedisModel implements IModel {
         // data validation
         if (this.validator) {
             await this.validator.Validate(data);
-        } else {
+        } else if (!this.validator && this.isKeyConstructedFromData) {
             log.warn(this.name + ": Model validator is not set.");
         }
 
         let prefix = (!useTmpTable) ? this.prefix : this.tmpPrefix;
-        prefix = (prefix !== "") ? prefix + "_" : prefix;
+        prefix = (!prefix || prefix === "") ? "(default)" : prefix;
 
         if (data instanceof Array) {
+            // start the redis transaction
             const multi = this.connection.multi();
+
             data.forEach((d) => {
+                // checking if the value is type of object
+                if (this.isKeyConstructedFromData && typeof d !== "object") {
+                    throw new CustomError("The data must be a type of object.", true, this.constructor.name);
+                }
                 const k = (this.isKeyConstructedFromData)
                     ? this.getSubElement(key, d)
                     : key;
-                return this.connection.set(prefix + k, this.encodeDataBeforeSave(d));
+                // encoding and saving the data as redis hash
+                return multi.hset(prefix, k, this.encodeDataBeforeSave(d));
             });
+
+            // redis transaction commit
             return multi.exec();
         } else {
+            // checking if the value is type of object
+            if (this.isKeyConstructedFromData && typeof data !== "object") {
+                throw new CustomError("The data must be a type of object.", true, this.constructor.name);
+            }
             const k = (this.isKeyConstructedFromData)
                 ? this.getSubElement(key, data)
                 : key;
-            return this.connection.set(prefix + k, this.encodeDataBeforeSave(data));
+            // encoding and saving the data as redis hash
+            return this.connection.hset(prefix, k, this.encodeDataBeforeSave(data));
         }
     }
 
     public getData = async (key: string, useTmpTable: boolean = false): Promise<any> => {
         let prefix = (!useTmpTable) ? this.prefix : this.tmpPrefix;
-        prefix = (prefix !== "") ? prefix + "_" : prefix;
-
-        return this.decodeDataAfterGet(await this.connection.get(prefix + key));
+        prefix = (!prefix || prefix === "") ? "(default)" : prefix;
+        // getting and decoding the data from redis hash
+        return this.decodeDataAfterGet(await this.connection.hget(prefix, key));
     }
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
-        throw new CustomError("Method is not implemented.", true, this.constructor.name, 1025);
+        let prefix = (!useTmpTable) ? this.prefix : this.tmpPrefix;
+        prefix = (!prefix || prefix === "") ? "(default)" : prefix;
+
+        return this.connection.del(prefix);
     }
 
     /**

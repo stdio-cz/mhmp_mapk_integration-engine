@@ -2,7 +2,8 @@
 
 import { VehiclePositions } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
-import { log, PostgresConnector, Validator } from "../../core/helpers";
+import { PostgresConnector } from "../../core/connectors";
+import { log, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { IModel, PostgresModel } from "../../core/models";
 
@@ -43,11 +44,8 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        let model = this.sequelizeModel;
         if (useTmpTable) {
-            model = this.tmpSequelizeModel;
-            /// synchronizing only tmp model
-            await model.sync();
+            throw new CustomError("Saving to tmp table is not implemented for this model.", true, this.name);
         }
 
         const connection = PostgresConnector.getConnection();
@@ -59,7 +57,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const res = await model.upsert(d, {transaction: t});
+                    const res = await this.sequelizeModel.upsert(d, {transaction: t});
                     if (res) {
                         i.push({
                             cis_short_name: d.cis_short_name,
@@ -77,7 +75,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 await t.commit();
                 return { inserted: i, updated: u };
             } else {
-                const res = await model.upsert(data, {transaction: t});
+                const res = await this.sequelizeModel.upsert(data, {transaction: t});
                 if (res) {
                     i.push({
                         cis_short_name: data.cis_short_name,
