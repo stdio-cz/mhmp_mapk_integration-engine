@@ -55,6 +55,7 @@ describe("ParkingsTransformation", () => {
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("id");
+        expect(data.properties).to.have.property("last_updated");
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("num_of_free_places");
         expect(data.properties).to.have.property("num_of_taken_places");
@@ -72,6 +73,7 @@ describe("ParkingsTransformation", () => {
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("id");
+            expect(data[i].properties).to.have.property("last_updated");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("num_of_free_places");
             expect(data[i].properties).to.have.property("num_of_taken_places");
@@ -100,6 +102,7 @@ describe("ParkingsTransformation", () => {
         it("should properly transform element", async () => {
             const data = await transformation.transformHistory(testTransformedData[0]);
             expect(data).to.have.property("id");
+            expect(data).to.have.property("last_updated");
             expect(data).to.have.property("num_of_free_places");
             expect(data).to.have.property("num_of_taken_places");
             expect(data).to.have.property("timestamp");
@@ -110,6 +113,7 @@ describe("ParkingsTransformation", () => {
             const data = await transformation.transformHistory(testTransformedData);
             for (let i = 0, imax = data.length; i < imax; i++) {
                 expect(data[i]).to.have.property("id");
+                expect(data[i]).to.have.property("last_updated");
                 expect(data[i]).to.have.property("num_of_free_places");
                 expect(data[i]).to.have.property("num_of_taken_places");
                 expect(data[i]).to.have.property("timestamp");

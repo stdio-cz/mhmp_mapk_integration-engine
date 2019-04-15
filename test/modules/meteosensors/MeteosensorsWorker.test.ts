@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { Meteosensors } from "data-platform-schema-definitions";
+import { Meteosensors } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { MeteosensorsWorker} from "../../../src/modules/meteosensors";

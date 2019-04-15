@@ -1,6 +1,6 @@
 "use strict";
 
-import { AirQualityStations, CityDistricts } from "data-platform-schema-definitions";
+import { AirQualityStations, CityDistricts } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, XMLDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";

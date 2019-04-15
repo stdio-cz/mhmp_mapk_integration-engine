@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS } from "data-platform-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
 import { log, PostgresConnector, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";

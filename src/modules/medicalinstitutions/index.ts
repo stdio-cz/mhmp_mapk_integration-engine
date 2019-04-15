@@ -1,3 +1,4 @@
 /* modules/MedicalInstitutions/index.ts */
-export * from "./MedicalInstitutionsTransformation";
+export * from "./HealthCareTransformation";
 export * from "./MedicalInstitutionsWorker";
+export * from "./PharmaciesTransformation";

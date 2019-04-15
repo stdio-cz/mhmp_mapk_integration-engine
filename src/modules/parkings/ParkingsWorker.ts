@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, Parkings } from "data-platform-schema-definitions";
+import { CityDistricts, Parkings } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi, Validator } from "../../core/helpers";
@@ -22,13 +22,16 @@ export class ParkingsWorker extends BaseWorker {
 
     constructor() {
         super();
+        const dataTypeStrategy = new JSONDataTypeStrategy({resultsPath: "results"});
+        // filter items with lastUpdated lower than two days
+        dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(Parkings.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
                 method: "GET",
                 url: config.datasources.TSKParkings,
             }),
-            new JSONDataTypeStrategy({resultsPath: "results"}),
+            dataTypeStrategy,
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
                 identifierPath: "properties.id",
@@ -43,11 +46,13 @@ export class ParkingsWorker extends BaseWorker {
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },
                 updateValues: (a, b) => {
+                    a.properties.last_updated = b.properties.last_updated;
                     a.properties.name = b.properties.name;
                     a.properties.num_of_free_places = b.properties.num_of_free_places;
                     a.properties.num_of_taken_places = b.properties.num_of_taken_places;
                     a.properties.total_num_of_places = b.properties.total_num_of_places;
                     a.properties.parking_type = b.properties.parking_type;
+                    a.properties.payment_link = b.properties.payment_link;
                     a.properties.timestamp = b.properties.timestamp;
                     return a;
                 },
@@ -56,6 +61,7 @@ export class ParkingsWorker extends BaseWorker {
         );
         this.transformation = new ParkingsTransformation();
         this.historyModel = new MongoModel(Parkings.history.name + "Model", {
+                identifierPath: "id",
                 mongoCollectionName: Parkings.history.mongoCollectionName,
                 outputMongooseSchemaObject: Parkings.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",

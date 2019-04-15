@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts, Meteosensors } from "data-platform-schema-definitions";
+import { CityDistricts, Meteosensors } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
@@ -20,13 +20,16 @@ export class MeteosensorsWorker extends BaseWorker {
 
     constructor() {
         super();
+        const dataTypeStrategy = new JSONDataTypeStrategy({resultsPath: "results"});
+        // filter items with lastUpdated lower than two days
+        dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(Meteosensors.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
                 method: "GET",
                 url: config.datasources.TSKMeteosensors,
             }),
-            new JSONDataTypeStrategy({resultsPath: "results"}),
+            dataTypeStrategy,
             new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Meteosensors.name + "Model", {
                 identifierPath: "properties.id",
@@ -54,6 +57,7 @@ export class MeteosensorsWorker extends BaseWorker {
         );
         this.transformation = new MeteosensorsTransformation();
         this.historyModel = new MongoModel(Meteosensors.history.name + "Model", {
+                identifierPath: "id",
                 mongoCollectionName: Meteosensors.history.mongoCollectionName,
                 outputMongooseSchemaObject: Meteosensors.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",

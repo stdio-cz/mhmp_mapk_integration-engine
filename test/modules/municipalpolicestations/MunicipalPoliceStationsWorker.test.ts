@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { MunicipalPoliceStations } from "data-platform-schema-definitions";
+import { MunicipalPoliceStations } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { GeocodeApi } from "../../../src/core/helpers";

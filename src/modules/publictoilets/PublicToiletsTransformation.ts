@@ -1,6 +1,6 @@
 "use strict";
 
-import { PublicToilets } from "data-platform-schema-definitions";
+import { PublicToilets } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class PublicToiletsTransformation extends BaseTransformation implements ITransformation {

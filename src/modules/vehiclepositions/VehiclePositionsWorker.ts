@@ -1,12 +1,14 @@
 "use strict";
 
-import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
+import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { Validator } from "../../core/helpers";
+import { CustomError } from "../../core/helpers/errors";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
     VehiclePositionsPositionsModel,
+    VehiclePositionsStopsModel,
     VehiclePositionsTransformation,
     VehiclePositionsTripsModel } from "./";
 
@@ -24,14 +26,7 @@ export class VehiclePositionsWorker extends BaseWorker {
     constructor() {
         super();
         this.modelPositions = new VehiclePositionsPositionsModel();
-        this.modelStops = new PostgresModel(VehiclePositions.stops.name + "Model", {
-                outputSequelizeAttributes: VehiclePositions.stops.outputSequelizeAttributes,
-                pgTableName: VehiclePositions.stops.pgTableName,
-                savingType: "insertOrUpdate",
-            },
-            new Validator(VehiclePositions.stops.name + "ModelValidator",
-                VehiclePositions.stops.outputMongooseSchemaObject),
-        );
+        this.modelStops = new VehiclePositionsStopsModel();
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
@@ -40,7 +35,8 @@ export class VehiclePositionsWorker extends BaseWorker {
                 isKeyConstructedFromData: true,
                 prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
             },
-        null);
+            new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
+                RopidGTFS.delayComputationTrips.outputMongooseSchemaObject));
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
     }
 
@@ -92,6 +88,12 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
         const gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
+
+        if (!gtfs) {
+            throw new CustomError("Delay Computation data (Redis) was not found. "
+                + "(gtfsTripId = " + gtfsTripId + ")", true);
+        }
+
         const tripShapePoints = gtfs.shape_points;
         let newLastDelay = null;
 
@@ -99,7 +101,7 @@ export class VehiclePositionsWorker extends BaseWorker {
             if (position.delay === null || newLastDelay !== null) {
                 const currentPosition = {
                     geometry: {
-                        coordinates: [position.lng, position.lat],
+                        coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
                         type: "Point",
                     },
                     properties: {
@@ -111,7 +113,8 @@ export class VehiclePositionsWorker extends BaseWorker {
                 const lastPosition = (key > 0)
                     ? {
                         geometry: {
-                            coordinates: [positionsToUpdate[key - 1].lng, positionsToUpdate[key - 1].lat],
+                            coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
+                                parseFloat(positionsToUpdate[key - 1].lat)],
                             type: "Point",
                         },
                         properties: {

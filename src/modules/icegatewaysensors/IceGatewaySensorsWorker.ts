@@ -1,6 +1,6 @@
 "use strict";
 
-import { IceGatewaySensors } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
@@ -48,6 +48,7 @@ export class IceGatewaySensorsWorker extends BaseWorker {
         );
         this.transformation = new IceGatewaySensorsTransformation();
         this.historyModel = new MongoModel(IceGatewaySensors.history.name + "Model", {
+                identifierPath: "id",
                 mongoCollectionName: IceGatewaySensors.history.mongoCollectionName,
                 outputMongooseSchemaObject: IceGatewaySensors.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",

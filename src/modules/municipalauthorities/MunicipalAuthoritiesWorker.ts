@@ -1,6 +1,6 @@
 "use strict";
 
-import { MunicipalAuthorities } from "data-platform-schema-definitions";
+import { MunicipalAuthorities } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
@@ -31,6 +31,7 @@ export class MunicipalAuthoritiesWorker extends BaseWorker {
         this.model = new MongoModel(MunicipalAuthorities.name + "Model", {
                 identifierPath: "properties.id",
                 modelIndexes: [
+                    { "properties.type": 1 },
                     { geometry : "2dsphere" },
                     {
                         "properties.address": "text",

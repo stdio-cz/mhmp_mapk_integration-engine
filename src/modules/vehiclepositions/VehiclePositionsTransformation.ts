@@ -1,6 +1,6 @@
 "use strict";
 
-import { VehiclePositions } from "data-platform-schema-definitions";
+import { VehiclePositions } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");
@@ -115,7 +115,6 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 cis_order: parseInt(attributes.po, 10),
                 cis_short_name: attributes.alias,
                 id: primaryKey,
-                modified: moment.tz("Europe/Prague").utc().format(),
                 start_cis_stop_id: parseInt(stops[0].$.zast, 10),
                 start_cis_stop_platform_code: stops[0].$.stan,
                 start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
@@ -175,7 +174,6 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     : null,
                 departure_time: (departure) ? stop.$.odj : null,
                 departure_timestamp: (departure) ? departure.utc().format() : null,
-                modified: moment.tz("Europe/Prague").utc().format(),
                 trips_id: primaryKey,
             };
         });

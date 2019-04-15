@@ -1,508 +1,536 @@
 [
-    {
-       "geometry": {
-          "coordinates": [
-             14.597429,
-             50.0808
-          ],
-          "type": "Point"
+   {
+     "geometry": {
+       "coordinates": [
+         14.597429,
+         50.0808
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534001,
+       "last_updated": 1396247275000,
+       "name": "Běchovice",
+       "num_of_free_places": 91,
+       "num_of_taken_places": 1,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534001,
-          "name": "Běchovice",
-          "num_of_free_places": 91,
-          "num_of_taken_places": 1,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1396247275000,
-          "total_num_of_places": 92
+       "timestamp": 1554802603006,
+       "total_num_of_places": 92
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.492015,
+         50.032074
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534017,
+       "last_updated": 1551878722000,
+       "name": "Chodov",
+       "num_of_free_places": 17,
+       "num_of_taken_places": 636,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.492015,
-             50.032074
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 653
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.517204,
+         50.076397
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534015,
+       "last_updated": 1551878623000,
+       "name": "Depo Hostivař",
+       "num_of_free_places": 11,
+       "num_of_taken_places": 158,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534017,
-          "name": "Chodov",
-          "num_of_free_places": 17,
-          "num_of_taken_places": 636,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878722000,
-          "total_num_of_places": 653
+       "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=122",
+       "timestamp": 1554802603006,
+       "total_num_of_places": 169
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.441252,
+         50.109318
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534002,
+       "last_updated": 1551878901000,
+       "name": "Holešovice",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 74,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.517204,
-             50.076397
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 74
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.428616,
+         50.060696
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 176,
+       "last_updated": 1538473533000,
+       "name": "Kongresové centrum Praha",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 260,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534015,
-          "name": "Depo Hostivař",
-          "num_of_free_places": 11,
-          "num_of_taken_places": 158,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878623000,
-          "total_num_of_places": 169
+       "timestamp": 1554802603006,
+       "total_num_of_places": 260
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.358078,
+         50.06858
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 530002,
+       "last_updated": 1508165918000,
+       "name": "Kotlářka",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 181,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.441252,
-             50.109318
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 181
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.514741,
+         50.125168
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534016,
+       "last_updated": 1551878852000,
+       "name": "Letňany",
+       "num_of_free_places": 40,
+       "num_of_taken_places": 593,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534002,
-          "name": "Holešovice",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 74,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878901000,
-          "total_num_of_places": 74
+       "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=123",
+       "timestamp": 1554802603006,
+       "total_num_of_places": 633
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.472344,
+         50.126156
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534014,
+       "last_updated": 1551878676000,
+       "name": "Ládví",
+       "num_of_free_places": 2,
+       "num_of_taken_places": 76,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.428616,
-             50.060696
-          ],
-          "type": "Point"
+       "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=121",
+       "timestamp": 1554802603006,
+       "total_num_of_places": 78
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.350451,
+         50.05053
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534013,
+       "last_updated": 1527826742000,
+       "name": "Nové Butovice",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 57,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 176,
-          "name": "Kongresové centrum Praha",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 260,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1538473533000,
-          "total_num_of_places": 260
+       "timestamp": 1554802603006,
+       "total_num_of_places": 57
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.466562,
+         50.003105
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 530003,
+       "last_updated": 1508165919000,
+       "name": "Písnice",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 95,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.358078,
-             50.06858
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 95
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.36348,
+         49.986687
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534007,
+       "last_updated": 1551878673000,
+       "name": "Radotín",
+       "num_of_free_places": 9,
+       "num_of_taken_places": 24,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 530002,
-          "name": "Kotlářka",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 181,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1508165918000,
-          "total_num_of_places": 181
+       "timestamp": 1554802603006,
+       "total_num_of_places": 33
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.56221,
+         50.10684
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534004,
+       "last_updated": 1551878902000,
+       "name": "Rajská zahrada",
+       "num_of_free_places": 4,
+       "num_of_taken_places": 84,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.514741,
-             50.125168
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 88
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.507447,
+         50.069622
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534012,
+       "last_updated": 1551878568000,
+       "name": "Skalka 1",
+       "num_of_free_places": 12,
+       "num_of_taken_places": 51,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534016,
-          "name": "Letňany",
-          "num_of_free_places": 40,
-          "num_of_taken_places": 593,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878852000,
-          "total_num_of_places": 633
+       "timestamp": 1554802603006,
+       "total_num_of_places": 63
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.511875,
+         50.070156
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534010,
+       "last_updated": 1396266878000,
+       "name": "Skalka 2",
+       "num_of_free_places": 66,
+       "num_of_taken_places": 8,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.472344,
-             50.126156
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 74
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.437327,
+         50.11548
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 174,
+       "last_updated": 1537445018000,
+       "name": "Troja",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 269,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534014,
-          "name": "Ládví",
-          "num_of_free_places": 2,
-          "num_of_taken_places": 76,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878676000,
-          "total_num_of_places": 78
+       "timestamp": 1554802603006,
+       "total_num_of_places": 269
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.28977,
+         50.054527
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534008,
+       "last_updated": 1551878880000,
+       "name": "Zličín 1",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 83,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.350451,
-             50.05053
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 83
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.290852,
+         50.053432
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534009,
+       "last_updated": 1551878889000,
+       "name": "Zličín 2",
+       "num_of_free_places": 0,
+       "num_of_taken_places": 61,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 534013,
-          "name": "Nové Butovice",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 57,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1527826742000,
-          "total_num_of_places": 57
+       "timestamp": 1554802603006,
+       "total_num_of_places": 61
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.579415,
+         50.11016
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534003,
+       "last_updated": 1551878886000,
+       "name": "Černý Most 1",
+       "num_of_free_places": 12,
+       "num_of_taken_places": 282,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.466562,
-             50.003105
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 294
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.582787,
+         50.110615
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534011,
+       "last_updated": 1551878901000,
+       "name": "Černý Most 2",
+       "num_of_free_places": 2,
+       "num_of_taken_places": 129,
+       "parking_type": {
+         "description": "P+R parkoviště",
+         "id": 1
        },
-       "properties": {
-          "id": 530003,
-          "name": "Písnice",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 95,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1508165919000,
-          "total_num_of_places": 95
+       "timestamp": 1554802603006,
+       "total_num_of_places": 131
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.491086,
+         50.032753
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 5340171,
+       "last_updated": 1551878721000,
+       "name": "Chodov A",
+       "num_of_free_places": 529,
+       "num_of_taken_places": 676,
+       "parking_type": {
+         "description": "placené parkoviště",
+         "id": 2
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.36348,
-             49.986687
-          ],
-          "type": "Point"
+       "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=106",
+       "timestamp": 1554802603006,
+       "total_num_of_places": 1205
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.491086,
+         50.032753
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 5340172,
+       "last_updated": 1551878723000,
+       "name": "Chodov E",
+       "num_of_free_places": 635,
+       "num_of_taken_places": 174,
+       "parking_type": {
+         "description": "placené parkoviště",
+         "id": 2
        },
-       "properties": {
-          "id": 534007,
-          "name": "Radotín",
-          "num_of_free_places": 9,
-          "num_of_taken_places": 24,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878673000,
-          "total_num_of_places": 33
+       "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=106",
+       "timestamp": 1554802603006,
+       "total_num_of_places": 809
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.431474,
+         50.080696
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534202,
+       "last_updated": 1551878886000,
+       "name": "Slovan",
+       "num_of_free_places": 44,
+       "num_of_taken_places": 436,
+       "parking_type": {
+         "description": "placené parkoviště",
+         "id": 2
        },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.56221,
-             50.10684
-          ],
-          "type": "Point"
+       "timestamp": 1554802603006,
+       "total_num_of_places": 480
+     },
+     "type": "Feature"
+   },
+   {
+     "geometry": {
+       "coordinates": [
+         14.434239,
+         50.083508
+       ],
+       "type": "Point"
+     },
+     "properties": {
+       "id": 534201,
+       "last_updated": 1551878861000,
+       "name": "Wilsonova",
+       "num_of_free_places": 268,
+       "num_of_taken_places": 196,
+       "parking_type": {
+         "description": "placené parkoviště",
+         "id": 2
        },
-       "properties": {
-          "id": 534004,
-          "name": "Rajská zahrada",
-          "num_of_free_places": 4,
-          "num_of_taken_places": 84,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878902000,
-          "total_num_of_places": 88
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.507447,
-             50.069622
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534012,
-          "name": "Skalka 1",
-          "num_of_free_places": 12,
-          "num_of_taken_places": 51,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878568000,
-          "total_num_of_places": 63
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.511875,
-             50.070156
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534010,
-          "name": "Skalka 2",
-          "num_of_free_places": 66,
-          "num_of_taken_places": 8,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1396266878000,
-          "total_num_of_places": 74
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.437327,
-             50.11548
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 174,
-          "name": "Troja",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 269,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1537445018000,
-          "total_num_of_places": 269
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.28977,
-             50.054527
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534008,
-          "name": "Zličín 1",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 83,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878880000,
-          "total_num_of_places": 83
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.290852,
-             50.053432
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534009,
-          "name": "Zličín 2",
-          "num_of_free_places": 0,
-          "num_of_taken_places": 61,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878889000,
-          "total_num_of_places": 61
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.579415,
-             50.11016
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534003,
-          "name": "Černý Most 1",
-          "num_of_free_places": 12,
-          "num_of_taken_places": 282,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878886000,
-          "total_num_of_places": 294
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.582787,
-             50.110615
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534011,
-          "name": "Černý Most 2",
-          "num_of_free_places": 2,
-          "num_of_taken_places": 129,
-          "parking_type": {
-             "description": "P+R parkoviště",
-             "id": 1
-          },
-          "timestamp": 1551878901000,
-          "total_num_of_places": 131
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.491086,
-             50.032753
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 5340171,
-          "name": "Chodov A",
-          "num_of_free_places": 529,
-          "num_of_taken_places": 676,
-          "parking_type": {
-             "description": "placené parkoviště",
-             "id": 2
-          },
-          "timestamp": 1551878721000,
-          "total_num_of_places": 1205
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.491086,
-             50.032753
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 5340172,
-          "name": "Chodov E",
-          "num_of_free_places": 635,
-          "num_of_taken_places": 174,
-          "parking_type": {
-             "description": "placené parkoviště",
-             "id": 2
-          },
-          "timestamp": 1551878723000,
-          "total_num_of_places": 809
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.431474,
-             50.080696
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534202,
-          "name": "Slovan",
-          "num_of_free_places": 44,
-          "num_of_taken_places": 436,
-          "parking_type": {
-             "description": "placené parkoviště",
-             "id": 2
-          },
-          "timestamp": 1551878886000,
-          "total_num_of_places": 480
-       },
-       "type": "Feature"
-    },
-    {
-       "geometry": {
-          "coordinates": [
-             14.434239,
-             50.083508
-          ],
-          "type": "Point"
-       },
-       "properties": {
-          "id": 534201,
-          "name": "Wilsonova",
-          "num_of_free_places": 268,
-          "num_of_taken_places": 196,
-          "parking_type": {
-             "description": "placené parkoviště",
-             "id": 2
-          },
-          "timestamp": 1551878861000,
-          "total_num_of_places": 464
-       },
-       "type": "Feature"
-    }
+       "timestamp": 1554802603006,
+       "total_num_of_places": 464
+     },
+     "type": "Feature"
+   }
  ]

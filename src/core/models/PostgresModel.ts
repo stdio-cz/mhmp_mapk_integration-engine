@@ -127,40 +127,35 @@ export class PostgresModel implements IModel {
     }
 
     protected insertOnly = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-        const t = await connection.transaction();
-
         try {
             if (data instanceof Array) {
-                await model.bulkCreate(data, {transaction: t});
+                await model.bulkCreate(data);
             } else {
-                await model.create(data, {transaction: t});
+                await model.create(data);
             }
-            return await t.commit();
         } catch (err) {
             log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
-            await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 
     protected insertOrUpdate = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
 
         try {
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const t = await connection.transaction();
                     await model.upsert(d, {transaction: t});
-                    return await t.commit();
                 });
                 await Promise.all(promises);
             } else {
-                const t = await connection.transaction();
                 await model.upsert(data, {transaction: t});
-                return await t.commit();
             }
+            return await t.commit();
         } catch (err) {
+            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { TrafficCameras } from "data-platform-schema-definitions";
+import { TrafficCameras } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const request = require("request-promise");

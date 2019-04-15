@@ -1,6 +1,7 @@
 "use strict";
 
-import { MerakiAccessPoints } from "data-platform-schema-definitions";
+import { MerakiAccessPoints } from "golemio-schema-definitions";
+import { Validator } from "../../core/helpers";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { MerakiAccessPointsTransformation } from "./";
@@ -18,14 +19,16 @@ export class MerakiAccessPointsWorker extends BaseWorker {
                 pgTableName: MerakiAccessPoints.observations.pgTableName,
                 savingType: "insertOnly",
             },
-            null,
+            new Validator(MerakiAccessPoints.observations.name + "ModelValidator",
+                MerakiAccessPoints.observations.outputMongooseSchemaObject),
         );
         this.modelTags = new PostgresModel(MerakiAccessPoints.tags.name + "Model", {
                 outputSequelizeAttributes: MerakiAccessPoints.tags.outputSequelizeAttributes,
                 pgTableName: MerakiAccessPoints.tags.pgTableName,
                 savingType: "insertOrUpdate",
             },
-            null,
+            new Validator(MerakiAccessPoints.tags.name + "ModelValidator",
+                MerakiAccessPoints.tags.outputMongooseSchemaObject),
         );
         this.transformation = new MerakiAccessPointsTransformation();
     }

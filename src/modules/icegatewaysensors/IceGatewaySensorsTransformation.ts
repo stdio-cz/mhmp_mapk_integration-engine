@@ -1,6 +1,6 @@
 "use strict";
 
-import { IceGatewaySensors } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class IceGatewaySensorsTransformation extends BaseTransformation implements ITransformation {

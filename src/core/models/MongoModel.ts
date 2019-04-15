@@ -35,6 +35,7 @@ export class MongoModel implements IModel {
 
         this.schema = new mongoose.Schema(settings.outputMongooseSchemaObject,
             { bufferCommands: false });
+        this.schema.index({ [settings.identifierPath]: 1 });
         if (settings.modelIndexes) {
             settings.modelIndexes.forEach((i) => {
                 this.schema.index(i);
@@ -61,7 +62,7 @@ export class MongoModel implements IModel {
             ? settings.searchPath
             : (id, multiple = false) => (multiple) ? { id: { $in: id } } : { id };
         this.resultsPath = settings.resultsPath || "";
-        this.identifierPath = settings.identifierPath || "id";
+        this.identifierPath = settings.identifierPath;
         this.select = settings.select || "-_id -__v";
     }
 

@@ -1,6 +1,6 @@
 "use strict";
 
-import { VehiclePositions } from "data-platform-schema-definitions";
+import { VehiclePositions } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
 import { log, PostgresConnector, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
@@ -50,13 +50,16 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             await model.sync();
         }
 
+        const connection = PostgresConnector.getConnection();
+        const t = await connection.transaction();
+
         try {
             const i = []; // inserted
             const u = []; // updated
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const res = await model.upsert(d);
+                    const res = await model.upsert(d, {transaction: t});
                     if (res) {
                         i.push({
                             cis_short_name: d.cis_short_name,
@@ -71,9 +74,10 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     return;
                 });
                 await Promise.all(promises);
+                await t.commit();
                 return { inserted: i, updated: u };
             } else {
-                const res = await model.upsert(data);
+                const res = await model.upsert(data, {transaction: t});
                 if (res) {
                     i.push({
                         cis_short_name: data.cis_short_name,
@@ -85,9 +89,12 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 } else {
                     u.push(data.id);
                 }
+                await t.commit();
                 return { inserted: i, updated: u };
             }
         } catch (err) {
+            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }

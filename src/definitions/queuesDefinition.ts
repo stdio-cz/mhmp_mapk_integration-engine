@@ -5,7 +5,7 @@ import {
     MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
     Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
-    } from "data-platform-schema-definitions";
+    } from "golemio-schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector, log } from "../core/helpers";
 import { CustomError, handleError } from "../core/helpers/errors";

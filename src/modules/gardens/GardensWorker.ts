@@ -1,6 +1,6 @@
 "use strict";
 
-import { Gardens } from "data-platform-schema-definitions";
+import { Gardens } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { Validator } from "../../core/helpers";
