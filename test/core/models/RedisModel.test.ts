@@ -194,7 +194,7 @@ describe("RedisModel", () => {
         };
         model = new RedisModel("Test" + "Model",
             settings,
-            new Validator("TestValidator", mso));
+            new Validator("TestRedisValidator", mso));
         const testdata = {
             key: {
                 subkey: "testkey2",

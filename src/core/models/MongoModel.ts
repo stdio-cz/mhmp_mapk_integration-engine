@@ -1,7 +1,7 @@
 "use strict";
 
 import mongoose = require("mongoose");
-import { log, Validator } from "../helpers";
+import { getSubProperty, log, Validator } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, IMongooseSettings } from "./";
 
@@ -26,7 +26,7 @@ export class MongoModel implements IModel {
     /** String to specify selection of DB query. */
     protected select;
     /** Type/Strategy of saving the data */
-    protected savingType: "insertOnly" | "insertOrUpdate";
+    protected savingType: "readOnly" | "insertOnly" | "insertOrUpdate";
     /** Function to specify which values can be updated */
     protected updateValues: (dbData: any, newData: any) => any;
 
@@ -67,6 +67,10 @@ export class MongoModel implements IModel {
     }
 
     public save = async (data: any, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
         // data validation
         if (this.validator) {
             await this.validator.Validate(data);
@@ -74,26 +78,27 @@ export class MongoModel implements IModel {
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
+        const model = this.getMongooseModelSafely(useTmpTable);
 
-        switch (this.savingType) {
-            case "insertOnly":
-                return this.insertOnly(model, data);
-            case "insertOrUpdate":
-                return this.insertOrUpdate(data, useTmpTable);
-            default:
-                throw new CustomError("The model saving type was not specified. Data was not saved.",
-                    true, this.name, 1024);
-        }
+        // calling the method based on savingType (this.insertOnly() or this.insertOrUpdate())
+        return this[this.savingType](model, data);
     }
 
-    public update = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
+    public updateOneById = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
         return model.updateOne(this.searchPath(id), data, { runValidators: true }).exec();
     }
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
         try {
             await model.deleteMany({}).exec();
         } catch (err) {
@@ -101,10 +106,54 @@ export class MongoModel implements IModel {
         }
     }
 
-    public replaceOriginalCollectionByTemporaryCollection = async (): Promise<void> => {
+    public find = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            return await model.find(opts);
+        } catch (err) {
+            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+        }
+    }
+
+    public findOne = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            return await model.findOne(opts);
+        } catch (err) {
+            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+        }
+    }
+
+    public findOneById = async (id: string | number, useTmpTable: boolean = false): Promise<any> => {
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            const data = await model.findOne(this.searchPath(id)).exec();
+            if (!data) {
+                throw new CustomError("Model data was not found.", true, this.name, 1014);
+            } else {
+                return data;
+            }
+        } catch (err) {
+            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+        }
+    }
+
+    public aggregate = async (aggregation: any[], useTmpTable: boolean = false): Promise<any> => {
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            return model.aggregate(aggregation).exec();
+        } catch (err) {
+            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+        }
+    }
+
+    public replaceOrigCollectionByTempCollection = async (): Promise<void> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
         if (!this.tmpMongooseModel) {
-            log.warn("Temporary model is not defined.");
-            return;
+            throw new CustomError("Temporary model is not defined.", true, this.name);
         }
 
         try {
@@ -127,48 +176,7 @@ export class MongoModel implements IModel {
         }
     }
 
-    public find = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
-        try {
-            return await model.find(opts);
-        } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
-        }
-    }
-
-    public findOne = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
-        try {
-            return await model.findOne(opts);
-        } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
-        }
-    }
-
-    public findOneById = async (id: string|number, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
-        try {
-            const data = await model.findOne(this.searchPath(id)).exec();
-            if (!data) {
-                throw new CustomError("Model data was not found.", true, this.name, 1014);
-            } else {
-                return data;
-            }
-        } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
-        }
-    }
-
-    public aggregate = async (aggregation: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.mongooseModel : this.tmpMongooseModel;
-        try {
-            return model.aggregate(aggregation).exec();
-        } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
-        }
-    }
-
-    protected insertOnly = async (model: mongoose.Model<any>, data: any): Promise<any> => {
+    private insertOnly = async (model: mongoose.Model<any>, data: any): Promise<any> => {
         try {
             if (data instanceof Array) {
                 return model.insertMany(data);
@@ -180,49 +188,49 @@ export class MongoModel implements IModel {
         }
     }
 
-    protected insertOrUpdate = async (data: any, useTmpTable: boolean = false): Promise<any> => {
+    private insertOrUpdate = async (model: mongoose.Model<any>, data: any): Promise<any> => {
         try {
             if (data instanceof Array) {
                 const promises = data.map((item) => {
-                    return this.insertOrUpdateOne(item, useTmpTable);
+                    return this.insertOrUpdateOne(model, item);
                 });
                 return Promise.all(promises);
             } else {
-                return this.insertOrUpdateOne(data, useTmpTable);
+                return this.insertOrUpdateOne(model, data);
             }
         } catch (err) {
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 
-    protected insertOrUpdateOne = async (newData: any, useTmpTable: boolean = false) => {
+    private insertOrUpdateOne = async (model: mongoose.Model<any>, newData: any) => {
+        if (!this.updateValues) {
+            throw new CustomError("Method updateValues() is not defined.", true, this.name);
+        }
         try {
-            let dbData = await this.findOneById(this.getSubElement(this.identifierPath, newData), useTmpTable);
+            let dbData = await model.findOne(this.searchPath(getSubProperty(this.identifierPath, newData))).exec();
+            if (!dbData) {
+                throw new CustomError("Model data was not found.", true, this.name, 1014);
+            }
             dbData = this.updateValues(dbData, newData);
             return dbData.save();
         } catch (err) {
-            if (err instanceof CustomError && err.code === 1023) {
-                return this.mongooseModel.create(newData);
+            if (err instanceof CustomError && err.code === 1014) {
+                return model.create(newData);
             } else {
                 throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
             }
         }
     }
 
-    /**
-     * Method that reduces object data by path.
-     *
-     * @param {string} path Specifies where to look for the unique identifier of the object to find it in the data.
-     * @param {object} obj Raw data.
-     * @returns {object|array} Filtered data.
-     */
-    protected getSubElement = (path: string, obj: any): any => {
-        if (path === "") {
-            return obj;
-        } else {
-            return path.split(".").reduce((prev, curr) => {
-                return prev ? prev[curr] : undefined;
-            }, obj || self);
+    private getMongooseModelSafely = (useTmpTable: boolean): mongoose.Model<any> => {
+        let model = this.mongooseModel;
+        if (useTmpTable && this.tmpMongooseModel) {
+            model = this.tmpMongooseModel;
+        } else if (useTmpTable && !this.tmpMongooseModel) {
+            throw new CustomError("Temporary model is not defined.", true, this.name);
         }
+        return model;
     }
+
 }

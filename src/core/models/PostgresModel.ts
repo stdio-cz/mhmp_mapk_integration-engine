@@ -1,7 +1,7 @@
 "use strict";
 
 import * as Sequelize from "sequelize";
-import { PostgresConnector } from "../../../src/core/connectors";
+import { PostgresConnector } from "../connectors";
 import { log, Validator } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, ISequelizeSettings } from "./";
@@ -23,13 +23,13 @@ export class PostgresModel implements IModel {
         this.name = name;
 
         this.sequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
-            settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "public"});
+            settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "public" });
 
         if (settings.hasTmpTable) {
             this.tmpSequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
-                settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "tmp"});
+                settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "tmp" });
         } else {
-            this.tmpSequelizeModel = null;
+            this.tmpSequelizeModel = undefined;
         }
 
         if (settings.attributesToRemove) {
@@ -54,33 +54,14 @@ export class PostgresModel implements IModel {
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        let model = this.sequelizeModel;
-        if (useTmpTable) {
-            model = this.tmpSequelizeModel;
-            /// synchronizing only tmp model
-            await model.sync();
-        }
+        const model = await this.getSequelizeModelSafely(useTmpTable);
 
-        switch (this.savingType) {
-            case "insertOnly":
-                return this.insertOnly(model, data);
-            case "insertOrUpdate":
-                return this.insertOrUpdate(model, data);
-            default:
-                throw new CustomError("The model saving type was not specified. Data was not saved.",
-                    true, this.name, 1024);
-        }
-
+        // calling the method based on savingType (this.insertOnly() or this.insertOrUpdate())
+        return this[this.savingType](model, data);
     }
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
-
-        let model = this.sequelizeModel;
-        if (useTmpTable) {
-            model = this.tmpSequelizeModel;
-            /// synchronizing only tmp model
-            await model.sync();
-        }
+        const model = await this.getSequelizeModelSafely(useTmpTable);
 
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
@@ -99,7 +80,7 @@ export class PostgresModel implements IModel {
     }
 
     public find = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        const model = await this.getSequelizeModelSafely(useTmpTable);
         try {
             return await model.findAll(opts);
         } catch (err) {
@@ -108,7 +89,7 @@ export class PostgresModel implements IModel {
     }
 
     public findOne = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        const model = await this.getSequelizeModelSafely(useTmpTable);
         try {
             return await model.findOne(opts);
         } catch (err) {
@@ -117,7 +98,7 @@ export class PostgresModel implements IModel {
     }
 
     public findAndCountAll = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
-        const model = (!useTmpTable) ? this.sequelizeModel : this.tmpSequelizeModel;
+        const model = await this.getSequelizeModelSafely(useTmpTable);
         try {
             return await model.findAndCountAll(opts);
         } catch (err) {
@@ -125,7 +106,7 @@ export class PostgresModel implements IModel {
         }
     }
 
-    protected insertOnly = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
+    private insertOnly = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
         try {
             if (data instanceof Array) {
                 await model.bulkCreate(data);
@@ -133,30 +114,42 @@ export class PostgresModel implements IModel {
                 await model.create(data);
             }
         } catch (err) {
-            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
     }
 
-    protected insertOrUpdate = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
+    private insertOrUpdate = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
 
         try {
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    await model.upsert(d, {transaction: t});
+                    await model.upsert(d, { transaction: t });
                 });
                 await Promise.all(promises);
             } else {
-                await model.upsert(data, {transaction: t});
+                await model.upsert(data, { transaction: t });
             }
             return await t.commit();
         } catch (err) {
-            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
+    }
+
+    private getSequelizeModelSafely = async (useTmpTable: boolean): Promise<Sequelize.Model<any, any>> => {
+        let model = this.sequelizeModel;
+        if (useTmpTable && this.tmpSequelizeModel) {
+            model = this.tmpSequelizeModel;
+            /// synchronizing only tmp model
+            await model.sync();
+        } else if (useTmpTable && !this.tmpSequelizeModel) {
+            throw new CustomError("Temporary model is not defined.", true, this.name);
+        }
+        return model;
     }
 
 }

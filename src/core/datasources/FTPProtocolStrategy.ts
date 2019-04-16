@@ -98,7 +98,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
             return (lastModified) ? moment(lastModified, "MM-DD-YYYY hh:mmA").toISOString() : null;
         } catch (err) {
             log.error(err);
-            throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
+            return null;
         }
     }
 

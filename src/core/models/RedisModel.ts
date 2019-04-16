@@ -1,8 +1,8 @@
 "use strict";
 
 import * as Redis from "ioredis";
-import { RedisConnector } from "../../../src/core/connectors";
-import { log, Validator } from "../helpers";
+import { RedisConnector } from "../connectors";
+import { getSubProperty, log, Validator } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, IRedisSettings } from "./";
 
@@ -62,7 +62,7 @@ export class RedisModel implements IModel {
                     throw new CustomError("The data must be a type of object.", true, this.constructor.name);
                 }
                 const k = (this.isKeyConstructedFromData)
-                    ? this.getSubElement(key, d)
+                    ? getSubProperty(key, d)
                     : key;
                 // encoding and saving the data as redis hash
                 return multi.hset(prefix, k, this.encodeDataBeforeSave(d));
@@ -76,7 +76,7 @@ export class RedisModel implements IModel {
                 throw new CustomError("The data must be a type of object.", true, this.constructor.name);
             }
             const k = (this.isKeyConstructedFromData)
-                ? this.getSubElement(key, data)
+                ? getSubProperty(key, data)
                 : key;
             // encoding and saving the data as redis hash
             return this.connection.hset(prefix, k, this.encodeDataBeforeSave(data));
@@ -95,23 +95,6 @@ export class RedisModel implements IModel {
         prefix = (!prefix || prefix === "") ? "(default)" : prefix;
 
         return this.connection.del(prefix);
-    }
-
-    /**
-     * Method that reduces object data by path.
-     *
-     * @param {string} path Specifies where to look for the unique identifier of the object to find it in the data.
-     * @param {object} obj Raw data.
-     * @returns {object|array} Filtered data.
-     */
-    protected getSubElement = (path: string, obj: any): any => {
-        if (path === "") {
-            return obj;
-        } else {
-            return path.split(".").reduce((prev, curr) => {
-                return prev ? prev[curr] : undefined;
-            }, obj || self);
-        }
     }
 
 }

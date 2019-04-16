@@ -27,7 +27,7 @@ export class AirQualityStationsWorker extends BaseWorker {
         stationsDataType.setFilter((item) => item.code[0].indexOf("A") === 0);
         this.dataSource = new DataSource(AirQualityStations.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.AirQualityStations,
             }),
@@ -36,7 +36,7 @@ export class AirQualityStationsWorker extends BaseWorker {
                 AirQualityStations.datasourceMongooseSchemaObject));
         this.model = new MongoModel(AirQualityStations.name + "Model", {
                 identifierPath: "properties.code",
-                modelIndexes: [{ geometry : "2dsphere" }],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: AirQualityStations.mongoCollectionName,
                 outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -69,7 +69,7 @@ export class AirQualityStationsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

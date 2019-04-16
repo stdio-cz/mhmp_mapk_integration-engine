@@ -18,7 +18,7 @@ export interface IMongooseSettings {
     mongoCollectionName: string;
     outputMongooseSchemaObject: SchemaDefinition;
     resultsPath?: string;
-    savingType: "insertOnly" | "insertOrUpdate";
+    savingType: "readOnly" | "insertOnly" | "insertOrUpdate";
     updateValues?: (dbData: any, newData: any) => any;
     searchPath?: (id: any, multiple: boolean) => any;
     select?: string;

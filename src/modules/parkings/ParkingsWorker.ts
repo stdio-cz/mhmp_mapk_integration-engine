@@ -27,7 +27,7 @@ export class ParkingsWorker extends BaseWorker {
         dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(Parkings.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.TSKParkings,
             }),
@@ -35,7 +35,7 @@ export class ParkingsWorker extends BaseWorker {
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ geometry: "2dsphere" },
                     { "properties.name": "text", "properties.address": "text" },
                         {weights: { "properties.name": 5, "properties.address": 1 }}],
                 mongoCollectionName: Parkings.mongoCollectionName,
@@ -74,7 +74,7 @@ export class ParkingsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

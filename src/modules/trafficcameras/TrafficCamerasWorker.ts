@@ -25,7 +25,7 @@ export class TrafficCamerasWorker extends BaseWorker {
         dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (10 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(TrafficCameras.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.TSKTrafficCameras,
             }),
@@ -33,7 +33,7 @@ export class TrafficCamerasWorker extends BaseWorker {
             new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
         this.model = new MongoModel(TrafficCameras.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ geometry: "2dsphere" },
                     { "properties.name": "text", "properties.address": "text" },
                         { weights: { "properties.name": 5, "properties.address": 1 }}],
                 mongoCollectionName: TrafficCameras.mongoCollectionName,
@@ -69,7 +69,7 @@ export class TrafficCamerasWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

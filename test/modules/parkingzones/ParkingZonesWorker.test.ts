@@ -30,7 +30,7 @@ describe("ParkingZonesWorker", () => {
         sandbox.stub(worker.transformation, "transformTariffs")
             .callsFake(() => Object.assign({tariffs: [], tariffsText: ""}));
         sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.model, "update");
+        sandbox.stub(worker.model, "updateOneById");
     });
 
     afterEach(() => {
@@ -53,11 +53,11 @@ describe("ParkingZonesWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceTariffs.setProtocolStrategy);
         sandbox.assert.calledOnce(worker.dataSourceTariffs.getAll);
         sandbox.assert.calledOnce(worker.transformation.transformTariffs);
-        sandbox.assert.calledOnce(worker.model.update);
+        sandbox.assert.calledOnce(worker.model.updateOneById);
         sandbox.assert.callOrder(
             worker.dataSourceTariffs.getAll,
             worker.transformation.transformTariffs,
-            worker.model.update);
+            worker.model.updateOneById);
     });
 
 });

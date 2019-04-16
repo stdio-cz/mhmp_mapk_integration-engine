@@ -25,7 +25,7 @@ export class MeteosensorsWorker extends BaseWorker {
         dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(Meteosensors.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.TSKMeteosensors,
             }),
@@ -33,7 +33,7 @@ export class MeteosensorsWorker extends BaseWorker {
             new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Meteosensors.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: Meteosensors.mongoCollectionName,
                 outputMongooseSchemaObject: Meteosensors.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -71,7 +71,7 @@ export class MeteosensorsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

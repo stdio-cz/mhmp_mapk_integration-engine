@@ -66,7 +66,7 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
 
         });
         const results = await Promise.all(promises);
-        return results.filter((r) => r !== null);
+        return results.filter((r) => r);
     }
 
     protected transformElement = async (element: any): Promise<any> => {

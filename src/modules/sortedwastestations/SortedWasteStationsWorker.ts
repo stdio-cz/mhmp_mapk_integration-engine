@@ -30,17 +30,17 @@ export class SortedWasteStationsWorker extends BaseWorker {
     constructor() {
         super();
         this.iprContainersDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers : {},
-                    method: "GET",
-                    url: config.datasources.IPRSortedWasteContainers,
-                }),
-                new JSONDataTypeStrategy({resultsPath: "features"}),
-                new Validator(SortedWasteStations.ipr.name + "ContainersDataSource",
-                    SortedWasteStations.ipr.datasourceContainersMongooseSchemaObject));
+            new HTTPProtocolStrategy({
+                headers: {},
+                method: "GET",
+                url: config.datasources.IPRSortedWasteContainers,
+            }),
+            new JSONDataTypeStrategy({ resultsPath: "features" }),
+            new Validator(SortedWasteStations.ipr.name + "ContainersDataSource",
+                SortedWasteStations.ipr.datasourceContainersMongooseSchemaObject));
         this.iprStationsDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.IPRSortedWasteStations,
             }),
@@ -49,7 +49,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 SortedWasteStations.ipr.datasourceStationsMongooseSchemaObject));
         this.oictDatasource = new DataSource(SortedWasteStations.oict.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {
+                headers: {
                     Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
                 },
                 method: "GET",
@@ -60,7 +60,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 SortedWasteStations.oict.datasourceMongooseSchemaObject));
         this.potexDatasource = new DataSource(SortedWasteStations.potex.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.POTEXSortedWasteContainers,
             }),
@@ -70,7 +70,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(SortedWasteStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ geometry: "2dsphere" },
                     { "properties.name": "text" }, { weights: { "properties.name": 5 }}],
                 mongoCollectionName: SortedWasteStations.mongoCollectionName,
                 outputMongooseSchemaObject: SortedWasteStations.outputMongooseSchemaObject,
@@ -102,7 +102,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },
