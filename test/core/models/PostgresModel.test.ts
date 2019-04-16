@@ -66,6 +66,9 @@ describe("PostgresModel", () => {
             + "updated_at timestamp with time zone, "
             + "CONSTRAINT test_pkey PRIMARY KEY (id));",
             { type: Sequelize.QueryTypes.SELECT });
+        await connection.query(
+            "CREATE SCHEMA IF NOT EXISTS tmp;",
+            { type: Sequelize.QueryTypes.SELECT });
     });
 
     afterEach(async () => {
