@@ -26,8 +26,20 @@ class MySequelize {
                 pool: {
                     acquire: 60000,
                     idle: 10000,
-                    max: 25,
+                    max: Number(config.POSTGRES_POOL_MAX_CONNECTIONS) || 10,
                     min: 0,
+                },
+                retry: {
+                    match: [
+                        /SequelizeConnectionError/,
+                        /SequelizeConnectionRefusedError/,
+                        /SequelizeHostNotFoundError/,
+                        /SequelizeHostNotReachableError/,
+                        /SequelizeInvalidConnectionError/,
+                        /SequelizeConnectionTimedOutError/,
+                        /TimeoutError/,
+                    ],
+                    max: 8,
                 },
             });
             await this.connection.authenticate();
