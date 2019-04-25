@@ -12,8 +12,7 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-// TODO gitlab connection to RabbitMQ not tunneled yet
-describe.skip("AMQPConnector", () => {
+describe("AMQPConnector", () => {
 
     it("should has connect method", async () => {
         expect(AMQPConnector.connect).not.to.be.undefined;
