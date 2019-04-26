@@ -509,26 +509,6 @@ const definitions: IQueueDefinition[] = [
                 worker: RopidGTFSWorker,
                 workerMethod: "downloadCisStops",
             },
-            {
-                name: "refreshDataForDelayCalculation",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
-                },
-                worker: RopidGTFSWorker,
-                workerMethod: "refreshDataForDelayCalculation",
-            },
-            {
-                name: "saveDataForDelayCalculation",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
-                },
-                worker: RopidGTFSWorker,
-                workerMethod: "saveDataForDelayCalculation",
-            },
         ],
     },
     {
