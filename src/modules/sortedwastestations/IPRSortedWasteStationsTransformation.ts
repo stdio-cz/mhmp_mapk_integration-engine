@@ -47,7 +47,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             return result;
         });
         const results = await Promise.all(promises);
-        return results.filter((r) => r !== null);
+        return results.filter((r) => r);
     }
 
     protected transformElement = async (element: any): Promise<any> => {

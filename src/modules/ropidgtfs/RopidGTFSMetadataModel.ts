@@ -2,7 +2,8 @@
 
 import { RopidGTFS } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
-import { log, PostgresConnector, Validator } from "../../core/helpers";
+import { PostgresConnector } from "../../core/connectors";
+import { log, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { IModel, PostgresModel } from "../../core/models";
 
@@ -76,14 +77,31 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                     version,
                 },
             });
-            const promises = tables.map((table) => {
-                const tableName = RopidGTFS[table.dataValues.tn].pgTableName;
-                const tmpTableName = RopidGTFS[table.dataValues.tn].tmpPgTableName;
+
+            const promises = tables.map(async (table) => {
+                const tableName = "public." + RopidGTFS[table.dataValues.tn].pgTableName;
+                const tmpTableName = "tmp." + RopidGTFS[table.dataValues.tn].pgTableName;
+                const oldTableName = "tmp.old_" + RopidGTFS[table.dataValues.tn].pgTableName;
+
+                // getting table columns and joining them into string for the INSERT SELECT command
+                // it's because the "star" from "INSERT INTO table SELECT * FROM other_table" not working
+                const columns = await connection.query(
+                    "SELECT column_name "
+                    + "FROM information_schema.columns "
+                    + "WHERE table_schema = 'public' "
+                    + "AND table_name = '" + RopidGTFS[table.dataValues.tn].pgTableName + "'; ",
+                    { type: Sequelize.QueryTypes.SELECT });
+                const columnsString = columns.map((c) => '"' + c.column_name + '"').join(", ");
+
                 return connection.query(
-                    "ALTER TABLE IF EXISTS " + tableName + " RENAME TO old_" + tableName + "; "
-                    + "ALTER TABLE IF EXISTS " + tmpTableName + " RENAME TO " + tableName + "; "
-                    + "DROP TABLE IF EXISTS old_" + tableName + "; ",
-                    { transaction: t });
+                    "CREATE TABLE IF NOT EXISTS " + oldTableName + " (LIKE " + tableName + " INCLUDING ALL); "
+                    + "TRUNCATE TABLE " + oldTableName + "; "
+                    + "INSERT INTO " + oldTableName + " SELECT " + columnsString + " FROM " + tableName + "; "
+                    + "TRUNCATE TABLE " + tableName + "; "
+                    + "INSERT INTO " + tableName + " SELECT " + columnsString + " FROM " + tmpTableName + "; "
+                    + "DROP TABLE IF EXISTS " + tmpTableName + "; "
+                    + "DROP TABLE IF EXISTS " + oldTableName + "; ",
+                    { type: Sequelize.QueryTypes.SELECT, transaction: t });
             });
             await Promise.all(promises);
             await this.sequelizeModel.destroy({
@@ -152,7 +170,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         });
         const tablesArray = [];
         tables.map((table) => {
-            tablesArray.push("'" + RopidGTFS[table.dataValues.tn].tmpPgTableName + "'");
+            tablesArray.push("'" + RopidGTFS[table.dataValues.tn].pgTableName + "'");
         });
 
         // TODO zbavit se raw query
@@ -162,7 +180,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             + "WHERE "
             + "table_schema NOT IN ('pg_catalog', 'information_schema') "
             + "AND table_type = 'BASE TABLE' "
-            + "AND table_name in (" + tablesArray.join(",") + "); ",
+            + "AND table_name in (" + tablesArray.join(",") + ") "
+            + "AND table_schema = 'tmp'; ",
             { type: Sequelize.QueryTypes.SELECT});
 
         log.debug(this.name + " Total from tables: " + result[0].total);

@@ -21,7 +21,7 @@ export class PlaygroundsWorker extends BaseWorker {
         super();
         this.dataSource = new DataSource(Playgrounds.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.Playgrounds,
             }),
@@ -61,7 +61,7 @@ export class PlaygroundsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

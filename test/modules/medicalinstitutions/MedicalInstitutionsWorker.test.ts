@@ -5,7 +5,8 @@
 import { MedicalInstitutions } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
-import { GeocodeApi, RedisConnector } from "../../../src/core/helpers";
+import { RedisConnector } from "../../../src/core/connectors";
+import { GeocodeApi } from "../../../src/core/helpers";
 import { MedicalInstitutionsWorker } from "../../../src/modules/medicalinstitutions";
 
 const chai = require("chai");
@@ -48,7 +49,7 @@ describe("MedicalInstitutionsWorker", () => {
         sandbox.stub(worker.redisModel, "getData")
             .callsFake(() => testData[0].data);
         sandbox.stub(worker.model, "save");
-        sandbox.stub(worker.model, "update");
+        sandbox.stub(worker.model, "updateOneById");
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MedicalInstitutions.name.toLowerCase();
         sandbox.stub(worker.model, "findOneById")
@@ -94,7 +95,7 @@ describe("MedicalInstitutionsWorker", () => {
         sandbox.assert.calledOnce(worker.cityDistrictsModel.findOne);
         sandbox.assert.calledOnce(GeocodeApi.getGeoByAddress);
         sandbox.assert.calledOnce(data1.save);
-        sandbox.assert.calledOnce(worker.model.update);
+        sandbox.assert.calledOnce(worker.model.updateOneById);
     });
 
     it("should calls the correct methods by updateGeoAndDistrict method (same geo)", async () => {

@@ -23,7 +23,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
         yardsDataType.setFilter((item) => item.properties.PLATNOST !== 0);
         this.dataSource = new DataSource(WasteCollectionYards.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.WasteCollectionYards,
             }),
@@ -33,7 +33,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
 
         this.model = new MongoModel(WasteCollectionYards.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ geometry: "2dsphere" },
                     { "properties.name": "text", "properties.operator": "text", "properties.address": "text" },
                     { weights: { "properties.name": 5, "properties.address": 1, "properties.operator": 5 }}],
                 mongoCollectionName: WasteCollectionYards.mongoCollectionName,
@@ -65,7 +65,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

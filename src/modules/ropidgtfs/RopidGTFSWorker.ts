@@ -47,7 +47,7 @@ export class RopidGTFSWorker extends BaseWorker {
         this.transformation = new RopidGTFSTransformation();
         this.redisModel = new RedisModel(RopidGTFS.name + "Model", {
                 isKeyConstructedFromData: false,
-                prefix: "",
+                prefix: "files",
             },
             null);
         this.metaModel = new RopidGTFSMetadataModel();
@@ -62,19 +62,19 @@ export class RopidGTFSWorker extends BaseWorker {
             null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new PostgresModel(RopidGTFS.cis_stop_groups.name + "Model", {
+                hasTmpTable: true,
                 outputSequelizeAttributes: RopidGTFS.cis_stop_groups.outputSequelizeAttributes,
                 pgTableName: RopidGTFS.cis_stop_groups.pgTableName,
                 savingType: "insertOnly",
-                tmpPgTableName: RopidGTFS.cis_stop_groups.tmpPgTableName,
             },
             new Validator(RopidGTFS.cis_stop_groups.name + "ModelValidator",
                 RopidGTFS.cis_stop_groups.outputMongooseSchemaObject),
         );
         this.cisStopsModel = new PostgresModel(RopidGTFS.cis_stops.name + "Model", {
+                hasTmpTable: true,
                 outputSequelizeAttributes: RopidGTFS.cis_stops.outputSequelizeAttributes,
                 pgTableName: RopidGTFS.cis_stops.pgTableName,
                 savingType: "insertOnly",
-                tmpPgTableName: RopidGTFS.cis_stops.tmpPgTableName,
             },
             new Validator(RopidGTFS.cis_stops.name + "ModelValidator",
                 RopidGTFS.cis_stops.outputMongooseSchemaObject),
@@ -331,10 +331,10 @@ export class RopidGTFSWorker extends BaseWorker {
     private getModelByName = (name: string): PostgresModel => {
         if (RopidGTFS[name].name) {
             return new PostgresModel(RopidGTFS[name].name + "Model", {
+                    hasTmpTable: true,
                     outputSequelizeAttributes: RopidGTFS[name].outputSequelizeAttributes,
                     pgTableName: RopidGTFS[name].pgTableName,
                     savingType: "insertOnly",
-                    tmpPgTableName: RopidGTFS[name].tmpPgTableName,
                 },
                 new Validator(RopidGTFS[name].name + "ModelValidator",
                     RopidGTFS[name].outputMongooseSchemaObject),

@@ -2,7 +2,8 @@
 
 import { VehiclePositions } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
-import { PostgresConnector, Validator } from "../../core/helpers";
+import { PostgresConnector } from "../../core/connectors";
+import { Validator } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class VehiclePositionsPositionsModel extends PostgresModel implements IModel {

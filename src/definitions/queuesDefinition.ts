@@ -7,7 +7,8 @@ import {
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "golemio-schema-definitions";
 import { config } from "../core/config";
-import { AMQPConnector, log } from "../core/helpers";
+import { AMQPConnector } from "../core/connectors";
+import { log } from "../core/helpers";
 import { CustomError, handleError } from "../core/helpers/errors";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
@@ -476,7 +477,7 @@ const definitions: IQueueDefinition[] = [
                                 channel.ack(msg);
                             } else {
                                 handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    this.constructor.name, 1021));
+                                    null, 1021));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");

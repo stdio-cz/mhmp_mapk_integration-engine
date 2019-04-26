@@ -19,7 +19,7 @@ export abstract class BaseTransformation implements ITransformation {
                 return this.transformElement(element);
             });
             const results = await Promise.all(promises);
-            return results.filter((r) => r !== null);
+            return results.filter((r) => r);
         } else {
             return this.transformElement(data);
         }
@@ -34,7 +34,7 @@ export abstract class BaseTransformation implements ITransformation {
                 return this.transformHistoryElement(element);
             });
             const results = await Promise.all(promises);
-            return results.filter((r) => r !== null);
+            return results.filter((r) => r);
         } else {
             return this.transformHistoryElement(data);
         }

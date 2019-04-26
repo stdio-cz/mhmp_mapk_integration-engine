@@ -21,7 +21,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
         super();
         this.dataSource = new DataSource(MunicipalPoliceStations.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.MunicipalPoliceStations,
             }),
@@ -58,7 +58,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

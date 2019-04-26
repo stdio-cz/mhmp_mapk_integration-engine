@@ -20,7 +20,7 @@ export class ParkingZonesWorker extends BaseWorker {
     constructor() {
         super();
         const zonesDataType = new JSONDataTypeStrategy({resultsPath: "features"});
-        zonesDataType.setFilter((item) => item.properties.TARIFTAB !== null);
+        zonesDataType.setFilter((item) => item.properties.TARIFTAB);
         this.dataSource = new DataSource(ParkingZones.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},
@@ -30,7 +30,7 @@ export class ParkingZonesWorker extends BaseWorker {
             zonesDataType,
             new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject));
         this.dataSourceTariffs = new DataSource("ParkingZonesTariffsDataSource",
-            null,
+            undefined,
             new JSONDataTypeStrategy({resultsPath: "dailyTariff"}),
             new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
         this.model = new MongoModel(ParkingZones.name + "Model", {
@@ -93,7 +93,7 @@ export class ParkingZonesWorker extends BaseWorker {
             const data = await this.dataSourceTariffs.getAll();
             const transformedData = await this.transformation.transformTariffs(code, data);
 
-            await this.model.update(code, {
+            await this.model.updateOneById(code, {
                 $set: {
                     "properties.tariffs": transformedData.tariffs,
                     "properties.tariffs_text": transformedData.tariffsText,

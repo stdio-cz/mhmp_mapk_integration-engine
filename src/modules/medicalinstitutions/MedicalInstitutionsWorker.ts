@@ -25,7 +25,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         this.pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
             new HTTPProtocolStrategy({
                 encoding: null,
-                headers : {},
+                headers: {},
                 isCompressed: true,
                 method: "GET",
                 rejectUnauthorized: false,
@@ -63,7 +63,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         });
         this.healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
                 new HTTPProtocolStrategy({
-                    headers : {},
+                    headers: {},
                     method: "GET",
                     url: config.datasources.MedicalInstitutionsHealthCare,
                 }),
@@ -72,13 +72,13 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                     MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
         this.redisModel = new RedisModel(MedicalInstitutions.name + "Model", {
                 isKeyConstructedFromData: false,
-                prefix: "",
+                prefix: "files",
             },
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
                 identifierPath: "properties.id",
                 modelIndexes: [{ "properties.type.group": 1 },
-                    { geometry : "2dsphere" },
+                    { geometry: "2dsphere" },
                     { "properties.name": "text", "properties.address": "text" },
                     { weights: { "properties.name": 5, "properties.address": 1 }}],
                 mongoCollectionName: MedicalInstitutions.mongoCollectionName,
@@ -112,7 +112,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },
@@ -178,7 +178,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                     },
                 });
                 // TODO zjistit proc tady nefunguje `await dbData.save();` viz vyse
-                await this.model.update(id, {$set: {"properties.district": (result) ? result.properties.slug : null}});
+                await this.model.updateOneById(id,
+                    {$set: {"properties.district": (result) ? result.properties.slug : null}});
             } catch (err) {
                 throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
             }
