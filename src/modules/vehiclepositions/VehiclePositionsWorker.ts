@@ -3,6 +3,7 @@
 import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
 import { config } from "../../core/config";
 import { log, Validator } from "../../core/helpers";
+import { CustomError } from "../../core/helpers/errors";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";
@@ -259,82 +260,88 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     private getResultObjectForDelayCalculation = async (tripId: string): Promise<any> => {
-        const tripsModel = new RopidGTFSTripsModel();
-        const stopTimes = await tripsModel.findByIdWithStopTimes(tripId);
-        const shapes = await tripsModel.findByIdWithShapes(tripId);
+        try {
+            const tripsModel = new RopidGTFSTripsModel();
+            const stopTimes = await tripsModel.findByIdWithStopTimes(tripId);
+            const shapes = await tripsModel.findByIdWithShapes(tripId);
 
-        // { <tripData>, stop_times: [ <stopTimesDataWithStop> ], shapes: [ <shapesData> ] }
-        const trip = {
-            ...stopTimes.dataValues,
-            ...shapes.dataValues,
-        };
-
-        const tmpGtfs = {
-            ...await this.getStopTimesForDelayComputation(trip),
-            shapes_anchor_points: await this.getShapesAnchorPointsForDelayComputation(trip.shape_id, trip.shapes),
-        };
-
-        // ----------------------------------------------
-
-        // TEMP constS
-        const tmpStopTimes = tmpGtfs.tripsStopTimes;
-        const stops = tmpGtfs.tripsStops;
-        // MAKING COPY
-        const shapesAnchorPoints = tmpGtfs.shapes_anchor_points;
-        const shapePoints = [];
-
-        // INDEXES OF ACTUAL stops
-        let lastStop = 0;
-        let nextStop = 1;
-
-        for (let i = 0, imax = shapesAnchorPoints.length; i < imax; i++) {
-            const shapePoint = {
-                coordinates: [],
-                distance_from_last_stop: null,
-                last_stop: null,
-                next_stop: null,
-                shape_dist_traveled: {},
-                time_scheduled_seconds: null,
+            // { <tripData>, stop_times: [ <stopTimesDataWithStop> ], shapes: [ <shapesData> ] }
+            const trip = {
+                ...stopTimes.dataValues,
+                ...shapes.dataValues,
             };
 
-            shapePoint.shape_dist_traveled = shapesAnchorPoints[i].shape_dist_traveled;
-            shapePoint.coordinates = [
-                shapesAnchorPoints[i].coordinates[0],
-                shapesAnchorPoints[i].coordinates[1],
-            ];
+            const tmpGtfs = {
+                ...await this.getStopTimesForDelayComputation(trip),
+                shapes_anchor_points: await this.getShapesAnchorPointsForDelayComputation(trip.shape_id, trip.shapes),
+            };
 
-            // DECIDE WHENEVER IS NEXT shapes_anchor_points[i] JUST AFTER NEXT stop (BY DISTANCE)
-            if (shapesAnchorPoints[i].shape_dist_traveled >= tmpStopTimes[nextStop].shape_dist_traveled
-                    && i < (shapesAnchorPoints.length - 1) && nextStop < (stops.length - 1)) {
-                lastStop++;
-                nextStop++;
+            // ----------------------------------------------
+
+            // TEMP constS
+            const tmpStopTimes = tmpGtfs.tripsStopTimes;
+            const stops = tmpGtfs.tripsStops;
+            // MAKING COPY
+            const shapesAnchorPoints = tmpGtfs.shapes_anchor_points;
+            const shapePoints = [];
+
+            // INDEXES OF ACTUAL stops
+            let lastStop = 0;
+            let nextStop = 1;
+
+            for (let i = 0, imax = shapesAnchorPoints.length; i < imax; i++) {
+                const shapePoint = {
+                    coordinates: [],
+                    distance_from_last_stop: null,
+                    last_stop: null,
+                    next_stop: null,
+                    shape_dist_traveled: {},
+                    time_scheduled_seconds: null,
+                };
+
+                shapePoint.shape_dist_traveled = shapesAnchorPoints[i].shape_dist_traveled;
+                shapePoint.coordinates = [
+                    shapesAnchorPoints[i].coordinates[0],
+                    shapesAnchorPoints[i].coordinates[1],
+                ];
+
+                // DECIDE WHENEVER IS NEXT shapes_anchor_points[i] JUST AFTER NEXT stop (BY DISTANCE)
+                if (shapesAnchorPoints[i].shape_dist_traveled >= tmpStopTimes[nextStop].shape_dist_traveled
+                        && i < (shapesAnchorPoints.length - 1) && nextStop < (stops.length - 1)) {
+                    lastStop++;
+                    nextStop++;
+                }
+
+                // ID FOR LAST AND NEXT STOPS
+                shapePoint.last_stop = stops[lastStop].stop_id;
+                shapePoint.next_stop = stops[nextStop].stop_id;
+
+                // MAYBE NOT NECESSARY
+                shapePoint.distance_from_last_stop = Math.round((
+                    shapesAnchorPoints[i].shape_dist_traveled
+                        - tmpStopTimes[lastStop].shape_dist_traveled) * 1000) / 1000;
+
+                // COMPUTING SCHEDULED TIMES FOR EACH ANCHOR POINT - LINEAR INTERPOLATION BETWEEN STOPS
+                shapePoint.time_scheduled_seconds =
+                    tmpStopTimes[lastStop].departure_time_seconds
+                    + Math.round(
+                        (tmpStopTimes[nextStop].arrival_time_seconds - tmpStopTimes[lastStop].departure_time_seconds)
+                        * shapePoint.distance_from_last_stop
+                        / (tmpStopTimes[nextStop].shape_dist_traveled - tmpStopTimes[lastStop].shape_dist_traveled),
+                    );
+
+                shapePoints.push(shapePoint);
             }
-
-            // ID FOR LAST AND NEXT STOPS
-            shapePoint.last_stop = stops[lastStop].stop_id;
-            shapePoint.next_stop = stops[nextStop].stop_id;
-
-            // MAYBE NOT NECESSARY
-            shapePoint.distance_from_last_stop = Math.round((
-                shapesAnchorPoints[i].shape_dist_traveled
-                    - tmpStopTimes[lastStop].shape_dist_traveled) * 1000) / 1000;
-
-            // COMPUTING SCHEDULED TIMES FOR EACH ANCHOR POINT - LINEAR INTERPOLATION BETWEEN STOPS
-            shapePoint.time_scheduled_seconds =
-                tmpStopTimes[lastStop].departure_time_seconds
-                + Math.round(
-                    (tmpStopTimes[nextStop].arrival_time_seconds - tmpStopTimes[lastStop].departure_time_seconds)
-                    * shapePoint.distance_from_last_stop
-                    / (tmpStopTimes[nextStop].shape_dist_traveled - tmpStopTimes[lastStop].shape_dist_traveled),
-                );
-
-            shapePoints.push(shapePoint);
+            // FINAL OBJECT
+            return {
+                shape_points: shapePoints,
+                trip: { ...trip, shapes: undefined, stop_times: undefined },
+            };
+        } catch (err) {
+            log.error(err);
+            throw new CustomError("Error while getting object for delay calculation (trip_id=" + tripId + ").",
+                true, undefined, undefined, err);
         }
-        // FINAL OBJECT
-        return {
-            shape_points: shapePoints,
-            trip: { ...trip, shapes: undefined, stop_times: undefined },
-        };
     }
 
     private getShapesAnchorPointsForDelayComputation = async (shapeId: string, shapes: any[]): Promise<any> => {
