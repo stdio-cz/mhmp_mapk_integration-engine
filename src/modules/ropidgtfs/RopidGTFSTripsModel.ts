@@ -42,6 +42,8 @@ export class RopidGTFSTripsModel extends PostgresModel implements IModel {
         this.sequelizeModel.hasMany(stopTimesModel, {
             as: "stop_times",
             foreignKey: "trip_id",
+            onDelete: "NO ACTION",
+            onUpdate: "NO ACTION",
         });
 
         const shapesModel = PostgresConnector.getConnection().define(RopidGTFS.shapes.pgTableName,
