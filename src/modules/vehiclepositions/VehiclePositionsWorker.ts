@@ -267,8 +267,8 @@ export class VehiclePositionsWorker extends BaseWorker {
 
             // { <tripData>, stop_times: [ <stopTimesDataWithStop> ], shapes: [ <shapesData> ] }
             const trip = {
-                ...stopTimes.dataValues,
-                ...shapes.dataValues,
+                ...stopTimes,
+                ...shapes,
             };
 
             const tmpGtfs = {

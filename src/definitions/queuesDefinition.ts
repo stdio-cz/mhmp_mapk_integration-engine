@@ -472,7 +472,7 @@ const definitions: IQueueDefinition[] = [
 
                         if (qt.messageCount === 0 && qs.messageCount === 0) {
                             // for sure all messages are dispatched
-                            await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
+                            await new Promise((done) => setTimeout(done, 20000)); // sleeps for 20 seconds
                             if (await worker.checkSavedRowsAndReplaceTables(msg)) {
                                 channel.ack(msg);
                             } else {
@@ -482,7 +482,7 @@ const definitions: IQueueDefinition[] = [
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
-                            await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
+                            await new Promise((done) => setTimeout(done, 60000)); // sleeps for 1 minute
                             channel.reject(msg);
                         }
                     } catch (err) {
