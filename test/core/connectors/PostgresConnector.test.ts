@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { PostgresConnector } from "../../../src/core/helpers";
+import { PostgresConnector } from "../../../src/core/connectors";
 import { CustomError } from "../../../src/core/helpers/errors";
 
 const chai = require("chai");

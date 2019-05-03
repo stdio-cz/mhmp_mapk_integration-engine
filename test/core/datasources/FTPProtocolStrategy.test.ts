@@ -3,8 +3,8 @@
 "use strict";
 
 import "mocha";
+import { RedisConnector } from "../../../src/core/connectors";
 import { FTPProtocolStrategy, IFTPSettings } from "../../../src/core/datasources";
-import { RedisConnector } from "../../../src/core/helpers";
 
 const chai = require("chai");
 const expect = chai.expect;

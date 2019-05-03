@@ -9,7 +9,7 @@ export interface ISequelizeSettings {
     pgTableName: string;
     savingType: "insertOnly" | "insertOrUpdate";
     sequelizeAdditionalSettings?: object;
-    tmpPgTableName?: string;
+    hasTmpTable?: boolean;
 }
 
 export interface IMongooseSettings {
@@ -18,7 +18,7 @@ export interface IMongooseSettings {
     mongoCollectionName: string;
     outputMongooseSchemaObject: SchemaDefinition;
     resultsPath?: string;
-    savingType: "insertOnly" | "insertOrUpdate";
+    savingType: "readOnly" | "insertOnly" | "insertOrUpdate";
     updateValues?: (dbData: any, newData: any) => any;
     searchPath?: (id: any, multiple: boolean) => any;
     select?: string;

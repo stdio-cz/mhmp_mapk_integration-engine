@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { mongooseConnection } from "../../../src/core/helpers";
+import { mongooseConnection } from "../../../src/core/connectors";
 
 const chai = require("chai");
 const expect = chai.expect;

@@ -12,7 +12,7 @@ export class CSVDataTypeStrategy implements IDataTypeStrategy {
 
     constructor(settings: ICSVSettings) {
         this.dataTypeSettings = settings;
-        this.filter = null;
+        this.filter = undefined;
     }
 
     public setDataTypeSettings = (settings: ICSVSettings): void => {

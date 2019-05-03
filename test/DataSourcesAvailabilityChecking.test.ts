@@ -9,11 +9,12 @@ import {
 } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../src/core/config";
+import { RedisConnector } from "../src/core/connectors";
 import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../src/core/datasources";
-import { RedisConnector, Validator } from "../src/core/helpers";
+import { Validator } from "../src/core/helpers";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -119,7 +120,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         beforeEach(() => {
             const zonesProtocol = new JSONDataTypeStrategy({resultsPath: "features"});
-            zonesProtocol.setFilter((item) => item.properties.TARIFTAB !== null);
+            zonesProtocol.setFilter((item) => item.properties.TARIFTAB);
             datasource = new DataSource(ParkingZones.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers : {},
@@ -306,7 +307,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         beforeEach(() => {
             const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
-            hoppyGoDataType.setFilter((item) => item.localization !== null);
+            hoppyGoDataType.setFilter((item) => item.localization);
             datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers : {},

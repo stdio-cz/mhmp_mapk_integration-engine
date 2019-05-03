@@ -29,7 +29,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
             };
         });
         const results = await Promise.all(promises);
-        return results.filter((r) => r !== null);
+        return results.filter((r) => r);
     }
 
     protected transformElement = async (element: any): Promise<any> => {
@@ -61,7 +61,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
                     number_of_serving_counters: parseInt(activity.td[2], 10),
                 };
             } else {
-                return null;
+                return undefined;
             }
         });
         res.served_activities = await Promise.all(activities);

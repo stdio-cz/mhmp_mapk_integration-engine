@@ -34,7 +34,7 @@ export class SharedCarsWorker extends BaseWorker {
             new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
                 SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
         const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
-        hoppyGoDataType.setFilter((item) => item.localization !== null);
+        hoppyGoDataType.setFilter((item) => item.localization);
         this.hoppyGoDataSource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers : {},

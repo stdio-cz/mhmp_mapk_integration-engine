@@ -1,6 +1,6 @@
 {
 	"name": "golemio-integration-engine",
-	"version": "0.1.1",
+	"version": "0.1.3",
 	"description": "Integration Engine of the Golemio data platform.",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
@@ -12,7 +12,8 @@
 		"core-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/core/helpers/**/*.test.ts --exit",
 		"modules-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/modules/**/*.test.ts --exit",
 		"datasources-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/DataSourcesAvailabilityChecking.test.ts --exit",
-		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit"
+		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit",
+		"generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Integration Engine\" --mode file --out docs/typedoc src"
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",
@@ -37,14 +38,15 @@
 		"sinon": "7.1.1",
 		"nyc": "13.1.0",
 		"source-map-support": "0.5.9",
-		"nock": "10.0.6"
+		"nock": "10.0.6",
+		"typedoc": "^0.14.2"
 	},
 	"dependencies": {
 		"amqplib": "0.5.2",
 		"basic-ftp": "2.17.0",
 		"cheap-ruler": "2.5.1",
 		"csvtojson": "2.0.8",
-		"golemio-schema-definitions": "0.1.6",
+		"golemio-schema-definitions": "0.1.7",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
@@ -72,10 +74,13 @@
 		"exclude": [
 			"**/*.d.ts",
 			"dist",
-			"**/*.test.ts"
+			"**/*.test.ts",
+			"coverage",
+			"node_modules"
 		],
 		"reporter": [
-			"text-summary"
+			"text",
+			"lcov"
 		],
 		"all": true,
 		"lines": 0,

@@ -21,7 +21,7 @@ export class PublicToiletsWorker extends BaseWorker {
         super();
         this.dataSource = new DataSource(PublicToilets.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {},
+                headers: {},
                 method: "GET",
                 url: config.datasources.PublicToilets,
             }),
@@ -29,7 +29,7 @@ export class PublicToiletsWorker extends BaseWorker {
             new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject));
         this.model = new MongoModel(PublicToilets.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
+                modelIndexes: [{ geometry: "2dsphere" },
                     { "properties.address": "text" }, { weights: { "properties.address": 1 }}],
                 mongoCollectionName: PublicToilets.mongoCollectionName,
                 outputMongooseSchemaObject: PublicToilets.outputMongooseSchemaObject,
@@ -54,7 +54,7 @@ export class PublicToiletsWorker extends BaseWorker {
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",
-                savingType: "insertOrUpdate",
+                savingType: "readOnly",
                 searchPath: (id, multiple) => (multiple)
                     ? { "properties.id": { $in: id } }
                     : { "properties.id": id },

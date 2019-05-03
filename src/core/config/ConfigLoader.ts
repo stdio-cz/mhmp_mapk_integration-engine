@@ -8,7 +8,7 @@ const FILES_DIR = "../../../config/";
 const FILES_EXT = ".json";
 
 /**
- * Helper for loading and merging default and specific config files.
+ * Helper class for loading and merging default and specific config files.
  */
 export class ConfigLoader {
 
@@ -38,8 +38,8 @@ export class ConfigLoader {
     }
 }
 
-// TODO prejmenovat na lower-case
-export let config = {
+/** Exporting all configurations */
+export const config = { // TODO prejmenovat na lower-case
     HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     MOJEPRAHA_ENDPOINT_APIKEY: process.env.MOJEPRAHA_ENDPOINT_APIKEY,
@@ -51,6 +51,7 @@ export let config = {
     PARKINGS_PAYMENT_URL: process.env.PARKINGS_PAYMENT_URL,
     PARKING_ZONES_PAYMENT_URL: process.env.PARKING_ZONES_PAYMENT_URL,
     POSTGRES_CONN: process.env.POSTGRES_CONN,
+    POSTGRES_POOL_MAX_CONNECTIONS: process.env.POSTGRES_POOL_MAX_CONNECTIONS,
     RABBIT_CONN: process.env.RABBIT_CONN,
     RABBIT_EXCHANGE_NAME: process.env.RABBIT_EXCHANGE_NAME,
     REDIS_CONN: process.env.REDIS_CONN,

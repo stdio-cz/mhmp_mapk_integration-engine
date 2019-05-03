@@ -1,8 +1,8 @@
 "use strict";
 
 import { config } from "../config";
-import { log } from "./";
-import { CustomError, handleError } from "./errors";
+import { log } from "../helpers";
+import { CustomError, handleError } from "../helpers/errors";
 
 import mongoose = require("mongoose");
 

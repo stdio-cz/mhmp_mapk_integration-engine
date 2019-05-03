@@ -1,7 +1,7 @@
 "use strict";
 
 import { config } from "../config";
-import { AMQPConnector } from "../helpers";
+import { AMQPConnector } from "../connectors";
 import { CustomError } from "../helpers/errors";
 
 export class BaseWorker {

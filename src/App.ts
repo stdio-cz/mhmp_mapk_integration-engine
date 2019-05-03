@@ -1,7 +1,8 @@
 "use strict";
 
 import { config } from "./core/config";
-import { AMQPConnector, log, mongooseConnection, PostgresConnector, RedisConnector } from "./core/helpers";
+import { AMQPConnector, mongooseConnection, PostgresConnector, RedisConnector } from "./core/connectors";
+import { log } from "./core/helpers";
 import { handleError } from "./core/helpers/errors";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";

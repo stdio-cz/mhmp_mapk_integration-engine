@@ -1,6 +1,7 @@
 "use strict";
 
-import { log, PostgresConnector } from "../../core/helpers";
+import { PostgresConnector } from "../../core/connectors";
+import { log } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 
 export class PurgeWorker {

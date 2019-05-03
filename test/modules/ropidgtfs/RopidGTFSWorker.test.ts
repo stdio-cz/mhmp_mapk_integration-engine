@@ -5,7 +5,7 @@
 import { RopidGTFS } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
-import { PostgresConnector, RedisConnector } from "../../../src/core/helpers";
+import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { RopidGTFSWorker } from "../../../src/modules/ropidgtfs";
 
 const chai = require("chai");
@@ -75,6 +75,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.stub(worker.cisStopGroupsModel, "save");
         sandbox.stub(worker.cisStopsModel, "truncate");
         sandbox.stub(worker.cisStopsModel, "save");
+        sandbox.stub(worker.delayComputationTripsModel, "truncate");
     });
 
     afterEach(() => {
@@ -144,7 +145,7 @@ describe("RopidGTFSWorker", () => {
         await worker.checkSavedRowsAndReplaceTables();
         sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
         sandbox.assert.calledOnce(worker.metaModel.replaceTables);
-        sandbox.assert.calledOnce(worker.sendMessageToExchange);
+        sandbox.assert.calledOnce(worker.delayComputationTripsModel.truncate);
     });
 
     it("should calls the correct methods by downloadCisStops method", async () => {

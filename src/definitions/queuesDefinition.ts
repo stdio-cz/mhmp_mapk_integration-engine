@@ -7,7 +7,8 @@ import {
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "golemio-schema-definitions";
 import { config } from "../core/config";
-import { AMQPConnector, log } from "../core/helpers";
+import { AMQPConnector } from "../core/connectors";
+import { log } from "../core/helpers";
 import { CustomError, handleError } from "../core/helpers/errors";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
@@ -471,17 +472,17 @@ const definitions: IQueueDefinition[] = [
 
                         if (qt.messageCount === 0 && qs.messageCount === 0) {
                             // for sure all messages are dispatched
-                            await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
+                            await new Promise((done) => setTimeout(done, 20000)); // sleeps for 20 seconds
                             if (await worker.checkSavedRowsAndReplaceTables(msg)) {
                                 channel.ack(msg);
                             } else {
                                 handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    this.constructor.name, 1021));
+                                    null, 1021));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
-                            await new Promise((done) => setTimeout(done, 5000)); // sleeps for 5 seconds
+                            await new Promise((done) => setTimeout(done, 60000)); // sleeps for 1 minute
                             channel.reject(msg);
                         }
                     } catch (err) {
@@ -507,26 +508,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "downloadCisStops",
-            },
-            {
-                name: "refreshDataForDelayCalculation",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
-                },
-                worker: RopidGTFSWorker,
-                workerMethod: "refreshDataForDelayCalculation",
-            },
-            {
-                name: "saveDataForDelayCalculation",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
-                },
-                worker: RopidGTFSWorker,
-                workerMethod: "saveDataForDelayCalculation",
             },
         ],
     },
