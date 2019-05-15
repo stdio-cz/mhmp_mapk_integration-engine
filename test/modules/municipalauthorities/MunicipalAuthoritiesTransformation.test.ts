@@ -50,13 +50,13 @@ describe("MunicipalAuthoritiesTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
+        const data = await transformation.transform(testSourceData[3]);
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -67,7 +67,7 @@ describe("MunicipalAuthoritiesTransformation", () => {
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

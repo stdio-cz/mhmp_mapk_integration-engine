@@ -56,7 +56,7 @@ describe("IceGatewaySensorsTransformation", () => {
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("sensors");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -67,7 +67,7 @@ describe("IceGatewaySensorsTransformation", () => {
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("sensors");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 
@@ -89,7 +89,7 @@ describe("IceGatewaySensorsTransformation", () => {
             const data = await transformation.transformHistory(testTransformedData[0]);
             expect(data).to.have.property("id");
             expect(data).to.have.property("sensors");
-            expect(data).to.have.property("timestamp");
+            expect(data).to.have.property("updated_at");
         });
 
         it("should properly transform collection", async () => {
@@ -97,7 +97,7 @@ describe("IceGatewaySensorsTransformation", () => {
             for (let i = 0, imax = data.length; i < imax; i++) {
                 expect(data[i]).to.have.property("id");
                 expect(data[i]).to.have.property("sensors");
-                expect(data[i]).to.have.property("timestamp");
+                expect(data[i]).to.have.property("updated_at");
             }
         });
 

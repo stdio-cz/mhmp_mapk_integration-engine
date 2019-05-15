@@ -61,14 +61,14 @@ describe("ParkingZonesTransformation", () => {
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
-        expect(data.properties).to.have.property("code");
+        expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("midpoint");
         expect(data.properties).to.have.property("northeast");
         expect(data.properties).to.have.property("southwest");
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("number_of_places");
         expect(data.properties).to.have.property("payment_link");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
         expect(data.properties).to.have.property("type");
         expect(data.properties).to.have.property("zps_id");
     });
@@ -79,14 +79,14 @@ describe("ParkingZonesTransformation", () => {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
-            expect(data[i].properties).to.have.property("code");
+            expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("midpoint");
             expect(data[i].properties).to.have.property("northeast");
             expect(data[i].properties).to.have.property("southwest");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("number_of_places");
             expect(data[i].properties).to.have.property("payment_link");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
             expect(data[i].properties).to.have.property("type");
             expect(data[i].properties).to.have.property("zps_id");
         }

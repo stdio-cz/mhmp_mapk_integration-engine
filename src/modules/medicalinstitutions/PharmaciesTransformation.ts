@@ -46,8 +46,9 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
                                 files.openingHours[hour.KOD_PRACOVISTE] = [];
                             }
                             files.openingHours[hour.KOD_PRACOVISTE].push({
-                                day: this.getDayLabel(hour.DEN),
-                                hours: hour.OD + " - " + hour.DO,
+                                closes: hour.DO,
+                                day_of_week: this.getDayLabel(hour.DEN),
+                                opens: hour.OD,
                             });
                         }
                     });
@@ -78,10 +79,11 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
             },
             properties: {
                 address: {
-                    city: element.MESTO,
-                    formatted: element.ULICE + ", " + element.PSC + " " + element.MESTO,
-                    street: element.ULICE,
-                    zip: element.PSC,
+                    address_country: "Česko",
+                    address_formatted: element.ULICE + ", " + element.PSC + " " + element.MESTO + ", Česko",
+                    address_locality: element.MESTO,
+                    postal_code: element.PSC,
+                    street_address: element.ULICE,
                 },
                 email: (element.EMAIL) ? element.EMAIL.trim().split(",") : [],
                 id: slug(element.KOD_PRACOVISTE + "-" + element.NAZEV, {lower: true}),
@@ -90,12 +92,12 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
                 opening_hours: [],
                 pharmacy_code: (element.KOD_LEKARNY) ? element.KOD_LEKARNY : null,
                 telephone: (element.TELEFON) ? element.TELEFON.trim().split(",") : [],
-                timestamp: new Date().getTime(),
                 type: {
                     description: null,
                     group: "pharmacies",
                     id: element.TYP_LEKARNY,
                 },
+                updated_at: new Date().getTime(),
                 web: (element.WWW) ? element.WWW.trim().split(",") : [],
             },
             type: "Feature",
@@ -111,14 +113,14 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
 
     private getDayLabel = (day: string): string => {
         switch (day) {
-            case "PO": return "Pondělí";
-            case "UT": return "Úterý";
-            case "ST": return "Středa";
-            case "CT": return "Čtvrtek";
-            case "PA": return "Pátek";
-            case "SO": return "Sobota";
-            case "NE": return "Neděle";
-            case "SVATEK": return "Svátek";
+            case "PO": return "Monday";
+            case "UT": return "Tuesday";
+            case "ST": return "Wednesday";
+            case "CT": return "Thursday";
+            case "PA": return "Friday";
+            case "SO": return "Saturday";
+            case "NE": return "Sunday";
+            case "SVATEK": return "PublicHolidays";
         }
     }
 

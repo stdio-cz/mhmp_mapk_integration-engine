@@ -57,7 +57,7 @@ describe("PlaygroundsTransformation", () => {
         expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("content");
         expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
         expect(data.properties).to.have.property("url");
     });
 
@@ -70,7 +70,7 @@ describe("PlaygroundsTransformation", () => {
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("content");
             expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
             expect(data[i].properties).to.have.property("url");
         }
     });

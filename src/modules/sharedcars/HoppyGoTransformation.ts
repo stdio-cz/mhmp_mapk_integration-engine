@@ -35,7 +35,7 @@ export class HoppyGoTransformation extends BaseTransformation implements ITransf
                 id: element.hash_code.split("?")[0],
                 name: element.manufacturer_name,
                 res_url: config.HOPPYGO_BASE_URL + element.hash_code,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

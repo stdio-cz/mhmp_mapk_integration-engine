@@ -35,9 +35,7 @@ export class ParkingsWorker extends BaseWorker {
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" },
-                    { "properties.name": "text", "properties.address": "text" },
-                        {weights: { "properties.name": 5, "properties.address": 1 }}],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: Parkings.mongoCollectionName,
                 outputMongooseSchemaObject: Parkings.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -53,7 +51,7 @@ export class ParkingsWorker extends BaseWorker {
                     a.properties.total_num_of_places = b.properties.total_num_of_places;
                     a.properties.parking_type = b.properties.parking_type;
                     a.properties.payment_link = b.properties.payment_link;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -134,7 +132,7 @@ export class ParkingsWorker extends BaseWorker {
             }
         }
 
-        if (!dbData.properties.address
+        if (!dbData.properties.address || !dbData.properties.address.address_formatted
                 || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
                 || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
@@ -156,17 +154,17 @@ export class ParkingsWorker extends BaseWorker {
         const timestampMonthAgo = moment().subtract(1, "months").unix();
 
         const aggregation = [
-            { $match: { $and: [ { id }, { timestamp: { $gte: timestampMonthAgo }} ] }},
+            { $match: { $and: [ { id }, { updated_at: { $gte: timestampMonthAgo }} ] }},
             {
                 $group: {
                     _id: {
                         dayOfWeek: {
-                            $subtract: [ {$dayOfWeek: { $toDate: "$timestamp" }}, 1 ],
+                            $subtract: [ {$dayOfWeek: { $toDate: "$updated_at" }}, 1 ],
                         },
                         hour: {
                             $dateToString: {
                                 date: {
-                                    $toDate: "$timestamp",
+                                    $toDate: "$updated_at",
                                 },
                                 format: "%H",
                             },

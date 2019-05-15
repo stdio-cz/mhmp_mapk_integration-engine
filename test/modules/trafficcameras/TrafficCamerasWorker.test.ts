@@ -107,7 +107,7 @@ describe("TrafficCamerasWorker", () => {
         data1 = {
             geometry: {coordinates: [0, 0]},
             properties: {
-                address: "a",
+                address: { address_formatted: "a" },
                 district: "praha-0",
                 id: 1},
             save: sandbox.stub().resolves(true),

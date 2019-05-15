@@ -46,7 +46,7 @@ export class GardensWorker extends BaseWorker {
                     a.properties.address = b.properties.address;
                     a.properties.district = b.properties.district;
                     a.properties.properties = b.properties.properties;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

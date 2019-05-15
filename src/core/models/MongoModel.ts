@@ -213,6 +213,7 @@ export class MongoModel implements IModel {
                 throw new CustomError("Model data was not found.", true, this.name, 1014);
             }
             dbData = this.updateValues(dbData, newData);
+            dbData.markModified("properties"); // TODO zkontrolovat jestli funguje na vsechny pripady
             return dbData.save();
         } catch (err) {
             if (err instanceof CustomError && err.code === 1014) {

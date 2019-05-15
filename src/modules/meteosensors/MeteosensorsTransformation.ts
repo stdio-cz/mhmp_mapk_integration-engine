@@ -29,7 +29,7 @@ export class MeteosensorsTransformation extends BaseTransformation implements IT
                     ? element.name.split("-")[1]
                     : element.name,
                 road_temperature: null,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
                 wind_direction: null,
                 wind_speed: null,
             },
@@ -60,7 +60,7 @@ export class MeteosensorsTransformation extends BaseTransformation implements IT
             id: element.properties.id,
             last_updated: element.properties.last_updated,
             road_temperature: element.properties.road_temperature,
-            timestamp: element.properties.timestamp,
+            updated_at: element.properties.updated_at,
             wind_direction: element.properties.wind_direction,
             wind_speed: element.properties.wind_speed,
         };

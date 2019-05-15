@@ -55,7 +55,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
         expect(data).to.have.property("municipal_authority_id");
         expect(data).to.have.property("served_activities");
         expect(data).to.have.property("title");
-        expect(data).to.have.property("timestamp");
+        expect(data).to.have.property("updated_at");
     });
 
     describe("history", () => {
@@ -80,7 +80,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
                 expect(data[0]).to.have.property("activity");
                 expect(data[0]).to.have.property("number_of_person_in_queue");
                 expect(data[0]).to.have.property("number_of_serving_counters");
-                expect(data[0]).to.have.property("timestamp");
+                expect(data[0]).to.have.property("updated_at");
             }
         });
 

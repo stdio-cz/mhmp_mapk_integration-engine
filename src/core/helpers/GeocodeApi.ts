@@ -6,6 +6,15 @@ import { CustomError } from "./errors";
 
 const request = require("request-promise");
 
+interface IPostalAddress {
+    address_formatted: string;
+    street_address?: string;
+    postal_code?: string;
+    address_locality?: string;
+    address_region?: string;
+    address_country: string;
+}
+
 /**
  * Helper class for requesting additional data from OpenStreetMap API.
  */
@@ -17,7 +26,7 @@ class GeocodeApi {
      * @param {number} lat Latitude
      * @param {number} lng Longitude
      */
-    public getAddressByLatLng = async (lat: number, lng: number): Promise<string> => {
+    public getAddressByLatLng = async (lat: number, lng: number): Promise<IPostalAddress> => {
         const options = {
             headers: {
                 "Cache-Control": "no-cache",
@@ -29,26 +38,34 @@ class GeocodeApi {
         try {
             const body = await request(options);
             const resultAddr = JSON.parse(body).address;
-            let address = "";
+            let address = {
+                address_country: "",
+                address_formatted: "",
+            };
 
             if (resultAddr.road) {
-                address += resultAddr.road;
+                let streetAddress = resultAddr.road;
                 if (resultAddr.house_number) {
-                    address += " " + resultAddr.house_number;
+                    streetAddress += " " + resultAddr.house_number;
                 }
-                address += ", ";
+                address.address_formatted += streetAddress + ", ";
+                address = { ...address, ...{ street_address: streetAddress } };
             }
             if (resultAddr.city) {
                 if (resultAddr.postcode) {
-                    address += resultAddr.postcode + " ";
+                    address.address_formatted += resultAddr.postcode + " ";
+                    address = { ...address, ...{ postal_code: resultAddr.postcode } };
                 }
-                address += resultAddr.city;
+                address.address_formatted += resultAddr.city;
+                address = { ...address, ...{ address_locality: resultAddr.city } };
                 if (resultAddr.suburb) {
-                    address += "-" + resultAddr.suburb;
+                    address.address_formatted += "-" + resultAddr.suburb;
+                    address = { ...address, ...{ address_region: resultAddr.suburb } };
                 }
-                address += ", ";
+                address.address_formatted += ", ";
             }
-            address += resultAddr.country;
+            address.address_formatted += resultAddr.country;
+            address.address_country = resultAddr.country;
             return address;
         } catch (err) {
             throw new CustomError("Retrieving of the open street map nominatim data failed.", true,

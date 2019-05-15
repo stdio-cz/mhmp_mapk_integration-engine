@@ -34,7 +34,7 @@ export class TrafficCamerasTransformation extends BaseTransformation implements 
                     ? parseInt(element.lastUpdated, 10)
                     : null,
                 name: element.name,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };
@@ -70,7 +70,7 @@ export class TrafficCamerasTransformation extends BaseTransformation implements 
             id: element.properties.id,
             image: element.properties.image,
             last_updated: element.properties.last_updated,
-            timestamp: new Date().getTime(),
+            updated_at: new Date().getTime(),
         };
         return res;
     }

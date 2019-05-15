@@ -23,7 +23,11 @@ export class OICTSortedWasteStationsTransformation extends BaseTransformation im
                 containers: [{
                     cleaning_frequency: (element.cleaning_frequency === "0" || element.cleaning_frequency === "00")
                         ? null
-                        : element.cleaning_frequency,
+                        : {
+                            duration: "P" + Math.floor(element.cleaning_frequency / 10) + "W",
+                            frequency: (element.cleaning_frequency % 10),
+                            id: element.cleaning_frequency,
+                        },
                     company: element.company,
                     container_type: null,
                     description: (element.description) ? element.description : null,
@@ -33,7 +37,7 @@ export class OICTSortedWasteStationsTransformation extends BaseTransformation im
                 id: element.unique_id,
                 name: element.address,
                 station_number: null,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

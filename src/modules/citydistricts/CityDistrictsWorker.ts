@@ -38,7 +38,7 @@ export class CityDistrictsWorker extends BaseWorker {
                     a.geometry.coordinates = b.geometry.coordinates;
                     a.properties.name = b.properties.name;
                     a.properties.slug = b.properties.slug;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

@@ -20,7 +20,9 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 type: "Point",
             },
             properties: {
-                address: (element.address) ? element.address : null,
+                address: (element.address)
+                    ? { address_formatted: element.address }
+                    : null,
                 agendas: [],
                 district: (element.district) ? element.district : null,
                 email: (element.email) ? element.email : [],
@@ -36,53 +38,111 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 official_board: (element.official_board) ? element.official_board : null,
                 opening_hours: [],
                 telephone: (element.telephone) ? element.telephone : [],
-                timestamp: new Date().getTime(),
-                type: (element.type) ? element.type : null,
+                type: (element.type)
+                    ? { id: element.type, description: this.getTypeDescription(element.type) }
+                    : null,
+                updated_at: new Date().getTime(),
                 web: (element.web) ? element.web : [],
             },
             type: "Feature",
         };
 
         if (element.opening_hours_monday) {
-            res.properties.opening_hours.push({
-                day: "Pondělí",
-                hours: element.opening_hours_monday.split("; "),
+            element.opening_hours_monday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Monday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_tuesday) {
-            res.properties.opening_hours.push({
-                day: "Úterý",
-                hours: element.opening_hours_tuesday.split("; "),
+            element.opening_hours_tuesday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Tuesday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_wednesday) {
-            res.properties.opening_hours.push({
-                day: "Středa",
-                hours: element.opening_hours_wednesday.split("; "),
+            element.opening_hours_wednesday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Wednesday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_thursday) {
-            res.properties.opening_hours.push({
-                day: "Čtvrtek",
-                hours: element.opening_hours_thursday.split("; "),
+            element.opening_hours_thursday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Thursday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_friday) {
-            res.properties.opening_hours.push({
-                day: "Pátek",
-                hours: element.opening_hours_friday.split("; "),
+            element.opening_hours_friday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Friday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_saturday) {
-            res.properties.opening_hours.push({
-                day: "Sobota",
-                hours: element.opening_hours_saturday.split("; "),
+            element.opening_hours_saturday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Saturday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
         if (element.opening_hours_sunday) {
-            res.properties.opening_hours.push({
-                day: "Neděle",
-                hours: element.opening_hours_sunday.split("; "),
+            element.opening_hours_sunday.split("; ").forEach((hours) => {
+                const desc = hours.match(/\(([^)]+)\)/);
+                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
+                    const [opens, closes] = h.split(" - ");
+                    res.properties.opening_hours.push({
+                        closes,
+                        day_of_week: "Sunday",
+                        description: (desc && desc[1]) ? desc[1] : null,
+                        opens,
+                    });
+                });
             });
         }
 
@@ -104,6 +164,14 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
         }
 
         return res;
+    }
+
+    private getTypeDescription = (id: string): string => {
+        switch (id) {
+            case "city-hall": return "Magistrát";
+            case "municipality": return "Obecní úřad";
+            default: return "";
+        }
     }
 
 }

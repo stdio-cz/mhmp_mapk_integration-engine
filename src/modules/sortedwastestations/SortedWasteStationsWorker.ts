@@ -70,8 +70,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(SortedWasteStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" },
-                    { "properties.name": "text" }, { weights: { "properties.name": 5 }}],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: SortedWasteStations.mongoCollectionName,
                 outputMongooseSchemaObject: SortedWasteStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -85,7 +84,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                     a.properties.district = (b.properties.district) ? b.properties.district : null;
                     a.properties.name = b.properties.name;
                     a.properties.station_number = b.properties.station_number;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

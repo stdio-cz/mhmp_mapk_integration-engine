@@ -59,17 +59,18 @@ describe("PharmaciesTransformation", () => {
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("address");
-            expect(data[i].properties.address).to.have.property("city");
-            expect(data[i].properties.address).to.have.property("formatted");
-            expect(data[i].properties.address).to.have.property("street");
-            expect(data[i].properties.address).to.have.property("zip");
+            expect(data[i].properties.address).to.have.property("address_country");
+            expect(data[i].properties.address).to.have.property("address_locality");
+            expect(data[i].properties.address).to.have.property("address_formatted");
+            expect(data[i].properties.address).to.have.property("street_address");
+            expect(data[i].properties.address).to.have.property("postal_code");
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("institution_code");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("type");
             expect(data[i].properties.type).to.have.property("description");
             expect(data[i].properties.type).to.have.property("id");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

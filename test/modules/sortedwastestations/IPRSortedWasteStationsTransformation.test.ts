@@ -67,7 +67,7 @@ describe("IPRSortedWasteStationsTransformation", () => {
             expect(data[i].properties).to.have.property("containers");
             expect(data[i].properties.containers).to.be.an("array");
             expect(data[i].properties.containers[0]).to.have.property("trash_type");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

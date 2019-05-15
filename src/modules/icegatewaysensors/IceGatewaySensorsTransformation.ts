@@ -21,7 +21,7 @@ export class IceGatewaySensorsTransformation extends BaseTransformation implemen
             properties: {
                 id: element.ice_id,
                 sensors: [],
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };
@@ -62,7 +62,7 @@ export class IceGatewaySensorsTransformation extends BaseTransformation implemen
         const res = {
             id: element.properties.id,
             sensors: filteredSensors,
-            timestamp: element.properties.timestamp,
+            updated_at: element.properties.updated_at,
         };
         if (res.sensors.length === 0) {
             return null;

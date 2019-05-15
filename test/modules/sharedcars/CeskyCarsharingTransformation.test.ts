@@ -64,7 +64,7 @@ describe("CeskyCarsharingTransformation", () => {
         expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("res_url");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -83,7 +83,7 @@ describe("CeskyCarsharingTransformation", () => {
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("res_url");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

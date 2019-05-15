@@ -30,25 +30,7 @@ export class MunicipalAuthoritiesWorker extends BaseWorker {
 
         this.model = new MongoModel(MunicipalAuthorities.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [
-                    { "properties.type": 1 },
-                    { geometry : "2dsphere" },
-                    {
-                        "properties.address": "text",
-                        "properties.agendas.description": "text",
-                        "properties.agendas.keywords": "text",
-                        "properties.name": "text",
-                    },
-                    {
-                        name: "textindex1",
-                        weights: {
-                            "properties.address": 1,
-                            "properties.agendas.description": 5,
-                            "properties.agendas.keywords": 5,
-                            "properties.name": 5,
-                        },
-                    },
-                ],
+                modelIndexes: [{ geometry : "2dsphere" }, { "properties.type": 1 }],
                 mongoCollectionName: MunicipalAuthorities.mongoCollectionName,
                 outputMongooseSchemaObject: MunicipalAuthorities.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -68,7 +50,7 @@ export class MunicipalAuthoritiesWorker extends BaseWorker {
                     a.properties.type = b.properties.type;
                     a.properties.image = b.properties.image;
                     a.properties.agendas = b.properties.agendas;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

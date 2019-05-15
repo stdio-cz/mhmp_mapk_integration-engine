@@ -62,7 +62,7 @@ describe("ParkingsTransformation", () => {
         expect(data.properties).to.have.property("parking_type");
         expect(data.properties.parking_type).to.have.property("description");
         expect(data.properties.parking_type).to.have.property("id");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
         expect(data.properties).to.have.property("total_num_of_places");
     });
 
@@ -80,7 +80,7 @@ describe("ParkingsTransformation", () => {
             expect(data[i].properties).to.have.property("parking_type");
             expect(data[i].properties.parking_type).to.have.property("description");
             expect(data[i].properties.parking_type).to.have.property("id");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
             expect(data[i].properties).to.have.property("total_num_of_places");
         }
     });
@@ -105,7 +105,7 @@ describe("ParkingsTransformation", () => {
             expect(data).to.have.property("last_updated");
             expect(data).to.have.property("num_of_free_places");
             expect(data).to.have.property("num_of_taken_places");
-            expect(data).to.have.property("timestamp");
+            expect(data).to.have.property("updated_at");
             expect(data).to.have.property("total_num_of_places");
         });
 
@@ -116,7 +116,7 @@ describe("ParkingsTransformation", () => {
                 expect(data[i]).to.have.property("last_updated");
                 expect(data[i]).to.have.property("num_of_free_places");
                 expect(data[i]).to.have.property("num_of_taken_places");
-                expect(data[i]).to.have.property("timestamp");
+                expect(data[i]).to.have.property("updated_at");
                 expect(data[i]).to.have.property("total_num_of_places");
             }
         });

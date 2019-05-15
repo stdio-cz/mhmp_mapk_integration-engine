@@ -38,7 +38,11 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             while (sortedContainers[j]
                     && sortedContainers[j].properties.STATIONID === station.properties.ID) {
                 result.properties.containers.push({
-                    cleaning_frequency: sortedContainers[j].properties.CLEANINGFREQUENCYCODE,
+                    cleaning_frequency: {
+                        duration: "P" + Math.floor(sortedContainers[j].properties.CLEANINGFREQUENCYCODE / 10) + "W",
+                        frequency: (sortedContainers[j].properties.CLEANINGFREQUENCYCODE % 10),
+                        id: sortedContainers[j].properties.CLEANINGFREQUENCYCODE,
+                    },
                     container_type: sortedContainers[j].properties.CONTAINERTYPE,
                     trash_type: this.getTrashTypeByString(sortedContainers[j].properties.TRASHTYPENAME),
                 });
@@ -60,7 +64,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
                 id: element.properties.ID,
                 name: element.properties.STATIONNAME,
                 station_number: element.properties.STATIONNUMBER,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: element.type,
         };

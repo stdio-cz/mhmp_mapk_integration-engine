@@ -23,11 +23,12 @@ export class HealthCareTransformation extends BaseTransformation implements ITra
             },
             properties: {
                 address: {
-                    city: element.adresa_název_obce,
-                    formatted: element.adresa_název_ulice + " " + element.adresa_číslo_domovní + ", "
-                    + element.adresa_psč + " " + element.adresa_název_obce,
-                    street: element.adresa_název_ulice + " " + element.adresa_číslo_domovní,
-                    zip: element.adresa_psč,
+                    address_country: "Česko",
+                    address_formatted: element.adresa_název_ulice + " " + element.adresa_číslo_domovní + ", "
+                        + element.adresa_psč + " " + element.adresa_název_obce + ", Česko",
+                    address_locality: element.adresa_název_obce,
+                    postal_code: element.adresa_psč,
+                    street_address: element.adresa_název_ulice + " " + element.adresa_číslo_domovní,
                 },
                 email: (element.kontakt_email) ? element.kontakt_email.trim().split(",") : [],
                 id: slug(element.id + "-" + element.název, {lower: true}),
@@ -36,12 +37,12 @@ export class HealthCareTransformation extends BaseTransformation implements ITra
                 opening_hours: [],
                 pharmacy_code: null,
                 telephone: (element.kontakt_telefon) ? element.kontakt_telefon.trim().split(",") : [],
-                timestamp: new Date().getTime(),
                 type: {
                     description: element.typ,
                     group: "health_care",
                     id: this.getTypeId(element.typ),
                 },
+                updated_at: new Date().getTime(),
                 web: (element.kontakt_url) ? element.kontakt_url.trim().split(",") : [],
             },
             type: "Feature",
