@@ -54,6 +54,35 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         return results.filter((r) => r);
     }
 
+    public getTrashTypeByString = (key: string): {id: number, description: string} => {
+        switch (key) {
+            case "Barevné sklo":
+            case "glass_coloured":
+                return { description: "Barevné sklo", id: 1 };
+            case "Elektrozařízení":
+                return { description: "Elektrozařízení", id: 2 };
+            case "Kovy":
+            case "metal":
+                return { description: "Kovy", id: 3 };
+            case "Nápojové kartóny":
+            case "beverage_cartons":
+                return { description: "Nápojové kartóny", id: 4 };
+            case "Papír":
+            case "paper":
+                return { description: "Papír", id: 5 };
+            case "Plast":
+            case "plastic":
+                return { description: "Plast", id: 6 };
+            case "Čiré sklo":
+            case "glass_white":
+                return { description: "Čiré sklo", id: 7 };
+            case "Textil":
+                return { description: "Textil", id: 8 };
+            default:
+                return { description: "neznámý", id: 0 };
+        }
+    }
+
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: element.geometry,
@@ -78,30 +107,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             case "obyvatelům domu":
                 return { description: "obyvatelům domu", id: 2 };
             default:
-                return { description: "neznámá", id: 0 };
-        }
-    }
-
-    private getTrashTypeByString = (key: string): {id: number, description: string} => {
-        switch (key) {
-            case "Barevné sklo":
-                return { description: "Barevné sklo", id: 1 };
-            case "Elektrozařízení":
-                return { description: "Elektrozařízení", id: 2 };
-            case "Kovy":
-                return { description: "Kovy", id: 3 };
-            case "Nápojové kartóny":
-                return { description: "Nápojové kartóny", id: 4 };
-            case "Papír":
-                return { description: "Papír", id: 5 };
-            case "Plast":
-                return { description: "Plast", id: 6 };
-            case "Čiré sklo":
-                return { description: "Čiré sklo", id: 7 };
-            case "Textil":
-                return { description: "Textil", id: 8 };
-            default:
-                return { description: "neznámý", id: 0 };
+                return { description: "neznámá dostupnost", id: 3 };
         }
     }
 }

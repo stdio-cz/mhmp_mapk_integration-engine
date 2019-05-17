@@ -51,7 +51,7 @@ export class OICTSortedWasteStationsTransformation extends BaseTransformation im
             case "obyvatelům domu":
                 return { description: "obyvatelům domu", id: 2 };
             default:
-                return { description: "neznámá", id: 0 };
+                return { description: "neznámá dostupnost", id: 3 };
         }
     }
 
