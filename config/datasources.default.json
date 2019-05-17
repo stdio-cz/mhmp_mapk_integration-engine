@@ -36,6 +36,8 @@
     "RopidGTFSFilename": "PID_GTFS.zip",
     "RopidGTFSPath": "GTFS/",
     "SkodaPalaceQueues": "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
+    "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
+    "SensoneoSortedWasteSensorsApiKey": "",
     "TSKMeteosensors": "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     "TSKParkings": "http://www.tsk-praha.cz/tskexport3/json/parkings",
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",

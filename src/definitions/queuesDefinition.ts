@@ -578,6 +578,66 @@ const definitions: IQueueDefinition[] = [
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateDistrict",
             },
+            {
+                name: "getSensors",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "getSensors",
+            },
+            {
+                name: "pairSensorsWithContainers",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "pairSensorsWithContainers",
+            },
+            {
+                name: "updateSensorsMeasurement",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsMeasurement",
+            },
+            {
+                name: "updateSensorsMeasurementInContainer",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsMeasurementInContainer",
+            },
+            {
+                name: "updateSensorsPicks",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsPicks",
+            },
+            {
+                name: "updateSensorsPicksInContainer",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsPicksInContainer",
+            },
         ],
     },
     {

@@ -677,6 +677,9 @@ describe("DataSourcesAvailabilityChecking", () => {
         let iprStationsDatasource;
         let oictDatasource;
         let potexDatasource;
+        let sensorsContainersDatasource;
+        let sensorsMeasurementsDatasource;
+        let sensorsPicksDatasource;
 
         beforeEach(() => {
             iprContainersDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
@@ -717,6 +720,47 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new JSONDataTypeStrategy({resultsPath: "places"}),
                 new Validator(SortedWasteStations.potex.name + "DataSource",
                     SortedWasteStations.potex.datasourceMongooseSchemaObject));
+
+            const to = new Date();
+            const from = new Date();
+            from.setHours(to.getHours() - 6);
+            sensorsContainersDatasource = new DataSource(SortedWasteStations.sensorsContainers.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "GET",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/container",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "containers"}),
+                new Validator(SortedWasteStations.sensorsContainers.name + "DataSource",
+                    SortedWasteStations.sensorsContainers.datasourceMongooseSchemaObject));
+            sensorsMeasurementsDatasource = new DataSource(SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    body: JSON.stringify({ from, to }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "POST",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/measurement",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "measurements"}),
+                new Validator(SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                    SortedWasteStations.sensorsMeasurements.datasourceMongooseSchemaObject));
+            sensorsPicksDatasource = new DataSource(SortedWasteStations.sensorsPicks.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    body: JSON.stringify({ from, to }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "POST",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/picks",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "picks"}),
+                new Validator(SortedWasteStations.sensorsPicks.name + "DataSource",
+                    SortedWasteStations.sensorsPicks.datasourceMongooseSchemaObject));
         });
 
         it("should returns all IPR Containers objects", async () => {
@@ -757,6 +801,21 @@ describe("DataSourcesAvailabilityChecking", () => {
         it("should returns POTEX Containers last modified", async () => {
             const data = await potexDatasource.getLastModified();
             expect(data).to.be.null;
+        });
+
+        it("should returns all sensors containers objects", async () => {
+            const data = await sensorsContainersDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns all sensors measurements objects", async () => {
+            const data = await sensorsMeasurementsDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns all sensors picks objects", async () => {
+            const data = await sensorsPicksDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
         });
 
     });
