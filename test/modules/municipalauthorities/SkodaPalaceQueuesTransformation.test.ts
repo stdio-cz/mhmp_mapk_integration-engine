@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { SkodaPalaceQueuesTransformation } from "../../../src/modules/skodapalacequeues";
+import { SkodaPalaceQueuesTransformation } from "../../../src/modules/municipalauthorities";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -64,7 +64,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
 
         beforeEach(async () => {
             transformation = new SkodaPalaceQueuesTransformation();
-            const buffer = await readFile(__dirname + "/../../data/skodapalacequeues-transformed.json");
+            const buffer = await readFile(__dirname + "/../../data/municipalauthorities_queues-transformed.json");
             testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
         });
 

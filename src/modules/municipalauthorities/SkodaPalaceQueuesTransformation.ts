@@ -1,6 +1,6 @@
 "use strict";
 
-import { SkodaPalaceQueues } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");
@@ -11,7 +11,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
 
     constructor() {
         super();
-        this.name = SkodaPalaceQueues.name;
+        this.name = MunicipalAuthorities.skodaPalaceQueues.name;
     }
 
     /**

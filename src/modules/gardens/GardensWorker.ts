@@ -28,9 +28,7 @@ export class GardensWorker extends BaseWorker {
             new Validator(Gardens.name + "DataSource", Gardens.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Gardens.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
-                    { "properties.name": "text", "properties.address": "text", "properties.description": "text" },
-                    { weights: { "properties.name": 5, "properties.address": 1, "properties.description": 5 }} ],
+                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: Gardens.mongoCollectionName,
                 outputMongooseSchemaObject: Gardens.outputMongooseSchemaObject,
                 resultsPath: "properties",
