@@ -106,6 +106,19 @@ export class MongoModel implements IModel {
         }
     }
 
+    public delete = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            return await model.deleteMany(opts).exec();
+        } catch (err) {
+            throw new CustomError("Error while deleting data.", true, this.name, 1011, err);
+        }
+    }
+
     public find = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
         const model = this.getMongooseModelSafely(useTmpTable);
         try {

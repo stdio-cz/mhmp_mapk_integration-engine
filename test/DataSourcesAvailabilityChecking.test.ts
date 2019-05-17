@@ -5,7 +5,7 @@
 import {
     AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
     Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
-    RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations, TrafficCameras, WasteCollectionYards,
+    RopidGTFS, SharedCars, SortedWasteStations, TrafficCameras, WasteCollectionYards,
 } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../src/core/config";
@@ -502,35 +502,35 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.null;
         });
 
-    });
+        describe("SkodaPalaceQueues", () => {
 
-    describe("SkodaPalaceQueues", () => {
+            let skodaPalaceQueuesDatasource;
 
-        let datasource;
+            beforeEach(() => {
+                skodaPalaceQueuesDatasource = new DataSource(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers : {},
+                        method: "GET",
+                        url: config.datasources.SkodaPalaceQueues,
+                    }),
+                    new XMLDataTypeStrategy({
+                        resultsPath: "html.body.div",
+                        xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
+                    }),
+                    new Validator(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                        MunicipalAuthorities.skodaPalaceQueues.datasourceMongooseSchemaObject));
+            });
 
-        beforeEach(() => {
-            datasource = new DataSource(SkodaPalaceQueues.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers : {},
-                    method: "GET",
-                    url: config.datasources.SkodaPalaceQueues,
-                }),
-                new XMLDataTypeStrategy({
-                    resultsPath: "html.body.div",
-                    xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
-                }),
-                new Validator(SkodaPalaceQueues.name + "DataSource",
-                    SkodaPalaceQueues.datasourceMongooseSchemaObject));
-        });
+            it("should returns all objects", async () => {
+                const data = await skodaPalaceQueuesDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
+            it("should returns last modified", async () => {
+                const data = await skodaPalaceQueuesDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
 
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
         });
 
     });

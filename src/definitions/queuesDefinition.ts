@@ -3,7 +3,7 @@
 import {
     AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
     MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations,
+    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "golemio-schema-definitions";
 import { config } from "../core/config";
@@ -28,7 +28,6 @@ import { PublicToiletsWorker } from "../modules/publictoilets";
 import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
 import { SharedCarsWorker } from "../modules/sharedcars";
-import { SkodaPalaceQueuesWorker } from "../modules/skodapalacequeues";
 import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
@@ -242,6 +241,25 @@ const definitions: IQueueDefinition[] = [
                 worker: MunicipalAuthoritiesWorker,
                 workerMethod: "refreshDataInDB",
             },
+            {
+                name: "refreshWaitingQueues",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: MunicipalAuthoritiesWorker,
+                workerMethod: "refreshWaitingQueues",
+            },
+            {
+                name: "saveWaitingQueuesDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MunicipalAuthoritiesWorker,
+                workerMethod: "saveWaitingQueuesDataToHistory",
+            },
         ],
     },
     {
@@ -415,6 +433,15 @@ const definitions: IQueueDefinition[] = [
                 worker: PurgeWorker,
                 workerMethod: "deleteOldMerakiAccessPointsObservations",
             },
+            {
+                name: "deleteOldTrafficCamerasHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldTrafficCamerasHistory",
+            },
         ],
     },
     {
@@ -524,31 +551,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: SharedCarsWorker,
                 workerMethod: "refreshDataInDB",
-            },
-        ],
-    },
-    {
-        name: SkodaPalaceQueues.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SkodaPalaceQueues.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
-                },
-                worker: SkodaPalaceQueuesWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: SkodaPalaceQueuesWorker,
-                workerMethod: "saveDataToHistory",
             },
         ],
     },
