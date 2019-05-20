@@ -105,7 +105,7 @@ describe("SortedWasteStationsWorker", () => {
             .callsFake(() => testTransformedData[0]);
         sandbox.stub(worker, "mergeContainersIntoStations")
             .callsFake(() => [[testTransformedData[0]], [testTransformedData[1], testTransformedData[2]]]);
-        sandbox.stub(worker.model, "updateOneById");
+        sandbox.stub(worker.model, "updateOne");
 
         sandbox.stub(worker.sensorsContainersDatasource, "getAll").callsFake(() => testSensorContainersData);
         sandbox.stub(worker.sensorsMeasurementsDatasource, "getAll").callsFake(() => testSensorMeasurementData);
@@ -194,7 +194,7 @@ describe("SortedWasteStationsWorker", () => {
     it("should calls the correct methods by pairSensorsWithContainers method", async () => {
         await worker.pairSensorsWithContainers({content: new Buffer(JSON.stringify(testSensorContainersData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
-        sandbox.assert.calledOnce(worker.model.updateOneById);
+        sandbox.assert.calledOnce(worker.model.updateOne);
     });
 
     it("should calls the correct methods by updateSensorsMeasurement method", async () => {
@@ -213,7 +213,7 @@ describe("SortedWasteStationsWorker", () => {
         await worker.updateSensorsMeasurementInContainer({content: new Buffer(
             JSON.stringify(testSensorMeasurementData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
-        sandbox.assert.calledOnce(worker.model.updateOneById);
+        sandbox.assert.calledOnce(worker.model.updateOne);
     });
 
     it("should calls the correct methods by updateSensorsPicks method", async () => {
@@ -231,7 +231,7 @@ describe("SortedWasteStationsWorker", () => {
     it("should calls the correct methods by updateSensorsPicksInContainer method", async () => {
         await worker.updateSensorsPicksInContainer({content: new Buffer(JSON.stringify(testSensorPicksData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
-        sandbox.assert.calledOnce(worker.model.updateOneById);
+        sandbox.assert.calledOnce(worker.model.updateOne);
     });
 
 });
