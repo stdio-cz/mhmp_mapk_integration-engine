@@ -292,6 +292,55 @@ describe("MongoModel", () => {
         expect(data[0]).to.have.property("property2", "c");
     });
 
+    // method model.updateOne()
+
+    it("should throws error if model is read only", async () => {
+        expect(model.updateOne({id: 1}, {})).to.be.rejectedWith(CustomError);
+        expect(model.updateOne({id: 1}, {}, true)).to.be.rejectedWith(CustomError);
+    });
+
+    it("should throws error if data are not valid", async () => {
+        settings.savingType = "insertOnly";
+        model = new MongoModel("Test" + "Model",
+            settings,
+            new Validator("TestMongoModelValidator", schemaObject),
+        );
+        await model.save({ id: 1, property1: "a", property2: "b" });
+        expect(model.updateOne({id: 1}, { property1: { a: 1 } })).to.be.rejectedWith(Error);
+        expect(model.updateOne({id: 1}, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
+    });
+
+    it("should throws error when update tmp model and tmp model is not defined", async () => {
+        settings.savingType = "insertOnly";
+        model = new MongoModel("Test" + "Model",
+            settings,
+            new Validator("TestMongoModelValidator", schemaObject),
+        );
+        expect(model.updateOne({id: 1}, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
+    });
+
+    it("should update values", async () => {
+        settings.savingType = "insertOnly";
+        settings.tmpMongoCollectionName = "tmp_" + collectionName;
+        model = new MongoModel("Test" + "Model",
+            settings,
+            new Validator("TestMongoModelValidator", schemaObject),
+        );
+        await model.save({ id: 1, property1: "a", property2: "b" });
+        await model.save({ id: 1, property1: "a", property2: "b" }, true);
+        let data = await model.findOneById(1);
+        expect(data).to.have.property("property1", "a");
+        data = await model.findOneById(1, true);
+        expect(data).to.have.property("property1", "a");
+
+        await model.updateOne({id: 1}, { $set: { property1: "b" } });
+        await model.updateOne({id: 1}, { $set: { property1: "b" } }, true);
+        data = await model.findOneById(1);
+        expect(data).to.have.property("property1", "b");
+        data = await model.findOneById(1, true);
+        expect(data).to.have.property("property1", "b");
+    });
+
     // method model.updateOneById()
 
     it("should throws error if model is read only", async () => {
@@ -373,6 +422,44 @@ describe("MongoModel", () => {
 
         await model.truncate();
         await model.truncate(true);
+        data = await model.find({});
+        expect(data.length).to.equal(0);
+        data = await model.find({}, true);
+        expect(data.length).to.equal(0);
+    });
+
+    // method model.delete()
+
+    it("should throws error if model is read only", async () => {
+        expect(model.delete({id: 1})).to.be.rejectedWith(CustomError);
+        expect(model.delete({id: 1}, true)).to.be.rejectedWith(CustomError);
+    });
+
+    it("should throws error when delete from tmp model and tmp model is not defined", async () => {
+        settings.savingType = "insertOnly";
+        model = new MongoModel("Test" + "Model",
+            settings,
+            new Validator("TestMongoModelValidator", schemaObject),
+        );
+        expect(model.delete({id: 1}, true)).to.be.rejectedWith(CustomError);
+    });
+
+    it("should delete", async () => {
+        settings.savingType = "insertOnly";
+        settings.tmpMongoCollectionName = "tmp_" + collectionName;
+        model = new MongoModel("Test" + "Model",
+            settings,
+            new Validator("TestMongoModelValidator", schemaObject),
+        );
+        await model.save({ id: 1, property1: "a", property2: "b" });
+        await model.save({ id: 1, property1: "a", property2: "b" }, true);
+        let data = await model.find({});
+        expect(data.length).to.equal(1);
+        data = await model.find({}, true);
+        expect(data.length).to.equal(1);
+
+        await model.delete({id: 1});
+        await model.delete({id: 1}, true);
         data = await model.find({});
         expect(data.length).to.equal(0);
         data = await model.find({}, true);

@@ -84,6 +84,15 @@ export class MongoModel implements IModel {
         return this[this.savingType](model, data);
     }
 
+    public updateOne = async (opts: any, data: any, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
+        return model.updateOne(opts, data, { runValidators: true }).exec();
+    }
+
     public updateOneById = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
         if (this.savingType === "readOnly") {
             throw new CustomError("The model saving type is read only.", true, this.name);

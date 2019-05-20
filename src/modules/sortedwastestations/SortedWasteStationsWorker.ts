@@ -335,22 +335,33 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 return container.trash_type.id === trashType.id;
             });
             if (foundContainerIndex !== -1) {
-                const foundContainer = station.properties.containers[foundContainerIndex];
-                foundContainer.sensor_id = sensor.id;
-                station.properties.containers.splice(foundContainerIndex, 1);
-                station.properties.containers.push(foundContainer);
-                await this.model.updateOneById(station.properties.id,
-                    {$set: {"properties.containers": station.properties.containers}});
+                await this.model.updateOne(
+                {
+                    "properties.containers.trash_type.id": trashType.id,
+                    "properties.id": station.properties.id,
+                },
+                {
+                    $set: {
+                        "properties.containers.$.sensor_id": sensor.id,
+                    },
+                });
             } else {
                 // container not exists, adding new container to station
-                station.properties.containers.push({
+                const newContainer = {
                     cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
                     container_type: sensor.bin_type,
                     sensor_id: sensor.id,
                     trash_type: trashType,
+                };
+                await this.model.updateOne(
+                {
+                    "properties.id": station.properties.id,
+                },
+                {
+                    $push: {
+                        "properties.containers": newContainer,
+                    },
                 });
-                await this.model.updateOneById(station.properties.id,
-                    {$set: {"properties.containers": station.properties.containers}});
                 log.warn("Error while getting sensors and pair them with containers. Station '"
                     + stationNumber + "': Trash type '" + sensor.trash_type + "' was not found. "
                     + "New station was created.");
@@ -392,10 +403,16 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 percent_calculated: measurement.percent_calculated,
                 prediction_utc: measurement.prediction_utc,
             };
-            station.properties.containers.splice(foundContainerIndex, 1);
-            station.properties.containers.push(foundContainer);
-            await this.model.updateOneById(station.properties.id,
-                {$set: {"properties.containers": station.properties.containers}});
+            await this.model.updateOne(
+            {
+                "properties.containers.sensor_id": measurement.container_id,
+                "properties.id": station.properties.id,
+            },
+            {
+                $set: {
+                    "properties.containers.$": foundContainer,
+                },
+            });
         } else {
             throw new CustomError("Error while updating sensors measurement. Sensor id '"
                 + measurement.container_id + "' was not found.", true, this.constructor.name, 1028);
@@ -434,10 +451,16 @@ export class SortedWasteStationsWorker extends BaseWorker {
             foundContainer.last_pick = {
                 pick_at_utc: pick.pick_at_utc,
             };
-            station.properties.containers.splice(foundContainerIndex, 1);
-            station.properties.containers.push(foundContainer);
-            await this.model.updateOneById(station.properties.id,
-                {$set: {"properties.containers": station.properties.containers}});
+            await this.model.updateOne(
+            {
+                "properties.containers.sensor_id": pick.container_id,
+                "properties.id": station.properties.id,
+            },
+            {
+                $set: {
+                    "properties.containers.$": foundContainer,
+                },
+            });
         } else {
             throw new CustomError("Error while updating sensors picks. Sensor id '"
                 + pick.container_id + "' was not found.", true, this.constructor.name, 1028);
