@@ -1,6 +1,6 @@
 "use strict";
 
-import { TrafficCameras } from "golemio-schema-definitions";
+import { SharedBikes, SharedCars, TrafficCameras } from "golemio-schema-definitions";
 import { PostgresConnector } from "../../core/connectors";
 import { log, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
@@ -9,6 +9,8 @@ import { MongoModel } from "../../core/models";
 export class PurgeWorker {
 
     private trafficCamerasHistoryModel: MongoModel;
+    private sharedBikesModel: MongoModel;
+    private sharedCarsModel: MongoModel;
 
     constructor() {
         this.trafficCamerasHistoryModel = new MongoModel(TrafficCameras.history.name + "Model", {
@@ -19,6 +21,32 @@ export class PurgeWorker {
             },
             new Validator(TrafficCameras.history.name + "ModelValidator",
                 TrafficCameras.history.outputMongooseSchemaObject),
+        );
+        this.sharedBikesModel = new MongoModel(SharedBikes.name + "Model", {
+                identifierPath: "properties.id",
+                modelIndexes: [{ geometry : "2dsphere" }],
+                mongoCollectionName: SharedBikes.mongoCollectionName,
+                outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+            },
+            new Validator(SharedBikes.name + "ModelValidator", SharedBikes.outputMongooseSchemaObject),
+        );
+        this.sharedCarsModel = new MongoModel(SharedCars.name + "Model", {
+                identifierPath: "properties.id",
+                modelIndexes: [{ geometry : "2dsphere" }],
+                mongoCollectionName: SharedCars.mongoCollectionName,
+                outputMongooseSchemaObject: SharedCars.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+            },
+            new Validator(SharedCars.name + "ModelValidator", SharedCars.outputMongooseSchemaObject),
         );
     }
 
@@ -60,6 +88,36 @@ export class PurgeWorker {
         try {
             const res = await this.trafficCamerasHistoryModel.delete({
                 updated_at: { $lt: ttl.getTime() },
+            });
+            log.debug(JSON.stringify(res));
+        } catch (err) {
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+        }
+    }
+
+    public deleteOldSharedBikes = async (msg: any): Promise<void> => {
+        const now = new Date();
+        const ttl = new Date();
+        ttl.setMinutes(now.getMinutes() - 2);
+
+        try {
+            const res = await this.sharedBikesModel.delete({
+                "properties.updated_at": { $lt: ttl.getTime() },
+            });
+            log.debug(JSON.stringify(res));
+        } catch (err) {
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+        }
+    }
+
+    public deleteOldSharedCars = async (msg: any): Promise<void> => {
+        const now = new Date();
+        const ttl = new Date();
+        ttl.setMinutes(now.getMinutes() - 2);
+
+        try {
+            const res = await this.sharedCarsModel.delete({
+                "properties.updated_at": { $lt: ttl.getTime() },
             });
             log.debug(JSON.stringify(res));
         } catch (err) {

@@ -470,6 +470,24 @@ const definitions: IQueueDefinition[] = [
                 worker: PurgeWorker,
                 workerMethod: "deleteOldTrafficCamerasHistory",
             },
+            {
+                name: "deleteOldSharedBikes",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldSharedBikes",
+            },
+            {
+                name: "deleteOldSharedCars",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldSharedCars",
+            },
         ],
     },
     {
