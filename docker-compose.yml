@@ -1,0 +1,77 @@
+version: '3.4'
+services:
+  integration-engine:
+    build:
+      context: .
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: INFO
+      MONGO_CONN: mongodb://mongo:pass@mongo:27017/dataplatform?authSource=admin
+      POSTGRES_CONN: postgres://postgres:pass@postgres/dataplatform
+      REDIS_CONN: redis://redis:6379/
+      RABBIT_CONN: amqp://rabbit:pass@rabbitmq
+      RABBIT_EXCHANGE_NAME: "dataplatform"
+      OPEN_STREET_MAP_API_URL_SEARCH: https://nominatim.openstreetmap.org/search?format=json&accept-language=cs
+      OPEN_STREET_MAP_API_URL_REVERSE: https://nominatim.openstreetmap.org/reverse?format=json&accept-language=cs&zoom=18
+      MOJEPRAHA_ENDPOINT_APIKEY: MUJTAJNYKLICNAMOJEPRAHAAPI
+      MOJEPRAHA_ENDPOINT_BASEURL: https://www.mojepraha.eu
+      PARKINGS_PAYMENT_URL: https://ke-utc.appspot.com/static/select_offstreet.html
+      PARKING_ZONES_PAYMENT_URL: https://ke-utc.appspot.com/static/onstreet.html
+      HOPPYGO_BASE_URL: https://www.hoppygo.com/car-detail/
+    networks:
+     - golemio
+
+  mongo:
+    image: mongo:4.0.5
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+     - mongo_data:/data/db
+    ports:
+      - 27017:27017 # only for development
+    networks:
+     - golemio
+
+  postgres:
+    image: postgres:10.5
+    environment:
+      POSTGRES_PASSWORD: pass
+    ports:
+     - 5432:5432 # only for development
+    volumes:
+     - pg_data:/var/lib/postgresql/data
+    networks:
+     - golemio
+
+  rabbitmq:
+    image: rabbitmq:3.7.14-management
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: pass
+    ports:
+     - 5672:5672
+     - 15672:15672
+    volumes:
+     - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+     - golemio
+
+  redis:
+    image: redis:5.0
+    volumes:
+      - redis_data:/data
+    networks:
+     - golemio
+    ports:
+     - 6379:6379 # only for development
+
+volumes:
+  pg_data:
+  mongo_data:
+  rabbitmq_data:
+  redis_data:
+
+networks:
+  golemio:
+    external: true
