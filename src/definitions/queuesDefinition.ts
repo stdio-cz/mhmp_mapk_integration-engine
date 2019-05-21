@@ -1,9 +1,9 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
-    MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SortedWasteStations,
+    AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
+    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
+    ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "golemio-schema-definitions";
 import { config } from "../core/config";
@@ -12,6 +12,7 @@ import { log } from "../core/helpers";
 import { CustomError, handleError } from "../core/helpers/errors";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { GardensWorker } from "../modules/gardens";
 import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
@@ -27,6 +28,7 @@ import { PlaygroundsWorker } from "../modules/playgrounds";
 import { PublicToiletsWorker } from "../modules/publictoilets";
 import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
+import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
 import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
@@ -65,6 +67,32 @@ const definitions: IQueueDefinition[] = [
                     messageTtl: 59 * 60 * 1000,
                 },
                 worker: AirQualityStationsWorker,
+                workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: BicycleParkings.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleParkings.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: BicycleParkingsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: BicycleParkingsWorker,
                 workerMethod: "updateDistrict",
             },
         ],
@@ -535,6 +563,22 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "downloadCisStops",
+            },
+        ],
+    },
+    {
+        name: SharedBikes.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SharedBikes.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: SharedBikesWorker,
+                workerMethod: "refreshDataInDB",
             },
         ],
     },

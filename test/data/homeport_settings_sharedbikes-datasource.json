@@ -1,0 +1,22 @@
+{
+    "ShowBikeAvailabilityTypes": [],
+    "FreeBike": true,
+    "Bluetooth": false,
+    "FreeBikeCenter": {
+      "lat": "50.0961400",
+      "lng": "14.3661022"
+    },
+    "FreeBikeRadiusAllowed": 5000,
+    "FreeBikeEbikeMinimalBattery": 10,
+    "FreebikeBatteryRangeCorrection": 10,
+    "FreeBikeRentFromLocationScale": 2,
+    "FreeBikeRentFromCoordsScale": 2,
+    "EBikeRadiusAllowed": 1000000,
+    "AreaColors": {
+      "ReturnAllowed": null,
+      "ReturnAllowedAlpha": null,
+      "ReturnDisabled": null,
+      "ReturnDisabledAlpha": null,
+      "Geofence": null
+    }
+  }
