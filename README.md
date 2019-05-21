@@ -17,6 +17,13 @@ Developed by http://operatorict.cz
 
 ## Installation
 
+### A) Docker compose
+1. create docker network if not already exists `docker network create golemio`
+2. `docker-compose up -d` will start all necessary services
+
+
+### B) Local instalation
+
 Install Node, MongoDB, PostgreSQL and Redis.
 
 Create the `.npmrc` file and type to it the url to the OICT private npm proxy registry:
