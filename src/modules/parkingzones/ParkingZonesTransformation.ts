@@ -151,7 +151,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
                 id: element.properties.TARIFTAB,
                 midpoint: null,
                 name: (types[parseInt(element.properties.TYPZONY, 10)])
-                    ? types[parseInt(element.properties.TYPZONY, 10)] + " - " + element.properties.TARIFTAB
+                    ? element.properties.TARIFTAB + " " + types[parseInt(element.properties.TYPZONY, 10)]
                     : element.properties.TARIFTAB,
                 northeast: null,
                 number_of_places: parseInt(element.properties.PS_ZPS, 10),
