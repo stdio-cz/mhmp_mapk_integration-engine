@@ -192,20 +192,20 @@ export class VehiclePositionsWorker extends BaseWorker {
             }
 
             const nPt = {distance: Infinity};
-            innerPtsInRadiusIterator(i, 0, nPt, () => {
+            innerPtsInRadiusIterator(i, 0, nPt, (res) => {
                 // so now you have all possible nearest points on shape
                 // (could be more if shape line is overlaping itself)
-                closestPts.push(nPt);
+                closestPts.push(res);
 
                 // next step
                 setImmediate(ptsInRadiusIterator.bind(null, i + 1, cb));
             });
         };
 
-        const innerPtsInRadiusIterator = (i: number, k: number, nPt: any, cb: () => void): void => {
+        const innerPtsInRadiusIterator = (i: number, k: number, nPt: any, cb: (res) => void): void => {
             // end of iteration
             if (ptsInRadius[i].length === k) {
-                return cb();
+                return cb(nPt);
             }
 
             const distance = turf.distance(pt, turf.point(ptsInRadius[i][k].coordinates));
