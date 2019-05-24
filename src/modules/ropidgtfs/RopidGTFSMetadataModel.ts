@@ -81,7 +81,6 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             const promises = tables.map(async (table) => {
                 const tableName = "public." + RopidGTFS[table.dataValues.tn].pgTableName;
                 const tmpTableName = "tmp." + RopidGTFS[table.dataValues.tn].pgTableName;
-                const oldTableName = "tmp.old_" + RopidGTFS[table.dataValues.tn].pgTableName;
 
                 // getting table columns and joining them into string for the INSERT SELECT command
                 // it's because the "star" from "INSERT INTO table SELECT * FROM other_table" not working
@@ -94,13 +93,9 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 const columnsString = columns.map((c) => '"' + c.column_name + '"').join(", ");
 
                 return connection.query(
-                    "CREATE TABLE IF NOT EXISTS " + oldTableName + " (LIKE " + tableName + " INCLUDING ALL); "
-                    + "TRUNCATE TABLE " + oldTableName + "; "
-                    + "INSERT INTO " + oldTableName + " SELECT " + columnsString + " FROM " + tableName + "; "
-                    + "TRUNCATE TABLE " + tableName + "; "
+                    "TRUNCATE TABLE " + tableName + "; "
                     + "INSERT INTO " + tableName + " SELECT " + columnsString + " FROM " + tmpTableName + "; "
-                    + "DROP TABLE IF EXISTS " + tmpTableName + "; "
-                    + "DROP TABLE IF EXISTS " + oldTableName + "; ",
+                    + "DROP TABLE IF EXISTS " + tmpTableName + "; ",
                     { type: Sequelize.QueryTypes.SELECT, transaction: t });
             });
             await Promise.all(promises);
