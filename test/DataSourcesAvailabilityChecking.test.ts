@@ -3,9 +3,10 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
-    Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets,
-    RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations, TrafficCameras, WasteCollectionYards,
+    AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
+    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
+    Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
+    WasteCollectionYards,
 } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../src/core/config";
@@ -270,65 +271,68 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("CeskyCarsharingSharedCars", () => {
+    describe("SharedCars", () => {
 
-        let datasource;
+        describe("CeskyCarsharing", () => {
 
-        beforeEach(() => {
-            datasource = new DataSource(SharedCars.ceskyCarsharing.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    body: JSON.stringify(config.datasources.CeskyCarsharingSharedCarsEndpointCredentials),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    method: "POST",
-                    url: config.datasources.CeskyCarsharingSharedCars,
-                }),
-                new JSONDataTypeStrategy({resultsPath: "cars"}),
-                new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
-                    SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
+            let datasource;
+
+            beforeEach(() => {
+                datasource = new DataSource(SharedCars.ceskyCarsharing.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        body: JSON.stringify(config.datasources.CeskyCarsharingSharedCarsEndpointCredentials),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        method: "POST",
+                        url: config.datasources.CeskyCarsharingSharedCars,
+                    }),
+                    new JSONDataTypeStrategy({resultsPath: "cars"}),
+                    new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
+                        SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
         });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
+        describe("HoppyGo", () => {
+
+            let datasource;
+
+            beforeEach(() => {
+                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
+                hoppyGoDataType.setFilter((item) => item.localization);
+                datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers : {},
+                        method: "GET",
+                        url: config.datasources.HoppyGoSharedCars,
+                    }),
+                    hoppyGoDataType,
+                    new Validator(SharedCars.hoppyGo.name + "DataSource",
+                        SharedCars.hoppyGo.datasourceMongooseSchemaObject));
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
         });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("HoppyGoSharedCars", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
-            hoppyGoDataType.setFilter((item) => item.localization);
-            datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers : {},
-                    method: "GET",
-                    url: config.datasources.HoppyGoSharedCars,
-                }),
-                hoppyGoDataType,
-                new Validator(SharedCars.hoppyGo.name + "DataSource",
-                    SharedCars.hoppyGo.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
     });
 
     describe("Gardens", () => {
@@ -502,35 +506,35 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.null;
         });
 
-    });
+        describe("SkodaPalaceQueues", () => {
 
-    describe("SkodaPalaceQueues", () => {
+            let skodaPalaceQueuesDatasource;
 
-        let datasource;
+            beforeEach(() => {
+                skodaPalaceQueuesDatasource = new DataSource(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers : {},
+                        method: "GET",
+                        url: config.datasources.SkodaPalaceQueues,
+                    }),
+                    new XMLDataTypeStrategy({
+                        resultsPath: "html.body.div",
+                        xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
+                    }),
+                    new Validator(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                        MunicipalAuthorities.skodaPalaceQueues.datasourceMongooseSchemaObject));
+            });
 
-        beforeEach(() => {
-            datasource = new DataSource(SkodaPalaceQueues.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers : {},
-                    method: "GET",
-                    url: config.datasources.SkodaPalaceQueues,
-                }),
-                new XMLDataTypeStrategy({
-                    resultsPath: "html.body.div",
-                    xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
-                }),
-                new Validator(SkodaPalaceQueues.name + "DataSource",
-                    SkodaPalaceQueues.datasourceMongooseSchemaObject));
-        });
+            it("should returns all objects", async () => {
+                const data = await skodaPalaceQueuesDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
+            it("should returns last modified", async () => {
+                const data = await skodaPalaceQueuesDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
 
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
         });
 
     });
@@ -677,6 +681,9 @@ describe("DataSourcesAvailabilityChecking", () => {
         let iprStationsDatasource;
         let oictDatasource;
         let potexDatasource;
+        let sensorsContainersDatasource;
+        let sensorsMeasurementsDatasource;
+        let sensorsPicksDatasource;
 
         beforeEach(() => {
             iprContainersDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
@@ -717,6 +724,47 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new JSONDataTypeStrategy({resultsPath: "places"}),
                 new Validator(SortedWasteStations.potex.name + "DataSource",
                     SortedWasteStations.potex.datasourceMongooseSchemaObject));
+
+            const to = new Date();
+            const from = new Date();
+            from.setHours(to.getHours() - 6);
+            sensorsContainersDatasource = new DataSource(SortedWasteStations.sensorsContainers.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers : {
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "GET",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/container",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "containers"}),
+                new Validator(SortedWasteStations.sensorsContainers.name + "DataSource",
+                    SortedWasteStations.sensorsContainers.datasourceMongooseSchemaObject));
+            sensorsMeasurementsDatasource = new DataSource(SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    body: JSON.stringify({ from, to }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "POST",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/measurement",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "measurements"}),
+                new Validator(SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                    SortedWasteStations.sensorsMeasurements.datasourceMongooseSchemaObject));
+            sensorsPicksDatasource = new DataSource(SortedWasteStations.sensorsPicks.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    body: JSON.stringify({ from, to }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
+                    },
+                    method: "POST",
+                    url: config.datasources.SensoneoSortedWasteSensors + "/picks",
+                }),
+                new JSONDataTypeStrategy({resultsPath: "picks"}),
+                new Validator(SortedWasteStations.sensorsPicks.name + "DataSource",
+                    SortedWasteStations.sensorsPicks.datasourceMongooseSchemaObject));
         });
 
         it("should returns all IPR Containers objects", async () => {
@@ -756,6 +804,154 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns POTEX Containers last modified", async () => {
             const data = await potexDatasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+        it("should returns all sensors containers objects", async () => {
+            const data = await sensorsContainersDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns all sensors measurements objects", async () => {
+            const data = await sensorsMeasurementsDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns all sensors picks objects", async () => {
+            const data = await sensorsPicksDatasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+    });
+
+    describe("SharedBikes", () => {
+
+        describe("Rekola", () => {
+
+            let datasource;
+
+            beforeEach(() => {
+                datasource = new DataSource(SharedBikes.rekola.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers: config.datasources.RekolaSharedBikesHeaders,
+                        method: "GET",
+                        url: config.datasources.RekolaSharedBikes,
+                    }),
+                    new JSONDataTypeStrategy({resultsPath: ""}),
+                    new Validator(SharedBikes.rekola.name + "DataSource",
+                        SharedBikes.rekola.datasourceMongooseSchemaObject));
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+        });
+
+        describe("Homeport", () => {
+
+            let locationsDatasource;
+            let outOfLocationsDatasource;
+            let settingsDatasource;
+
+            beforeEach(() => {
+                locationsDatasource = new DataSource(SharedBikes.homeport.name + "LocDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        strictSSL: false,
+                        url: config.datasources.HomeportLocationsSharedBikes,
+                    }),
+                    new JSONDataTypeStrategy({resultsPath: "Locations"}),
+                    new Validator(SharedBikes.homeport.name + "LocDataSource",
+                        SharedBikes.homeport.datasourceLocationsMongooseSchemaObject));
+                const homeportOutOfLocDataTypeStrategy = new JSONDataTypeStrategy({resultsPath: ""});
+                homeportOutOfLocDataTypeStrategy.setFilter((item) => item.AvailabilityCode === 1);
+                outOfLocationsDatasource = new DataSource(SharedBikes.homeport.name + "OutOfLocDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        strictSSL: false,
+                        url: config.datasources.HomeportOutOfLocationsSharedBikes,
+                    }),
+                    homeportOutOfLocDataTypeStrategy,
+                    new Validator(SharedBikes.homeport.name + "OutOfLocDataSource",
+                        SharedBikes.homeport.datasourceOutOfLocationsMongooseSchemaObject));
+                settingsDatasource = new DataSource(SharedBikes.homeport.name + "SetDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        strictSSL: false,
+                        url: config.datasources.HomeportSettingsSharedBikes,
+                    }),
+                    new JSONDataTypeStrategy({resultsPath: "data.Map"}),
+                    new Validator(SharedBikes.homeport.name + "SetDataSource",
+                        SharedBikes.homeport.settingDatasourceMongooseSchemaObject));
+            });
+
+            it("should returns all locations objects", async () => {
+                const data = await locationsDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns locations last modified", async () => {
+                const data = await locationsDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+            it("should returns all out of locations objects", async () => {
+                const data = await outOfLocationsDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns out of locations last modified", async () => {
+                const data = await outOfLocationsDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+            it("should returns all settings objects", async () => {
+                const data = await settingsDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns settings last modified", async () => {
+                const data = await settingsDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+        });
+
+    });
+
+    describe("BicycleParkings", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(BicycleParkings.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: config.datasources.BicycleParkings,
+                }),
+                new JSONDataTypeStrategy({resultsPath: "elements"}),
+                new Validator(BicycleParkings.name + "DataSource",
+                    BicycleParkings.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
 

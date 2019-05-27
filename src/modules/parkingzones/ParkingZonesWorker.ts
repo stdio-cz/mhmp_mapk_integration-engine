@@ -34,21 +34,21 @@ export class ParkingZonesWorker extends BaseWorker {
             new JSONDataTypeStrategy({resultsPath: "dailyTariff"}),
             new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
         this.model = new MongoModel(ParkingZones.name + "Model", {
-                identifierPath: "properties.code",
+                identifierPath: "properties.id",
                 modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: ParkingZones.mongoCollectionName,
                 outputMongooseSchemaObject: ParkingZones.outputMongooseSchemaObject,
                 resultsPath: "properties",
                 savingType: "insertOrUpdate",
                 searchPath: (id, multiple) => (multiple)
-                    ? { "properties.code": { $in: id } }
-                    : { "properties.code": id },
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
                 updateValues: (a, b) => {
                     a.properties.name = b.properties.name;
                     a.properties.number_of_places = b.properties.number_of_places;
                     a.properties.payment_link = b.properties.payment_link;
                     a.properties.tariffs = b.properties.tariffs;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     a.properties.type = b.properties.type;
                     a.properties.midpoint = b.properties.midpoint;
                     a.properties.northeast = b.properties.northeast;
@@ -72,13 +72,13 @@ export class ParkingZonesWorker extends BaseWorker {
         // send messages for updating tariffs
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateTariffs",
-                new Buffer(JSON.stringify(p.properties.code)));
+                new Buffer(JSON.stringify(p.properties.id)));
         });
         await Promise.all(promises);
 }
 
     public updateTariffs = async (msg: any): Promise<void> => {
-        const code = JSON.parse(msg.content.toString());
+        const id = JSON.parse(msg.content.toString());
 
         this.dataSourceTariffs.setProtocolStrategy(new HTTPProtocolStrategy({
                 headers : {
@@ -86,14 +86,14 @@ export class ParkingZonesWorker extends BaseWorker {
                 },
                 json: true,
                 method: "GET",
-                url: config.datasources.ParkingZonesTariffs + code,
+                url: config.datasources.ParkingZonesTariffs + id,
             }));
 
         try {
             const data = await this.dataSourceTariffs.getAll();
-            const transformedData = await this.transformation.transformTariffs(code, data);
+            const transformedData = await this.transformation.transformTariffs(id, data);
 
-            await this.model.updateOneById(code, {
+            await this.model.updateOneById(id, {
                 $set: {
                     "properties.tariffs": transformedData.tariffs,
                     "properties.tariffs_text": transformedData.tariffsText,

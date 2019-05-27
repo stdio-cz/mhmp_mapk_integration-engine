@@ -42,7 +42,7 @@ export class IceGatewayStreetLampsTransformation extends BaseTransformation impl
                     description: states["" + element.state],
                     id: element.state,
                 },
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

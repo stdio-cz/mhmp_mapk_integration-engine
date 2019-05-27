@@ -24,7 +24,7 @@ export class PlaygroundsTransformation extends BaseTransformation implements ITr
                 name: element.title.replace(/\d{1,2}\.(\D){0,1} /g, ""),
                 perex: (element.perex) ? element.perex : null,
                 properties: [],
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
                 url: element.url,
             },
             type: "Feature",
@@ -32,8 +32,8 @@ export class PlaygroundsTransformation extends BaseTransformation implements ITr
         if (element.category) {
             const properties = element.category.map(async (cat) => {
                 return {
+                    description: cat.nazev,
                     id: cat.id,
-                    title: cat.nazev,
                 };
             });
             res.properties.properties = await Promise.all(properties);

@@ -35,10 +35,10 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
                     ? { description: "P+R parkoviště", id: 1 }
                     : { description: "placené parkoviště", id: 2 },
                 payment_link: this.getMPLAPaymentLink(element.id),
-                timestamp: new Date().getTime(),
                 total_num_of_places: !isNaN(parseInt(element.totalNumOfPlaces, 10))
                     ? parseInt(element.totalNumOfPlaces, 10)
                     : null,
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };
@@ -55,8 +55,8 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
             last_updated: element.properties.last_updated,
             num_of_free_places: element.properties.num_of_free_places,
             num_of_taken_places: element.properties.num_of_taken_places,
-            timestamp: new Date().getTime(),
             total_num_of_places: element.properties.total_num_of_places,
+            updated_at: new Date().getTime(),
         };
         if (!res.total_num_of_places) { // null || undefined || 0
             return null;

@@ -19,7 +19,7 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
                 type: "Point",
             },
             properties: {
-                code: element.code,
+                id: element.code,
                 measurement: {
                     AQ_hourly_index: (element.AQ_hourly_index && element.AQ_hourly_index.value)
                         ? parseInt(element.AQ_hourly_index.value, 10)
@@ -27,7 +27,7 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
                     components: [],
                 },
                 name: element.name,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };
@@ -67,9 +67,9 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
 
     protected transformHistoryElement = async (element: any): Promise<any> => {
         const res = {
-            code: element.properties.code,
+            id: element.properties.id,
             measurement: element.properties.measurement,
-            timestamp: element.properties.timestamp,
+            updated_at: element.properties.updated_at,
         };
         return res;
     }

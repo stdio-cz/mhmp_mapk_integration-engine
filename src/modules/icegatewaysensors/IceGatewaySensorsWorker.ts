@@ -40,7 +40,7 @@ export class IceGatewaySensorsWorker extends BaseWorker {
                     : { "properties.id": id },
                 updateValues: (a, b) => {
                     a.properties.sensors = b.properties.sensors;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

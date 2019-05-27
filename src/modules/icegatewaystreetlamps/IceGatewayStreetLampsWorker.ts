@@ -46,7 +46,7 @@ export class IceGatewayStreetLampsWorker extends BaseWorker {
                     a.properties.lamppost_id = b.properties.lamppost_id;
                     a.properties.last_dim_override = b.properties.last_dim_override;
                     a.properties.state = b.properties.state;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

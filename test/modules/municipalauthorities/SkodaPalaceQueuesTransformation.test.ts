@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { SkodaPalaceQueuesTransformation } from "../../../src/modules/skodapalacequeues";
+import { SkodaPalaceQueuesTransformation } from "../../../src/modules/municipalauthorities";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -55,7 +55,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
         expect(data).to.have.property("municipal_authority_id");
         expect(data).to.have.property("served_activities");
         expect(data).to.have.property("title");
-        expect(data).to.have.property("timestamp");
+        expect(data).to.have.property("updated_at");
     });
 
     describe("history", () => {
@@ -64,7 +64,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
 
         beforeEach(async () => {
             transformation = new SkodaPalaceQueuesTransformation();
-            const buffer = await readFile(__dirname + "/../../data/skodapalacequeues-transformed.json");
+            const buffer = await readFile(__dirname + "/../../data/municipalauthorities_queues-transformed.json");
             testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
         });
 
@@ -80,7 +80,7 @@ describe("SkodaPalaceQueuesTransformation", () => {
                 expect(data[0]).to.have.property("activity");
                 expect(data[0]).to.have.property("number_of_person_in_queue");
                 expect(data[0]).to.have.property("number_of_serving_counters");
-                expect(data[0]).to.have.property("timestamp");
+                expect(data[0]).to.have.property("updated_at");
             }
         });
 

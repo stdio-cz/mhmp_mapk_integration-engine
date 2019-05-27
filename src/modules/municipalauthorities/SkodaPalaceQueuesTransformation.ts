@@ -1,6 +1,6 @@
 "use strict";
 
-import { SkodaPalaceQueues } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "golemio-schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");
@@ -11,7 +11,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
 
     constructor() {
         super();
-        this.name = SkodaPalaceQueues.name;
+        this.name = MunicipalAuthorities.skodaPalaceQueues.name;
     }
 
     /**
@@ -25,7 +25,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
                 municipal_authority_id: data.municipal_authority_id,
                 number_of_person_in_queue: activity.number_of_person_in_queue,
                 number_of_serving_counters: activity.number_of_serving_counters,
-                timestamp: data.timestamp,
+                updated_at: data.updated_at,
             };
         });
         const results = await Promise.all(promises);
@@ -49,8 +49,8 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
             last_updated: lastUpdated.format(),
             municipal_authority_id: "skoduv-palac",
             served_activities: [],
-            timestamp: new Date().getTime(),
             title: "Monitoring odbavování klientů ve Škodově paláci",
+            updated_at: new Date().getTime(),
         };
 
         const activities = element.table.tbody.tr.map(async (activity) => {

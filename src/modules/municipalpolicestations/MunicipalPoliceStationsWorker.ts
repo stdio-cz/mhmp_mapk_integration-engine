@@ -31,9 +31,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(MunicipalPoliceStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
-                    { "properties.address": "text", "properties.cadastral_area": "text" },
-                    { weights: { "properties.address": 1, "properties.cadastral_area": 1 }}],
+                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: MunicipalPoliceStations.mongoCollectionName,
                 outputMongooseSchemaObject: MunicipalPoliceStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -44,7 +42,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
                 updateValues: (a, b) => {
                     a.properties.cadastral_area = b.properties.cadastral_area;
                     a.properties.note = b.properties.note;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -106,7 +104,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
             }
         }
 
-        if (!dbData.properties.address
+        if (!dbData.properties.address || !dbData.properties.address.address_formatted
                 || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
                 || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {

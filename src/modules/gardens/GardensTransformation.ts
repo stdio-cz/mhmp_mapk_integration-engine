@@ -19,26 +19,54 @@ export class GardensTransformation extends BaseTransformation implements ITransf
                 type: "Point",
             },
             properties: {
-                address: (element.address) ? element.address : null,
+                address: (element.address)
+                    ? { address_formatted: element.address }
+                    : null,
                 description: (element.description) ? element.description : null,
                 district: (element.district) ? element.district : null,
                 id: element.slug,
-                image: (element.image) ? element.image : null,
+                image: {
+                    url: (element.image) ? element.image : null,
+                },
                 name: element.name,
                 properties: [],
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
                 url: (element.url) ? element.url : null,
             },
             type: "Feature",
         };
 
-        res.properties.properties = Object.getOwnPropertyNames(element).map(
-            (item) => (item.indexOf("properties_") !== -1 && element[item] && element[item] !== "")
-                ? { id: item.replace("properties_", ""), description: element[item] }
-                : null,
-        ).filter((item) => item);
+        res.properties.properties = Object.getOwnPropertyNames(element).map((item) => {
+            if ((item.indexOf("properties_") !== -1 && element[item] && element[item] !== "")) {
+                const propertyId = item.replace("properties_", "");
+                return {
+                    description: this.getPropertyDescription(propertyId),
+                    id: propertyId,
+                    value: element[item],
+                };
+            }
+            return null;
+        }).filter((item) => item);
 
         return res;
+    }
+
+    private getPropertyDescription = (id: string): string => {
+        switch (id) {
+            case "restaurace": return "Občerstvení";
+            case "wc": return "WC";
+            case "misto": return "Zajímavosti";
+            case "kolo": return "Cyklostezky";
+            case "hriste": return "Dětské hřiště";
+            case "brusle": return "Bruslení";
+            case "sport": return "Sportovní hřiště";
+            case "mhd": return "MHD";
+            case "parking": return "Parkování";
+            case "cesty": return "Povrch cest";
+            case "provoz": return "Provozovatel";
+            case "doba": return "Otevírací doba";
+            default: return null;
+        }
     }
 
 }

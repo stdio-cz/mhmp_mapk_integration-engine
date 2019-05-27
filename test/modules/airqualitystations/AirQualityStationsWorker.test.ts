@@ -31,8 +31,8 @@ describe("AirQualityStationsWorker", () => {
         testData = [1, 2];
         testTransformedData = [1, 2];
         testTransformedHistoryData = [1, 2];
-        data0 = {properties: {code: 0}, geometry: {coordinates: [0, 0]}};
-        data1 = {properties: {code: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
+        data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
+        data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
 
         worker = new AirQualityStationsWorker();
 
@@ -94,7 +94,7 @@ describe("AirQualityStationsWorker", () => {
     it("should calls the correct methods by updateDistrict method (different geo)", async () => {
         await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
-        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.code);
+        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
         sandbox.assert.calledOnce(worker.cityDistrictsModel.findOne);
         sandbox.assert.calledOnce(data1.save);
@@ -105,13 +105,13 @@ describe("AirQualityStationsWorker", () => {
             geometry: {coordinates: [0, 0]},
             properties: {
                 address: "a",
-                code: 1,
-                district: "praha-0"},
+                district: "praha-0",
+                id: 1},
             save: sandbox.stub().resolves(true),
         };
         await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
-        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.code);
+        sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
         sandbox.assert.notCalled(worker.cityDistrictsModel.findOne);
         sandbox.assert.notCalled(data1.save);

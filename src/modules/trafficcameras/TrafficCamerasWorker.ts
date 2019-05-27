@@ -33,9 +33,7 @@ export class TrafficCamerasWorker extends BaseWorker {
             new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
         this.model = new MongoModel(TrafficCameras.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" },
-                    { "properties.name": "text", "properties.address": "text" },
-                        { weights: { "properties.name": 5, "properties.address": 1 }}],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: TrafficCameras.mongoCollectionName,
                 outputMongooseSchemaObject: TrafficCameras.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -47,7 +45,7 @@ export class TrafficCamerasWorker extends BaseWorker {
                     a.properties.image = b.properties.image;
                     a.properties.last_updated = b.properties.last_updated;
                     a.properties.name = b.properties.name;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -127,7 +125,7 @@ export class TrafficCamerasWorker extends BaseWorker {
             }
         }
 
-        if (!dbData.properties.address
+        if (!dbData.properties.address || !dbData.properties.address.address_formatted
                 || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
                 || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {

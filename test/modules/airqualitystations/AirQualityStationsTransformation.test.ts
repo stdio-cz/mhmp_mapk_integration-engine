@@ -54,9 +54,9 @@ describe("AirQualityStationsTransformation", () => {
         expect(data).to.have.property("geometry");
         expect(data).to.have.property("properties");
         expect(data).to.have.property("type");
-        expect(data.properties).to.have.property("code");
+        expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -65,9 +65,9 @@ describe("AirQualityStationsTransformation", () => {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
-            expect(data[i].properties).to.have.property("code");
+            expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 
@@ -87,17 +87,17 @@ describe("AirQualityStationsTransformation", () => {
 
         it("should properly transform element", async () => {
             const data = await transformation.transformHistory(testTransformedData[0]);
-            expect(data).to.have.property("code");
+            expect(data).to.have.property("id");
             expect(data).to.have.property("measurement");
-            expect(data).to.have.property("timestamp");
+            expect(data).to.have.property("updated_at");
         });
 
         it("should properly transform collection", async () => {
             const data = await transformation.transformHistory(testTransformedData);
             for (let i = 0, imax = data.length; i < imax; i++) {
-                expect(data[i]).to.have.property("code");
+                expect(data[i]).to.have.property("id");
                 expect(data[i]).to.have.property("measurement");
-                expect(data[i]).to.have.property("timestamp");
+                expect(data[i]).to.have.property("updated_at");
             }
         });
 

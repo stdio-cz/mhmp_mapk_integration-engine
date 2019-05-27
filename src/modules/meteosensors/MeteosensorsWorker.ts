@@ -49,7 +49,7 @@ export class MeteosensorsWorker extends BaseWorker {
                     a.properties.humidity = b.properties.humidity;
                     a.properties.wind_direction = b.properties.wind_direction;
                     a.properties.wind_speed = b.properties.wind_speed;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

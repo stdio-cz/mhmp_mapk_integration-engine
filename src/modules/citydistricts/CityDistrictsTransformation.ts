@@ -24,7 +24,7 @@ export class CityDistrictsTransformation extends BaseTransformation implements I
                 id: parseInt(element.properties.KOD_MC, 10),
                 name: element.properties.NAZEV_MC,
                 slug: slug(element.properties.NAZEV_MC, { lower: true }),
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: element.type,
         };

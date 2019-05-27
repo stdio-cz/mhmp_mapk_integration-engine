@@ -36,7 +36,7 @@ export class CeskyCarsharingTransformation extends BaseTransformation implements
                 id: element.rz,
                 name: element.car_name,
                 res_url: element.res_url,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

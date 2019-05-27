@@ -62,7 +62,7 @@ export class SharedCarsWorker extends BaseWorker {
                     a.properties.fuel = b.properties.fuel;
                     a.properties.name = b.properties.name;
                     a.properties.res_url = b.properties.res_url;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

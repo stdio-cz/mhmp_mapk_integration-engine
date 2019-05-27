@@ -60,7 +60,7 @@ describe("TrafficCamerasTransformation", () => {
         expect(data.properties.image).to.have.property("url");
         expect(data.properties).to.have.property("last_updated");
         expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -75,7 +75,7 @@ describe("TrafficCamerasTransformation", () => {
             expect(data[i].properties.image).to.have.property("url");
             expect(data[i].properties).to.have.property("last_updated");
             expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 
@@ -100,7 +100,7 @@ describe("TrafficCamerasTransformation", () => {
             expect(data.image).to.have.property("file_size");
             expect(data.image).to.have.property("url");
             expect(data).to.have.property("last_updated");
-            expect(data).to.have.property("timestamp");
+            expect(data).to.have.property("updated_at");
         });
 
         it("should properly transform collection", async () => {
@@ -111,7 +111,7 @@ describe("TrafficCamerasTransformation", () => {
                 expect(data[i].image).to.have.property("file_size");
                 expect(data[i].image).to.have.property("url");
                 expect(data[i]).to.have.property("last_updated");
-                expect(data[i]).to.have.property("timestamp");
+                expect(data[i]).to.have.property("updated_at");
             }
         });
 

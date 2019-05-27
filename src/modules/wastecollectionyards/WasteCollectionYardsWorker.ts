@@ -33,9 +33,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
 
         this.model = new MongoModel(WasteCollectionYards.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" },
-                    { "properties.name": "text", "properties.operator": "text", "properties.address": "text" },
-                    { weights: { "properties.name": 5, "properties.address": 1, "properties.operator": 5 }}],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: WasteCollectionYards.mongoCollectionName,
                 outputMongooseSchemaObject: WasteCollectionYards.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -51,7 +49,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
                     a.properties.contact = b.properties.contact;
                     a.properties.operating_hours = b.properties.operating_hours;
                     a.properties.properties = b.properties.properties;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },

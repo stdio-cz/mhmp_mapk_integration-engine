@@ -29,11 +29,7 @@ export class PlaygroundsWorker extends BaseWorker {
             new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Playgrounds.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" },
-                    { "properties.address": "text", "properties.content": "text", "properties.name": "text",
-                        "properties.perex": "text" },
-                    { weights: { "properties.address": 1, "properties.content": 5, "properties.name": 5,
-                        "properties.perex": 5 }}],
+                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: Playgrounds.mongoCollectionName,
                 outputMongooseSchemaObject: Playgrounds.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -48,7 +44,7 @@ export class PlaygroundsWorker extends BaseWorker {
                     a.properties.content = b.properties.content;
                     a.properties.image = b.properties.image;
                     a.properties.properties = b.properties.properties;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -109,7 +105,7 @@ export class PlaygroundsWorker extends BaseWorker {
             }
         }
 
-        if (!dbData.properties.address
+        if (!dbData.properties.address || !dbData.properties.address.address_formatted
                 || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
                 || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {

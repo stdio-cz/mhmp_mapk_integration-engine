@@ -22,7 +22,7 @@ export class MunicipalPoliceStationsTransformation extends BaseTransformation im
                 id: slug(element.properties.NKU + "-" + element.properties.NVPK + "-" + element.properties.CPOP,
                     { lower: true }),
                 note: (element.properties.POZN) ? element.properties.POZN : null,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

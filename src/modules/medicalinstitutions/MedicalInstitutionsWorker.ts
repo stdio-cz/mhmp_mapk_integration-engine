@@ -77,10 +77,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ "properties.type.group": 1 },
-                    { geometry: "2dsphere" },
-                    { "properties.name": "text", "properties.address": "text" },
-                    { weights: { "properties.name": 5, "properties.address": 1 }}],
+                modelIndexes: [{ geometry: "2dsphere" }, { "properties.type.group": 1 }],
                 mongoCollectionName: MedicalInstitutions.mongoCollectionName,
                 outputMongooseSchemaObject: MedicalInstitutions.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -97,7 +94,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                     a.properties.telephone = b.properties.telephone;
                     a.properties.type = b.properties.type;
                     a.properties.web = b.properties.web;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -154,8 +151,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
 
         if (dbData.geometry.coordinates[0] === 0 && dbData.geometry.coordinates[1] === 0) {
             try {
-                const coordinates = await GeocodeApi.getGeoByAddress(dbData.properties.address.street.split(",")[0],
-                    dbData.properties.address.city);
+                const coordinates = await GeocodeApi.getGeoByAddress(dbData.properties.address.street_address,
+                    dbData.properties.address.address_locality);
                 dbData.geometry.coordinates = coordinates;
                 await dbData.save();
             } catch (err) {

@@ -1,9 +1,9 @@
 "use strict";
 
 import {
-    AirQualityStations, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions,
-    MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
-    Playgrounds, PublicToilets, RopidGTFS, SharedCars, SkodaPalaceQueues, SortedWasteStations,
+    AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
+    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
+    ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
     } from "golemio-schema-definitions";
 import { config } from "../core/config";
@@ -12,6 +12,7 @@ import { log } from "../core/helpers";
 import { CustomError, handleError } from "../core/helpers/errors";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { GardensWorker } from "../modules/gardens";
 import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
@@ -27,8 +28,8 @@ import { PlaygroundsWorker } from "../modules/playgrounds";
 import { PublicToiletsWorker } from "../modules/publictoilets";
 import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
+import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
-import { SkodaPalaceQueuesWorker } from "../modules/skodapalacequeues";
 import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
@@ -66,6 +67,32 @@ const definitions: IQueueDefinition[] = [
                     messageTtl: 59 * 60 * 1000,
                 },
                 worker: AirQualityStationsWorker,
+                workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: BicycleParkings.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleParkings.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: BicycleParkingsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000,
+                },
+                worker: BicycleParkingsWorker,
                 workerMethod: "updateDistrict",
             },
         ],
@@ -242,6 +269,25 @@ const definitions: IQueueDefinition[] = [
                 worker: MunicipalAuthoritiesWorker,
                 workerMethod: "refreshDataInDB",
             },
+            {
+                name: "refreshWaitingQueues",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: MunicipalAuthoritiesWorker,
+                workerMethod: "refreshWaitingQueues",
+            },
+            {
+                name: "saveWaitingQueuesDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MunicipalAuthoritiesWorker,
+                workerMethod: "saveWaitingQueuesDataToHistory",
+            },
         ],
     },
     {
@@ -415,6 +461,33 @@ const definitions: IQueueDefinition[] = [
                 worker: PurgeWorker,
                 workerMethod: "deleteOldMerakiAccessPointsObservations",
             },
+            {
+                name: "deleteOldTrafficCamerasHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldTrafficCamerasHistory",
+            },
+            {
+                name: "deleteOldSharedBikes",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldSharedBikes",
+            },
+            {
+                name: "deleteOldSharedCars",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: PurgeWorker,
+                workerMethod: "deleteOldSharedCars",
+            },
         ],
     },
     {
@@ -512,6 +585,22 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
+        name: SharedBikes.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SharedBikes.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: SharedBikesWorker,
+                workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
         name: SharedCars.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SharedCars.name.toLowerCase(),
         queues: [
@@ -524,31 +613,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: SharedCarsWorker,
                 workerMethod: "refreshDataInDB",
-            },
-        ],
-    },
-    {
-        name: SkodaPalaceQueues.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SkodaPalaceQueues.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
-                },
-                worker: SkodaPalaceQueuesWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: SkodaPalaceQueuesWorker,
-                workerMethod: "saveDataToHistory",
             },
         ],
     },
@@ -575,6 +639,66 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateDistrict",
+            },
+            {
+                name: "getSensors",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "getSensors",
+            },
+            {
+                name: "pairSensorsWithContainers",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 24 * 60 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "pairSensorsWithContainers",
+            },
+            {
+                name: "updateSensorsMeasurement",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsMeasurement",
+            },
+            {
+                name: "updateSensorsMeasurementInContainer",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsMeasurementInContainer",
+            },
+            {
+                name: "updateSensorsPicks",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsPicks",
+            },
+            {
+                name: "updateSensorsPicksInContainer",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000,
+                },
+                worker: SortedWasteStationsWorker,
+                workerMethod: "updateSensorsPicksInContainer",
             },
         ],
     },

@@ -27,9 +27,9 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
             const res = await Promise.all(promises);
 
             const sorted = res.sort((a, b) => {
-                if (a.properties.code < b.properties.code) {
+                if (a.properties.id < b.properties.id) {
                     return -1;
-                } else if (a.properties.code > b.properties.code) {
+                } else if (a.properties.id > b.properties.id) {
                     return 1;
                 } else {
                     return a.properties.zps_id - b.properties.zps_id;
@@ -42,7 +42,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
                     return cb();
                 }
 
-                if (sorted[i].properties.code === sorted[i + 1].properties.code) {
+                if (sorted[i].properties.id === sorted[i + 1].properties.id) {
                     if (sorted[i].geometry.type === "Polygon") {
                         sorted[i].geometry.type = "MultiPolygon";
                         sorted[i].geometry.coordinates = [
@@ -98,11 +98,11 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
     /**
      * Tariff processing
      */
-    public transformTariffs = async (code: string, data: any): Promise<any> => {
+    public transformTariffs = async (id: string, data: any): Promise<any> => {
         const resultTariffs = [];
 
         if (!data) {
-            throw Error(`Tarif pro ${code} nebyl nalezen.`);
+            throw Error(`Tarif pro ${id} nebyl nalezen.`);
         }
 
         const promises1 = data.map(async (tariff) => {
@@ -148,10 +148,10 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
                 type: element.geometry.type,
             },
             properties: {
-                code: element.properties.TARIFTAB,
+                id: element.properties.TARIFTAB,
                 midpoint: null,
                 name: (types[parseInt(element.properties.TYPZONY, 10)])
-                    ? types[parseInt(element.properties.TYPZONY, 10)] + " - " + element.properties.TARIFTAB
+                    ? element.properties.TARIFTAB + " " + types[parseInt(element.properties.TYPZONY, 10)]
                     : element.properties.TARIFTAB,
                 northeast: null,
                 number_of_places: parseInt(element.properties.PS_ZPS, 10),
@@ -160,13 +160,13 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
                     : null,
                 southwest: null,
                 tariffs: [],
-                timestamp: new Date().getTime(),
                 type: {
                     description: (types[parseInt(element.properties.TYPZONY, 10)])
                         ? types[parseInt(element.properties.TYPZONY, 10)]
                         : "",
                     id: parseInt(element.properties.TYPZONY, 10),
                 },
+                updated_at: new Date().getTime(),
                 zps_id: parseInt(element.properties.ZPS_ID, 10),
             },
             type: "Feature",

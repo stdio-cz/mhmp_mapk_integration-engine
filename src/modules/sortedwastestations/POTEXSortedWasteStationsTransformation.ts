@@ -37,7 +37,7 @@ export class POTEXSortedWasteStationsTransformation extends BaseTransformation i
                 id: "potex-" + slug(element.title, { lower: true }),
                 name: element.title,
                 station_number: null,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

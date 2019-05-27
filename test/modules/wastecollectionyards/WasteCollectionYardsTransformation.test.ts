@@ -61,7 +61,7 @@ describe("WasteCollectionYardsTransformation", () => {
         expect(data.properties).to.have.property("operating_hours");
         expect(data.properties).to.have.property("operator");
         expect(data.properties).to.have.property("type");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -77,7 +77,7 @@ describe("WasteCollectionYardsTransformation", () => {
             expect(data[i].properties).to.have.property("operating_hours");
             expect(data[i].properties).to.have.property("operator");
             expect(data[i].properties).to.have.property("type");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

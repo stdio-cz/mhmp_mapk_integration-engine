@@ -21,15 +21,18 @@ describe("SortedWasteStationsWorker", () => {
     let queuePrefix;
     let testData;
     let testTransformedData;
+    let testSensorContainersData;
+    let testSensorMeasurementData;
+    let testSensorPicksData;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox = sinon.createSandbox();
 
         testData = [1, 2];
         testTransformedData = [{
             geometry: {coordinates: [0, 0]},
             properties: { accessibility: {id: 1},
-                containers: [{}],
+                containers: [{trash_type: {id: 6}, sensor_id: 29823}],
                 id: 10},
             remove: sandbox.stub().resolves(true),
             save: sandbox.stub().resolves(true),
@@ -48,6 +51,38 @@ describe("SortedWasteStationsWorker", () => {
             save: sandbox.stub().resolves(true),
             },
         ];
+        testSensorContainersData = [{
+            address: "Nad Úžlabinou 708",
+            bin_type: "Schäfer/Europa-OV",
+            code: "0010/ 268C00462",
+            id: 29823,
+            latitude: 50.08035899999999,
+            longitude: 14.49945600000001,
+            trash_type: "plastic",
+        }];
+        testSensorMeasurementData = [{
+            battery_status: 3.6,
+            code: "0006/ 263C00231",
+            container_id: 29823,
+            firealarm: 0,
+            id: 12536378,
+            measured_at_utc: "2019-05-16T08:47:22.000Z",
+            percent_calculated: 56,
+            prediction_utc: "2019-05-20T16:29:09.000Z",
+            temperature: 10,
+            upturned: 0,
+        }];
+        testSensorPicksData = [{
+            code: "0001/ 038C00042",
+            container_id: 29823,
+            decrease: 20,
+            event_driven: false,
+            id: 12495474,
+            percent_before: 100,
+            percent_now: 10,
+            pick_at_utc: "2019-05-14T04:09:42.000Z",
+            pick_minfilllevel: 30,
+        }];
 
         worker = new SortedWasteStationsWorker();
 
@@ -66,8 +101,17 @@ describe("SortedWasteStationsWorker", () => {
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + SortedWasteStations.name.toLowerCase();
         sandbox.stub(worker.model, "findOneById")
             .callsFake(() => testTransformedData[1]);
+        sandbox.stub(worker.model, "findOne")
+            .callsFake(() => testTransformedData[0]);
         sandbox.stub(worker, "mergeContainersIntoStations")
             .callsFake(() => [[testTransformedData[0]], [testTransformedData[1], testTransformedData[2]]]);
+        sandbox.stub(worker.model, "updateOne");
+
+        sandbox.stub(worker.sensorsContainersDatasource, "getAll").callsFake(() => testSensorContainersData);
+        sandbox.stub(worker.sensorsMeasurementsDatasource, "getAll").callsFake(() => testSensorMeasurementData);
+        sandbox.stub(worker.sensorsMeasurementsModel, "save");
+        sandbox.stub(worker.sensorsPicksDatasource, "getAll").callsFake(() => testSensorPicksData);
+        sandbox.stub(worker.sensorsPicksModel, "save");
 
         sandbox.stub(worker.cityDistrictsModel, "findOne")
             .callsFake(() => Object.assign({properties: {slug: "praha-1"}}));
@@ -133,6 +177,61 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.assert.notCalled(worker.cityDistrictsModel.findOne);
         sandbox.assert.notCalled(testTransformedData[1].save);
         sandbox.assert.notCalled(testTransformedData[1].remove);
+    });
+
+    it("should calls the correct methods by getSensors method", async () => {
+        await worker.getSensors();
+
+        sandbox.assert.calledOnce(worker.sensorsContainersDatasource.getAll);
+        testSensorContainersData.map((f) => {
+            sandbox.assert.calledWith(worker.sendMessageToExchange,
+                "workers." + queuePrefix + ".pairSensorsWithContainers",
+                new Buffer(JSON.stringify(f)));
+        });
+        sandbox.assert.calledThrice(worker.sendMessageToExchange);
+    });
+
+    it("should calls the correct methods by pairSensorsWithContainers method", async () => {
+        await worker.pairSensorsWithContainers({content: new Buffer(JSON.stringify(testSensorContainersData[0]))});
+        sandbox.assert.calledOnce(worker.model.findOne);
+        sandbox.assert.calledOnce(worker.model.updateOne);
+    });
+
+    it("should calls the correct methods by updateSensorsMeasurement method", async () => {
+        await worker.updateSensorsMeasurement();
+
+        sandbox.assert.calledOnce(worker.sensorsMeasurementsDatasource.getAll);
+        sandbox.assert.calledOnce(worker.sensorsMeasurementsModel.save);
+        testSensorMeasurementData.map((f) => {
+            sandbox.assert.calledWith(worker.sendMessageToExchange,
+                "workers." + queuePrefix + ".updateSensorsMeasurementInContainer",
+                new Buffer(JSON.stringify(f)));
+        });
+    });
+
+    it("should calls the correct methods by updateSensorsMeasurementInContainer method", async () => {
+        await worker.updateSensorsMeasurementInContainer({content: new Buffer(
+            JSON.stringify(testSensorMeasurementData[0]))});
+        sandbox.assert.calledOnce(worker.model.findOne);
+        sandbox.assert.calledOnce(worker.model.updateOne);
+    });
+
+    it("should calls the correct methods by updateSensorsPicks method", async () => {
+        await worker.updateSensorsPicks();
+
+        sandbox.assert.calledOnce(worker.sensorsPicksDatasource.getAll);
+        sandbox.assert.calledOnce(worker.sensorsPicksModel.save);
+        testSensorPicksData.map((f) => {
+            sandbox.assert.calledWith(worker.sendMessageToExchange,
+                "workers." + queuePrefix + ".updateSensorsPicksInContainer",
+                new Buffer(JSON.stringify(f)));
+        });
+    });
+
+    it("should calls the correct methods by updateSensorsPicksInContainer method", async () => {
+        await worker.updateSensorsPicksInContainer({content: new Buffer(JSON.stringify(testSensorPicksData[0]))});
+        sandbox.assert.calledOnce(worker.model.findOne);
+        sandbox.assert.calledOnce(worker.model.updateOne);
     });
 
 });

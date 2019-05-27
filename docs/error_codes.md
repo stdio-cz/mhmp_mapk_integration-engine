@@ -29,3 +29,4 @@
 - 1025: Method is not implemented.
 - 1026: Sorted Waste Containers were not set. Use method setContaners().
 - 1027: Error while updating parking zone tariffs.
+- 1028: Error while updating sensors measurement/picks.

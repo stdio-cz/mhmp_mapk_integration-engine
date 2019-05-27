@@ -62,7 +62,7 @@ describe("IceGatewayStreetLampsTransformation", () => {
         expect(data.properties).to.have.property("state");
         expect(data.properties.state).to.have.property("description");
         expect(data.properties.state).to.have.property("id");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -79,7 +79,7 @@ describe("IceGatewayStreetLampsTransformation", () => {
             expect(data[i].properties).to.have.property("state");
             expect(data[i].properties.state).to.have.property("description");
             expect(data[i].properties.state).to.have.property("id");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

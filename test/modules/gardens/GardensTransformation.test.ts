@@ -56,7 +56,7 @@ describe("GardensTransformation", () => {
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("timestamp");
+        expect(data.properties).to.have.property("updated_at");
     });
 
     it("should properly transform collection", async () => {
@@ -67,7 +67,7 @@ describe("GardensTransformation", () => {
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("timestamp");
+            expect(data[i].properties).to.have.property("updated_at");
         }
     });
 

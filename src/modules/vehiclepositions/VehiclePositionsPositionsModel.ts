@@ -23,7 +23,6 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
 
     constructor() {
         super(VehiclePositions.positions.name + "Model", {
-                attributesToRemove: [ "id" ],
                 outputSequelizeAttributes: VehiclePositions.positions.outputSequelizeAttributes,
                 pgTableName: VehiclePositions.positions.pgTableName,
                 savingType: "insertOnly",

@@ -35,19 +35,19 @@ export class AirQualityStationsWorker extends BaseWorker {
             new Validator(AirQualityStations.name + "DataSource",
                 AirQualityStations.datasourceMongooseSchemaObject));
         this.model = new MongoModel(AirQualityStations.name + "Model", {
-                identifierPath: "properties.code",
+                identifierPath: "properties.id",
                 modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: AirQualityStations.mongoCollectionName,
                 outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
                 savingType: "insertOrUpdate",
                 searchPath: (id, multiple) => (multiple)
-                    ? { "properties.code": { $in: id } }
-                    : { "properties.code": id },
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
                 updateValues: (a, b) => {
                     a.properties.name = b.properties.name;
                     a.properties.measurement = b.properties.measurement;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -55,7 +55,7 @@ export class AirQualityStationsWorker extends BaseWorker {
         );
         this.transformation = new AirQualityStationsTransformation();
         this.historyModel = new MongoModel(AirQualityStations.history.name + "Model", {
-                identifierPath: "code",
+                identifierPath: "id",
                 mongoCollectionName: AirQualityStations.history.mongoCollectionName,
                 outputMongooseSchemaObject: AirQualityStations.history.outputMongooseSchemaObject,
                 savingType: "insertOnly",
@@ -103,7 +103,7 @@ export class AirQualityStationsWorker extends BaseWorker {
 
     public updateDistrict = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const id = inputData.properties.code;
+        const id = inputData.properties.id;
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district

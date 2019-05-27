@@ -23,7 +23,7 @@ export class PublicToiletsTransformation extends BaseTransformation implements I
                 price: (element.properties.CENA)
                     ? element.properties.CENA.replace(/\r?\n/g, " ")
                     : null,
-                timestamp: new Date().getTime(),
+                updated_at: new Date().getTime(),
             },
             type: "Feature",
         };

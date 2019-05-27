@@ -29,8 +29,7 @@ export class PublicToiletsWorker extends BaseWorker {
             new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject));
         this.model = new MongoModel(PublicToilets.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" },
-                    { "properties.address": "text" }, { weights: { "properties.address": 1 }}],
+                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: PublicToilets.mongoCollectionName,
                 outputMongooseSchemaObject: PublicToilets.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -41,7 +40,7 @@ export class PublicToiletsWorker extends BaseWorker {
                 updateValues: (a, b) => {
                     a.properties.opened = b.properties.opened;
                     a.properties.price = b.properties.price;
-                    a.properties.timestamp = b.properties.timestamp;
+                    a.properties.updated_at = b.properties.updated_at;
                     return a;
                 },
             },
@@ -102,7 +101,7 @@ export class PublicToiletsWorker extends BaseWorker {
             }
         }
 
-        if (!dbData.properties.address
+        if (!dbData.properties.address || !dbData.properties.address.address_formatted
                 || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
                 || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {

@@ -84,6 +84,15 @@ export class MongoModel implements IModel {
         return this[this.savingType](model, data);
     }
 
+    public updateOne = async (opts: any, data: any, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
+        return model.updateOne(opts, data, { runValidators: true }).exec();
+    }
+
     public updateOneById = async (id: any, data: any, useTmpTable: boolean = false): Promise<any> => {
         if (this.savingType === "readOnly") {
             throw new CustomError("The model saving type is read only.", true, this.name);
@@ -103,6 +112,19 @@ export class MongoModel implements IModel {
             await model.deleteMany({}).exec();
         } catch (err) {
             throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+        }
+    }
+
+    public delete = async (opts: object, useTmpTable: boolean = false): Promise<any> => {
+        if (this.savingType === "readOnly") {
+            throw new CustomError("The model saving type is read only.", true, this.name);
+        }
+
+        const model = this.getMongooseModelSafely(useTmpTable);
+        try {
+            return await model.deleteMany(opts).exec();
+        } catch (err) {
+            throw new CustomError("Error while deleting data.", true, this.name, 1011, err);
         }
     }
 
@@ -213,6 +235,7 @@ export class MongoModel implements IModel {
                 throw new CustomError("Model data was not found.", true, this.name, 1014);
             }
             dbData = this.updateValues(dbData, newData);
+            dbData.markModified("properties"); // TODO zkontrolovat jestli funguje na vsechny pripady
             return dbData.save();
         } catch (err) {
             if (err instanceof CustomError && err.code === 1014) {
