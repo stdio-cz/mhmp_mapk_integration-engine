@@ -287,15 +287,6 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 new Buffer(JSON.stringify(p)));
         });
         await Promise.all(promises);
-
-        await new Promise((done) => setTimeout(done, 15000)); // sleeps for 15 seconds
-
-        // send message to update measurement
-        this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsMeasurement",
-            new Buffer("Just Do It!"));
-        // send message to update picks
-        this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsPicks",
-            new Buffer("Just Do It!"));
     }
 
     public pairSensorsWithContainers = async (msg: any): Promise<void> => {
@@ -304,6 +295,16 @@ export class SortedWasteStationsWorker extends BaseWorker {
         const stationNumber = sensor.code.split("C")[0];
         const trashType = this.iprTransformation.getTrashTypeByString(sensor.trash_type);
         const station = await this.model.findOne({"properties.station_number": stationNumber});
+        const lastMeasurement = await this.sensorsMeasurementsModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 }},
+            { $limit: 1 },
+        ]);
+        const lastPick = await this.sensorsPicksModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 }},
+            { $limit: 1 },
+        ]);
 
         if (!station) {
             // station not exists, creating new station
@@ -317,6 +318,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                     containers: [{
                         cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
                         container_type: sensor.bin_type,
+                        last_measurement: (lastMeasurement[0])
+                            ? {
+                                measured_at_utc: lastMeasurement[0].measured_at_utc,
+                                percent_calculated: lastMeasurement[0].percent_calculated,
+                                prediction_utc: lastMeasurement[0].prediction_utc,
+                            }
+                            : null,
+                        last_pick: (lastPick[0])
+                            ? {
+                                pick_at_utc: lastPick[0].pick_at_utc,
+                            }
+                            : null,
                         sensor_id: sensor.id,
                         trash_type: trashType,
                     }],
@@ -342,6 +355,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 },
                 {
                     $set: {
+                        "properties.containers.$.last_measurement": (lastMeasurement[0])
+                            ? {
+                                measured_at_utc: lastMeasurement[0].measured_at_utc,
+                                percent_calculated: lastMeasurement[0].percent_calculated,
+                                prediction_utc: lastMeasurement[0].prediction_utc,
+                            }
+                            : null,
+                        "properties.containers.$.last_pick": (lastPick[0])
+                            ? {
+                                pick_at_utc: lastPick[0].pick_at_utc,
+                            }
+                            : null,
                         "properties.containers.$.sensor_id": sensor.id,
                     },
                 });
@@ -350,6 +375,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 const newContainer = {
                     cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
                     container_type: sensor.bin_type,
+                    last_measurement: (lastMeasurement[0])
+                        ? {
+                            measured_at_utc: lastMeasurement[0].measured_at_utc,
+                            percent_calculated: lastMeasurement[0].percent_calculated,
+                            prediction_utc: lastMeasurement[0].prediction_utc,
+                        }
+                        : null,
+                    last_pick: (lastPick[0])
+                        ? {
+                            pick_at_utc: lastPick[0].pick_at_utc,
+                        }
+                        : null,
                     sensor_id: sensor.id,
                     trash_type: trashType,
                 };
