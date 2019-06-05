@@ -70,6 +70,7 @@ describe("SortedWasteStationsWorker", () => {
             percent_calculated: 56,
             prediction_utc: "2019-05-20T16:29:09.000Z",
             temperature: 10,
+            updated_at: 1559737670311,
             upturned: 0,
         }];
         testSensorPicksData = [{
@@ -82,6 +83,7 @@ describe("SortedWasteStationsWorker", () => {
             percent_now: 10,
             pick_at_utc: "2019-05-14T04:09:42.000Z",
             pick_minfilllevel: 30,
+            updated_at: 1559737670311,
         }];
 
         worker = new SortedWasteStationsWorker();
@@ -114,6 +116,9 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.stub(worker.sensorsPicksDatasource, "getAll").callsFake(() => testSensorPicksData);
         sandbox.stub(worker.sensorsPicksModel, "save");
         sandbox.stub(worker.sensorsPicksModel, "aggregate").callsFake(() => []);
+
+        sandbox.stub(worker.sensoneoMeasurementsTransformation, "transform").callsFake(() => testSensorMeasurementData);
+        sandbox.stub(worker.sensoneoPicksTransformation, "transform").callsFake(() => testSensorPicksData);
 
         sandbox.stub(worker.cityDistrictsModel, "findOne")
             .callsFake(() => Object.assign({properties: {slug: "praha-1"}}));
