@@ -1,0 +1,14 @@
+{
+    "gpreservation": {
+        "zoneinfo": {
+            "zonei": {
+                "capacity": "633",
+                "name": "Parkoviště",
+                "occupation": "178",
+                "reservedcapacity": "0",
+                "reservedoccupation": "0",
+                "parking_id": 534016
+            }
+        }
+    }
+}

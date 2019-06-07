@@ -359,6 +359,15 @@ const definitions: IQueueDefinition[] = [
                 worker: ParkingsWorker,
                 workerMethod: "updateAverageOccupancy",
             },
+            {
+                name: "saveOccupanciesToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ParkingsWorker,
+                workerMethod: "saveOccupanciesToDB",
+            },
         ],
     },
     {
