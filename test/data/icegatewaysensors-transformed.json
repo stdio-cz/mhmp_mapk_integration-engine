@@ -75,7 +75,7 @@
                 "min": 4
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -99,7 +99,7 @@
                 "min": 823.3434
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -123,7 +123,7 @@
                 "min": 21.23
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -147,7 +147,7 @@
                 "min": 36.3
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -251,7 +251,7 @@
                 "min": 40.1
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -339,7 +339,7 @@
                 "min": 50
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -419,7 +419,7 @@
                 "min": 52.5
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -434,7 +434,7 @@
        "properties": {
           "id": "ICE-003-042-000-009",
           "sensors": [],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -449,7 +449,7 @@
        "properties": {
           "id": "ICE-003-042-000-010",
           "sensors": [],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -521,7 +521,7 @@
                 "min": 44.8
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -585,7 +585,7 @@
                 "min": 47.6
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -689,7 +689,7 @@
                 "min": 55.4
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -761,7 +761,7 @@
                 "min": 0
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -841,7 +841,7 @@
                 "min": 56.1
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -945,7 +945,7 @@
                 "min": 48.5
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1009,7 +1009,7 @@
                 "min": 43
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1024,7 +1024,7 @@
        "properties": {
           "id": "ICE-003-042-000-020",
           "sensors": [],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1088,7 +1088,7 @@
                 "min": 44.5
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1160,7 +1160,7 @@
                 "min": 39.1
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1224,7 +1224,7 @@
                 "min": 37
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1296,7 +1296,7 @@
                 "min": 38.1
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1384,7 +1384,7 @@
                 "min": 54
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1424,7 +1424,7 @@
                 "min": 55.1
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1504,7 +1504,7 @@
                 "min": 10
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1568,7 +1568,7 @@
                 "min": 41.5
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     },
@@ -1640,7 +1640,7 @@
                 "min": 45.3
              }
           ],
-          "timestamp": 1551878665200
+          "updated_at": 1551878665200
        },
        "type": "Feature"
     }

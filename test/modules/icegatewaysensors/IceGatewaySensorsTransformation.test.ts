@@ -87,16 +87,28 @@ describe("IceGatewaySensorsTransformation", () => {
 
         it("should properly transform element", async () => {
             const data = await transformation.transformHistory(testTransformedData[0]);
-            expect(data).to.have.property("id");
-            expect(data).to.have.property("sensors");
-            expect(data).to.have.property("updated_at");
+            for (let i = 0, imax = data.length; i < imax; i++) {
+                expect(data[i]).to.have.property("sensor_type");
+                expect(data[i]).to.have.property("max");
+                expect(data[i]).to.have.property("created_at");
+                expect(data[i]).to.have.property("avg");
+                expect(data[i]).to.have.property("validity");
+                expect(data[i]).to.have.property("min");
+                expect(data[i]).to.have.property("id");
+                expect(data[i]).to.have.property("updated_at");
+            }
         });
 
         it("should properly transform collection", async () => {
             const data = await transformation.transformHistory(testTransformedData);
             for (let i = 0, imax = data.length; i < imax; i++) {
+                expect(data[i]).to.have.property("sensor_type");
+                expect(data[i]).to.have.property("max");
+                expect(data[i]).to.have.property("created_at");
+                expect(data[i]).to.have.property("avg");
+                expect(data[i]).to.have.property("validity");
+                expect(data[i]).to.have.property("min");
                 expect(data[i]).to.have.property("id");
-                expect(data[i]).to.have.property("sensors");
                 expect(data[i]).to.have.property("updated_at");
             }
         });

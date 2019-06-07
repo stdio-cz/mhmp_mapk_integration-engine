@@ -25,7 +25,7 @@
           "telephone": [
              "251116604"
           ],
-          "timestamp": 1554736716455,
+          "created_at": 1554736716455,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -57,7 +57,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -89,7 +89,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -123,7 +123,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -159,7 +159,7 @@
           "telephone": [
              "283971357"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -195,7 +195,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -233,7 +233,7 @@
              " 224968537",
              " 233018298"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -269,7 +269,7 @@
           "telephone": [
              "234716300"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -307,7 +307,7 @@
           "telephone": [
              "271914978"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -341,7 +341,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -375,7 +375,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -411,7 +411,7 @@
           "telephone": [
              "271008120"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -447,7 +447,7 @@
           "telephone": [
              "271008120"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -479,7 +479,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -515,7 +515,7 @@
           "telephone": [
              "251116604"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -553,7 +553,7 @@
              " 224968537",
              " 233018298"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -589,7 +589,7 @@
           "telephone": [
              "257314354"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -626,7 +626,7 @@
              "272941280",
              " 272940401"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -660,7 +660,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -696,7 +696,7 @@
           "telephone": [
              "603434574"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -728,7 +728,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -760,7 +760,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -792,7 +792,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -826,7 +826,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -863,7 +863,7 @@
              "233340908",
              "283024142"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -899,7 +899,7 @@
           "telephone": [
              "221573556"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -933,7 +933,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -969,7 +969,7 @@
           "telephone": [
              "222809223"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1005,7 +1005,7 @@
           "telephone": [
              "266010128"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -1041,7 +1041,7 @@
           "telephone": [
              "266010128"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -1077,7 +1077,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1115,7 +1115,7 @@
           "telephone": [
              "233372187"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1149,7 +1149,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1183,7 +1183,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1219,7 +1219,7 @@
           "telephone": [
              "603434574"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1255,7 +1255,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1291,7 +1291,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1327,7 +1327,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1363,7 +1363,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1399,7 +1399,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1435,7 +1435,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1471,7 +1471,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1507,7 +1507,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1543,7 +1543,7 @@
           "telephone": [
              "224431111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1575,7 +1575,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1611,7 +1611,7 @@
           "telephone": [
              "257271111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -1648,7 +1648,7 @@
              "272941280",
              " 272940401"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -1686,7 +1686,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -1720,7 +1720,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -1752,7 +1752,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1784,7 +1784,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1818,7 +1818,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1854,7 +1854,7 @@
           "telephone": [
              "221977111"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -1888,7 +1888,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -1924,7 +1924,7 @@
           "telephone": [
              "257325606"
           ],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -1958,7 +1958,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -1992,7 +1992,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716456,
+          "created_at": 1554736716456,
           "type": {
              "description": "Ostatní zvláštní zdravotnická zařízení",
              "group": "health_care",
@@ -2028,7 +2028,7 @@
           "telephone": [
              "270003589"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -2062,7 +2062,7 @@
           "telephone": [
              "257317694"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2098,7 +2098,7 @@
           "telephone": [
              "296113250"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2130,7 +2130,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -2166,7 +2166,7 @@
           "telephone": [
              "266084414"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -2202,7 +2202,7 @@
           "telephone": [
              "222924213"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Záchytná stanice",
              "group": "health_care",
@@ -2238,7 +2238,7 @@
           "telephone": [
              "234123229"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2274,7 +2274,7 @@
           "telephone": [
              "224814284"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zvláštní zdravotnická zařízení",
              "group": "health_care",
@@ -2312,7 +2312,7 @@
           "telephone": [
              "281040771"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -2349,7 +2349,7 @@
              "541 422 271",
              " 541422 288"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2386,7 +2386,7 @@
           "telephone": [
              "543420666"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2418,7 +2418,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -2454,7 +2454,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -2490,7 +2490,7 @@
           "telephone": [
              "222998931"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2528,7 +2528,7 @@
           "telephone": [
              "420266081111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -2564,7 +2564,7 @@
           "telephone": [
              "261081111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -2600,7 +2600,7 @@
           "telephone": [
              "251561100"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2636,7 +2636,7 @@
           "telephone": [
              "257213754"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2670,7 +2670,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2706,7 +2706,7 @@
           "telephone": [
              "274771478"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2738,7 +2738,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -2774,7 +2774,7 @@
           "telephone": [
              "724276641"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -2810,7 +2810,7 @@
           "telephone": [
              "603555001"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -2846,7 +2846,7 @@
           "telephone": [
              "736537022"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2880,7 +2880,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -2916,7 +2916,7 @@
           "telephone": [
              "234123229"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -2952,7 +2952,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -2990,7 +2990,7 @@
              " 224968537",
              " 233018298"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -3028,7 +3028,7 @@
              " 224968537",
              " 233018298"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -3064,7 +3064,7 @@
           "telephone": [
              "233324280"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -3101,7 +3101,7 @@
              "241744481",
              " 775735326"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -3137,7 +3137,7 @@
           "telephone": [
              "222724630"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -3174,7 +3174,7 @@
              "241744481",
              " 775735326"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -3211,7 +3211,7 @@
              "221016106",
              " 224254007"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -3245,7 +3245,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -3281,7 +3281,7 @@
           "telephone": [
              "233310040"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zvláštní zdravotnická zařízení",
              "group": "health_care",
@@ -3318,7 +3318,7 @@
           "telephone": [
              "261260235"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -3354,7 +3354,7 @@
           "telephone": [
              "257923005"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -3392,7 +3392,7 @@
              " 224968537",
              " 233018298"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -3428,7 +3428,7 @@
           "telephone": [
              "221969338"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -3464,7 +3464,7 @@
           "telephone": [
              "221977111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -3500,7 +3500,7 @@
           "telephone": [
              "234075244"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -3536,7 +3536,7 @@
           "telephone": [
              "242480837"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zvláštní zdravotnická zařízení",
              "group": "health_care",
@@ -3568,7 +3568,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -3604,7 +3604,7 @@
           "telephone": [
              "234115111"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -3640,7 +3640,7 @@
           "telephone": [
              "261198994"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -3676,7 +3676,7 @@
           "telephone": [
              "251561100"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -3712,7 +3712,7 @@
           "telephone": [
              "251116604"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -3748,7 +3748,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -3784,7 +3784,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -3820,7 +3820,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -3856,7 +3856,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -3892,7 +3892,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -3928,7 +3928,7 @@
           "telephone": [
              "266083041"
           ],
-          "timestamp": 1554736716457,
+          "created_at": 1554736716457,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -3965,7 +3965,7 @@
              "257197100",
              " 257197101"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -4001,7 +4001,7 @@
           "telephone": [
              "24210112"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4038,7 +4038,7 @@
              "241744481",
              " 775735326"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -4074,7 +4074,7 @@
           "telephone": [
              "235314141"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -4110,7 +4110,7 @@
           "telephone": [
              "235314141"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -4144,7 +4144,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -4180,7 +4180,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -4216,7 +4216,7 @@
           "telephone": [
              "220183333"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4252,7 +4252,7 @@
           "telephone": [
              "221551233"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4288,7 +4288,7 @@
           "telephone": [
              "296192357"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4324,7 +4324,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -4360,7 +4360,7 @@
           "telephone": [
              "272654151"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4394,7 +4394,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4430,7 +4430,7 @@
           "telephone": [
              "251116604"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -4466,7 +4466,7 @@
           "telephone": [
              "257220760"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4498,7 +4498,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4532,7 +4532,7 @@
           "telephone": [
              "281019238"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4564,7 +4564,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4596,7 +4596,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4632,7 +4632,7 @@
           "telephone": [
              "234123229"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4664,7 +4664,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4702,7 +4702,7 @@
              "272997149",
              " 220514320"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4740,7 +4740,7 @@
              "272997149",
              " 220514320"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Zdravotnické středisko",
              "group": "health_care",
@@ -4776,7 +4776,7 @@
           "telephone": [
              "271742118"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4812,7 +4812,7 @@
           "telephone": [
              "271 774 777"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -4848,7 +4848,7 @@
           "telephone": [
              "773836505"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4882,7 +4882,7 @@
           "telephone": [
              "tel.:257.328.352"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -4918,7 +4918,7 @@
           "telephone": [
              "225000888"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -4954,7 +4954,7 @@
           "telephone": [
              "284000813"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice následné péče",
              "group": "health_care",
@@ -4986,7 +4986,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní zdravotnická zařízení",
              "group": "health_care",
@@ -5020,7 +5020,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5052,7 +5052,7 @@
           "opening_hours": [],
           "pharmacy_code": null,
           "telephone": [],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5088,7 +5088,7 @@
           "telephone": [
              "257273171"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5122,7 +5122,7 @@
           "telephone": [
              "257317694"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5156,7 +5156,7 @@
           "telephone": [
              "257317694"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5192,7 +5192,7 @@
           "telephone": [
              "220806861"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Ostatní ambulantní zařízení",
              "group": "health_care",
@@ -5230,7 +5230,7 @@
              " 222801307",
              " 222801305"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -5268,7 +5268,7 @@
              " 222801307",
              " 222801305"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -5302,7 +5302,7 @@
           "telephone": [
              "235325214"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Výdejna zdravotnických prostředků",
              "group": "health_care",
@@ -5338,7 +5338,7 @@
           "telephone": [
              "224431111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5374,7 +5374,7 @@
           "telephone": [
              "267162200"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5410,7 +5410,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5446,7 +5446,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5482,7 +5482,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5518,7 +5518,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5554,7 +5554,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5590,7 +5590,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5626,7 +5626,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5662,7 +5662,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5698,7 +5698,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5734,7 +5734,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5770,7 +5770,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5806,7 +5806,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5842,7 +5842,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5878,7 +5878,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5914,7 +5914,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5950,7 +5950,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -5986,7 +5986,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716458,
+          "created_at": 1554736716458,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -6022,7 +6022,7 @@
           "telephone": [
              "224961111"
           ],
-          "timestamp": 1554736716459,
+          "created_at": 1554736716459,
           "type": {
              "description": "Fakultní nemocnice",
              "group": "health_care",
@@ -6058,7 +6058,7 @@
           "telephone": [
              "257271111"
           ],
-          "timestamp": 1554736716459,
+          "created_at": 1554736716459,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -6094,7 +6094,7 @@
           "telephone": [
              "296511200"
           ],
-          "timestamp": 1554736716459,
+          "created_at": 1554736716459,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
@@ -6130,7 +6130,7 @@
           "telephone": [
              "261 361 111"
           ],
-          "timestamp": 1554736716459,
+          "created_at": 1554736716459,
           "type": {
              "description": "Nemocnice",
              "group": "health_care",
