@@ -17,7 +17,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 92
      },
      "type": "Feature"
@@ -40,7 +40,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 653
      },
      "type": "Feature"
@@ -64,7 +64,7 @@
          "id": 1
        },
        "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=122",
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 169
      },
      "type": "Feature"
@@ -87,7 +87,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 74
      },
      "type": "Feature"
@@ -110,7 +110,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 260
      },
      "type": "Feature"
@@ -133,7 +133,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 181
      },
      "type": "Feature"
@@ -157,7 +157,7 @@
          "id": 1
        },
        "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=123",
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 633
      },
      "type": "Feature"
@@ -181,7 +181,7 @@
          "id": 1
        },
        "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=121",
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 78
      },
      "type": "Feature"
@@ -204,7 +204,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 57
      },
      "type": "Feature"
@@ -227,7 +227,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 95
      },
      "type": "Feature"
@@ -250,7 +250,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 33
      },
      "type": "Feature"
@@ -273,7 +273,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 88
      },
      "type": "Feature"
@@ -296,7 +296,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 63
      },
      "type": "Feature"
@@ -319,7 +319,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 74
      },
      "type": "Feature"
@@ -342,7 +342,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 269
      },
      "type": "Feature"
@@ -365,7 +365,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 83
      },
      "type": "Feature"
@@ -388,7 +388,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 61
      },
      "type": "Feature"
@@ -411,7 +411,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 294
      },
      "type": "Feature"
@@ -434,7 +434,7 @@
          "description": "P+R parkoviště",
          "id": 1
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 131
      },
      "type": "Feature"
@@ -458,7 +458,7 @@
          "id": 2
        },
        "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=106",
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 1205
      },
      "type": "Feature"
@@ -482,7 +482,7 @@
          "id": 2
        },
        "payment_link": "https://ke-utc.appspot.com/static/select_offstreet.html?shortname=106",
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 809
      },
      "type": "Feature"
@@ -505,7 +505,7 @@
          "description": "placené parkoviště",
          "id": 2
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 480
      },
      "type": "Feature"
@@ -528,7 +528,7 @@
          "description": "placené parkoviště",
          "id": 2
        },
-       "timestamp": 1554802603006,
+       "created_at": 1554802603006,
        "total_num_of_places": 464
      },
      "type": "Feature"

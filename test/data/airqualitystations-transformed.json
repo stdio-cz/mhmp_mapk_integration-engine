@@ -8,7 +8,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ABREA",
+          "id": "ABREA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -36,7 +36,7 @@
              ]
           },
           "name": "Praha 6-Břevnov",
-          "timestamp": 1551717263585
+          "updated_at": 1551717263585
        },
        "type": "Feature"
     },
@@ -49,7 +49,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ACHOA",
+          "id": "ACHOA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -77,7 +77,7 @@
              ]
           },
           "name": "Praha 4-Chodov",
-          "timestamp": 1551717263585
+          "updated_at": 1551717263585
        },
        "type": "Feature"
     },
@@ -90,7 +90,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "AKALA",
+          "id": "AKALA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -118,7 +118,7 @@
              ]
           },
           "name": "Praha 8-Karlín",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -131,7 +131,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "AKOBA",
+          "id": "AKOBA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -166,7 +166,7 @@
              ]
           },
           "name": "Praha 8-Kobylisy",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -179,7 +179,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ALEGA",
+          "id": "ALEGA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -221,7 +221,7 @@
              ]
           },
           "name": "Praha 2-Legerova (hot spot)",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -234,7 +234,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ALERA",
+          "id": "ALERA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -269,7 +269,7 @@
              ]
           },
           "name": "Letiště Praha",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -282,7 +282,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ALIBA",
+          "id": "ALIBA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -324,7 +324,7 @@
              ]
           },
           "name": "Praha 4-Libuš",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -337,7 +337,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "APRUA",
+          "id": "APRUA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -365,7 +365,7 @@
              ]
           },
           "name": "Praha 10-Průmyslová",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -378,7 +378,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "AREPA",
+          "id": "AREPA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -406,7 +406,7 @@
              ]
           },
           "name": "Praha 1-n. Republiky",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -419,7 +419,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ARERA",
+          "id": "ARERA",
           "measurement": {
              "AQ_hourly_index": 3,
              "components": [
@@ -454,7 +454,7 @@
              ]
           },
           "name": "Praha 5-Řeporyje",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -467,7 +467,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ARIEA",
+          "id": "ARIEA",
           "measurement": {
              "AQ_hourly_index": 0,
              "components": [
@@ -509,7 +509,7 @@
              ]
           },
           "name": "Praha 2-Riegrovy sady",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -522,7 +522,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ASMIA",
+          "id": "ASMIA",
           "measurement": {
              "AQ_hourly_index": 0,
              "components": [
@@ -550,7 +550,7 @@
              ]
           },
           "name": "Praha 5-Smíchov",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -563,7 +563,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ASROA",
+          "id": "ASROA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -598,7 +598,7 @@
              ]
           },
           "name": "Praha 10-Šrobárova",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -611,7 +611,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ASTOA",
+          "id": "ASTOA",
           "measurement": {
              "AQ_hourly_index": 1,
              "components": [
@@ -639,7 +639,7 @@
              ]
           },
           "name": "Praha 5-Stodůlky",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -652,7 +652,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "ASUCA",
+          "id": "ASUCA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -680,7 +680,7 @@
              ]
           },
           "name": "Praha 6-Suchdol",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -693,7 +693,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "AVRSA",
+          "id": "AVRSA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -714,7 +714,7 @@
              ]
           },
           "name": "Praha 10-Vršovice",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     },
@@ -727,7 +727,7 @@
           "type": "Point"
        },
        "properties": {
-          "code": "AVYNA",
+          "id": "AVYNA",
           "measurement": {
              "AQ_hourly_index": 2,
              "components": [
@@ -762,7 +762,7 @@
              ]
           },
           "name": "Praha 9-Vysočany",
-          "timestamp": 1551717263586
+          "updated_at": 1551717263586
        },
        "type": "Feature"
     }

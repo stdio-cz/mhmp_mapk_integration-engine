@@ -32,7 +32,7 @@
           "id": "potex-benice",
           "name": "Benice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -69,7 +69,7 @@
           "id": "potex-albert-pruhonice",
           "name": "Albert Průhonice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -106,7 +106,7 @@
           "id": "potex-elektroworld-pruhonice",
           "name": "Elektroworld Průhonice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -143,7 +143,7 @@
           "id": "potex-kika-pruhonice",
           "name": "KIKA Průhonice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -180,7 +180,7 @@
           "id": "potex-lidl-pruhonice",
           "name": "LIDL Průhonice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -217,7 +217,7 @@
           "id": "potex-dobrejovice",
           "name": "Dobřejovice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -254,7 +254,7 @@
           "id": "potex-hostivice",
           "name": "Hostivice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -291,7 +291,7 @@
           "id": "potex-jesenice-1",
           "name": "Jesenice 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -328,7 +328,7 @@
           "id": "potex-jesenice-2",
           "name": "Jesenice 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -365,7 +365,7 @@
           "id": "potex-kocanda",
           "name": "Kocanda",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -402,7 +402,7 @@
           "id": "potex-dolni-pocernice",
           "name": "Dolní Počernice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -439,7 +439,7 @@
           "id": "potex-kunratice",
           "name": "Kunratice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -476,7 +476,7 @@
           "id": "potex-nebusice",
           "name": "Nebušice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -513,7 +513,7 @@
           "id": "potex-nedvezi",
           "name": "Nedvězí",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -550,7 +550,7 @@
           "id": "potex-predni-kopanina",
           "name": "Přední Kopanina",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -587,7 +587,7 @@
           "id": "potex-satalice",
           "name": "Satalice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -624,7 +624,7 @@
           "id": "potex-zbraslav-1",
           "name": "Zbraslav 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -661,7 +661,7 @@
           "id": "potex-zbraslav-2",
           "name": "Zbraslav 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -698,7 +698,7 @@
           "id": "potex-zbraslav-3",
           "name": "Zbraslav 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -735,7 +735,7 @@
           "id": "potex-zlicin",
           "name": "Zličín",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -772,7 +772,7 @@
           "id": "potex-nove-mesto",
           "name": "Nové Město",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -809,7 +809,7 @@
           "id": "potex-vinohrady-1",
           "name": "Vinohrady 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -846,7 +846,7 @@
           "id": "potex-vinohrady-2",
           "name": "Vinohrady 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -883,7 +883,7 @@
           "id": "potex-vinohrady-3",
           "name": "Vinohrady 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -920,7 +920,7 @@
           "id": "potex-zizkov",
           "name": "Žižkov",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -957,7 +957,7 @@
           "id": "potex-zizkov-1",
           "name": "Žižkov 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -994,7 +994,7 @@
           "id": "potex-zizkov-2",
           "name": "Žižkov 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1031,7 +1031,7 @@
           "id": "potex-zizkov-3",
           "name": "Žižkov 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1068,7 +1068,7 @@
           "id": "potex-zizkov-4",
           "name": "Žižkov 4",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1105,7 +1105,7 @@
           "id": "potex-zizkov-5",
           "name": "Žižkov 5",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1142,7 +1142,7 @@
           "id": "potex-zizkov-6",
           "name": "Žižkov 6",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1179,7 +1179,7 @@
           "id": "potex-zizkov-7",
           "name": "Žižkov 7",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1216,7 +1216,7 @@
           "id": "potex-krc-1",
           "name": "Krč 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1253,7 +1253,7 @@
           "id": "potex-krc-2",
           "name": "Krč 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1290,7 +1290,7 @@
           "id": "potex-krc-3",
           "name": "Krč 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1327,7 +1327,7 @@
           "id": "potex-lhotka-1",
           "name": "Lhotka 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1364,7 +1364,7 @@
           "id": "potex-lhotka-2",
           "name": "Lhotka 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1401,7 +1401,7 @@
           "id": "potex-michle",
           "name": "Michle",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1438,7 +1438,7 @@
           "id": "potex-novodvorska",
           "name": "Novodvorská",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1475,7 +1475,7 @@
           "id": "potex-nusle",
           "name": "Nusle ",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1512,7 +1512,7 @@
           "id": "potex-podoli",
           "name": "Podolí",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1549,7 +1549,7 @@
           "id": "potex-sporilov",
           "name": "Spořilov",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1586,7 +1586,7 @@
           "id": "potex-seberov",
           "name": "Šeberov",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1623,7 +1623,7 @@
           "id": "potex-barrandov",
           "name": "Barrandov",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1660,7 +1660,7 @@
           "id": "potex-jinonice",
           "name": "Jinonice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1697,7 +1697,7 @@
           "id": "potex-smichov-1",
           "name": "Smíchov 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1734,7 +1734,7 @@
           "id": "potex-dejvice",
           "name": "Dejvice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1771,7 +1771,7 @@
           "id": "potex-dejvice-1",
           "name": "Dejvice 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1808,7 +1808,7 @@
           "id": "potex-vokovice",
           "name": "Vokovice",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1845,7 +1845,7 @@
           "id": "potex-holesovice",
           "name": "Holešovice ",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1882,7 +1882,7 @@
           "id": "potex-bohnice-1",
           "name": "Bohnice 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1919,7 +1919,7 @@
           "id": "potex-bohnice-2",
           "name": "Bohnice 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1956,7 +1956,7 @@
           "id": "potex-bohnice-3",
           "name": "Bohnice 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -1993,7 +1993,7 @@
           "id": "potex-bohnice-4",
           "name": "Bohnice 4",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2030,7 +2030,7 @@
           "id": "potex-bohnice-5",
           "name": "Bohnice 5",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2067,7 +2067,7 @@
           "id": "potex-cimice-1",
           "name": "Čimice 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2104,7 +2104,7 @@
           "id": "potex-cimice-2",
           "name": "Čimice 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2141,7 +2141,7 @@
           "id": "potex-dablice-1",
           "name": "Ďáblice 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2178,7 +2178,7 @@
           "id": "potex-dablice-2",
           "name": "Ďáblice 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2215,7 +2215,7 @@
           "id": "potex-kobylisy-1",
           "name": "Kobylisy 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2252,7 +2252,7 @@
           "id": "potex-kobylisy-2",
           "name": "Kobylisy 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2289,7 +2289,7 @@
           "id": "potex-kobylisy-3",
           "name": "Kobylisy 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2326,7 +2326,7 @@
           "id": "potex-kobylisy-4",
           "name": "Kobylisy 4",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2363,7 +2363,7 @@
           "id": "potex-kobylisy-5",
           "name": "Kobylisy 5",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2400,7 +2400,7 @@
           "id": "potex-kotlaska-hloubetin",
           "name": "Kotlaska - Hloubětín",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2437,7 +2437,7 @@
           "id": "potex-ladvi",
           "name": "Ládví",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2474,7 +2474,7 @@
           "id": "potex-troja",
           "name": "Troja",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2511,7 +2511,7 @@
           "id": "potex-cakovice-globus",
           "name": "Čakovice Globus",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2548,7 +2548,7 @@
           "id": "potex-hloubetin",
           "name": "Hloubětín",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2585,7 +2585,7 @@
           "id": "potex-letnany-1",
           "name": "Letňany 1",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2622,7 +2622,7 @@
           "id": "potex-letnany-2",
           "name": "Letňany 2",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2659,7 +2659,7 @@
           "id": "potex-letnany-3",
           "name": "Letňany 3",
           "station_number": null,
-          "timestamp": 1552313612409
+          "updated_at": 1552313612409
        },
        "type": "Feature"
     },
@@ -2696,7 +2696,7 @@
           "id": "potex-prosek-2",
           "name": "Prosek 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2733,7 +2733,7 @@
           "id": "potex-prosek-1",
           "name": "Prosek 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2770,7 +2770,7 @@
           "id": "potex-strizkov",
           "name": "Střížkov",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2807,7 +2807,7 @@
           "id": "potex-malesice-2",
           "name": "Malešice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2844,7 +2844,7 @@
           "id": "potex-malesice-1",
           "name": "Malešice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2881,7 +2881,7 @@
           "id": "potex-vrsovice-1",
           "name": "Vršovice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2918,7 +2918,7 @@
           "id": "potex-vrsovice-2",
           "name": "Vršovice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2955,7 +2955,7 @@
           "id": "potex-vrsovice-3",
           "name": "Vršovice 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -2992,7 +2992,7 @@
           "id": "potex-vrsovice-4",
           "name": "Vršovice 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3029,7 +3029,7 @@
           "id": "potex-zabehlice",
           "name": "Záběhlice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3066,7 +3066,7 @@
           "id": "potex-zabehlice-1",
           "name": "Záběhlice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3103,7 +3103,7 @@
           "id": "potex-zabehlice-2",
           "name": "Záběhlice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3140,7 +3140,7 @@
           "id": "potex-zahradni-mesto",
           "name": "Zahradní Město",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3177,7 +3177,7 @@
           "id": "potex-chodov-1",
           "name": "Chodov 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3214,7 +3214,7 @@
           "id": "potex-chodov-2",
           "name": "Chodov 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3251,7 +3251,7 @@
           "id": "potex-chodov-3",
           "name": "Chodov 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3288,7 +3288,7 @@
           "id": "potex-chodov-4",
           "name": "Chodov 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3325,7 +3325,7 @@
           "id": "potex-roztyly",
           "name": "Roztyly",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3362,7 +3362,7 @@
           "id": "potex-kamyk-1",
           "name": "Kamýk 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3399,7 +3399,7 @@
           "id": "potex-kamyk-2",
           "name": "Kamýk 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3436,7 +3436,7 @@
           "id": "potex-modrany",
           "name": "Modřany",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3473,7 +3473,7 @@
           "id": "potex-luka",
           "name": "Luka",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3510,7 +3510,7 @@
           "id": "potex-cerny-most-1",
           "name": "Černý most 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3547,7 +3547,7 @@
           "id": "potex-cerny-most-3-elektroworld",
           "name": "Černý most 3 - Elektroworld",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3584,7 +3584,7 @@
           "id": "potex-cerny-most-5-bratri-vencliku",
           "name": "Černý most 5 - Bratří Venclíků",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3621,7 +3621,7 @@
           "id": "potex-jahodnice",
           "name": "Jahodnice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3658,7 +3658,7 @@
           "id": "potex-dolni-mecholupy",
           "name": "Dolní Měcholupy",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3695,7 +3695,7 @@
           "id": "potex-dubec",
           "name": "Dubeč",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3732,7 +3732,7 @@
           "id": "potex-dubecek",
           "name": "Dubeček",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3769,7 +3769,7 @@
           "id": "potex-horni-mecholupy",
           "name": "Horní Měcholupy",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3806,7 +3806,7 @@
           "id": "potex-petrovice",
           "name": "Petrovice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3843,7 +3843,7 @@
           "id": "potex-sterboholy",
           "name": "Štěrboholy",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3880,7 +3880,7 @@
           "id": "potex-bila-hora",
           "name": "Bílá Hora",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3917,7 +3917,7 @@
           "id": "potex-repy-1",
           "name": "Řepy 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3954,7 +3954,7 @@
           "id": "potex-repy-2",
           "name": "Řepy 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -3991,7 +3991,7 @@
           "id": "potex-repy-3",
           "name": "Řepy 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4028,7 +4028,7 @@
           "id": "potex-repy-4",
           "name": "Řepy 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4065,7 +4065,7 @@
           "id": "potex-repy-5",
           "name": "Řepy 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4102,7 +4102,7 @@
           "id": "potex-horni-pocernice-1",
           "name": "Horní Počernice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4139,7 +4139,7 @@
           "id": "potex-horni-pocernice-2",
           "name": "Horní Počernice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4176,7 +4176,7 @@
           "id": "potex-klanovice",
           "name": "Klánovice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4213,7 +4213,7 @@
           "id": "potex-hajek-uhrineves",
           "name": "Hájek, Uhříněves",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4250,7 +4250,7 @@
           "id": "potex-kolovraty-1",
           "name": "Kolovraty 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4287,7 +4287,7 @@
           "id": "potex-kolovraty-2",
           "name": "Kolovraty 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4324,7 +4324,7 @@
           "id": "potex-pitkovice",
           "name": "Pitkovice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4361,7 +4361,7 @@
           "id": "potex-uhrineves-1",
           "name": "Uhříněves 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4398,7 +4398,7 @@
           "id": "potex-uhrineves-2",
           "name": "Uhříněves 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4435,7 +4435,7 @@
           "id": "potex-dolni-jircany",
           "name": "Dolní Jirčany",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4472,7 +4472,7 @@
           "id": "potex-psary-1",
           "name": "Psáry 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4509,7 +4509,7 @@
           "id": "potex-psary-2",
           "name": "Psáry 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4546,7 +4546,7 @@
           "id": "potex-ricany-1",
           "name": "Říčany 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4583,7 +4583,7 @@
           "id": "potex-ricany-2",
           "name": "Říčany 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4620,7 +4620,7 @@
           "id": "potex-zelivec",
           "name": "Želivec",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4657,7 +4657,7 @@
           "id": "potex-sestajovice",
           "name": "Šestajovice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4694,7 +4694,7 @@
           "id": "potex-uvaly",
           "name": "Úvaly",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4731,7 +4731,7 @@
           "id": "potex-velke-popovice",
           "name": "Velké Popovice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4768,7 +4768,7 @@
           "id": "potex-vestec",
           "name": "Vestec",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4805,7 +4805,7 @@
           "id": "potex-zbraslav-4",
           "name": "Zbraslav 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4842,7 +4842,7 @@
           "id": "potex-dolni-pocernice-1",
           "name": "Dolní Počernice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4879,7 +4879,7 @@
           "id": "potex-repy-6",
           "name": "Řepy 6",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4916,7 +4916,7 @@
           "id": "potex-repy-7",
           "name": "Řepy 7",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4953,7 +4953,7 @@
           "id": "potex-cerny-most-6",
           "name": "Černý most 6",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -4990,7 +4990,7 @@
           "id": "potex-cerny-most-7",
           "name": "Černý most 7",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5027,7 +5027,7 @@
           "id": "potex-kyje",
           "name": "Kyje",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5064,7 +5064,7 @@
           "id": "potex-vysocany",
           "name": "Vysočany",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5101,7 +5101,7 @@
           "id": "potex-karlin-1",
           "name": "Karlín 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5138,7 +5138,7 @@
           "id": "potex-dablice-3",
           "name": "Ďáblice 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5175,7 +5175,7 @@
           "id": "potex-dablice-4",
           "name": "Ďáblice 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5212,7 +5212,7 @@
           "id": "potex-bohnice-6",
           "name": "Bohnice 6",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5249,7 +5249,7 @@
           "id": "potex-bohnice-7",
           "name": "Bohnice 7",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5286,7 +5286,7 @@
           "id": "potex-bohnice-8",
           "name": "Bohnice 8",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5323,7 +5323,7 @@
           "id": "potex-dolni-chabry",
           "name": "Dolní Chabry",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5360,7 +5360,7 @@
           "id": "potex-dobroviz",
           "name": "Dobrovíz",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5397,7 +5397,7 @@
           "id": "potex-dobroviz-1",
           "name": "Dobrovíz 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5434,7 +5434,7 @@
           "id": "potex-ms-jahodnice",
           "name": "MŠ Jahodnice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5471,7 +5471,7 @@
           "id": "potex-zs-spitalska",
           "name": "ZŠ Špitálská",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5508,7 +5508,7 @@
           "id": "potex-fotbalove-hriste-xaverov",
           "name": "Fotbalové hřiště Xaverov",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5545,7 +5545,7 @@
           "id": "potex-squash-sportovni-centrum-pro6",
           "name": "Squash, Sportovní centrum Pro6",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5582,7 +5582,7 @@
           "id": "potex-uhrineves-3",
           "name": "Uhříněves 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5619,7 +5619,7 @@
           "id": "potex-uhrineves-4",
           "name": "Uhříněves 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5656,7 +5656,7 @@
           "id": "potex-makro-cerny-most",
           "name": "Makro - Černý Most",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5693,7 +5693,7 @@
           "id": "potex-makro-stodulky",
           "name": "Makro - Stodůlky",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5730,7 +5730,7 @@
           "id": "potex-cerny-most-4",
           "name": "Černý most 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5767,7 +5767,7 @@
           "id": "potex-cerny-most-8",
           "name": "Černý most 8",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5804,7 +5804,7 @@
           "id": "potex-nedvezi-2",
           "name": "Nedvězí 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5841,7 +5841,7 @@
           "id": "potex-dolni-chabry-1",
           "name": "Dolní Chabry 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5878,7 +5878,7 @@
           "id": "potex-dolni-chabry-2",
           "name": "Dolní Chabry 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5915,7 +5915,7 @@
           "id": "potex-billa-stodulky",
           "name": "Billa - Stodůlky",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5952,7 +5952,7 @@
           "id": "potex-chodov-5",
           "name": "Chodov 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -5989,7 +5989,7 @@
           "id": "potex-chodov-6",
           "name": "Chodov 6",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6026,7 +6026,7 @@
           "id": "potex-chodov-7",
           "name": "Chodov 7",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6063,7 +6063,7 @@
           "id": "potex-haje",
           "name": "Háje",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6100,7 +6100,7 @@
           "id": "potex-chodov-8",
           "name": "Chodov 8",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6137,7 +6137,7 @@
           "id": "potex-podoli-1",
           "name": "Podolí 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6174,7 +6174,7 @@
           "id": "potex-nusle-1",
           "name": "Nusle 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6211,7 +6211,7 @@
           "id": "potex-nusle-2",
           "name": "Nusle 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6248,7 +6248,7 @@
           "id": "potex-nove-butovice-1",
           "name": "Nové Butovice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6285,7 +6285,7 @@
           "id": "potex-stodulky",
           "name": "Stodůlky",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6322,7 +6322,7 @@
           "id": "potex-nove-butovice-2",
           "name": "Nové Butovice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6359,7 +6359,7 @@
           "id": "potex-stodulky-1",
           "name": "Stodůlky 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6396,7 +6396,7 @@
           "id": "potex-stodulky-2",
           "name": "Stodůlky 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6433,7 +6433,7 @@
           "id": "potex-petrovice-1",
           "name": "Petrovice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6470,7 +6470,7 @@
           "id": "potex-letnany-4",
           "name": "Letňany 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6507,7 +6507,7 @@
           "id": "potex-letnany",
           "name": "Letňany",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6544,7 +6544,7 @@
           "id": "potex-modrany-1",
           "name": "Modřany 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6581,7 +6581,7 @@
           "id": "potex-kamyk",
           "name": "Kamýk",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6618,7 +6618,7 @@
           "id": "potex-modrany-2",
           "name": "Modřany 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6655,7 +6655,7 @@
           "id": "potex-kamyk-3",
           "name": "Kamýk 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6692,7 +6692,7 @@
           "id": "potex-modrany-3",
           "name": "Modřany 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6729,7 +6729,7 @@
           "id": "potex-modrany-4",
           "name": "Modřany 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6766,7 +6766,7 @@
           "id": "potex-libus",
           "name": "Libuš",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6803,7 +6803,7 @@
           "id": "potex-horni-pocernice",
           "name": "Horní Počernice",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6840,7 +6840,7 @@
           "id": "potex-horni-pocernice-3",
           "name": "Horní Počernice 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6877,7 +6877,7 @@
           "id": "potex-petriny",
           "name": "Petřiny",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6914,7 +6914,7 @@
           "id": "potex-veleslavin",
           "name": "Veleslavín",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6951,7 +6951,7 @@
           "id": "potex-kamyk-4",
           "name": "Kamýk 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -6988,7 +6988,7 @@
           "id": "potex-kamyk-5",
           "name": "Kamýk 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7025,7 +7025,7 @@
           "id": "potex-zbraslav-5",
           "name": "Zbraslav 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7062,7 +7062,7 @@
           "id": "potex-park-hostivar",
           "name": "Park Hostivař",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7099,7 +7099,7 @@
           "id": "potex-nusle-3",
           "name": "Nusle 3",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7136,7 +7136,7 @@
           "id": "potex-vinohrady-4",
           "name": "Vinohrady 4",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7173,7 +7173,7 @@
           "id": "potex-petrovice-2",
           "name": "Petrovice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7210,7 +7210,7 @@
           "id": "potex-holesovice-1",
           "name": "Holešovice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7247,7 +7247,7 @@
           "id": "potex-holesovice-2",
           "name": "Holešovice 2",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7284,7 +7284,7 @@
           "id": "potex-vrsovice-5",
           "name": "Vršovice 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7321,7 +7321,7 @@
           "id": "potex-liben",
           "name": "Libeň",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7358,7 +7358,7 @@
           "id": "potex-modrany-5",
           "name": "Modřany 5",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7395,7 +7395,7 @@
           "id": "potex-vokovice-1",
           "name": "Vokovice 1",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7432,7 +7432,7 @@
           "id": "potex-liboc",
           "name": "Liboc",
           "station_number": null,
-          "timestamp": 1552313612410
+          "updated_at": 1552313612410
        },
        "type": "Feature"
     },
@@ -7469,7 +7469,7 @@
           "id": "potex-hlubocepy",
           "name": "Hlubočepy",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7506,7 +7506,7 @@
           "id": "potex-smichov-2",
           "name": "Smíchov 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7543,7 +7543,7 @@
           "id": "potex-smichov-3",
           "name": "Smíchov 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7580,7 +7580,7 @@
           "id": "potex-kosire",
           "name": "Košíře",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7617,7 +7617,7 @@
           "id": "potex-hlubocepy-1",
           "name": "Hlubočepy 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7654,7 +7654,7 @@
           "id": "potex-hlubocepy-2",
           "name": "Hlubočepy 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7691,7 +7691,7 @@
           "id": "potex-smichov-4",
           "name": "Smíchov 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7728,7 +7728,7 @@
           "id": "potex-stodulky",
           "name": "Stodůlky",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7765,7 +7765,7 @@
           "id": "potex-kosire-1",
           "name": "Košíře 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7802,7 +7802,7 @@
           "id": "potex-kosire-2",
           "name": "Košíře 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7839,7 +7839,7 @@
           "id": "potex-smichov-5",
           "name": "Smíchov 5",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7876,7 +7876,7 @@
           "id": "potex-hlubocepy-3",
           "name": "Hlubočepy 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7913,7 +7913,7 @@
           "id": "potex-hlubocepy-4",
           "name": "Hlubočepy 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7950,7 +7950,7 @@
           "id": "potex-kosire-3",
           "name": "Košíře 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -7987,7 +7987,7 @@
           "id": "potex-smichov-6",
           "name": "Smíchov 6",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8024,7 +8024,7 @@
           "id": "potex-hlubocepy-5",
           "name": "Hlubočepy 5",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8061,7 +8061,7 @@
           "id": "potex-hlubocepy-6",
           "name": "Hlubočepy 6",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8098,7 +8098,7 @@
           "id": "potex-vokovice-2",
           "name": "Vokovice 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8135,7 +8135,7 @@
           "id": "potex-stodulky-3",
           "name": "Stodůlky 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8172,7 +8172,7 @@
           "id": "potex-stodulky-4",
           "name": "Stodůlky 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8209,7 +8209,7 @@
           "id": "potex-stodulky-5",
           "name": "Stodůlky 5",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8246,7 +8246,7 @@
           "id": "potex-stodulky-6",
           "name": "Stodůlky 6",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8283,7 +8283,7 @@
           "id": "potex-stodulky-7",
           "name": "Stodůlky 7",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8320,7 +8320,7 @@
           "id": "potex-stodulky-8",
           "name": "Stodůlky 8",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8357,7 +8357,7 @@
           "id": "potex-stodulky-9",
           "name": "Stodůlky 9",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8394,7 +8394,7 @@
           "id": "potex-stodulky-10",
           "name": "Stodůlky 10",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8431,7 +8431,7 @@
           "id": "potex-stodulky-11",
           "name": "Stodůlky 11",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8468,7 +8468,7 @@
           "id": "potex-troja-1",
           "name": "Troja 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8505,7 +8505,7 @@
           "id": "potex-bohnice-9",
           "name": "Bohnice 9",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8542,7 +8542,7 @@
           "id": "potex-kobylisy-6",
           "name": "Kobylisy 6",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8579,7 +8579,7 @@
           "id": "potex-kobylisy-7",
           "name": "Kobylisy 7",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8616,7 +8616,7 @@
           "id": "potex-kobylisy-8",
           "name": "Kobylisy 8",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8653,7 +8653,7 @@
           "id": "potex-kobylisy-9",
           "name": "Kobylisy 9",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8690,7 +8690,7 @@
           "id": "potex-kobylisy",
           "name": "Kobylisy",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8727,7 +8727,7 @@
           "id": "potex-1-kobylisy",
           "name": "1 Kobylisy",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8764,7 +8764,7 @@
           "id": "potex-cimice-3",
           "name": "Čimice 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8801,7 +8801,7 @@
           "id": "potex-bohnice",
           "name": "Bohnice",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8838,7 +8838,7 @@
           "id": "potex-karlin-2",
           "name": "Karlín 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8875,7 +8875,7 @@
           "id": "potex-karlin-3",
           "name": "Karlín 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8912,7 +8912,7 @@
           "id": "potex-karlin-4",
           "name": "Karlín 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8949,7 +8949,7 @@
           "id": "potex-karlin-5",
           "name": "Karlín 5",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -8986,7 +8986,7 @@
           "id": "potex-skalka",
           "name": "Skalka",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9023,7 +9023,7 @@
           "id": "potex-hanspaulka",
           "name": "Hanspaulka",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9060,7 +9060,7 @@
           "id": "potex-benice-1",
           "name": "Benice 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9097,7 +9097,7 @@
           "id": "potex-radotin",
           "name": "Radotín",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9134,7 +9134,7 @@
           "id": "potex-repy-8",
           "name": "Řepy 8",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9171,7 +9171,7 @@
           "id": "potex-chodov-9",
           "name": "Chodov 9",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9208,7 +9208,7 @@
           "id": "potex-opatov-1",
           "name": "Opatov 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9245,7 +9245,7 @@
           "id": "potex-jinocany-1",
           "name": "Jinočany 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9282,7 +9282,7 @@
           "id": "potex-jinocany-2",
           "name": "Jinočany 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9319,7 +9319,7 @@
           "id": "potex-haje-1",
           "name": "Háje 1",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9356,7 +9356,7 @@
           "id": "potex-chodov-15",
           "name": "Chodov 15",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9393,7 +9393,7 @@
           "id": "potex-chodov-11",
           "name": "Chodov 11",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9430,7 +9430,7 @@
           "id": "potex-chodov-12",
           "name": "Chodov 12",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9467,7 +9467,7 @@
           "id": "potex-haje-2",
           "name": "Háje 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9504,7 +9504,7 @@
           "id": "potex-chodov-13",
           "name": "Chodov 13",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9541,7 +9541,7 @@
           "id": "potex-haje-3",
           "name": "Háje 3",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9578,7 +9578,7 @@
           "id": "potex-chodov-14",
           "name": "Chodov 14",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9615,7 +9615,7 @@
           "id": "potex-chodov-10",
           "name": "Chodov 10",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9652,7 +9652,7 @@
           "id": "potex-chodov-16",
           "name": "Chodov 16",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9689,7 +9689,7 @@
           "id": "potex-chodov-17",
           "name": "Chodov 17",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9726,7 +9726,7 @@
           "id": "potex-haje-4",
           "name": "Háje 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9763,7 +9763,7 @@
           "id": "potex-chodov-18",
           "name": "Chodov 18",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9800,7 +9800,7 @@
           "id": "potex-chodov-19",
           "name": "Chodov 19",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9837,7 +9837,7 @@
           "id": "potex-haje-5",
           "name": "Háje 5",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9874,7 +9874,7 @@
           "id": "potex-kunratice-2",
           "name": "Kunratice 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9911,7 +9911,7 @@
           "id": "potex-nusle-4",
           "name": "Nusle 4",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9948,7 +9948,7 @@
           "id": "potex-kamyk-6",
           "name": "Kamýk 6",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -9985,7 +9985,7 @@
           "id": "potex-dolni-pocernice-2",
           "name": "Dolní Počernice 2",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -10022,7 +10022,7 @@
           "id": "potex-cesky-brod",
           "name": "Český Brod",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     },
@@ -10059,7 +10059,7 @@
           "id": "potex-celakovice",
           "name": "Čelákovice",
           "station_number": null,
-          "timestamp": 1552313612411
+          "updated_at": 1552313612411
        },
        "type": "Feature"
     }

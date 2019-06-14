@@ -18,7 +18,7 @@
                     "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
                     "id": 2
                 },
-                "timestamp": 1547051693393
+                "created_at": 1547051693393
             },
             "type": "Feature"
         },
@@ -40,7 +40,7 @@
                     "description": "lost connection (connection status older than 1 hour)",
                     "id": -1
                 },
-                "timestamp": 1547051693393
+                "created_at": 1547051693393
             },
             "type": "Feature"
         },
@@ -62,7 +62,7 @@
                     "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
                     "id": 2
                 },
-                "timestamp": 1547051693393
+                "created_at": 1547051693393
             },
             "type": "Feature"
         }
