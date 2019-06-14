@@ -30,7 +30,6 @@ export class IceGatewaySensorsWorker extends BaseWorker {
             new Validator(IceGatewaySensors.name + "DataSource", IceGatewaySensors.datasourceMongooseSchemaObject));
         this.model = new MongoModel(IceGatewaySensors.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: IceGatewaySensors.mongoCollectionName,
                 outputMongooseSchemaObject: IceGatewaySensors.outputMongooseSchemaObject,
                 resultsPath: "properties",

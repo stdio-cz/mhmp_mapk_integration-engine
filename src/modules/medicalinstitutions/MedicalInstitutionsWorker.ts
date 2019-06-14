@@ -77,7 +77,6 @@ export class MedicalInstitutionsWorker extends BaseWorker {
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }, { "properties.type.group": 1 }],
                 mongoCollectionName: MedicalInstitutions.mongoCollectionName,
                 outputMongooseSchemaObject: MedicalInstitutions.outputMongooseSchemaObject,
                 resultsPath: "properties",

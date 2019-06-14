@@ -36,7 +36,6 @@ export class AirQualityStationsWorker extends BaseWorker {
                 AirQualityStations.datasourceMongooseSchemaObject));
         this.model = new MongoModel(AirQualityStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: AirQualityStations.mongoCollectionName,
                 outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
                 resultsPath: "properties",

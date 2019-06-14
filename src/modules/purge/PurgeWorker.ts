@@ -24,7 +24,6 @@ export class PurgeWorker {
         );
         this.sharedBikesModel = new MongoModel(SharedBikes.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: SharedBikes.mongoCollectionName,
                 outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -37,7 +36,6 @@ export class PurgeWorker {
         );
         this.sharedCarsModel = new MongoModel(SharedCars.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: SharedCars.mongoCollectionName,
                 outputMongooseSchemaObject: SharedCars.outputMongooseSchemaObject,
                 resultsPath: "properties",

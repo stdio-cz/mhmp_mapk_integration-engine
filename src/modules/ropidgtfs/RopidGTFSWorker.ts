@@ -47,6 +47,8 @@ export class RopidGTFSWorker extends BaseWorker {
             },
             null);
         this.metaModel = new RopidGTFSMetadataModel();
+        const cisStopsTypeStrategy = new JSONDataTypeStrategy({resultsPath: "stopGroups"});
+        cisStopsTypeStrategy.setFilter((item) => item.cis !== 0);
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
                 filename: config.datasources.RopidGTFSCisStopsFilename,
@@ -54,7 +56,7 @@ export class RopidGTFSWorker extends BaseWorker {
                 tmpDir: "/tmp/",
                 url: config.datasources.RopidFTP,
             }),
-            new JSONDataTypeStrategy({resultsPath: "stopGroups"}),
+            cisStopsTypeStrategy,
             null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new PostgresModel(RopidGTFS.cis_stop_groups.name + "Model", {
@@ -188,6 +190,20 @@ export class RopidGTFSWorker extends BaseWorker {
             version: dbLastModified.version + 1 });
 
         const transformedData = await this.transformationCisStops.transform(data);
+
+        log.debug(transformedData.cis_stop_groups.length);
+        const unique = {};
+        const duplicates = {};
+        transformedData.cis_stop_groups.forEach((item) => {
+            if (!unique[item.cis]) {
+                unique[item.cis] = item;
+            } else {
+                duplicates[item.cis] = item;
+            }
+        });
+        log.debug(Object.keys(unique).length);
+        log.debug(JSON.stringify(duplicates));
+
         // save meta
         await this.metaModel.save([{
             dataset: "CIS_STOPS",

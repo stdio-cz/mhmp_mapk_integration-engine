@@ -32,7 +32,6 @@ export class IceGatewayStreetLampsWorker extends BaseWorker {
                 IceGatewayStreetLamps.datasourceMongooseSchemaObject));
         this.model = new MongoModel(IceGatewayStreetLamps.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: IceGatewayStreetLamps.mongoCollectionName,
                 outputMongooseSchemaObject: IceGatewayStreetLamps.outputMongooseSchemaObject,
                 resultsPath: "properties",
