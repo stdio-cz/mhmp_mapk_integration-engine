@@ -31,7 +31,6 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(MunicipalPoliceStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: MunicipalPoliceStations.mongoCollectionName,
                 outputMongooseSchemaObject: MunicipalPoliceStations.outputMongooseSchemaObject,
                 resultsPath: "properties",

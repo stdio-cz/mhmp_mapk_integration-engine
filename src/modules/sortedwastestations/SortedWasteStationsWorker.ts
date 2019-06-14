@@ -81,7 +81,6 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(SortedWasteStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: SortedWasteStations.mongoCollectionName,
                 outputMongooseSchemaObject: SortedWasteStations.outputMongooseSchemaObject,
                 resultsPath: "properties",

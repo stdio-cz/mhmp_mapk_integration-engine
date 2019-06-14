@@ -26,7 +26,6 @@ export class CityDistrictsWorker extends BaseWorker {
             new Validator(CityDistricts.name + "DataSourceValidator", CityDistricts.datasourceMongooseSchemaObject));
         this.model = new MongoModel(CityDistricts.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }, { "properties.slug": 1 }],
                 mongoCollectionName: CityDistricts.mongoCollectionName,
                 outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
                 resultsPath: "properties",

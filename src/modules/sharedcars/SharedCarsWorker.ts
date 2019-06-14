@@ -47,7 +47,6 @@ export class SharedCarsWorker extends BaseWorker {
 
         this.model = new MongoModel(SharedCars.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: SharedCars.mongoCollectionName,
                 outputMongooseSchemaObject: SharedCars.outputMongooseSchemaObject,
                 resultsPath: "properties",

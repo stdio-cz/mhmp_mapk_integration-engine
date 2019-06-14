@@ -37,7 +37,6 @@ export class ParkingsWorker extends BaseWorker {
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: Parkings.mongoCollectionName,
                 outputMongooseSchemaObject: Parkings.outputMongooseSchemaObject,
                 resultsPath: "properties",

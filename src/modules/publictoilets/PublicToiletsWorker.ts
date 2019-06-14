@@ -29,7 +29,6 @@ export class PublicToiletsWorker extends BaseWorker {
             new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject));
         this.model = new MongoModel(PublicToilets.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: PublicToilets.mongoCollectionName,
                 outputMongooseSchemaObject: PublicToilets.outputMongooseSchemaObject,
                 resultsPath: "properties",

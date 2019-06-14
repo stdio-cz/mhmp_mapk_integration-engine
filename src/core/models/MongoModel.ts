@@ -35,12 +35,6 @@ export class MongoModel implements IModel {
 
         this.schema = new mongoose.Schema(settings.outputMongooseSchemaObject,
             { bufferCommands: false });
-        this.schema.index({ [settings.identifierPath]: 1 });
-        if (settings.modelIndexes) {
-            settings.modelIndexes.forEach((i) => {
-                this.schema.index(i);
-            });
-        }
 
         try {
             this.mongooseModel = mongoose.model(this.name);

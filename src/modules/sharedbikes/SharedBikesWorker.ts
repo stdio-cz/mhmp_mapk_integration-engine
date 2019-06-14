@@ -61,7 +61,6 @@ export class SharedBikesWorker extends BaseWorker {
 
         this.model = new MongoModel(SharedBikes.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: SharedBikes.mongoCollectionName,
                 outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
                 resultsPath: "properties",
