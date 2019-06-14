@@ -2428,7 +2428,7 @@
                 "id": 547310,
                 "name": "Praha-Čakovice",
                 "slug": "praha-cakovice",
-                "timestamp": 1547111347515
+                "updated_at": 1547111347515
             },
             "type": "Feature"
         },
@@ -5724,7 +5724,7 @@
                 "id": 547361,
                 "name": "Praha 14",
                 "slug": "praha-14",
-                "timestamp": 1547111347515
+                "updated_at": 1547111347515
             },
             "type": "Feature"
         },
@@ -10988,7 +10988,7 @@
                 "id": 547107,
                 "name": "Praha 12",
                 "slug": "praha-12",
-                "timestamp": 1547111347516
+                "updated_at": 1547111347516
             },
             "type": "Feature"
         }
