@@ -142,7 +142,7 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {
-        await worker.checkSavedRowsAndReplaceTables();
+        await worker.checkSavedRowsAndReplaceTables({content: new Buffer(JSON.stringify({count: 8}))});
         sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
         sandbox.assert.calledOnce(worker.metaModel.replaceTables);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.truncate);

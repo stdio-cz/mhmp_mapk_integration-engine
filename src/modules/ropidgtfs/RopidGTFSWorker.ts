@@ -165,9 +165,10 @@ export class RopidGTFSWorker extends BaseWorker {
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
+        const inputData = JSON.parse(msg.content.toString());
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         try {
-            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
+            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version, inputData.count);
             await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
             await this.delayComputationTripsModel.truncate();
             return true;
@@ -191,6 +192,7 @@ export class RopidGTFSWorker extends BaseWorker {
 
         const transformedData = await this.transformationCisStops.transform(data);
 
+        // TODO osetrit duplicity cis_id
         log.debug(transformedData.cis_stop_groups.length);
         const unique = {};
         const duplicates = {};
@@ -221,7 +223,7 @@ export class RopidGTFSWorker extends BaseWorker {
             await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
             await this.cisStopsModel.truncate(true);
             await this.cisStopsModel.save(transformedData.cis_stops, true);
-            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
+            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1, 2);
             await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
         } catch (err) {
             log.error(err);
