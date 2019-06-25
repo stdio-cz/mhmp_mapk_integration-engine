@@ -14,13 +14,12 @@ export class MosMATicketActivationsTransformation extends BaseTransformation imp
 
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
-            account_id: element.accountId,
-            cptp: element.cptp,
             date: element.date,
-            lat: element.lat,
-            lon: element.lon,
+            lat: (element.lat) ? parseFloat(element.lat) : null,
+            lon: (element.lon) ? parseFloat(element.lon) : null,
             ticket_id: element.ticketId,
             type: element.type,
+            zones: element.zones,
         };
         return res;
     }

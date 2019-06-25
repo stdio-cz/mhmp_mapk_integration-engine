@@ -54,20 +54,28 @@ describe("MosMATicketPurchasesTransformation", () => {
         expect(data).to.have.property("account_id");
         expect(data).to.have.property("cptp");
         expect(data).to.have.property("date");
+        expect(data).to.have.property("duration");
         expect(data).to.have.property("lat");
         expect(data).to.have.property("lon");
+        expect(data).to.have.property("tariff_id");
+        expect(data).to.have.property("tariff_name");
         expect(data).to.have.property("ticket_id");
+        expect(data).to.have.property("zone_count");
     });
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("account_id");
-            expect(data[i]).to.have.property("cptp");
-            expect(data[i]).to.have.property("date");
-            expect(data[i]).to.have.property("lat");
-            expect(data[i]).to.have.property("lon");
-            expect(data[i]).to.have.property("ticket_id");
+            expect(data[0]).to.have.property("account_id");
+            expect(data[0]).to.have.property("cptp");
+            expect(data[0]).to.have.property("date");
+            expect(data[0]).to.have.property("duration");
+            expect(data[0]).to.have.property("lat");
+            expect(data[0]).to.have.property("lon");
+            expect(data[0]).to.have.property("tariff_id");
+            expect(data[0]).to.have.property("tariff_name");
+            expect(data[0]).to.have.property("ticket_id");
+            expect(data[0]).to.have.property("zone_count");
         }
     });
 

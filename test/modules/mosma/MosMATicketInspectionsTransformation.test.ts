@@ -50,8 +50,10 @@ describe("MosMATicketInspectionsTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
+        const data = await transformation.transform(testSourceData[1]);
         expect(data).to.have.property("date");
+        expect(data).to.have.property("lat");
+        expect(data).to.have.property("lon");
         expect(data).to.have.property("reason");
         expect(data).to.have.property("result");
         expect(data).to.have.property("user_id");

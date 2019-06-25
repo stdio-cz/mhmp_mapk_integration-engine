@@ -17,9 +17,13 @@ export class MosMATicketPurchasesTransformation extends BaseTransformation imple
             account_id: element.accountId,
             cptp: element.cptp,
             date: element.date,
-            lat: element.lat,
-            lon: element.lon,
+            duration: element.duration,
+            lat: (element.lat) ? parseFloat(element.lat) : null,
+            lon: (element.lat) ? parseFloat(element.lon) : null,
+            tariff_id: element.tariffId,
+            tariff_name: element.tariffName,
             ticket_id: element.ticketId,
+            zone_count: element.zoneCount,
         };
         return res;
     }

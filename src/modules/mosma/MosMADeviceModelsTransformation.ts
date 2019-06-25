@@ -13,8 +13,11 @@ export class MosMADeviceModelsTransformation extends BaseTransformation implemen
     }
 
     protected transformElement = async (element: any): Promise<any> => {
-        // not transformation is needed
-        return element;
+        const res = {
+            count: element.count,
+            model: element.model,
+        };
+        return res;
     }
 
 }

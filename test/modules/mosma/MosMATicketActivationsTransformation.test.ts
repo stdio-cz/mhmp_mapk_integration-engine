@@ -51,25 +51,23 @@ describe("MosMATicketActivationsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.transform(testSourceData[0]);
-        expect(data).to.have.property("account_id");
-        expect(data).to.have.property("cptp");
         expect(data).to.have.property("date");
         expect(data).to.have.property("lat");
         expect(data).to.have.property("lon");
         expect(data).to.have.property("ticket_id");
         expect(data).to.have.property("type");
+        expect(data).to.have.property("zones")
     });
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("account_id");
-            expect(data[i]).to.have.property("cptp");
             expect(data[i]).to.have.property("date");
             expect(data[i]).to.have.property("lat");
             expect(data[i]).to.have.property("lon");
             expect(data[i]).to.have.property("ticket_id");
             expect(data[i]).to.have.property("type");
+            expect(data[i]).to.have.property("zones")
         }
     });
 
