@@ -52,15 +52,22 @@ describe("VehiclePositionsTransformation", () => {
     it("should properly transform element", async () => {
         const data = await transformation.transform(testSourceData.m.spoj[0]);
         expect(data).to.have.property("positions");
+        expect(data.positions[0]).to.have.property("lat", 50.16252);
+        expect(data.positions[0]).to.have.property("lng", 14.52483);
         expect(data).to.have.property("stops");
+        expect(data.stops.length).to.equal(28);
         expect(data).to.have.property("trips");
+        expect(data.trips[0]).to.have.property("cis_id", 100110);
     });
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData.m.spoj);
         expect(data).to.have.property("positions");
+        expect(data.positions.length).to.equal(321);
         expect(data).to.have.property("stops");
+        expect(data.stops.length).to.equal(5953);
         expect(data).to.have.property("trips");
+        expect(data.trips.length).to.equal(321);
     });
 
 });
