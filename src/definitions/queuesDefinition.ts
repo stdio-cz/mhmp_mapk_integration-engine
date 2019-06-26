@@ -5,7 +5,7 @@ import {
     MedicalInstitutions, MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
     ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
-    } from "golemio-schema-definitions";
+} from "golemio-schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
@@ -15,6 +15,7 @@ import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { GardensWorker } from "../modules/gardens";
+import { GeneralWorker } from "../modules/general";
 import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
 import { IceGatewayStreetLampsWorker } from "../modules/icegatewaystreetlamps";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
@@ -36,6 +37,22 @@ import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 
 const definitions: IQueueDefinition[] = [
+    {
+        name: "general",
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + "general",
+        queues: [
+            {
+                name: "import",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000,
+                },
+                worker: GeneralWorker,
+                workerMethod: "saveData",
+            },
+        ],
+    },
     {
         name: AirQualityStations.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase(),
@@ -814,25 +831,26 @@ const definitions: IQueueDefinition[] = [
             },
         ],
     },
-/*
-    // template
-    {
-        name: TemplateDataset.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TemplateDataset.name.toLowerCase(),
-        queues: [
-            {
-                name: "TemplateQueue",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+    /*
+        // template
+        {
+            name: TemplateDataset.name,
+            queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TemplateDataset.name.toLowerCase(),
+            queues: [
+                {
+                    name: "TemplateQueue",
+                    options: {
+                        deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                        deadLetterRoutingKey: "dead",
+                        messageTtl: 4 * 60 * 1000,
+                    },
+                    worker: TemplateWorker,
+                    workerMethod: "TemplateQueue",
                 },
-                worker: TemplateWorker,
-                workerMethod: "TemplateQueue",
-            },
-        ],
-    },
-*/
+            ],
+        },
+    */
 ];
 
 export { definitions as queuesDefinition };
+
