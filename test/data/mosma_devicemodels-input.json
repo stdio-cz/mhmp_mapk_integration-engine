@@ -1,0 +1,262 @@
+[
+    {
+        "model": "",
+        "count": 12
+    },
+    {
+        "model": "3",
+        "count": 1
+    },
+    {
+        "model": "Asus Nexus 7",
+        "count": 2
+    },
+    {
+        "model": "Genymotion Samsung Galaxy S6 - 7.1.0 - API 25 - 1440x2560",
+        "count": 1
+    },
+    {
+        "model": "Genymotion Samsung Galaxy S7 - 6.0.0 - API 23 - 1440x2560",
+        "count": 1
+    },
+    {
+        "model": "Genymotion Samsung Galaxy S8 - 8.0 - API 26 - 1440x2960",
+        "count": 1
+    },
+    {
+        "model": "Google Android SDK built for x86",
+        "count": 53
+    },
+    {
+        "model": "Google Android SDK built for x86_64",
+        "count": 5
+    },
+    {
+        "model": "Google Pixel",
+        "count": 1
+    },
+    {
+        "model": "Google Pixel 2",
+        "count": 6
+    },
+    {
+        "model": "HMD Global Nokia 7 plus",
+        "count": 1
+    },
+    {
+        "model": "HMD Global TA-1033",
+        "count": 1
+    },
+    {
+        "model": "HMD Global TA-1053",
+        "count": 1
+    },
+    {
+        "model": "HUAWEI ANE-LX1",
+        "count": 1
+    },
+    {
+        "model": "HUAWEI COL-L29",
+        "count": 1
+    },
+    {
+        "model": "HUAWEI FRD-L09",
+        "count": 2
+    },
+    {
+        "model": "HUAWEI P7-L10",
+        "count": 1
+    },
+    {
+        "model": "HUAWEI PE-TL10",
+        "count": 1
+    },
+    {
+        "model": "HUAWEI STF-L09",
+        "count": 2
+    },
+    {
+        "model": "HUAWEI VNS-L21",
+        "count": 2
+    },
+    {
+        "model": "iPad",
+        "count": 6
+    },
+    {
+        "model": "iPad Simulator",
+        "count": 15
+    },
+    {
+        "model": "iPhone",
+        "count": 84
+    },
+    {
+        "model": "iPhone 5 (GSM+CDMA)",
+        "count": 9
+    },
+    {
+        "model": "iPhone 5c (GSM+CDMA)",
+        "count": 10
+    },
+    {
+        "model": "iPhone 6",
+        "count": 2
+    },
+    {
+        "model": "iPhone 6 (Plus)",
+        "count": 1
+    },
+    {
+        "model": "iPhone 6s",
+        "count": 7
+    },
+    {
+        "model": "iPhone SE",
+        "count": 5
+    },
+    {
+        "model": "iPhone Simulator",
+        "count": 195
+    },
+    {
+        "model": "iPhone X",
+        "count": 3
+    },
+    {
+        "model": "iPhone X (GSM+CDMA)",
+        "count": 15
+    },
+    {
+        "model": "iPhone XS",
+        "count": 1
+    },
+    {
+        "model": "LENOVO Lenovo P70-A",
+        "count": 5
+    },
+    {
+        "model": "LGE LG-D855",
+        "count": 19
+    },
+    {
+        "model": "LGE LG-H870",
+        "count": 5
+    },
+    {
+        "model": "LGE LG-M700",
+        "count": 1
+    },
+    {
+        "model": "LGE LG-P970",
+        "count": 1
+    },
+    {
+        "model": "LGE Nexus 5X",
+        "count": 2
+    },
+    {
+        "model": "Motorola MotoG3",
+        "count": 3
+    },
+    {
+        "model": "OnePlus ONEPLUS A6003",
+        "count": 1
+    },
+    {
+        "model": "Samsung GT-I9506",
+        "count": 1
+    },
+    {
+        "model": "Samsung SM-A310F",
+        "count": 2
+    },
+    {
+        "model": "Samsung SM-A510F",
+        "count": 1
+    },
+    {
+        "model": "Samsung SM-A520F",
+        "count": 1
+    },
+    {
+        "model": "Samsung SM-G357FZ",
+        "count": 1
+    },
+    {
+        "model": "Samsung SM-G800F",
+        "count": 2
+    },
+    {
+        "model": "Samsung SM-G903F",
+        "count": 1
+    },
+    {
+        "model": "Samsung SM-G925F",
+        "count": 2
+    },
+    {
+        "model": "Samsung SM-G930F",
+        "count": 2
+    },
+    {
+        "model": "Samsung SM-G950F",
+        "count": 6
+    },
+    {
+        "model": "Samsung SM-J510FN",
+        "count": 5
+    },
+    {
+        "model": "Samsung SM-J530F",
+        "count": 3
+    },
+    {
+        "model": "Simulator",
+        "count": 7
+    },
+    {
+        "model": "Sony E2303",
+        "count": 4
+    },
+    {
+        "model": "Sony Ericsson SK17i",
+        "count": 2
+    },
+    {
+        "model": "Ulefone Power_2",
+        "count": 1
+    },
+    {
+        "model": "Unknown Android SDK built for x86",
+        "count": 21
+    },
+    {
+        "model": "Unknown Android SDK built for x86_64",
+        "count": 7
+    },
+    {
+        "model": "Xiaomi Mi A1",
+        "count": 6
+    },
+    {
+        "model": "Xiaomi Redmi 3S",
+        "count": 2
+    },
+    {
+        "model": "Xiaomi Redmi 4",
+        "count": 1
+    },
+    {
+        "model": "Xiaomi Redmi 4A",
+        "count": 1
+    },
+    {
+        "model": "Xiaomi Redmi 5",
+        "count": 1
+    },
+    {
+        "model": "Xiaomi Redmi 5A",
+        "count": 3
+    }
+]
