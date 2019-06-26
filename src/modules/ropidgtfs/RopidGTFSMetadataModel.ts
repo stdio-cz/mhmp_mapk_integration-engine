@@ -56,10 +56,13 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         }
     }
 
-    public checkSavedRows = async (dataset: string, version: number): Promise<void> => {
-        const metaSum = await this.getTotalFromMeta(dataset, version);
-        const tableSum = await this.getTotalFromTables(dataset, version);
-        if (metaSum !== tableSum) {
+    public checkSavedRows = async (dataset: string, version: number, numOfTables: number): Promise<void> => {
+        const meta = await this.getTotalFromMeta(dataset, version);
+        const tables = await this.getTotalFromTables(dataset, version);
+        if (meta.totalRows !== tables.totalRows
+                || meta.numOfTables !== tables.numOfTables
+                || meta.numOfTables !== numOfTables
+                || tables.numOfTables !== numOfTables) {
             throw new CustomError(this.name + ": checkSavedRows() failed.", true);
         }
     }
@@ -141,6 +144,14 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
     }
 
     private getTotalFromMeta = async (dataset: string, version: number): Promise<any> => {
+        const tables = await this.sequelizeModel.findAll({
+            attributes: [["key", "tn"]],
+            where: {
+                dataset,
+                type: "TABLE_TOTAL_COUNT",
+                version,
+            },
+        });
         const result = await this.sequelizeModel.findAll({
             attributes: [[Sequelize.fn("SUM", Sequelize.cast(Sequelize.col("value"), "INTEGER")), "total"]],
             where: {
@@ -149,8 +160,12 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 version,
             },
         });
-        log.debug(this.name + " Total from metadata: " + result[0].dataValues.total);
-        return result[0].dataValues.total;
+        const res = {
+            numOfTables: tables.length,
+            totalRows: result[0].dataValues.total,
+        };
+        log.debug(this.name + " Total from metadata: " + JSON.stringify(res));
+        return res;
     }
 
     private getTotalFromTables = async (dataset: string, version: number): Promise<any> => {
@@ -179,8 +194,12 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             + "AND table_schema = 'tmp'; ",
             { type: Sequelize.QueryTypes.SELECT});
 
-        log.debug(this.name + " Total from tables: " + result[0].total);
-        return result[0].total;
+        const res = {
+            numOfTables: tables.length,
+            totalRows: result[0].total,
+        };
+        log.debug(this.name + " Total from tables: " + JSON.stringify(res));
+        return res;
     }
 
 }

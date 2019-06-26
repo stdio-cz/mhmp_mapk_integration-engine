@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { VehiclePositionsTransformation } from "../../../src/modules/vehiclepositions";
+import { MosMADeviceModelsTransformation } from "../../../src/modules/mosma";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -29,20 +29,20 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("VehiclePositionsTransformation", () => {
+describe("MosMADeviceModelsTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new VehiclePositionsTransformation();
-        const buffer = await readFile(__dirname + "/../../data/vehiclepositions-input.json");
+        transformation = new MosMADeviceModelsTransformation();
+        const buffer = await readFile(__dirname + "/../../data/mosma_devicemodels-input.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("VehiclePositions");
+        expect(transformation.name).is.equal("MOSMADeviceModels");
     });
 
     it("should has transform method", async () => {
@@ -50,24 +50,17 @@ describe("VehiclePositionsTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData.m.spoj[0]);
-        expect(data).to.have.property("positions");
-        expect(data.positions[0]).to.have.property("lat", 50.16252);
-        expect(data.positions[0]).to.have.property("lng", 14.52483);
-        expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(28);
-        expect(data).to.have.property("trips");
-        expect(data.trips[0]).to.have.property("cis_id", 100110);
+        const data = await transformation.transform(testSourceData[0]);
+        expect(data).to.have.property("count");
+        expect(data).to.have.property("model");
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.transform(testSourceData.m.spoj);
-        expect(data).to.have.property("positions");
-        expect(data.positions.length).to.equal(321);
-        expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(5953);
-        expect(data).to.have.property("trips");
-        expect(data.trips.length).to.equal(321);
+        const data = await transformation.transform(testSourceData);
+        for (let i = 0, imax = data.length; i < imax; i++) {
+            expect(data[0]).to.have.property("count");
+            expect(data[0]).to.have.property("model");
+        }
     });
 
 });

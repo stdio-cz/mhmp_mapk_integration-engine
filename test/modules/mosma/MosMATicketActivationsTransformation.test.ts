@@ -3,7 +3,7 @@
 "use strict";
 
 import "mocha";
-import { VehiclePositionsTransformation } from "../../../src/modules/vehiclepositions";
+import { MosMATicketActivationsTransformation } from "../../../src/modules/mosma";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -29,20 +29,20 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("VehiclePositionsTransformation", () => {
+describe("MosMATicketActivationsTransformation", () => {
 
     let transformation;
     let testSourceData;
 
     beforeEach(async () => {
-        transformation = new VehiclePositionsTransformation();
-        const buffer = await readFile(__dirname + "/../../data/vehiclepositions-input.json");
+        transformation = new MosMATicketActivationsTransformation();
+        const buffer = await readFile(__dirname + "/../../data/mosma_ticketactivations-input.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("VehiclePositions");
+        expect(transformation.name).is.equal("MOSMATicketActivations");
     });
 
     it("should has transform method", async () => {
@@ -50,24 +50,25 @@ describe("VehiclePositionsTransformation", () => {
     });
 
     it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData.m.spoj[0]);
-        expect(data).to.have.property("positions");
-        expect(data.positions[0]).to.have.property("lat", 50.16252);
-        expect(data.positions[0]).to.have.property("lng", 14.52483);
-        expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(28);
-        expect(data).to.have.property("trips");
-        expect(data.trips[0]).to.have.property("cis_id", 100110);
+        const data = await transformation.transform(testSourceData[0]);
+        expect(data).to.have.property("date");
+        expect(data).to.have.property("lat");
+        expect(data).to.have.property("lon");
+        expect(data).to.have.property("ticket_id");
+        expect(data).to.have.property("type");
+        expect(data).to.have.property("zones")
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.transform(testSourceData.m.spoj);
-        expect(data).to.have.property("positions");
-        expect(data.positions.length).to.equal(321);
-        expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(5953);
-        expect(data).to.have.property("trips");
-        expect(data.trips.length).to.equal(321);
+        const data = await transformation.transform(testSourceData);
+        for (let i = 0, imax = data.length; i < imax; i++) {
+            expect(data[i]).to.have.property("date");
+            expect(data[i]).to.have.property("lat");
+            expect(data[i]).to.have.property("lon");
+            expect(data[i]).to.have.property("ticket_id");
+            expect(data[i]).to.have.property("type");
+            expect(data[i]).to.have.property("zones")
+        }
     });
 
 });

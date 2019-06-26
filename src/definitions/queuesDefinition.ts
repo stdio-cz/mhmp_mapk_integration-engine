@@ -2,7 +2,7 @@
 
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
+    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
     ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards,
 } from "golemio-schema-definitions";
@@ -21,6 +21,7 @@ import { IceGatewayStreetLampsWorker } from "../modules/icegatewaystreetlamps";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
 import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
+import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
 import { ParkingsWorker } from "../modules/parkings";
@@ -269,6 +270,48 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: MOS.MA.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MOS.MA.name.toLowerCase(),
+        queues: [
+            {
+                name: "saveDeviceModelsDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "saveDeviceModelsDataToDB",
+            },
+            {
+                name: "saveTicketActivationsDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "saveTicketActivationsDataToDB",
+            },
+            {
+                name: "saveTicketInspectionsDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "saveTicketInspectionsDataToDB",
+            },
+            {
+                name: "saveTicketPurchasesDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "saveTicketPurchasesDataToDB",
             },
         ],
     },
