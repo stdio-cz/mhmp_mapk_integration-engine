@@ -96,6 +96,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#datasource" class="tsd-kind-icon">data<wbr>Source</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#historymodel" class="tsd-kind-icon">history<wbr>Model</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#occupanciesmodel" class="tsd-kind-icon">occupancies<wbr>Model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#occupanciestransformation" class="tsd-kind-icon">occupancies<wbr>Transformation</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#queueprefix" class="tsd-kind-icon">queue<wbr>Prefix</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="parkingsworker.html#transformation" class="tsd-kind-icon">transformation</a></li>
 							</ul>
@@ -105,6 +107,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingsworker.html#savedatatohistory" class="tsd-kind-icon">save<wbr>Data<wbr>ToHistory</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingsworker.html#saveoccupanciestodb" class="tsd-kind-icon">save<wbr>Occupancies<wbr>ToDB</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="parkingsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingsworker.html#updateaddressanddistrict" class="tsd-kind-icon">update<wbr>Address<wbr>And<wbr>District</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingsworker.html#updateaverageoccupancy" class="tsd-kind-icon">update<wbr>Average<wbr>Occupancy</a></li>
@@ -125,7 +128,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/parkings/ParkingsWorker.ts:21</li>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:23</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="parkingsworker.html" class="tsd-signature-type">ParkingsWorker</a></h4>
@@ -176,6 +179,26 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="occupanciesmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> occupancies<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">occupancies<wbr>Model<span class="tsd-signature-symbol">:</span> <a href="postgresmodel.html" class="tsd-signature-type">PostgresModel</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/parkings/ParkingsWorker.ts:23</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="occupanciestransformation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> occupancies<wbr>Transformation</h3>
+					<div class="tsd-signature tsd-kind-icon">occupancies<wbr>Transformation<span class="tsd-signature-symbol">:</span> <a href="parkingsoccupanciestransformation.html" class="tsd-signature-type">ParkingsOccupanciesTransformation</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/parkings/ParkingsWorker.ts:22</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="queueprefix" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> queue<wbr>Prefix</h3>
 					<div class="tsd-signature tsd-kind-icon">queue<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -208,7 +231,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/parkings/ParkingsWorker.ts:84</li>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:94</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -231,7 +254,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/parkings/ParkingsWorker.ts:103</li>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:113</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>msg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="saveoccupanciestodb" class="tsd-anchor"></a>
+					<h3>save<wbr>Occupancies<wbr>ToDB</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">save<wbr>Occupancies<wbr>ToDB<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:210</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -284,7 +330,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/parkings/ParkingsWorker.ts:109</li>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:119</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -307,7 +353,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/parkings/ParkingsWorker.ts:150</li>
+									<li>Defined in modules/parkings/ParkingsWorker.ts:160</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -353,6 +399,12 @@
 								<a href="parkingsworker.html#model" class="tsd-kind-icon">model</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="parkingsworker.html#occupanciesmodel" class="tsd-kind-icon">occupancies<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="parkingsworker.html#occupanciestransformation" class="tsd-kind-icon">occupancies<wbr>Transformation</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="parkingsworker.html#queueprefix" class="tsd-kind-icon">queue<wbr>Prefix</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
@@ -363,6 +415,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="parkingsworker.html#savedatatohistory" class="tsd-kind-icon">save<wbr>Data<wbr>ToHistory</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="parkingsworker.html#saveoccupanciestodb" class="tsd-kind-icon">save<wbr>Occupancies<wbr>ToDB</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="parkingsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a>

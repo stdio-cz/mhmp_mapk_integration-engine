@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CityDistrictsWorker | Golemio Integration Engine</title>
+	<title>BicycleParkingsWorker | Golemio Integration Engine</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="citydistrictsworker.html">CityDistrictsWorker</a>
+					<a href="bicycleparkingsworker.html">BicycleParkingsWorker</a>
 				</li>
 			</ul>
-			<h1>Class CityDistrictsWorker</h1>
+			<h1>Class BicycleParkingsWorker</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 						<a href="baseworker.html" class="tsd-signature-type">BaseWorker</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">CityDistrictsWorker</span>
+								<span class="target">BicycleParkingsWorker</span>
 							</li>
 						</ul>
 					</li>
@@ -86,22 +86,25 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="citydistrictsworker.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="bicycleparkingsworker.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="citydistrictsworker.html#datasource" class="tsd-kind-icon">data<wbr>Source</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="citydistrictsworker.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="citydistrictsworker.html#transformation" class="tsd-kind-icon">transformation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bicycleparkingsworker.html#citydistrictsmodel" class="tsd-kind-icon">city<wbr>Districts<wbr>Model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bicycleparkingsworker.html#datasource" class="tsd-kind-icon">data<wbr>Source</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bicycleparkingsworker.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bicycleparkingsworker.html#queueprefix" class="tsd-kind-icon">queue<wbr>Prefix</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bicycleparkingsworker.html#transformation" class="tsd-kind-icon">transformation</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="citydistrictsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="citydistrictsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bicycleparkingsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="bicycleparkingsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bicycleparkingsworker.html#updatedistrict" class="tsd-kind-icon">update<wbr>District</a></li>
 							</ul>
 						</section>
 					</div>
@@ -113,16 +116,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>City<wbr>Districts<wbr>Worker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="citydistrictsworker.html" class="tsd-signature-type">CityDistrictsWorker</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Bicycle<wbr>Parkings<wbr>Worker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bicycleparkingsworker.html" class="tsd-signature-type">BicycleParkingsWorker</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/citydistricts/CityDistrictsWorker.ts:15</li>
+									<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:18</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="citydistrictsworker.html" class="tsd-signature-type">CityDistrictsWorker</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="bicycleparkingsworker.html" class="tsd-signature-type">BicycleParkingsWorker</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -130,12 +133,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="citydistrictsmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> city<wbr>Districts<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">city<wbr>Districts<wbr>Model<span class="tsd-signature-symbol">:</span> <a href="mongomodel.html" class="tsd-signature-type">MongoModel</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:18</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="datasource" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> data<wbr>Source</h3>
 					<div class="tsd-signature tsd-kind-icon">data<wbr>Source<span class="tsd-signature-symbol">:</span> <a href="datasource.html" class="tsd-signature-type">DataSource</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in modules/citydistricts/CityDistrictsWorker.ts:14</li>
+							<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:14</li>
 						</ul>
 					</aside>
 				</section>
@@ -145,17 +158,27 @@
 					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="mongomodel.html" class="tsd-signature-type">MongoModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in modules/citydistricts/CityDistrictsWorker.ts:13</li>
+							<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:16</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="queueprefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> queue<wbr>Prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">queue<wbr>Prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:17</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="transformation" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> transformation</h3>
-					<div class="tsd-signature tsd-kind-icon">transformation<span class="tsd-signature-symbol">:</span> <a href="citydistrictstransformation.html" class="tsd-signature-type">CityDistrictsTransformation</a></div>
+					<div class="tsd-signature tsd-kind-icon">transformation<span class="tsd-signature-symbol">:</span> <a href="bicycleparkingstransformation.html" class="tsd-signature-type">BicycleParkingsTransformation</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in modules/citydistricts/CityDistrictsWorker.ts:15</li>
+							<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:15</li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +195,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/citydistricts/CityDistrictsWorker.ts:49</li>
+									<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:65</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -215,6 +238,29 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatedistrict" class="tsd-anchor"></a>
+					<h3>update<wbr>District</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>District<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/bicycleparkings/BicycleParkingsWorker.ts:78</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>msg: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -230,25 +276,34 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="citydistrictsworker.html" class="tsd-kind-icon">City<wbr>Districts<wbr>Worker</a>
+						<a href="bicycleparkingsworker.html" class="tsd-kind-icon">Bicycle<wbr>Parkings<wbr>Worker</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="citydistrictsworker.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="bicycleparkingsworker.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="citydistrictsworker.html#datasource" class="tsd-kind-icon">data<wbr>Source</a>
+								<a href="bicycleparkingsworker.html#citydistrictsmodel" class="tsd-kind-icon">city<wbr>Districts<wbr>Model</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="citydistrictsworker.html#model" class="tsd-kind-icon">model</a>
+								<a href="bicycleparkingsworker.html#datasource" class="tsd-kind-icon">data<wbr>Source</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="citydistrictsworker.html#transformation" class="tsd-kind-icon">transformation</a>
+								<a href="bicycleparkingsworker.html#model" class="tsd-kind-icon">model</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="bicycleparkingsworker.html#queueprefix" class="tsd-kind-icon">queue<wbr>Prefix</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="bicycleparkingsworker.html#transformation" class="tsd-kind-icon">transformation</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="citydistrictsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a>
+								<a href="bicycleparkingsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="citydistrictsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a>
+								<a href="bicycleparkingsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="bicycleparkingsworker.html#updatedistrict" class="tsd-kind-icon">update<wbr>District</a>
 							</li>
 						</ul>
 					</li>
