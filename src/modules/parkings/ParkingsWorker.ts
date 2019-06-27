@@ -5,9 +5,9 @@ import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi, Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
-import { MongoModel } from "../../core/models";
+import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import { ParkingsTransformation } from "./";
+import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
 
 const moment = require("moment");
 
@@ -19,6 +19,8 @@ export class ParkingsWorker extends BaseWorker {
     private historyModel: MongoModel;
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
+    private occupanciesTransformation: ParkingsOccupanciesTransformation;
+    private occupanciesModel: PostgresModel;
 
     constructor() {
         super();
@@ -35,7 +37,6 @@ export class ParkingsWorker extends BaseWorker {
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: Parkings.mongoCollectionName,
                 outputMongooseSchemaObject: Parkings.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -78,6 +79,15 @@ export class ParkingsWorker extends BaseWorker {
                     : { "properties.id": id },
             },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
+        );
+        this.occupanciesTransformation = new ParkingsOccupanciesTransformation();
+        this.occupanciesModel = new PostgresModel(Parkings.occupancies.name + "Model", {
+                outputSequelizeAttributes: Parkings.occupancies.outputSequelizeAttributes,
+                pgTableName: Parkings.occupancies.pgTableName,
+                savingType: "insertOnly",
+            },
+            new Validator(Parkings.occupancies.name + "ModelValidator",
+                Parkings.occupancies.outputMongooseSchemaObject),
         );
     }
 
@@ -195,6 +205,12 @@ export class ParkingsWorker extends BaseWorker {
             throw new CustomError("Error while updating average taken places.",
                 true, this.constructor.name, 1019, err);
         }
+    }
+
+    public saveOccupanciesToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.occupanciesTransformation.transform(inputData);
+        await this.occupanciesModel.save(transformedData);
     }
 
 }

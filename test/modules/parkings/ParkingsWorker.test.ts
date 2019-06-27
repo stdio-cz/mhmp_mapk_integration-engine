@@ -5,6 +5,7 @@
 import { Parkings } from "golemio-schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
+import { PostgresConnector } from "../../../src/core/connectors";
 import { GeocodeApi } from "../../../src/core/helpers";
 import { ParkingsWorker } from "../../../src/modules/parkings";
 
@@ -25,6 +26,8 @@ describe("ParkingsWorker", () => {
     let testTransformedHistoryData;
     let data0;
     let data1;
+    let testOccData;
+    let testTransformedOccData;
 
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
@@ -34,6 +37,20 @@ describe("ParkingsWorker", () => {
         testTransformedHistoryData = [1, 2];
         data0 = {properties: {id: 0}, geometry: {coordinates: [0, 0]}};
         data1 = {properties: {id: 1}, geometry: {coordinates: [1, 1]}, save: sandbox.stub().resolves(true)};
+        testOccData = { gpreservation: { zoneinfo: { zonei: {
+                        capacity: "633", name: "Parkoviště", occupation: "178", reservedcapacity: "0",
+                        reservedoccupation: "0",
+                    } } },
+        };
+        testTransformedOccData = {
+            capacity: 633, occupation: 178, parking_id: 534016, reservedcapacity: 0, reservedoccupation: 0,
+        };
+
+        sandbox.stub(PostgresConnector, "getConnection")
+            .callsFake(() => Object.assign({
+                define: sandbox.stub().callsFake(() => ({})),
+                transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
+            }));
 
         worker = new ParkingsWorker();
 
@@ -54,6 +71,10 @@ describe("ParkingsWorker", () => {
 
         sandbox.stub(worker.cityDistrictsModel, "findOne");
         sandbox.stub(GeocodeApi, "getAddressByLatLng");
+
+        sandbox.stub(worker.occupanciesTransformation, "transform")
+            .callsFake(() => testTransformedOccData);
+        sandbox.stub(worker.occupanciesModel, "save");
     });
 
     afterEach(() => {
@@ -132,6 +153,15 @@ describe("ParkingsWorker", () => {
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
         sandbox.assert.calledOnce(worker.historyModel.aggregate);
         sandbox.assert.calledOnce(data1.save);
+    });
+
+    it("should calls the correct methods by saveOccupanciesToDB method", async () => {
+        await worker.saveOccupanciesToDB({content: new Buffer(JSON.stringify(testOccData))});
+        sandbox.assert.calledOnce(worker.occupanciesTransformation.transform);
+        sandbox.assert.calledOnce(worker.occupanciesModel.save);
+        sandbox.assert.callOrder(
+            worker.occupanciesTransformation.transform,
+            worker.occupanciesModel.save);
     });
 
 });

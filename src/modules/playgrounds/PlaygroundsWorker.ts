@@ -29,7 +29,6 @@ export class PlaygroundsWorker extends BaseWorker {
             new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Playgrounds.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry : "2dsphere" }],
                 mongoCollectionName: Playgrounds.mongoCollectionName,
                 outputMongooseSchemaObject: Playgrounds.outputMongooseSchemaObject,
                 resultsPath: "properties",

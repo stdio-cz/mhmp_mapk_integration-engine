@@ -12,6 +12,23 @@ export class IceGatewaySensorsTransformation extends BaseTransformation implemen
         this.name = IceGatewaySensors.name;
     }
 
+    /**
+     * Overrides BaseTransformation::transformHistory
+     */
+    public transformHistory = async (data: any|any[]): Promise<any|any[]> => {
+        if (data instanceof Array) {
+            const promises = data.map((element) => {
+                return this.transformHistoryElement(element);
+            });
+            const results = await Promise.all(promises);
+            // in this case the transformHistoryElement() returns array or null
+            const filtered = results.filter((r) => r); // null values are deleted
+            return Array.prototype.concat(...filtered); // concatenating all sub-arrays to one array
+        } else {
+            return this.transformHistoryElement(data);
+        }
+    }
+
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
@@ -59,15 +76,10 @@ export class IceGatewaySensorsTransformation extends BaseTransformation implemen
 
     protected transformHistoryElement = async (element: any): Promise<any> => {
         const filteredSensors = element.properties.sensors.filter((s) => s.validity === 0);
-        const res = {
-            id: element.properties.id,
-            sensors: filteredSensors,
-            updated_at: element.properties.updated_at,
-        };
-        if (res.sensors.length === 0) {
-            return null;
-        }
-        return res;
+        return filteredSensors.map((sensor) => {
+            sensor.created_at = sensor.created_at * 1000;
+            return { ...sensor, id: element.properties.id, updated_at: element.properties.updated_at };
+        });
     }
 
 }

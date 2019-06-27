@@ -33,7 +33,6 @@ export class MeteosensorsWorker extends BaseWorker {
             new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Meteosensors.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: Meteosensors.mongoCollectionName,
                 outputMongooseSchemaObject: Meteosensors.outputMongooseSchemaObject,
                 resultsPath: "properties",

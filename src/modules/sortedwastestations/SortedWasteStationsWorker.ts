@@ -10,7 +10,9 @@ import { BaseWorker } from "../../core/workers";
 import {
     IPRSortedWasteStationsTransformation,
     OICTSortedWasteStationsTransformation,
-    POTEXSortedWasteStationsTransformation } from "./";
+    POTEXSortedWasteStationsTransformation,
+    SensoneoMeasurementsTransformation,
+    SensoneoPicksTransformation } from "./";
 
 const _ = require("underscore");
 
@@ -33,6 +35,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
     private sensorsPicksDatasource: DataSource;
     private sensorsMeasurementsModel: MongoModel;
     private sensorsPicksModel: MongoModel;
+    private sensoneoMeasurementsTransformation: SensoneoMeasurementsTransformation;
+    private sensoneoPicksTransformation: SensoneoPicksTransformation;
 
     constructor() {
         super();
@@ -77,7 +81,6 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         this.model = new MongoModel(SortedWasteStations.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: SortedWasteStations.mongoCollectionName,
                 outputMongooseSchemaObject: SortedWasteStations.outputMongooseSchemaObject,
                 resultsPath: "properties",
@@ -190,6 +193,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
             new Validator(SortedWasteStations.sensorsPicks.name + "ModelValidator",
                 SortedWasteStations.sensorsPicks.outputMongooseSchemaObject),
         );
+        this.sensoneoMeasurementsTransformation = new SensoneoMeasurementsTransformation();
+        this.sensoneoPicksTransformation = new SensoneoPicksTransformation();
 
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + SortedWasteStations.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
@@ -287,15 +292,6 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 new Buffer(JSON.stringify(p)));
         });
         await Promise.all(promises);
-
-        await new Promise((done) => setTimeout(done, 15000)); // sleeps for 15 seconds
-
-        // send message to update measurement
-        this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsMeasurement",
-            new Buffer("Just Do It!"));
-        // send message to update picks
-        this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsPicks",
-            new Buffer("Just Do It!"));
     }
 
     public pairSensorsWithContainers = async (msg: any): Promise<void> => {
@@ -304,6 +300,16 @@ export class SortedWasteStationsWorker extends BaseWorker {
         const stationNumber = sensor.code.split("C")[0];
         const trashType = this.iprTransformation.getTrashTypeByString(sensor.trash_type);
         const station = await this.model.findOne({"properties.station_number": stationNumber});
+        const lastMeasurement = await this.sensorsMeasurementsModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 }},
+            { $limit: 1 },
+        ]);
+        const lastPick = await this.sensorsPicksModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 }},
+            { $limit: 1 },
+        ]);
 
         if (!station) {
             // station not exists, creating new station
@@ -317,6 +323,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                     containers: [{
                         cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
                         container_type: sensor.bin_type,
+                        last_measurement: (lastMeasurement[0])
+                            ? {
+                                measured_at_utc: lastMeasurement[0].measured_at_utc,
+                                percent_calculated: lastMeasurement[0].percent_calculated,
+                                prediction_utc: lastMeasurement[0].prediction_utc,
+                            }
+                            : null,
+                        last_pick: (lastPick[0])
+                            ? {
+                                pick_at_utc: lastPick[0].pick_at_utc,
+                            }
+                            : null,
                         sensor_id: sensor.id,
                         trash_type: trashType,
                     }],
@@ -342,6 +360,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 },
                 {
                     $set: {
+                        "properties.containers.$.last_measurement": (lastMeasurement[0])
+                            ? {
+                                measured_at_utc: lastMeasurement[0].measured_at_utc,
+                                percent_calculated: lastMeasurement[0].percent_calculated,
+                                prediction_utc: lastMeasurement[0].prediction_utc,
+                            }
+                            : null,
+                        "properties.containers.$.last_pick": (lastPick[0])
+                            ? {
+                                pick_at_utc: lastPick[0].pick_at_utc,
+                            }
+                            : null,
                         "properties.containers.$.sensor_id": sensor.id,
                     },
                 });
@@ -350,6 +380,18 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 const newContainer = {
                     cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
                     container_type: sensor.bin_type,
+                    last_measurement: (lastMeasurement[0])
+                        ? {
+                            measured_at_utc: lastMeasurement[0].measured_at_utc,
+                            percent_calculated: lastMeasurement[0].percent_calculated,
+                            prediction_utc: lastMeasurement[0].prediction_utc,
+                        }
+                        : null,
+                    last_pick: (lastPick[0])
+                        ? {
+                            pick_at_utc: lastPick[0].pick_at_utc,
+                        }
+                        : null,
                     sensor_id: sensor.id,
                     trash_type: trashType,
                 };
@@ -370,18 +412,34 @@ export class SortedWasteStationsWorker extends BaseWorker {
     }
 
     public updateSensorsMeasurement = async (msg: any): Promise<void> => {
-        const to = new Date();
-        const from = new Date();
-        from.setHours(to.getHours() - 6); // last six hour from now
+        let from: Date;
+        let to: Date;
+        try {
+            // setting custom interval from message data
+            const customInterval = JSON.parse(msg.content.toString());
+            if (customInterval.from && customInterval.to) {
+                from = new Date(customInterval.from);
+                to = new Date(customInterval.to);
+                log.debug(`Interval from: ${from} to ${to} was used.`);
+            } else {
+                throw new Error("Interval must contain from and to properties.");
+            }
+        } catch (err) {
+            // setting default interval (normal situation)
+            to = new Date();
+            from = new Date();
+            from.setHours(to.getHours() - 6); // last six hour from now
+        }
+
         this.sensorsMeasurementsHTTPSettings.body = JSON.stringify({from, to});
         this.sensorsMeasurementsDatasource.setProtocolStrategy(new HTTPProtocolStrategy(
             this.sensorsMeasurementsHTTPSettings));
         const data = await this.sensorsMeasurementsDatasource.getAll();
-
-        await this.sensorsMeasurementsModel.save(data);
+        const transformedData = await this.sensoneoMeasurementsTransformation.transform(data);
+        await this.sensorsMeasurementsModel.save(transformedData);
 
         // send messages for pairing with containers
-        const promises = data.map((p) => {
+        const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsMeasurementInContainer",
                 new Buffer(JSON.stringify(p)));
         });
@@ -398,21 +456,27 @@ export class SortedWasteStationsWorker extends BaseWorker {
             });
 
             const foundContainer = station.properties.containers[foundContainerIndex];
-            foundContainer.last_measurement = {
-                measured_at_utc: measurement.measured_at_utc,
-                percent_calculated: measurement.percent_calculated,
-                prediction_utc: measurement.prediction_utc,
-            };
-            await this.model.updateOne(
-            {
-                "properties.containers.sensor_id": measurement.container_id,
-                "properties.id": station.properties.id,
-            },
-            {
-                $set: {
-                    "properties.containers.$": foundContainer,
+            // update only if the new data has newer timestamp
+            if (!foundContainer.last_measurement
+                    || foundContainer.last_measurement.measured_at_utc < measurement.measured_at_utc) {
+                foundContainer.last_measurement = {
+                    measured_at_utc: measurement.measured_at_utc,
+                    percent_calculated: measurement.percent_calculated,
+                    prediction_utc: measurement.prediction_utc,
+                };
+                await this.model.updateOne(
+                {
+                    "properties.containers.sensor_id": measurement.container_id,
+                    "properties.id": station.properties.id,
                 },
-            });
+                {
+                    $set: {
+                        "properties.containers.$": foundContainer,
+                    },
+                });
+            } else {
+                log.debug("Last measurement has newer data.");
+            }
         } else {
             throw new CustomError("Error while updating sensors measurement. Sensor id '"
                 + measurement.container_id + "' was not found.", true, this.constructor.name, 1028);
@@ -420,18 +484,34 @@ export class SortedWasteStationsWorker extends BaseWorker {
     }
 
     public updateSensorsPicks = async (msg: any): Promise<void> => {
-        const to = new Date();
-        const from = new Date();
-        from.setHours(to.getHours() - 6); // last six hour from now
+        let from: Date;
+        let to: Date;
+        try {
+            // setting custom interval from message data
+            const customInterval = JSON.parse(msg.content.toString());
+            if (customInterval.from && customInterval.to) {
+                from = new Date(customInterval.from);
+                to = new Date(customInterval.to);
+                log.debug(`Interval from: ${from} to ${to} was used.`);
+            } else {
+                throw new Error("Interval must contain from and to properties.");
+            }
+        } catch (err) {
+            // setting default interval (normal situation)
+            to = new Date();
+            from = new Date();
+            from.setHours(to.getHours() - 6); // last six hour from now
+        }
+
         this.sensorsPicksHTTPSettings.body = JSON.stringify({from, to});
         this.sensorsPicksDatasource.setProtocolStrategy(new HTTPProtocolStrategy(
             this.sensorsPicksHTTPSettings));
         const data = await this.sensorsPicksDatasource.getAll();
-
-        await this.sensorsPicksModel.save(data);
+        const transformedData = await this.sensoneoPicksTransformation.transform(data);
+        await this.sensorsPicksModel.save(transformedData);
 
         // send messages for pairing with containers
-        const promises = data.map((p) => {
+        const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsPicksInContainer",
                 new Buffer(JSON.stringify(p)));
         });
@@ -448,19 +528,24 @@ export class SortedWasteStationsWorker extends BaseWorker {
             });
 
             const foundContainer = station.properties.containers[foundContainerIndex];
-            foundContainer.last_pick = {
-                pick_at_utc: pick.pick_at_utc,
-            };
-            await this.model.updateOne(
-            {
-                "properties.containers.sensor_id": pick.container_id,
-                "properties.id": station.properties.id,
-            },
-            {
-                $set: {
-                    "properties.containers.$": foundContainer,
+            // update only if the new data has newer timestamp
+            if (!foundContainer.last_pick || foundContainer.last_pick.pick_at_utc < pick.pick_at_utc) {
+                foundContainer.last_pick = {
+                    pick_at_utc: pick.pick_at_utc,
+                };
+                await this.model.updateOne(
+                {
+                    "properties.containers.sensor_id": pick.container_id,
+                    "properties.id": station.properties.id,
                 },
-            });
+                {
+                    $set: {
+                        "properties.containers.$": foundContainer,
+                    },
+                });
+            } else {
+                log.debug("Last pick has newer data.");
+            }
         } else {
             throw new CustomError("Error while updating sensors picks. Sensor id '"
                 + pick.container_id + "' was not found.", true, this.constructor.name, 1028);

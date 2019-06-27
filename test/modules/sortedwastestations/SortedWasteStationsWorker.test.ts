@@ -70,6 +70,7 @@ describe("SortedWasteStationsWorker", () => {
             percent_calculated: 56,
             prediction_utc: "2019-05-20T16:29:09.000Z",
             temperature: 10,
+            updated_at: 1559737670311,
             upturned: 0,
         }];
         testSensorPicksData = [{
@@ -82,6 +83,7 @@ describe("SortedWasteStationsWorker", () => {
             percent_now: 10,
             pick_at_utc: "2019-05-14T04:09:42.000Z",
             pick_minfilllevel: 30,
+            updated_at: 1559737670311,
         }];
 
         worker = new SortedWasteStationsWorker();
@@ -110,8 +112,13 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.stub(worker.sensorsContainersDatasource, "getAll").callsFake(() => testSensorContainersData);
         sandbox.stub(worker.sensorsMeasurementsDatasource, "getAll").callsFake(() => testSensorMeasurementData);
         sandbox.stub(worker.sensorsMeasurementsModel, "save");
+        sandbox.stub(worker.sensorsMeasurementsModel, "aggregate").callsFake(() => []);
         sandbox.stub(worker.sensorsPicksDatasource, "getAll").callsFake(() => testSensorPicksData);
         sandbox.stub(worker.sensorsPicksModel, "save");
+        sandbox.stub(worker.sensorsPicksModel, "aggregate").callsFake(() => []);
+
+        sandbox.stub(worker.sensoneoMeasurementsTransformation, "transform").callsFake(() => testSensorMeasurementData);
+        sandbox.stub(worker.sensoneoPicksTransformation, "transform").callsFake(() => testSensorPicksData);
 
         sandbox.stub(worker.cityDistrictsModel, "findOne")
             .callsFake(() => Object.assign({properties: {slug: "praha-1"}}));
@@ -188,13 +195,15 @@ describe("SortedWasteStationsWorker", () => {
                 "workers." + queuePrefix + ".pairSensorsWithContainers",
                 new Buffer(JSON.stringify(f)));
         });
-        sandbox.assert.calledThrice(worker.sendMessageToExchange);
+        sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by pairSensorsWithContainers method", async () => {
         await worker.pairSensorsWithContainers({content: new Buffer(JSON.stringify(testSensorContainersData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
         sandbox.assert.calledOnce(worker.model.updateOne);
+        sandbox.assert.calledOnce(worker.sensorsMeasurementsModel.aggregate);
+        sandbox.assert.calledOnce(worker.sensorsPicksModel.aggregate);
     });
 
     it("should calls the correct methods by updateSensorsMeasurement method", async () => {

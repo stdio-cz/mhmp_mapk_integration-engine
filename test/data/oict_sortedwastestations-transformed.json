@@ -33,7 +33,7 @@
          "id": "diakonie-broumov_namesti-omladiny",
          "name": "Náměstí Omladiny",
          "station_number": null,
-         "timestamp": 1552311565780
+         "created_at": 1552311565780
       },
       "type": "Feature"
    },
@@ -71,7 +71,7 @@
          "id": "diakonie-broumov_prusikova",
          "name": "Prusíkova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -109,7 +109,7 @@
          "id": "diakonie-broumov_zakovska-x-starodvorska",
          "name": "Žákovská X Starodvorská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -147,7 +147,7 @@
          "id": "diakonie-broumov_v-sudech-14882",
          "name": "V Sudech 1488/2",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -185,7 +185,7 @@
          "id": "diakonie-broumov_piskovcova-x-prosecka",
          "name": "Pískovcová X Prosecká",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -223,7 +223,7 @@
          "id": "diakonie-broumov_pastevcu-483",
          "name": "Pastevců 483",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -261,7 +261,7 @@
          "id": "diakonie-broumov_perucka-254210",
          "name": "Perucká 2542/10",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -299,7 +299,7 @@
          "id": "diakonie-broumov_pod-vidouli",
          "name": "Pod Vidoulí",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -337,7 +337,7 @@
          "id": "diakonie-broumov_jankovska",
          "name": "Jankovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -375,7 +375,7 @@
          "id": "diakonie-broumov_u-hraze",
          "name": "U Hráze",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -413,7 +413,7 @@
          "id": "diakonie-broumov_milanska",
          "name": "Milánská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -451,7 +451,7 @@
          "id": "diakonie-broumov_durychova",
          "name": "Durychova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -489,7 +489,7 @@
          "id": "diakonie-broumov_nambratri-synku",
          "name": "Nám.Bratří Synků",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -527,7 +527,7 @@
          "id": "diakonie-broumov_zakryta",
          "name": "Zakrytá",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -565,7 +565,7 @@
          "id": "diakonie-broumov_proslunena-x-v-nasypu",
          "name": "Prosluněná X V Násypu",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -603,7 +603,7 @@
          "id": "diakonie-broumov_archeologicka-x-bronzova",
          "name": "Archeologická X Bronzová",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -641,7 +641,7 @@
          "id": "diakonie-broumov_jilemnicka",
          "name": "Jilemnická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -679,7 +679,7 @@
          "id": "diakonie-broumov_ostromecska-x-jeseniova",
          "name": "Ostromečská x Jeseniova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -717,7 +717,7 @@
          "id": "diakonie-broumov_zivoninska",
          "name": "Živonínská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -755,7 +755,7 @@
          "id": "diakonie-broumov_hlavni",
          "name": "Hlavní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -793,7 +793,7 @@
          "id": "diakonie-broumov_becovska-939",
          "name": "Bečovská 939",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -831,7 +831,7 @@
          "id": "diakonie-broumov_klikata-123890c",
          "name": "Klikatá 1238/90c",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -869,7 +869,7 @@
          "id": "diakonie-broumov_lovosicka",
          "name": "Lovosická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -907,7 +907,7 @@
          "id": "diakonie-broumov_predskolni",
          "name": "Předškolní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -945,7 +945,7 @@
          "id": "diakonie-broumov_smichovska",
          "name": "Smíchovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -983,7 +983,7 @@
          "id": "diakonie-broumov_novovysocanska-x-u-nove-skoly",
          "name": "Novovysočanská X U Nové školy",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1021,7 +1021,7 @@
          "id": "diakonie-broumov_zalesanska",
          "name": "Zálešanská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1059,7 +1059,7 @@
          "id": "diakonie-broumov_bellusova-181937",
          "name": "Bellušová 1819/37",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1097,7 +1097,7 @@
          "id": "diakonie-broumov_podkovarska-35",
          "name": "Podkovářská 35",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1135,7 +1135,7 @@
          "id": "diakonie-broumov_hlubocepska-x-michnovska",
          "name": "Hlubočepská X Michnovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1173,7 +1173,7 @@
          "id": "diakonie-broumov_teplarenska-5",
          "name": "Teplárenská 5",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1211,7 +1211,7 @@
          "id": "diakonie-broumov_telovychovna",
          "name": "Tělovýchovná",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1249,7 +1249,7 @@
          "id": "diakonie-broumov_pod-lysinami",
          "name": "Pod Lysinami",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1287,7 +1287,7 @@
          "id": "diakonie-broumov_fantova-36",
          "name": "Fantova 36",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1325,7 +1325,7 @@
          "id": "diakonie-broumov_hilmarova",
          "name": "Hilmarova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1363,7 +1363,7 @@
          "id": "diakonie-broumov_voctarova",
          "name": "Voctářova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1401,7 +1401,7 @@
          "id": "diakonie-broumov_ostruzinova",
          "name": "Ostružinová",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1439,7 +1439,7 @@
          "id": "diakonie-broumov_namesti-14rijna-x-preslova",
          "name": "Náměstí 14.října X Preslova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1477,7 +1477,7 @@
          "id": "diakonie-broumov_holeckova-x-kmochova",
          "name": "Holečkova X Kmochova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1515,7 +1515,7 @@
          "id": "diakonie-broumov_pod-sancemi-4441",
          "name": "Pod Šancemi 444/1",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1553,7 +1553,7 @@
          "id": "diakonie-broumov_sturova-x-v-stihlach",
          "name": "Štúrova X V Štíhlách",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1591,7 +1591,7 @@
          "id": "diakonie-broumov_ceskolipska-x-novoborska",
          "name": "Českolipská X Novoborská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1629,7 +1629,7 @@
          "id": "diakonie-broumov_za-valem",
          "name": "Za Valem",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1667,7 +1667,7 @@
          "id": "diakonie-broumov_k-cihelne-420",
          "name": "K Cihelně 420",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1705,7 +1705,7 @@
          "id": "diakonie-broumov_sokolovska",
          "name": "Sokolovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1743,7 +1743,7 @@
          "id": "diakonie-broumov_kubanske-namesti",
          "name": "Kubánské náměstí",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1781,7 +1781,7 @@
          "id": "diakonie-broumov_topolova-x-jablonova",
          "name": "Topolová X Jabloňova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1819,7 +1819,7 @@
          "id": "diakonie-broumov_galerie-harfa",
          "name": "Galerie Harfa",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1857,7 +1857,7 @@
          "id": "diakonie-broumov_nadrazni",
          "name": "Nádražní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1895,7 +1895,7 @@
          "id": "diakonie-broumov_na-bambouzku",
          "name": "Na Bambouzku",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1933,7 +1933,7 @@
          "id": "diakonie-broumov_probostska-1",
          "name": "Proboštská 1",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -1971,7 +1971,7 @@
          "id": "diakonie-broumov_obloukova-6",
          "name": "Oblouková 6",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2009,7 +2009,7 @@
          "id": "diakonie-broumov_v-cibulkach",
          "name": "V Cibulkách",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2047,7 +2047,7 @@
          "id": "diakonie-broumov_michelska-x-u-plynarny",
          "name": "Michelská x U Plynárny",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2085,7 +2085,7 @@
          "id": "diakonie-broumov_nad-klamovkou",
          "name": "Nad Klamovkou",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2123,7 +2123,7 @@
          "id": "diakonie-broumov_vrsovicka-63",
          "name": "Vršovická 63",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2161,7 +2161,7 @@
          "id": "diakonie-broumov_jana-ruzicky",
          "name": "Jana Růžičky",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2199,7 +2199,7 @@
          "id": "diakonie-broumov_branicka-x-mezivrsi",
          "name": "Bránická X Mezivrší",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2237,7 +2237,7 @@
          "id": "diakonie-broumov_dobronicka-892",
          "name": "Dobronická 892",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2275,7 +2275,7 @@
          "id": "diakonie-broumov_k-homolce",
          "name": "K Homolce",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2313,7 +2313,7 @@
          "id": "diakonie-broumov_prouzova-6",
          "name": "Prouzova 6",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2351,7 +2351,7 @@
          "id": "diakonie-broumov_staroklanovicka",
          "name": "Staroklánovická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2389,7 +2389,7 @@
          "id": "diakonie-broumov_treglova",
          "name": "Tréglova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2427,7 +2427,7 @@
          "id": "diakonie-broumov_podnikatelska",
          "name": "Podnikatelská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2465,7 +2465,7 @@
          "id": "diakonie-broumov_mohylova-x-piskova",
          "name": "Mohylová X Píškova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2503,7 +2503,7 @@
          "id": "diakonie-broumov_jablonecka",
          "name": "Jablonecká",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2541,7 +2541,7 @@
          "id": "diakonie-broumov_behounkova-25",
          "name": "Běhounkova 25",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2579,7 +2579,7 @@
          "id": "diakonie-broumov_lamacova-x-lohniskeho",
          "name": "Lamačova X Lohniského",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2617,7 +2617,7 @@
          "id": "diakonie-broumov_vyletni",
          "name": "Výletní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2655,7 +2655,7 @@
          "id": "diakonie-broumov_srbinska",
          "name": "Srbínská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2693,7 +2693,7 @@
          "id": "diakonie-broumov_kurandove-x-hogrova",
          "name": "Kurandové X Högrova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2731,7 +2731,7 @@
          "id": "diakonie-broumov_hurbanova-25",
          "name": "Hurbanova 25",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2769,7 +2769,7 @@
          "id": "diakonie-broumov_libusska",
          "name": "Libušská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2807,7 +2807,7 @@
          "id": "diakonie-broumov_rubensova",
          "name": "Rubensova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2845,7 +2845,7 @@
          "id": "diakonie-broumov_nedasovska",
          "name": "Nedašovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2883,7 +2883,7 @@
          "id": "diakonie-broumov_na-kacence",
          "name": "Na Kačence",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2921,7 +2921,7 @@
          "id": "diakonie-broumov_chvalkovicka-3",
          "name": "Chvalkovická 3",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2959,7 +2959,7 @@
          "id": "diakonie-broumov_chodovska",
          "name": "Chodovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -2997,7 +2997,7 @@
          "id": "diakonie-broumov_bohusovicka",
          "name": "Bohušovická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3035,7 +3035,7 @@
          "id": "diakonie-broumov_horsovska-x-drahovska",
          "name": "Horšovská X Drahovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3073,7 +3073,7 @@
          "id": "diakonie-broumov_heranova-x-vackova",
          "name": "Heranova X Vackova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3111,7 +3111,7 @@
          "id": "diakonie-broumov_karlstejnska-x-u-detskeho-hriste",
          "name": "Karlštejnská X U Dětského hřiště",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3149,7 +3149,7 @@
          "id": "diakonie-broumov_kotorska",
          "name": "Kotorská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3187,7 +3187,7 @@
          "id": "diakonie-broumov_hostinskeho-16182",
          "name": "Hostinského 1618/2",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3225,7 +3225,7 @@
          "id": "diakonie-broumov_vsestarska-x-lovcicka",
          "name": "Všestarská X Lovčická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3263,7 +3263,7 @@
          "id": "diakonie-broumov_v-krepelkach-x-na-navrati",
          "name": "V Křepelkách X Na Návrati",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3301,7 +3301,7 @@
          "id": "diakonie-broumov_naskove",
          "name": "Naskové",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3339,7 +3339,7 @@
          "id": "diakonie-broumov_podolska-x-prava",
          "name": "Podolská X Pravá",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3377,7 +3377,7 @@
          "id": "diakonie-broumov_drtinova",
          "name": "Drtinova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3415,7 +3415,7 @@
          "id": "diakonie-broumov_mladoboleslavska",
          "name": "Mladoboleslavská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3453,7 +3453,7 @@
          "id": "diakonie-broumov_tristolicna-x-pod-lipkami",
          "name": "Třístoličná X Pod Lipkami",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3491,7 +3491,7 @@
          "id": "diakonie-broumov_chudenicka-2",
          "name": "Chudenická 2",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3529,7 +3529,7 @@
          "id": "diakonie-broumov_pocernicka",
          "name": "Počernická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3567,7 +3567,7 @@
          "id": "diakonie-broumov_chlumecka",
          "name": "Chlumecká",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3605,7 +3605,7 @@
          "id": "diakonie-broumov_u-parku",
          "name": "U Parku",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3643,7 +3643,7 @@
          "id": "diakonie-broumov_v-olsinach",
          "name": "V Olšinách",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3681,7 +3681,7 @@
          "id": "diakonie-broumov_jestedska",
          "name": "Ještědská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3719,7 +3719,7 @@
          "id": "diakonie-broumov_sidliste-19",
          "name": "Sídliště 19",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3757,7 +3757,7 @@
          "id": "diakonie-broumov_janskeho-93",
          "name": "Janského 93",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3795,7 +3795,7 @@
          "id": "diakonie-broumov_na-lise",
          "name": "Na Líše",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3833,7 +3833,7 @@
          "id": "diakonie-broumov_na-betonce",
          "name": "Na Betonce",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3871,7 +3871,7 @@
          "id": "diakonie-broumov_vernericka",
          "name": "Verneřická",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3909,7 +3909,7 @@
          "id": "diakonie-broumov_veltruska",
          "name": "Veltruská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3947,7 +3947,7 @@
          "id": "diakonie-broumov_peroutkova-x-xaveriova",
          "name": "Peroutkova X Xaveriová",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -3985,7 +3985,7 @@
          "id": "diakonie-broumov_oplanska",
          "name": "Oplanská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4023,7 +4023,7 @@
          "id": "diakonie-broumov_jilovska",
          "name": "Jílovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4061,7 +4061,7 @@
          "id": "diakonie-broumov_radounova-x-krtenska",
          "name": "Radouňova X Krteňská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4099,7 +4099,7 @@
          "id": "diakonie-broumov_jablonova-x-v-korytech",
          "name": "Jabloňová X V Korytech",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4137,7 +4137,7 @@
          "id": "diakonie-broumov_klicovska",
          "name": "Klíčovská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4175,7 +4175,7 @@
          "id": "diakonie-broumov_seydlerova-x-v-hurkach",
          "name": "Seydlerova X V Hůrkách",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4213,7 +4213,7 @@
          "id": "diakonie-broumov_mezi-hrbitovy",
          "name": "Mezi Hřbitovy",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4251,7 +4251,7 @@
          "id": "diakonie-broumov_hostivarska-30",
          "name": "Hostivařská 30",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4289,7 +4289,7 @@
          "id": "diakonie-broumov_josefa-bibrdlika",
          "name": "Josefa Bibrdlíka",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4327,7 +4327,7 @@
          "id": "diakonie-broumov_azalkova-x-prazska",
          "name": "Azalková X Pražská",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4365,7 +4365,7 @@
          "id": "diakonie-broumov_v-lipach",
          "name": "V Lipách",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4403,7 +4403,7 @@
          "id": "diakonie-broumov_namesti-pod-lipou",
          "name": "Náměstí Pod Lípou",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4441,7 +4441,7 @@
          "id": "diakonie-broumov_cernokostelecka",
          "name": "Černokostelecká",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4479,7 +4479,7 @@
          "id": "diakonie-broumov_roztylske-namesti",
          "name": "Roztylské náměstí",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4517,7 +4517,7 @@
          "id": "diakonie-broumov_generala-sisky",
          "name": "Generála Šišky",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4555,7 +4555,7 @@
          "id": "diakonie-broumov_borovanskeho",
          "name": "Borovanského",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4593,7 +4593,7 @@
          "id": "diakonie-broumov_u-modre-skoly",
          "name": "U Modré školy",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4631,7 +4631,7 @@
          "id": "diakonie-broumov_zahradnickova",
          "name": "Zahradníčkova",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4669,7 +4669,7 @@
          "id": "diakonie-broumov_vyrobni",
          "name": "Výrobní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4707,7 +4707,7 @@
          "id": "diakonie-broumov_na-veseli-x-soudni",
          "name": "Na Veselí x Soudní",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    },
@@ -4745,7 +4745,7 @@
          "id": "diakonie-broumov_peroutkova-x-na-vaclavce",
          "name": "Peroutkova X Na Václavce",
          "station_number": null,
-         "timestamp": 1552311565781
+         "created_at": 1552311565781
       },
       "type": "Feature"
    }

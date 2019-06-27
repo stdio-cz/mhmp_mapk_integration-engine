@@ -47,6 +47,8 @@ export class RopidGTFSWorker extends BaseWorker {
             },
             null);
         this.metaModel = new RopidGTFSMetadataModel();
+        const cisStopsTypeStrategy = new JSONDataTypeStrategy({resultsPath: "stopGroups"});
+        cisStopsTypeStrategy.setFilter((item) => item.cis !== 0);
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
                 filename: config.datasources.RopidGTFSCisStopsFilename,
@@ -54,7 +56,7 @@ export class RopidGTFSWorker extends BaseWorker {
                 tmpDir: "/tmp/",
                 url: config.datasources.RopidFTP,
             }),
-            new JSONDataTypeStrategy({resultsPath: "stopGroups"}),
+            cisStopsTypeStrategy,
             null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new PostgresModel(RopidGTFS.cis_stop_groups.name + "Model", {
@@ -163,9 +165,10 @@ export class RopidGTFSWorker extends BaseWorker {
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
+        const inputData = JSON.parse(msg.content.toString());
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         try {
-            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
+            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version, inputData.count);
             await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
             await this.delayComputationTripsModel.truncate();
             return true;
@@ -188,6 +191,21 @@ export class RopidGTFSWorker extends BaseWorker {
             version: dbLastModified.version + 1 });
 
         const transformedData = await this.transformationCisStops.transform(data);
+
+        // TODO osetrit duplicity cis_id
+        log.debug(transformedData.cis_stop_groups.length);
+        const unique = {};
+        const duplicates = {};
+        transformedData.cis_stop_groups.forEach((item) => {
+            if (!unique[item.cis]) {
+                unique[item.cis] = item;
+            } else {
+                duplicates[item.cis] = item;
+            }
+        });
+        log.debug(Object.keys(unique).length);
+        log.debug(JSON.stringify(duplicates));
+
         // save meta
         await this.metaModel.save([{
             dataset: "CIS_STOPS",
@@ -205,7 +223,7 @@ export class RopidGTFSWorker extends BaseWorker {
             await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
             await this.cisStopsModel.truncate(true);
             await this.cisStopsModel.save(transformedData.cis_stops, true);
-            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
+            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1, 2);
             await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
         } catch (err) {
             log.error(err);

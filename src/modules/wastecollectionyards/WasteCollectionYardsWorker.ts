@@ -33,7 +33,6 @@ export class WasteCollectionYardsWorker extends BaseWorker {
 
         this.model = new MongoModel(WasteCollectionYards.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: WasteCollectionYards.mongoCollectionName,
                 outputMongooseSchemaObject: WasteCollectionYards.outputMongooseSchemaObject,
                 resultsPath: "properties",

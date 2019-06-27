@@ -88,6 +88,13 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
 
         const res = {
             position: {
+                bearing: (attributes.azimut)
+                    ? parseInt(attributes.azimut, 10)
+                    : null,
+                cis_last_stop_id: (attributes.zast)
+                    ? parseInt(attributes.zast, 10)
+                    : null,
+                cis_last_stop_sequence: null,
                 delay_stop_arrival: (attributes.zpoz_prij)
                     ? parseInt(attributes.zpoz_prij, 10)
                     : null,
@@ -103,6 +110,9 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     : null,
                 origin_time: attributes.cpoz,
                 origin_timestamp: timestamp.utc().format(),
+                speed: (attributes.rychl)
+                    ? parseInt(attributes.rychl, 10)
+                    : null,
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
                     : null,
@@ -110,10 +120,22 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             },
             stops: [],
             trip: {
+                cis_agency_name: (attributes.dopr)
+                    ? attributes.dopr
+                    : null,
                 cis_id: parseInt(attributes.lin, 10),
                 cis_number: parseInt(attributes.spoj, 10),
                 cis_order: parseInt(attributes.po, 10),
+                cis_parent_route_name: (attributes.kmenl)
+                    ? parseInt(attributes.kmenl, 10)
+                    : null,
+                cis_real_agency_name: (attributes.doprSkut)
+                    ? attributes.doprSkut
+                    : null,
                 cis_short_name: attributes.alias,
+                cis_vehicle_registration_number: (attributes.vuzevc)
+                    ? parseInt(attributes.vuzevc, 10)
+                    : null,
                 id: primaryKey,
                 start_cis_stop_id: parseInt(stops[0].$.zast, 10),
                 start_cis_stop_platform_code: stops[0].$.stan,
@@ -157,12 +179,23 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 departure.add(isOverMidnight, "d");
             }
 
+            const cisStopSequence = i + 1;
+            // finding cis_last_stop_sequence (positions table)
+            if (res.position.cis_last_stop_id === parseInt(stop.$.zast, 10)
+                    && ((stop.$.zpoz_typ && parseInt(stop.$.zpoz_typ, 10) === 3)
+                        || (stop.$.zpoz_typ_prij && parseInt(stop.$.zpoz_typ_prij, 10) === 3))) {
+                res.position.cis_last_stop_sequence = cisStopSequence;
+            }
+
             return {
+                arrival_delay_type: (stop.$.zpoz_typ_prij)
+                    ? parseInt(stop.$.zpoz_typ_prij, 10)
+                    : null,
                 arrival_time: (arrival) ? stop.$.prij : null,
                 arrival_timestamp: (arrival) ? arrival.utc().format() : null,
                 cis_stop_id: parseInt(stop.$.zast, 10),
                 cis_stop_platform_code: stop.$.stan,
-                cis_stop_sequence: i + 1,
+                cis_stop_sequence: cisStopSequence,
                 delay_arrival: (stop.$.zpoz_prij)
                     ? parseInt(stop.$.zpoz_prij, 10)
                     : null,

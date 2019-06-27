@@ -33,7 +33,7 @@
                 "type": "Polygon"
             },
             "properties": {
-                "code": "P1-0101",
+                "id": "P1-0101",
                 "midpoint": [
                     14.389515198310312,
                     50.09128299854385
@@ -71,7 +71,7 @@
                         ]
                     }
                 ],
-                "timestamp": 1547049026501,
+                "created_at": 1547049026501,
                 "type": {
                     "description": "Rezidentní úsek",
                     "id": 1
@@ -109,7 +109,7 @@
                 "type": "Polygon"
             },
             "properties": {
-                "code": "P1-0102",
+                "id": "P1-0102",
                 "midpoint": [
                     14.390671899380662,
                     50.09104386555356
@@ -147,7 +147,7 @@
                         ]
                     }
                 ],
-                "timestamp": 1547049026502,
+                "created_at": 1547049026502,
                 "type": {
                     "description": "Rezidentní úsek",
                     "id": 1
@@ -185,7 +185,7 @@
                 "type": "Polygon"
             },
             "properties": {
-                "code": "P1-0103",
+                "id": "P1-0103",
                 "midpoint": [
                     14.389233122936087,
                     50.09031117266189
@@ -223,7 +223,7 @@
                         ]
                     }
                 ],
-                "timestamp": 1547049026501,
+                "created_at": 1547049026501,
                 "type": {
                     "description": "Rezidentní úsek",
                     "id": 1
@@ -343,7 +343,7 @@
                 "type": "MultiPolygon"
             },
             "properties": {
-                "code": "P1-0104",
+                "id": "P1-0104",
                 "midpoint": [
                     14.393333409766594,
                     50.09064320521421
@@ -381,7 +381,7 @@
                         ]
                     }
                 ],
-                "timestamp": 1547049026501,
+                "created_at": 1547049026501,
                 "type": {
                     "description": "Rezidentní úsek",
                     "id": 1

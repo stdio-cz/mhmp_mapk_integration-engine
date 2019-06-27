@@ -33,7 +33,6 @@ export class TrafficCamerasWorker extends BaseWorker {
             new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
         this.model = new MongoModel(TrafficCameras.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: TrafficCameras.mongoCollectionName,
                 outputMongooseSchemaObject: TrafficCameras.outputMongooseSchemaObject,
                 resultsPath: "properties",

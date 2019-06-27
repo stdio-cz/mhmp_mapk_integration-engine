@@ -1,5 +1,7 @@
 "use strict";
 
+import * as fs from "fs";
+import * as path from "path";
 import { config } from "./core/config";
 import { AMQPConnector, mongooseConnection, PostgresConnector, RedisConnector } from "./core/connectors";
 import { log } from "./core/helpers";
@@ -14,6 +16,7 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
+            log.info(`Commit SHA: ${await this.loadCommitSHA()}`);
             await this.database();
             await this.queueProcessors();
             log.info("Started!");
@@ -58,6 +61,20 @@ class App {
             return new QueueProcessor(ch, queueDefinition).registerQueues();
         });
         await Promise.all(promises);
+    }
+
+    /**
+     * Loading the Commit SHA of the current build
+     */
+    private loadCommitSHA = async (): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
+                if (err) {
+                    return resolve(undefined);
+                }
+                return resolve(data.toString());
+            });
+        });
     }
 
 }

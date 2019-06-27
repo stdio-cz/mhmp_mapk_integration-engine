@@ -30,7 +30,6 @@ export class BicycleParkingsWorker extends BaseWorker {
                 BicycleParkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(BicycleParkings.name + "Model", {
                 identifierPath: "properties.id",
-                modelIndexes: [{ geometry: "2dsphere" }],
                 mongoCollectionName: BicycleParkings.mongoCollectionName,
                 outputMongooseSchemaObject: BicycleParkings.outputMongooseSchemaObject,
                 resultsPath: "properties",

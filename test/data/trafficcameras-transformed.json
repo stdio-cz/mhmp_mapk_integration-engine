@@ -17,7 +17,7 @@
          },
          "last_updated": 1551185711000,
          "name": "5.května",
-         "timestamp": 1551447576126
+         "updated_at": 1551447576126
       },
       "type": "Feature"
    },
@@ -39,7 +39,7 @@
          },
          "last_updated": 1551185717000,
          "name": "DP - Kobylisy C - BUS MHD DP",
-         "timestamp": 1551447576126
+         "updated_at": 1551447576126
       },
       "type": "Feature"
    },
@@ -61,7 +61,7 @@
          },
          "last_updated": 1551185728000,
          "name": "DP - Kobylisy C - BUS směr Prosek",
-         "timestamp": 1551447576127
+         "updated_at": 1551447576127
       },
       "type": "Feature"
    },
@@ -83,7 +83,7 @@
          },
          "last_updated": 1551185716000,
          "name": "DP - Kobylisy C - Střelničná",
-         "timestamp": 1551447576127
+         "updated_at": 1551447576127
       },
       "type": "Feature"
    },
@@ -105,7 +105,7 @@
          },
          "last_updated": 1551185728000,
          "name": "DP - Kobylisy C - přehledový záběr odjezd BUS MHD",
-         "timestamp": 1551447576127
+         "updated_at": 1551447576127
       },
       "type": "Feature"
    },
@@ -127,7 +127,7 @@
          },
          "last_updated": 1551185728000,
          "name": "DP - Ládví BUS Střelničná",
-         "timestamp": 1551447576127
+         "updated_at": 1551447576127
       },
       "type": "Feature"
    },
@@ -149,7 +149,7 @@
          },
          "last_updated": 1549619881000,
          "name": "DP - Rajská zahrada sever - Chlumecká",
-         "timestamp": 1551447576127
+         "updated_at": 1551447576127
       },
       "type": "Feature"
    },
@@ -171,7 +171,7 @@
          },
          "last_updated": 1551185727000,
          "name": "DP - Černý Most/BUS Dálková doprava ČSAD Chlumecká",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -193,7 +193,7 @@
          },
          "last_updated": 1551185712000,
          "name": "Evropská - K Letišti VO",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -215,7 +215,7 @@
          },
          "last_updated": 1551185712000,
          "name": "Evropská - Vlastina VO",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -237,7 +237,7 @@
          },
          "last_updated": 1551185719000,
          "name": "Heyrovského nám. VO",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -259,7 +259,7 @@
          },
          "last_updated": 1551185713000,
          "name": "Hostivařská - Švehlova VO",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -281,7 +281,7 @@
          },
          "last_updated": 1551185711000,
          "name": "Hotel Corinthia - web",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -303,7 +303,7 @@
          },
          "last_updated": 1551185731000,
          "name": "Mariánské hradby",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -325,7 +325,7 @@
          },
          "last_updated": 1551185670000,
          "name": "Merkurie, Argentinská 38",
-         "timestamp": 1551447576128
+         "updated_at": 1551447576128
       },
       "type": "Feature"
    },
@@ -347,7 +347,7 @@
          },
          "last_updated": 1551185710000,
          "name": "Na chobotě",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -369,7 +369,7 @@
          },
          "last_updated": 1551185709000,
          "name": "Nám.bří Synků 8",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -391,7 +391,7 @@
          },
          "last_updated": 1551185642000,
          "name": "Olšanské náměstí VO - web",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -413,7 +413,7 @@
          },
          "last_updated": 1551185711000,
          "name": "Podolské nábřeží VO",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -435,7 +435,7 @@
          },
          "last_updated": 1551185710000,
          "name": "Pošta Plzeňská 139",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -457,7 +457,7 @@
          },
          "last_updated": 1551185715000,
          "name": "TSK - Argentinská - Jateční",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -479,7 +479,7 @@
          },
          "last_updated": 1551185644000,
          "name": "TSK - Argentinská - Plynární",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -501,7 +501,7 @@
          },
          "last_updated": 1551185627000,
          "name": "TSK - Bělocerkevská",
-         "timestamp": 1551447576129
+         "updated_at": 1551447576129
       },
       "type": "Feature"
    },
@@ -523,7 +523,7 @@
          },
          "last_updated": 1551185717000,
          "name": "TSK - Demínka (Anglická - Škrétova)",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -545,7 +545,7 @@
          },
          "last_updated": 1551185726000,
          "name": "TSK - Freyova - Ocelářská",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -567,7 +567,7 @@
          },
          "last_updated": 1551185731000,
          "name": "TSK - J. Želivského",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -589,7 +589,7 @@
          },
          "last_updated": 1551185679000,
          "name": "TSK - Jiráskův most",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -611,7 +611,7 @@
          },
          "last_updated": 1551185724000,
          "name": "TSK - Karlovo nám. - Odborů",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -633,7 +633,7 @@
          },
          "last_updated": 1551185631000,
          "name": "TSK - Korunovační",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -655,7 +655,7 @@
          },
          "last_updated": 1551185696000,
          "name": "TSK - Legerova - Anglická",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -677,7 +677,7 @@
          },
          "last_updated": 1551185632000,
          "name": "TSK - Legerova - Rumunská",
-         "timestamp": 1551447576130
+         "updated_at": 1551447576130
       },
       "type": "Feature"
    },
@@ -699,7 +699,7 @@
          },
          "last_updated": 1551185730000,
          "name": "TSK - Radlická k Plzeňské",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -721,7 +721,7 @@
          },
          "last_updated": 1551185724000,
          "name": "TSK - Slezská",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -743,7 +743,7 @@
          },
          "last_updated": 1551185630000,
          "name": "TSK - Strakonická - Barrandovský most",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -765,7 +765,7 @@
          },
          "last_updated": 1551185714000,
          "name": "TSK - V Holešovičkách do centra",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -787,7 +787,7 @@
          },
          "last_updated": 1551185725000,
          "name": "TSK - V Holešovičkách z centra",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -809,7 +809,7 @@
          },
          "last_updated": 1551185723000,
          "name": "TSK - Votická",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -831,7 +831,7 @@
          },
          "last_updated": 1551185652000,
          "name": "TSK - Výtoň",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -853,7 +853,7 @@
          },
          "last_updated": 1551185715000,
          "name": "TSK - Wilsonova k P-2",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -875,7 +875,7 @@
          },
          "last_updated": 1551185721000,
          "name": "TSK - Wilsonova k P-7",
-         "timestamp": 1551447576131
+         "updated_at": 1551447576131
       },
       "type": "Feature"
    },
@@ -897,7 +897,7 @@
          },
          "last_updated": 1551185715000,
          "name": "TSK - náměstí I. P. Pavlova",
-         "timestamp": 1551447576132
+         "updated_at": 1551447576132
       },
       "type": "Feature"
    },
@@ -919,7 +919,7 @@
          },
          "last_updated": 1549619883000,
          "name": "TSK - Českomoravská - Freyova 2. (Harfa)",
-         "timestamp": 1551447576132
+         "updated_at": 1551447576132
       },
       "type": "Feature"
    },
@@ -941,7 +941,7 @@
          },
          "last_updated": 1551185712000,
          "name": "TSK Štefánikova 23 - web",
-         "timestamp": 1551447576132
+         "updated_at": 1551447576132
       },
       "type": "Feature"
    },
@@ -963,7 +963,7 @@
          },
          "last_updated": 1551185709000,
          "name": "Veletržní, Duk.hrdinů 45",
-         "timestamp": 1551447576134
+         "updated_at": 1551447576134
       },
       "type": "Feature"
    },
@@ -985,7 +985,7 @@
          },
          "last_updated": 1551185710000,
          "name": "Vypich VO",
-         "timestamp": 1551447576134
+         "updated_at": 1551447576134
       },
       "type": "Feature"
    },
@@ -1007,7 +1007,7 @@
          },
          "last_updated": 1551185712000,
          "name": "Zikova - Vítězné náměstí - web",
-         "timestamp": 1551447576134
+         "updated_at": 1551447576134
       },
       "type": "Feature"
    },
@@ -1029,7 +1029,7 @@
          },
          "last_updated": 1551185714000,
          "name": "Čechův most VO",
-         "timestamp": 1551447576134
+         "updated_at": 1551447576134
       },
       "type": "Feature"
    },
@@ -1051,7 +1051,7 @@
          },
          "last_updated": 1551185714000,
          "name": "Černokostelecká - Úvalská VO",
-         "timestamp": 1551447576135
+         "updated_at": 1551447576135
       },
       "type": "Feature"
    },
@@ -1073,7 +1073,7 @@
          },
          "last_updated": 1551185717000,
          "name": "Černý most - Chlumecká",
-         "timestamp": 1551447576135
+         "updated_at": 1551447576135
       },
       "type": "Feature"
    }
