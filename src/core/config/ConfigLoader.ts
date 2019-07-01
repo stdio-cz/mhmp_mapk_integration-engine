@@ -40,7 +40,6 @@ export class ConfigLoader {
 
 /** Exporting all configurations */
 export const config = { // TODO prejmenovat na lower-case
-    app_version: process.env.npm_package_version,
     HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     MOJEPRAHA_ENDPOINT_APIKEY: process.env.MOJEPRAHA_ENDPOINT_APIKEY,
@@ -51,7 +50,6 @@ export const config = { // TODO prejmenovat na lower-case
     OPEN_STREET_MAP_API_URL_SEARCH: process.env.OPEN_STREET_MAP_API_URL_SEARCH,
     PARKINGS_PAYMENT_URL: process.env.PARKINGS_PAYMENT_URL,
     PARKING_ZONES_PAYMENT_URL: process.env.PARKING_ZONES_PAYMENT_URL,
-    port: process.env.PORT,
     POSTGRES_CONN: process.env.POSTGRES_CONN,
     POSTGRES_POOL_MAX_CONNECTIONS: process.env.POSTGRES_POOL_MAX_CONNECTIONS,
     RABBIT_CONN: process.env.RABBIT_CONN,
@@ -59,6 +57,8 @@ export const config = { // TODO prejmenovat na lower-case
     REDIS_CONN: process.env.REDIS_CONN,
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
+    app_version: process.env.npm_package_version,
     datasources: new ConfigLoader("datasources").conf,
-    queuesBlacklist: new ConfigLoader("queuesBlacklist").conf
+    port: process.env.PORT,
+    queuesBlacklist: new ConfigLoader("queuesBlacklist").conf,
 };

@@ -14,7 +14,6 @@ import { queuesDefinition } from "./definitions";
 
 const http = require("http");
 
-
 class App {
 
     // Create a new express application instance
@@ -27,6 +26,7 @@ class App {
      * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
+        //
     }
 
     /**
@@ -61,7 +61,7 @@ class App {
     private setHeaders = (req: express.Request, res: express.Response, next: express.NextFunction) => {
         res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, HEAD");
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
     }
 
