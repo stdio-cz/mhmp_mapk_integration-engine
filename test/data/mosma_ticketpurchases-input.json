@@ -1,0 +1,26 @@
+[
+    {
+        "ticketId": 6055,
+        "accountId": "SN91MD7P86COJ9LIO5O3T1PN1CVL3NNA",
+        "cptp": 202,
+        "date": "2018-08-01T11:01:17+02:00",
+        "lat": null,
+        "lon": null,
+        "duration": 30,
+        "tariffId": 1,
+        "tariffName": "test",
+        "zoneCount": 1
+    },
+    {
+        "ticketId": 6058,
+        "accountId": "4U1R6NDHILP96E0Q4PQCI6NGN4ABC1SV",
+        "cptp": 101,
+        "date": "2018-08-01T14:38:17+02:00",
+        "lat": 50.102753,
+        "lon": 14.4455083,
+        "duration": 30,
+        "tariffId": 1,
+        "tariffName": "test",
+        "zoneCount": 1
+    }
+]

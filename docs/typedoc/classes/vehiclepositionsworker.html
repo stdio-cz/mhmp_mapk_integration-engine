@@ -104,11 +104,9 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#getestimatedpoint" class="tsd-kind-icon">get<wbr>Estimated<wbr>Point</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#getmodelbyname" class="tsd-kind-icon">get<wbr>Model<wbr>ByName</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#getresultobjectfordelaycalculation" class="tsd-kind-icon">get<wbr>Result<wbr>Object<wbr>For<wbr>Delay<wbr>Calculation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#getshapesanchorpointsfordelaycomputation" class="tsd-kind-icon">get<wbr>Shapes<wbr>Anchor<wbr>Points<wbr>For<wbr>Delay<wbr>Computation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#getstoptimesfordelaycomputation" class="tsd-kind-icon">get<wbr>Stop<wbr>Times<wbr>For<wbr>Delay<wbr>Computation</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsworker.html#r4d" class="tsd-kind-icon">r4d</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsworker.html#savedatatodb" class="tsd-kind-icon">save<wbr>Data<wbr>ToDB</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsworker.html#savestopstodb" class="tsd-kind-icon">save<wbr>Stops<wbr>ToDB</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="vehiclepositionsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
@@ -208,7 +206,7 @@
 					<a name="getestimatedpoint" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Estimated<wbr>Point</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Estimated<wbr>Point<span class="tsd-signature-symbol">(</span>tripShapePoints<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, currentPosition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, lastPosition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Estimated<wbr>Point<span class="tsd-signature-symbol">(</span>tripShapePoints<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, currentPosition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, lastPosition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -229,30 +227,7 @@
 									<h5>lastPosition: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="getmodelbyname" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Model<wbr>ByName</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Model<wbr>ByName<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="postgresmodel.html" class="tsd-signature-type">PostgresModel</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:402</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="postgresmodel.html" class="tsd-signature-type">PostgresModel</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -266,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:262</li>
+									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:309</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -289,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:347</li>
+									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:407</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -315,7 +290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:376</li>
+									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:450</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -325,29 +300,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="r4d" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> r4d</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">r4d<span class="tsd-signature-symbol">(</span>num<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in modules/vehiclepositions/VehiclePositionsWorker.ts:258</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>num: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -515,9 +467,6 @@
 								<a href="vehiclepositionsworker.html#getestimatedpoint" class="tsd-kind-icon">get<wbr>Estimated<wbr>Point</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="vehiclepositionsworker.html#getmodelbyname" class="tsd-kind-icon">get<wbr>Model<wbr>ByName</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="vehiclepositionsworker.html#getresultobjectfordelaycalculation" class="tsd-kind-icon">get<wbr>Result<wbr>Object<wbr>For<wbr>Delay<wbr>Calculation</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -525,9 +474,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="vehiclepositionsworker.html#getstoptimesfordelaycomputation" class="tsd-kind-icon">get<wbr>Stop<wbr>Times<wbr>For<wbr>Delay<wbr>Computation</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="vehiclepositionsworker.html#r4d" class="tsd-kind-icon">r4d</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="vehiclepositionsworker.html#savedatatodb" class="tsd-kind-icon">save<wbr>Data<wbr>ToDB</a>
