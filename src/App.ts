@@ -21,6 +21,8 @@ class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3000", 10);
 
+    private commitSHA: string;
+
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
@@ -34,7 +36,8 @@ class App {
      */
     public start = async (): Promise<void> => {
         try {
-            log.info(`Commit SHA: ${await this.loadCommitSHA()}`);
+            this.commitSHA = await this.loadCommitSHA();
+            log.info(`Commit SHA: ${this.commitSHA}`);
             this.express = express();
             this.middleware();
             this.routes();
@@ -86,6 +89,7 @@ class App {
 
                 res.json({
                     app_name: "Data Platform Integration Engine",
+                    commit_sha: this.commitSHA,
                     status: "Up",
                     version: config.app_version,
                 });
@@ -151,8 +155,8 @@ class App {
     /**
      * Loading the Commit SHA of the current build
      */
-    private loadCommitSHA = async (): Promise<any> => {
-        return new Promise((resolve, reject) => {
+    private loadCommitSHA = async (): Promise<string> => {
+        return new Promise<string>((resolve, reject) => {
             fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
                 if (err) {
                     return resolve(undefined);
