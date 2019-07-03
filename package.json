@@ -33,6 +33,7 @@
 		"@types/sequelize": "4.27.32",
 		"chai": "4.2.0",
 		"chai-as-promised": "7.1.1",
+		"husky": "^3.0.0",
 		"mocha": "5.2.0",
 		"nock": "10.0.6",
 		"nyc": "13.1.0",
@@ -92,5 +93,10 @@
 		"statements": 0,
 		"functions": 0,
 		"branches": 0
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "tslint -p ."
+		}
 	}
 }
