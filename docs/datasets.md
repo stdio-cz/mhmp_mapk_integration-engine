@@ -1,6 +1,6 @@
 # Datové sady Integračního enginu Golemio
 
-Poslední úprava: 17. 6. 2019
+Poslední úprava: 27. 6. 2019
 
 ## AirQualityStations
 - zdroj: ČHMU http://portal.chmi.cz/files/portal/docs/uoco/web_generator/AIMdata_hourly.xml
@@ -65,6 +65,13 @@ Poslední úprava: 17. 6. 2019
 - typ: PULL
 - obnova dat: 1x za 5min
 - historizace: ano
+- retence: TBD
+
+## MOS Mobile Application
+- zdroj: input-gateway
+- typ: INPUT
+- obnova dat: cca 1x denně
+- historizace: ne
 - retence: TBD
 
 ## MunicipalAuthorities

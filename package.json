@@ -1,12 +1,12 @@
 {
 	"name": "golemio-integration-engine",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Integration Engine of the Golemio data platform.",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"start": "node -r dotenv/config dist/App.js",
-		"debug": "node --inspect-brk=9231 -r dotenv/config dist/App.js",
+		"debug": "node --inspect-brk=9230 -r dotenv/config dist/App.js",
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit",
@@ -14,7 +14,8 @@
 		"modules-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/modules/**/*.test.ts --exit",
 		"datasources-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/DataSourcesAvailabilityChecking.test.ts --exit",
 		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/DataSourcesAvailabilityChecking.test.ts --exit",
-		"generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Integration Engine\" --mode file --out docs/typedoc src"
+		"generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Integration Engine\" --mode file --out docs/typedoc src",
+		"tslint": "tslint -p ."
 	},
 	"keywords": [],
 	"author": "Operator ICT, a.s.",
@@ -24,23 +25,27 @@
 		"url": "https://gitlab.oict.cz/data-platform/integration-engine"
 	},
 	"devDependencies": {
-		"@types/debug": "0.0.31",
-		"@types/ioredis": "4.0.10",
-		"@types/node": "10.12.0",
+		"@types/amqplib": "^0.5.13",
 		"@types/chai": "4.1.7",
+		"@types/debug": "0.0.31",
+		"@types/express": "^4.17.0",
+		"@types/ioredis": "4.0.10",
 		"@types/mocha": "5.2.5",
+		"@types/morgan": "^1.7.35",
+		"@types/node": "10.12.0",
 		"@types/sequelize": "4.27.32",
-		"ts-node": "7.0.1",
-		"typescript": "3.1.3",
-		"tslint": "5.11.0",
 		"chai": "4.2.0",
-		"mocha": "5.2.0",
 		"chai-as-promised": "7.1.1",
-		"sinon": "7.1.1",
-		"nyc": "13.1.0",
-		"source-map-support": "0.5.9",
+		"husky": "^3.0.0",
+		"mocha": "5.2.0",
 		"nock": "10.0.6",
-		"typedoc": "^0.14.2"
+		"nyc": "13.1.0",
+		"sinon": "7.1.1",
+		"source-map-support": "0.5.9",
+		"ts-node": "7.0.1",
+		"tslint": "5.11.0",
+		"typedoc": "^0.14.2",
+		"typescript": "3.1.3"
 	},
 	"dependencies": {
 		"@turf/turf": "5.1.6",
@@ -48,15 +53,17 @@
 		"basic-ftp": "2.17.0",
 		"cheap-ruler": "2.5.1",
 		"csvtojson": "2.0.8",
-		"fast-csv": "3.0.1",
-		"golemio-schema-definitions": "0.1.9-dev.1987",
 		"debug": "3.1.0",
 		"decompress": "4.2.0",
 		"dotenv": "6.1.0",
+		"express": "^4.17.1",
+		"fast-csv": "3.0.1",
+		"golemio-schema-definitions": "0.1.9",
 		"iconv-lite": "0.4.24",
 		"ioredis": "4.6.2",
 		"moment-timezone": "0.5.23",
 		"mongoose": "5.3.6",
+		"morgan": "^1.9.1",
 		"pg": "7.6.1",
 		"pg-hstore": "2.3.2",
 		"request": "2.88.0",
@@ -89,5 +96,10 @@
 		"statements": 0,
 		"functions": 0,
 		"branches": 0
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run tslint"
+		}
 	}
 }
