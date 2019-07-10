@@ -5,19 +5,17 @@ import { config } from "../config";
 import { log } from "../helpers";
 import { CustomError, handleError } from "../helpers/errors";
 
-const amqp = require("amqplib");
-
 class MyAMQP {
 
     private channel: amqplib.Channel;
 
-    public connect = async (): Promise<amqplib.Channel|undefined> => {
+    public connect = async (): Promise<amqplib.Channel | undefined> => {
         try {
             if (this.channel) {
                 return this.channel;
             }
 
-            const conn = await amqp.connect(config.RABBIT_CONN);
+            const conn = await amqplib.connect(config.RABBIT_CONN);
             this.channel = await conn.createChannel();
             log.info("Connected to Queue!");
             conn.on("close", () => {
@@ -42,8 +40,8 @@ class MyAMQP {
     }
 
     private assertDeadQueue = async (channel: amqplib.Channel): Promise<void> => {
-        channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
-        const q = channel.assertQueue(config.RABBIT_EXCHANGE_NAME + ".deadqueue", {
+        channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", { durable: false });
+        const q = await channel.assertQueue(config.RABBIT_EXCHANGE_NAME + ".deadqueue", {
             durable: true,
             messageTtl: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds
         });
