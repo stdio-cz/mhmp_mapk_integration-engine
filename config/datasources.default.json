@@ -53,5 +53,7 @@
     "TSKMeteosensors": "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     "TSKParkings": "http://www.tsk-praha.cz/tskexport3/json/parkings",
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",
+    "TSKZtpParkings": "http://tsk.3nicom.cloud/api/all",
+    "TSKZtpParkingsToken": "myStringToken",
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json"
 }

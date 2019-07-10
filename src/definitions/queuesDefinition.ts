@@ -4,8 +4,8 @@ import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
     MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
     ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, VehiclePositions, WasteCollectionYards,
-    } from "golemio-schema-definitions";
+    TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
+} from "golemio-schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
@@ -35,6 +35,7 @@ import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
+import { ZtpParkingsWorker } from "../modules/ztpparkings";
 
 const definitions: IQueueDefinition[] = [
     {
@@ -857,25 +858,69 @@ const definitions: IQueueDefinition[] = [
             },
         ],
     },
-/*
-    // template
     {
-        name: TemplateDataset.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TemplateDataset.name.toLowerCase(),
+        name: ZtpParkings.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + ZtpParkings.name.toLowerCase(),
         queues: [
             {
-                name: "TemplateQueue",
+                name: "refreshDataInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000,
                 },
-                worker: TemplateWorker,
-                workerMethod: "TemplateQueue",
+                worker: ZtpParkingsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "updateAddressAndDistrict",
+            },
+            {
+                name: "updateStatusAndDevice",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "updateStatusAndDevice",
             },
         ],
     },
-*/
+    /*
+        // template
+        {
+            name: TemplateDataset.name,
+            queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TemplateDataset.name.toLowerCase(),
+            queues: [
+                {
+                    name: "TemplateQueue",
+                    options: {
+                        deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                        deadLetterRoutingKey: "dead",
+                        messageTtl: 4 * 60 * 1000,
+                    },
+                    worker: TemplateWorker,
+                    workerMethod: "TemplateQueue",
+                },
+            ],
+        },
+    */
 ];
 
 export { definitions as queuesDefinition };
