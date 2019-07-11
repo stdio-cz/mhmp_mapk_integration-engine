@@ -896,4 +896,3 @@ const definitions: IQueueDefinition[] = [
 ];
 
 export { definitions as queuesDefinition };
-

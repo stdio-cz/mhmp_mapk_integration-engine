@@ -78,6 +78,12 @@
 					<li>golemio-schema-definitions module</li>
 				</ul>
 				<h2 id="installation">Installation</h2>
+				<h3 id="a-docker-compose">A) Docker compose</h3>
+				<ol>
+					<li>create docker network if not already exists <code>docker network create golemio</code></li>
+					<li><code>docker-compose up -d</code> will start all necessary services</li>
+				</ol>
+				<h3 id="b-local-instalation">B) Local instalation</h3>
 				<p>Install Node, MongoDB, PostgreSQL and Redis.</p>
 				<p>Create the <code>.npmrc</code> file and type to it the url to the OICT private npm proxy registry:</p>
 				<pre><code>registry=<span class="hljs-string">http:</span><span class="hljs-comment">//&lt;url_to_oict_registry&gt;</span></code></pre><p>Install all npm modules using command:</p>
@@ -143,6 +149,12 @@
 						<a href="classes/baseworker.html" class="tsd-kind-icon">Base<wbr>Worker</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/bicycleparkingstransformation.html" class="tsd-kind-icon">Bicycle<wbr>Parkings<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/bicycleparkingsworker.html" class="tsd-kind-icon">Bicycle<wbr>Parkings<wbr>Worker</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/csvdatatypestrategy.html" class="tsd-kind-icon">CSVData<wbr>Type<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -185,6 +197,12 @@
 						<a href="classes/healthcaretransformation.html" class="tsd-kind-icon">Health<wbr>Care<wbr>Transformation</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/homeportlocationstransformation.html" class="tsd-kind-icon">Homeport<wbr>Locations<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/homeportoutoflocationstransformation.html" class="tsd-kind-icon">Homeport<wbr>Out<wbr>OfLocations<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/hoppygotransformation.html" class="tsd-kind-icon">Hoppy<wbr>GoTransformation</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -224,6 +242,21 @@
 						<a href="classes/mongomodel.html" class="tsd-kind-icon">Mongo<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/mosmadevicemodelstransformation.html" class="tsd-kind-icon">MosMADevice<wbr>Models<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mosmaticketactivationstransformation.html" class="tsd-kind-icon">MosMATicket<wbr>Activations<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mosmaticketinspectionstransformation.html" class="tsd-kind-icon">MosMATicket<wbr>Inspections<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mosmaticketpurchasestransformation.html" class="tsd-kind-icon">MosMATicket<wbr>Purchases<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mosmaworker.html" class="tsd-kind-icon">MosMAWorker</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/municipalauthoritiestransformation.html" class="tsd-kind-icon">Municipal<wbr>Authorities<wbr>Transformation</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -258,6 +291,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/parkingzonesworker.html" class="tsd-kind-icon">Parking<wbr>Zones<wbr>Worker</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/parkingsoccupanciestransformation.html" class="tsd-kind-icon">Parkings<wbr>Occupancies<wbr>Transformation</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/parkingstransformation.html" class="tsd-kind-icon">Parkings<wbr>Transformation</a>
@@ -296,6 +332,9 @@
 						<a href="classes/redismodel.html" class="tsd-kind-icon">Redis<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/rekolatransformation.html" class="tsd-kind-icon">Rekola<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/ropidgtfscisstopstransformation.html" class="tsd-kind-icon">RopidGTFSCis<wbr>Stops<wbr>Transformation</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -309,6 +348,15 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/ropidgtfsworker.html" class="tsd-kind-icon">RopidGTFSWorker</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/sensoneomeasurementstransformation.html" class="tsd-kind-icon">Sensoneo<wbr>Measurements<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/sensoneopickstransformation.html" class="tsd-kind-icon">Sensoneo<wbr>Picks<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/sharedbikesworker.html" class="tsd-kind-icon">Shared<wbr>Bikes<wbr>Worker</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/sharedcarsworker.html" class="tsd-kind-icon">Shared<wbr>Cars<wbr>Worker</a>
@@ -441,6 +489,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#definitions" class="tsd-kind-icon">definitions</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#fastcsv" class="tsd-kind-icon">fastcsv</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#fs" class="tsd-kind-icon">fs</a>
