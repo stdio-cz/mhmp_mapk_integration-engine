@@ -5,7 +5,6 @@ import { config } from "../config";
 import { log } from "../helpers";
 import { CustomError, handleError } from "../helpers/errors";
 
-
 class MyAMQP {
 
     private channel: amqplib.Channel;
