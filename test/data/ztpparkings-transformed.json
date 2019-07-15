@@ -1,0 +1,1997 @@
+[
+  {
+    "geometry": {
+      "coordinates": [
+        14.4201819,
+        50.0880592
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "",
+      "id": 5,
+      "id_group": "5",
+      "id_park": 6,
+      "id_space": 5,
+      "image_name": "Pařížská 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/5/Pařížská 1.jpeg",
+      "last_updated_at": 1553245757000,
+      "location": "Pařížská 1",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 47,
+      "signal_rssi1": 40,
+      "size": "2,30\tx 4,60",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 859,
+      "type": "kolmé",
+      "updated_at": 1562745691164
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4203997,
+        50.0879817
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "",
+      "id": 6,
+      "id_group": "6",
+      "id_park": 6,
+      "id_space": 6,
+      "image_name": "Pařížská 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/6/Pařížská 2.jpeg",
+      "last_updated_at": 1553256487000,
+      "location": "Pařížská 2",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 54,
+      "signal_rssi1": 53,
+      "size": "2,30\tx 4,60",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 866,
+      "type": "kolmé",
+      "updated_at": 1562745691165
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4173006,
+        50.0871358
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "",
+      "id": 8,
+      "id_group": "8",
+      "id_park": 7,
+      "id_space": 2,
+      "image_name": "Mariánské nám. 3.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/8/Mariánské nám. 3.png",
+      "last_updated_at": 1547551068000,
+      "location": "Mariánské nám. 3",
+      "master": "Mar. Nám.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 58,
+      "signal_rssi1": 59,
+      "size": "2,20\tx 4,60",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 842,
+      "type": "kolmé",
+      "updated_at": 1562745691165
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4168675,
+        50.0873569
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "",
+      "id": 10,
+      "id_group": "10",
+      "id_park": 7,
+      "id_space": 4,
+      "image_name": "Valenstýnská.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/10/Valenstýnská.png",
+      "last_updated_at": 1547550605000,
+      "location": "Valentýnská (Mariánské nám.)",
+      "master": "Mar. Nám.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 31,
+      "signal_rssi1": 32,
+      "size": "1,90\tx 5,00",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 839,
+      "type": "podélné",
+      "updated_at": 1562745691166
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42120951,
+        50.08131147
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "",
+      "id": 21,
+      "id_group": "21",
+      "id_park": 14,
+      "id_space": 3,
+      "image_name": "Vladislavova.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/21/Vladislavova.png",
+      "last_updated_at": 1562738365000,
+      "location": "Vladislavova",
+      "master": "Charvátova",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 41,
+      "signal_rssi1": 42,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 829,
+      "type": "podélné",
+      "updated_at": 1562745691166
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42115851,
+        50.09283867
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "",
+      "id": 26,
+      "id_group": "26",
+      "id_park": 17,
+      "id_space": 1,
+      "image_name": "Dvořákovo nábř..png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/26/Dvořákovo nábř..png",
+      "last_updated_at": 1562736583000,
+      "location": "Dvořákovo nábřeží",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 96,
+      "signal_rssi1": 92,
+      "size": "3,30\tx 4,80",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "kolmé",
+      "updated_at": 1562745691166
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.43243504,
+        50.0916497
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "",
+      "id": 32,
+      "id_group": "32",
+      "id_park": 19,
+      "id_space": 1,
+      "image_name": "Lodecká 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/32/Lodecká 1.png",
+      "last_updated_at": 1562734347000,
+      "location": "Lodecká 1",
+      "master": "Barvířská",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 53,
+      "signal_rssi1": 54,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 878,
+      "type": "podélné",
+      "updated_at": 1562745691166
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.43272316,
+        50.0917851
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "",
+      "id": 33,
+      "id_group": "33",
+      "id_park": 19,
+      "id_space": 2,
+      "image_name": "Lodecká 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/33/Lodecká 2.png",
+      "last_updated_at": 1548761441000,
+      "location": "Lodecká 2",
+      "master": "Barvířská",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 38,
+      "signal_rssi1": 38,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 832,
+      "type": "podélné",
+      "updated_at": 1562745691167
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.456204296607,
+        50.092048269853
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "205A0C",
+      "failure": false,
+      "group": null,
+      "id": 119,
+      "id_group": "119",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Šaldova 7.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/119/Šaldova 7.png",
+      "last_updated_at": 1562735764000,
+      "location": "Šaldova 7",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": null,
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "podélné",
+      "updated_at": 1562745691167
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455296175096,
+        50.093574567822
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": null,
+      "id": 120,
+      "id_group": "120",
+      "id_park": 28,
+      "id_space": 10,
+      "image_name": "Šaldova 4.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/120/Šaldova 4.png",
+      "last_updated_at": 1550587861000,
+      "location": "Šaldova 4",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 61,
+      "signal_rssi1": 62,
+      "size": "2,00\tx 5,50",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 865,
+      "type": "podélné",
+      "updated_at": 1562745691167
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455296175096,
+        50.093574567822
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": null,
+      "id": 121,
+      "id_group": "121",
+      "id_park": 28,
+      "id_space": 3,
+      "image_name": "Šaldova 3.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/121/Šaldova 3.png",
+      "last_updated_at": 1562692848000,
+      "location": "Šaldova 3",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 50,
+      "signal_rssi1": 50,
+      "size": "2,50\tx 5,30",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 812,
+      "type": "kolmé",
+      "updated_at": 1562745691168
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455600987247,
+        50.0935297657
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": null,
+      "id": 122,
+      "id_group": "122",
+      "id_park": 28,
+      "id_space": 5,
+      "image_name": "Šaldova 5.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/122/Šaldova 5.png",
+      "last_updated_at": 1562511546000,
+      "location": "Šaldova 5",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 30,
+      "signal_rssi1": 52,
+      "size": "2,00\tx 5,60",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 845,
+      "type": "podélné",
+      "updated_at": 1562745691168
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455133502988,
+        50.094190041364
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": null,
+      "id": 128,
+      "id_group": "128",
+      "id_park": 28,
+      "id_space": 1,
+      "image_name": "Šaldova 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/128/Šaldova 1.png",
+      "last_updated_at": 1545866733000,
+      "location": "Šaldova 1",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 33,
+      "signal_rssi1": 31,
+      "size": "2,00\tx 5,50",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 811,
+      "type": "podélné",
+      "updated_at": 1562745691168
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455166580321,
+        50.093439346656
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": null,
+      "id": 129,
+      "id_group": "129",
+      "id_park": 28,
+      "id_space": 2,
+      "image_name": "Šaldova 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/129/Šaldova 2.png",
+      "last_updated_at": 1562733474000,
+      "location": "Šaldova 2",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 56,
+      "signal_rssi1": 57,
+      "size": "2,50\tx 5,50",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 834,
+      "type": "kolmé",
+      "updated_at": 1562745691168
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.455560586795,
+        50.093330174933
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": null,
+      "id": 130,
+      "id_group": "130",
+      "id_park": 28,
+      "id_space": 6,
+      "image_name": "Šaldova 6.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/130/Šaldova 6.png",
+      "last_updated_at": 1551797967000,
+      "location": "Šaldova 6",
+      "master": "Roh. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 43,
+      "signal_rssi1": 43,
+      "size": "2,00\tx 7,10",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 829,
+      "type": "podélné",
+      "updated_at": 1562745691169
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.454274177551268,
+        50.093040218029614
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "205A4A",
+      "failure": false,
+      "group": null,
+      "id": 137,
+      "id_group": "137",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Křižíkova 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/137/Křižíkova 1.jpeg",
+      "last_updated_at": 1562736021000,
+      "location": "Křižíkova 1",
+      "master": null,
+      "note": "Max 4 h. ",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,10 x 5,40",
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "podélné",
+      "updated_at": 1562745691169
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.45176362991333,
+        50.09276489693108
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "2042AE",
+      "failure": false,
+      "group": null,
+      "id": 138,
+      "id_group": "138",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Křižíkova 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/138/Křižíkova 2.jpeg",
+      "last_updated_at": 1562737458000,
+      "location": "Křižíkova 2",
+      "master": null,
+      "note": "Max 4 h. ",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,30 x 5,00",
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "kolmé",
+      "updated_at": 1562745691169
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4322881,
+        50.0805722
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "2044A2",
+      "failure": false,
+      "group": "8",
+      "id": 116,
+      "id_group": "group_8",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Wilsonova 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/116/Wilsonova 1.jpeg",
+      "last_updated_at": 1562737230000,
+      "location": "Wilsonova 1",
+      "master": "Wilsonova",
+      "note": "Max. 4 hod",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,10 x 5,30",
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "podélné",
+      "updated_at": 1562745691170
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4322236,
+        50.0805514
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "8",
+      "id": 13,
+      "id_group": "group_8",
+      "id_park": 11,
+      "id_space": 1,
+      "image_name": "Wilaonova 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/13/Wilaonova 2.jpeg",
+      "last_updated_at": 1562722317000,
+      "location": "Wilsonova 2",
+      "master": "Wilsonova",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 35,
+      "signal_rssi1": 44,
+      "size": "2,10 x 5,40",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 839,
+      "type": "podélné",
+      "updated_at": 1562745691170
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42253924,
+        50.07939621
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "205A37",
+      "failure": false,
+      "group": "13",
+      "id": 117,
+      "id_group": "group_13",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Vodičkova 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/117/Vodičkova 2.png",
+      "last_updated_at": 1562723186000,
+      "location": "Vodičkova 2",
+      "master": "Lazarská",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,10 x 5,00",
+      "source": "SIGFOX",
+      "surface": "dlaždice",
+      "temperature": null,
+      "type": "podélné",
+      "updated_at": 1562745691184
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42247707,
+        50.07936593
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "2042E6",
+      "failure": false,
+      "group": "13",
+      "id": 118,
+      "id_group": "group_13",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Vodičkova 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/118/Vodičkova 1.png",
+      "last_updated_at": 1562724564000,
+      "location": "Vodičkova 1",
+      "master": "Lazarská",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,10\tx 4,70",
+      "source": "SIGFOX",
+      "surface": "dlaždice",
+      "temperature": null,
+      "type": "podélné",
+      "updated_at": 1562745691184
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.41930890083313,
+        50.082287753886085
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "2059C8",
+      "failure": false,
+      "group": "17",
+      "id": 135,
+      "id_group": "group_17",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Národní 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/135/Národní 1.jpeg",
+      "last_updated_at": 1562736126000,
+      "location": "Národní 1",
+      "master": null,
+      "note": "Max 4 h. ",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,30\tx 5,50",
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "kolmé",
+      "updated_at": 1562745691184
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.419416189193724,
+        50.08230840753779
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": "2059B4",
+      "failure": false,
+      "group": "17",
+      "id": 136,
+      "id_group": "group_17",
+      "id_park": null,
+      "id_space": null,
+      "image_name": "Národní 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/136/Národní 2.jpeg",
+      "last_updated_at": 1562737615000,
+      "location": "Národní 2",
+      "master": null,
+      "note": "Max 4 h. ",
+      "occupied": true,
+      "signal_rssi0": null,
+      "signal_rssi1": null,
+      "size": "2,20\tx 5,50",
+      "source": "SIGFOX",
+      "surface": "asfalt",
+      "temperature": null,
+      "type": "kolmé",
+      "updated_at": 1562745691185
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4207364,
+        50.0879447
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "1",
+      "id": 1,
+      "id_group": "group_1",
+      "id_park": 6,
+      "id_space": 1,
+      "image_name": "Staroměstské nám 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/1/Staroměstské nám 1.jpeg",
+      "last_updated_at": 1553228973000,
+      "location": "Staroměstské nám. 1",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 44,
+      "signal_rssi1": 42,
+      "size": "3,20\tx 4,00",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 845,
+      "type": "kolmé",
+      "updated_at": 1562745691185
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4207631,
+        50.0879572
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "1",
+      "id": 2,
+      "id_group": "group_1",
+      "id_park": 6,
+      "id_space": 2,
+      "image_name": "Staroměstské nám 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/2/Staroměstské nám 2.jpeg",
+      "last_updated_at": 1553249421000,
+      "location": "Staroměstské nám. 2",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 43,
+      "signal_rssi1": 47,
+      "size": "3,20\tx 4,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 873,
+      "type": "kolmé",
+      "updated_at": 1562745691185
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4207919,
+        50.0879708
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "1",
+      "id": 3,
+      "id_group": "group_1",
+      "id_park": 6,
+      "id_space": 3,
+      "image_name": "Staroměstské nám 3.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/3/Staroměstské nám 3.jpeg",
+      "last_updated_at": 1553023729000,
+      "location": "Staroměstské nám. 3",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 72,
+      "signal_rssi1": 73,
+      "size": "2,50\tx 4,60",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 848,
+      "type": "kolmé",
+      "updated_at": 1562745691186
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4208156,
+        50.087985
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "1",
+      "id": 4,
+      "id_group": "group_1",
+      "id_park": 6,
+      "id_space": 4,
+      "image_name": "Staroměstské nám 4.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/4/Staroměstské nám 4.jpeg",
+      "last_updated_at": 1553255437000,
+      "location": "Staroměstské nám. 4",
+      "master": "Starom. Nám",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 67,
+      "signal_rssi1": 60,
+      "size": "2,30\tx 4,60",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 843,
+      "type": "kolmé",
+      "updated_at": 1562745691186
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4173433,
+        50.0867208
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "2",
+      "id": 7,
+      "id_group": "group_2",
+      "id_park": 7,
+      "id_space": 1,
+      "image_name": "Mariánské nám. 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/7/Mariánské nám. 2.png",
+      "last_updated_at": 1547550908000,
+      "location": "Mariánské nám. 2",
+      "master": "Mar. Nám.",
+      "note": "Max. 4 hod",
+      "occupied": null,
+      "signal_rssi0": 57,
+      "signal_rssi1": 58,
+      "size": "3,20\tx 4,00",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 842,
+      "type": "podélné",
+      "updated_at": 1562745691186
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4174292,
+        50.0867069
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "2",
+      "id": 9,
+      "id_group": "group_2",
+      "id_park": 7,
+      "id_space": 3,
+      "image_name": "Mariánské nám. 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/9/Mariánské nám. 1.png",
+      "last_updated_at": 1547550600000,
+      "location": "Mariánské nám. 1",
+      "master": "Mar. Nám.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 49,
+      "signal_rssi1": 49,
+      "size": "2,20\tx 5,10",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 875,
+      "type": "podélné",
+      "updated_at": 1562745691186
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42554,
+        50.09243
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "3",
+      "id": 105,
+      "id_group": "group_3",
+      "id_park": 8,
+      "id_space": 10,
+      "image_name": "Řásnovka 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/105/Řásnovka 1.jpeg",
+      "last_updated_at": 1550963648000,
+      "location": "Řásnovka 1",
+      "master": "Rasnovka",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 90,
+      "signal_rssi1": 85,
+      "size": "2,60\tx 4,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "kolmé",
+      "updated_at": 1562745691186
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.425444,
+        50.092425
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "3",
+      "id": 106,
+      "id_group": "group_3",
+      "id_park": 8,
+      "id_space": 11,
+      "image_name": "Řásnovka 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/106/Řásnovka 2.jpeg",
+      "last_updated_at": 1550895371000,
+      "location": "Řásnovka 2",
+      "master": "Rasnovka",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 84,
+      "signal_rssi1": 79,
+      "size": "3,20\tx 4,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "kolmé",
+      "updated_at": 1562745691187
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42595685,
+        50.07967299
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "4",
+      "id": 15,
+      "id_group": "group_4",
+      "id_park": 12,
+      "id_space": 1,
+      "image_name": "Stěpánská 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/15/Stěpánská 1.jpeg",
+      "last_updated_at": 1562733991000,
+      "location": "Stěpánská 1",
+      "master": "Štěpánská",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 48,
+      "signal_rssi1": 44,
+      "size": "2,70\tx 4,40",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 824,
+      "type": "kolmé",
+      "updated_at": 1562745691187
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4259696,
+        50.07969405
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "4",
+      "id": 16,
+      "id_group": "group_4",
+      "id_park": 12,
+      "id_space": 2,
+      "image_name": "Štěpánská 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/16/Štěpánská 2.jpeg",
+      "last_updated_at": 1562700308000,
+      "location": "Stěpánská 2",
+      "master": "Štěpánská",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 55,
+      "signal_rssi1": 56,
+      "size": "2,60\tx 4,40",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 855,
+      "type": "kolmé",
+      "updated_at": 1562745691187
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42084263,
+        50.08188347
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "6",
+      "id": 19,
+      "id_group": "group_6",
+      "id_park": 14,
+      "id_space": 1,
+      "image_name": "Charvátova 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/19/Charvátova 2.png",
+      "last_updated_at": 1545242591000,
+      "location": "Charvátova 2",
+      "master": "Charvátova",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 63,
+      "signal_rssi1": 64,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 850,
+      "type": "podélné",
+      "updated_at": 1562745691187
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42091598,
+        50.08186513
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "6",
+      "id": 20,
+      "id_group": "group_6",
+      "id_park": 14,
+      "id_space": 2,
+      "image_name": "Charvátova 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/20/Charvátova 1.png",
+      "last_updated_at": 1562288530000,
+      "location": "Charvátova 1",
+      "master": "Charvátova",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 76,
+      "signal_rssi1": 77,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 885,
+      "type": "podélné",
+      "updated_at": 1562745691188
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.41471479,
+        50.08037547
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "9",
+      "id": 24,
+      "id_group": "group_9",
+      "id_park": 16,
+      "id_space": 1,
+      "image_name": "Ostrovní 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/24/Ostrovní 1.png",
+      "last_updated_at": 1562732958000,
+      "location": "Ostrovní 1",
+      "master": "Ostrovní",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 50,
+      "signal_rssi1": 51,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 863,
+      "type": "kolmé",
+      "updated_at": 1562745691189
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.41467306,
+        50.08038126
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "9",
+      "id": 25,
+      "id_group": "group_9",
+      "id_park": 16,
+      "id_space": 2,
+      "image_name": "Ostrovní 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/25/Ostrovní 2.png",
+      "last_updated_at": 1541194356000,
+      "location": "Ostrovní 2",
+      "master": "Ostrovní",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 57,
+      "signal_rssi1": 63,
+      "size": null,
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 855,
+      "type": "kolmé",
+      "updated_at": 1562745691190
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42591344,
+        50.09017695
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "10",
+      "id": 27,
+      "id_group": "group_10",
+      "id_park": 18,
+      "id_space": 1,
+      "image_name": "Rybná 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/27/Rybná 1.png",
+      "last_updated_at": 1562062607000,
+      "location": "Rybná 1",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 57,
+      "signal_rssi1": 59,
+      "size": "2,20\tx 5,70",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "podélné",
+      "updated_at": 1562745691190
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4259094,
+        50.09022186
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "10",
+      "id": 28,
+      "id_group": "group_10",
+      "id_park": 18,
+      "id_space": 2,
+      "image_name": "Rybná 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/28/Rybná 2.png",
+      "last_updated_at": 1562450138000,
+      "location": "Rybná 2",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 52,
+      "signal_rssi1": 60,
+      "size": "2,20\tx 5,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "podélné",
+      "updated_at": 1562745691191
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42590635,
+        50.0902698
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "10",
+      "id": 29,
+      "id_group": "group_10",
+      "id_park": 18,
+      "id_space": 3,
+      "image_name": "Rybná 3.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/29/Rybná 3.png",
+      "last_updated_at": 1562715177000,
+      "location": "Rybná 3",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 57,
+      "signal_rssi1": 59,
+      "size": "2,20\tx 5,00",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "podélné",
+      "updated_at": 1562745691193
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42598683,
+        50.09057532
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "11",
+      "id": 30,
+      "id_group": "group_11",
+      "id_park": 18,
+      "id_space": 4,
+      "image_name": "Dlouhá 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/30/Dlouhá 1.png",
+      "last_updated_at": 1562703780000,
+      "location": "Dlouhá 1",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 70,
+      "signal_rssi1": 72,
+      "size": "2,30\tx 4,70",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -9,
+      "type": "kolmé",
+      "updated_at": 1562745691194
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42605347,
+        50.09059109
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "11",
+      "id": 31,
+      "id_group": "group_11",
+      "id_park": 18,
+      "id_space": 5,
+      "image_name": "Dlouhá 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/31/Dlouhá 2.png",
+      "last_updated_at": 1562704464000,
+      "location": "Dlouhá 2",
+      "master": "Dvoř. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 41,
+      "signal_rssi1": 63,
+      "size": "2,30\tx 4,70",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -11,
+      "type": "kolmé",
+      "updated_at": 1562745691194
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42839277,
+        50.08745744
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "12",
+      "id": 34,
+      "id_group": "group_12",
+      "id_park": 20,
+      "id_space": 1,
+      "image_name": "Náměstí rep 1.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/34/Náměstí rep 1.jpeg",
+      "last_updated_at": 1562271978000,
+      "location": "Náměstí Republiky 1",
+      "master": "Hybernská",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 34,
+      "signal_rssi1": 61,
+      "size": "3,50\tx 4,10",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 907,
+      "type": "kolmé",
+      "updated_at": 1562745691202
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.42839677,
+        50.08748887
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "12",
+      "id": 35,
+      "id_group": "group_12",
+      "id_park": 20,
+      "id_space": 2,
+      "image_name": "Náměstí rep 2.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/35/Náměstí rep 2.jpeg",
+      "last_updated_at": 1562733715000,
+      "location": "Náměstí Republiky 2",
+      "master": "Hybernská",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 53,
+      "signal_rssi1": 54,
+      "size": "3,50\tx 4,00",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 889,
+      "type": "kolmé",
+      "updated_at": 1562745691203
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.4284062,
+        50.08752233
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "12",
+      "id": 36,
+      "id_group": "group_12",
+      "id_park": 20,
+      "id_space": 3,
+      "image_name": "Náměstí rep 3.jpeg",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/36/Náměstí rep 3.jpeg",
+      "last_updated_at": 1562738314000,
+      "location": "Náměstí Republiky 3",
+      "master": "Hybernská",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 53,
+      "signal_rssi1": 72,
+      "size": "3,60\tx 3,80",
+      "source": "CITIQ",
+      "surface": "asfalt",
+      "temperature": 871,
+      "type": "kolmé",
+      "updated_at": 1562745691203
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40939387,
+        50.08813877
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "14",
+      "id": 39,
+      "id_group": "group_14",
+      "id_park": 22,
+      "id_space": 3,
+      "image_name": "U lužického s. 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/39/U lužického s. 1.png",
+      "last_updated_at": 1562507414000,
+      "location": "U Lužického semináře 1",
+      "master": "Kos. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 101,
+      "signal_rssi1": 87,
+      "size": "2,60\tx 5,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -7,
+      "type": "podélné",
+      "updated_at": 1562745691203
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40949264,
+        50.08807333
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "14",
+      "id": 40,
+      "id_group": "group_14",
+      "id_park": 22,
+      "id_space": 4,
+      "image_name": "U lužického s. 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/40/U lužického s. 2.png",
+      "last_updated_at": 1562586298000,
+      "location": "U Lužického semináře 2",
+      "master": "Kos. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 78,
+      "signal_rssi1": 69,
+      "size": "2,70\tx 5,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -7,
+      "type": "podélné",
+      "updated_at": 1562745691203
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40944619,
+        50.088104
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "14",
+      "id": 41,
+      "id_group": "group_14",
+      "id_park": 22,
+      "id_space": 5,
+      "image_name": "U lužického s. 3.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/41/U lužického s. 3.png",
+      "last_updated_at": 1562731636000,
+      "location": "U Lužického semináře 3",
+      "master": "Kos. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 71,
+      "signal_rssi1": 70,
+      "size": "2,50\tx 5,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -12,
+      "type": "podélné",
+      "updated_at": 1562745691204
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.411344,
+        50.089895
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "15",
+      "id": 123,
+      "id_group": "group_15",
+      "id_park": 22,
+      "id_space": 16,
+      "image_name": "Kosárkovo 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/123/Kosárkovo 1.png",
+      "last_updated_at": 1562737963000,
+      "location": "Kosárkovo nábřeží 1",
+      "master": "Kos. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 42,
+      "signal_rssi1": 86,
+      "size": "2,60\tx 5,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "podélné",
+      "updated_at": 1562745691204
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.411355,
+        50.089919
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "15",
+      "id": 124,
+      "id_group": "group_15",
+      "id_park": 22,
+      "id_space": 17,
+      "image_name": "Kosárkova 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/124/Kosárkova 2.png",
+      "last_updated_at": 1562732860000,
+      "location": "Kosárkovo nábřeží 2",
+      "master": "Kos. Nábř.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 66,
+      "signal_rssi1": 63,
+      "size": "2,50\tx 5,30",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "podélné",
+      "updated_at": 1562745691205
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40246558,
+        50.08836916
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "5",
+      "id": 112,
+      "id_group": "group_5",
+      "id_park": 23,
+      "id_space": 1,
+      "image_name": "Malostranská 1.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/112/Malostranská 1.png",
+      "last_updated_at": 1562734446000,
+      "location": "Malostranská nám. 1",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 37,
+      "signal_rssi1": 45,
+      "size": "2,70\tx 5,20",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -12,
+      "type": "podélné",
+      "updated_at": 1562745691205
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40244936,
+        50.08839423
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "5",
+      "id": 113,
+      "id_group": "group_5",
+      "id_park": 23,
+      "id_space": 2,
+      "image_name": "Malostranská 2.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/113/Malostranská 2.png",
+      "last_updated_at": 1562723411000,
+      "location": "Malostranská nám. 2",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 46,
+      "signal_rssi1": 51,
+      "size": "2,80\tx 5,40",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -11,
+      "type": "podélné",
+      "updated_at": 1562745691205
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40245091,
+        50.08842445
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "5",
+      "id": 125,
+      "id_group": "group_5",
+      "id_park": 23,
+      "id_space": 15,
+      "image_name": "Malostranská 3.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/125/Malostranská 3.png",
+      "last_updated_at": 1562737804000,
+      "location": "Malostranská nám. 3",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": true,
+      "signal_rssi0": 39,
+      "signal_rssi1": 58,
+      "size": "3,00\tx 5,60",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": 127,
+      "type": "kolmé",
+      "updated_at": 1562745691205
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40328566,
+        50.08777758
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "7",
+      "id": 102,
+      "id_group": "group_7",
+      "id_park": 23,
+      "id_space": 4,
+      "image_name": "Malostranská 4.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/102/Malostranská 4.png",
+      "last_updated_at": 1562735046000,
+      "location": "Malostranská nám. 4",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 39,
+      "signal_rssi1": 68,
+      "size": "2,90\tx 4,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -8,
+      "type": "podélné",
+      "updated_at": 1562745691206
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40332973,
+        50.08777758
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "7",
+      "id": 104,
+      "id_group": "group_7",
+      "id_park": 23,
+      "id_space": 5,
+      "image_name": "Malostranská 5.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/104/Malostranská 5.png",
+      "last_updated_at": 1562680213000,
+      "location": "Malostranská nám. 5",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 56,
+      "signal_rssi1": 51,
+      "size": "2,80\tx 4,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -5,
+      "type": "podélné",
+      "updated_at": 1562745691206
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40337655,
+        50.08777278
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": true,
+      "group": "7",
+      "id": 114,
+      "id_group": "group_7",
+      "id_park": 23,
+      "id_space": 6,
+      "image_name": "Malostranská 6.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/114/Malostranská 6.png",
+      "last_updated_at": 1559808015000,
+      "location": "Malostranská nám. 6",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": null,
+      "signal_rssi0": 42,
+      "signal_rssi1": 59,
+      "size": "2,90\tx 4,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -1,
+      "type": "podélné",
+      "updated_at": 1562745691206
+    },
+    "type": "Feature"
+  },
+  {
+    "geometry": {
+      "coordinates": [
+        14.40341949,
+        50.08777182
+      ],
+      "type": "Point"
+    },
+    "properties": {
+      "active": 1,
+      "device_id": null,
+      "failure": false,
+      "group": "7",
+      "id": 134,
+      "id_group": "group_7",
+      "id_park": 23,
+      "id_space": 7,
+      "image_name": "Malostranská 7.png",
+      "image_src": "http://tsk.3nicom.cloud/data/spaces/134/Malostranská 7.png",
+      "last_updated_at": 1562691231000,
+      "location": "Malostranské nám. 7",
+      "master": "Malostr. Nám.",
+      "note": "Max 4 h.",
+      "occupied": false,
+      "signal_rssi0": 57,
+      "signal_rssi1": 81,
+      "size": "2,90\tx 4,50",
+      "source": "CITIQ",
+      "surface": "dlaždice",
+      "temperature": -4,
+      "type": "kolmé",
+      "updated_at": 1562745691206
+    },
+    "type": "Feature"
+  }
+]

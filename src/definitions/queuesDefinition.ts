@@ -4,7 +4,7 @@ import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
-    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards,
+    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
 } from "golemio-schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
@@ -36,6 +36,7 @@ import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
+import { ZtpParkingsWorker } from "../modules/ztpparkings";
 
 const definitions: IQueueDefinition[] = [
     {
@@ -870,6 +871,50 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: WasteCollectionYardsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: ZtpParkings.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + ZtpParkings.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "saveDataToHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "saveDataToHistory",
+            },
+            {
+                name: "updateAddressAndDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "updateAddressAndDistrict",
+            },
+            {
+                name: "updateStatusAndDevice",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ZtpParkingsWorker,
+                workerMethod: "updateStatusAndDevice",
             },
         ],
     },
