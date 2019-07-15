@@ -1,10 +1,10 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
-    ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, VehiclePositions, WasteCollectionYards,
+    AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
+    IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
+    MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
+    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards,
 } from "golemio-schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
@@ -39,15 +39,14 @@ import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 
 const definitions: IQueueDefinition[] = [
     {
-        name: "general",
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + "general",
+        name: GeneralImport.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + GeneralImport.name.toLocaleLowerCase(),
         queues: [
             {
                 name: "import",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000,
                 },
                 worker: GeneralWorker,
                 workerMethod: "saveData",

@@ -19,7 +19,7 @@ export class GeneralTransformation extends BaseTransformation implements ITransf
                 textData: element.body,
             };
         } else {
-            data = element.body;
+            data = this.replaceKeysInObj(element.body, "$", "_$"); // replacing `$` to `_$` for saving to db
         }
 
         const res = {
@@ -28,5 +28,21 @@ export class GeneralTransformation extends BaseTransformation implements ITransf
         };
 
         return res;
+    }
+
+    private replaceKeysInObj = (obj: object, oldKey: string|number, newKey: string|number) => {
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const value = obj[key];
+                if (key === oldKey) {
+                    obj[newKey] = value;
+                    delete obj[key];
+                }
+                if (typeof value === "object" && key !== oldKey) {
+                    obj[key] = this.replaceKeysInObj(value, oldKey, newKey);
+                }
+            }
+        }
+        return obj;
     }
 }
