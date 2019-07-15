@@ -309,8 +309,9 @@ describe("DataSourcesAvailabilityChecking", () => {
             let datasource;
 
             beforeEach(() => {
-                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: ""});
-                hoppyGoDataType.setFilter((item) => item.localization);
+                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: "data.items"});
+                hoppyGoDataType.setFilter((item) =>
+                    (item.localization && item.localization !== "" && item.localization !== ","));
                 datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
                     new HTTPProtocolStrategy({
                         headers : {},

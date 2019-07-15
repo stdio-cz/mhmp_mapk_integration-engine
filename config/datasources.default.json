@@ -10,7 +10,7 @@
     "HomeportLocationsSharedBikes": "https://tkhs-freebikeprague.cloudapp.net/Services/Api/Location/Map/Extended?lang=cs",
     "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.cloudapp.net/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
     "HomeportSettingsSharedBikes": "https://prague.freebike.com/api/setting?Lang=cs",
-    "HoppyGoSharedCars": "https://www.hoppygo.com/api/v1/exports/cars_search",
+    "HoppyGoSharedCars": "",
     "IGSensors": "https://prague-city.ice-gateway.com/iceapi/v1/iot/data/all/?per_page=200",
     "IGStreetLamp": "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
     "IGStreetLamps": "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",
