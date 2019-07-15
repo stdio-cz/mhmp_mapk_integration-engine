@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SharedCarsWorker | Golemio Integration Engine</title>
+	<title>GeneralWorker | Golemio Integration Engine</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="sharedcarsworker.html">SharedCarsWorker</a>
+					<a href="generalworker.html">GeneralWorker</a>
 				</li>
 			</ul>
-			<h1>Class SharedCarsWorker</h1>
+			<h1>Class GeneralWorker</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 						<a href="baseworker.html" class="tsd-signature-type">BaseWorker</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">SharedCarsWorker</span>
+								<span class="target">GeneralWorker</span>
 							</li>
 						</ul>
 					</li>
@@ -86,24 +86,23 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="sharedcarsworker.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="generalworker.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="sharedcarsworker.html#ceskycarsharingdatasource" class="tsd-kind-icon">cesky<wbr>Carsharing<wbr>Data<wbr>Source</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="sharedcarsworker.html#ceskycarsharingtransformation" class="tsd-kind-icon">cesky<wbr>Carsharing<wbr>Transformation</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="sharedcarsworker.html#hoppygodatasource" class="tsd-kind-icon">hoppy<wbr>GoData<wbr>Source</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="sharedcarsworker.html#hoppygotransformation" class="tsd-kind-icon">hoppy<wbr>GoTransformation</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="sharedcarsworker.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="generalworker.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="generalworker.html#schema" class="tsd-kind-icon">schema</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="generalworker.html#transformation" class="tsd-kind-icon">transformation</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="sharedcarsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="sharedcarsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="generalworker.html#createmodel" class="tsd-kind-icon">create<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="generalworker.html#savedata" class="tsd-kind-icon">save<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="generalworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,16 +114,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Shared<wbr>Cars<wbr>Worker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sharedcarsworker.html" class="tsd-signature-type">SharedCarsWorker</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>General<wbr>Worker<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="generalworker.html" class="tsd-signature-type">GeneralWorker</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/sharedcars/SharedCarsWorker.ts:20</li>
+									<li>Defined in modules/general/GeneralWorker.ts:15</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="sharedcarsworker.html" class="tsd-signature-type">SharedCarsWorker</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="generalworker.html" class="tsd-signature-type">GeneralWorker</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -132,52 +131,32 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="ceskycarsharingdatasource" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> cesky<wbr>Carsharing<wbr>Data<wbr>Source</h3>
-					<div class="tsd-signature tsd-kind-icon">cesky<wbr>Carsharing<wbr>Data<wbr>Source<span class="tsd-signature-symbol">:</span> <a href="datasource.html" class="tsd-signature-type">DataSource</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in modules/sharedcars/SharedCarsWorker.ts:16</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="ceskycarsharingtransformation" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> cesky<wbr>Carsharing<wbr>Transformation</h3>
-					<div class="tsd-signature tsd-kind-icon">cesky<wbr>Carsharing<wbr>Transformation<span class="tsd-signature-symbol">:</span> <a href="ceskycarsharingtransformation.html" class="tsd-signature-type">CeskyCarsharingTransformation</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in modules/sharedcars/SharedCarsWorker.ts:18</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="hoppygodatasource" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> hoppy<wbr>GoData<wbr>Source</h3>
-					<div class="tsd-signature tsd-kind-icon">hoppy<wbr>GoData<wbr>Source<span class="tsd-signature-symbol">:</span> <a href="datasource.html" class="tsd-signature-type">DataSource</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in modules/sharedcars/SharedCarsWorker.ts:17</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="hoppygotransformation" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> hoppy<wbr>GoTransformation</h3>
-					<div class="tsd-signature tsd-kind-icon">hoppy<wbr>GoTransformation<span class="tsd-signature-symbol">:</span> <a href="hoppygotransformation.html" class="tsd-signature-type">HoppyGoTransformation</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in modules/sharedcars/SharedCarsWorker.ts:19</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="model" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> model</h3>
 					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="mongomodel.html" class="tsd-signature-type">MongoModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in modules/sharedcars/SharedCarsWorker.ts:20</li>
+							<li>Defined in modules/general/GeneralWorker.ts:15</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="schema" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> schema</h3>
+					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SchemaDefinition</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/general/GeneralWorker.ts:14</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="transformation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> transformation</h3>
+					<div class="tsd-signature tsd-kind-icon">transformation<span class="tsd-signature-symbol">:</span> <a href="generaltransformation.html" class="tsd-signature-type">GeneralTransformation</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/general/GeneralWorker.ts:13</li>
 						</ul>
 					</aside>
 				</section>
@@ -185,16 +164,39 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="refreshdataindb" class="tsd-anchor"></a>
-					<h3>refresh<wbr>Data<wbr>InDB</h3>
+					<a name="createmodel" class="tsd-anchor"></a>
+					<h3>create<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">refresh<wbr>Data<wbr>InDB<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Model<span class="tsd-signature-symbol">(</span>providerName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="mongomodel.html" class="tsd-signature-type">MongoModel</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/sharedcars/SharedCarsWorker.ts:75</li>
+									<li>Defined in modules/general/GeneralWorker.ts:37</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>providerName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="mongomodel.html" class="tsd-signature-type">MongoModel</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="savedata" class="tsd-anchor"></a>
+					<h3>save<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">save<wbr>Data<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/general/GeneralWorker.ts:23</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -252,31 +254,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="sharedcarsworker.html" class="tsd-kind-icon">Shared<wbr>Cars<wbr>Worker</a>
+						<a href="generalworker.html" class="tsd-kind-icon">General<wbr>Worker</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="sharedcarsworker.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="generalworker.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="sharedcarsworker.html#ceskycarsharingdatasource" class="tsd-kind-icon">cesky<wbr>Carsharing<wbr>Data<wbr>Source</a>
+								<a href="generalworker.html#model" class="tsd-kind-icon">model</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="sharedcarsworker.html#ceskycarsharingtransformation" class="tsd-kind-icon">cesky<wbr>Carsharing<wbr>Transformation</a>
+								<a href="generalworker.html#schema" class="tsd-kind-icon">schema</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="sharedcarsworker.html#hoppygodatasource" class="tsd-kind-icon">hoppy<wbr>GoData<wbr>Source</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="sharedcarsworker.html#hoppygotransformation" class="tsd-kind-icon">hoppy<wbr>GoTransformation</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="sharedcarsworker.html#model" class="tsd-kind-icon">model</a>
+								<a href="generalworker.html#transformation" class="tsd-kind-icon">transformation</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="sharedcarsworker.html#refreshdataindb" class="tsd-kind-icon">refresh<wbr>Data<wbr>InDB</a>
+								<a href="generalworker.html#createmodel" class="tsd-kind-icon">create<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="generalworker.html#savedata" class="tsd-kind-icon">save<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="sharedcarsworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a>
+								<a href="generalworker.html#sendmessagetoexchange" class="tsd-kind-icon">send<wbr>Message<wbr>ToExchange</a>
 							</li>
 						</ul>
 					</li>

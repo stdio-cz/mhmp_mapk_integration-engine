@@ -141,7 +141,7 @@ Poslední úprava: 27. 6. 2019
 ## SharedCars
 - zdroje:
   - ČeskýCarsharing https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct
-  - HoppyGo https://www.hoppygo.com/api/v1/exports/cars_search
+  - HoppyGo https://www.hoppygo.com/api/v2/exports/cars_search
 - typ: PULL
 - obnova dat: 1x za 2min
 - historizace: ne
@@ -167,10 +167,10 @@ Poslední úprava: 27. 6. 2019
 - retence: půl dne
 
 ## VehiclePositions
-- zdroj:
-- typ: PULL
-- obnova dat:
-- historizace: ano
+- zdroj: Ropid input-gateway
+- typ: INPUT
+- obnova dat: cca 1x za 10 vteřin
+- historizace: ne
 - retence: TBD
 
 ## WasteCollectionYards
@@ -178,4 +178,13 @@ Poslední úprava: 27. 6. 2019
 - typ: PULL
 - obnova dat: 1. den v měsíci
 - historizace: ne
+- retence: TBD
+
+## ZTPParkings
+- zdroje:
+  - TSK http://tsk.3nicom.cloud/api/all
+  - TSK input-gateway (obsazenost)
+- typ: PULL + INPUT
+- obnova dat: 1x za hodinu
+- historizace: ano
 - retence: TBD
