@@ -12,7 +12,7 @@ Developed by http://operatorict.cz
 - MongoDB
 - PostgreSQL
 - Redis
-- npm
+- yarn
 - golemio-schema-definitions module
 
 ## Installation
@@ -31,9 +31,9 @@ Create the `.npmrc` file and type to it the url to the OICT private npm proxy re
 registry=http://<url_to_oict_registry>
 ```
 
-Install all npm modules using command:
+Install all dependencies using command:
 ```
-npm install
+yarn install
 ```
 
 ## Configuration
