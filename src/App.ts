@@ -19,7 +19,7 @@ class App {
     // Create a new express application instance
     public express: express.Application = express();
     // The port the express app will listen on
-    public port: number = parseInt(config.port || "3000", 10);
+    public port: number = parseInt(config.port || "3006", 10);
 
     private commitSHA: string;
 
