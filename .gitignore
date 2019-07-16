@@ -6,3 +6,4 @@ config/*.json
 .nyc_output
 coverage
 /.vscode
+test/datasources-test/report.txt
