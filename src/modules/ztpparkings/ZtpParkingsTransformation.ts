@@ -24,6 +24,8 @@ export class ZtpParkingsTransformation extends BaseTransformation implements ITr
                     innerArray.forEach(((element) => {
                         const lastUpdated = moment.tz(element.last_updated, "Europe/Prague");
                         const lastUpdatedAsNumber = lastUpdated.valueOf();
+
+                        const status = parseInt(element.status, 10);
                         const item = {
                             geometry: {
                                 coordinates: [parseFloat(element.lng), parseFloat(element.lat)],
@@ -34,7 +36,7 @@ export class ZtpParkingsTransformation extends BaseTransformation implements ITr
                                 // address: null,
                                 device_id: element.device,
                                 // district: null,
-                                failure: element.status === 2,
+                                failure: status === 2,
                                 group: element.group,
                                 id: element.id,
                                 id_group: key,
@@ -46,7 +48,7 @@ export class ZtpParkingsTransformation extends BaseTransformation implements ITr
                                 location: element.lokalita,
                                 master: element.master,
                                 note: element.note,
-                                occupied: element.status === 0 ? false : element.status === 1 ? true : null,
+                                occupied: status === 0 ? false : status === 1 ? true : null,
                                 signal_rssi0: element.rssi0,
                                 signal_rssi1: element.rssi1,
                                 size: element.rozmer,
