@@ -37,7 +37,7 @@ export class GeneralWorker extends BaseWorker {
     public createModel(providerName: string): MongoModel {
         return new MongoModel(providerName + "Model", {
             identifierPath: "id",
-            mongoCollectionName: providerName,
+            mongoCollectionName: GeneralImport.name.toLocaleLowerCase() + "_" + providerName,
             outputMongooseSchemaObject: this.schema,
             savingType: "insertOnly",
         },

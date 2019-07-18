@@ -74,7 +74,7 @@
 					<li>MongoDB</li>
 					<li>PostgreSQL</li>
 					<li>Redis</li>
-					<li>npm</li>
+					<li>yarn</li>
 					<li>golemio-schema-definitions module</li>
 				</ul>
 				<h2 id="installation">Installation</h2>
@@ -86,8 +86,8 @@
 				<h3 id="b-local-instalation">B) Local instalation</h3>
 				<p>Install Node, MongoDB, PostgreSQL and Redis.</p>
 				<p>Create the <code>.npmrc</code> file and type to it the url to the OICT private npm proxy registry:</p>
-				<pre><code>registry=<span class="hljs-string">http:</span><span class="hljs-comment">//&lt;url_to_oict_registry&gt;</span></code></pre><p>Install all npm modules using command:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span></code></pre><h2 id="configuration">Configuration</h2>
+				<pre><code>registry=<span class="hljs-string">http:</span><span class="hljs-comment">//&lt;url_to_oict_registry&gt;</span></code></pre><p>Install all dependencies using command:</p>
+				<pre><code>yarn <span class="hljs-keyword">install</span></code></pre><h2 id="configuration">Configuration</h2>
 				<p>Configuration is split to environment (.env file) options and other specific options (e.g. datasources).</p>
 				<p>The specific configuration files are in the <code>config/</code> directory. Default options are in the files, which names contains <code>.default</code>. If you want to override the default options, you can create the file with the same name but without word <code>.default</code>, e.g. <code>datasources.default.json</code> -&gt; <code>datasources.json</code>. The default and specific configuration files are merged by the rule: specific options overrides default options.</p>
 				<p>Environment options can be set with the system (e.g. in debian with <code>export NODE_ENV=test</code>) or with the <code>.env</code> file. Example of the <code>.env</code> file is saved as <code>.env.template</code>.</p>
@@ -187,6 +187,12 @@
 					<li class=" tsd-kind-class">
 						<a href="classes/gardensworker.html" class="tsd-kind-icon">Gardens<wbr>Worker</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/generaltransformation.html" class="tsd-kind-icon">General<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/generalworker.html" class="tsd-kind-icon">General<wbr>Worker</a>
+					</li>
 					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="classes/geocodeapi.html" class="tsd-kind-icon">Geocode<wbr>Api</a>
 					</li>
@@ -282,6 +288,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/oictsortedwastestationstransformation.html" class="tsd-kind-icon">OICTSorted<wbr>Waste<wbr>Stations<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/objectkeysvalidator.html" class="tsd-kind-icon">Object<wbr>Keys<wbr>Validator</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/potexsortedwastestationstransformation.html" class="tsd-kind-icon">POTEXSorted<wbr>Waste<wbr>Stations<wbr>Transformation</a>
@@ -400,6 +409,15 @@
 					<li class=" tsd-kind-class">
 						<a href="classes/xmldatatypestrategy.html" class="tsd-kind-icon">XMLData<wbr>Type<wbr>Strategy</a>
 					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ztpparkingsinputtransformation.html" class="tsd-kind-icon">Ztp<wbr>Parkings<wbr>Input<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ztpparkingstransformation.html" class="tsd-kind-icon">Ztp<wbr>Parkings<wbr>Transformation</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ztpparkingsworker.html" class="tsd-kind-icon">Ztp<wbr>Parkings<wbr>Worker</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/icsvsettings.html" class="tsd-kind-icon">ICSVSettings</a>
 					</li>
@@ -467,9 +485,6 @@
 						<a href="globals.html#align" class="tsd-kind-icon">align</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#amqp" class="tsd-kind-icon">amqp</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#cheapruler" class="tsd-kind-icon">cheapruler</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
@@ -504,6 +519,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#handleerror" class="tsd-kind-icon">handle<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#http" class="tsd-kind-icon">http</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#iconv" class="tsd-kind-icon">iconv</a>

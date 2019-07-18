@@ -20,6 +20,9 @@ services:
       HOPPYGO_BASE_URL: https://www.hoppygo.com/car-detail/
     networks:
      - golemio
+## Example how inject datasources.json file into build image
+#    volumes:
+#     - /my-path/datasources.json:/home/node/app/config/datasources.json
 
   mongo:
     image: mongo:4.0.5

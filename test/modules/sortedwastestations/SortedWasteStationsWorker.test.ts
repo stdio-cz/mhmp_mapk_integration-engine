@@ -32,7 +32,12 @@ describe("SortedWasteStationsWorker", () => {
         testTransformedData = [{
             geometry: {coordinates: [0, 0]},
             properties: { accessibility: {id: 1},
-                containers: [{trash_type: {id: 6}, sensor_id: 29823}],
+                containers: [{
+                    sensor_code: "0006/ 263C00231",
+                    sensor_container_id: 29823,
+                    sensor_supplier: "Sensoneo",
+                    trash_type: {id: 6},
+                }],
                 id: 10},
             remove: sandbox.stub().resolves(true),
             save: sandbox.stub().resolves(true),
