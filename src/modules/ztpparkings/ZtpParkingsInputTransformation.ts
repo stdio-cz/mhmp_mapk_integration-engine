@@ -18,13 +18,14 @@ export class ZtpParkingsInputTransformation extends BaseTransformation implement
         const lastUpdated = moment.tz(element.last_updated, "Europe/Prague");
         const lastUpdatedAsNumber = lastUpdated.valueOf();
 
+        const status = parseInt(element.status, 10);
         const res = {
             properties: {
                 device_id: element.device,
-                failure: element.status === 2,
+                failure: status === 2,
                 id: element.id,
                 last_updated_at: lastUpdatedAsNumber,
-                occupied: element.status === 0 ? false : element.status === 1 ? true : null,
+                occupied: status === 0 ? false : status === 1 ? true : null,
             },
         };
         return res;
