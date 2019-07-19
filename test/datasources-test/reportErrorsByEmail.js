@@ -4,11 +4,12 @@ const fs = require("fs");
 const nodemailer = require("nodemailer");
 
 const config = {
-    mail_password: process.env.MAIL_PASSWORD,
-    mail_port: process.env.MAIL_PORT,
-    mail_reciever: process.env.MAIL_RECEIVER,
-    mail_service: process.env.MAIL_SERVICE,
-    mail_username: process.env.MAIL_USERNAME,
+    mail_from: process.env.MAILER_FROM,
+    mail_password: process.env.MAILER_PASSWORD,
+    mail_port: process.env.MAILER_PORT,
+    mail_reciever: process.env.MAILER_RECEIVER,
+    mail_service: process.env.MAILER_SERVICE,
+    mail_username: process.env.MAILER_USERNAME,
 };
 
 const transporter = nodemailer.createTransport({
@@ -24,22 +25,27 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const send = (to, subject, text = "", html = "", from = "no-replay@operatorict.cz", callback) => {
+// to, subject, text = "", html = "", from = "no-replay@operatorict.cz"
+const send = (opts, callback) => {
+    // options validation
+    if (!opts.to || opts.to === "" || !opts.subject || opts.subject === "" || !opts.from || opts.from === "") {
+        callback("Mandatory options must be set.");
+    }
+
     // Setup email data with unicode symbols
     const mailOptions = {
-        from, // sender address
-        html, // html body
-        subject, // Subject line
-        text, // plain text body
-        to, // list of receivers
+        from: opts.from, // sender address
+        html: opts.html, // html body
+        subject: opts.subject, // Subject line
+        text: opts.text, // plain text body
+        to: opts.to, // list of receivers
     };
 
     // Send mail with defined transport object
     console.log("Sending email...");
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            callback();
-            return console.log(error);
+            return callback(error);
         }
         console.log("Message %s sent: %s", info.messageId, info.response);
         callback();
@@ -51,8 +57,18 @@ fs.readFile(`${__dirname}/report.txt`, "utf8", (err, data) => {
         throw err;
     }
     if (data.indexOf("failing") !== -1) {
-        send(config.mail_reciever, "Golemio Integration Engine - datasources test reporting", data, "", `<${config.mail_username}>`, () => {
-            console.log(`Report was sent by email to ${config.mail_reciever}`);
+        send({
+            to: config.mail_reciever,
+            subject: "Golemio Integration Engine - datasources test reporting",
+            text: data,
+            html: "",
+            from: config.mail_from || `<${config.mail_username}>`
+        } , (error) => {
+            if (!error) {
+                console.log(`Report was sent by email to ${config.mail_reciever}`);
+            } else {
+                throw error;
+            }
         });
     } else {
         console.log("Tests OK!");
