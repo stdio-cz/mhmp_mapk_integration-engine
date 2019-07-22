@@ -4,6 +4,7 @@ const fs = require("fs");
 const nodemailer = require("nodemailer");
 
 const config = {
+    mail_enable: process.env.MAILER_ENABLE === "true" || false,
     mail_from: process.env.MAILER_FROM,
     mail_password: process.env.MAILER_PASSWORD,
     mail_port: process.env.MAILER_PORT,
@@ -57,19 +58,24 @@ fs.readFile(`${__dirname}/report.txt`, "utf8", (err, data) => {
         throw err;
     }
     if (data.indexOf("failing") !== -1) {
-        send({
-            to: config.mail_reciever,
-            subject: "Golemio Integration Engine - datasources test reporting",
-            text: data,
-            html: "",
-            from: config.mail_from || `<${config.mail_username}>`
-        } , (error) => {
-            if (!error) {
-                console.log(`Report was sent by email to ${config.mail_reciever}`);
-            } else {
-                throw error;
-            }
-        });
+        if (config.mail_enable) {
+            send({
+                to: config.mail_reciever,
+                subject: "Golemio Integration Engine - datasources test reporting",
+                text: data,
+                html: "",
+                from: config.mail_from || `<${config.mail_username}>`
+            } , (error) => {
+                if (!error) {
+                    console.log(`Report was sent by email to ${config.mail_reciever}`);
+                } else {
+                    throw error;
+                }
+            });
+        } else {
+            console.error("Mailer is disabled. Writing errors to console.");
+            console.error(data);
+        }
     } else {
         console.log("Tests OK!");
     }
