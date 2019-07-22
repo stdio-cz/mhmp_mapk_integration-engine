@@ -8,7 +8,7 @@ const config = {
     mail_password: process.env.MAILER_PASSWORD,
     mail_port: process.env.MAILER_PORT,
     mail_reciever: process.env.MAILER_RECEIVER,
-    mail_service: process.env.MAILER_SERVICE,
+    mail_service: process.env.MAILER_HOST,
     mail_username: process.env.MAILER_USERNAME,
 };
 
