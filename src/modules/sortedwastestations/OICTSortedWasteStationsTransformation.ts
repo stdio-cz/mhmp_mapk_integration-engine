@@ -33,7 +33,6 @@ export class OICTSortedWasteStationsTransformation extends BaseTransformation im
                     description: (element.description) ? element.description : null,
                     trash_type: this.getTrashTypeByString(element.trash_type),
                 }],
-                district: element.district,
                 id: element.unique_id,
                 name: element.address,
                 station_number: null,
