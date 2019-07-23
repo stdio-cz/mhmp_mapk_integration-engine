@@ -238,7 +238,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         const results = merged.concat(await Promise.all(remaining));
         await this.model.save(results);
 
-        // send messages for updating district and address and average occupancy
+        // send messages for updating district
         const promises = results.map((p) => {
             if (!p.properties.district) {
                 this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
@@ -316,7 +316,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             const last = await this.model.aggregate([
                 { $group: { _id: null, lastId: { $max: "$properties.id" }}},
                 { $project: { _id: 0, lastId: 1 }}]);
-            await this.model.save({
+            const saved = await this.model.save({
                 geometry: { coordinates: [ sensor.longitude, sensor.latitude ], type: "Point" },
                 properties: {
                     accessibility: { description: "neznámá dostupnost", id: 3 },
@@ -348,6 +348,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 },
                 type: "Feature",
             });
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
+                new Buffer(JSON.stringify(saved)));
             log.warn("Error while getting sensors and pair them with containers. Station '"
                 + stationNumber + "' was not found. New station was created.");
         } else {

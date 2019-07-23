@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/@types/node/index.d.ts" />
+/// <reference path="../../node_modules/@types/node/index.d.ts" />
 
 "use strict";
 
@@ -9,13 +9,13 @@ import {
     WasteCollectionYards, ZtpParkings,
 } from "golemio-schema-definitions";
 import "mocha";
-import { config } from "../src/core/config";
-import { RedisConnector } from "../src/core/connectors";
+import { config } from "../../src/core/config";
+import { RedisConnector } from "../../src/core/connectors";
 import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
-} from "../src/core/datasources";
-import { ObjectKeysValidator, Validator } from "../src/core/helpers";
+} from "../../src/core/datasources";
+import { ObjectKeysValidator, Validator } from "../../src/core/helpers";
 
 const chai = require("chai");
 const expect = chai.expect;

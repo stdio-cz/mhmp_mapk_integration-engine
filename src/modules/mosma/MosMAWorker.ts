@@ -34,7 +34,7 @@ export class MosMAWorker extends BaseWorker {
         this.ticketActivationsModel = new PostgresModel(MOS.MA.ticketActivations.name + "Model", {
                 outputSequelizeAttributes: MOS.MA.ticketActivations.outputSequelizeAttributes,
                 pgTableName: MOS.MA.ticketActivations.pgTableName,
-                savingType: "insertOnly",
+                savingType: "insertOrUpdate",
             },
             new Validator(MOS.MA.ticketActivations.name + "ModelValidator",
                 MOS.MA.ticketActivations.outputMongooseSchemaObject),
@@ -50,7 +50,7 @@ export class MosMAWorker extends BaseWorker {
         this.ticketPurchasesModel = new PostgresModel(MOS.MA.ticketPurchases.name + "Model", {
                 outputSequelizeAttributes: MOS.MA.ticketPurchases.outputSequelizeAttributes,
                 pgTableName: MOS.MA.ticketPurchases.pgTableName,
-                savingType: "insertOnly",
+                savingType: "insertOrUpdate",
             },
             new Validator(MOS.MA.ticketPurchases.name + "ModelValidator",
                 MOS.MA.ticketPurchases.outputMongooseSchemaObject),
@@ -64,6 +64,7 @@ export class MosMAWorker extends BaseWorker {
     public saveDeviceModelsDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.deviceModelTransformation.transform(inputData);
+        await this.deviceModelModel.truncate();
         await this.deviceModelModel.save(transformedData);
     }
 

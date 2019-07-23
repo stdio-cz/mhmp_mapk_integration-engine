@@ -89,7 +89,6 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             properties: {
                 accessibility: this.getAccessibilityByString(element.properties.PRISTUP),
                 containers: [],
-                district: slug(element.properties.CITYDISTRICT, { lower: true }),
                 id: element.properties.ID,
                 name: element.properties.STATIONNAME,
                 station_number: element.properties.STATIONNUMBER,
