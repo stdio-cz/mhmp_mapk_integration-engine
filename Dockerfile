@@ -8,7 +8,7 @@ RUN chown -R node:node .
 
 RUN ls -la
 
-RUN npm install
+RUN yarn install
 RUN npm run build
 
 CMD ["npm","start"]

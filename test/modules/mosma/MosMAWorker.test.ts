@@ -33,6 +33,7 @@ describe("MosMAWorker", () => {
         sandbox.stub(worker.ticketPurchasesTransformation, "transform")
             .callsFake(() => []);
         sandbox.stub(worker.deviceModelModel, "save");
+        sandbox.stub(worker.deviceModelModel, "truncate");
         sandbox.stub(worker.ticketActivationsModel, "save");
         sandbox.stub(worker.ticketInspectionsModel, "save");
         sandbox.stub(worker.ticketPurchasesModel, "save");
@@ -45,9 +46,11 @@ describe("MosMAWorker", () => {
     it("should calls the correct methods by saveDeviceModelsDataToDB method", async () => {
         await worker.saveDeviceModelsDataToDB({content: new Buffer(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.deviceModelTransformation.transform);
+        sandbox.assert.calledOnce(worker.deviceModelModel.truncate);
         sandbox.assert.calledOnce(worker.deviceModelModel.save);
         sandbox.assert.callOrder(
             worker.deviceModelTransformation.transform,
+            worker.deviceModelModel.truncate,
             worker.deviceModelModel.save);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });

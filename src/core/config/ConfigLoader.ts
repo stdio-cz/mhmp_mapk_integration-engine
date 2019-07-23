@@ -57,6 +57,8 @@ export const config = { // TODO prejmenovat na lower-case
     REDIS_CONN: process.env.REDIS_CONN,
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
+    app_version: process.env.npm_package_version,
     datasources: new ConfigLoader("datasources").conf,
+    port: process.env.PORT,
     queuesBlacklist: new ConfigLoader("queuesBlacklist").conf,
 };

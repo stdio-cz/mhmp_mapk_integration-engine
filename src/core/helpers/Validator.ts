@@ -10,9 +10,9 @@ import { CustomError } from "./errors";
 export class Validator {
 
     /** Name of the model */
-    private modelName: string;
+    protected modelName: string;
     /** Reference to mongoose model object, used for validation */
-    private mongooseModel: Model<any>;
+    protected mongooseModel: Model<any>;
 
     constructor(modelName: string, schemaObject: SchemaDefinition) {
         this.modelName = modelName;
@@ -51,7 +51,7 @@ export class Validator {
      * @param {object} data
      * @returns {boolean} Returns true or throw error
      */
-    private ValidateElement = async (data: object): Promise<boolean> => {
+    protected ValidateElement = async (data: object): Promise<boolean> => {
         try {
             const modelInstance = new this.mongooseModel(data);
             await modelInstance.validate();

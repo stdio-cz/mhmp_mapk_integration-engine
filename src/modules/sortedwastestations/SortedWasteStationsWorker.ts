@@ -238,7 +238,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         const results = merged.concat(await Promise.all(remaining));
         await this.model.save(results);
 
-        // send messages for updating district and address and average occupancy
+        // send messages for updating district
         const promises = results.map((p) => {
             if (!p.properties.district) {
                 this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
@@ -316,7 +316,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             const last = await this.model.aggregate([
                 { $group: { _id: null, lastId: { $max: "$properties.id" }}},
                 { $project: { _id: 0, lastId: 1 }}]);
-            await this.model.save({
+            const saved = await this.model.save({
                 geometry: { coordinates: [ sensor.longitude, sensor.latitude ], type: "Point" },
                 properties: {
                     accessibility: { description: "neznámá dostupnost", id: 3 },
@@ -335,7 +335,9 @@ export class SortedWasteStationsWorker extends BaseWorker {
                                 pick_at_utc: lastPick[0].pick_at_utc,
                             }
                             : null,
-                        sensor_id: sensor.id,
+                        sensor_code: sensor.code,
+                        sensor_container_id: sensor.id,
+                        sensor_supplier: "Sensoneo",
                         trash_type: trashType,
                     }],
                     district: null,
@@ -346,6 +348,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 },
                 type: "Feature",
             });
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
+                new Buffer(JSON.stringify(saved)));
             log.warn("Error while getting sensors and pair them with containers. Station '"
                 + stationNumber + "' was not found. New station was created.");
         } else {
@@ -372,7 +376,9 @@ export class SortedWasteStationsWorker extends BaseWorker {
                                 pick_at_utc: lastPick[0].pick_at_utc,
                             }
                             : null,
-                        "properties.containers.$.sensor_id": sensor.id,
+                        "properties.containers.$.sensor_code": sensor.code,
+                        "properties.containers.$.sensor_container_id": sensor.id,
+                        "properties.containers.$.sensor_supplier": "Sensoneo",
                     },
                 });
             } else {
@@ -392,8 +398,10 @@ export class SortedWasteStationsWorker extends BaseWorker {
                             pick_at_utc: lastPick[0].pick_at_utc,
                         }
                         : null,
-                    sensor_id: sensor.id,
-                    trash_type: trashType,
+                    sensor_code: sensor.code,
+                    sensor_container_id: sensor.id,
+                    sensor_supplier: "Sensoneo",
+                trash_type: trashType,
                 };
                 await this.model.updateOne(
                 {
@@ -448,11 +456,13 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
     public updateSensorsMeasurementInContainer = async (msg: any): Promise<void> => {
         const measurement = JSON.parse(msg.content.toString());
-        const station = await this.model.findOne({"properties.containers.sensor_id": measurement.container_id});
+        const station = await this.model.findOne({
+            "properties.containers.sensor_container_id": measurement.container_id,
+        });
 
         if (station) {
             const foundContainerIndex = station.properties.containers.findIndex((container) => {
-                return container.sensor_id === measurement.container_id;
+                return container.sensor_container_id === measurement.container_id;
             });
 
             const foundContainer = station.properties.containers[foundContainerIndex];
@@ -466,7 +476,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 };
                 await this.model.updateOne(
                 {
-                    "properties.containers.sensor_id": measurement.container_id,
+                    "properties.containers.sensor_container_id": measurement.container_id,
                     "properties.id": station.properties.id,
                 },
                 {
@@ -478,7 +488,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 log.debug("Last measurement has newer data.");
             }
         } else {
-            throw new CustomError("Error while updating sensors measurement. Sensor id '"
+            throw new CustomError("Error while updating sensors measurement. Sensor container id '"
                 + measurement.container_id + "' was not found.", true, this.constructor.name, 1028);
         }
     }
@@ -520,11 +530,13 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
     public updateSensorsPicksInContainer = async (msg: any): Promise<void> => {
         const pick = JSON.parse(msg.content.toString());
-        const station = await this.model.findOne({"properties.containers.sensor_id": pick.container_id});
+        const station = await this.model.findOne({
+            "properties.containers.sensor_container_id": pick.container_id,
+        });
 
         if (station) {
             const foundContainerIndex = station.properties.containers.findIndex((container) => {
-                return container.sensor_id === pick.container_id;
+                return container.sensor_container_id === pick.container_id;
             });
 
             const foundContainer = station.properties.containers[foundContainerIndex];
@@ -535,7 +547,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 };
                 await this.model.updateOne(
                 {
-                    "properties.containers.sensor_id": pick.container_id,
+                    "properties.containers.sensor_container_id": pick.container_id,
                     "properties.id": station.properties.id,
                 },
                 {
@@ -547,7 +559,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 log.debug("Last pick has newer data.");
             }
         } else {
-            throw new CustomError("Error while updating sensors picks. Sensor id '"
+            throw new CustomError("Error while updating sensors picks. Sensor container id '"
                 + pick.container_id + "' was not found.", true, this.constructor.name, 1028);
         }
     }

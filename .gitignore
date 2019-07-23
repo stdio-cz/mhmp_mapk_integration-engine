@@ -5,3 +5,5 @@ config/*.json
 !config/*.default.json
 .nyc_output
 coverage
+/.vscode
+test/datasources-test/report.txt

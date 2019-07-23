@@ -56,7 +56,7 @@ describe("MosMATicketActivationsTransformation", () => {
         expect(data).to.have.property("lon");
         expect(data).to.have.property("ticket_id");
         expect(data).to.have.property("type");
-        expect(data).to.have.property("zones")
+        expect(data).to.have.property("zones");
     });
 
     it("should properly transform collection", async () => {
@@ -67,7 +67,7 @@ describe("MosMATicketActivationsTransformation", () => {
             expect(data[i]).to.have.property("lon");
             expect(data[i]).to.have.property("ticket_id");
             expect(data[i]).to.have.property("type");
-            expect(data[i]).to.have.property("zones")
+            expect(data[i]).to.have.property("zones");
         }
     });
 
