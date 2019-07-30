@@ -2,11 +2,12 @@
 
 "use strict";
 
+import { Validator } from "golemio-validator";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
 import { mongooseConnection } from "../../../src/core/connectors";
-import { log, Validator } from "../../../src/core/helpers";
+import { log } from "../../../src/core/helpers";
 import { CustomError } from "../../../src/core/helpers/errors";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
 

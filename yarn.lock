@@ -1633,7 +1633,7 @@ async@2.6.1:
   dependencies:
     lodash "^4.17.10"
 
-async@^2.6.1:
+async@2.6.2, async@^2.6.1:
   version "2.6.2"
   resolved "http://10.200.0.50:4873/async/-/async-2.6.2.tgz#18330ea7e6e313887f5d2f2a904bac6fe4dd5381"
   integrity sha512-H1qVYh1MYhEEFLsP97cVKqCGo7KfCyTt6uEWqsTBr9SO84oK9Uwbyd/yCW+6rKJLHksBNUVWZDAjfS+Ccx0Bbg==
@@ -1757,7 +1757,7 @@ browser-stdout@1.3.1:
   resolved "http://10.200.0.50:4873/browser-stdout/-/browser-stdout-1.3.1.tgz#baa559ee14ced73452229bad7326467c61fabd60"
   integrity sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw==
 
-bson@^1.1.0, bson@~1.1.0:
+bson@^1.1.0, bson@^1.1.1, bson@~1.1.0, bson@~1.1.1:
   version "1.1.1"
   resolved "http://10.200.0.50:4873/bson/-/bson-1.1.1.tgz#4330f5e99104c4e751e7351859e2d408279f2f13"
   integrity sha512-jCGVYLoYMHDkOsbwJZBCqwMHyH4c+wzgI9hG7Z6SZJRXWr+x58pdIbm2i9a/jFGCkRJqRUr8eoI7lDWa0hTkxg==
@@ -2271,7 +2271,7 @@ debug@^3.1.0:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.0:
+debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
   resolved "http://10.200.0.50:4873/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -2418,6 +2418,11 @@ dotenv@^5.0.1:
   version "5.0.1"
   resolved "http://10.200.0.50:4873/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   integrity sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
+
+dotenv@^8.0.0:
+  version "8.0.0"
+  resolved "http://10.200.0.50:4873/dotenv/-/dotenv-8.0.0.tgz#ed310c165b4e8a97bb745b0a9d99c31bda566440"
+  integrity sha512-30xVGqjLjiUOArT4+M5q9sYdvuR4riM6yK9wMcas9Vbp6zZa+ocC9dp6QoftuhTPhFAiLK/0C5Ni2nou/Bk8lg==
 
 dottie@^2.0.0:
   version "2.0.1"
@@ -2873,6 +2878,15 @@ globals@^11.1.0:
   resolved "http://10.200.0.50:4873/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
+golemio-errors@^0.0.1-dev.2519:
+  version "0.0.1-dev.2519"
+  resolved "http://10.200.0.50:4873/golemio-errors/-/golemio-errors-0.0.1-dev.2519.tgz#fcc2e327a5500c42e778037a46ce924c53ffd66c"
+  integrity sha512-0hpNZaU1t6agKwWmPXJASdiiGnnjZiVO63hs2y4D/J0QOTSgkiJ1xAtF3rcpOcXez8O0Oy7LGc7M1d0e9L/6JQ==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
+
 golemio-schema-definitions@0.1.10:
   version "0.1.10"
   resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.10.tgz#ac4e4246147c80c11053825d8348b8c15cd548c5"
@@ -2883,6 +2897,27 @@ golemio-schema-definitions@0.1.10:
     db-migrate-pg "0.5.0"
     mongoose "5.3.14"
     sequelize "4.41.2"
+
+golemio-utils@^0.0.1-dev.2523:
+  version "0.0.1-dev.2523"
+  resolved "http://10.200.0.50:4873/golemio-utils/-/golemio-utils-0.0.1-dev.2523.tgz#a83600c64fa5e4ece8085b3db012026d1f2676aa"
+  integrity sha512-iUXxt2AbzHKNNRbOCzPilt4tAhwVhOAjGe4f9xhCKPOA/8w8jxikGfQ3kAjjhUg49iHRCPNTQS8FeWgXksH08Q==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    request "^2.88.0"
+    winston "^3.2.1"
+
+golemio-validator@^0.0.1-dev.2522:
+  version "0.0.1-dev.2522"
+  resolved "http://10.200.0.50:4873/golemio-validator/-/golemio-validator-0.0.1-dev.2522.tgz#cff3bbf17237e7679c0853535d736bb3462f8a4d"
+  integrity sha512-S6AUBKlYbP6L6ZsmmmYH3PcLyyh/175UArNjgujCSemOeH2fzdnzMEaWM5elrZR91b+CmkLHkICKGGcZt0hdYw==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    golemio-errors "^0.0.1-dev.2519"
+    mongoose "^5.6.7"
+    winston "^3.2.1"
 
 graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.0"
@@ -3660,6 +3695,17 @@ mongodb-core@3.1.9:
   optionalDependencies:
     saslprep "^1.0.0"
 
+mongodb-core@3.2.7:
+  version "3.2.7"
+  resolved "http://10.200.0.50:4873/mongodb-core/-/mongodb-core-3.2.7.tgz#a8ef1fe764a192c979252dacbc600dc88d77e28f"
+  integrity sha512-WypKdLxFNPOH/Jy6i9z47IjG2wIldA54iDZBmHMINcgKOUcWJh8og+Wix76oGd7EyYkHJKssQ2FAOw5Su/n4XQ==
+  dependencies:
+    bson "^1.1.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
 "mongodb-uri@>= 0.9.7":
   version "0.9.7"
   resolved "http://10.200.0.50:4873/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
@@ -3679,6 +3725,14 @@ mongodb@3.1.6:
   integrity sha512-E5QJuXQoMlT7KyCYqNNMfAkhfQD79AT4F8Xd+6x37OX+8BL17GyXyWvfm6wuyx4wnzCCPoCSLeMeUN2S7dU9yw==
   dependencies:
     mongodb-core "3.1.5"
+    safe-buffer "^5.1.2"
+
+mongodb@3.2.7:
+  version "3.2.7"
+  resolved "http://10.200.0.50:4873/mongodb/-/mongodb-3.2.7.tgz#8ba149e4be708257cad0dea72aebb2bbb311a7ac"
+  integrity sha512-2YdWrdf1PJgxcCrT1tWoL6nHuk6hCxhddAAaEh8QJL231ci4+P9FLyqopbTm2Z2sAU6mhCri+wd9r1hOcHdoMw==
+  dependencies:
+    mongodb-core "3.2.7"
     safe-buffer "^5.1.2"
 
 mongodb@^2.2.34:
@@ -3733,6 +3787,25 @@ mongoose@5.3.6:
     safe-buffer "5.1.2"
     sliced "1.0.1"
 
+mongoose@^5.6.7:
+  version "5.6.7"
+  resolved "http://10.200.0.50:4873/mongoose/-/mongoose-5.6.7.tgz#f98116e2740816c5be3cdf07040834abcd090f2a"
+  integrity sha512-42rbdZ9HLBbGjLvRSB4voqemgFkJTIyqSLLcJARKs1zdQzEJ3O77dWRllIy2bSo35GcY17ihEdoJX27pDqu3Mg==
+  dependencies:
+    async "2.6.2"
+    bson "~1.1.1"
+    kareem "2.3.0"
+    mongodb "3.2.7"
+    mongodb-core "3.2.7"
+    mongoose-legacy-pluralize "1.0.2"
+    mpath "0.6.0"
+    mquery "3.2.1"
+    ms "2.1.2"
+    regexp-clone "1.0.0"
+    safe-buffer "5.1.2"
+    sift "7.0.1"
+    sliced "1.0.1"
+
 monotone-convex-hull-2d@^1.0.1:
   version "1.0.1"
   resolved "http://10.200.0.50:4873/monotone-convex-hull-2d/-/monotone-convex-hull-2d-1.0.1.tgz#47f5daeadf3c4afd37764baa1aa8787a40eee08c"
@@ -3756,6 +3829,11 @@ mpath@0.5.1:
   resolved "http://10.200.0.50:4873/mpath/-/mpath-0.5.1.tgz#17131501f1ff9e6e4fbc8ffa875aa7065b5775ab"
   integrity sha512-H8OVQ+QEz82sch4wbODFOz+3YQ61FYz/z3eJ5pIdbMEaUzDqA268Wd+Vt4Paw9TJfvDgVKaayC0gBzMIw2jhsg==
 
+mpath@0.6.0:
+  version "0.6.0"
+  resolved "http://10.200.0.50:4873/mpath/-/mpath-0.6.0.tgz#aa922029fca4f0f641f360e74c5c1b6a4c47078e"
+  integrity sha512-i75qh79MJ5Xo/sbhxrDrPSEG0H/mr1kcZXJ8dH6URU5jD/knFxCVqVC/gVSW7GIXL/9hHWlT9haLbCXWOll3qw==
+
 mquery@3.2.0:
   version "3.2.0"
   resolved "http://10.200.0.50:4873/mquery/-/mquery-3.2.0.tgz#e276472abd5109686a15eb2a8e0761db813c81cc"
@@ -3764,6 +3842,17 @@ mquery@3.2.0:
     bluebird "3.5.1"
     debug "3.1.0"
     regexp-clone "0.0.1"
+    safe-buffer "5.1.2"
+    sliced "1.0.1"
+
+mquery@3.2.1:
+  version "3.2.1"
+  resolved "http://10.200.0.50:4873/mquery/-/mquery-3.2.1.tgz#8b059a49cdae0a8a9e804284ef64c2f58d3ac05d"
+  integrity sha512-kY/K8QToZWTTocm0U+r8rqcJCp5PRl6e8tPmoDs5OeSO3DInZE2rAL6AYH+V406JTo8305LdASOQcxRDqHojyw==
+  dependencies:
+    bluebird "3.5.1"
+    debug "3.1.0"
+    regexp-clone "^1.0.0"
     safe-buffer "5.1.2"
     sliced "1.0.1"
 
@@ -3777,7 +3866,7 @@ ms@2.1.1:
   resolved "http://10.200.0.50:4873/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
-ms@^2.1.1:
+ms@2.1.2, ms@^2.1.1:
   version "2.1.2"
   resolved "http://10.200.0.50:4873/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
@@ -4576,6 +4665,11 @@ regexp-clone@0.0.1:
   resolved "http://10.200.0.50:4873/regexp-clone/-/regexp-clone-0.0.1.tgz#a7c2e09891fdbf38fbb10d376fb73003e68ac589"
   integrity sha1-p8LgmJH9vzj7sQ03b7cwA+aKxYk=
 
+regexp-clone@1.0.0, regexp-clone@^1.0.0:
+  version "1.0.0"
+  resolved "http://10.200.0.50:4873/regexp-clone/-/regexp-clone-1.0.0.tgz#222db967623277056260b992626354a04ce9bf63"
+  integrity sha512-TuAasHQNamyyJ2hb97IuBEif4qBHGjPHBS64sZwytpLEqtBQ1gPJTnOaQ6qmpET16cK14kkjbazl6+p0RRv0yw==
+
 release-zalgo@^1.0.0:
   version "1.0.0"
   resolved "http://10.200.0.50:4873/release-zalgo/-/release-zalgo-1.0.0.tgz#09700b7e5074329739330e535c5a90fb67851730"
@@ -4607,7 +4701,7 @@ request-promise@4.2.2:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@2.88.0:
+request@2.88.0, request@^2.88.0:
   version "2.88.0"
   resolved "http://10.200.0.50:4873/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -4877,6 +4971,11 @@ shimmer@^1.1.0:
   version "1.2.1"
   resolved "http://10.200.0.50:4873/shimmer/-/shimmer-1.2.1.tgz#610859f7de327b587efebf501fb43117f9aff337"
   integrity sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw==
+
+sift@7.0.1:
+  version "7.0.1"
+  resolved "http://10.200.0.50:4873/sift/-/sift-7.0.1.tgz#47d62c50b159d316f1372f8b53f9c10cd21a4b08"
+  integrity sha512-oqD7PMJ+uO6jV9EQCl0LrRw1OwsiPsiFQR5AR30heR+4Dl7jBBbDLnNvWiak20tzZlSE1H7RB30SX/1j/YYT7g==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
@@ -5612,7 +5711,7 @@ winston@2.1.x:
     pkginfo "0.3.x"
     stack-trace "0.0.x"
 
-winston@3.2.1:
+winston@3.2.1, winston@^3.2.1:
   version "3.2.1"
   resolved "http://10.200.0.50:4873/winston/-/winston-3.2.1.tgz#63061377976c73584028be2490a1846055f77f07"
   integrity sha512-zU6vgnS9dAWCEKg/QYigd6cgMVVNwyTzKs81XZtTFuRwJOcDdBg7AU0mXVyNbs7O5RH2zdv+BdNZUlx7mXPuOw==

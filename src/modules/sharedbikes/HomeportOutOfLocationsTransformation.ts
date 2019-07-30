@@ -1,9 +1,10 @@
 "use strict";
 
 import { SharedBikes } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { log, Validator } from "../../core/helpers";
+import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class HomeportOutOfLocationsTransformation extends BaseTransformation implements ITransformation {
@@ -22,7 +23,7 @@ export class HomeportOutOfLocationsTransformation extends BaseTransformation imp
                 strictSSL: false,
                 url: config.datasources.HomeportSettingsSharedBikes,
             }),
-            new JSONDataTypeStrategy({resultsPath: "data.Map"}),
+            new JSONDataTypeStrategy({ resultsPath: "data.Map" }),
             new Validator(SharedBikes.homeport.name + "SetDataSource",
                 SharedBikes.homeport.settingDatasourceMongooseSchemaObject));
         this.batteryRangeCorrection = 0;
@@ -45,7 +46,7 @@ export class HomeportOutOfLocationsTransformation extends BaseTransformation imp
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
-                coordinates: [ parseFloat(element.Longitude), parseFloat(element.Latitude) ],
+                coordinates: [parseFloat(element.Longitude), parseFloat(element.Latitude)],
                 type: "Point",
             },
             properties: {
@@ -57,7 +58,7 @@ export class HomeportOutOfLocationsTransformation extends BaseTransformation imp
                     ? Math.round((
                         (element.Battery - this.batteryRangeCorrection) *
                         (100 / (100 - this.batteryRangeCorrection))
-                      ))
+                    ))
                     : null,
                 id: "homeport-" + element.BikeIdentifier,
                 in_rack: (element.inRack) ? element.inRack : false,

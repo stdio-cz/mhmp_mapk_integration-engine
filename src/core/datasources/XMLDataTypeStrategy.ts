@@ -1,6 +1,6 @@
 "use strict";
 
-import { getSubProperty } from "../helpers";
+import { getSubProperty } from "golemio-utils";
 import { CustomError } from "../helpers/errors";
 import { IDataTypeStrategy, IXMLSettings } from "./";
 

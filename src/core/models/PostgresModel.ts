@@ -1,8 +1,9 @@
 "use strict";
 
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../connectors";
-import { log, Validator } from "../helpers";
+import { log } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, ISequelizeSettings } from "./";
 

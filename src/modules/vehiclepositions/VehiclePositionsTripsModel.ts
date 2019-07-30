@@ -1,9 +1,10 @@
 "use strict";
 
 import { VehiclePositions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { log, Validator } from "../../core/helpers";
+import { log } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { IModel, PostgresModel } from "../../core/models";
 
@@ -24,10 +25,10 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
     constructor() {
         super(VehiclePositions.trips.name + "Model", {
-                outputSequelizeAttributes: VehiclePositions.trips.outputSequelizeAttributes,
-                pgTableName: VehiclePositions.trips.pgTableName,
-                savingType: "insertOrUpdate",
-            },
+            outputSequelizeAttributes: VehiclePositions.trips.outputSequelizeAttributes,
+            pgTableName: VehiclePositions.trips.pgTableName,
+            savingType: "insertOrUpdate",
+        },
             new Validator(VehiclePositions.trips.name + "ModelValidator",
                 VehiclePositions.trips.outputMongooseSchemaObject),
         );
@@ -57,7 +58,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const res = await this.sequelizeModel.upsert(d, {transaction: t});
+                    const res = await this.sequelizeModel.upsert(d, { transaction: t });
                     if (res) {
                         i.push({
                             cis_short_name: d.cis_short_name,
@@ -75,7 +76,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 await t.commit();
                 return { inserted: i, updated: u };
             } else {
-                const res = await this.sequelizeModel.upsert(data, {transaction: t});
+                const res = await this.sequelizeModel.upsert(data, { transaction: t });
                 if (res) {
                     i.push({
                         cis_short_name: data.cis_short_name,
@@ -91,7 +92,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 return { inserted: i, updated: u };
             }
         } catch (err) {
-            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             await t.rollback();
             throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
         }
@@ -145,9 +146,11 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         // TODO dat si bacha na posileny spoje
         // gtfs_trip_id obsahuje POS, rozlisit podle cis_order
         if (result[0]) {
-            await this.sequelizeModel.update(result[0], { where: {
-                id: trip.id,
-            }});
+            await this.sequelizeModel.update(result[0], {
+                where: {
+                    id: trip.id,
+                },
+            });
         } else {
             throw new CustomError("Error while updating gtfs_trip_id for id '" + trip.id + "'.", true, this.name, 1022);
         }

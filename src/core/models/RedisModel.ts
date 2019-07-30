@@ -1,8 +1,10 @@
 "use strict";
 
+import { getSubProperty } from "golemio-utils";
+import { Validator } from "golemio-validator";
 import * as Redis from "ioredis";
 import { RedisConnector } from "../connectors";
-import { getSubProperty, log, Validator } from "../helpers";
+import { log } from "../helpers";
 import { CustomError } from "../helpers/errors";
 import { IModel, IRedisSettings } from "./";
 
@@ -62,7 +64,7 @@ export class RedisModel implements IModel {
                     throw new CustomError("The data must be a type of object.", true, this.constructor.name);
                 }
                 const k = (this.isKeyConstructedFromData)
-                    ? getSubProperty(key, d)
+                    ? getSubProperty<string>(key, d)
                     : key;
                 // encoding and saving the data as redis hash
                 return multi.hset(prefix, k, this.encodeDataBeforeSave(d));
@@ -76,7 +78,7 @@ export class RedisModel implements IModel {
                 throw new CustomError("The data must be a type of object.", true, this.constructor.name);
             }
             const k = (this.isKeyConstructedFromData)
-                ? getSubProperty(key, data)
+                ? getSubProperty<string>(key, data)
                 : key;
             // encoding and saving the data as redis hash
             return this.connection.hset(prefix, k, this.encodeDataBeforeSave(data));

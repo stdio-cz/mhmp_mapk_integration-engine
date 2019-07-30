@@ -64,6 +64,8 @@
 		"express": "^4.17.1",
 		"fast-csv": "3.0.1",
 		"golemio-schema-definitions": "0.1.10",
+		"golemio-utils": "^0.0.1-dev.2523",
+		"golemio-validator": "^0.0.1-dev.2522",
 		"iconv-lite": "0.4.24",
 		"ioredis": "4.6.2",
 		"moment-timezone": "0.5.23",

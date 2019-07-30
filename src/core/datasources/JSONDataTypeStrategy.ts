@@ -1,6 +1,6 @@
 "use strict";
 
-import { getSubProperty } from "../helpers";
+import { getSubProperty } from "golemio-utils";
 import { CustomError } from "../helpers/errors";
 import { IDataTypeStrategy, IJSONSettings } from "./";
 
@@ -27,7 +27,7 @@ export class JSONDataTypeStrategy implements IDataTypeStrategy {
             if (typeof data === "string") {
                 data = JSON.parse(data);
             }
-            let parsed = getSubProperty(this.resultsPath, data);
+            let parsed = getSubProperty<any>(this.resultsPath, data);
             if (this.filter) {
                 parsed = parsed.filter(this.filter);
             }

@@ -1,9 +1,9 @@
 "use strict";
 
 import { AirQualityStations, CityDistricts } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, XMLDataTypeStrategy } from "../../core/datasources";
-import { Validator } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
@@ -35,44 +35,44 @@ export class AirQualityStationsWorker extends BaseWorker {
             new Validator(AirQualityStations.name + "DataSource",
                 AirQualityStations.datasourceMongooseSchemaObject));
         this.model = new MongoModel(AirQualityStations.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: AirQualityStations.mongoCollectionName,
-                outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.name = b.properties.name;
-                    a.properties.measurement = b.properties.measurement;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: AirQualityStations.mongoCollectionName,
+            outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.name = b.properties.name;
+                a.properties.measurement = b.properties.measurement;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(AirQualityStations.name + "ModelValidator", AirQualityStations.outputMongooseSchemaObject),
         );
         this.transformation = new AirQualityStationsTransformation();
         this.historyModel = new MongoModel(AirQualityStations.history.name + "Model", {
-                identifierPath: "id",
-                mongoCollectionName: AirQualityStations.history.mongoCollectionName,
-                outputMongooseSchemaObject: AirQualityStations.history.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-            },
+            identifierPath: "id",
+            mongoCollectionName: AirQualityStations.history.mongoCollectionName,
+            outputMongooseSchemaObject: AirQualityStations.history.outputMongooseSchemaObject,
+            savingType: "insertOnly",
+        },
             new Validator(AirQualityStations.history.name + "ModelValidator",
                 AirQualityStations.history.outputMongooseSchemaObject),
         );
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
     }
@@ -106,8 +106,8 @@ export class AirQualityStationsWorker extends BaseWorker {
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {

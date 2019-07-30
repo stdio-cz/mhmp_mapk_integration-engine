@@ -1,9 +1,10 @@
 "use strict";
 
 import { CityDistricts, ZtpParkings } from "golemio-schema-definitions";
+import { ObjectKeysValidator, Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { GeocodeApi, ObjectKeysValidator, Validator } from "../../core/helpers";
+import { GeocodeApi } from "../../core/helpers";
 import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";

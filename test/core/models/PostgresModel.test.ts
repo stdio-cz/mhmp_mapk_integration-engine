@@ -2,11 +2,12 @@
 
 "use strict";
 
+import { Validator } from "golemio-validator";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../../src/core/connectors";
-import { log, Validator } from "../../../src/core/helpers";
+import { log } from "../../../src/core/helpers";
 import { CustomError } from "../../../src/core/helpers/errors";
 import { ISequelizeSettings, PostgresModel } from "../../../src/core/models";
 

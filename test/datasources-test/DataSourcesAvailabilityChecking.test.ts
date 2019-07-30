@@ -8,6 +8,7 @@ import {
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
     WasteCollectionYards, ZtpParkings,
 } from "golemio-schema-definitions";
+import { ObjectKeysValidator, Validator } from "golemio-validator";
 import "mocha";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
@@ -15,7 +16,6 @@ import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-import { ObjectKeysValidator, Validator } from "../../src/core/helpers";
 
 const chai = require("chai");
 const expect = chai.expect;

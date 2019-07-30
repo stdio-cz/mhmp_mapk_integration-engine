@@ -1,9 +1,9 @@
 "use strict";
 
 import { VehiclePositions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { Validator } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class VehiclePositionsPositionsModel extends PostgresModel implements IModel {
@@ -23,25 +23,25 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
 
     constructor() {
         super(VehiclePositions.positions.name + "Model", {
-                outputSequelizeAttributes: VehiclePositions.positions.outputSequelizeAttributes,
-                pgTableName: VehiclePositions.positions.pgTableName,
-                savingType: "insertOnly",
-                sequelizeAdditionalSettings: {
-                    indexes: [{
-                        fields: ["trips_id"],
-                        name: "vehiclepositions_positions_trips_id",
-                    }, {
-                        fields: ["origin_time"],
-                        name: "vehiclepositions_positions_origin_time",
-                    }],
-                },
+            outputSequelizeAttributes: VehiclePositions.positions.outputSequelizeAttributes,
+            pgTableName: VehiclePositions.positions.pgTableName,
+            savingType: "insertOnly",
+            sequelizeAdditionalSettings: {
+                indexes: [{
+                    fields: ["trips_id"],
+                    name: "vehiclepositions_positions_trips_id",
+                }, {
+                    fields: ["origin_time"],
+                    name: "vehiclepositions_positions_origin_time",
+                }],
             },
+        },
             new Validator(VehiclePositions.positions.name + "ModelValidator",
                 VehiclePositions.positions.outputMongooseSchemaObject),
         );
         this.tripsModel = PostgresConnector.getConnection().define(VehiclePositions.trips.pgTableName,
             VehiclePositions.trips.outputSequelizeAttributes, {});
-        this.tripsModel.hasMany(this.sequelizeModel, {foreignKey: "trips_id", sourceKey: "id"});
+        this.tripsModel.hasMany(this.sequelizeModel, { foreignKey: "trips_id", sourceKey: "id" });
     }
 
     public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
@@ -52,12 +52,12 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 "id", "gtfs_trip_id",
             ],
             include: [{
-                attributes: [ "lat", "lng", "origin_time", "origin_timestamp", "delay" ],
+                attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay"],
                 model: this.sequelizeModel,
                 where: { tracking: { [Sequelize.Op.ne]: 0 } },
             }],
             order: [
-                [{ model: this.sequelizeModel }, "origin_time" ],
+                [{ model: this.sequelizeModel }, "origin_time"],
                 [{ model: this.sequelizeModel }, "created_at", "ASC"],
             ],
             raw: true,
@@ -84,10 +84,10 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         const t = await connection.transaction();
         try {
             await this.sequelizeModel.update({
-                    delay,
-                    gtfs_next_stop_id: gtfsNextStopId,
-                    gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
-                },
+                delay,
+                gtfs_next_stop_id: gtfsNextStopId,
+                gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
+            },
                 {
                     transaction: t,
                     where: {
