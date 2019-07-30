@@ -1,11 +1,11 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { VehiclePositions } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class VehiclePositionsStopsModel extends PostgresModel implements IModel {

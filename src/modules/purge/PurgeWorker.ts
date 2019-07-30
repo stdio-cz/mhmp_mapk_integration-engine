@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { SharedBikes, SharedCars, TrafficCameras } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 
 export class PurgeWorker {

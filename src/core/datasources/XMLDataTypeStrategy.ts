@@ -1,7 +1,7 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { getSubProperty } from "golemio-utils";
-import { CustomError } from "../helpers/errors";
 import { IDataTypeStrategy, IXMLSettings } from "./";
 
 const xml2js = require("xml2js-es6-promise");

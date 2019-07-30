@@ -1,7 +1,7 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { SortedWasteStations } from "golemio-schema-definitions";
-import { CustomError } from "../../core/helpers/errors";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");
@@ -36,7 +36,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         const promises = sortedStations.map(async (station) => {
             const result = await this.transformElement(station);
             while (sortedContainers[j]
-                    && sortedContainers[j].properties.STATIONID === station.properties.ID) {
+                && sortedContainers[j].properties.STATIONID === station.properties.ID) {
                 result.properties.containers.push({
                     cleaning_frequency: {
                         duration: "P" + Math.floor(sortedContainers[j].properties.CLEANINGFREQUENCYCODE / 10) + "W",
@@ -54,7 +54,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         return results.filter((r) => r);
     }
 
-    public getTrashTypeByString = (key: string): {id: number, description: string} => {
+    public getTrashTypeByString = (key: string): { id: number, description: string } => {
         switch (key) {
             case "Barevné sklo":
             case "glass_coloured":
@@ -99,7 +99,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         return res;
     }
 
-    private getAccessibilityByString = (key: string): {id: number, description: string} => {
+    private getAccessibilityByString = (key: string): { id: number, description: string } => {
         switch (key) {
             case "volně":
                 return { description: "volně", id: 1 };

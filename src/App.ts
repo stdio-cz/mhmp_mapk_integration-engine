@@ -1,6 +1,7 @@
 "use strict";
 
 import * as express from "express";
+import { CustomError, handleError } from "golemio-errors";
 import * as httpLogger from "morgan";
 
 import * as fs from "fs";
@@ -8,7 +9,6 @@ import * as path from "path";
 import { config } from "./core/config";
 import { AMQPConnector, mongooseConnection, PostgresConnector, RedisConnector } from "./core/connectors";
 import { log } from "./core/helpers";
-import { CustomError, handleError } from "./core/helpers/errors";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 

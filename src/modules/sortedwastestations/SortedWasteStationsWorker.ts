@@ -1,11 +1,11 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { CityDistricts, SortedWasteStations } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy } from "../../core/datasources";
 import { log } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {

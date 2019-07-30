@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "../helpers/errors";
+import { CustomError } from "golemio-errors";
 import { ITransformation } from "./";
 
 export abstract class BaseTransformation implements ITransformation {
@@ -13,7 +13,7 @@ export abstract class BaseTransformation implements ITransformation {
     /**
      * Transform the whole collection or one single element
      */
-    public transform = async (data: any|any[]): Promise<any|any[]> => {
+    public transform = async (data: any | any[]): Promise<any | any[]> => {
         if (data instanceof Array) {
             const promises = data.map((element) => {
                 return this.transformElement(element);
@@ -28,7 +28,7 @@ export abstract class BaseTransformation implements ITransformation {
     /**
      * Transform the whole collection or one single element as history
      */
-    public transformHistory = async (data: any|any[]): Promise<any|any[]> => {
+    public transformHistory = async (data: any | any[]): Promise<any | any[]> => {
         if (data instanceof Array) {
             const promises = data.map((element) => {
                 return this.transformHistoryElement(element);

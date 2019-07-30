@@ -1,11 +1,11 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { CityDistricts, Parkings } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { GeocodeApi } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";

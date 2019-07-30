@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { CityDistricts, WasteCollectionYards } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { WasteCollectionYardsTransformation } from "./";
@@ -19,7 +19,7 @@ export class WasteCollectionYardsWorker extends BaseWorker {
 
     constructor() {
         super();
-        const yardsDataType = new JSONDataTypeStrategy({resultsPath: "features"});
+        const yardsDataType = new JSONDataTypeStrategy({ resultsPath: "features" });
         yardsDataType.setFilter((item) => item.properties.PLATNOST !== 0);
         this.dataSource = new DataSource(WasteCollectionYards.name + "DataSource",
             new HTTPProtocolStrategy({
@@ -32,41 +32,41 @@ export class WasteCollectionYardsWorker extends BaseWorker {
                 WasteCollectionYards.datasourceMongooseSchemaObject));
 
         this.model = new MongoModel(WasteCollectionYards.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: WasteCollectionYards.mongoCollectionName,
-                outputMongooseSchemaObject: WasteCollectionYards.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.name = b.properties.name;
-                    a.properties.operator = b.properties.operator;
-                    a.properties.type = b.properties.type;
-                    a.properties.address = b.properties.address;
-                    a.properties.contact = b.properties.contact;
-                    a.properties.operating_hours = b.properties.operating_hours;
-                    a.properties.properties = b.properties.properties;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: WasteCollectionYards.mongoCollectionName,
+            outputMongooseSchemaObject: WasteCollectionYards.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.name = b.properties.name;
+                a.properties.operator = b.properties.operator;
+                a.properties.type = b.properties.type;
+                a.properties.address = b.properties.address;
+                a.properties.contact = b.properties.contact;
+                a.properties.operating_hours = b.properties.operating_hours;
+                a.properties.properties = b.properties.properties;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(WasteCollectionYards.name + "ModelValidator",
                 WasteCollectionYards.outputMongooseSchemaObject),
         );
         this.transformation = new WasteCollectionYardsTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + WasteCollectionYards.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
     }
@@ -90,8 +90,8 @@ export class WasteCollectionYardsWorker extends BaseWorker {
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {

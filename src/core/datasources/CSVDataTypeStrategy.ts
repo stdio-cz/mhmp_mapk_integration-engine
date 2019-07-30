@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "../helpers/errors";
+import { CustomError } from "golemio-errors";
 import { ICSVSettings, IDataTypeStrategy } from "./";
 
 const csvtojson = require("csvtojson");

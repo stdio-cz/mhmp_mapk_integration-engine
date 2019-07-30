@@ -1,11 +1,11 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { getSubProperty } from "golemio-utils";
 import { Validator } from "golemio-validator";
 import * as Redis from "ioredis";
 import { RedisConnector } from "../connectors";
 import { log } from "../helpers";
-import { CustomError } from "../helpers/errors";
 import { IModel, IRedisSettings } from "./";
 
 export class RedisModel implements IModel {

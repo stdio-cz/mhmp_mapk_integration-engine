@@ -2,13 +2,13 @@
 
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { Validator } from "golemio-validator";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { log } from "../../../src/core/helpers";
-import { CustomError } from "../../../src/core/helpers/errors";
 import { ISequelizeSettings, PostgresModel } from "../../../src/core/models";
 
 const chai = require("chai");
@@ -138,13 +138,13 @@ describe("PostgresModel", () => {
         await model.save({ column1: 1, column2: "b" });
         await model.save({ column1: 1, column2: "b" }, true);
 
-        let data = await model.findOne({ where: { column1: 1 }});
+        let data = await model.findOne({ where: { column1: 1 } });
         expect(data).to.have.property("column1", 1);
         expect(data).to.have.property("column2", "b");
         expect(data).to.have.property("created_at");
         expect(data).to.have.property("updated_at");
 
-        data = await model.findOne({ where: { column1: 1 }}, true);
+        data = await model.findOne({ where: { column1: 1 } }, true);
         expect(data).to.have.property("column1", 1);
         expect(data).to.have.property("column2", "b");
         expect(data).to.have.property("created_at");
@@ -175,19 +175,19 @@ describe("PostgresModel", () => {
             new Validator("TestPostgresModelValidator", schemaObject),
         );
         await model.save({ id: 1, column1: 1, column2: "b" });
-        let data = await model.findOne({ where: { id: 1 }});
+        let data = await model.findOne({ where: { id: 1 } });
         expect(data).to.have.property("column2", "b");
 
         await model.save({ id: 1, column1: 1, column2: "c" });
-        data = await model.findOne({ where: { id: 1 }});
+        data = await model.findOne({ where: { id: 1 } });
         expect(data).to.have.property("column2", "c");
 
         await model.save({ id: 1, column1: 1, column2: "b" }, true);
-        data = await model.findOne({ where: { id: 1 }}, true);
+        data = await model.findOne({ where: { id: 1 } }, true);
         expect(data).to.have.property("column2", "b");
 
         await model.save({ id: 1, column1: 1, column2: "c" }, true);
-        data = await model.findOne({ where: { id: 1 }}, true);
+        data = await model.findOne({ where: { id: 1 } }, true);
         expect(data).to.have.property("column2", "c");
     });
 
@@ -199,17 +199,17 @@ describe("PostgresModel", () => {
             new Validator("TestPostgresModelValidator", schemaObject),
         );
         await model.save([{ id: 1, column1: 1, column2: "b" }, { id: 2, column1: 2, column2: "c" }]);
-        let data = await model.findOne({ where: { id: 1 }});
+        let data = await model.findOne({ where: { id: 1 } });
         expect(data).to.have.property("column2", "b");
         await model.save([{ id: 1, column1: 1, column2: "c" }, { id: 2, column1: 2, column2: "d" }]);
-        data = await model.findOne({ where: { id: 1 }});
+        data = await model.findOne({ where: { id: 1 } });
         expect(data).to.have.property("column2", "c");
 
         await model.save([{ id: 1, column1: 1, column2: "b" }, { id: 2, column1: 2, column2: "c" }], true);
-        data = await model.findOne({ where: { id: 1 }}, true);
+        data = await model.findOne({ where: { id: 1 } }, true);
         expect(data).to.have.property("column2", "b");
         await model.save([{ id: 1, column1: 1, column2: "c" }, { id: 2, column1: 2, column2: "d" }], true);
-        data = await model.findOne({ where: { id: 1 }}, true);
+        data = await model.findOne({ where: { id: 1 } }, true);
         expect(data).to.have.property("column2", "c");
 
         data = await model.find({});
@@ -283,13 +283,13 @@ describe("PostgresModel", () => {
         await model.save({ column1: 1, column2: "b" });
         await model.save({ column1: 1, column2: "b" }, true);
 
-        let data = await model.findOne({ where: { column1: 1 }});
+        let data = await model.findOne({ where: { column1: 1 } });
         expect(data).to.have.property("column1", 1);
         expect(data).to.have.property("column2", "b");
         expect(data).to.have.property("created_at");
         expect(data).to.have.property("updated_at");
 
-        data = await model.findOne({ where: { column1: 1 }}, true);
+        data = await model.findOne({ where: { column1: 1 } }, true);
         expect(data).to.have.property("column1", 1);
         expect(data).to.have.property("column2", "b");
         expect(data).to.have.property("created_at");

@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { BicycleParkings, CityDistricts } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { BicycleParkingsTransformation } from "./";

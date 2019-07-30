@@ -1,7 +1,7 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { getSubProperty } from "golemio-utils";
-import { CustomError } from "../helpers/errors";
 import { IDataTypeStrategy, IJSONSettings } from "./";
 
 export class JSONDataTypeStrategy implements IDataTypeStrategy {

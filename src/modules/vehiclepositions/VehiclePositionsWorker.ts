@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { log } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";

@@ -1,9 +1,9 @@
 "use strict";
 
 import * as amqplib from "amqplib";
+import { CustomError, handleError } from "golemio-errors";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError, handleError } from "../helpers/errors";
 
 class MyAMQP {
 
