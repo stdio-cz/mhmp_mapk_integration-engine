@@ -12,6 +12,7 @@
 		"build": "tsc",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/datasources-test/*.{ts,js,txt} --exit",
+		"test-debug": "mocha --inspect-brk=9230 --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/datasources-test/*.{ts,js,txt} --exit",
 		"core-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/core/helpers/**/*.test.ts --exit",
 		"modules-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/modules/**/*.test.ts --exit",
 		"code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/core/helpers/*.test.ts test/core/helpers/**/*.test.ts test/core/**/*.test.ts test/modules/**/*.test.ts --exclude test/datasources-test/*.{ts,js,txt} --exit",
