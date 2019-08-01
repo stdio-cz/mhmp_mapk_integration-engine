@@ -25,6 +25,7 @@ export class GeneralTransformation extends BaseTransformation implements ITransf
         const res = {
             data,
             headers: element.headers,
+            updated_at: new Date().getTime(),
         };
 
         return res;

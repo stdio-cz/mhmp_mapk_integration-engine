@@ -2873,10 +2873,10 @@ globals@^11.1.0:
   resolved "http://10.200.0.50:4873/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-golemio-schema-definitions@0.1.12-dev.2557:
-  version "0.1.12-dev.2557"
-  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.12-dev.2557.tgz#3be77c7eb8f852e4bdeaba1ffc04fe7acbe9e7dc"
-  integrity sha512-S0laccVMcb9xPHVB97c2O9/YrQ/kPHz3fUZhix/HToo0nh6EOteT3k9gqc/3337hlGflLY6qImxU59vUTjDKVw==
+golemio-schema-definitions@0.1.12-dev.2564:
+  version "0.1.12-dev.2564"
+  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.12-dev.2564.tgz#81222d3018e8bed5dd09c5c0f6003d89410ad340"
+  integrity sha512-Kc4d6zR3+bKqD08T9dkM+9uFYw9y2cT477TCeowV/Gy1pACen3CCccewC39d5uE1OjeW22l8AXE0M2QNSJqlhw==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"
