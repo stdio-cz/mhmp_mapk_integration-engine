@@ -66,6 +66,7 @@
 		"fast-csv": "3.0.1",
 		"golemio-schema-definitions": "0.1.12-dev.2557",
 		"iconv-lite": "0.4.24",
+		"influx": "5.4.0",
 		"ioredis": "4.6.2",
 		"moment-timezone": "0.5.23",
 		"mongoose": "5.3.6",

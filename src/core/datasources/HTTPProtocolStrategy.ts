@@ -52,8 +52,7 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
             }
             return result;
         } catch (err) {
-            log.error(err);
-            throw new CustomError("Retrieving of the source data failed.", true, this.constructor.name, 1002, err);
+            throw new CustomError("Error while getting data from server.", true, this.constructor.name, 1029, err);
         }
     }
 
