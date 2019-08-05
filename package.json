@@ -1,6 +1,6 @@
 {
 	"name": "golemio-integration-engine",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": "Integration Engine of the Golemio data platform.",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
@@ -64,7 +64,7 @@
 		"dotenv": "6.1.0",
 		"express": "^4.17.1",
 		"fast-csv": "3.0.1",
-		"golemio-schema-definitions": "0.1.12-dev.2564",
+		"golemio-schema-definitions": "0.1.12",
 		"iconv-lite": "0.4.24",
 		"influx": "5.4.0",
 		"ioredis": "4.6.2",
