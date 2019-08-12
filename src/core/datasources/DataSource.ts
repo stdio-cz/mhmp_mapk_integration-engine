@@ -1,7 +1,7 @@
 "use strict";
 
 import { Validator } from "golemio-validator";
-import { log } from "../helpers";
+import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
 
 export class DataSource implements IDataSource {
@@ -49,12 +49,29 @@ export class DataSource implements IDataSource {
     }
 
     protected getRawData = async (): Promise<any> => {
-        const body = await this.protocolStrategy.getData();
-        const content = await this.dataTypeStrategy.parseData(body);
-        if (this.isEmpty(content)) {
-            log.warn("Data source returned empty data.");
+        try {
+            const body = await this.protocolStrategy.getData();
+            const content = await this.dataTypeStrategy.parseData(body);
+            if (this.isEmpty(content)) {
+                log.warn("Data source returned empty data.");
+                // logging number of records
+                loggerEvents.emit(
+                    LoggerEventType.NumberOfRecords, { name: this.name, numberOfRecords: 0 });
+            } else {
+                if (content instanceof Array) {
+                    // logging number of records
+                    loggerEvents.emit(
+                        LoggerEventType.NumberOfRecords, { name: this.name, numberOfRecords: content.length });
+                } else {
+                    // logging number of records
+                    loggerEvents.emit(
+                        LoggerEventType.NumberOfRecords, { name: this.name, numberOfRecords: 1 });
+                }
+            }
+            return content;
+        } catch (err) {
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
         }
-        return content;
     }
 
     private isEmpty = (content: any): boolean => {

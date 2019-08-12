@@ -7,11 +7,18 @@ import * as httpLogger from "morgan";
 import * as fs from "fs";
 import * as path from "path";
 import { config } from "./core/config";
-import { AMQPConnector, mongooseConnection, PostgresConnector, RedisConnector } from "./core/connectors";
+import {
+    AMQPConnector,
+    InfluxConnector,
+    MongoConnector,
+    PostgresConnector,
+    RedisConnector,
+} from "./core/connectors";
 import { log } from "./core/helpers";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
+const Influx = require("influx");
 const http = require("http");
 
 class App {
@@ -118,9 +125,23 @@ class App {
      * Starts the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
-        await mongooseConnection;
+        await MongoConnector.connect();
         await PostgresConnector.connect();
         await RedisConnector.connect();
+        if (config.influx_db.enabled) {
+            await InfluxConnector.connect([
+                {
+                    fields: {
+                        number_of_records: Influx.FieldType.INTEGER,
+                    },
+                    measurement: "number_of_records",
+                    tags: [
+                        "name",
+                    ],
+                },
+            ]);
+        }
+
     }
 
     /**

@@ -43,10 +43,10 @@ class MySequelize {
                 },
             });
             await this.connection.authenticate();
-            log.info("Connected to PostgresSQL!");
+            log.info("Connected to PostgreSQL!");
             return this.connection;
         } catch (err) {
-            throw new CustomError("Error while connecting to PostgresSQL.", false,
+            throw new CustomError("Error while connecting to PostgreSQL.", false,
                 this.constructor.name, undefined, err);
         }
     }

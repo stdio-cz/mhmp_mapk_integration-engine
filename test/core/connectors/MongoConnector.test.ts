@@ -3,7 +3,9 @@
 "use strict";
 
 import "mocha";
-import { mongooseConnection } from "../../../src/core/connectors";
+import { Connection } from "mongoose";
+import { MongoConnector } from "../../../src/core/connectors";
+import { CustomError } from "../../../src/core/helpers/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -13,8 +15,26 @@ chai.use(chaiAsPromised);
 
 describe("MongoConnector", () => {
 
-    it("should connect to MongoDB", async () => {
-        await expect(mongooseConnection).to.be.fulfilled;
+    it("should has connect method", async () => {
+        expect(MongoConnector.connect).not.to.be.undefined;
+    });
+
+    it("should has getConnection method", async () => {
+        expect(MongoConnector.getConnection).not.to.be.undefined;
+    });
+
+    it("should throws Error if not connect method was not called", () => {
+        expect(MongoConnector.getConnection).to.throw(CustomError);
+    });
+
+    it("should connects to MongoDB and returns connection", async () => {
+        const ch = await MongoConnector.connect();
+        expect(ch).to.be.an.instanceof(Connection);
+    });
+
+    it("should returns connection", async () => {
+        await MongoConnector.connect();
+        expect(MongoConnector.getConnection()).to.be.an.instanceof(Connection);
     });
 
 });

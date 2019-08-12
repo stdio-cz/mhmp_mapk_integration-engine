@@ -40,9 +40,10 @@ describe("GeneralTransformation", () => {
             },
         });
         expect(data).to.have.property("data");
-        expect(data).to.have.property("headers");
         expect(data.data).is.equal(testJsonData);
+        expect(data).to.have.property("headers");
         expect(data.headers).to.have.property("content-type");
+        expect(data).to.have.property("updated_at");
     });
 
     it("should properly transform plain text element", async () => {
@@ -53,8 +54,9 @@ describe("GeneralTransformation", () => {
             },
         });
         expect(data).to.have.property("data");
-        expect(data).to.have.property("headers");
         expect(data.data).to.have.property("textData");
+        expect(data).to.have.property("headers");
         expect(data.headers).to.have.property("content-type");
+        expect(data).to.have.property("updated_at");
     });
 });

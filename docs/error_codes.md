@@ -30,3 +30,5 @@
 - 1026: Sorted Waste Containers were not set. Use method setContaners().
 - 1027: Error while updating parking zone tariffs.
 - 1028: Error while updating sensors measurement/picks.
+- 1029: Error while getting data from server.
+- 1030: Error while parsing source data.

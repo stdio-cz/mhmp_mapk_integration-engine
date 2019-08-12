@@ -7,7 +7,6 @@ import { Validator } from "golemio-validator";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
-import { mongooseConnection } from "../../../src/core/connectors";
 import { log } from "../../../src/core/helpers";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
 
@@ -27,7 +26,7 @@ describe("MongoModel", () => {
     let model: MongoModel;
 
     before(async () => {
-        await mongooseConnection;
+        await MongoConnector.connect();
     });
 
     beforeEach(async () => {

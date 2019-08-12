@@ -8,7 +8,7 @@ import mongoose = require("mongoose");
 
 class MyMongoose {
 
-    public connect = async (): Promise<void> => {
+    public connect = async (): Promise<mongoose.Connection> => {
         try {
             await mongoose.connect(config.MONGO_CONN, {
                 autoReconnect: true,
@@ -25,13 +25,22 @@ class MyMongoose {
             mongoose.connection.on("disconnected", () => {
                 handleError(new CustomError("Database disconnected", false));
             });
+            return mongoose.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to MongoDB.", false,
                 this.constructor.name, undefined, err);
         }
     }
+
+    public getConnection = (): mongoose.Connection => {
+        if (mongoose.connection.readyState !== 1) {
+            throw new CustomError("Mongoose connection not exists. Firts call connect() method.", false,
+                this.constructor.name, undefined);
+        }
+        return mongoose.connection;
+    }
 }
 
-const mongooseConnection = new MyMongoose().connect();
+const MongoConnector = new MyMongoose();
 
-export { mongooseConnection };
+export { MongoConnector };
