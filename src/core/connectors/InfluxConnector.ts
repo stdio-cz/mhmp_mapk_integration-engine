@@ -1,8 +1,8 @@
 "use strict";
 
+import { CustomError, handleError } from "golemio-errors";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError, handleError } from "../helpers/errors";
 
 const Influx = require("influx");
 

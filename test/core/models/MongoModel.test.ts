@@ -7,6 +7,7 @@ import { Validator } from "golemio-validator";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
+import { MongoConnector } from "../../../src/core/connectors";
 import { log } from "../../../src/core/helpers";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
 

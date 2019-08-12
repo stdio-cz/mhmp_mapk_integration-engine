@@ -2,10 +2,10 @@
 
 "use strict";
 
+import { CustomError } from "golemio-errors";
 import "mocha";
 import { Connection } from "mongoose";
 import { MongoConnector } from "../../../src/core/connectors";
-import { CustomError } from "../../../src/core/helpers/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
