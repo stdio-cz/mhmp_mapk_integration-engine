@@ -5,7 +5,7 @@
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
-import { mongooseConnection } from "../../../src/core/connectors";
+import { MongoConnector } from "../../../src/core/connectors";
 import { log, Validator } from "../../../src/core/helpers";
 import { CustomError } from "../../../src/core/helpers/errors";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
@@ -26,7 +26,7 @@ describe("MongoModel", () => {
     let model: MongoModel;
 
     before(async () => {
-        await mongooseConnection;
+        await MongoConnector.connect();
     });
 
     beforeEach(async () => {

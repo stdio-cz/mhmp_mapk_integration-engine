@@ -21,6 +21,7 @@ import { IceGatewayStreetLampsWorker } from "../modules/icegatewaystreetlamps";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
 import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
+import { MosBEWorker } from "../modules/mosbe";
 import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
@@ -270,6 +271,48 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: MOS.BE.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MOS.BE.name.toLowerCase(),
+        queues: [
+            {
+                name: "saveAccountsDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveAccountsDataToDB",
+            },
+            {
+                name: "saveCouponsDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveCouponsDataToDB",
+            },
+            {
+                name: "saveCustomersDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveCustomersDataToDB",
+            },
+            {
+                name: "saveZonesDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveZonesDataToDB",
             },
         ],
     },
