@@ -4,6 +4,7 @@ const moment = require("moment");
 
 import { ZtpParkings } from "golemio-schema-definitions";
 import { log } from "../../core/helpers";
+import { CustomError } from "../../core/helpers/errors";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ZtpParkingsInputTransformation extends BaseTransformation implements ITransformation {
@@ -22,10 +23,14 @@ export class ZtpParkingsInputTransformation extends BaseTransformation implement
         const status = parseInt(element.status, 10);
         const id = parseInt(element.id, 10);
         if (isNaN(id)) {
-            log.error("ID must be a valid number.");
+            const msg = "ID must be a valid number.";
+            log.error(msg);
+            throw new CustomError(msg);
         }
         if (isNaN(status)) {
-            log.error("Status must be a valid number.");
+            const msg = "Status must be a valid number.";
+            log.error(msg);
+            throw new CustomError(msg);
         }
         const res = {
             properties: {
