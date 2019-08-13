@@ -1,0 +1,50 @@
+[
+    {
+      "couponID": "5745208",
+      "customerid": "2744947",
+      "tariffID": "135",
+      "Price": "2240.0000",
+      "Description": "None",
+      "ValidFrom": "2019-06-24T00:00:00",
+      "ValidTill": "2019-09-23T23:59:59",
+      "Created": "2019-06-20T11:40:34.927",
+      "SellerID": "1",
+      "CouponCustomStatusID": "1",
+      "TariffName": "čtvrtletní občanské.",
+      "TariffIntName": "(0121)",
+      "TariffProfileName": "Čtvrtletní",
+      "CustomerProfileName": "Občanské"
+    },
+    {
+      "couponID": "5745153",
+      "customerid": "1588740",
+      "tariffID": "135",
+      "Price": "1480.0000",
+      "Description": "",
+      "ValidFrom": "2019-07-01T00:00:00",
+      "ValidTill": "2019-09-30T23:59:59",
+      "Created": "2019-06-20T11:30:40.990",
+      "SellerID": "29",
+      "CouponCustomStatusID": "1",
+      "TariffName": "čtvrtletní občanské.",
+      "TariffIntName": "(0121)",
+      "TariffProfileName": "Čtvrtletní",
+      "CustomerProfileName": "Občanské"
+    },
+    {
+      "couponID": "5745139",
+      "customerid": "2739391",
+      "tariffID": "135",
+      "Price": "1480.0000",
+      "Description": "",
+      "ValidFrom": "2019-06-24T00:00:00",
+      "ValidTill": "2019-09-23T23:59:59",
+      "Created": "2019-06-20T11:26:46.780",
+      "SellerID": "29",
+      "CouponCustomStatusID": "1",
+      "TariffName": "čtvrtletní občanské.",
+      "TariffIntName": "(0121)",
+      "TariffProfileName": "Čtvrtletní",
+      "CustomerProfileName": "Občanské"
+    }
+  ]

@@ -47,14 +47,21 @@ Environment options can be set with the system (e.g. in debian with `export NODE
 
 ## Compilation of typescript code
 
-To compile typescript code into js one-time
-
+To compile typescript code into js one-time:
 ```
 npm run build
 ```
 or run this, to watch all changes
 ```
 npm run build-watch
+```
+or run via TypeScript
+```
+npm run dev-start
+```
+or run with a debugger
+```
+npm run dev-start-debug
 ```
 from the application's root directory.
 

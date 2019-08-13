@@ -67,6 +67,13 @@ Poslední úprava: 27. 6. 2019
 - historizace: ano
 - retence: TBD
 
+## MOS Backend
+- zdroj: input-gateway
+- typ: INPUT
+- obnova dat: cca 1x denně
+- historizace: ne
+- retence: TBD
+
 ## MOS Mobile Application
 - zdroj: input-gateway
 - typ: INPUT
