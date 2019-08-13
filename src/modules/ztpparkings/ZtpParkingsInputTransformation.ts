@@ -3,6 +3,7 @@
 const moment = require("moment");
 
 import { ZtpParkings } from "golemio-schema-definitions";
+import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ZtpParkingsInputTransformation extends BaseTransformation implements ITransformation {
@@ -19,11 +20,18 @@ export class ZtpParkingsInputTransformation extends BaseTransformation implement
         const lastUpdatedAsNumber = lastUpdated.valueOf();
 
         const status = parseInt(element.status, 10);
+        const id = parseInt(element.id, 10);
+        if (isNaN(id)) {
+            log.error("ID must be a valid number.");
+        }
+        if (isNaN(status)) {
+            log.error("Status must be a valid number.");
+        }
         const res = {
             properties: {
                 device_id: element.device,
                 failure: status === 2,
-                id: element.id,
+                id,
                 last_updated_at: lastUpdatedAsNumber,
                 occupied: status === 0 ? false : status === 1 ? true : null,
             },
