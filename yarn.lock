@@ -90,6 +90,24 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@golemio/errors@^0.0.3-dev.76540096":
+  version "0.0.3-dev.76540096"
+  resolved "http://10.200.0.50:4873/@golemio%2ferrors/-/errors-0.0.3-dev.76540096.tgz#a9dff13483e1c3123e70b71a1dbdfa87187e4bc3"
+  integrity sha512-WV3bxQRtzDy29JXRIaH0Mu+7P5CrZ3zspYRNMcKCV889esYc6j7jxOs4VtWohqpdZicMw7KikWI64+AVCaCU1Q==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
+
+"@golemio/utils@^0.0.2-dev.2752":
+  version "0.0.2-dev.2752"
+  resolved "http://10.200.0.50:4873/@golemio%2futils/-/utils-0.0.2-dev.2752.tgz#c1a5613ed106117de75e67e589a63a05b45f905c"
+  integrity sha512-hFBMXDszK5L4cD3K/hXEWft6Wn161thRVeTOQyXZcOlZkAuFQbyreH3nWIwEgefDolo29B0EjHNXvpTzTmlXCg==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
+
 "@sinonjs/commons@^1", "@sinonjs/commons@^1.0.2", "@sinonjs/commons@^1.2.0":
   version "1.4.0"
   resolved "http://10.200.0.50:4873/@sinonjs%2fcommons/-/commons-1.4.0.tgz#7b3ec2d96af481d7a0321252e7b1c94724ec5a78"
@@ -2885,7 +2903,7 @@ globals@^11.1.0:
   resolved "http://10.200.0.50:4873/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-golemio-errors@^0.0.1, golemio-errors@^0.0.1-dev.2532:
+golemio-errors@^0.0.1:
   version "0.0.1"
   resolved "http://10.200.0.50:4873/golemio-errors/-/golemio-errors-0.0.1.tgz#56098e45b2136c6b5e0e48c8e77f57309beacf77"
   integrity sha512-OBrUmtlWGcNr7QcUwE79YAo4ZYoUgGFXB9BbjCfykORw1lhttBxZnjEhXNUnES0PUD4z2us5hLysyozkcvChMw==
@@ -2904,15 +2922,6 @@ golemio-schema-definitions@0.1.12:
     db-migrate-pg "0.5.0"
     mongoose "5.3.14"
     sequelize "4.41.2"
-
-golemio-utils@^0.0.1-dev.2523:
-  version "0.0.1"
-  resolved "http://10.200.0.50:4873/golemio-utils/-/golemio-utils-0.0.1.tgz#97b41594c7217c7e41c431a1d9d9c9b79a21e0b7"
-  integrity sha512-NvsCJkQKJpP65MqT+U650XzEOBiJhKMd5SOtn4QPAfakIlB1CccA8DpgiTzxG161BliC3VC8zXWn1eHUqti3lA==
-  dependencies:
-    debug "^4.1.1"
-    dotenv "^8.0.0"
-    winston "^3.2.1"
 
 golemio-validator@^0.0.1-dev.2535:
   version "0.0.1"

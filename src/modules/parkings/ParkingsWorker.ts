@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { CityDistricts, Parkings } from "golemio-schema-definitions";
 import { Validator } from "golemio-validator";
 import { config } from "../../core/config";

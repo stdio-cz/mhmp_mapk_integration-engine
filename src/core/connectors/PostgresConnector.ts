@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import * as Sequelize from "sequelize";
 import { config } from "../config";
 import { log } from "../helpers";

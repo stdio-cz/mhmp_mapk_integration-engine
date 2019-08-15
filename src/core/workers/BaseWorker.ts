@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { config } from "../config";
 import { AMQPConnector } from "../connectors";
 

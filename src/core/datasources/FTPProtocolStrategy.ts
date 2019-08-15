@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import * as path from "path";
 import { log } from "../helpers";
 import { RedisModel } from "../models";

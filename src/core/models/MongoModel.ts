@@ -1,7 +1,7 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
-import { getSubProperty } from "golemio-utils";
+import { CustomError } from "@golemio/errors";
+import { getSubProperty } from "@golemio/utils";
 import { Validator } from "golemio-validator";
 import mongoose = require("mongoose");
 import { log } from "../helpers";

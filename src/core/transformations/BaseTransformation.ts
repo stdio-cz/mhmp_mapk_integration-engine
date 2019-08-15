@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { ITransformation } from "./";
 
 export abstract class BaseTransformation implements ITransformation {

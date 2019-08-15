@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import "mocha";
 import { PostgresConnector } from "../../../src/core/connectors";
 

@@ -1,7 +1,7 @@
 "use strict";
 
+import { ErrorHandler } from "@golemio/errors";
 import * as amqplib from "amqplib";
-import { handleError } from "golemio-errors";
 import { config } from "../config";
 import { log } from "../helpers";
 import { IQueueDefinition } from "./";
@@ -50,7 +50,7 @@ export class QueueProcessor {
             this.channel.ack(msg);
             log.verbose("[<] " + this.definition.queuePrefix + "." + name + ": done");
         } catch (err) {
-            handleError(err);
+            ErrorHandler.handle(err);
             this.channel.nack(msg, false, false);
         }
     }

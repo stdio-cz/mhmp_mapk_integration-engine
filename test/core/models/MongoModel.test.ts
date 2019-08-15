@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { Validator } from "golemio-validator";
 import "mocha";
 import mongoose = require("mongoose");

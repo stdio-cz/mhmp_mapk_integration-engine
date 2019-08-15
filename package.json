@@ -54,6 +54,8 @@
 		"typescript": "3.1.3"
 	},
 	"dependencies": {
+		"@golemio/errors": "^0.0.3-dev.76540096",
+		"@golemio/utils": "^0.0.2-dev.2752",
 		"@turf/turf": "5.1.6",
 		"amqplib": "0.5.2",
 		"basic-ftp": "2.17.0",
@@ -64,9 +66,7 @@
 		"dotenv": "6.1.0",
 		"express": "^4.17.1",
 		"fast-csv": "3.0.1",
-		"golemio-errors": "^0.0.1-dev.2532",
 		"golemio-schema-definitions": "0.1.12",
-		"golemio-utils": "^0.0.1-dev.2523",
 		"golemio-validator": "^0.0.1-dev.2535",
 		"iconv-lite": "0.4.24",
 		"influx": "5.4.0",

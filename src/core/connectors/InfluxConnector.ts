@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError, handleError } from "golemio-errors";
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import { config } from "../config";
 import { log } from "../helpers";
 
@@ -32,7 +32,7 @@ class MyInflux {
             log.info("Connected to InfluxDB!");
             return this.influx;
         } catch (err) {
-            handleError(new CustomError("Error while connecting to InfluxDB.", false, undefined, err));
+            ErrorHandler.handle(new CustomError("Error while connecting to InfluxDB.", false, undefined, err));
         }
     }
 

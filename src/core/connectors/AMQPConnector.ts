@@ -1,7 +1,7 @@
 "use strict";
 
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import * as amqplib from "amqplib";
-import { CustomError, handleError } from "golemio-errors";
 import { config } from "../config";
 import { log } from "../helpers";
 
@@ -19,7 +19,7 @@ class MyAMQP {
             this.channel = await conn.createChannel();
             log.info("Connected to Queue!");
             conn.on("close", () => {
-                handleError(new CustomError("Queue disconnected", false));
+                ErrorHandler.handle(new CustomError("Queue disconnected", false));
             });
 
             await this.assertDeadQueue(this.channel);

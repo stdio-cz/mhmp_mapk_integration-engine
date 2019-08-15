@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { Validator } from "golemio-validator";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
@@ -107,17 +107,18 @@ describe("PostgresModel", () => {
     // method model.save()
 
     it("should throws error if data are not valid", async () => {
-        expect(model.save({ column1: 1 })).to.be.rejectedWith(CustomError);
-        expect(model.save({ column1: 1 }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.save({ column1: 1 })).to.be.rejectedWith(Error);
+        await expect(model.save({ column1: 1 }, true)).to.be.rejectedWith(Error);
     });
 
     it("should logs warning if validator is not set", async () => {
+        settings.hasTmpTable = true;
         model = new PostgresModel("Test" + "Model",
             settings,
             undefined,
         );
-        expect(model.save({ column1: 1 })).to.be.rejectedWith(Error);
-        expect(model.save({ column1: 1 }, true)).to.be.rejectedWith(Error);
+        await expect(model.save({ column1: 1 })).to.be.fulfilled;
+        await expect(model.save({ column1: 1 }, true)).to.be.fulfilled;
         sandbox.assert.calledTwice(log.warn);
     });
 
@@ -126,7 +127,7 @@ describe("PostgresModel", () => {
             settings,
             new Validator("TestPostgresModelValidator", schemaObject),
         );
-        expect(model.save({ column1: 1, column2: "b" }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.save({ column1: 1, column2: "b" }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should saves one record, type insertOnly", async () => {
@@ -226,7 +227,7 @@ describe("PostgresModel", () => {
             settings,
             new Validator("TestPostgresModelValidator", schemaObject),
         );
-        expect(model.truncate(true)).to.be.rejectedWith(CustomError);
+        await expect(model.truncate(true)).to.be.rejectedWith(CustomError);
     });
 
     it("should truncate", async () => {

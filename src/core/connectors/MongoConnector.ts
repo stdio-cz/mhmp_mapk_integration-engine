@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError, handleError } from "golemio-errors";
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import { config } from "../config";
 import { log } from "../helpers";
 
@@ -23,7 +23,7 @@ class MyMongoose {
             });
             log.info("Connected to MongoDB!");
             mongoose.connection.on("disconnected", () => {
-                handleError(new CustomError("Database disconnected", false));
+                ErrorHandler.handle(new CustomError("Database disconnected", false));
             });
             return mongoose.connection;
         } catch (err) {

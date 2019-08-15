@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError, handleError } from "golemio-errors";
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
@@ -661,7 +661,7 @@ const definitions: IQueueDefinition[] = [
                             if (await worker.checkSavedRowsAndReplaceTables(msg)) {
                                 channel.ack(msg);
                             } else {
-                                handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
+                                ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
                                     null, 1021));
                                 channel.nack(msg, false, false);
                             }
@@ -671,7 +671,7 @@ const definitions: IQueueDefinition[] = [
                             channel.reject(msg);
                         }
                     } catch (err) {
-                        handleError(err);
+                        ErrorHandler.handle(err);
                         channel.nack(msg, false, false);
                     }
                 },
