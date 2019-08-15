@@ -32,3 +32,5 @@
 - 1028: Error while updating sensors measurement/picks.
 - 1029: Error while getting data from server.
 - 1030: Error while parsing source data.
+- 1031: ID must be a valid number.
+- 1032: Status must be a valid number.

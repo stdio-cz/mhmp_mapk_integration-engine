@@ -2912,10 +2912,10 @@ golemio-errors@^0.0.1:
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-golemio-schema-definitions@0.1.12:
-  version "0.1.12"
-  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.12.tgz#bea27855403927f7cdec88d2ea4eb4fc5da66d6c"
-  integrity sha512-NccLMWaPKKWbrIhOpzyglzR3qxTkpm1ehkoevK7IbuYg+uozHlOezLs/ZyfxJ60niyVf9wKlHbl5xOV6N1eWrA==
+golemio-schema-definitions@0.1.13-dev.2655:
+  version "0.1.13-dev.2655"
+  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.13-dev.2655.tgz#bac4ac43124ef6d0b566235ab39de00bf8a9f45f"
+  integrity sha512-gSbl19Ju8U0y+MAHdXHNSqGHCbWUs6t8I7FFnoDp3r05lDHiZRVH2Hgg/ebkiOGDKGZYu0NLKDA1wraFbmiakA==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"
