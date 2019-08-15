@@ -1,9 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../connectors";
-import { log, Validator } from "../helpers";
-import { CustomError } from "../helpers/errors";
+import { log } from "../helpers";
 import { IModel, ISequelizeSettings } from "./";
 
 export class PostgresModel implements IModel {

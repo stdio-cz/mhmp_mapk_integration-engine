@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { RopidGTFS } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { log, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
@@ -22,15 +23,15 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
     constructor() {
         super(RopidGTFS.metadata.name + "Model", {
-                outputSequelizeAttributes: RopidGTFS.metadata.outputSequelizeAttributes,
-                pgTableName: RopidGTFS.metadata.pgTableName,
-                savingType: "insertOnly",
-            },
+            outputSequelizeAttributes: RopidGTFS.metadata.outputSequelizeAttributes,
+            pgTableName: RopidGTFS.metadata.pgTableName,
+            savingType: "insertOnly",
+        },
             null,
         );
     }
 
-    public getLastModified = async (dataset: string): Promise<any|null> => {
+    public getLastModified = async (dataset: string): Promise<any | null> => {
         try {
             const lastMod = await this.sequelizeModel.findOne({
                 order: [["version", "DESC"]],
@@ -41,9 +42,9 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 },
             });
             return (lastMod) ? {
-                    lastModified: (lastMod.dataValues) ? lastMod.dataValues.value : null,
-                    version: (lastMod.dataValues) ? lastMod.dataValues.version : 1,
-                } : {
+                lastModified: (lastMod.dataValues) ? lastMod.dataValues.value : null,
+                version: (lastMod.dataValues) ? lastMod.dataValues.version : 1,
+            } : {
                     lastModified: null,
                     version: 0,
                 };
@@ -60,9 +61,9 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         const meta = await this.getTotalFromMeta(dataset, version);
         const tables = await this.getTotalFromTables(dataset, version);
         if (meta.totalRows !== tables.totalRows
-                || meta.numOfTables !== tables.numOfTables
-                || meta.numOfTables !== numOfTables
-                || tables.numOfTables !== numOfTables) {
+            || meta.numOfTables !== tables.numOfTables
+            || meta.numOfTables !== numOfTables
+            || tables.numOfTables !== numOfTables) {
             throw new CustomError(this.name + ": checkSavedRows() failed.", true);
         }
     }
@@ -106,10 +107,12 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 transaction: t,
                 where: {
                     dataset,
-                    version: { [Sequelize.Op.and]: [
-                        { [Sequelize.Op.ne]: version },
-                        { [Sequelize.Op.ne]: -1 },
-                    ]},
+                    version: {
+                        [Sequelize.Op.and]: [
+                            { [Sequelize.Op.ne]: version },
+                            { [Sequelize.Op.ne]: -1 },
+                        ],
+                    },
                 },
             });
             t.commit();
@@ -128,10 +131,12 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             transaction: t,
             where: {
                 dataset,
-                version: { [Sequelize.Op.and]: [
-                    { [Sequelize.Op.eq]: version },
-                    { [Sequelize.Op.ne]: -1 },
-                ]},
+                version: {
+                    [Sequelize.Op.and]: [
+                        { [Sequelize.Op.eq]: version },
+                        { [Sequelize.Op.ne]: -1 },
+                    ],
+                },
             },
         });
         await this.save({
@@ -139,7 +144,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             key: "failed",
             type: "DATASET_INFO",
             value: new Date().toISOString(),
-            version: -1 });
+            version: -1,
+        });
         t.commit();
     }
 
@@ -192,7 +198,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             + "AND table_type = 'BASE TABLE' "
             + "AND table_name in (" + tablesArray.join(",") + ") "
             + "AND table_schema = 'tmp'; ",
-            { type: Sequelize.QueryTypes.SELECT});
+            { type: Sequelize.QueryTypes.SELECT });
 
         const res = {
             numOfTables: tables.length,

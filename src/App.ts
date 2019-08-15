@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
 import * as express from "express";
 import * as httpLogger from "morgan";
 
@@ -14,7 +15,6 @@ import {
     RedisConnector,
 } from "./core/connectors";
 import { log } from "./core/helpers";
-import { CustomError, handleError } from "./core/helpers/errors";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
@@ -52,7 +52,7 @@ class App {
             // Setup error handler hook on server error
             // Setup error handler hook on server error
             server.on("error", (err: any) => {
-                handleError(new CustomError("Could not start a server", false, null, 1, err));
+                ErrorHandler.handle(new CustomError("Could not start a server", false, null, 1, err));
             });
             // Serve the application at the given port
             server.listen(this.port, () => {
@@ -64,7 +64,7 @@ class App {
             await this.queueProcessors();
             log.info("Started!");
         } catch (err) {
-            handleError(err);
+            ErrorHandler.handle(err);
         }
     }
 
@@ -111,13 +111,12 @@ class App {
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-            handleError(err).then((error) => {
-                if (error) {
-                    log.silly("Error caught by the router error handler.");
-                    res.setHeader("Content-Type", "application/json; charset=utf-8");
-                    res.status(error.error_code || 500).send(error);
-                }
-            });
+            const error: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            if (error) {
+                log.silly("Error caught by the router error handler.");
+                res.setHeader("Content-Type", "application/json; charset=utf-8");
+                res.status(error.error_status || 500).send(error);
+            }
         });
     }
 

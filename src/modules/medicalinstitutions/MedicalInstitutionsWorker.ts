@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { CityDistricts, MedicalInstitutions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { CSVDataTypeStrategy, DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { GeocodeApi, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { GeocodeApi } from "../../core/helpers";
 import { MongoModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { HealthCareTransformation, PharmaciesTransformation } from "./";
@@ -34,7 +35,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                     "lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv",
                 ],
             }),
-            new JSONDataTypeStrategy({resultsPath: ""}),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(MedicalInstitutions.pharmacies.name + "DataSource",
                 MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject));
         const hcDataTypeStrategy = new CSVDataTypeStrategy({
@@ -57,46 +58,46 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         hcDataTypeStrategy.setFilter((item) => {
             return item.adresa_kód_kraje === "CZ010"
                 && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
-                "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
-                "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+                    "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                    "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"].indexOf(item.typ) !== -1;
         });
         this.healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {},
-                    method: "GET",
-                    url: config.datasources.MedicalInstitutionsHealthCare,
-                }),
-                hcDataTypeStrategy,
-                new Validator(MedicalInstitutions.healthCare.name + "DataSource",
-                    MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
+            new HTTPProtocolStrategy({
+                headers: {},
+                method: "GET",
+                url: config.datasources.MedicalInstitutionsHealthCare,
+            }),
+            hcDataTypeStrategy,
+            new Validator(MedicalInstitutions.healthCare.name + "DataSource",
+                MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
         this.redisModel = new RedisModel(MedicalInstitutions.name + "Model", {
-                isKeyConstructedFromData: false,
-                prefix: "files",
-            },
+            isKeyConstructedFromData: false,
+            prefix: "files",
+        },
             null);
         this.model = new MongoModel(MedicalInstitutions.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: MedicalInstitutions.mongoCollectionName,
-                outputMongooseSchemaObject: MedicalInstitutions.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.address = b.properties.address;
-                    a.properties.email = b.properties.email;
-                    a.properties.name = b.properties.name;
-                    a.properties.opening_hours = b.properties.opening_hours;
-                    a.properties.pharmacy_code = b.properties.pharmacy_code;
-                    a.properties.telephone = b.properties.telephone;
-                    a.properties.type = b.properties.type;
-                    a.properties.web = b.properties.web;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: MedicalInstitutions.mongoCollectionName,
+            outputMongooseSchemaObject: MedicalInstitutions.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.address = b.properties.address;
+                a.properties.email = b.properties.email;
+                a.properties.name = b.properties.name;
+                a.properties.opening_hours = b.properties.opening_hours;
+                a.properties.pharmacy_code = b.properties.pharmacy_code;
+                a.properties.telephone = b.properties.telephone;
+                a.properties.type = b.properties.type;
+                a.properties.web = b.properties.web;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(MedicalInstitutions.name + "ModelValidator",
                 MedicalInstitutions.outputMongooseSchemaObject),
         );
@@ -104,15 +105,15 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         this.pharmaciesTransformation = new PharmaciesTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MedicalInstitutions.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
     }
@@ -160,8 +161,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         }
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {
@@ -175,7 +176,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                 });
                 // TODO zjistit proc tady nefunguje `await dbData.save();` viz vyse
                 await this.model.updateOneById(id,
-                    {$set: {"properties.district": (result) ? result.properties.slug : null}});
+                    { $set: { "properties.district": (result) ? result.properties.slug : null } });
             } catch (err) {
                 throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
             }

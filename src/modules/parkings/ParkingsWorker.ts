@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { CityDistricts, Parkings } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { GeocodeApi, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { GeocodeApi } from "../../core/helpers";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
@@ -24,7 +25,7 @@ export class ParkingsWorker extends BaseWorker {
 
     constructor() {
         super();
-        const dataTypeStrategy = new JSONDataTypeStrategy({resultsPath: "results"});
+        const dataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "results" });
         // filter items with lastUpdated lower than two days
         dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
         this.dataSource = new DataSource(Parkings.name + "DataSource",
@@ -36,56 +37,56 @@ export class ParkingsWorker extends BaseWorker {
             dataTypeStrategy,
             new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(Parkings.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: Parkings.mongoCollectionName,
-                outputMongooseSchemaObject: Parkings.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.last_updated = b.properties.last_updated;
-                    a.properties.name = b.properties.name;
-                    a.properties.num_of_free_places = b.properties.num_of_free_places;
-                    a.properties.num_of_taken_places = b.properties.num_of_taken_places;
-                    a.properties.total_num_of_places = b.properties.total_num_of_places;
-                    a.properties.parking_type = b.properties.parking_type;
-                    a.properties.payment_link = b.properties.payment_link;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: Parkings.mongoCollectionName,
+            outputMongooseSchemaObject: Parkings.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.last_updated = b.properties.last_updated;
+                a.properties.name = b.properties.name;
+                a.properties.num_of_free_places = b.properties.num_of_free_places;
+                a.properties.num_of_taken_places = b.properties.num_of_taken_places;
+                a.properties.total_num_of_places = b.properties.total_num_of_places;
+                a.properties.parking_type = b.properties.parking_type;
+                a.properties.payment_link = b.properties.payment_link;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(Parkings.name + "ModelValidator", Parkings.outputMongooseSchemaObject),
         );
         this.transformation = new ParkingsTransformation();
         this.historyModel = new MongoModel(Parkings.history.name + "Model", {
-                identifierPath: "id",
-                mongoCollectionName: Parkings.history.mongoCollectionName,
-                outputMongooseSchemaObject: Parkings.history.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-            },
+            identifierPath: "id",
+            mongoCollectionName: Parkings.history.mongoCollectionName,
+            outputMongooseSchemaObject: Parkings.history.outputMongooseSchemaObject,
+            savingType: "insertOnly",
+        },
             new Validator(Parkings.history.name + "ModelValidator", Parkings.history.outputMongooseSchemaObject),
         );
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + Parkings.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
         this.occupanciesTransformation = new ParkingsOccupanciesTransformation();
         this.occupanciesModel = new PostgresModel(Parkings.occupancies.name + "Model", {
-                outputSequelizeAttributes: Parkings.occupancies.outputSequelizeAttributes,
-                pgTableName: Parkings.occupancies.pgTableName,
-                savingType: "insertOnly",
-            },
+            outputSequelizeAttributes: Parkings.occupancies.outputSequelizeAttributes,
+            pgTableName: Parkings.occupancies.pgTableName,
+            savingType: "insertOnly",
+        },
             new Validator(Parkings.occupancies.name + "ModelValidator",
                 Parkings.occupancies.outputMongooseSchemaObject),
         );
@@ -122,8 +123,8 @@ export class ParkingsWorker extends BaseWorker {
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {
@@ -143,8 +144,8 @@ export class ParkingsWorker extends BaseWorker {
         }
 
         if (!dbData.properties.address || !dbData.properties.address.address_formatted
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const address = await GeocodeApi.getAddressByLatLng(dbData.geometry.coordinates[1],
                     dbData.geometry.coordinates[0]);
@@ -164,12 +165,12 @@ export class ParkingsWorker extends BaseWorker {
         const timestampMonthAgo = moment().subtract(1, "months").unix();
 
         const aggregation = [
-            { $match: { $and: [ { id }, { updated_at: { $gte: timestampMonthAgo }} ] }},
+            { $match: { $and: [{ id }, { updated_at: { $gte: timestampMonthAgo } }] } },
             {
                 $group: {
                     _id: {
                         dayOfWeek: {
-                            $subtract: [ {$dayOfWeek: { $toDate: "$updated_at" }}, 1 ],
+                            $subtract: [{ $dayOfWeek: { $toDate: "$updated_at" } }, 1],
                         },
                         hour: {
                             $dateToString: {

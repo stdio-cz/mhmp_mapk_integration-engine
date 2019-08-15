@@ -1,8 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
+import { getSubProperty } from "@golemio/utils";
+import { Validator } from "golemio-validator";
 import mongoose = require("mongoose");
-import { getSubProperty, log, Validator } from "../helpers";
-import { CustomError } from "../helpers/errors";
+import { log } from "../helpers";
 import { IModel, IMongooseSettings } from "./";
 
 export class MongoModel implements IModel {

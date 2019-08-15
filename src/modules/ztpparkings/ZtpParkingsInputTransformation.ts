@@ -2,8 +2,8 @@
 
 const moment = require("moment");
 
+import { CustomError } from "@golemio/errors";
 import { ZtpParkings } from "golemio-schema-definitions";
-import { CustomError } from "../../core/helpers/errors";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ZtpParkingsInputTransformation extends BaseTransformation implements ITransformation {

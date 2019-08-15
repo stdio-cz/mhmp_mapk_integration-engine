@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { IceGatewayStreetLamps } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy } from "../../core/datasources";
-import { Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { IceGatewayStreetLampsTransformation } from "./";
@@ -21,34 +21,34 @@ export class IceGatewayStreetLampsWorker extends BaseWorker {
         super();
         this.dataSource = new DataSource(IceGatewayStreetLamps.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {
+                headers: {
                     Authorization: "Token " + config.datasources.IGToken,
                 },
                 method: "GET",
                 url: config.datasources.IGStreetLamps,
             }),
-            new JSONDataTypeStrategy({resultsPath: ""}),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(IceGatewayStreetLamps.name + "DataSource",
                 IceGatewayStreetLamps.datasourceMongooseSchemaObject));
         this.model = new MongoModel(IceGatewayStreetLamps.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: IceGatewayStreetLamps.mongoCollectionName,
-                outputMongooseSchemaObject: IceGatewayStreetLamps.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.dim_value = b.properties.dim_value;
-                    a.properties.groups = b.properties.groups;
-                    a.properties.lamppost_id = b.properties.lamppost_id;
-                    a.properties.last_dim_override = b.properties.last_dim_override;
-                    a.properties.state = b.properties.state;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: IceGatewayStreetLamps.mongoCollectionName,
+            outputMongooseSchemaObject: IceGatewayStreetLamps.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.dim_value = b.properties.dim_value;
+                a.properties.groups = b.properties.groups;
+                a.properties.lamppost_id = b.properties.lamppost_id;
+                a.properties.last_dim_override = b.properties.last_dim_override;
+                a.properties.state = b.properties.state;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(IceGatewayStreetLamps.name + "ModelValidator",
                 IceGatewayStreetLamps.outputMongooseSchemaObject),
         );
@@ -68,7 +68,7 @@ export class IceGatewayStreetLampsWorker extends BaseWorker {
                 body: {
                     value: inputData.value,
                 },
-                headers : {
+                headers: {
                     "Authorization": "Token " + config.datasources.IGToken,
                     "Cache-Control": "no-cache",
                     "Content-Type": "application/json",

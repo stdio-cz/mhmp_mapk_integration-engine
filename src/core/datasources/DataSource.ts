@@ -1,7 +1,8 @@
 "use strict";
 
-import { log, loggerEvents, LoggerEventType, Validator } from "../helpers";
-import { CustomError } from "../helpers/errors";
+import { CustomError } from "@golemio/errors";
+import { Validator } from "golemio-validator";
+import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
 
 export class DataSource implements IDataSource {
@@ -12,10 +13,10 @@ export class DataSource implements IDataSource {
     private validator: Validator;
 
     constructor(
-            name: string,
-            protocolStrategy: IProtocolStrategy,
-            dataTypeStrategy: IDataTypeStrategy,
-            validator: Validator) {
+        name: string,
+        protocolStrategy: IProtocolStrategy,
+        dataTypeStrategy: IDataTypeStrategy,
+        validator: Validator) {
         this.name = name;
         this.protocolStrategy = protocolStrategy;
         this.dataTypeStrategy = dataTypeStrategy;

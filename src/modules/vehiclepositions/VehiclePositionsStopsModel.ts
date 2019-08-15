@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { VehiclePositions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { log, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class VehiclePositionsStopsModel extends PostgresModel implements IModel {
@@ -22,10 +23,10 @@ export class VehiclePositionsStopsModel extends PostgresModel implements IModel 
 
     constructor() {
         super(VehiclePositions.stops.name + "Model", {
-                outputSequelizeAttributes: VehiclePositions.stops.outputSequelizeAttributes,
-                pgTableName: VehiclePositions.stops.pgTableName,
-                savingType: "insertOrUpdate",
-            },
+            outputSequelizeAttributes: VehiclePositions.stops.outputSequelizeAttributes,
+            pgTableName: VehiclePositions.stops.pgTableName,
+            savingType: "insertOrUpdate",
+        },
             new Validator(VehiclePositions.stops.name + "ModelValidator",
                 VehiclePositions.stops.outputMongooseSchemaObject),
         );
@@ -51,8 +52,8 @@ export class VehiclePositionsStopsModel extends PostgresModel implements IModel 
             // TODO doplnit batch_id a author
             await connection.query(
                 "SELECT public.import_vehiclepositions_stops(-1, '"
-                    + JSON.stringify(data)
-                    + "'::json, 'integration-engine') ",
+                + JSON.stringify(data)
+                + "'::json, 'integration-engine') ",
                 { type: Sequelize.QueryTypes.SELECT },
             );
         } catch (err) {

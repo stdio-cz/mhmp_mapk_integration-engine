@@ -1,8 +1,8 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import * as path from "path";
 import { log } from "../helpers";
-import { CustomError } from "../helpers/errors";
 import { RedisModel } from "../models";
 import { IHTTPSettings, IProtocolStrategy } from "./";
 
@@ -30,16 +30,16 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
                 const prefix = path.parse(this.connectionSettings.url).name + "/";
                 const files = await decompress(result, {
                     filter: (this.connectionSettings.whitelistedFiles
-                            && this.connectionSettings.whitelistedFiles.length)
+                        && this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,
                 });
                 const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
-                        isKeyConstructedFromData: false,
-                        prefix: "files",
-                    },
-                null);
+                    isKeyConstructedFromData: false,
+                    prefix: "files",
+                },
+                    null);
                 result = await Promise.all(files.map(async (file) => {
                     await redisModel.save(prefix + file.path, file.data.toString("hex"));
                     return {

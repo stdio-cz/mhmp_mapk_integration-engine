@@ -1,9 +1,10 @@
 "use strict";
 
 import { SharedBikes } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { log, Validator } from "../../core/helpers";
+import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class HomeportLocationsTransformation extends BaseTransformation implements ITransformation {
@@ -22,7 +23,7 @@ export class HomeportLocationsTransformation extends BaseTransformation implemen
                 strictSSL: false,
                 url: config.datasources.HomeportSettingsSharedBikes,
             }),
-            new JSONDataTypeStrategy({resultsPath: "data.Map"}),
+            new JSONDataTypeStrategy({ resultsPath: "data.Map" }),
             new Validator(SharedBikes.homeport.name + "SetDataSource",
                 SharedBikes.homeport.settingDatasourceMongooseSchemaObject));
         this.batteryRangeCorrection = 0;
@@ -40,7 +41,7 @@ export class HomeportLocationsTransformation extends BaseTransformation implemen
                 if (data.length === i) {
                     return icb();
                 }
-                const coordinates = [ data[i].Longitude, data[i].Latitude ];
+                const coordinates = [data[i].Longitude, data[i].Latitude];
 
                 if (data[i].AvailableExternalBikes.length > 0) {
                     bikesIterator(0, data[i].AvailableExternalBikes, coordinates, () => {
@@ -95,7 +96,7 @@ export class HomeportLocationsTransformation extends BaseTransformation implemen
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: {
-                coordinates: [ parseFloat(element.Longitude), parseFloat(element.Latitude) ],
+                coordinates: [parseFloat(element.Longitude), parseFloat(element.Latitude)],
                 type: "Point",
             },
             properties: {
@@ -107,7 +108,7 @@ export class HomeportLocationsTransformation extends BaseTransformation implemen
                     ? Math.round((
                         (element.Battery - this.batteryRangeCorrection) *
                         (100 / (100 - this.batteryRangeCorrection))
-                      ))
+                    ))
                     : null,
                 id: "homeport-" + element.BikeIdentifier,
                 in_rack: (element.inRack) ? element.inRack : false,
