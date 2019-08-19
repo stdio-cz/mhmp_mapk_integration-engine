@@ -1,9 +1,8 @@
 "use strict";
 
-import { ErrorHandler } from "@golemio/errors";
 import * as amqplib from "amqplib";
 import { config } from "../config";
-import { log } from "../helpers";
+import { IExtendedCustomErrorObject, IntegrationErrorHandler, log } from "../helpers";
 import { IQueueDefinition } from "./";
 
 export class QueueProcessor {
@@ -50,8 +49,15 @@ export class QueueProcessor {
             this.channel.ack(msg);
             log.verbose("[<] " + this.definition.queuePrefix + "." + name + ": done");
         } catch (err) {
-            ErrorHandler.handle(err);
-            this.channel.nack(msg, false, false);
+            // Handling critical errors or datasets warnings
+            const errObject: IExtendedCustomErrorObject = IntegrationErrorHandler.handle(err);
+            // If error is not critical the warning is logged and message is acknowledged
+            if (errObject.ack) {
+                this.channel.ack(msg);
+            // Critical errors non-acknowledge the message
+            } else {
+                this.channel.nack(msg, false, false);
+            }
         }
     }
 

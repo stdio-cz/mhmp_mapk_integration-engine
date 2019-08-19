@@ -662,7 +662,7 @@ const definitions: IQueueDefinition[] = [
                                 channel.ack(msg);
                             } else {
                                 ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    null, 1021));
+                                    null, 5004));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");

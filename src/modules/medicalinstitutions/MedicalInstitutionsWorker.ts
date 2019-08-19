@@ -156,7 +156,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                 dbData.geometry.coordinates = coordinates;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating geo.", true, this.constructor.name, 1016, err);
+                throw new CustomError("Error while updating geo.", true, this.constructor.name, 5001, err);
             }
         }
 
@@ -178,7 +178,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                 await this.model.updateOneById(id,
                     { $set: { "properties.district": (result) ? result.properties.slug : null } });
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
     }

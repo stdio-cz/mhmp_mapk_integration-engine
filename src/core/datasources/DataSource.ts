@@ -71,7 +71,7 @@ export class DataSource implements IDataSource {
             }
             return content;
         } catch (err) {
-            throw new CustomError("Retrieving of the source data failed.", true, this.name, 1002, err);
+            throw new CustomError("Retrieving of the source data failed.", true, this.name, 2001, err);
         }
     }
 

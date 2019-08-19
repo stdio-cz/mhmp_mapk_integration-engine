@@ -44,7 +44,7 @@ export abstract class BaseTransformation implements ITransformation {
      * Transform one single element from input format (from data source) to output history format
      */
     protected transformHistoryElement = async (element: any): Promise<any> => {
-        throw new CustomError("Method is not implemented.", true, this.constructor.name, 1025);
+        throw new CustomError("Method is not implemented.", true, this.constructor.name, 6001);
     }
 
 }

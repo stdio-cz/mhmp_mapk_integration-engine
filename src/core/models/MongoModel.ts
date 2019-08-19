@@ -107,7 +107,7 @@ export class MongoModel implements IModel {
         try {
             await model.deleteMany({}).exec();
         } catch (err) {
-            throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+            throw new CustomError("Error while truncating data.", true, this.name, 4002, err);
         }
     }
 
@@ -120,7 +120,7 @@ export class MongoModel implements IModel {
         try {
             return await model.deleteMany(opts).exec();
         } catch (err) {
-            throw new CustomError("Error while deleting data.", true, this.name, 1011, err);
+            throw new CustomError("Error while deleting data.", true, this.name, 4002, err);
         }
     }
 
@@ -129,7 +129,7 @@ export class MongoModel implements IModel {
         try {
             return await model.find(opts);
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -138,7 +138,7 @@ export class MongoModel implements IModel {
         try {
             return await model.findOne(opts);
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -152,7 +152,7 @@ export class MongoModel implements IModel {
                 return data;
             }
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -161,7 +161,7 @@ export class MongoModel implements IModel {
         try {
             return model.aggregate(aggregation).exec();
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -202,7 +202,7 @@ export class MongoModel implements IModel {
                 return model.create(data);
             }
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
 
@@ -217,7 +217,7 @@ export class MongoModel implements IModel {
                 return this.insertOrUpdateOne(model, data);
             }
         } catch (err) {
-            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
 
@@ -237,7 +237,7 @@ export class MongoModel implements IModel {
             if (err instanceof CustomError && err.code === 1014) {
                 return model.create(newData);
             } else {
-                throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+                throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
             }
         }
     }

@@ -99,7 +99,7 @@ export class ParkingZonesWorker extends BaseWorker {
                 },
             });
         } catch (err) {
-            throw new CustomError("Error while updating parking zone tariffs.", true, this.constructor.name, 1027, err);
+            throw new CustomError("Error while updating parking zone tariffs.", true, this.constructor.name, 5001, err);
         }
     }
 

@@ -28,7 +28,7 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         const sortedStations = _.sortBy(stations, (a) => a.properties.ID);
         if (this.containers === undefined || this.containers === null) {
             throw new CustomError("Sorted Waste Containers were not set. Use method setContaners().",
-                true, this.constructor.name, 1026);
+                true, this.constructor.name, 3001);
         }
         const sortedContainers = _.sortBy(this.containers, (a) => a.properties.STATIONID);
 
