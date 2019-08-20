@@ -32,13 +32,15 @@ class MyInflux {
             log.info("Connected to InfluxDB!");
             return this.influx;
         } catch (err) {
-            ErrorHandler.handle(new CustomError("Error while connecting to InfluxDB.", false, undefined, err));
+            throw new CustomError("Error while connecting to InfluxDB.", false,
+                this.constructor.name, 1001, err);
         }
     }
 
     public getConnection = (): any => {
         if (!this.influx) {
-            throw new CustomError("InfluxDB connection not exists. Firts call connect() method.", false, undefined);
+            throw new CustomError("InfluxDB connection not exists. Firts call connect() method.", false,
+                this.constructor.name, 1002);
         }
         return this.influx;
     }

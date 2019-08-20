@@ -33,7 +33,7 @@ export class JSONDataTypeStrategy implements IDataTypeStrategy {
             }
             return parsed;
         } catch (err) {
-            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 1030, err);
+            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 2003, err);
         }
     }
 

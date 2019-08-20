@@ -121,7 +121,7 @@ export class TrafficCamerasWorker extends BaseWorker {
                 dbData.properties.district = (result) ? result.properties.slug : null;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
 
@@ -134,7 +134,7 @@ export class TrafficCamerasWorker extends BaseWorker {
                 dbData.properties.address = address;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating adress.", true, this.constructor.name, 1016, err);
+                throw new CustomError("Error while updating adress.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;

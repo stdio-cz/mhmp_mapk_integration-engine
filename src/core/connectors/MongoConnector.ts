@@ -28,14 +28,14 @@ class MyMongoose {
             return mongoose.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to MongoDB.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getConnection = (): mongoose.Connection => {
         if (mongoose.connection.readyState !== 1) {
             throw new CustomError("Mongoose connection not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return mongoose.connection;
     }

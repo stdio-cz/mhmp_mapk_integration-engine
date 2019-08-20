@@ -97,7 +97,7 @@ export class BicycleParkingsWorker extends BaseWorker {
                 dbData.properties.district = (result) ? result.properties.slug : null;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;

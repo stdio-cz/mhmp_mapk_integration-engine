@@ -64,7 +64,7 @@ export class PurgeWorker {
             );
             log.debug(res);
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -75,7 +75,7 @@ export class PurgeWorker {
             );
             log.debug(res);
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -90,7 +90,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -105,7 +105,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -120,7 +120,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 

@@ -90,10 +90,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@golemio/errors@^0.0.3-dev.76540096":
-  version "0.0.3-dev.76540096"
-  resolved "http://10.200.0.50:4873/@golemio%2ferrors/-/errors-0.0.3-dev.76540096.tgz#a9dff13483e1c3123e70b71a1dbdfa87187e4bc3"
-  integrity sha512-WV3bxQRtzDy29JXRIaH0Mu+7P5CrZ3zspYRNMcKCV889esYc6j7jxOs4VtWohqpdZicMw7KikWI64+AVCaCU1Q==
+"@golemio/errors@0.0.3-dev.77086387":
+  version "0.0.3-dev.77086387"
+  resolved "http://10.200.0.50:4873/@golemio%2ferrors/-/errors-0.0.3-dev.77086387.tgz#0dc4596f832d44262dfa696c4d9631c0f8fb6423"
+  integrity sha512-+/2mzr0ZMxJDBsihWFs+RzZxuo+8DacQxkFXUgioG9t9ljLALE2jdWZIMaegaXQIrSuDiy6a089BkYGczAsJDg==
   dependencies:
     debug "^4.1.1"
     dotenv "^8.0.0"

@@ -78,9 +78,18 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        await this.modelTrips.findAndUpdateGTFSTripId(inputData);
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-            new Buffer(inputData.id));
+        try {
+            const result = await this.modelTrips.findGTFSTripId(inputData);
+            await this.modelTrips.update(result, {
+                where: {
+                    id: inputData.id,
+                },
+            });
+            await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
+                new Buffer(inputData.id));
+        } catch (err) {
+            throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
+        }
     }
 
     public updateDelay = async (msg: any): Promise<void> => {

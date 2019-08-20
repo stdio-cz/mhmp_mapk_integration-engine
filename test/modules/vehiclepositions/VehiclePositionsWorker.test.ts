@@ -37,6 +37,7 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({
                 define: sandbox.stub().callsFake(() => sequelizeModelStub),
+                query: sandbox.stub().callsFake(() => [true]),
                 transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
             }));
         sandbox.stub(RedisConnector, "getConnection");
@@ -51,7 +52,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelStops, "save");
         sandbox.stub(worker.modelTrips, "save")
             .callsFake(() => testData);
-        sandbox.stub(worker.modelTrips, "findAndUpdateGTFSTripId");
+        sandbox.stub(worker.modelTrips, "findGTFSTripId");
+        sandbox.stub(worker.modelTrips, "update");
         sandbox.stub(worker, "sendMessageToExchange");
         sandbox.stub(worker.delayComputationTripsModel, "getData")
             .callsFake(() => Object.assign({shape_points: []}));
@@ -81,7 +83,7 @@ describe("VehiclePositionsWorker", () => {
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
         await worker.updateGTFSTripId({content: new Buffer(JSON.stringify({id: 0}))});
-        sandbox.assert.calledOnce(worker.modelTrips.findAndUpdateGTFSTripId);
+        sandbox.assert.calledOnce(worker.modelTrips.findGTFSTripId);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 

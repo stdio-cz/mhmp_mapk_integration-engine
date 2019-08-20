@@ -147,7 +147,7 @@ export class ZtpParkingsWorker extends BaseWorker {
                 dbData.properties.district = (result) ? result.properties.slug : null;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
 
@@ -160,7 +160,7 @@ export class ZtpParkingsWorker extends BaseWorker {
                 dbData.properties.address = address;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating adress.", true, this.constructor.name, 1016, err);
+                throw new CustomError("Error while updating adress.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;
@@ -181,7 +181,7 @@ export class ZtpParkingsWorker extends BaseWorker {
             await dbData.save();
         } catch (err) {
             throw new CustomError("Error while updating status and device.",
-                true, this.constructor.name, 1019, err);
+                true, this.constructor.name, 5001, err);
         }
 
         // send message for historization

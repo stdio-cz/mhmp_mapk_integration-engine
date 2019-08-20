@@ -279,7 +279,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                     log.debug("District was not found. Object '" + dbData.properties.id + "' removed.");
                 }
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;
@@ -491,7 +491,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             }
         } else {
             throw new CustomError("Error while updating sensors measurement. Sensor container id '"
-                + measurement.container_id + "' was not found.", true, this.constructor.name, 1028);
+                + measurement.container_id + "' was not found.", true, this.constructor.name, 5001);
         }
     }
 
@@ -562,7 +562,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             }
         } else {
             throw new CustomError("Error while updating sensors picks. Sensor container id '"
-                + pick.container_id + "' was not found.", true, this.constructor.name, 1028);
+                + pick.container_id + "' was not found.", true, this.constructor.name, 5001);
         }
     }
 

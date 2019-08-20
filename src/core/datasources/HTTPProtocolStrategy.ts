@@ -52,7 +52,7 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
             }
             return result;
         } catch (err) {
-            throw new CustomError("Error while getting data from server.", true, this.constructor.name, 1029, err);
+            throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }
     }
 

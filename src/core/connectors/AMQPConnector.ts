@@ -27,14 +27,14 @@ class MyAMQP {
             return this.channel;
         } catch (err) {
             throw new CustomError("Error while creating AMQP Channel.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getChannel = (): amqplib.Channel => {
         if (!this.channel) {
             throw new CustomError("AMQP channel not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return this.channel;
     }

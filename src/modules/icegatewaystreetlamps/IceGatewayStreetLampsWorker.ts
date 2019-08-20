@@ -79,7 +79,7 @@ export class IceGatewayStreetLampsWorker extends BaseWorker {
             };
             await request(requestObject);
         } catch (err) {
-            throw new CustomError("Error while sending the POST request.", true, this.constructor.name, 1018, err);
+            throw new CustomError("Error while sending the POST request.", true, this.constructor.name, 5003, err);
         }
     }
 }

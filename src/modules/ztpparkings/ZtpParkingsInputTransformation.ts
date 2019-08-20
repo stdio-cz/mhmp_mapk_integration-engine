@@ -22,10 +22,10 @@ export class ZtpParkingsInputTransformation extends BaseTransformation implement
         const status = parseInt(element.status, 10);
         const id = parseInt(element.id, 10);
         if (isNaN(id)) {
-            throw new CustomError("ID must be a valid number.", true, this.name, 1031);
+            throw new CustomError("ID must be a valid number.", true, this.name, 3002);
         }
         if (isNaN(status)) {
-            throw new CustomError("Status must be a valid number.", true, this.name, 1032);
+            throw new CustomError("Status must be a valid number.", true, this.name, 3002);
         }
         const res = {
             properties: {
