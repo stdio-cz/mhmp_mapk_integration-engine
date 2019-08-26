@@ -1,9 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { SharedBikes, SharedCars, TrafficCameras } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { PostgresConnector } from "../../core/connectors";
-import { log, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { log } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 
 export class PurgeWorker {
@@ -14,36 +15,36 @@ export class PurgeWorker {
 
     constructor() {
         this.trafficCamerasHistoryModel = new MongoModel(TrafficCameras.history.name + "Model", {
-                identifierPath: "id",
-                mongoCollectionName: TrafficCameras.history.mongoCollectionName,
-                outputMongooseSchemaObject: TrafficCameras.history.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-            },
+            identifierPath: "id",
+            mongoCollectionName: TrafficCameras.history.mongoCollectionName,
+            outputMongooseSchemaObject: TrafficCameras.history.outputMongooseSchemaObject,
+            savingType: "insertOnly",
+        },
             new Validator(TrafficCameras.history.name + "ModelValidator",
                 TrafficCameras.history.outputMongooseSchemaObject),
         );
         this.sharedBikesModel = new MongoModel(SharedBikes.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: SharedBikes.mongoCollectionName,
-                outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: SharedBikes.mongoCollectionName,
+            outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(SharedBikes.name + "ModelValidator", SharedBikes.outputMongooseSchemaObject),
         );
         this.sharedCarsModel = new MongoModel(SharedCars.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: SharedCars.mongoCollectionName,
-                outputMongooseSchemaObject: SharedCars.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: SharedCars.mongoCollectionName,
+            outputMongooseSchemaObject: SharedCars.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(SharedCars.name + "ModelValidator", SharedCars.outputMongooseSchemaObject),
         );
     }
@@ -63,7 +64,7 @@ export class PurgeWorker {
             );
             log.debug(res);
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -74,7 +75,7 @@ export class PurgeWorker {
             );
             log.debug(res);
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -89,7 +90,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -104,7 +105,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 
@@ -119,7 +120,7 @@ export class PurgeWorker {
             });
             log.debug(JSON.stringify(res));
         } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 1017, err);
+            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
         }
     }
 

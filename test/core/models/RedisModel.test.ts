@@ -2,9 +2,9 @@
 
 "use strict";
 
+import { Validator } from "golemio-validator";
 import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
-import { Validator } from "../../../src/core/helpers";
 import { IRedisSettings, RedisModel } from "../../../src/core/models";
 
 const chai = require("chai");
@@ -189,7 +189,8 @@ describe("RedisModel", () => {
         const mso = {
             key: {
                 subkey: String,
-                value: String },
+                value: String
+            },
             value: { type: String, required: true },
         };
         model = new RedisModel("Test" + "Model",

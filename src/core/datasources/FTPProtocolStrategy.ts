@@ -1,8 +1,8 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import * as path from "path";
 import { log } from "../helpers";
-import { CustomError } from "../helpers/errors";
 import { RedisModel } from "../models";
 import { IFTPSettings, IProtocolStrategy } from "./";
 
@@ -38,15 +38,15 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
             let result = null;
             const prefix = path.parse(this.connectionSettings.filename).name + "/";
             const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
-                    isKeyConstructedFromData: false,
-                    prefix: "files",
-                },
+                isKeyConstructedFromData: false,
+                prefix: "files",
+            },
                 null);
 
             if (this.connectionSettings.isCompressed) {
                 const files = await decompress(path.join(tmpDir, this.connectionSettings.filename), {
                     filter: (this.connectionSettings.whitelistedFiles
-                            && this.connectionSettings.whitelistedFiles.length)
+                        && this.connectionSettings.whitelistedFiles.length)
                         ? (file) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
                         : (file) => file,
@@ -81,7 +81,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
             }
             return result;
         } catch (err) {
-            throw new CustomError("Error while getting data from server.", true, this.constructor.name, 1029, err);
+            throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }
     }
 

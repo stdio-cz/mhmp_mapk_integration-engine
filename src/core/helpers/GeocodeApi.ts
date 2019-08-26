@@ -1,8 +1,8 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { config } from "../config";
 import { log } from "./";
-import { CustomError } from "./errors";
 
 const request = require("request-promise");
 
@@ -69,7 +69,7 @@ class GeocodeApi {
             return address;
         } catch (err) {
             throw new CustomError("Retrieving of the open street map nominatim data failed.", true,
-                this.constructor.name, 1012, err);
+                this.constructor.name, 6002, err);
         }
     }
 
@@ -93,13 +93,13 @@ class GeocodeApi {
             const result = JSON.parse(body);
             if (result.length === 0) {
                 throw new CustomError("Geo coordinations was not found for address '"
-                        + street + ", " + city + "'", true, this.constructor.name, 1016);
+                    + street + ", " + city + "'", true, this.constructor.name, 5001);
             }
-            return [ parseFloat(result[0].lon), parseFloat(result[0].lat) ];
+            return [parseFloat(result[0].lon), parseFloat(result[0].lat)];
         } catch (err) {
             log.error(err);
             throw new CustomError("Retrieving of the open street map nominatim data failed.", true,
-                this.constructor.name, 1012, err);
+                this.constructor.name, 6002, err);
         }
     }
 

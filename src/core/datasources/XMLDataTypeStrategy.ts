@@ -1,7 +1,7 @@
 "use strict";
 
-import { getSubProperty } from "../helpers";
-import { CustomError } from "../helpers/errors";
+import { CustomError } from "@golemio/errors";
+import { getSubProperty } from "@golemio/utils";
 import { IDataTypeStrategy, IXMLSettings } from "./";
 
 const xml2js = require("xml2js-es6-promise");
@@ -33,7 +33,7 @@ export class XMLDataTypeStrategy implements IDataTypeStrategy {
             }
             return parsed;
         } catch (err) {
-            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 1030, err);
+            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 2003, err);
         }
     }
 

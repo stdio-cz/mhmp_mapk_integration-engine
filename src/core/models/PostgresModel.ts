@@ -1,9 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../connectors";
-import { log, Validator } from "../helpers";
-import { CustomError } from "../helpers/errors";
+import { log } from "../helpers";
 import { IModel, ISequelizeSettings } from "./";
 
 export class PostgresModel implements IModel {
@@ -75,7 +76,7 @@ export class PostgresModel implements IModel {
             return await t.commit();
         } catch (err) {
             await t.rollback();
-            throw new CustomError("Error while truncating data.", true, this.name, 1011, err);
+            throw new CustomError("Error while truncating data.", true, this.name, 4002, err);
         }
     }
 
@@ -84,7 +85,7 @@ export class PostgresModel implements IModel {
         try {
             return await model.findAll(opts);
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -93,7 +94,7 @@ export class PostgresModel implements IModel {
         try {
             return await model.findOne(opts);
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
     }
 
@@ -102,8 +103,13 @@ export class PostgresModel implements IModel {
         try {
             return await model.findAndCountAll(opts);
         } catch (err) {
-            throw new CustomError("Error while getting from database.", true, this.name, 1023, err);
+            throw new CustomError("Error while getting from database.", true, this.name, 4004, err);
         }
+    }
+
+    public update = async (data: any, opts: any, useTmpTable: boolean = false): Promise<any> => {
+        const model = await this.getSequelizeModelSafely(useTmpTable);
+        return model.update(data, opts);
     }
 
     private insertOnly = async (model: Sequelize.Model<any, any>, data: any): Promise<any> => {
@@ -115,7 +121,7 @@ export class PostgresModel implements IModel {
             }
         } catch (err) {
             log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
-            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
 
@@ -136,7 +142,7 @@ export class PostgresModel implements IModel {
         } catch (err) {
             log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             await t.rollback();
-            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
 

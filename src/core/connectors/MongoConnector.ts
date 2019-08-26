@@ -1,8 +1,8 @@
 "use strict";
 
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError, handleError } from "../helpers/errors";
 
 import mongoose = require("mongoose");
 
@@ -23,19 +23,19 @@ class MyMongoose {
             });
             log.info("Connected to MongoDB!");
             mongoose.connection.on("disconnected", () => {
-                handleError(new CustomError("Database disconnected", false));
+                ErrorHandler.handle(new CustomError("Database disconnected", false));
             });
             return mongoose.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to MongoDB.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getConnection = (): mongoose.Connection => {
         if (mongoose.connection.readyState !== 1) {
             throw new CustomError("Mongoose connection not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return mongoose.connection;
     }

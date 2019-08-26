@@ -1,9 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { RopidGTFS, VehiclePositions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
-import { log, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { log } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";
@@ -11,7 +12,8 @@ import {
     VehiclePositionsPositionsModel,
     VehiclePositionsStopsModel,
     VehiclePositionsTransformation,
-    VehiclePositionsTripsModel } from "./";
+    VehiclePositionsTripsModel,
+} from "./";
 
 const turf = require("@turf/turf");
 const cheapruler = require("cheap-ruler");
@@ -33,11 +35,11 @@ export class VehiclePositionsWorker extends BaseWorker {
         this.modelTrips = new VehiclePositionsTripsModel();
         this.transformation = new VehiclePositionsTransformation();
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
-                decodeDataAfterGet: JSON.parse,
-                encodeDataBeforeSave: JSON.stringify,
-                isKeyConstructedFromData: true,
-                prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
-            },
+            decodeDataAfterGet: JSON.parse,
+            encodeDataBeforeSave: JSON.stringify,
+            isKeyConstructedFromData: true,
+            prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
+        },
             new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
                 RopidGTFS.delayComputationTrips.outputMongooseSchemaObject));
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
@@ -76,9 +78,18 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        await this.modelTrips.findAndUpdateGTFSTripId(inputData);
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-            new Buffer(inputData.id));
+        try {
+            const result = await this.modelTrips.findGTFSTripId(inputData);
+            await this.modelTrips.update(result, {
+                where: {
+                    id: inputData.id,
+                },
+            });
+            await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
+                new Buffer(inputData.id));
+        } catch (err) {
+            throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
+        }
     }
 
     public updateDelay = async (msg: any): Promise<void> => {
@@ -118,7 +129,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                     ? {
                         geometry: {
                             coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
-                                parseFloat(positionsToUpdate[key - 1].lat)],
+                            parseFloat(positionsToUpdate[key - 1].lat)],
                             type: "Point",
                         },
                         properties: {
@@ -132,7 +143,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 const estimatedPoint = await this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
                 newLastDelay = estimatedPoint.properties.time_delay;
                 if (estimatedPoint.properties.time_delay !== undefined
-                        && estimatedPoint.properties.time_delay !== null) {
+                    && estimatedPoint.properties.time_delay !== null) {
                     return this.modelPositions.updateDelay(position.id, position.origin_time,
                         estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
                         estimatedPoint.properties.next_stop_id);
@@ -151,7 +162,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         const pt = currentPosition;
         // init radius around GPS position ( 200 meters radius, 16 points polygon aka circle)
-        const radius = turf.circle(pt, 0.2, {steps: 16});
+        const radius = turf.circle(pt, 0.2, { steps: 16 });
 
         const ptsInRadius = [];
         let segmentIndex = 0;
@@ -191,7 +202,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 return cb();
             }
 
-            const nPt = {distance: Infinity};
+            const nPt = { distance: Infinity };
             innerPtsInRadiusIterator(i, 0, nPt, (res) => {
                 // so now you have all possible nearest points on shape
                 // (could be more if shape line is overlaping itself)
@@ -359,7 +370,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
                 // DECIDE WHENEVER IS NEXT shapes_anchor_points[i] JUST AFTER NEXT stop (BY DISTANCE)
                 if (shapesAnchorPoints[i].shape_dist_traveled >= tmpStopTimes[nextStop].shape_dist_traveled
-                        && i < (shapesAnchorPoints.length - 1) && nextStop < (stops.length - 1)) {
+                    && i < (shapesAnchorPoints.length - 1) && nextStop < (stops.length - 1)) {
                     lastStop++;
                     nextStop++;
                 }
@@ -371,7 +382,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 // MAYBE NOT NECESSARY
                 shapePoint.distance_from_last_stop = Math.round((
                     shapesAnchorPoints[i].shape_dist_traveled
-                        - tmpStopTimes[lastStop].shape_dist_traveled) * 1000) / 1000;
+                    - tmpStopTimes[lastStop].shape_dist_traveled) * 1000) / 1000;
 
                 // COMPUTING SCHEDULED TIMES FOR EACH ANCHOR POINT - LINEAR INTERPOLATION BETWEEN STOPS
                 shapePoint.time_scheduled_seconds =
@@ -409,7 +420,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         try {
             // CREATE turf LineString OBJECT FOR GIVEN COORDINATES
             const line = turf.lineString(shapes.map((p) => {
-                return [ parseFloat(p.shape_pt_lon), parseFloat(p.shape_pt_lat) ];
+                return [parseFloat(p.shape_pt_lon), parseFloat(p.shape_pt_lat)];
             }));
             // DEFAULT step BETWEEN TWO POINTS ON PATH [km] - SHORT DISTANCE IMPACTS PROCESS DURATION
             const step = 0.1;

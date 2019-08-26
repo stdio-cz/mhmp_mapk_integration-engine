@@ -1,9 +1,9 @@
 "use strict";
 
 import { IceGatewaySensors } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { Validator } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { IceGatewaySensorsTransformation } from "./";
@@ -20,38 +20,38 @@ export class IceGatewaySensorsWorker extends BaseWorker {
         super();
         this.dataSource = new DataSource(IceGatewaySensors.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers : {
+                headers: {
                     Authorization: "Token " + config.datasources.IGToken,
                 },
                 method: "GET",
                 url: config.datasources.IGSensors,
             }),
-            new JSONDataTypeStrategy({resultsPath: ""}),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(IceGatewaySensors.name + "DataSource", IceGatewaySensors.datasourceMongooseSchemaObject));
         this.model = new MongoModel(IceGatewaySensors.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: IceGatewaySensors.mongoCollectionName,
-                outputMongooseSchemaObject: IceGatewaySensors.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.sensors = b.properties.sensors;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: IceGatewaySensors.mongoCollectionName,
+            outputMongooseSchemaObject: IceGatewaySensors.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.sensors = b.properties.sensors;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(IceGatewaySensors.name + "ModelValidator", IceGatewaySensors.outputMongooseSchemaObject),
         );
         this.transformation = new IceGatewaySensorsTransformation();
         this.historyModel = new MongoModel(IceGatewaySensors.history.name + "Model", {
-                identifierPath: "id",
-                mongoCollectionName: IceGatewaySensors.history.mongoCollectionName,
-                outputMongooseSchemaObject: IceGatewaySensors.history.outputMongooseSchemaObject,
-                savingType: "insertOnly",
-            },
+            identifierPath: "id",
+            mongoCollectionName: IceGatewaySensors.history.mongoCollectionName,
+            outputMongooseSchemaObject: IceGatewaySensors.history.outputMongooseSchemaObject,
+            savingType: "insertOnly",
+        },
             new Validator(IceGatewaySensors.history.name + "ModelValidator",
                 IceGatewaySensors.history.outputMongooseSchemaObject),
         );

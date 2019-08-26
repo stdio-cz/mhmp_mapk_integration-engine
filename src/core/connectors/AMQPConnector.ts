@@ -1,9 +1,9 @@
 "use strict";
 
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import * as amqplib from "amqplib";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError, handleError } from "../helpers/errors";
 
 class MyAMQP {
 
@@ -19,7 +19,7 @@ class MyAMQP {
             this.channel = await conn.createChannel();
             log.info("Connected to Queue!");
             conn.on("close", () => {
-                handleError(new CustomError("Queue disconnected", false));
+                ErrorHandler.handle(new CustomError("Queue disconnected", false));
             });
 
             await this.assertDeadQueue(this.channel);
@@ -27,14 +27,14 @@ class MyAMQP {
             return this.channel;
         } catch (err) {
             throw new CustomError("Error while creating AMQP Channel.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getChannel = (): amqplib.Channel => {
         if (!this.channel) {
             throw new CustomError("AMQP channel not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return this.channel;
     }

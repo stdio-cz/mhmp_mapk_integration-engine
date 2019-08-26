@@ -1,9 +1,9 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import * as Sequelize from "sequelize";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError } from "../helpers/errors";
 
 class MySequelize {
 
@@ -47,14 +47,14 @@ class MySequelize {
             return this.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to PostgreSQL.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getConnection = (): Sequelize.Sequelize => {
         if (!this.connection) {
             throw new CustomError("Sequelize connection not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return this.connection;
     }

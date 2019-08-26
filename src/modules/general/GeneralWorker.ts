@@ -1,9 +1,9 @@
 "use strict";
 
 import { GeneralImport } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { IncomingHttpHeaders } from "http";
 import { SchemaDefinition } from "mongoose";
-import { Validator } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { GeneralTransformation } from "./GeneralTransformation";
