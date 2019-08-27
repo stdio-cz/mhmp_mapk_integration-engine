@@ -43,7 +43,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             });
             return (lastMod) ? {
                 lastModified: (lastMod.dataValues) ? lastMod.dataValues.value : null,
-                version: (lastMod.dataValues) ? lastMod.dataValues.version : 1,
+                version: (lastMod.dataValues) ? parseInt(lastMod.dataValues.version, 10) : 1,
             } : {
                     lastModified: null,
                     version: 0,
@@ -66,6 +66,18 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             || tables.numOfTables !== numOfTables) {
             throw new CustomError(this.name + ": checkSavedRows() failed.", true);
         }
+    }
+
+    public checkAllTablesHasSavedState = async (dataset: string, version: number): Promise<boolean> => {
+        const notSaved = await this.sequelizeModel.count({
+            where: {
+                dataset,
+                type: "STATE",
+                value: { [Sequelize.Op.ne]: "SAVED" },
+                version,
+            },
+        });
+        return (notSaved === 0) ? true : false;
     }
 
     public replaceTables = async (dataset: string, version: number): Promise<boolean> => {
@@ -147,6 +159,97 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             version: -1,
         });
         t.commit();
+    }
+
+    public updateState = async (dataset: string, name: string, state: string, version: number): Promise<any> => {
+        return this.sequelizeModel.update({
+            dataset,
+            key: name,
+            type: "STATE",
+            value: state,
+            version,
+        }, {
+            where: {
+                dataset,
+                key: name,
+                type: "STATE",
+                version,
+            },
+        });
+    }
+
+    public updateSavedRows = async (dataset: string, name: string, count: number, version: number): Promise<any> => {
+        const connection = PostgresConnector.getConnection();
+
+        const result = await connection.query(
+            "SELECT SUM(count_rows(table_schema, table_name)) as total "
+            + "FROM information_schema.tables "
+            + "WHERE "
+            + "table_schema NOT IN ('pg_catalog', 'information_schema') "
+            + "AND table_type = 'BASE TABLE' "
+            + "AND table_name = '" + RopidGTFS[name].pgTableName + "' "
+            + "AND table_schema = 'tmp'; ",
+            { type: Sequelize.QueryTypes.SELECT });
+
+        const metaRow = await this.sequelizeModel.findOne({
+            where: {
+                dataset,
+                key: name,
+                type: "SAVED_ROWS",
+                version,
+            },
+        });
+
+        if (!metaRow) {
+            await this.save({
+                dataset,
+                key: name,
+                type: "SAVED_ROWS",
+                value: result[0].total,
+                version,
+            });
+        } else {
+            await this.sequelizeModel.update({
+                dataset,
+                key: name,
+                type: "SAVED_ROWS",
+                value: result[0].total,
+                version,
+            }, {
+                where: {
+                    dataset,
+                    key: name,
+                    type: "SAVED_ROWS",
+                    version,
+                },
+            });
+        }
+
+        const total = await this.sequelizeModel.findOne({
+            where: {
+                dataset,
+                key: name,
+                type: "TABLE_TOTAL_COUNT",
+                version,
+            },
+        });
+
+        if (total && total.dataValues && parseInt(total.dataValues.value, 10) === parseInt(result[0].total, 10)) {
+            await this.sequelizeModel.update({
+                dataset,
+                key: name,
+                type: "STATE",
+                value: "SAVED",
+                version,
+            }, {
+                where: {
+                    dataset,
+                    key: name,
+                    type: "STATE",
+                    version,
+                },
+            });
+        }
     }
 
     private getTotalFromMeta = async (dataset: string, version: number): Promise<any> => {

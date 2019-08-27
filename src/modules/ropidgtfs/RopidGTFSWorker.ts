@@ -122,7 +122,15 @@ export class RopidGTFSWorker extends BaseWorker {
         });
 
         // send messages for transformation
-        const promises = files.map((file) => {
+        const promises = files.map(async (file) => {
+            // save meta
+            await this.metaModel.save({
+                dataset: "PID_GTFS",
+                key: file.name,
+                type: "STATE",
+                value: "DOWNLOADED",
+                version: dbLastModified.version + 1 || 1,
+            });
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".transformData",
                 new Buffer(JSON.stringify(file)));
         });
@@ -151,6 +159,9 @@ export class RopidGTFSWorker extends BaseWorker {
             version: dbLastModified.version,
         });
 
+        // save meta
+        await this.metaModel.updateState("PID_GTFS", transformedData.name, "TRANSFORMED", dbLastModified.version);
+
         // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
@@ -166,6 +177,15 @@ export class RopidGTFSWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
         await model.save(inputData.data, true);
+
+        // save meta
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        await this.metaModel.updateSavedRows("PID_GTFS", inputData.name, inputData.data.length, dbLastModified.version);
+    }
+
+    public checkAllTablesHasSavedState = async (msg: any): Promise<boolean> => {
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        return this.metaModel.checkAllTablesHasSavedState("PID_GTFS", dbLastModified.version);
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
