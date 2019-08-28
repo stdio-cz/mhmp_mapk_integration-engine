@@ -2,33 +2,27 @@
 
 ## Error Codes thrown with CustomError class
 
-- 1001: Sending the message to exchange failed.
-- 1002: Retrieving of the source data failed.
-- 1003: Error while saving to database.
-- 1004: Error while updating refresh time.
-- 1005: Error while getting last refreshed time.
-- 1006: Error getting last refresh time from database.
-- 1007: Validation error.
-- 1008: Source data was not found.
-- 1009: Error while removing expired ids.
-- 1010: Error while removing expired elements.
-- 1011: Error while truncating data.
-- 1012: Retrieving of the open street map nominatim data failed.
-- 1013: Error while getting district by coordinations.
-- 1014: Model data was not found.
-- 1015: Error while updating district.
-- 1016: Error while updating adress.
-- 1017: Error while purging old data.
-- 1018: Error while sending the POST request.
-- 1019: Error while updating average occupancy.
-- 1020: Error while getting average taken places.
-- 1021: Error while checking RopidGTFS saved rows.
-- 1022: Error while updating gtfs_trip_id
-- 1023: Error while getting from database.
-- 1024: The model saving type was not specified. Data was not saved.
-- 1025: Method is not implemented.
-- 1026: Sorted Waste Containers were not set. Use method setContaners().
-- 1027: Error while updating parking zone tariffs.
-- 1028: Error while updating sensors measurement/picks.
-- 1029: Error while getting data from server.
-- 1030: Error while parsing source data.
+- Connection Errors
+    - 1001: Error while connecting to {name}.
+    - 1002: {name} connection not exists. Firts call connect() method.
+    - 1003: Sending the message to exchange failed.
+- Datasources Errors
+    - 2001: Retrieving of the source data failed.
+    - 2002: Error while getting data from server.
+    - 2003: Error while parsing source data.
+- Transformations Errors
+    - 3001: Sorted Waste Containers were not set. Use method setContaners().
+    - 3002: {name} must be a valid number.
+- Models Errors
+    - 4001: Error while saving to database.
+    - 4002: Error while truncating data.
+    - 4003: Model data was not found.
+    - 4004: Error while getting from database.
+- Workers Errors
+    - 5001: Error while updating {name}. // warning
+    - 5002: Error while purging old data.
+    - 5003: Error while sending the POST request.
+    - 5004: Error while checking RopidGTFS saved rows.
+- Other Errors
+    - 6001: Method is not implemented.
+    - 6002: Retrieving of the open street map nominatim data failed. // warning

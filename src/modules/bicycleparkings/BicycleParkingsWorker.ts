@@ -1,10 +1,10 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { BicycleParkings, CityDistricts } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { BicycleParkingsTransformation } from "./";
@@ -25,39 +25,39 @@ export class BicycleParkingsWorker extends BaseWorker {
                 method: "GET",
                 url: config.datasources.BicycleParkings,
             }),
-            new JSONDataTypeStrategy({resultsPath: "elements"}),
+            new JSONDataTypeStrategy({ resultsPath: "elements" }),
             new Validator(BicycleParkings.name + "DataSource",
                 BicycleParkings.datasourceMongooseSchemaObject));
         this.model = new MongoModel(BicycleParkings.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: BicycleParkings.mongoCollectionName,
-                outputMongooseSchemaObject: BicycleParkings.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.tags = b.properties.tags;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: BicycleParkings.mongoCollectionName,
+            outputMongooseSchemaObject: BicycleParkings.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.tags = b.properties.tags;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(BicycleParkings.name + "ModelValidator", BicycleParkings.outputMongooseSchemaObject),
         );
         this.transformation = new BicycleParkingsTransformation();
 
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleParkings.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
     }
@@ -81,8 +81,8 @@ export class BicycleParkingsWorker extends BaseWorker {
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {
@@ -97,7 +97,7 @@ export class BicycleParkingsWorker extends BaseWorker {
                 dbData.properties.district = (result) ? result.properties.slug : null;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;

@@ -1,9 +1,9 @@
 "use strict";
 
 import { SharedBikes } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { Validator } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { HomeportLocationsTransformation, HomeportOutOfLocationsTransformation, RekolaTransformation } from "./";
@@ -31,10 +31,10 @@ export class SharedBikesWorker extends BaseWorker {
                 strictSSL: false,
                 url: config.datasources.HomeportLocationsSharedBikes,
             }),
-            new JSONDataTypeStrategy({resultsPath: "Locations"}),
+            new JSONDataTypeStrategy({ resultsPath: "Locations" }),
             new Validator(SharedBikes.homeport.name + "LocDataSource",
                 SharedBikes.homeport.datasourceLocationsMongooseSchemaObject));
-        const homeportOutOfLocDataTypeStrategy = new JSONDataTypeStrategy({resultsPath: ""});
+        const homeportOutOfLocDataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
         homeportOutOfLocDataTypeStrategy.setFilter((item) => item.AvailabilityCode === 1);
         this.homeportOutOfLocationsDataSource = new DataSource(SharedBikes.homeport.name + "OutOfLocDataSource",
             new HTTPProtocolStrategy({
@@ -52,7 +52,7 @@ export class SharedBikesWorker extends BaseWorker {
                 method: "GET",
                 url: config.datasources.RekolaSharedBikes,
             }),
-            new JSONDataTypeStrategy({resultsPath: ""}),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(SharedBikes.rekola.name + "DataSource",
                 SharedBikes.rekola.datasourceMongooseSchemaObject));
         this.homeportLocationsTransformation = new HomeportLocationsTransformation();
@@ -60,28 +60,28 @@ export class SharedBikesWorker extends BaseWorker {
         this.rekolaTransformation = new RekolaTransformation();
 
         this.model = new MongoModel(SharedBikes.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: SharedBikes.mongoCollectionName,
-                outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.geometry.coordinates = b.geometry.coordinates;
-                    a.properties.company = b.properties.company;
-                    a.properties.in_rack = b.properties.in_rack;
-                    a.properties.label = b.properties.label;
-                    a.properties.location_note = b.properties.location_note;
-                    a.properties.name = b.properties.name;
-                    a.properties.res_url = b.properties.res_url;
-                    a.properties.type = b.properties.type;
-                    a.properties.estimated_trip_length_in_km = b.properties.estimated_trip_length_in_km;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: SharedBikes.mongoCollectionName,
+            outputMongooseSchemaObject: SharedBikes.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.geometry.coordinates = b.geometry.coordinates;
+                a.properties.company = b.properties.company;
+                a.properties.in_rack = b.properties.in_rack;
+                a.properties.label = b.properties.label;
+                a.properties.location_note = b.properties.location_note;
+                a.properties.name = b.properties.name;
+                a.properties.res_url = b.properties.res_url;
+                a.properties.type = b.properties.type;
+                a.properties.estimated_trip_length_in_km = b.properties.estimated_trip_length_in_km;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(SharedBikes.name + "ModelValidator", SharedBikes.outputMongooseSchemaObject),
         );
     }

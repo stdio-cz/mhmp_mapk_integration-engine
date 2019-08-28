@@ -1,6 +1,6 @@
 "use strict";
 
-import { CustomError } from "../helpers/errors";
+import { CustomError } from "@golemio/errors";
 import { ICSVSettings, IDataTypeStrategy } from "./";
 
 const csvtojson = require("csvtojson");
@@ -33,7 +33,7 @@ export class CSVDataTypeStrategy implements IDataTypeStrategy {
             }
             return resulsArray;
         } catch (err) {
-            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 1030, err);
+            throw new CustomError("Error while parsing source data.", true, this.constructor.name, 2003, err);
         }
     }
 

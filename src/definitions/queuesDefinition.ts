@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
@@ -9,7 +10,6 @@ import {
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
-import { CustomError, handleError } from "../core/helpers/errors";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
@@ -651,27 +651,36 @@ const definitions: IQueueDefinition[] = [
                     const channel = await AMQPConnector.getChannel();
                     const queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
                     try {
-                        const qt = await channel.checkQueue(queuePrefix + ".transformData");
-                        const qs = await channel.checkQueue(queuePrefix + ".saveDataToDB");
                         const worker = new RopidGTFSWorker();
 
-                        if (qt.messageCount === 0 && qs.messageCount === 0) {
-                            // for sure all messages are dispatched
-                            await new Promise((done) => setTimeout(done, 20000)); // sleeps for 20 seconds
+                        // getting info about queues
+                        const transformQueue = await channel.checkQueue(queuePrefix + ".transformData");
+                        const saveQueue = await channel.checkQueue(queuePrefix + ".saveDataToDB");
+                        // getting info from metadata table
+                        const allSaved: boolean = await worker.checkAllTablesHasSavedState(msg);
+
+                        log.debug(JSON.stringify({ allSaved, saveQueue, transformQueue }));
+
+                        // checking if all queues are empty and all rows are saved
+                        if (transformQueue.messageCount === 0 && saveQueue.messageCount === 0 && allSaved) {
+                            // checking number of saved rows of all tables
+                            // and process switch between tmp and public schema
                             if (await worker.checkSavedRowsAndReplaceTables(msg)) {
                                 channel.ack(msg);
                             } else {
-                                handleError(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    null, 1021));
+                                // numbers of saved rows are not equal with number of downloaded rows
+                                ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
+                                    null, 5004));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
+                            // process is not done, wait
                             await new Promise((done) => setTimeout(done, 60000)); // sleeps for 1 minute
                             channel.reject(msg);
                         }
                     } catch (err) {
-                        handleError(err);
+                        ErrorHandler.handle(err);
                         channel.nack(msg, false, false);
                     }
                 },

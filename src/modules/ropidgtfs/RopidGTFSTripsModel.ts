@@ -1,9 +1,9 @@
 "use strict";
 
 import { RopidGTFS } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { Validator } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 export class RopidGTFSTripsModel extends PostgresModel implements IModel {
@@ -25,10 +25,10 @@ export class RopidGTFSTripsModel extends PostgresModel implements IModel {
 
     constructor() {
         super(RopidGTFS.trips.name + "Model", {
-                outputSequelizeAttributes: RopidGTFS.trips.outputSequelizeAttributes,
-                pgTableName: RopidGTFS.trips.pgTableName,
-                savingType: "insertOnly",
-            },
+            outputSequelizeAttributes: RopidGTFS.trips.outputSequelizeAttributes,
+            pgTableName: RopidGTFS.trips.pgTableName,
+            savingType: "insertOnly",
+        },
             new Validator(RopidGTFS.trips.name + "ModelValidator",
                 RopidGTFS.trips.outputMongooseSchemaObject),
         );
@@ -76,18 +76,20 @@ export class RopidGTFSTripsModel extends PostgresModel implements IModel {
                 stop,
             };
             tranformedResult.stop_times.push(stopTime);
-            tranformedResult = { ...tranformedResult, ...{
-                bikes_allowed: row.bikes_allowed,
-                block_id: row.block_id,
-                direction_id: row.direction_id,
-                exceptional: row.exceptional,
-                route_id: row.route_id,
-                service_id: row.service_id,
-                shape_id: row.shape_id,
-                trip_headsign: row.trip_headsign,
-                trip_id: row.trip_id,
-                wheelchair_accessible: row.wheelchair_accessible,
-            }};
+            tranformedResult = {
+                ...tranformedResult, ...{
+                    bikes_allowed: row.bikes_allowed,
+                    block_id: row.block_id,
+                    direction_id: row.direction_id,
+                    exceptional: row.exceptional,
+                    route_id: row.route_id,
+                    service_id: row.service_id,
+                    shape_id: row.shape_id,
+                    trip_headsign: row.trip_headsign,
+                    trip_id: row.trip_id,
+                    wheelchair_accessible: row.wheelchair_accessible,
+                },
+            };
         });
         return tranformedResult;
     }
@@ -110,18 +112,20 @@ export class RopidGTFSTripsModel extends PostgresModel implements IModel {
                 shape_pt_sequence: row.shapes_shape_pt_sequence,
             };
             tranformedResult.shapes.push(shape);
-            tranformedResult = { ...tranformedResult, ...{
-                bikes_allowed: row.bikes_allowed,
-                block_id: row.block_id,
-                direction_id: row.direction_id,
-                exceptional: row.exceptional,
-                route_id: row.route_id,
-                service_id: row.service_id,
-                shape_id: row.shape_id,
-                trip_headsign: row.trip_headsign,
-                trip_id: row.trip_id,
-                wheelchair_accessible: row.wheelchair_accessible,
-            }};
+            tranformedResult = {
+                ...tranformedResult, ...{
+                    bikes_allowed: row.bikes_allowed,
+                    block_id: row.block_id,
+                    direction_id: row.direction_id,
+                    exceptional: row.exceptional,
+                    route_id: row.route_id,
+                    service_id: row.service_id,
+                    shape_id: row.shape_id,
+                    trip_headsign: row.trip_headsign,
+                    trip_id: row.trip_id,
+                    wheelchair_accessible: row.wheelchair_accessible,
+                },
+            };
         });
         return tranformedResult;
     }

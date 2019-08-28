@@ -1,9 +1,9 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import * as Redis from "ioredis";
 import { config } from "../config";
 import { log } from "../helpers";
-import { CustomError } from "../helpers/errors";
 
 class MyRedis {
 
@@ -18,7 +18,7 @@ class MyRedis {
 
             this.connection.on("error", (err) => {
                 throw new CustomError("Error while connecting to Redis.", false,
-                    this.constructor.name, undefined, err);
+                    this.constructor.name, 1001, err);
             });
             this.connection.on("connect", () => {
                 log.info("Connected to Redis!");
@@ -27,14 +27,14 @@ class MyRedis {
             return this.connection;
         } catch (err) {
             throw new CustomError("Error while connecting to Redis.", false,
-                this.constructor.name, undefined, err);
+                this.constructor.name, 1001, err);
         }
     }
 
     public getConnection = (): Redis.Redis => {
         if (!this.connection) {
             throw new CustomError("Redis connection not exists. Firts call connect() method.", false,
-                this.constructor.name, undefined);
+                this.constructor.name, 1002);
         }
         return this.connection;
     }

@@ -1,15 +1,17 @@
 "use strict";
 
 import { RopidGTFS } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, FTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { log, Validator } from "../../core/helpers";
+import { log } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
     RopidGTFSCisStopsTransformation,
     RopidGTFSMetadataModel,
-    RopidGTFSTransformation } from "./";
+    RopidGTFSTransformation,
+} from "./";
 
 export class RopidGTFSWorker extends BaseWorker {
 
@@ -38,16 +40,16 @@ export class RopidGTFSWorker extends BaseWorker {
                     "shapes.txt", "stop_times.txt", "stops.txt", "routes.txt", "trips.txt",
                 ],
             }),
-            new JSONDataTypeStrategy({resultsPath: ""}),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             null);
         this.transformation = new RopidGTFSTransformation();
         this.redisModel = new RedisModel(RopidGTFS.name + "Model", {
-                isKeyConstructedFromData: false,
-                prefix: "files",
-            },
+            isKeyConstructedFromData: false,
+            prefix: "files",
+        },
             null);
         this.metaModel = new RopidGTFSMetadataModel();
-        const cisStopsTypeStrategy = new JSONDataTypeStrategy({resultsPath: "stopGroups"});
+        const cisStopsTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "stopGroups" });
         cisStopsTypeStrategy.setFilter((item) => item.cis !== 0);
         this.dataSourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
             new FTPProtocolStrategy({
@@ -60,29 +62,29 @@ export class RopidGTFSWorker extends BaseWorker {
             null);
         this.transformationCisStops = new RopidGTFSCisStopsTransformation();
         this.cisStopGroupsModel = new PostgresModel(RopidGTFS.cis_stop_groups.name + "Model", {
-                hasTmpTable: true,
-                outputSequelizeAttributes: RopidGTFS.cis_stop_groups.outputSequelizeAttributes,
-                pgTableName: RopidGTFS.cis_stop_groups.pgTableName,
-                savingType: "insertOnly",
-            },
+            hasTmpTable: true,
+            outputSequelizeAttributes: RopidGTFS.cis_stop_groups.outputSequelizeAttributes,
+            pgTableName: RopidGTFS.cis_stop_groups.pgTableName,
+            savingType: "insertOnly",
+        },
             new Validator(RopidGTFS.cis_stop_groups.name + "ModelValidator",
                 RopidGTFS.cis_stop_groups.outputMongooseSchemaObject),
         );
         this.cisStopsModel = new PostgresModel(RopidGTFS.cis_stops.name + "Model", {
-                hasTmpTable: true,
-                outputSequelizeAttributes: RopidGTFS.cis_stops.outputSequelizeAttributes,
-                pgTableName: RopidGTFS.cis_stops.pgTableName,
-                savingType: "insertOnly",
-            },
+            hasTmpTable: true,
+            outputSequelizeAttributes: RopidGTFS.cis_stops.outputSequelizeAttributes,
+            pgTableName: RopidGTFS.cis_stops.pgTableName,
+            savingType: "insertOnly",
+        },
             new Validator(RopidGTFS.cis_stops.name + "ModelValidator",
                 RopidGTFS.cis_stops.outputMongooseSchemaObject),
         );
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
-                decodeDataAfterGet: JSON.parse,
-                encodeDataBeforeSave: JSON.stringify,
-                isKeyConstructedFromData: true,
-                prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
-            },
+            decodeDataAfterGet: JSON.parse,
+            encodeDataBeforeSave: JSON.stringify,
+            isKeyConstructedFromData: true,
+            prefix: RopidGTFS.delayComputationTrips.mongoCollectionName,
+        },
             new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
                 RopidGTFS.delayComputationTrips.outputMongooseSchemaObject),
         );
@@ -116,10 +118,19 @@ export class RopidGTFSWorker extends BaseWorker {
             key: "last_modified",
             type: "DATASET_INFO",
             value: lastModified,
-            version: dbLastModified.version + 1 || 1 });
+            version: dbLastModified.version + 1 || 1,
+        });
 
         // send messages for transformation
-        const promises = files.map((file) => {
+        const promises = files.map(async (file) => {
+            // save meta
+            await this.metaModel.save({
+                dataset: "PID_GTFS",
+                key: file.name,
+                type: "STATE",
+                value: "DOWNLOADED",
+                version: dbLastModified.version + 1 || 1,
+            });
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".transformData",
                 new Buffer(JSON.stringify(file)));
         });
@@ -127,7 +138,7 @@ export class RopidGTFSWorker extends BaseWorker {
 
         // send message to checking if process is done
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDone",
-            new Buffer(JSON.stringify({count: files.length})));
+            new Buffer(JSON.stringify({ count: files.length })));
     }
 
     public transformData = async (msg: any): Promise<void> => {
@@ -145,7 +156,11 @@ export class RopidGTFSWorker extends BaseWorker {
             key: transformedData.name,
             type: "TABLE_TOTAL_COUNT",
             value: transformedData.total,
-            version: dbLastModified.version });
+            version: dbLastModified.version,
+        });
+
+        // save meta
+        await this.metaModel.updateState("PID_GTFS", transformedData.name, "TRANSFORMED", dbLastModified.version);
 
         // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
@@ -162,6 +177,15 @@ export class RopidGTFSWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
         await model.save(inputData.data, true);
+
+        // save meta
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        await this.metaModel.updateSavedRows("PID_GTFS", inputData.name, inputData.data.length, dbLastModified.version);
+    }
+
+    public checkAllTablesHasSavedState = async (msg: any): Promise<boolean> => {
+        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        return this.metaModel.checkAllTablesHasSavedState("PID_GTFS", dbLastModified.version);
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
@@ -188,7 +212,8 @@ export class RopidGTFSWorker extends BaseWorker {
             key: "last_modified",
             type: "DATASET_INFO",
             value: lastModified,
-            version: dbLastModified.version + 1 });
+            version: dbLastModified.version + 1,
+        });
 
         const transformedData = await this.transformationCisStops.transform(data);
 
@@ -212,12 +237,14 @@ export class RopidGTFSWorker extends BaseWorker {
             key: "cis_stop_groups",
             type: "TABLE_TOTAL_COUNT",
             value: transformedData.cis_stop_groups.length,
-            version: dbLastModified.version + 1 }, {
+            version: dbLastModified.version + 1,
+        }, {
             dataset: "CIS_STOPS",
             key: "cis_stops",
             type: "TABLE_TOTAL_COUNT",
             value: transformedData.cis_stops.length,
-            version: dbLastModified.version + 1 }]);
+            version: dbLastModified.version + 1,
+        }]);
         try {
             await this.cisStopGroupsModel.truncate(true);
             await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
@@ -234,11 +261,11 @@ export class RopidGTFSWorker extends BaseWorker {
     private getModelByName = (name: string): PostgresModel => {
         if (RopidGTFS[name].name) {
             return new PostgresModel(RopidGTFS[name].name + "Model", {
-                    hasTmpTable: true,
-                    outputSequelizeAttributes: RopidGTFS[name].outputSequelizeAttributes,
-                    pgTableName: RopidGTFS[name].pgTableName,
-                    savingType: "insertOnly",
-                },
+                hasTmpTable: true,
+                outputSequelizeAttributes: RopidGTFS[name].outputSequelizeAttributes,
+                pgTableName: RopidGTFS[name].pgTableName,
+                savingType: "insertOnly",
+            },
                 new Validator(RopidGTFS[name].name + "ModelValidator",
                     RopidGTFS[name].outputMongooseSchemaObject),
             );

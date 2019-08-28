@@ -2,8 +2,7 @@
 
 import * as amqplib from "amqplib";
 import { config } from "../config";
-import { log } from "../helpers";
-import { handleError } from "../helpers/errors";
+import { IExtendedCustomErrorObject, IntegrationErrorHandler, log } from "../helpers";
 import { IQueueDefinition } from "./";
 
 export class QueueProcessor {
@@ -50,22 +49,29 @@ export class QueueProcessor {
             this.channel.ack(msg);
             log.verbose("[<] " + this.definition.queuePrefix + "." + name + ": done");
         } catch (err) {
-            handleError(err);
-            this.channel.nack(msg, false, false);
+            // Handling critical errors or datasets warnings
+            const errObject: IExtendedCustomErrorObject = IntegrationErrorHandler.handle(err);
+            // If error is not critical the warning is logged and message is acknowledged
+            if (errObject.ack) {
+                this.channel.ack(msg);
+            // Critical errors non-acknowledge the message
+            } else {
+                this.channel.nack(msg, false, false);
+            }
         }
     }
 
     protected registerQueue = async (
-            name: string,
-            key: string,
-            processor: (msg: any) => any,
-            queueOptions: object = {}): Promise<any> => {
-        this.channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", {durable: false});
-        const q = await this.channel.assertQueue(name, {...queueOptions, ...{durable: true}});
+        name: string,
+        key: string,
+        processor: (msg: any) => any,
+        queueOptions: object = {}): Promise<any> => {
+        this.channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", { durable: false });
+        const q = await this.channel.assertQueue(name, { ...queueOptions, ...{ durable: true } });
         this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
         this.channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, key);
         log.verbose("[*] Waiting for messages in " + name + ".");
-        this.channel.consume(name, processor, {noAck: false});
+        this.channel.consume(name, processor, { noAck: false });
     }
 
 }

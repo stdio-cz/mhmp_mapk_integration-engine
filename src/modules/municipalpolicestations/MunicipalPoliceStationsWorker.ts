@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { CityDistricts, MunicipalPoliceStations } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { GeocodeApi, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { GeocodeApi } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { MunicipalPoliceStationsTransformation } from "./";
@@ -25,41 +26,41 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
                 method: "GET",
                 url: config.datasources.MunicipalPoliceStations,
             }),
-            new JSONDataTypeStrategy({resultsPath: "features"}),
+            new JSONDataTypeStrategy({ resultsPath: "features" }),
             new Validator(MunicipalPoliceStations.name + "DataSource",
                 MunicipalPoliceStations.datasourceMongooseSchemaObject));
 
         this.model = new MongoModel(MunicipalPoliceStations.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: MunicipalPoliceStations.mongoCollectionName,
-                outputMongooseSchemaObject: MunicipalPoliceStations.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "insertOrUpdate",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-                updateValues: (a, b) => {
-                    a.properties.cadastral_area = b.properties.cadastral_area;
-                    a.properties.note = b.properties.note;
-                    a.properties.updated_at = b.properties.updated_at;
-                    return a;
-                },
+            identifierPath: "properties.id",
+            mongoCollectionName: MunicipalPoliceStations.mongoCollectionName,
+            outputMongooseSchemaObject: MunicipalPoliceStations.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "insertOrUpdate",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+            updateValues: (a, b) => {
+                a.properties.cadastral_area = b.properties.cadastral_area;
+                a.properties.note = b.properties.note;
+                a.properties.updated_at = b.properties.updated_at;
+                return a;
             },
+        },
             new Validator(MunicipalPoliceStations.name + "ModelValidator",
                 MunicipalPoliceStations.outputMongooseSchemaObject),
         );
         this.transformation = new MunicipalPoliceStationsTransformation();
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MunicipalPoliceStations.name.toLowerCase();
         this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-                identifierPath: "properties.id",
-                mongoCollectionName: CityDistricts.mongoCollectionName,
-                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-                resultsPath: "properties",
-                savingType: "readOnly",
-                searchPath: (id, multiple) => (multiple)
-                    ? { "properties.id": { $in: id } }
-                    : { "properties.id": id },
-            },
+            identifierPath: "properties.id",
+            mongoCollectionName: CityDistricts.mongoCollectionName,
+            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+            resultsPath: "properties",
+            savingType: "readOnly",
+            searchPath: (id, multiple) => (multiple)
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
+        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
     }
@@ -83,8 +84,8 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
         const dbData = await this.model.findOneById(id);
 
         if (!dbData.properties.district
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
                     geometry: {
@@ -99,20 +100,20 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
                 dbData.properties.district = (result) ? result.properties.slug : null;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 1015, err);
+                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
             }
         }
 
         if (!dbData.properties.address || !dbData.properties.address.address_formatted
-                || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-                || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
+            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
+            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
             try {
                 const address = await GeocodeApi.getAddressByLatLng(dbData.geometry.coordinates[1],
                     dbData.geometry.coordinates[0]);
                 dbData.properties.address = address;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating adress.", true, this.constructor.name, 1016, err);
+                throw new CustomError("Error while updating adress.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;

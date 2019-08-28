@@ -1,10 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { VehiclePositions } from "golemio-schema-definitions";
+import { Validator } from "golemio-validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
-import { log, Validator } from "../../core/helpers";
-import { CustomError } from "../../core/helpers/errors";
+import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
 const moment = require("moment");
@@ -24,10 +25,10 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
     constructor() {
         super(VehiclePositions.trips.name + "Model", {
-                outputSequelizeAttributes: VehiclePositions.trips.outputSequelizeAttributes,
-                pgTableName: VehiclePositions.trips.pgTableName,
-                savingType: "insertOrUpdate",
-            },
+            outputSequelizeAttributes: VehiclePositions.trips.outputSequelizeAttributes,
+            pgTableName: VehiclePositions.trips.pgTableName,
+            savingType: "insertOrUpdate",
+        },
             new Validator(VehiclePositions.trips.name + "ModelValidator",
                 VehiclePositions.trips.outputMongooseSchemaObject),
         );
@@ -57,7 +58,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
             if (data instanceof Array) {
                 const promises = data.map(async (d) => {
-                    const res = await this.sequelizeModel.upsert(d, {transaction: t});
+                    const res = await this.sequelizeModel.upsert(d, { transaction: t });
                     if (res) {
                         i.push({
                             cis_short_name: d.cis_short_name,
@@ -75,7 +76,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 await t.commit();
                 return { inserted: i, updated: u };
             } else {
-                const res = await this.sequelizeModel.upsert(data, {transaction: t});
+                const res = await this.sequelizeModel.upsert(data, { transaction: t });
                 if (res) {
                     i.push({
                         cis_short_name: data.cis_short_name,
@@ -91,66 +92,64 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 return { inserted: i, updated: u };
             }
         } catch (err) {
-            log.error(JSON.stringify({errors: err.errors, fields: err.fields}));
+            log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             await t.rollback();
-            throw new CustomError("Error while saving to database.", true, this.name, 1003, err);
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
 
-    public findAndUpdateGTFSTripId = async (trip: any): Promise<any> => {
+    public findGTFSTripId = async (trip: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const startdate = moment(trip.start_timestamp);
 
         // TODO zbavit se raw query
-        const result = await connection.query(
-            "SELECT ropidgtfs_trips.trip_id as gtfs_trip_id, "
-            + "    ropidgtfs_routes.route_id as gtfs_route_id, "
-            + "    ropidgtfs_routes.route_short_name as gtfs_route_short_name "
-            + "FROM ropidgtfs_trips "
-            + "INNER JOIN ropidgtfs_routes ON ropidgtfs_trips.route_id=ropidgtfs_routes.route_id "
-            + "INNER JOIN ropidgtfs_stop_times ON ropidgtfs_trips.trip_id=ropidgtfs_stop_times.trip_id "
-            + "WHERE "
-            + "( ropidgtfs_routes.route_short_name LIKE '" + trip.cis_short_name + "' "
-            + "  OR CASE WHEN ('115' = 'IKEA') THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM' ELSE 'FALSE' END "
-            + ") "
-            + "AND ropidgtfs_stop_times.stop_id IN "
-            + "( SELECT stop_id FROM ropidgtfs_stops "
-            + "WHERE stop_id LIKE "
-            + "  (SELECT CONCAT('U',CAST(node AS TEXT),'Z%') FROM ropidgtfs_cis_stop_groups "
-            + "  WHERE cis IN "
-            + "    (SELECT cis FROM ropidgtfs_cis_stops WHERE cis = '" + trip.start_cis_stop_id + "')) "
-            + "  AND "
-            + "    (platform_code LIKE '" + trip.start_cis_stop_platform_code + "' "
-            + "    OR CASE WHEN (LENGTH(platform_code)<2) THEN platform_code LIKE "
-            + "      (CAST((ASCII('" + trip.start_cis_stop_platform_code + "')-64) AS CHAR)) END) "
-            + ") "
-            + "AND stop_sequence = 1 "
-            + "AND ropidgtfs_stop_times.departure_time "
-            + "  = TO_CHAR(('" + startdate.utc().format() + "' at time zone 'Europe/Prague'), 'FMHH24:MI:SS') "
-            + "AND ropidgtfs_trips.service_id IN ( "
-            + "SELECT service_id FROM ropidgtfs_calendar "
-            + "WHERE "
-            + startdate.format("dddd").toLowerCase() + " = 1 "
-            + "AND to_date(start_date, 'YYYYMMDD') <= '" + startdate.format("YYYY-MM-DD") + "' "
-            + "AND to_date(end_date, 'YYYYMMDD') >= '" + startdate.format("YYYY-MM-DD") + "' "
-            + "UNION SELECT service_id FROM ropidgtfs_calendar_dates "
-            + "WHERE exception_type=1 "
-            + "AND to_date(date, 'YYYYMMDD') = '" + startdate.format("YYYY-MM-DD") + "' "
-            + "EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates "
-            + "WHERE exception_type=2 "
-            + "AND to_date(date, 'YYYYMMDD') = '" + startdate.format("YYYY-MM-DD") + "' "
-            + ");",
-            { type: Sequelize.QueryTypes.SELECT });
-
+        // TODO zbavit se sql injection
         // TODO dat si bacha na posileny spoje
         // gtfs_trip_id obsahuje POS, rozlisit podle cis_order
-        if (result[0]) {
-            await this.sequelizeModel.update(result[0], { where: {
-                id: trip.id,
-            }});
-        } else {
-            throw new CustomError("Error while updating gtfs_trip_id for id '" + trip.id + "'.", true, this.name, 1022);
+        const result = await connection.query(`
+            SELECT ropidgtfs_trips.trip_id as gtfs_trip_id,
+                ropidgtfs_routes.route_id as gtfs_route_id,
+                ropidgtfs_routes.route_short_name as gtfs_route_short_name
+            FROM ropidgtfs_trips
+            INNER JOIN ropidgtfs_routes ON ropidgtfs_trips.route_id=ropidgtfs_routes.route_id
+            INNER JOIN ropidgtfs_stop_times ON ropidgtfs_trips.trip_id=ropidgtfs_stop_times.trip_id
+            WHERE
+            ( ropidgtfs_routes.route_short_name LIKE '${trip.cis_short_name}'
+              OR CASE WHEN ('115' = 'IKEA') THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM' ELSE 'FALSE' END
+            )
+            AND ropidgtfs_stop_times.stop_id IN
+            ( SELECT stop_id FROM ropidgtfs_stops
+            WHERE stop_id LIKE
+              (SELECT CONCAT('U',CAST(node AS TEXT),'Z%') FROM ropidgtfs_cis_stop_groups
+              WHERE cis IN
+                (SELECT cis FROM ropidgtfs_cis_stops WHERE cis = '${trip.start_cis_stop_id}'))
+              AND
+                (platform_code LIKE '${trip.start_cis_stop_platform_code}'
+                OR CASE WHEN (LENGTH(platform_code)<2) THEN platform_code LIKE
+                  (CAST((ASCII('${trip.start_cis_stop_platform_code}')-64) AS CHAR)) END)
+            )
+            AND stop_sequence = 1
+            AND ropidgtfs_stop_times.departure_time
+              = TO_CHAR(('${startdate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
+            AND ropidgtfs_trips.service_id IN (
+            SELECT service_id FROM ropidgtfs_calendar
+            WHERE ${startdate.format("dddd").toLowerCase()} = 1
+            AND to_date(start_date, 'YYYYMMDD') <= '${startdate.format("YYYY-MM-DD")}'
+            AND to_date(end_date, 'YYYYMMDD') >= '${startdate.format("YYYY-MM-DD")}'
+            UNION SELECT service_id FROM ropidgtfs_calendar_dates
+            WHERE exception_type = 1
+            AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+            EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
+            WHERE exception_type = 2
+            AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+            );`,
+            { type: Sequelize.QueryTypes.SELECT });
+
+        if (!result[0]) {
+            throw new CustomError(`Model data was not found for id '${trip.id}'.`, true,
+                this.constructor.name, 4003);
         }
+        return result[0];
     }
 
 }

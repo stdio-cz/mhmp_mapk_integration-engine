@@ -2,12 +2,13 @@
 
 "use strict";
 
+import { CustomError } from "@golemio/errors";
+import { Validator } from "golemio-validator";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
 import { MongoConnector } from "../../../src/core/connectors";
-import { log, Validator } from "../../../src/core/helpers";
-import { CustomError } from "../../../src/core/helpers/errors";
+import { log } from "../../../src/core/helpers";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
 
 const chai = require("chai");
@@ -295,8 +296,8 @@ describe("MongoModel", () => {
     // method model.updateOne()
 
     it("should throws error if model is read only", async () => {
-        expect(model.updateOne({id: 1}, {})).to.be.rejectedWith(CustomError);
-        expect(model.updateOne({id: 1}, {}, true)).to.be.rejectedWith(CustomError);
+        expect(model.updateOne({ id: 1 }, {})).to.be.rejectedWith(CustomError);
+        expect(model.updateOne({ id: 1 }, {}, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error if data are not valid", async () => {
@@ -306,8 +307,8 @@ describe("MongoModel", () => {
             new Validator("TestMongoModelValidator", schemaObject),
         );
         await model.save({ id: 1, property1: "a", property2: "b" });
-        expect(model.updateOne({id: 1}, { property1: { a: 1 } })).to.be.rejectedWith(Error);
-        expect(model.updateOne({id: 1}, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
+        expect(model.updateOne({ id: 1 }, { property1: { a: 1 } })).to.be.rejectedWith(Error);
+        expect(model.updateOne({ id: 1 }, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
     });
 
     it("should throws error when update tmp model and tmp model is not defined", async () => {
@@ -316,7 +317,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.updateOne({id: 1}, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
+        expect(model.updateOne({ id: 1 }, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should update values", async () => {
@@ -333,8 +334,8 @@ describe("MongoModel", () => {
         data = await model.findOneById(1, true);
         expect(data).to.have.property("property1", "a");
 
-        await model.updateOne({id: 1}, { $set: { property1: "b" } });
-        await model.updateOne({id: 1}, { $set: { property1: "b" } }, true);
+        await model.updateOne({ id: 1 }, { $set: { property1: "b" } });
+        await model.updateOne({ id: 1 }, { $set: { property1: "b" } }, true);
         data = await model.findOneById(1);
         expect(data).to.have.property("property1", "b");
         data = await model.findOneById(1, true);
@@ -431,8 +432,8 @@ describe("MongoModel", () => {
     // method model.delete()
 
     it("should throws error if model is read only", async () => {
-        expect(model.delete({id: 1})).to.be.rejectedWith(CustomError);
-        expect(model.delete({id: 1}, true)).to.be.rejectedWith(CustomError);
+        expect(model.delete({ id: 1 })).to.be.rejectedWith(CustomError);
+        expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error when delete from tmp model and tmp model is not defined", async () => {
@@ -441,7 +442,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.delete({id: 1}, true)).to.be.rejectedWith(CustomError);
+        expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should delete", async () => {
@@ -458,8 +459,8 @@ describe("MongoModel", () => {
         data = await model.find({}, true);
         expect(data.length).to.equal(1);
 
-        await model.delete({id: 1});
-        await model.delete({id: 1}, true);
+        await model.delete({ id: 1 });
+        await model.delete({ id: 1 }, true);
         data = await model.find({});
         expect(data.length).to.equal(0);
         data = await model.find({}, true);
