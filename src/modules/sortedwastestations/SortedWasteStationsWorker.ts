@@ -249,7 +249,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         });
         await Promise.all(promises);
         // send message to get and pair sensors
-        this.sendMessageToExchange("workers." + this.queuePrefix + ".getSensors",
+        this.sendMessageToExchange("workers." + this.queuePrefix + ".getSensorsAndPairThemWithContainers",
             new Buffer("Just Do It!"));
     }
 
@@ -285,140 +285,35 @@ export class SortedWasteStationsWorker extends BaseWorker {
         return dbData;
     }
 
-    public getSensors = async (msg: any): Promise<void> => {
+    public getSensorsAndPairThemWithContainers = async (msg: any): Promise<void> => {
         const data = await this.sensorsContainersDatasource.getAll();
-
-        // send messages for pairing with containers
-        const promises = data.map((p) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".pairSensorsWithContainers",
-                new Buffer(JSON.stringify(p)));
+        const promises = data.map(async (sensor) => {
+            return this.pairSensorWithContainer(sensor);
         });
-        await Promise.all(promises);
-    }
-
-    public pairSensorsWithContainers = async (msg: any): Promise<void> => {
-        const sensor = JSON.parse(msg.content.toString());
-
-        const stationNumber = sensor.code.split("C")[0];
-        const trashType = this.iprTransformation.getTrashTypeByString(sensor.trash_type);
-        const station = await this.model.findOne({ "properties.station_number": stationNumber });
-        const lastMeasurement = await this.sensorsMeasurementsModel.aggregate([
-            { $match: { container_id: sensor.id } },
-            { $sort: { measured_at_utc: -1 } },
-            { $limit: 1 },
-        ]);
-        const lastPick = await this.sensorsPicksModel.aggregate([
-            { $match: { container_id: sensor.id } },
-            { $sort: { measured_at_utc: -1 } },
-            { $limit: 1 },
-        ]);
-
-        if (!station) {
-            // station not exists, creating new station
-            const last = await this.model.aggregate([
-                { $group: { _id: null, lastId: { $max: "$properties.id" } } },
-                { $project: { _id: 0, lastId: 1 } }]);
-            const saved = await this.model.save({
-                geometry: { coordinates: [sensor.longitude, sensor.latitude], type: "Point" },
-                properties: {
-                    accessibility: { description: "neznámá dostupnost", id: 3 },
-                    containers: [{
-                        cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
-                        container_type: sensor.bin_type,
-                        last_measurement: (lastMeasurement[0])
-                            ? {
-                                measured_at_utc: lastMeasurement[0].measured_at_utc,
-                                percent_calculated: lastMeasurement[0].percent_calculated,
-                                prediction_utc: lastMeasurement[0].prediction_utc,
-                            }
-                            : null,
-                        last_pick: (lastPick[0])
-                            ? {
-                                pick_at_utc: lastPick[0].pick_at_utc,
-                            }
-                            : null,
-                        sensor_code: sensor.code,
-                        sensor_container_id: sensor.id,
-                        sensor_supplier: "Sensoneo",
-                        trash_type: trashType,
-                    }],
-                    district: null,
-                    id: last[0].lastId + 1,
-                    name: sensor.address,
-                    station_number: stationNumber,
-                    updated_at: new Date().getTime(),
-                },
-                type: "Feature",
-            });
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(saved)));
-            log.warn("Error while getting sensors and pair them with containers. Station '"
-                + stationNumber + "' was not found. New station was created.");
-        } else {
-            const foundContainerIndex = station.properties.containers.findIndex((container) => {
-                return container.trash_type.id === trashType.id;
-            });
-            if (foundContainerIndex !== -1) {
-                await this.model.updateOne(
-                    {
-                        "properties.containers.trash_type.id": trashType.id,
-                        "properties.id": station.properties.id,
-                    },
-                    {
-                        $set: {
-                            "properties.containers.$.last_measurement": (lastMeasurement[0])
-                                ? {
-                                    measured_at_utc: lastMeasurement[0].measured_at_utc,
-                                    percent_calculated: lastMeasurement[0].percent_calculated,
-                                    prediction_utc: lastMeasurement[0].prediction_utc,
-                                }
-                                : null,
-                            "properties.containers.$.last_pick": (lastPick[0])
-                                ? {
-                                    pick_at_utc: lastPick[0].pick_at_utc,
-                                }
-                                : null,
-                            "properties.containers.$.sensor_code": sensor.code,
-                            "properties.containers.$.sensor_container_id": sensor.id,
-                            "properties.containers.$.sensor_supplier": "Sensoneo",
-                        },
-                    });
+        // result can contain not paired sensors
+        const pairingResult = await Promise.all(promises);
+        // filters out null values
+        const sensorsWithoutStation = pairingResult.filter((item) => item);
+        // cluster sensor by station number
+        const clusteredSensorsByStationNumber = {};
+        sensorsWithoutStation.map((sensor: any) => {
+            if (!clusteredSensorsByStationNumber[sensor.code.split("C")[0]]) {
+                clusteredSensorsByStationNumber[sensor.code.split("C")[0]] = [];
             } else {
-                // container not exists, adding new container to station
-                const newContainer = {
-                    cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
-                    container_type: sensor.bin_type,
-                    last_measurement: (lastMeasurement[0])
-                        ? {
-                            measured_at_utc: lastMeasurement[0].measured_at_utc,
-                            percent_calculated: lastMeasurement[0].percent_calculated,
-                            prediction_utc: lastMeasurement[0].prediction_utc,
-                        }
-                        : null,
-                    last_pick: (lastPick[0])
-                        ? {
-                            pick_at_utc: lastPick[0].pick_at_utc,
-                        }
-                        : null,
-                    sensor_code: sensor.code,
-                    sensor_container_id: sensor.id,
-                    sensor_supplier: "Sensoneo",
-                    trash_type: trashType,
-                };
-                await this.model.updateOne(
-                    {
-                        "properties.id": station.properties.id,
-                    },
-                    {
-                        $push: {
-                            "properties.containers": newContainer,
-                        },
-                    });
-                log.warn("Error while getting sensors and pair them with containers. Station '"
-                    + stationNumber + "': Trash type '" + sensor.trash_type + "' was not found. "
-                    + "New station was created.");
+                clusteredSensorsByStationNumber[sensor.code.split("C")[0]].push(sensor);
             }
-        }
+        });
+
+        // get last station id
+        const lastId = await this.model.aggregate([
+            { $group: { _id: null, lastId: { $max: "$properties.id" } } },
+            { $project: { _id: 0, lastId: 1 } }]);
+
+        // create new stations with sensors as its containers
+        await Promise.all(Object.keys(clusteredSensorsByStationNumber).map((stationNumber) => {
+            return this.createNewStationFromSensors(stationNumber, ++lastId[0].lastId,
+                clusteredSensorsByStationNumber[stationNumber]);
+        }));
     }
 
     public updateSensorsMeasurement = async (msg: any): Promise<void> => {
@@ -601,6 +496,152 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 resolve([stations, containers]);
             });
         });
+    }
+
+    private async createNewStationFromSensors(stationNumber: string, newId: number, sensors: any[]): Promise<void> {
+        // transforming sensors to containers
+        const promises = sensors.map(async (sensor) => {
+            const trashType = this.iprTransformation.getTrashTypeByString(sensor.trash_type);
+            const lastMeasurement = await this.sensorsMeasurementsModel.aggregate([
+                { $match: { container_id: sensor.id } },
+                { $sort: { measured_at_utc: -1 } },
+                { $limit: 1 },
+            ]);
+            const lastPick = await this.sensorsPicksModel.aggregate([
+                { $match: { container_id: sensor.id } },
+                { $sort: { measured_at_utc: -1 } },
+                { $limit: 1 },
+            ]);
+            return {
+                cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
+                container_type: sensor.bin_type,
+                last_measurement: (lastMeasurement[0])
+                    ? {
+                        measured_at_utc: lastMeasurement[0].measured_at_utc,
+                        percent_calculated: lastMeasurement[0].percent_calculated,
+                        prediction_utc: lastMeasurement[0].prediction_utc,
+                    }
+                    : null,
+                last_pick: (lastPick[0])
+                    ? {
+                        pick_at_utc: lastPick[0].pick_at_utc,
+                    }
+                    : null,
+                sensor_code: sensor.code,
+                sensor_container_id: sensor.id,
+                sensor_supplier: "Sensoneo",
+                trash_type: trashType,
+            };
+        });
+        // containers array
+        const newContainers = await Promise.all(promises);
+
+        // saving new station with containers transformed from sensors
+        const saved = await this.model.save({
+            geometry: { coordinates: [sensors[0].longitude, sensors[0].latitude], type: "Point" },
+            properties: {
+                accessibility: { description: "neznámá dostupnost", id: 3 },
+                containers: newContainers,
+                district: null,
+                id: newId,
+                name: sensors[0].address,
+                station_number: stationNumber,
+                updated_at: new Date().getTime(),
+            },
+            type: "Feature",
+        });
+
+        // send message to update district
+        this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
+            new Buffer(JSON.stringify(saved)));
+        log.warn("New station '" + stationNumber + "' was created.");
+    }
+
+    private async pairSensorWithContainer(sensor: any): Promise<any> {
+        const stationNumber = sensor.code.split("C")[0];
+        const trashType = this.iprTransformation.getTrashTypeByString(sensor.trash_type);
+        const station = await this.model.findOne({ "properties.station_number": stationNumber });
+        const lastMeasurement = await this.sensorsMeasurementsModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 } },
+            { $limit: 1 },
+        ]);
+        const lastPick = await this.sensorsPicksModel.aggregate([
+            { $match: { container_id: sensor.id } },
+            { $sort: { measured_at_utc: -1 } },
+            { $limit: 1 },
+        ]);
+
+        if (!station) {
+            log.warn("Error while getting sensors and pair them with containers. Station '"
+                + stationNumber + "' was not found. (" + sensor.trash_type + ")");
+            return sensor;
+        } else {
+            const foundContainerIndex = station.properties.containers.findIndex((container) => {
+                return container.trash_type.id === trashType.id;
+            });
+            if (foundContainerIndex !== -1) {
+                await this.model.updateOne(
+                    {
+                        "properties.containers.trash_type.id": trashType.id,
+                        "properties.id": station.properties.id,
+                    },
+                    {
+                        $set: {
+                            "properties.containers.$.last_measurement": (lastMeasurement[0])
+                                ? {
+                                    measured_at_utc: lastMeasurement[0].measured_at_utc,
+                                    percent_calculated: lastMeasurement[0].percent_calculated,
+                                    prediction_utc: lastMeasurement[0].prediction_utc,
+                                }
+                                : null,
+                            "properties.containers.$.last_pick": (lastPick[0])
+                                ? {
+                                    pick_at_utc: lastPick[0].pick_at_utc,
+                                }
+                                : null,
+                            "properties.containers.$.sensor_code": sensor.code,
+                            "properties.containers.$.sensor_container_id": sensor.id,
+                            "properties.containers.$.sensor_supplier": "Sensoneo",
+                        },
+                    });
+            } else {
+                // container not exists, adding new container to station
+                const newContainer = {
+                    cleaning_frequency: { duration: "P0W", frequency: 0, id: 0 },
+                    container_type: sensor.bin_type,
+                    last_measurement: (lastMeasurement[0])
+                        ? {
+                            measured_at_utc: lastMeasurement[0].measured_at_utc,
+                            percent_calculated: lastMeasurement[0].percent_calculated,
+                            prediction_utc: lastMeasurement[0].prediction_utc,
+                        }
+                        : null,
+                    last_pick: (lastPick[0])
+                        ? {
+                            pick_at_utc: lastPick[0].pick_at_utc,
+                        }
+                        : null,
+                    sensor_code: sensor.code,
+                    sensor_container_id: sensor.id,
+                    sensor_supplier: "Sensoneo",
+                    trash_type: trashType,
+                };
+                await this.model.updateOne(
+                    {
+                        "properties.id": station.properties.id,
+                    },
+                    {
+                        $push: {
+                            "properties.containers": newContainer,
+                        },
+                    });
+                log.warn("Error while getting sensors and pair them with containers. Station '"
+                    + stationNumber + "': Trash type '" + sensor.trash_type + "' was not found. "
+                    + "New container was created.");
+            }
+            return null;
+        }
     }
 
     private calculateDistanceBetweenPoints = (coord1, coord2) => {
