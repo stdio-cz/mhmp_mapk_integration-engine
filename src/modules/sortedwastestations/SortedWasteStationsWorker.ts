@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { CityDistricts, SortedWasteStations } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { CityDistricts, SortedWasteStations } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy } from "../../core/datasources";
 import { log } from "../../core/helpers";

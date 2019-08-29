@@ -1,7 +1,7 @@
 "use strict";
 
-import { VehiclePositions } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { VehiclePositions } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
 import { IModel, PostgresModel } from "../../core/models";

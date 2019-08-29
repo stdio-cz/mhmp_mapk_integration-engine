@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { ParkingZones } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { ParkingZones } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { MongoModel } from "../../core/models";

@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { MedicalInstitutions } from "golemio-schema-definitions";
+import { MedicalInstitutions } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { RedisConnector } from "../../../src/core/connectors";

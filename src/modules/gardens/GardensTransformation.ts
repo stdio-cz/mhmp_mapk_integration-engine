@@ -1,6 +1,6 @@
 "use strict";
 
-import { Gardens } from "golemio-schema-definitions";
+import { Gardens } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class GardensTransformation extends BaseTransformation implements ITransformation {

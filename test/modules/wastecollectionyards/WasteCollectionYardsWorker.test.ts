@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { WasteCollectionYards } from "golemio-schema-definitions";
+import { WasteCollectionYards } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { WasteCollectionYardsWorker } from "../../../src/modules/wastecollectionyards";

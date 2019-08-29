@@ -4,6 +4,7 @@
 
 import "mocha";
 import { IXMLSettings, XMLDataTypeStrategy } from "../../../src/core/datasources";
+import { CustomError } from "@golemio/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -64,7 +65,7 @@ describe("XMLDataTypeStrategy", () => {
     });
 
     it("should throw error if XML is not valid", async () => {
-        expect(strategy.parseData('<a id="1"><message>test</mess></a>')).to.be.rejected;
+        await expect(strategy.parseData('<a id="1"><message>test</mess></a>')).to.be.rejectedWith(CustomError);
     });
 
     it("should properly set data type settings", async () => {

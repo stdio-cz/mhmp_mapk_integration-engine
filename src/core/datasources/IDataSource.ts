@@ -1,6 +1,6 @@
 "use strict";
 
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import { IDataTypeStrategy, IProtocolStrategy } from "./";
 
 export interface IDataSource {

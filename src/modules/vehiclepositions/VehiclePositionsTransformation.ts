@@ -1,6 +1,6 @@
 "use strict";
 
-import { VehiclePositions } from "golemio-schema-definitions";
+import { VehiclePositions } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");

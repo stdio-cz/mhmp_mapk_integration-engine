@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { IceGatewayStreetLamps } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { IceGatewayStreetLamps } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy } from "../../core/datasources";
 import { MongoModel } from "../../core/models";

@@ -2,7 +2,7 @@
 
 import { CustomError } from "@golemio/errors";
 import { getSubProperty } from "@golemio/utils";
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import * as Redis from "ioredis";
 import { RedisConnector } from "../connectors";
 import { log } from "../helpers";
@@ -46,7 +46,11 @@ export class RedisModel implements IModel {
     public save = async (key: string, data: any, useTmpTable: boolean = false): Promise<any> => {
         // data validation
         if (this.validator) {
-            await this.validator.Validate(data);
+            try {
+                await this.validator.Validate(data);
+            } catch (err) {
+                throw new CustomError("Error while validating data.", true, this.name, 4005, err);
+            }
         } else if (!this.validator && this.isKeyConstructedFromData) {
             log.warn(this.name + ": Model validator is not set.");
         }
