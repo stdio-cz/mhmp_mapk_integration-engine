@@ -82,6 +82,7 @@ export class RekolaTransformation extends BaseTransformation implements ITransfo
             case "bike": return { description: "bike", id: 1 };
             case "e-bike": return { description: "ebike", id: 2 };
             case "scooter": return { description: "scooter", id: 3 };
+            case "padlujemecz": return { description: "paddleboard", id: 4 };
             default:
                 log.warn("Undefined Rekola type: " + id);
                 return { description: "bike", id: 1 };
