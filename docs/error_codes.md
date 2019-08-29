@@ -10,6 +10,7 @@
     - 2001: Retrieving of the source data failed.
     - 2002: Error while getting data from server.
     - 2003: Error while parsing source data.
+    - 2004: Error while validating source data.
 - Transformations Errors
     - 3001: Sorted Waste Containers were not set. Use method setContaners().
     - 3002: {name} must be a valid number.
@@ -18,6 +19,7 @@
     - 4002: Error while truncating data.
     - 4003: Model data was not found.
     - 4004: Error while getting from database.
+    - 4005: Error while validating data.
 - Workers Errors
     - 5001: Error while updating {name}. // warning
     - 5002: Error while purging old data.

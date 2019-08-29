@@ -1,7 +1,7 @@
 "use strict";
 
-import { Gardens } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { Gardens } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { MongoModel } from "../../core/models";

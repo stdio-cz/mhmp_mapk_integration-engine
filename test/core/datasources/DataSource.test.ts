@@ -2,6 +2,7 @@
 
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import "mocha";
 import { DataSource } from "../../../src/core/datasources";
 import { log } from "../../../src/core/helpers/Logger";
@@ -78,7 +79,7 @@ describe("DataSource", () => {
     it("should throws error if data are not valid", async () => {
         validatorStub.Validate = sandbox.stub().throws();
         datasource.setValidator(validatorStub);
-        expect(datasource.getAll()).to.be.rejected;
+        await expect(datasource.getAll()).to.be.rejectedWith(CustomError);
     });
 
     it("should warn if data are empty", async () => {

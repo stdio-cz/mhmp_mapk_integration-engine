@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { Playgrounds } from "golemio-schema-definitions";
+import { Playgrounds } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { GeocodeApi } from "../../../src/core/helpers";

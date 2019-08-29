@@ -13,7 +13,7 @@ Developed by http://operatorict.cz
 - PostgreSQL
 - Redis
 - yarn
-- golemio-schema-definitions module
+- @golemio/schema-definitions module
 
 ## Installation
 
@@ -81,9 +81,9 @@ on Windows
 
 ## Migrating PostgreSQL database
 
-Before start the PostgreSQL database has to be created and migrated. In this case is used `db-migrate` from the `golemio-schema-definitions` module.
+Before start the PostgreSQL database has to be created and migrated. In this case is used `db-migrate` from the `@golemio/schema-definitions` module.
 
-For more informations see [`golemio-schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
+For more informations see [`@golemio/schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
 
 
 ## Run

@@ -1,7 +1,7 @@
 "use strict";
 
-import { RopidGTFS } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { RopidGTFS } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, FTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { log } from "../../core/helpers";

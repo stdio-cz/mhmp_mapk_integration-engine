@@ -1,6 +1,6 @@
 "use strict";
 
-import { IceGatewayStreetLamps } from "golemio-schema-definitions";
+import { IceGatewayStreetLamps } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class IceGatewayStreetLampsTransformation extends BaseTransformation implements ITransformation {

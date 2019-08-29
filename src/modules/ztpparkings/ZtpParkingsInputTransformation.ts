@@ -3,7 +3,7 @@
 const moment = require("moment");
 
 import { CustomError } from "@golemio/errors";
-import { ZtpParkings } from "golemio-schema-definitions";
+import { ZtpParkings } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ZtpParkingsInputTransformation extends BaseTransformation implements ITransformation {

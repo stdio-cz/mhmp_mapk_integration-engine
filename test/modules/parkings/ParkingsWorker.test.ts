@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { Parkings } from "golemio-schema-definitions";
+import { Parkings } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { PostgresConnector } from "../../../src/core/connectors";

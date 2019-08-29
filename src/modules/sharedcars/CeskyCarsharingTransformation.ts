@@ -1,6 +1,6 @@
 "use strict";
 
-import { SharedCars } from "golemio-schema-definitions";
+import { SharedCars } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class CeskyCarsharingTransformation extends BaseTransformation implements ITransformation {

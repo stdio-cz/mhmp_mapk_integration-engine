@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { SortedWasteStations } from "golemio-schema-definitions";
+import { SortedWasteStations } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { SortedWasteStationsWorker } from "../../../src/modules/sortedwastestations";

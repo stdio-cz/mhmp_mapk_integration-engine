@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS } from "golemio-schema-definitions";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class RopidGTFSCisStopsTransformation extends BaseTransformation implements ITransformation {

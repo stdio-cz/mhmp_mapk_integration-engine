@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { BicycleParkings } from "golemio-schema-definitions";
+import { BicycleParkings } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { BicycleParkingsWorker } from "../../../src/modules/bicycleparkings";

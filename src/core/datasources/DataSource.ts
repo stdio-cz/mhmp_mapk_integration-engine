@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
 
@@ -38,7 +38,11 @@ export class DataSource implements IDataSource {
     public getAll = async (): Promise<any> => {
         const data = await this.getRawData();
         if (this.validator) {
-            await this.validator.Validate(data);
+            try {
+                await this.validator.Validate(data);
+            } catch (err) {
+                throw new CustomError("Error while validating source data.", true, this.name, 2004, err);
+            }
         } else {
             log.warn("DataSource validator is not set.");
         }
