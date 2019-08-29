@@ -762,24 +762,14 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "updateDistrict",
             },
             {
-                name: "getSensors",
+                name: "getSensorsAndPairThemWithContainers",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 1 * 24 * 60 * 60 * 1000,
                 },
                 worker: SortedWasteStationsWorker,
-                workerMethod: "getSensors",
-            },
-            {
-                name: "pairSensorsWithContainers",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 24 * 60 * 60 * 1000,
-                },
-                worker: SortedWasteStationsWorker,
-                workerMethod: "pairSensorsWithContainers",
+                workerMethod: "getSensorsAndPairThemWithContainers",
             },
             {
                 name: "updateSensorsMeasurement",

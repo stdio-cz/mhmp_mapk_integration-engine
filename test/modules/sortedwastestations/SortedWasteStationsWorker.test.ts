@@ -113,6 +113,7 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.stub(worker, "mergeContainersIntoStations")
             .callsFake(() => [[testTransformedData[0]], [testTransformedData[1], testTransformedData[2]]]);
         sandbox.stub(worker.model, "updateOne");
+        sandbox.stub(worker, "pairSensorWithContainer");
 
         sandbox.stub(worker.sensorsContainersDatasource, "getAll").callsFake(() => testSensorContainersData);
         sandbox.stub(worker.sensorsMeasurementsDatasource, "getAll").callsFake(() => testSensorMeasurementData);
@@ -191,24 +192,11 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.assert.notCalled(testTransformedData[1].remove);
     });
 
-    it("should calls the correct methods by getSensors method", async () => {
-        await worker.getSensors();
+    it("should calls the correct methods by getSensorsAndPairThemWithContainers method", async () => {
+        await worker.getSensorsAndPairThemWithContainers();
 
         sandbox.assert.calledOnce(worker.sensorsContainersDatasource.getAll);
-        testSensorContainersData.map((f) => {
-            sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".pairSensorsWithContainers",
-                new Buffer(JSON.stringify(f)));
-        });
-        sandbox.assert.calledOnce(worker.sendMessageToExchange);
-    });
-
-    it("should calls the correct methods by pairSensorsWithContainers method", async () => {
-        await worker.pairSensorsWithContainers({content: new Buffer(JSON.stringify(testSensorContainersData[0]))});
-        sandbox.assert.calledOnce(worker.model.findOne);
-        sandbox.assert.calledOnce(worker.model.updateOne);
-        sandbox.assert.calledOnce(worker.sensorsMeasurementsModel.aggregate);
-        sandbox.assert.calledOnce(worker.sensorsPicksModel.aggregate);
+        sandbox.assert.calledOnce(worker.pairSensorWithContainer);
     });
 
     it("should calls the correct methods by updateSensorsMeasurement method", async () => {
