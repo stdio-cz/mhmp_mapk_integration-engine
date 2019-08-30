@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { MunicipalAuthorities } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { MunicipalAuthoritiesWorker } from "../../../src/modules/municipalauthorities";

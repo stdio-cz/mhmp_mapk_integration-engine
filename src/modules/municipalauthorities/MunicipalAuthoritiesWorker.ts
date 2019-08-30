@@ -1,7 +1,7 @@
 "use strict";
 
-import { MunicipalAuthorities } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { MunicipalAuthorities } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy, XMLDataTypeStrategy } from "../../core/datasources";
 import { MongoModel } from "../../core/models";

@@ -1,6 +1,6 @@
 "use strict";
 
-import { SortedWasteStations } from "golemio-schema-definitions";
+import { SortedWasteStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class SensoneoMeasurementsTransformation extends BaseTransformation implements ITransformation {

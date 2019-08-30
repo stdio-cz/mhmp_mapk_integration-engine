@@ -5,6 +5,7 @@
 import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
 import { HTTPProtocolStrategy, IHTTPSettings } from "../../../src/core/datasources";
+import { CustomError } from "@golemio/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -67,7 +68,7 @@ describe("HTTPProtocolStrategy", () => {
     it("should throw error if getting data failed", async () => {
         testSettings.url = "https://notfound.com";
         strategy.setConnectionSettings(testSettings);
-        expect(strategy.getData()).to.be.rejected;
+        await expect(strategy.getData()).to.be.rejectedWith(CustomError);
     });
 
     it("should properly get data in zip format", async () => {

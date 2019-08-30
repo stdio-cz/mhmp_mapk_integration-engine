@@ -6,7 +6,7 @@ import {
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
-} from "golemio-schema-definitions";
+} from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
@@ -762,24 +762,14 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "updateDistrict",
             },
             {
-                name: "getSensors",
+                name: "getSensorsAndPairThemWithContainers",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 1 * 24 * 60 * 60 * 1000,
                 },
                 worker: SortedWasteStationsWorker,
-                workerMethod: "getSensors",
-            },
-            {
-                name: "pairSensorsWithContainers",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 24 * 60 * 60 * 1000,
-                },
-                worker: SortedWasteStationsWorker,
-                workerMethod: "pairSensorsWithContainers",
+                workerMethod: "getSensorsAndPairThemWithContainers",
             },
             {
                 name: "updateSensorsMeasurement",

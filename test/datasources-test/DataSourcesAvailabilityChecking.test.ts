@@ -7,8 +7,8 @@ import {
     MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
     WasteCollectionYards, ZtpParkings,
-} from "golemio-schema-definitions";
-import { ObjectKeysValidator, Validator } from "golemio-validator";
+} from "@golemio/schema-definitions";
+import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import "mocha";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";

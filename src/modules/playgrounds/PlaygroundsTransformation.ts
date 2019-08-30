@@ -1,6 +1,6 @@
 "use strict";
 
-import { Playgrounds } from "golemio-schema-definitions";
+import { Playgrounds } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class PlaygroundsTransformation extends BaseTransformation implements ITransformation {

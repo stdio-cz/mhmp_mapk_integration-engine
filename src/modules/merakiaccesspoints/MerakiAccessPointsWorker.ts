@@ -1,7 +1,7 @@
 "use strict";
 
-import { MerakiAccessPoints } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { MerakiAccessPoints } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { MerakiAccessPointsTransformation } from "./";

@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { RopidGTFS } from "golemio-schema-definitions";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";

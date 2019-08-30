@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { RopidGTFS } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { RopidGTFS } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";

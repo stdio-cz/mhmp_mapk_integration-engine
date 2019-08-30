@@ -1,6 +1,6 @@
 "use strict";
 
-import { SortedWasteStations } from "golemio-schema-definitions";
+import { SortedWasteStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");

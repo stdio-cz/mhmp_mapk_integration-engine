@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { ZtpParkings } from "golemio-schema-definitions";
+import { ZtpParkings } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { GeocodeApi } from "../../../src/core/helpers";

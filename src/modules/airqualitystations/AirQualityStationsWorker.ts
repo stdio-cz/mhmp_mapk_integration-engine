@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { AirQualityStations, CityDistricts } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { AirQualityStations, CityDistricts } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, XMLDataTypeStrategy } from "../../core/datasources";
 import { MongoModel } from "../../core/models";

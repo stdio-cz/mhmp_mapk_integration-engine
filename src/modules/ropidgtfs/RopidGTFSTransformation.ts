@@ -1,6 +1,6 @@
 "use strict";
 
-import { RopidGTFS } from "golemio-schema-definitions";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
