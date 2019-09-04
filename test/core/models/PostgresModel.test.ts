@@ -3,7 +3,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
 import * as Sequelize from "sequelize";

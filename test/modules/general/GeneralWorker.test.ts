@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { GeneralImport } from "golemio-schema-definitions";
+import { GeneralImport } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { MongoModel } from "../../../src/core/models";

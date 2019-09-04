@@ -1,6 +1,6 @@
 "use strict";
 
-import { Parkings } from "golemio-schema-definitions";
+import { Parkings } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ParkingsOccupanciesTransformation extends BaseTransformation implements ITransformation {

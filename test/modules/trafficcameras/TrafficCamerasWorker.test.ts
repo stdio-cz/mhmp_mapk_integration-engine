@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { TrafficCameras } from "golemio-schema-definitions";
+import { TrafficCameras } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { GeocodeApi } from "../../../src/core/helpers";

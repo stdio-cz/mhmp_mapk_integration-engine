@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../connectors";
 import { log } from "../helpers";
@@ -50,7 +50,11 @@ export class PostgresModel implements IModel {
     public save = async (data: any, useTmpTable: boolean = false): Promise<any> => {
         // data validation
         if (this.validator) {
-            await this.validator.Validate(data);
+            try {
+                await this.validator.Validate(data);
+            } catch (err) {
+                throw new CustomError("Error while validating data.", true, this.name, 4005, err);
+            }
         } else {
             log.warn(this.name + ": Model validator is not set.");
         }

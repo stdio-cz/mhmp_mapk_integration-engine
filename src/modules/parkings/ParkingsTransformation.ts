@@ -1,6 +1,6 @@
 "use strict";
 
-import { Parkings } from "golemio-schema-definitions";
+import { Parkings } from "@golemio/schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 

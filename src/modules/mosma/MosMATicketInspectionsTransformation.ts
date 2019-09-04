@@ -1,6 +1,6 @@
 "use strict";
 
-import { MOS } from "golemio-schema-definitions";
+import { MOS } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class MosMATicketInspectionsTransformation extends BaseTransformation implements ITransformation {

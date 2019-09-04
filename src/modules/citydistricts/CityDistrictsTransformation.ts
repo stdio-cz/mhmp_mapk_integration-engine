@@ -1,6 +1,6 @@
 "use strict";
 
-import { CityDistricts } from "golemio-schema-definitions";
+import { CityDistricts } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");

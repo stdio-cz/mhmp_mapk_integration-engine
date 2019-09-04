@@ -4,6 +4,7 @@
 
 import "mocha";
 import { IJSONSettings, JSONDataTypeStrategy } from "../../../src/core/datasources";
+import { CustomError } from "@golemio/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -68,7 +69,7 @@ describe("JSONDataTypeStrategy", () => {
     });
 
     it("should throw error if JSON is not valid", async () => {
-        expect(strategy.parseData('{"message": }')).to.be.rejected;
+        await expect(strategy.parseData('{"message": }')).to.be.rejectedWith(CustomError);
     });
 
     it("should properly set data type settings", async () => {

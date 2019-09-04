@@ -1,6 +1,6 @@
 "use strict";
 
-import { GeneralImport } from "golemio-schema-definitions";
+import { GeneralImport } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class GeneralTransformation extends BaseTransformation implements ITransformation {

@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { RopidGTFS } from "golemio-schema-definitions";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import "mocha";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
@@ -52,6 +52,8 @@ describe("RopidGTFSWorker", () => {
         sandbox.stub(worker.metaModel, "checkSavedRows");
         sandbox.stub(worker.metaModel, "replaceTables");
         sandbox.stub(worker.metaModel, "rollbackFailedSaving");
+        sandbox.stub(worker.metaModel, "updateState");
+        sandbox.stub(worker.metaModel, "updateSavedRows");
 
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
@@ -99,7 +101,7 @@ describe("RopidGTFSWorker", () => {
     it("should calls the correct methods by downloadFiles method", async () => {
         await worker.downloadFiles();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
-        sandbox.assert.calledOnce(worker.metaModel.save);
+        sandbox.assert.calledThrice(worker.metaModel.save);
         sandbox.assert.callCount(worker.sendMessageToExchange, 3);
         testData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
@@ -123,6 +125,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelTruncateStub);
         sandbox.assert.calledOnce(worker.metaModel.save);
+        sandbox.assert.calledOnce(worker.metaModel.updateState);
         testTransformedData.data.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".saveDataToDB",
@@ -139,6 +142,7 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelSaveStub);
         sandbox.assert.calledWith(modelSaveStub, testTransformedData.data);
+        sandbox.assert.calledOnce(worker.metaModel.updateSavedRows);
     });
 
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {

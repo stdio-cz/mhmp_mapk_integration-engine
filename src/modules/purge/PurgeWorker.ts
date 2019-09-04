@@ -1,8 +1,8 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { SharedBikes, SharedCars, TrafficCameras } from "golemio-schema-definitions";
-import { Validator } from "golemio-validator";
+import { SharedBikes, SharedCars, TrafficCameras } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
 import { MongoModel } from "../../core/models";

@@ -1,6 +1,6 @@
 "use strict";
 
-import { MedicalInstitutions } from "golemio-schema-definitions";
+import { MedicalInstitutions } from "@golemio/schema-definitions";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 

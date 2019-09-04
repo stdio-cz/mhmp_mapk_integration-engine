@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
 import { IRedisSettings, RedisModel } from "../../../src/core/models";
@@ -154,7 +154,7 @@ describe("RedisModel", () => {
             settings,
             null);
         const testdata = "testdata2";
-        expect(model.save("key.subkey", testdata)).to.be.rejected;
+        await expect(model.save("key.subkey", testdata)).to.be.rejected;
     });
 
     it("should saves the array of records with key constructed from data (with data encode/decode)", async () => {
@@ -176,7 +176,7 @@ describe("RedisModel", () => {
             },
             "testdata3",
         ];
-        expect(model.save("key.subkey", testdata)).to.be.rejected;
+        await expect(model.save("key.subkey", testdata)).to.be.rejected;
     });
 
     it("should throw error if data is not valid", async () => {
@@ -189,7 +189,7 @@ describe("RedisModel", () => {
         const mso = {
             key: {
                 subkey: String,
-                value: String
+                value: String,
             },
             value: { type: String, required: true },
         };
@@ -202,7 +202,7 @@ describe("RedisModel", () => {
                 value: "testdata2",
             },
         };
-        expect(model.save("key.subkey", testdata)).to.be.rejected;
+        await expect(model.save("key.subkey", testdata)).to.be.rejected;
     });
 
     it("should properly delete all data", async () => {

@@ -83,7 +83,7 @@ describe("FTPProtocolStrategy", () => {
 
     it("should throw error if getting data failed", async () => {
         downloadStub.throws(new Error("test"));
-        expect(strategy.getData()).to.be.rejected;
+        await expect(strategy.getData()).to.be.rejectedWith(Error);
     });
 
     it("should properly get data in zip format", async () => {

@@ -3,7 +3,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "golemio-validator";
+import { Validator } from "@golemio/validator";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
@@ -97,13 +97,13 @@ describe("MongoModel", () => {
     // method model.save()
 
     it("should throws error if model is read only", async () => {
-        expect(model.save([{ id: 1 }])).to.be.rejectedWith(CustomError);
-        expect(model.save([{ id: 1 }], true)).to.be.rejectedWith(CustomError);
+        await expect(model.save([{ id: 1 }])).to.be.rejectedWith(CustomError);
+        await expect(model.save([{ id: 1 }], true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error if data are not valid", async () => {
-        expect(model.save([{ id: 1, property1: "a" }])).to.be.rejectedWith(CustomError);
-        expect(model.save([{ id: 1, property1: "a" }], true)).to.be.rejectedWith(CustomError);
+        await expect(model.save([{ id: 1, property1: "a" }])).to.be.rejectedWith(CustomError);
+        await expect(model.save([{ id: 1, property1: "a" }], true)).to.be.rejectedWith(CustomError);
     });
 
     it("should logs warning if validator is not set", async () => {
@@ -112,8 +112,8 @@ describe("MongoModel", () => {
             settings,
             undefined,
         );
-        expect(model.save([{ id: 1, property1: "a" }])).to.be.rejectedWith(Error);
-        expect(model.save([{ id: 1, property1: "a" }], true)).to.be.rejectedWith(Error);
+        await expect(model.save([{ id: 1, property1: "a" }])).to.be.rejectedWith(Error);
+        await expect(model.save([{ id: 1, property1: "a" }], true)).to.be.rejectedWith(Error);
         sandbox.assert.calledTwice(log.warn);
     });
 
@@ -123,7 +123,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.save([{ id: 1, property1: "a", property2: "b" }], true)).to.be.rejectedWith(CustomError);
+        await expect(model.save([{ id: 1, property1: "a", property2: "b" }], true)).to.be.rejectedWith(CustomError);
     });
 
     it("should saves one record, type insertOnly, main model", async () => {
@@ -200,7 +200,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.save({ id: 1, property1: "a", property2: "b" })).to.be.rejectedWith(CustomError);
+        await expect(model.save({ id: 1, property1: "a", property2: "b" })).to.be.rejectedWith(CustomError);
     });
 
     it("should saves one record, type insertOrUpdate, main model", async () => {
@@ -296,8 +296,8 @@ describe("MongoModel", () => {
     // method model.updateOne()
 
     it("should throws error if model is read only", async () => {
-        expect(model.updateOne({ id: 1 }, {})).to.be.rejectedWith(CustomError);
-        expect(model.updateOne({ id: 1 }, {}, true)).to.be.rejectedWith(CustomError);
+        await expect(model.updateOne({ id: 1 }, {})).to.be.rejectedWith(CustomError);
+        await expect(model.updateOne({ id: 1 }, {}, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error if data are not valid", async () => {
@@ -307,8 +307,8 @@ describe("MongoModel", () => {
             new Validator("TestMongoModelValidator", schemaObject),
         );
         await model.save({ id: 1, property1: "a", property2: "b" });
-        expect(model.updateOne({ id: 1 }, { property1: { a: 1 } })).to.be.rejectedWith(Error);
-        expect(model.updateOne({ id: 1 }, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
+        await expect(model.updateOne({ id: 1 }, { property1: { a: 1 } })).to.be.rejectedWith(Error);
+        await expect(model.updateOne({ id: 1 }, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
     });
 
     it("should throws error when update tmp model and tmp model is not defined", async () => {
@@ -317,7 +317,8 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.updateOne({ id: 1 }, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.updateOne({ id: 1 }, { property1: "b", property2: "c" }, true))
+            .to.be.rejectedWith(CustomError);
     });
 
     it("should update values", async () => {
@@ -345,8 +346,8 @@ describe("MongoModel", () => {
     // method model.updateOneById()
 
     it("should throws error if model is read only", async () => {
-        expect(model.updateOneById(1, {})).to.be.rejectedWith(CustomError);
-        expect(model.updateOneById(1, {}, true)).to.be.rejectedWith(CustomError);
+        await expect(model.updateOneById(1, {})).to.be.rejectedWith(CustomError);
+        await expect(model.updateOneById(1, {}, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error if data are not valid", async () => {
@@ -356,8 +357,8 @@ describe("MongoModel", () => {
             new Validator("TestMongoModelValidator", schemaObject),
         );
         await model.save({ id: 1, property1: "a", property2: "b" });
-        expect(model.updateOneById(1, { property1: { a: 1 } })).to.be.rejectedWith(Error);
-        expect(model.updateOneById(1, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
+        await expect(model.updateOneById(1, { property1: { a: 1 } })).to.be.rejectedWith(Error);
+        await expect(model.updateOneById(1, { property1: { a: 1 } }, true)).to.be.rejectedWith(Error);
     });
 
     it("should throws error when update tmp model and tmp model is not defined", async () => {
@@ -366,7 +367,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.updateOneById(1, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.updateOneById(1, { property1: "b", property2: "c" }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should update values", async () => {
@@ -394,8 +395,8 @@ describe("MongoModel", () => {
     // method model.truncate()
 
     it("should throws error if model is read only", async () => {
-        expect(model.truncate()).to.be.rejectedWith(CustomError);
-        expect(model.truncate(true)).to.be.rejectedWith(CustomError);
+        await expect(model.truncate()).to.be.rejectedWith(CustomError);
+        await expect(model.truncate(true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error when truncate tmp model and tmp model is not defined", async () => {
@@ -404,7 +405,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.truncate(true)).to.be.rejectedWith(CustomError);
+        await expect(model.truncate(true)).to.be.rejectedWith(CustomError);
     });
 
     it("should truncate", async () => {
@@ -432,8 +433,8 @@ describe("MongoModel", () => {
     // method model.delete()
 
     it("should throws error if model is read only", async () => {
-        expect(model.delete({ id: 1 })).to.be.rejectedWith(CustomError);
-        expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.delete({ id: 1 })).to.be.rejectedWith(CustomError);
+        await expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error when delete from tmp model and tmp model is not defined", async () => {
@@ -442,7 +443,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
+        await expect(model.delete({ id: 1 }, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should delete", async () => {
@@ -475,7 +476,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.find({}, true)).to.be.rejectedWith(CustomError);
+        await expect(model.find({}, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should returns an array of records", async () => {
@@ -504,7 +505,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.findOne({}, true)).to.be.rejectedWith(CustomError);
+        await expect(model.findOne({}, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should returns an one object", async () => {
@@ -531,7 +532,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.findOneById(1, true)).to.be.rejectedWith(CustomError);
+        await expect(model.findOneById(1, true)).to.be.rejectedWith(CustomError);
     });
 
     it("should returns an one object", async () => {
@@ -559,8 +560,8 @@ describe("MongoModel", () => {
         );
         await model.save({ id: 1, property1: "a", property2: "b" });
         await model.save({ id: 1, property1: "a", property2: "b" }, true);
-        expect(model.findOneById(2)).to.be.rejectedWith(CustomError);
-        expect(model.findOneById(2)).to.be.rejectedWith(CustomError);
+        await expect(model.findOneById(2)).to.be.rejectedWith(CustomError);
+        await expect(model.findOneById(2)).to.be.rejectedWith(CustomError);
     });
 
     // method model.aggregate()
@@ -571,7 +572,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.aggregate([], true)).to.be.rejectedWith(CustomError);
+        await expect(model.aggregate([], true)).to.be.rejectedWith(CustomError);
     });
 
     it("should returns an array of records", async () => {
@@ -604,7 +605,7 @@ describe("MongoModel", () => {
     */
 
     it("should throws error if model is read only", async () => {
-        expect(model.replaceOrigCollectionByTempCollection()).to.be.rejectedWith(CustomError);
+        await expect(model.replaceOrigCollectionByTempCollection()).to.be.rejectedWith(CustomError);
     });
 
     it("should throws error when tmp model is not defined", async () => {
@@ -613,7 +614,7 @@ describe("MongoModel", () => {
             settings,
             new Validator("TestMongoModelValidator", schemaObject),
         );
-        expect(model.replaceOrigCollectionByTempCollection()).to.be.rejectedWith(CustomError);
+        await expect(model.replaceOrigCollectionByTempCollection()).to.be.rejectedWith(CustomError);
     });
 
     it("should properly replace collections", async () => {
@@ -628,7 +629,7 @@ describe("MongoModel", () => {
 
         const data = await model.findOneById(1);
         expect(data).to.be.an("object");
-        expect(model.findOneById(1, true)).to.be.rejectedWith(CustomError);
+        await expect(model.findOneById(1, true)).to.be.rejectedWith(CustomError);
     });
 
 });

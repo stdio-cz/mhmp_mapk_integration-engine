@@ -6,7 +6,7 @@ import {
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
-} from "golemio-schema-definitions";
+} from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
@@ -651,22 +651,31 @@ const definitions: IQueueDefinition[] = [
                     const channel = await AMQPConnector.getChannel();
                     const queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
                     try {
-                        const qt = await channel.checkQueue(queuePrefix + ".transformData");
-                        const qs = await channel.checkQueue(queuePrefix + ".saveDataToDB");
                         const worker = new RopidGTFSWorker();
 
-                        if (qt.messageCount === 0 && qs.messageCount === 0) {
-                            // for sure all messages are dispatched
-                            await new Promise((done) => setTimeout(done, 20000)); // sleeps for 20 seconds
+                        // getting info about queues
+                        const transformQueue = await channel.checkQueue(queuePrefix + ".transformData");
+                        const saveQueue = await channel.checkQueue(queuePrefix + ".saveDataToDB");
+                        // getting info from metadata table
+                        const allSaved: boolean = await worker.checkAllTablesHasSavedState(msg);
+
+                        log.debug(JSON.stringify({ allSaved, saveQueue, transformQueue }));
+
+                        // checking if all queues are empty and all rows are saved
+                        if (transformQueue.messageCount === 0 && saveQueue.messageCount === 0 && allSaved) {
+                            // checking number of saved rows of all tables
+                            // and process switch between tmp and public schema
                             if (await worker.checkSavedRowsAndReplaceTables(msg)) {
                                 channel.ack(msg);
                             } else {
+                                // numbers of saved rows are not equal with number of downloaded rows
                                 ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
                                     null, 5004));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
                         } else {
+                            // process is not done, wait
                             await new Promise((done) => setTimeout(done, 60000)); // sleeps for 1 minute
                             channel.reject(msg);
                         }
@@ -753,24 +762,14 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "updateDistrict",
             },
             {
-                name: "getSensors",
+                name: "getSensorsAndPairThemWithContainers",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 1 * 24 * 60 * 60 * 1000,
                 },
                 worker: SortedWasteStationsWorker,
-                workerMethod: "getSensors",
-            },
-            {
-                name: "pairSensorsWithContainers",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 24 * 60 * 60 * 1000,
-                },
-                worker: SortedWasteStationsWorker,
-                workerMethod: "pairSensorsWithContainers",
+                workerMethod: "getSensorsAndPairThemWithContainers",
             },
             {
                 name: "updateSensorsMeasurement",

@@ -1,6 +1,6 @@
 "use strict";
 
-import { MunicipalAuthorities } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const moment = require("moment-timezone");
