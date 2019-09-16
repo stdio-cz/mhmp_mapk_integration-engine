@@ -137,7 +137,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
 
     protected transformTariffItem = (value: any) => {
         return {
-            divisibility: value.divisitility,
+            divisibility: value.divisibility,
             max_parking_time: value.maxParkingTime,
             max_price: value.maxPrice,
             pay_at_holiday: value.payAtHoliday,
