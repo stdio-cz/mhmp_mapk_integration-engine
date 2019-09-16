@@ -55,7 +55,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "0.1.15-dev.3039",
+		"@golemio/schema-definitions": "0.1.15",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "^0.0.4",
 		"@turf/turf": "5.1.6",
