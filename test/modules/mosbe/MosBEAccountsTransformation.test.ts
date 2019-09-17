@@ -1,16 +1,13 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { MosBEAccountsTransformation } from "../../../src/modules/mosbe";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const fs = require("fs");
-
 chai.use(chaiAsPromised);
+const fs = require("fs");
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

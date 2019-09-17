@@ -44,10 +44,10 @@ export interface IFTPSettings {
 
 export interface IProtocolStrategy {
 
-    setConnectionSettings: (settings: IHTTPSettings | IFTPSettings) => void;
+    setConnectionSettings(settings: IHTTPSettings | IFTPSettings): void;
 
-    getData: () => Promise<any>;
+    getData(): Promise<any>;
 
-    getLastModified: () => Promise<any>;
+    getLastModified(): Promise<any>;
 
 }

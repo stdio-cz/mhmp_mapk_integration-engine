@@ -28,14 +28,14 @@ class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3006", 10);
 
-    private commitSHA: string;
+    private commitSHA: string | undefined;
 
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
-        //
+        this.commitSHA = undefined;
     }
 
     /**
@@ -52,7 +52,7 @@ class App {
             // Setup error handler hook on server error
             // Setup error handler hook on server error
             server.on("error", (err: any) => {
-                ErrorHandler.handle(new CustomError("Could not start a server", false, null, 1, err));
+                ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
             });
             // Serve the application at the given port
             server.listen(this.port, () => {
@@ -106,7 +106,7 @@ class App {
 
         // Not found error - no route was matched
         this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            next(new CustomError("Not found", true, null, 404));
+            next(new CustomError("Not found", true, undefined, 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
@@ -148,15 +148,15 @@ class App {
      * and register queue processors to consume messages
      */
     private queueProcessors = async (): Promise<void> => {
-        const ch = await AMQPConnector.connect();
+        const channel = await AMQPConnector.connect();
 
         // filtering queue definitions by blacklist
         let filteredQueuesDefinitions = queuesDefinition;
-        Object.keys(config.queuesBlacklist).map((b) => {
+        Object.keys(config.queuesBlacklist).map((b: string) => {
             if (config.queuesBlacklist[b].length === 0) {
                 filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
             } else {
-                config.queuesBlacklist[b].map((d) => {
+                config.queuesBlacklist[b].map((d: string) => {
                     filteredQueuesDefinitions = filteredQueuesDefinitions.map((a) => {
                         a.queues = a.queues.filter((c) => c.name !== d);
                         return a;
@@ -167,7 +167,7 @@ class App {
 
         // use generic queue processor for register (filtered) queues
         const promises = filteredQueuesDefinitions.map((queueDefinition) => {
-            return new QueueProcessor(ch, queueDefinition).registerQueues();
+            return new QueueProcessor(channel, queueDefinition).registerQueues();
         });
         await Promise.all(promises);
     }
