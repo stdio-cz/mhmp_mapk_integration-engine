@@ -1,12 +1,12 @@
 {
 	"name": "golemio-integration-engine",
-	"version": "0.1.11",
+	"version": "0.1.12",
 	"description": "Integration Engine of the Golemio Data Platform System",
 	"main": "dist/App.js",
 	"types": "dist/App.d.ts",
 	"scripts": {
 		"dev-start": "ts-node-dev -r dotenv/config ./src/App.ts",
-		"dev-start-debug": "ts-node-dev --inspect-brk=9229 -r dotenv/config ./src/App.ts",
+		"dev-start-debug": "ts-node-dev --inspect-brk=9230 -r dotenv/config ./src/App.ts",
 		"start": "node -r dotenv/config dist/App.js",
 		"debug": "node --inspect-brk=9230 -r dotenv/config dist/App.js",
 		"build": "tsc",
@@ -55,7 +55,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "0.1.14-dev.2894",
+		"@golemio/schema-definitions": "0.1.15",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "^0.0.4",
 		"@turf/turf": "5.1.6",

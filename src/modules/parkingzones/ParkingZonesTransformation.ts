@@ -18,7 +18,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
     /**
      * Overrides BaseTransformation::transform
      */
-    public transform = async (data: any|any[]): Promise<any|any[]> => {
+    public transform = async (data: any | any[]): Promise<any | any[]> => {
 
         if (data instanceof Array) {
             const promises = data.map((element) => {
@@ -115,14 +115,14 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
             if (resultTariffs.length === 0) {
                 resultTariffs.push({
                     days: [dayOfWeek],
-                    tariff: tariff.tariff,
+                    tariff: tariff.tariff ? tariff.tariff.map((x) => this.transformTariffItem(x)) : null,
                 });
             } else if (exist !== -1) {
                 resultTariffs[exist].days.push(dayOfWeek);
             } else {
                 resultTariffs.push({
                     days: [dayOfWeek],
-                    tariff: tariff.tariff,
+                    tariff: tariff.tariff ? tariff.tariff.map((x) => this.transformTariffItem(x)) : null,
                 });
             }
             return;
@@ -132,6 +132,18 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
         return {
             tariffs: (resultTariffs.length) ? resultTariffs : null,
             tariffsText: (resultTariffs.length) ? this.stringifyTariffs(resultTariffs).join("; ") : null,
+        };
+    }
+
+    protected transformTariffItem = (value: any) => {
+        return {
+            divisibility: value.divisibility,
+            max_parking_time: value.maxParkingTime,
+            max_price: value.maxPrice,
+            pay_at_holiday: value.payAtHoliday,
+            price_per_hour: value.pricePerHour,
+            time_from: value.timeFrom,
+            time_to: value.timeTo,
         };
     }
 
@@ -306,7 +318,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
             const t = resultTariffs[i];
             let days: string = "";
             t.days = t.days.sort((a, b) => weekdays[a].id - weekdays[b].id);
-            t.tariff = t.tariff.sort((a, b) => a.payAtHoliday - b.payAtHoliday);
+            t.tariff = t.tariff.sort((a, b) => a.pay_at_holiday - b.pay_at_holiday);
 
             for (let j = 0, jmax = t.days.length; j < jmax; j++) {
                 if (days === "") {
@@ -320,12 +332,12 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
 
             for (let j = 0, jmax = t.tariff.length; j < jmax; j++) {
                 resultString.push(days
-                    + ((t.tariff[j].payAtHoliday) ? " (ve svátek)" : "")
-                    + " " + this.parsePT(t.tariff[j].timeFrom, true)
-                    + "-" + this.parsePT(t.tariff[j].timeTo, true)
-                    + " " + t.tariff[j].pricePerHour + " Kč/hod."
+                    + ((t.tariff[j].pay_at_holiday) ? " (ve svátek)" : "")
+                    + " " + this.parsePT(t.tariff[j].time_from, true)
+                    + "-" + this.parsePT(t.tariff[j].time_to, true)
+                    + " " + t.tariff[j].price_per_hour + " Kč/hod."
                     + " (max. "
-                    + parseInt(this.parsePT(t.tariff[j].maxParkingTime, false), 10) / 1000 / 60 / 60
+                    + parseInt(this.parsePT(t.tariff[j].max_parking_time, false), 10) / 1000 / 60 / 60
                     + " hod.)");
             }
         }
