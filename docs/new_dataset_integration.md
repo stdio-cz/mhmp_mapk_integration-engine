@@ -1,6 +1,6 @@
 ## Adding a new dataset
 
-- create new directory in `src/modules` named by new dataset (lower-case, no words delimiters)
+- create new directory in `src/modules` named by new dataset (lowercase, no words delimiters)
 - in the new directory create Transformation(s) (data transformation from datasource format to output format) and Worker (worker methods processing messages from MQ)
 - import dataset from schema-definitions
 - if is required to getting data (PULL) implement new DataSource in `test/datasources-test/DataSourcesAvailabilityChecking.test.ts` and test it

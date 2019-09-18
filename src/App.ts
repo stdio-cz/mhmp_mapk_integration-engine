@@ -21,21 +21,21 @@ import { queuesDefinition } from "./definitions";
 const Influx = require("influx");
 const http = require("http");
 
-class App {
+export default class App {
 
-    // Create a new express application instance
+    /// Create a new express application instance
     public express: express.Application = express();
-    // The port the express app will listen on
+    /// The port the express app will listen on
     public port: number = parseInt(config.port || "3006", 10);
-
-    private commitSHA: string | undefined;
+    /// The SHA of the last commit from the application running
+    private commitSHA: string | undefined = undefined;
 
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
-        this.commitSHA = undefined;
+        //
     }
 
     /**
@@ -45,23 +45,9 @@ class App {
         try {
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
-            this.express = express();
-            this.middleware();
-            this.routes();
-            const server = http.createServer(this.express);
-            // Setup error handler hook on server error
-            // Setup error handler hook on server error
-            server.on("error", (err: any) => {
-                ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
-            });
-            // Serve the application at the given port
-            server.listen(this.port, () => {
-                // Success callback
-                log.info(`Listening at http://localhost:${this.port}/`);
-            });
-
             await this.database();
             await this.queueProcessors();
+            await this.expressServer();
             log.info("Started!");
         } catch (err) {
             ErrorHandler.handle(err);
@@ -73,51 +59,6 @@ class App {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
-    }
-
-    private middleware = (): void => {
-        if (config.NODE_ENV === "development") {
-            this.express.use(httpLogger("dev"));
-        } else {
-            this.express.use(httpLogger("combined"));
-        }
-
-        this.express.use(this.setHeaders);
-    }
-
-    private routes = (): void => {
-        const defaultRouter = express.Router();
-
-        // base url route handler
-        defaultRouter.get(["/", "/health-check", "/status"],
-            (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-                log.silly("Health check/status called.");
-
-                res.json({
-                    app_name: "Data Platform Integration Engine",
-                    commit_sha: this.commitSHA,
-                    status: "Up",
-                    version: config.app_version,
-                });
-            });
-
-        this.express.use("/", defaultRouter);
-
-        // Not found error - no route was matched
-        this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            next(new CustomError("Not found", true, undefined, 404));
-        });
-
-        // Error handler to catch all errors sent by routers (propagated through next(err))
-        this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-            const error: ICustomErrorObject = HTTPErrorHandler.handle(err);
-            if (error) {
-                log.silly("Error caught by the router error handler.");
-                res.setHeader("Content-Type", "application/json; charset=utf-8");
-                res.status(error.error_status || 500).send(error);
-            }
-        });
     }
 
     /**
@@ -186,6 +127,74 @@ class App {
         });
     }
 
-}
+    /**
+     * Starts the express server
+     */
+    private async expressServer(): Promise<void> {
+        this.express = express();
+        this.middleware();
+        this.routes();
 
-export default new App().start();
+        const server = http.createServer(this.express);
+        // Setup error handler hook on server error
+        server.on("error", (err: any) => {
+            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
+        });
+        // Serve the application at the given port
+        server.listen(this.port, () => {
+            // Success callback
+            log.info(`Listening at http://localhost:${this.port}/`);
+        });
+    }
+
+    /**
+     * Binds middlewares to express server
+     */
+    private middleware = (): void => {
+        if (config.NODE_ENV === "development") {
+            this.express.use(httpLogger("dev"));
+        } else {
+            this.express.use(httpLogger("combined"));
+        }
+        this.express.use(this.setHeaders);
+    }
+
+    /**
+     * Defines express server routes
+     */
+    private routes = (): void => {
+        const defaultRouter = express.Router();
+
+        // base url route handler
+        defaultRouter.get(["/", "/health-check", "/status"],
+            (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+                log.silly("Health check/status called.");
+
+                res.json({
+                    app_name: "Golemio Data Platform Integration Engine",
+                    commit_sha: this.commitSHA,
+                    status: "Up",
+                    version: config.app_version,
+                });
+            });
+
+        this.express.use("/", defaultRouter);
+
+        // Not found error - no route was matched
+        this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            next(new CustomError("Not found", true, undefined, 404));
+        });
+
+        // Error handler to catch all errors sent by routers (propagated through next(err))
+        this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+            const error: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            if (error) {
+                log.silly("Error caught by the router error handler.");
+                res.setHeader("Content-Type", "application/json; charset=utf-8");
+                res.status(error.error_status || 500).send(error);
+            }
+        });
+    }
+
+}
