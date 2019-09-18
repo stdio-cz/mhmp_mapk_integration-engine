@@ -19,10 +19,11 @@ export class ConfigLoader {
      * Constructor
      *
      * @param {string} filename Filename of the configuration file.
+     * @param {boolean} replaceDefault If is true then the default and specific configs are NOT MERGED.
      */
-    constructor(filename: string) {
-        let conf: any = {};
-        let defaultConf: any = {};
+    constructor(filename: string, replaceDefault: boolean = false) {
+        let conf: any;
+        let defaultConf: any;
         try {
             try {
                 conf = require(path.join(__dirname, FILES_DIR, filename + FILES_EXT));
@@ -33,8 +34,17 @@ export class ConfigLoader {
         } catch (err) {
             throw new Error(`Default config '${filename}' was not found.`);
         }
+
+        /// conf is exported (defaultConf is not included)
+        if (replaceDefault && conf) {
+            this.conf = conf;
         /// merging objects defaultConf and conf for export
-        this.conf = { ...defaultConf, ...conf };
+        } else if (conf) {
+            this.conf = { ...defaultConf, ...conf };
+        /// only defaultConf is exported
+        } else {
+            this.conf = defaultConf;
+        }
     }
 }
 
@@ -68,5 +78,5 @@ export const config = { // TODO prejmenovat na lower-case
         username: process.env.INFLUX_DB_USERNAME,
     },
     port: process.env.PORT,
-    queuesBlacklist: new ConfigLoader("queuesBlacklist").conf,
+    queuesBlacklist: new ConfigLoader("queuesBlacklist", true).conf,
 };

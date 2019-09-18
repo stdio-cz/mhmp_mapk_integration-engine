@@ -1,6 +1,10 @@
 # Configuration files
 
+TODO Add to `docs/` folder.
+
 ## Datasources (`datasources.json`)
+
+**Configuration in file `datasources.json` is merged with configuration in file `datasources.default.json`.**
 
 Example:
 
@@ -16,6 +20,8 @@ Example:
 
 
 ## Queues Blacklist (`queuesBlacklist.json`)
+
+**Configuration in file `queuesBlacklist.json` replaces whole configuration in file `queuesBlacklist.default.json`.**
 
 Example:
 
