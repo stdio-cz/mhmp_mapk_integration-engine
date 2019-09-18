@@ -52,7 +52,6 @@ export class ConfigLoader {
 export const config = { // TODO prejmenovat na lower-case
     HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
-    MOJEPRAHA_ENDPOINT_APIKEY: process.env.MOJEPRAHA_ENDPOINT_APIKEY,
     MOJEPRAHA_ENDPOINT_BASEURL: process.env.MOJEPRAHA_ENDPOINT_BASEURL,
     MONGO_CONN: process.env.MONGO_CONN,
     NODE_ENV: process.env.NODE_ENV,
