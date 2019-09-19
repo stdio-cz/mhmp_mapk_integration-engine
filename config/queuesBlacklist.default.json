@@ -1,1 +1,24 @@
-{}
+{
+    "Gardens": [],
+    "General": [],
+    "IceGatewaySensors": [],
+    "IceGatewayStreetLamps": [],
+    "MerakiAccessPoints": [],
+    "MOSBackend": [],
+    "MOSMobileApplication": [],
+    "MunicipalAuthorities": [],
+    "ParkingZones": ["updateTariffs"],
+    "Purge": [],
+    "RopidGTFS": [],
+    "SharedBikes": [],
+    "SharedCars": [],
+    "SortedWasteStations": [
+        "getSensorsAndPairThemWithContainers",
+        "updateSensorsMeasurement",
+        "updateSensorsMeasurementInContainer",
+        "updateSensorsPicks",
+        "updateSensorsPicksInContainer"
+    ],
+    "VehiclePositions": [],
+    "ZtpParkings": []
+}

@@ -10,6 +10,11 @@ class MyMongoose {
 
     public connect = async (): Promise<mongoose.Connection> => {
         try {
+            if (!config.MONGO_CONN) {
+                throw new CustomError("The ENV variable MONGO_CONN cannot be undefined.", true,
+                    this.constructor.name, 6003);
+            }
+
             await mongoose.connect(config.MONGO_CONN, {
                 autoReconnect: true,
                 bufferMaxEntries: 0,

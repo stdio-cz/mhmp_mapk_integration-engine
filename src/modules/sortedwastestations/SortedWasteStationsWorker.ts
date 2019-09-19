@@ -63,7 +63,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         this.oictDatasource = new DataSource(SortedWasteStations.oict.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers: {
-                    Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                    Authorization: "Basic " + config.datasources.OICTEndpointApikey,
                 },
                 method: "GET",
                 url: config.datasources.OICTSortedWasteContainers,

@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import * as amqplib from "amqplib";
 import { config } from "../config";
 import { IExtendedCustomErrorObject, IntegrationErrorHandler, log } from "../helpers";
@@ -27,6 +28,10 @@ export class QueueProcessor {
                     ? q.customProcessFunction // custom processor from definition
                     : async (msg) => { // default processor
                         await this.defaultProcessor(msg, q.name, async () => {
+                            if (!q.worker || !q.workerMethod) {
+                                throw new CustomError("Worker and worker method must be defined.", false,
+                                    this.constructor.name, 5005);
+                            }
                             const w = new q.worker();
                             await w[q.workerMethod](msg);
                         });
@@ -62,15 +67,26 @@ export class QueueProcessor {
     }
 
     protected registerQueue = async (
-        name: string,
-        key: string,
-        processor: (msg: any) => any,
-        queueOptions: object = {}): Promise<any> => {
+            name: string,
+            key: string,
+            processor: (msg: any) => any,
+            queueOptions: object = {}): Promise<any> => {
+
+        if (!config.RABBIT_EXCHANGE_NAME) {
+            throw new CustomError("The ENV variable RABBIT_EXCHANGE_NAME cannot be undefined.", true,
+                this.constructor.name, 6003);
+        }
+
+        // Create exchange if not exists
         this.channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", { durable: false });
+        // Create queue
         const q = await this.channel.assertQueue(name, { ...queueOptions, ...{ durable: true } });
-        this.channel.prefetch(1); // This tells RabbitMQ not to give more than one message to a worker at a time.
+        // This tells RabbitMQ not to give more than one message to a worker at a time.
+        this.channel.prefetch(1);
+        // Bind queue to exchange
         this.channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, key);
         log.verbose("[*] Waiting for messages in " + name + ".");
+        // Listen and consume messages in queue
         this.channel.consume(name, processor, { noAck: false });
     }
 

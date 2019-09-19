@@ -19,7 +19,7 @@ export class GardensWorker extends BaseWorker {
         this.dataSource = new DataSource(Gardens.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers: {
-                    Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                    Authorization: "Basic " + config.datasources.OICTEndpointApikey,
                 },
                 method: "GET",
                 url: config.datasources.Gardens,

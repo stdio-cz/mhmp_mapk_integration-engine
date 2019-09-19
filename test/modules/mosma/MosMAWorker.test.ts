@@ -1,17 +1,9 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import "mocha";
+import * as sinon from "sinon";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { MosMAWorker } from "../../../src/modules/mosma";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
-
-chai.use(chaiAsPromised);
 
 describe("MosMAWorker", () => {
 

@@ -22,6 +22,11 @@ enum LoggerEventType {
     NumberOfRecords = "number-of-records",
 }
 
+interface ILoggerEventNumberOfRecordsInputType {
+    name: string;
+    numberOfRecords: number;
+}
+
 /**
  * Winston logger setup
  */
@@ -54,7 +59,7 @@ logger.debug = (logText: any) => {
     winstonDebugLog(logText);
 };
 
-loggerEvents.on(LoggerEventType.NumberOfRecords, ({ name, numberOfRecords }) => {
+loggerEvents.on(LoggerEventType.NumberOfRecords, ({ name, numberOfRecords }: ILoggerEventNumberOfRecordsInputType) => {
     if (config.influx_db.enabled) {
         const influxDB = InfluxConnector.getConnection();
         try {

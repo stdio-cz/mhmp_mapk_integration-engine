@@ -1,20 +1,17 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { CustomError } from "@golemio/errors";
 import { Validator } from "@golemio/validator";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import mongoose = require("mongoose");
 import { SchemaDefinition } from "mongoose";
+import * as sinon from "sinon";
 import { MongoConnector } from "../../../src/core/connectors";
 import { log } from "../../../src/core/helpers";
 import { IMongooseSettings, MongoModel } from "../../../src/core/models";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
 
 chai.use(chaiAsPromised);
 

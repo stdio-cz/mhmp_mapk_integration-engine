@@ -9,22 +9,22 @@ const xml2js = require("xml2js-es6-promise");
 export class XMLDataTypeStrategy implements IDataTypeStrategy {
 
     private dataTypeSettings: IXMLSettings;
-    private filter: (item: any) => any;
+    private filter: ((item: any) => any) | undefined;
 
     constructor(settings: IXMLSettings) {
         this.dataTypeSettings = settings;
         this.filter = undefined;
     }
 
-    public setDataTypeSettings = (settings: IXMLSettings): void => {
+    public setDataTypeSettings(settings: IXMLSettings): void {
         this.dataTypeSettings = settings;
     }
 
-    public setFilter = (filterFunction: (item: any) => any) => {
+    public setFilter(filterFunction: (item: any) => any) {
         this.filter = filterFunction;
     }
 
-    public parseData = async (data: any): Promise<any> => {
+    public async parseData(data: any): Promise<any> {
         try {
             let parsed = await xml2js(data, this.dataTypeSettings.xml2jsParams);
             parsed = getSubProperty(this.dataTypeSettings.resultsPath, parsed);

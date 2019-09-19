@@ -1,16 +1,12 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { CustomError } from "@golemio/errors";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as sinon from "sinon";
 import { DataSource } from "../../../src/core/datasources";
 import { log } from "../../../src/core/helpers/Logger";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
 
 chai.use(chaiAsPromised);
 
@@ -48,38 +44,38 @@ describe("DataSource", () => {
     });
 
     it("should has name method", () => {
-        expect(datasource.name).not.to.be.undefined;
+        chai.expect(datasource.name).not.to.be.undefined;
     });
 
     it("should has getAll method", () => {
-        expect(datasource.getAll).not.to.be.undefined;
+        chai.expect(datasource.getAll).not.to.be.undefined;
     });
 
     it("should has getLastModified method", () => {
-        expect(datasource.getLastModified).not.to.be.undefined;
+        chai.expect(datasource.getLastModified).not.to.be.undefined;
     });
 
     it("should has setProtocolStrategy method", () => {
-        expect(datasource.setProtocolStrategy).not.to.be.undefined;
+        chai.expect(datasource.setProtocolStrategy).not.to.be.undefined;
     });
 
     it("should has setDataTypeStrategy method", () => {
-        expect(datasource.setDataTypeStrategy).not.to.be.undefined;
+        chai.expect(datasource.setDataTypeStrategy).not.to.be.undefined;
     });
 
     it("should has setValidator method", () => {
-        expect(datasource.setValidator).not.to.be.undefined;
+        chai.expect(datasource.setValidator).not.to.be.undefined;
     });
 
     it("should properly get all data", async () => {
         const data = await datasource.getAll();
-        expect(data).to.have.property("message");
+        chai.expect(data).to.have.property("message");
     });
 
     it("should throws error if data are not valid", async () => {
         validatorStub.Validate = sandbox.stub().throws();
         datasource.setValidator(validatorStub);
-        await expect(datasource.getAll()).to.be.rejectedWith(CustomError);
+        await chai.expect(datasource.getAll()).to.be.rejectedWith(CustomError);
     });
 
     it("should warn if data are empty", async () => {
@@ -108,17 +104,17 @@ describe("DataSource", () => {
 
     it("should set protocol strategy", async () => {
         datasource.setProtocolStrategy(null);
-        expect(datasource.protocolStrategy).to.be.null;
+        chai.expect(datasource.protocolStrategy).to.be.null;
     });
 
     it("should set datatype strategy", async () => {
         datasource.setDataTypeStrategy(null);
-        expect(datasource.dataTypeStrategy).to.be.null;
+        chai.expect(datasource.dataTypeStrategy).to.be.null;
     });
 
     it("should set validator", async () => {
         datasource.setValidator(null);
-        expect(datasource.validator).to.be.null;
+        chai.expect(datasource.validator).to.be.null;
     });
 
 });

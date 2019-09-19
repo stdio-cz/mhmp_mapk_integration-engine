@@ -1,18 +1,15 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as sinon from "sinon";
 import { RedisConnector } from "../../../src/core/connectors";
 import { FTPProtocolStrategy, IFTPSettings } from "../../../src/core/datasources";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
 const ftp = require("basic-ftp");
 const fs = require("fs");
-
 chai.use(chaiAsPromised);
 
 describe("FTPProtocolStrategy", () => {
@@ -78,7 +75,7 @@ describe("FTPProtocolStrategy", () => {
 
     it("should properly get data", async () => {
         const res = await strategy.getData();
-        expect(res).to.be.a.string;
+        expect(res).to.be.a("string");
     });
 
     it("should throw error if getting data failed", async () => {

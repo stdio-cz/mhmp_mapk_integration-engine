@@ -19,11 +19,11 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         this.connectionSettings = settings;
     }
 
-    public setConnectionSettings = (settings: IFTPSettings): void => {
+    public setConnectionSettings(settings: IFTPSettings): void {
         this.connectionSettings = settings;
     }
 
-    public getData = async (): Promise<any> => {
+    public async getData(): Promise<any> {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;
@@ -47,11 +47,11 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
                 const files = await decompress(path.join(tmpDir, this.connectionSettings.filename), {
                     filter: (this.connectionSettings.whitelistedFiles
                         && this.connectionSettings.whitelistedFiles.length)
-                        ? (file) => this.connectionSettings.whitelistedFiles
+                        ? (file: any) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
-                        : (file) => file,
+                        : (file: any) => file,
                 });
-                result = await Promise.all(files.map(async (file) => {
+                result = await Promise.all(files.map(async (file: any) => {
                     await redisModel.save(prefix + file.path, file.data.toString("hex"));
                     return {
                         filepath: prefix + file.path,
@@ -63,10 +63,10 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
             } else if (this.connectionSettings.hasSubFiles) {
                 let files = await this.readDir(path.join(tmpDir, this.connectionSettings.filename));
                 if (this.connectionSettings.whitelistedFiles && this.connectionSettings.whitelistedFiles.length) {
-                    files = files.filter((file) => this.connectionSettings.whitelistedFiles
+                    files = files.filter((file: any) => this.connectionSettings.whitelistedFiles
                         .indexOf(file) !== -1);
                 }
-                result = await Promise.all(files.map(async (file) => {
+                result = await Promise.all(files.map(async (file: any) => {
                     const data = await this.readFile(path.join(tmpDir, prefix, file));
                     await redisModel.save(prefix + file, data.toString("hex"));
                     return {
@@ -85,7 +85,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    public getLastModified = async (): Promise<string> => {
+    public async getLastModified(): Promise<string|null> {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;
@@ -101,15 +101,15 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    private readFile = (file: string): Promise<Buffer> => {
+    private readFile(file: string): Promise<Buffer> {
         return new Promise((resolve, reject) => {
             const stream = fs.createReadStream(file);
-            const chunks = [];
+            const chunks: any[] = [];
 
-            stream.on("error", (err) => {
+            stream.on("error", (err: Error) => {
                 reject(err);
             });
-            stream.on("data", (data) => {
+            stream.on("data", (data: any) => {
                 chunks.push(data);
             });
             stream.on("close", () => {
@@ -118,9 +118,9 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         });
     }
 
-    private readDir = (dirPath: string): Promise<any> => {
+    private readDir(dirPath: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            fs.readdir(dirPath, (err, files) => {
+            fs.readdir(dirPath, (err: Error, files: any) => {
                 if (err) {
                     return reject(err);
                 }

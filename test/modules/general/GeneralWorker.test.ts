@@ -1,17 +1,14 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { GeneralImport } from "@golemio/schema-definitions";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { MongoModel } from "../../../src/core/models";
 import { GeneralWorker } from "../../../src/modules/general";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
 
 chai.use(chaiAsPromised);
 

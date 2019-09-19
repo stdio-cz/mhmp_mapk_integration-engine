@@ -7,7 +7,7 @@ export interface IQueueDefinition {
         customProcessFunction?: (msg: any) => Promise<void>;
         name: string,
         options: any,
-        worker: any, // TODO IWorker
-        workerMethod: string,
+        worker: any | undefined, // TODO IWorker
+        workerMethod: string | undefined,
     }>;
 }

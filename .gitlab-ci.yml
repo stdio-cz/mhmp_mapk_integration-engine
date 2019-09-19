@@ -54,3 +54,16 @@ registry_deployment:
     refs:
       - master
       - development
+
+pages:
+  stage: deploy
+  image: node:8
+  script:
+  - yarn install
+  - yarn run generate-docs
+  - mv docs/typedoc public
+  artifacts:
+    paths:
+    - public
+  only:
+    - master

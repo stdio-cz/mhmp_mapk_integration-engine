@@ -670,7 +670,7 @@ const definitions: IQueueDefinition[] = [
                             } else {
                                 // numbers of saved rows are not equal with number of downloaded rows
                                 ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    null, 5004));
+                                    undefined, 5004));
                                 channel.nack(msg, false, false);
                             }
                             log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
@@ -690,8 +690,8 @@ const definitions: IQueueDefinition[] = [
                     deadLetterRoutingKey: "dead",
                     messageTtl: 23 * 60 * 60 * 1000,
                 },
-                worker: null,
-                workerMethod: null,
+                worker: undefined,
+                workerMethod: undefined,
             },
             {
                 name: "downloadCisStops",

@@ -1,4 +1,5 @@
-[![coverage report](http://gitlab.oict.cz/data-platform/integration-engine/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/integration-engine/commits/master)
+[![pipeline status](https://gitlab.com/operator-ict/golemio/code/integration-engine/badges/master/pipeline.svg)](https://gitlab.com/operator-ict/golemio/code/integration-engine/commits/master)
+[![coverage report](https://gitlab.com/operator-ict/golemio/code/integration-engine/badges/master/coverage.svg)](https://gitlab.com/operator-ict/golemio/code/integration-engine/commits/master)
 
 # Golemio Integration Engine
 
@@ -6,37 +7,48 @@ Integration Engine of the Golemio data platform.
 
 Developed by http://operatorict.cz
 
-## Prerequisites
 
-- NodeJS
-- MongoDB
-- PostgreSQL
-- Redis
-- yarn
-- @golemio/schema-definitions module
+## Docker instalation
 
-## Installation
+### Prerequisites
+- Docker Engine (https://docs.docker.com/)
+- RabbitMQ (https://www.rabbitmq.com/)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- Redis (https://redis.io/)
+- Golemio Schema Definitions
 
-### A) Docker compose
+### Instalation & run using Docker Compose
+
 1. create docker network if not already exists `docker network create golemio`
 2. `docker-compose up -d` will start all necessary services
 
 
-### B) Local instalation
+## Local instalation
 
-Install Node, MongoDB, PostgreSQL and Redis.
+### Prerequisites
 
-Create the `.npmrc` file and type to it the url to the OICT private npm proxy registry:
-```
-registry=http://<url_to_oict_registry>
-```
+- node.js (https://nodejs.org)
+- RabbitMQ (https://www.rabbitmq.com/)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- Redis (https://redis.io/)
+- yarn (https://yarnpkg.com)
+- TypeScript (https://www.typescriptlang.org/)
+- Golemio Schema Definitions
+
+### Installation
+
+Install all prerequisites
 
 Install all dependencies using command:
 ```
 yarn install
 ```
 
-## Configuration
+from the application's root directory.
+
+### Configuration
 
 Configuration is split to environment (.env file) options and other specific options (e.g. datasources).
 
@@ -44,58 +56,40 @@ The specific configuration files are in the `config/` directory. Default options
 
 Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`) or with the `.env` file. Example of the `.env` file is saved as `.env.template`.
 
+Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
-## Compilation of typescript code
+### Migrating PostgreSQL and MongoDB databases
 
-To compile typescript code into js one-time:
-```
-npm run build
-```
-or run this, to watch all changes
-```
-npm run build-watch
-```
-or run via TypeScript
-```
-npm run dev-start
-```
-or run with a debugger
-```
-npm run dev-start-debug
-```
-from the application's root directory.
-
-
-## Running MongoDB database
-
-Run Mongo Daemon by:
-```
-/usr/bin/mongod
-```
-on Unix, or
-```
-C:\Program Files\MongoDB\Server\*.*\bin\mongod.exe
-```
-on Windows
-
-
-## Migrating PostgreSQL database
-
-Before start the PostgreSQL database has to be created and migrated. In this case is used `db-migrate` from the `@golemio/schema-definitions` module.
+Before start the databases have to be created and migrated. In this case is used `db-migrate` from the `@golemio/schema-definitions` module.
 
 For more informations see [`@golemio/schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
 
+### Build & Run
 
-## Run
+#### Production
+
+To compile typescript code into js one-time (production build):
+```
+npm run build
+```
+To run the app:
 
 ```
 npm start
 ```
 
-from the application's root directory.
+#### Dev/debug
 
-Application is now running locally and processing messages from the queue.
+Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
+```
+npm run dev-start
+```
+or run with a debugger:
+```
+npm run dev-start-debug
+```
 
+Application is now running locally on port 3006 or on port specified in the environment variable.
 
 ## Tests
 
@@ -111,27 +105,24 @@ npm run datasources-test
 ```
 from the application's root directory.
 
+## Logging
 
-## Problems?
+Logging uses `Winston` for standard logging with levels, `morgan` for http access logs and `debug` (https://www.npmjs.com/package/debug) for debugging.
+
+All logs with `silly` and `debug` level are printed as standard log (if appropriate log level is set) using Winston as well as using `debug` module with `"golemio:integration-engine"` settings.
+
+You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
+
+## Documentation
+
+For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
+
+More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and `configuration_files.md` for description on how properly work with config files.
+
+## Contribution guidelines
+
+Please read `CONTRIBUTING.md`.
+
+## Troubleshooting
 
 Contact benak@operatorict.cz or vycpalek@operatorict.cz
-
-## Useful tips & links
-[Installing MongoDB database](https://docs.mongodb.com/master/tutorial/install-mongodb-on-debian/?_ga=1.255632584.174019589.1492515586)
-
-### Installing MongoDB
-Install MongoDB from package
-
-Binaries for MongoDB database are in `/usr/bin/` on Unix or `C:\Program Files\MongoDB\Server\3.4\bin` on Windows
-
-For example run Mongo Shell by:
-```
-/usr/bin/mongo
-```
-on Unix, or
-```
-C:\Program Files\MongoDB\Server\3.4\bin\mongo.exe
-```
-on Windows
-
-Create a folder `/data/db` if it doesn't exist -- MongoDB stores its data there (Unix systems)
