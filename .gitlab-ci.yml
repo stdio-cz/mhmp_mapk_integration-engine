@@ -59,8 +59,9 @@ pages:
   stage: deploy
   image: node:8
   script:
-  - yarn install
-  - yarn run generate-docs
+  - cat $VERDACCIO_NPMRC_PATH > .npmrc
+  - yarn install && rm -f .npmrc
+  - npm run generate-docs
   - mv docs/typedoc public
   artifacts:
     paths:
