@@ -1,5 +1,5 @@
-[![pipeline status](http://gitlab.oict.cz/data-platform/integration-engine/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/integration-engine/commits/master)
-[![coverage report](http://gitlab.oict.cz/data-platform/integration-engine/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/integration-engine/commits/master)
+[![pipeline status](https://gitlab.com/operator-ict/golemio/code/integration-engine/badges/master/pipeline.svg)](https://gitlab.com/operator-ict/golemio/code/integration-engine/commits/master)
+[![coverage report](https://gitlab.com/operator-ict/golemio/code/integration-engine/badges/master/coverage.svg)](https://gitlab.com/operator-ict/golemio/code/integration-engine/commits/master)
 
 # Golemio Integration Engine
 

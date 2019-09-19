@@ -1,6 +1,6 @@
 {
 	"name": "@golemio/integration-engine",
-	"version": "0.2.0",
+	"version": "1.0.0",
 	"description": "Integration Engine of the Golemio Data Platform System",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://gitlab.oict.cz/data-platform/integration-engine"
+		"url": "https://gitlab.com/operator-ict/golemio/code/integration-engine"
 	},
 	"devDependencies": {
 		"@types/amqplib": "^0.5.13",
