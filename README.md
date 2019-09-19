@@ -117,7 +117,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
-More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset.
+More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and `configuration_files.md` for description on how properly work with config files.
 
 ## Contribution guidelines
 
