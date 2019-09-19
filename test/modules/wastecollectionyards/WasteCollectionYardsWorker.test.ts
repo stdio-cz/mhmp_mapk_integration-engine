@@ -1,18 +1,10 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { WasteCollectionYards } from "@golemio/schema-definitions";
 import "mocha";
+import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { WasteCollectionYardsWorker } from "../../../src/modules/wastecollectionyards";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
-
-chai.use(chaiAsPromised);
 
 describe("WasteCollectionYardsWorker", () => {
 

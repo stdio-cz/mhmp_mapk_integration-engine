@@ -6,6 +6,7 @@ import { log } from "../helpers";
 
 const Influx = require("influx");
 
+// TODO fix any type, fix write errors, refactor to same format as other connectors
 class MyInflux {
 
     private influx: any;

@@ -31,9 +31,9 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
                 const files = await decompress(result, {
                     filter: (this.connectionSettings.whitelistedFiles
                         && this.connectionSettings.whitelistedFiles.length)
-                        ? (file) => this.connectionSettings.whitelistedFiles
+                        ? (file: any) => this.connectionSettings.whitelistedFiles
                             .indexOf(file.path) !== -1
-                        : (file) => file,
+                        : (file: any) => file,
                 });
                 const redisModel = new RedisModel("HTTPProtocolStrategy" + "Model", {
                     isKeyConstructedFromData: false,
@@ -56,7 +56,7 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    public getLastModified = async (): Promise<string> => {
+    public getLastModified = async (): Promise<string|null> => {
         try {
             const s = this.connectionSettings;
             s.method = "HEAD";

@@ -1,20 +1,17 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { CustomError } from "@golemio/errors";
 import { Validator } from "@golemio/validator";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
 import * as Sequelize from "sequelize";
+import * as sinon from "sinon";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { log } from "../../../src/core/helpers";
 import { ISequelizeSettings, PostgresModel } from "../../../src/core/models";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
 
 chai.use(chaiAsPromised);
 

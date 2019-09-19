@@ -1,19 +1,11 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import { RopidGTFS } from "@golemio/schema-definitions";
 import "mocha";
+import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { RopidGTFSWorker } from "../../../src/modules/ropidgtfs";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
-
-chai.use(chaiAsPromised);
 
 describe("RopidGTFSWorker", () => {
 

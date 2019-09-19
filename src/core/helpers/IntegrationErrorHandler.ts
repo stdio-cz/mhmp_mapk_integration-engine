@@ -28,7 +28,7 @@ export class IntegrationErrorHandler extends ErrorHandler {
 
         if (err instanceof CustomError && err.isOperational) {
             // is warning
-            if (warningErrorCodes.indexOf(err.code) !== -1) {
+            if (err.code && warningErrorCodes.indexOf(err.code) !== -1) {
                 log.warn(err.toString());
                 return { ...err.toObject(), ...{ ack: true } };
             // is error

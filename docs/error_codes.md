@@ -25,6 +25,8 @@
     - 5002: Error while purging old data.
     - 5003: Error while sending the POST request.
     - 5004: Error while checking RopidGTFS saved rows.
+    - 5005: Worker and worker method must be defined.
 - Other Errors
     - 6001: Method is not implemented.
     - 6002: Retrieving of the open street map nominatim data failed. // warning
+    - 6003: The ENV variable {name} cannot be undefined.

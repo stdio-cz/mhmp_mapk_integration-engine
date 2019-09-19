@@ -1,16 +1,8 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import "mocha";
+import * as sinon from "sinon";
 import { ParkingZonesWorker } from "../../../src/modules/parkingzones";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const sinon = require("sinon");
-
-chai.use(chaiAsPromised);
 
 describe("ParkingZonesWorker", () => {
 

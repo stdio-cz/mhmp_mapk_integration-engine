@@ -1,13 +1,11 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as fs from "fs";
 import "mocha";
 import { config, ConfigLoader } from "../../../src/core/config";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
@@ -28,6 +26,43 @@ describe("ConfigLoader", () => {
         expect(config.datasources.TSKParkings).to.be.equal("http://www.tsk-praha.cz/tskexport3/json/parkings");
         // env variables
         expect(config.MONGO_CONN).is.not.null;
+    });
+
+    it("should properly replace default conf by specific conf", () => {
+        fs.writeFileSync(__dirname + "/../../../config/repltest.default.json", JSON.stringify({
+            a: 1,
+            b: 2,
+        }));
+        fs.writeFileSync(__dirname + "/../../../config/repltest.json", JSON.stringify({
+            a: 3,
+            c: 1,
+            d: 2,
+        }));
+
+        let conf = new ConfigLoader("repltest").conf;
+        expect(conf.a).to.equal(3);
+        expect(conf.b).to.equal(2);
+        expect(conf.c).to.equal(1);
+        expect(conf.d).to.equal(2);
+
+        conf = new ConfigLoader("repltest", true).conf;
+        expect(conf.a).to.equal(3);
+        expect(conf.b).to.be.undefined;
+        expect(conf.c).to.equal(1);
+        expect(conf.d).to.equal(2);
+
+        fs.writeFileSync(__dirname + "/../../../config/repltest2.default.json", JSON.stringify({
+            a: 1,
+            b: 2,
+        }));
+
+        conf = new ConfigLoader("repltest2", true).conf;
+        expect(conf.a).to.equal(1);
+        expect(conf.b).to.equal(2);
+
+        fs.unlinkSync(__dirname + "/../../../config/repltest.json");
+        fs.unlinkSync(__dirname + "/../../../config/repltest.default.json");
+        fs.unlinkSync(__dirname + "/../../../config/repltest2.default.json");
     });
 
 });

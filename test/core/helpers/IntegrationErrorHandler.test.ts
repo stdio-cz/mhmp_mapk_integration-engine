@@ -1,13 +1,12 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import "mocha";
-import { IntegrationErrorHandler } from "../../../src/core/helpers";
-
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import "mocha";
 import * as sinon from "sinon";
+import { IntegrationErrorHandler } from "../../../src/core/helpers";
 
 chai.use(chaiAsPromised);
 

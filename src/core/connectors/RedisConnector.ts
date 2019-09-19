@@ -7,14 +7,24 @@ import { log } from "../helpers";
 
 class MyRedis {
 
-    private connection: Redis.Redis;
+    private connection: Redis.Redis | undefined;
 
     public connect = async (): Promise<Redis.Redis> => {
         try {
             if (this.connection) {
                 return this.connection;
             }
+
+            if (!config.REDIS_CONN) {
+                throw new CustomError("The ENV variable REDIS_CONN cannot be undefined.", true,
+                    this.constructor.name, 6003);
+            }
+
             this.connection = new Redis(config.REDIS_CONN);
+
+            if (!this.connection) {
+                throw new Error("Connection is undefined.");
+            }
 
             this.connection.on("error", (err) => {
                 throw new CustomError("Error while connecting to Redis.", false,

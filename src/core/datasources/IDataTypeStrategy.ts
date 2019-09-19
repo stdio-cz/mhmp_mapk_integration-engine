@@ -26,10 +26,10 @@ export interface IXMLSettings {
 
 export interface IDataTypeStrategy {
 
-    setDataTypeSettings: (settings: IJSONSettings | ICSVSettings | IXMLSettings) => void;
+    setDataTypeSettings(settings: IJSONSettings | ICSVSettings | IXMLSettings): void;
 
-    setFilter: (filterFunction: (item: any) => any) => void;
+    setFilter(filterFunction: (item: any) => any): void;
 
-    parseData: (data: any) => Promise<any>;
+    parseData(data: any): Promise<any>;
 
 }

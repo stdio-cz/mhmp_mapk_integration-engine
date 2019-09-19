@@ -1,15 +1,13 @@
-/// <reference path="../../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { GeneralTransformation } from "../../../src/modules/general";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-
 chai.use(chaiAsPromised);
+const fs = require("fs");
 
 describe("GeneralTransformation", () => {
 

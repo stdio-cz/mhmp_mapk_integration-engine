@@ -1,5 +1,3 @@
-/// <reference path="../../node_modules/@types/node/index.d.ts" />
-
 "use strict";
 
 import {
@@ -9,6 +7,9 @@ import {
     WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
@@ -16,10 +17,6 @@ import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
@@ -51,7 +48,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
-            expect(data).to.be.a.string;
+            expect(data).to.be.a("string");
         });
     });
 
@@ -150,7 +147,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
-            expect(data).to.be.a.string;
+            expect(data).to.be.a("string");
         });
 
         it("should returns all tariffs objects", async () => {
@@ -202,7 +199,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
-            expect(data).to.be.a.string;
+            expect(data).to.be.a("string");
         });
 
         it("should returns all cis objects", async () => {
@@ -212,7 +209,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should returns cis last modified", async () => {
             const data = await datasourceCisStops.getLastModified();
-            expect(data).to.be.a.string;
+            expect(data).to.be.a("string");
         });
 
     });
@@ -373,7 +370,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             datasource = new DataSource(Gardens.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
-                        Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                        Authorization: "Basic " + config.datasources.OICTEndpointApikey,
                     },
                     method: "GET",
                     url: config.datasources.Gardens,
@@ -516,7 +513,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             datasource = new DataSource(MunicipalAuthorities.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
-                        Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                        Authorization: "Basic " + config.datasources.OICTEndpointApikey,
                     },
                     method: "GET",
                     url: config.datasources.MunicipalAuthorities,
@@ -737,7 +734,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             oictDatasource = new DataSource(SortedWasteStations.oict.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
-                        Authorization: "Basic " + config.MOJEPRAHA_ENDPOINT_APIKEY,
+                        Authorization: "Basic " + config.datasources.OICTEndpointApikey,
                     },
                     method: "GET",
                     url: config.datasources.OICTSortedWasteContainers,

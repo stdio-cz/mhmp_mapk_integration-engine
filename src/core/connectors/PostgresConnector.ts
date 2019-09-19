@@ -7,12 +7,17 @@ import { log } from "../helpers";
 
 class MySequelize {
 
-    private connection: Sequelize.Sequelize;
+    private connection: Sequelize.Sequelize | undefined;
 
     public connect = async (): Promise<Sequelize.Sequelize> => {
         try {
             if (this.connection) {
                 return this.connection;
+            }
+
+            if (!config.POSTGRES_CONN) {
+                throw new CustomError("The ENV variable POSTGRES_CONN cannot be undefined.", true,
+                    this.constructor.name, 6003);
             }
 
             this.connection = new Sequelize(config.POSTGRES_CONN, {
@@ -42,6 +47,11 @@ class MySequelize {
                     max: 8,
                 },
             });
+
+            if (!this.connection) {
+                throw new Error("Connection is undefined.");
+            }
+
             await this.connection.authenticate();
             log.info("Connected to PostgreSQL!");
             return this.connection;

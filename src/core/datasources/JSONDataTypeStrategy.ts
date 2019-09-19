@@ -7,22 +7,22 @@ import { IDataTypeStrategy, IJSONSettings } from "./";
 export class JSONDataTypeStrategy implements IDataTypeStrategy {
 
     private resultsPath: string;
-    private filter: (item: any) => any;
+    private filter: ((item: any) => any) | undefined;
 
     constructor(settings: IJSONSettings) {
         this.resultsPath = settings.resultsPath;
         this.filter = undefined;
     }
 
-    public setDataTypeSettings = (settings: IJSONSettings): void => {
+    public setDataTypeSettings(settings: IJSONSettings): void {
         this.resultsPath = settings.resultsPath;
     }
 
-    public setFilter = (filterFunction: (item: any) => any) => {
+    public setFilter(filterFunction: (item: any) => any) {
         this.filter = filterFunction;
     }
 
-    public parseData = async (data: any): Promise<any> => {
+    public async parseData(data: any): Promise<any> {
         try {
             if (typeof data === "string") {
                 data = JSON.parse(data);
