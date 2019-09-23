@@ -53,10 +53,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Monday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -67,10 +67,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Tuesday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -81,10 +81,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Wednesday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -95,10 +95,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Thursday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -109,10 +109,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Friday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -123,10 +123,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Saturday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
@@ -137,10 +137,10 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
                 hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
                     const [opens, closes] = h.split(" - ");
                     res.properties.opening_hours.push({
-                        closes,
+                        closes: closes.trim(),
                         day_of_week: "Sunday",
                         description: (desc && desc[1]) ? desc[1] : null,
-                        opens,
+                        opens: opens.trim(),
                     });
                 });
             });
