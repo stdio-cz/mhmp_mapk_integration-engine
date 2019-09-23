@@ -4,6 +4,23 @@ import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
+enum openingHoursDaysKeys {
+    opening_hours_monday = "Monday",
+    opening_hours_tuesday = "Tuesday",
+    opening_hours_wednesday = "Wednesday",
+    opening_hours_thursday = "Thursday",
+    opening_hours_friday = "Friday",
+    opening_hours_saturday = "Saturday",
+    opening_hours_sunday = "Sunday",
+}
+
+interface IOpeningHours {
+    closes: string;
+    description?: string | null;
+    day_of_week: string;
+    opens: string;
+}
+
 export class MunicipalAuthoritiesTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
@@ -47,104 +64,15 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
             type: "Feature",
         };
 
-        if (element.opening_hours_monday) {
-            element.opening_hours_monday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Monday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_tuesday) {
-            element.opening_hours_tuesday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Tuesday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_wednesday) {
-            element.opening_hours_wednesday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Wednesday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_thursday) {
-            element.opening_hours_thursday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Thursday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_friday) {
-            element.opening_hours_friday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Friday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_saturday) {
-            element.opening_hours_saturday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Saturday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
-        if (element.opening_hours_sunday) {
-            element.opening_hours_sunday.split("; ").forEach((hours) => {
-                const desc = hours.match(/\(([^)]+)\)/);
-                hours.replace(/\(([^)]+)\)/, "").split(", ").forEach((h) => {
-                    const [opens, closes] = h.split(" - ");
-                    res.properties.opening_hours.push({
-                        closes: closes.trim(),
-                        day_of_week: "Sunday",
-                        description: (desc && desc[1]) ? desc[1] : null,
-                        opens: opens.trim(),
-                    });
-                });
-            });
-        }
+        Object.keys(openingHoursDaysKeys).map((openingHoursDaysKey: string) => {
+            if (element[openingHoursDaysKey] && element[openingHoursDaysKey] !== "") {
+                res.properties.opening_hours = [
+                    ...res.properties.opening_hours,
+                    ...this.transformOpeningHours(openingHoursDaysKeys[openingHoursDaysKey],
+                        element[openingHoursDaysKey]),
+                ];
+            }
+        });
 
         if (element.agendas && element.agendas.length > 0) {
             const agendas = element.agendas.map(async (agenda) => {
@@ -172,6 +100,23 @@ export class MunicipalAuthoritiesTransformation extends BaseTransformation imple
             case "municipality": return "Obecní úřad";
             default: return "";
         }
+    }
+
+    private transformOpeningHours(dayString: string, openingHoursString: string): IOpeningHours[] {
+        const res: IOpeningHours[] = [];
+        openingHoursString.split("; ").forEach((hoursByScope: string) => {
+            const desc = hoursByScope.match(/\(([^)]+)\)/);
+            hoursByScope.replace(/\(([^)]+)\)/, "").split(", ").forEach((hours: string) => {
+                const [opens, closes]: string[] = hours.split(" - ");
+                res.push({
+                    closes: closes.trim(),
+                    day_of_week: dayString,
+                    description: (desc && desc[1]) ? desc[1] : null,
+                    opens: opens.trim(),
+                });
+            });
+        });
+        return res;
     }
 
 }
