@@ -1,9 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { SharedCars } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
+import { log } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { CeskyCarsharingTransformation, HoppyGoTransformation } from "./";
@@ -73,17 +75,30 @@ export class SharedCarsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await Promise.all([
-            this.ceskyCarsharingDataSource.getAll(),
-            this.hoppyGoDataSource.getAll(),
-        ]);
-        const transformedData = await Promise.all([
-            this.ceskyCarsharingTransformation.transform(data[0]),
-            this.hoppyGoTransformation.transform(data[1]),
-        ]);
+        let ceskyCarsharing = [];
+        let hoppyGo = [];
+
+        try {
+            ceskyCarsharing = await this.ceskyCarsharingTransformation
+                .transform(await this.ceskyCarsharingDataSource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        try {
+            hoppyGo = await this.hoppyGoTransformation
+                .transform(await this.hoppyGoDataSource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        const concatenatedData = [
+            ...ceskyCarsharing,
+            ...hoppyGo,
+        ];
 
         // filter the objects 18 km far from the center of Prague
-        const filteredData = transformedData[0].concat(transformedData[1]).filter((item) => {
+        const filteredData = concatenatedData.filter((item) => {
             // distance from center of Prague
             const distance = ruler.distance([14.463401734828949, 50.06081863605803], item.geometry.coordinates);
             return distance < 18;
