@@ -14,7 +14,12 @@ export class SensoneoMeasurementsTransformation extends BaseTransformation imple
 
     protected transformElement = async (element: any): Promise<any> => {
 
-        const res = { ...element, updated_at: new Date().getTime() };
+        const res = {
+            ...element,
+            measured_at_utc: element.measured_at,
+            prediction_utc: element.prediction,
+            updated_at: new Date().getTime(),
+        };
         delete res.measured_at;
         delete res.prediction;
 

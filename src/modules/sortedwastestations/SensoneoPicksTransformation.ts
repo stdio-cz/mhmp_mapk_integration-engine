@@ -14,7 +14,11 @@ export class SensoneoPicksTransformation extends BaseTransformation implements I
 
     protected transformElement = async (element: any): Promise<any> => {
 
-        const res = { ...element, updated_at: new Date().getTime() };
+        const res = {
+            ...element,
+            picked_at_utc: new Date(element.picked_at).getTime(),
+            updated_at: new Date().getTime(),
+        };
         delete res.picked_at;
 
         return res;
