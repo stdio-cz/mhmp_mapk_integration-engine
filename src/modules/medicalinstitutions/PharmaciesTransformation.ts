@@ -1,11 +1,13 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { MedicalInstitutions } from "@golemio/schema-definitions";
+import { parse as fastcsvParse } from "fast-csv";
+import { Readable } from "stream";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 const slug = require("slugify");
-const csvtojson = require("csvtojson");
 const iconv = require("iconv-lite");
 
 export class PharmaciesTransformation extends BaseTransformation implements ITransformation {
@@ -106,9 +108,29 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
     }
 
     private transformFile = async (file: any): Promise<any> => {
-        return csvtojson({
-            delimiter: ";", noheader: false,
-        }).fromString(iconv.decode(Buffer.from(file.data, "hex"), "win1250"));
+        const readable = new Readable();
+        readable._read = () => {
+            // _read is required but you can noop it
+        };
+        readable.push(iconv.decode(Buffer.from(file.data, "hex"), "win1250"));
+        readable.push(null);
+
+        return new Promise((resolve, reject) => {
+            const resulsArray = [];
+            readable
+                .pipe(fastcsvParse({ delimiter: ";", headers: true }))
+                .on("error", (error) => {
+                    reject(new CustomError("Error while parsing source data.", true,
+                        this.constructor.name, 2003, error));
+                })
+                .on("data", (row) => {
+                    resulsArray.push(row);
+                })
+                .on("end", (rowCount: number) => {
+                    return resolve(resulsArray);
+                });
+
+        });
     }
 
     private getDayLabel = (day: string): string => {

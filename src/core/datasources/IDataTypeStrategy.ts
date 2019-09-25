@@ -8,10 +8,10 @@ export interface IJSONSettings {
 
 export interface ICSVSettings {
 
-    /** CSVTOJSON library parameters */
-    csvtojsonParams: object;
+    /** fast-csv library parameters */
+    fastcsvParams: object;
 
-    /** CSVTOJSON library line transformation */
+    /** line transformation */
     subscribe: (json: any) => any;
 }
 
