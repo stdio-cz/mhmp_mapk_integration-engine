@@ -1,11 +1,10 @@
 "use strict";
 
 import { RopidGTFS } from "@golemio/schema-definitions";
+import { parse as fastcsvParse } from "fast-csv";
+import { Readable } from "stream";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
-
-const lodash = require("lodash");
-const fastcsv = require("fast-csv");
 
 export class RopidGTFSTransformation extends BaseTransformation implements ITransformation {
 
@@ -18,41 +17,47 @@ export class RopidGTFSTransformation extends BaseTransformation implements ITran
 
     protected transformElement = async (element: any): Promise<any> => {
         let hrstart = process.hrtime();
-        const str = Buffer.from(element.data, "hex").toString("utf8");
-        log.debug(`${element.name}: buffer to string: ${process.hrtime(hrstart)[0]}s `
-            + `${process.hrtime(hrstart)[1] / 1000000}ms"`);
+
+        const buffer = Buffer.from(element.data, "hex");
+        const readable = new Readable();
+        readable._read = () => {
+            // _read is required but you can noop it
+        };
+        readable.push(buffer);
+        readable.push(null);
+        log.debug(`${element.name}: buffer to stream: ${process.hrtime(hrstart)[0]}s `
+            + `${process.hrtime(hrstart)[1] / 1000000}ms`);
 
         return new Promise((resolve, reject) => {
             hrstart = process.hrtime();
-            const parsed = [];
-            fastcsv
-                .parseString(str, { headers: true })
+            let parsed = [];
+            const chunks = [];
+            readable
+                .pipe(fastcsvParse({ headers: true }))
                 .on("error", (error) => {
                     reject(error);
                 })
                 .on("data", (row) => {
                     parsed.push(row);
+                    if (parsed.length % 1000 === 0) {
+                        chunks.push(parsed);
+                        parsed = [];
+                    }
                 })
                 .on("end", (rowCount) => {
-                    log.debug(`${element.name}: parsed ${rowCount} rows`);
+                    if (parsed.length > 0) {
+                        chunks.push(parsed);
+                        parsed = [];
+                    }
+                    log.debug(`${element.name}: parsed ${rowCount} rows (${chunks.length} chunks)`);
                     log.debug(`${element.name}: csv to json: ${process.hrtime(hrstart)[0]}s `
-                        + `${process.hrtime(hrstart)[1] / 1000000}ms"`);
-
-                    hrstart = process.hrtime();
-                    const total = parsed.length;
-                    // chunk into smaller sub arrays
-                    const chunks = lodash.chunk(parsed, 1000);
-                    log.debug(`${element.name}: array to chunks: ${process.hrtime(hrstart)[0]}s `
-                        + `${process.hrtime(hrstart)[1] / 1000000}ms"`);
-
+                        + `${process.hrtime(hrstart)[1] / 1000000}ms`);
                     return resolve({
                         data: chunks,
                         name: element.name,
-                        total,
+                        total: rowCount,
                     });
                 });
         });
-
     }
-
 }
