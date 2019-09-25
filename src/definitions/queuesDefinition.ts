@@ -4,7 +4,7 @@ import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
-    MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
+    MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
@@ -27,6 +27,7 @@ import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
 import { ParkingsWorker } from "../modules/parkings";
 import { ParkingZonesWorker } from "../modules/parkingzones";
+import { ParkomatsWorker } from "../modules/parkomats";
 import { PlaygroundsWorker } from "../modules/playgrounds";
 import { PublicToiletsWorker } from "../modules/publictoilets";
 import { PurgeWorker } from "../modules/purge";
@@ -496,6 +497,22 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: ParkingZonesWorker,
                 workerMethod: "updateTariffs",
+            },
+        ],
+    },
+    {
+        name: Parkomats.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Parkomats.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000,
+                },
+                worker: ParkomatsWorker,
+                workerMethod: "refreshDataInDB",
             },
         ],
     },
