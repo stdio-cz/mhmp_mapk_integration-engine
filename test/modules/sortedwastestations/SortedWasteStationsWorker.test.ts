@@ -92,8 +92,8 @@ describe("SortedWasteStationsWorker", () => {
 
         sandbox.stub(worker.iprTransformation, "transform").callsFake(() => testTransformedData[0]);
         sandbox.stub(worker.iprTransformation, "setContainers");
-        sandbox.stub(worker.oictTransformation, "transform").callsFake(() => testTransformedData[1]);
-        sandbox.stub(worker.potexTransformation, "transform").callsFake(() => testTransformedData[2]);
+        sandbox.stub(worker.oictTransformation, "transform").callsFake(() => [testTransformedData[1]]);
+        sandbox.stub(worker.potexTransformation, "transform").callsFake(() => [testTransformedData[2]]);
 
         sandbox.stub(worker.model, "save");
         sandbox.stub(worker, "sendMessageToExchange");
@@ -131,7 +131,7 @@ describe("SortedWasteStationsWorker", () => {
         sandbox.assert.calledOnce(worker.iprContainersDatasource.getAll);
         sandbox.assert.calledOnce(worker.iprStationsDatasource.getAll);
         sandbox.assert.calledOnce(worker.oictDatasource.getAll);
-        sandbox.assert.calledOnce(worker.oictDatasource.getAll);
+        sandbox.assert.calledOnce(worker.potexDatasource.getAll);
         sandbox.assert.calledOnce(worker.iprTransformation.setContainers);
         sandbox.assert.calledOnce(worker.iprTransformation.transform);
         sandbox.assert.calledOnce(worker.oictTransformation.transform);
@@ -144,12 +144,12 @@ describe("SortedWasteStationsWorker", () => {
         });
         sandbox.assert.callOrder(
             worker.iprContainersDatasource.getAll,
-            worker.iprStationsDatasource.getAll,
-            worker.oictDatasource.getAll,
-            worker.potexDatasource.getAll,
             worker.iprTransformation.setContainers,
+            worker.iprStationsDatasource.getAll,
             worker.iprTransformation.transform,
+            worker.oictDatasource.getAll,
             worker.oictTransformation.transform,
+            worker.potexDatasource.getAll,
             worker.potexTransformation.transform,
             worker.model.save,
             worker.sendMessageToExchange);
