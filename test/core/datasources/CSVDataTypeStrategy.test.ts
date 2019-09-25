@@ -15,7 +15,7 @@ describe("CSVDataTypeStrategy", () => {
     let testCSVString;
 
     beforeEach(() => {
-        testSettings = { csvtojsonParams: { noheader: false }, subscribe: ((json: any) => json)};
+        testSettings = { fastcsvParams: { headers: true }, subscribe: ((json: any) => json)};
         strategy = new CSVDataTypeStrategy(testSettings);
         testCSVString = "id,data\n1,test1\n2,test\n";
     });

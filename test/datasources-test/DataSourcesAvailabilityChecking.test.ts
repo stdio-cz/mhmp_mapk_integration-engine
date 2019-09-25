@@ -646,7 +646,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new Validator(MedicalInstitutions.pharmacies.name + "DataSource",
                     MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject));
             const hcDataTypeStrategy = new CSVDataTypeStrategy({
-                csvtojsonParams: { noheader: false },
+                fastcsvParams: { headers: true },
                 subscribe: ((json: any) => {
                     delete json.poskytovatel_ič;
                     delete json.poskytovatel_právní_forma_osoba;
