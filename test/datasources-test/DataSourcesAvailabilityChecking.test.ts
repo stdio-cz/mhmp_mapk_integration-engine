@@ -11,6 +11,7 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
@@ -986,16 +987,14 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("TSKParkomats", () => {
 
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            const dataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
-
-            const from = new Date();
-            from.setMinutes(from.getMinutes() - 12);
-            const to = new Date();
+            const to = moment.tz(new Date(), "Europe/Prague");
+            const from = to.clone();
+            from.subtract(12, "minutes");
             const url = config.datasources.TSKParkomats +
-                `/parkingsessions?from=${from.toISOString()}&to=${to.toISOString()}`;
+                `/parkingsessions?from=${from.format("YYYY-MM-DDTHH:mm:ss")}&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
 
             const dataSourceHTTPSettings: IHTTPSettings = {
                 headers: {
@@ -1007,8 +1006,9 @@ describe("DataSourcesAvailabilityChecking", () => {
 
             datasource = new DataSource(Parkomats.name + "DataSource",
                 new HTTPProtocolStrategy(dataSourceHTTPSettings),
-                dataTypeStrategy,
-                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject));
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject),
+            );
         });
 
         it("should returns all objects", async () => {

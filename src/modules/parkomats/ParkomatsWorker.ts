@@ -2,6 +2,7 @@
 
 import { Parkomats } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
+import * as moment from "moment-timezone";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy } from "../../core/datasources";
 import { log } from "../../core/helpers";
@@ -20,7 +21,6 @@ export class ParkomatsWorker extends BaseWorker {
 
     constructor() {
         super();
-        const dataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
 
         this.dataSourceHTTPSettings = {
             headers: {
@@ -34,7 +34,7 @@ export class ParkomatsWorker extends BaseWorker {
 
         this.dataSource = new DataSource(Parkomats.name + "DataSource",
             new HTTPProtocolStrategy(this.dataSourceHTTPSettings),
-            dataTypeStrategy,
+            new JSONDataTypeStrategy({ resultsPath: "" }),
             new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject));
         this.model = new PostgresModel(Parkomats.name + "Model", {
             outputSequelizeAttributes: Parkomats.outputSequelizeAttributes,
@@ -46,45 +46,28 @@ export class ParkomatsWorker extends BaseWorker {
         this.transformation = new ParkomatsTransformation();
     }
 
-    // from cron tasks
+    // TODO resolve custom from/to use in different endpoint (/parkingsessionshistory)
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        function setDefaultFrom(): Date {
-            const d = new Date();
-            d.setMinutes(d.getMinutes() - 12); // last 12 minutes from now
-            return d;
-        }
-
-        function setDefaultTo(): Date {
-            const d = new Date(); // now
-            return d;
-        }
-
-        let from: Date;
-        let to: Date;
+        let from: moment.Moment;
+        let to: moment.Moment;
         try {
             // setting custom interval from message data
-            const content = msg.content.toString();
-            const customInterval = JSON.parse(content);
-            if (customInterval.from) {
-                from = new Date(customInterval.from);
+            const customInterval = JSON.parse(msg.content.toString());
+            if (customInterval.from && customInterval.to) {
+                from = moment.tz(new Date(customInterval.from), "Europe/Prague");
+                to = moment.tz(new Date(customInterval.to), "Europe/Prague");
+                log.debug(`Interval from: ${from} to ${to} was used.`);
             } else {
-                from = setDefaultFrom();
-            }
-            if (customInterval.to) {
-                to = new Date(customInterval.to);
-            } else {
-                to = setDefaultTo();
-            }
-
-            if (from && to) {
-                log.debug(`Interval from: ${from.toISOString()} to ${to.toISOString()} was used.`);
+                throw new Error("Interval must contain from and to properties.");
             }
         } catch (err) {
-            from = setDefaultFrom();
-            to = setDefaultTo();
+            // setting default interval (normal situation)
+            to = moment.tz(new Date(), "Europe/Prague");
+            from = to.clone();
+            from.subtract(12, "minutes");
         }
 
-        const url = this.dataSourceUrl + from.toISOString() + `&to=${to.toISOString()}`;
+        const url = this.dataSourceUrl + from.format("YYYY-MM-DDTHH:mm:ss") + `&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
         this.dataSourceHTTPSettings.url = url;
         this.dataSource.setProtocolStrategy(new HTTPProtocolStrategy(
             this.dataSourceHTTPSettings));
