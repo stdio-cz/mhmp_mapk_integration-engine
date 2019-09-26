@@ -2,7 +2,7 @@
 
 import * as chai from "chai";
 import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { MunicipalAuthoritiesTransformation } from "../../../src/modules/municipalauthorities";
 

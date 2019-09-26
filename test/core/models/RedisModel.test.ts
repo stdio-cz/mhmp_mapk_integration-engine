@@ -3,7 +3,7 @@
 import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
 import { IRedisSettings, RedisModel } from "../../../src/core/models";

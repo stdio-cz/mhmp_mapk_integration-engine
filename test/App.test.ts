@@ -3,11 +3,11 @@
 import { CustomError } from "@golemio/errors";
 import * as chai from "chai";
 import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import chaiAsPromised from "chai-as-promised";
 import * as express from "express";
 import "mocha";
 import * as sinon from "sinon";
-import * as request from "supertest";
+import request from "supertest";
 import App from "../src/App";
 import { config } from "../src/core/config";
 import { AMQPConnector, MongoConnector, PostgresConnector, RedisConnector } from "../src/core/connectors";
