@@ -32,18 +32,18 @@ describe("SharedBikesWorker", () => {
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
         sandbox.assert.calledOnce(worker.homeportLocationsDataSource.getAll);
-        sandbox.assert.calledOnce(worker.homeportOutOfLocationsDataSource.getAll);
-        sandbox.assert.calledOnce(worker.rekolaDataSource.getAll);
         sandbox.assert.calledOnce(worker.homeportLocationsTransformation.transform);
+        sandbox.assert.calledOnce(worker.homeportOutOfLocationsDataSource.getAll);
         sandbox.assert.calledOnce(worker.homeportOutOfLocationsTransformation.transform);
+        sandbox.assert.calledOnce(worker.rekolaDataSource.getAll);
         sandbox.assert.calledOnce(worker.rekolaTransformation.transform);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.callOrder(
             worker.homeportLocationsDataSource.getAll,
-            worker.homeportOutOfLocationsDataSource.getAll,
-            worker.rekolaDataSource.getAll,
             worker.homeportLocationsTransformation.transform,
+            worker.homeportOutOfLocationsDataSource.getAll,
             worker.homeportOutOfLocationsTransformation.transform,
+            worker.rekolaDataSource.getAll,
             worker.rekolaTransformation.transform,
             worker.model.save);
     });

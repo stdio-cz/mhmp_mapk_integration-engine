@@ -72,8 +72,8 @@ describe("MedicalInstitutionsWorker", () => {
         });
         sandbox.assert.callOrder(
             worker.pharmaciesDatasource.getAll,
-            worker.healthCareDatasource.getAll,
             worker.pharmaciesTransformation.transform,
+            worker.healthCareDatasource.getAll,
             worker.healthCareTransformation.transform,
             worker.model.save,
             worker.sendMessageToExchange);

@@ -1,12 +1,10 @@
 "use strict";
 
 import { CustomError, ErrorHandler } from "@golemio/errors";
+import { InfluxDB } from "influx";
 import { config } from "../config";
 import { log } from "../helpers";
 
-const Influx = require("influx");
-
-// TODO fix any type, fix write errors, refactor to same format as other connectors
 class MyInflux {
 
     private influx: any;
@@ -17,11 +15,10 @@ class MyInflux {
                 return this.influx;
             }
 
-            this.influx = new Influx.InfluxDB({
+            this.influx = new InfluxDB({
                 database: config.influx_db.database,
-                host: config.influx_db.host,
+                hosts: config.influx_db.hosts,
                 password: config.influx_db.password,
-                port: config.influx_db.port,
                 schema: schemas,
                 username: config.influx_db.username,
             });

@@ -5,7 +5,7 @@ import { CityDistricts, MedicalInstitutions } from "@golemio/schema-definitions"
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { CSVDataTypeStrategy, DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { GeocodeApi } from "../../core/helpers";
+import { GeocodeApi, log } from "../../core/helpers";
 import { MongoModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { HealthCareTransformation, PharmaciesTransformation } from "./";
@@ -41,26 +41,37 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         const hcDataTypeStrategy = new CSVDataTypeStrategy({
             fastcsvParams: { headers: true },
             subscribe: ((json: any) => {
-                delete json.poskytovatel_ič;
-                delete json.poskytovatel_právní_forma_osoba;
-                delete json.poskytovatel_právní_forma;
-                delete json.sídlo_adresa_kód_kraje;
-                delete json.sídlo_adresa_název_kraje;
-                delete json.sídlo_adresa_kód_okresu;
-                delete json.sídlo_adresa_název_okresu;
-                delete json.sídlo_adresa_psč;
-                delete json.sídlo_adresa_název_obce;
-                delete json.sídlo_adresa_název_ulice;
-                delete json.sídlo_adresa_číslo_domovní;
+                delete json.CisloDomovniOrientacniSidlo;
+                delete json.DruhPece;
+                delete json.FormaPece;
+                delete json.Ico;
+                delete json.Kod;
+                delete json.Kraj;
+                delete json.KrajCodeSidlo;
+                delete json.MistoPoskytovaniId;
+                delete json.ObecSidlo;
+                delete json.OborPece;
+                delete json.OdbornyZastupce;
+                delete json.Okres;
+                delete json.OkresCode;
+                delete json.OkresCodeSidlo;
+                delete json.PoskytovatelFax;
+                delete json.PravniFormaKod;
+                delete json.PscSidlo;
+                delete json.SpravniObvod;
+                delete json.TypOsoby;
+                delete json.UliceSidlo;
                 return json;
             }),
         });
         hcDataTypeStrategy.setFilter((item) => {
-            return item.adresa_kód_kraje === "CZ010"
+            return item.KrajCode === "CZ010"
+                && item.Lat
+                && item.Lng
                 && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
                     "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
                     "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                    "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+                    "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
         });
         this.healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
             new HTTPProtocolStrategy({
@@ -119,25 +130,37 @@ export class MedicalInstitutionsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await Promise.all([
-            this.pharmaciesDatasource.getAll(),
-            this.healthCareDatasource.getAll(),
-        ]);
+        let pharmacies = [];
+        let healthCare = [];
 
-        const inputData = data[0].map(async (d) => {
-            d.data = await this.redisModel.getData(d.filepath);
-            return d;
-        });
+        try {
+            const pharmaciesData = await this.pharmaciesDatasource.getAll();
+            const inputData = pharmaciesData.map(async (d) => {
+                d.data = await this.redisModel.getData(d.filepath);
+                return d;
+            });
+            pharmacies = await this.pharmaciesTransformation
+                .transform(await Promise.all(inputData));
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
 
-        let transformedData = await Promise.all([
-            this.pharmaciesTransformation.transform(await Promise.all(inputData)),
-            this.healthCareTransformation.transform(data[1]),
-        ]);
-        transformedData = transformedData[0].concat(transformedData[1]);
-        await this.model.save(transformedData);
+        try {
+            healthCare = await this.healthCareTransformation
+                .transform(await this.healthCareDatasource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        const concatenatedData = [
+            ...pharmacies,
+            ...healthCare,
+        ];
+
+        await this.model.save(concatenatedData);
 
         // send messages for updating district and geo
-        const promises = transformedData.map((p) => {
+        const promises = concatenatedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGeoAndDistrict",
                 new Buffer(JSON.stringify(p)));
         });
@@ -156,6 +179,8 @@ export class MedicalInstitutionsWorker extends BaseWorker {
                 dbData.geometry.coordinates = coordinates;
                 await dbData.save();
             } catch (err) {
+                await dbData.remove();
+                log.debug("Address by geo was not found. Object '" + dbData.properties.id + "' removed.");
                 throw new CustomError("Error while updating geo.", true, this.constructor.name, 5001, err);
             }
         }

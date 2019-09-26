@@ -1,9 +1,11 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { SharedBikes } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
+import { log } from "../../core/helpers";
 import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { HomeportLocationsTransformation, HomeportOutOfLocationsTransformation, RekolaTransformation } from "./";
@@ -87,18 +89,36 @@ export class SharedBikesWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await Promise.all([
-            this.homeportLocationsDataSource.getAll(),
-            this.homeportOutOfLocationsDataSource.getAll(),
-            this.rekolaDataSource.getAll(),
-        ]);
-        const transformedData = await Promise.all([
-            this.homeportLocationsTransformation.transform(data[0]),
-            this.homeportOutOfLocationsTransformation.transform(data[1]),
-            this.rekolaTransformation.transform(data[2]),
-        ]);
+        let homeportLocations = [];
+        let homeportOutOfLocations = [];
+        let rekola = [];
 
-        const concatenatedData = transformedData[0].concat(transformedData[1].concat(transformedData[2]));
+        try {
+            homeportLocations = await this.homeportLocationsTransformation
+                .transform(await this.homeportLocationsDataSource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        try {
+            homeportOutOfLocations = await this.homeportOutOfLocationsTransformation
+                .transform(await this.homeportOutOfLocationsDataSource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        try {
+            rekola = await this.rekolaTransformation
+                .transform(await this.rekolaDataSource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        const concatenatedData = [
+            ...homeportLocations,
+            ...homeportOutOfLocations,
+            ...rekola,
+        ];
 
         // filter the objects 18 km far from the center of Prague
         const filteredData = concatenatedData.filter((item) => {
