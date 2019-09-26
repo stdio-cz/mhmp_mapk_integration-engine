@@ -27,7 +27,8 @@ export class ParkomatsWorker extends BaseWorker {
                 authorization: config.datasources.TSKParkomatsToken,
             },
             method: "GET",
-            // Warning! Url must be filled with required `from` querystring param
+            // Warning! Url must be filled with required `from` and `to` querystring param
+            // if `to` omitted, API returns empty array!
             url: this.dataSourceUrl,
         };
 
@@ -48,9 +49,13 @@ export class ParkomatsWorker extends BaseWorker {
     // from cron tasks
     public refreshDataInDB = async (msg: any): Promise<void> => {
         function setDefaultFrom(): Date {
-            // setting default interval (normal situation)
             const d = new Date();
             d.setMinutes(d.getMinutes() - 12); // last 12 minutes from now
+            return d;
+        }
+
+        function setDefaultTo(): Date {
+            const d = new Date(); // now
             return d;
         }
 
@@ -67,27 +72,25 @@ export class ParkomatsWorker extends BaseWorker {
             }
             if (customInterval.to) {
                 to = new Date(customInterval.to);
+            } else {
+                to = setDefaultTo();
             }
 
             if (from && to) {
                 log.debug(`Interval from: ${from.toISOString()} to ${to.toISOString()} was used.`);
-            } else if (from) {
-                log.debug(`Parameter from: ${from.toISOString()} was used.`);
             }
         } catch (err) {
             from = setDefaultFrom();
+            to = setDefaultTo();
         }
 
-        let url = this.dataSourceUrl + from.toISOString();
-        if (to) {
-            url += `&to=${to.toISOString()}`;
-        }
+        const url = this.dataSourceUrl + from.toISOString() + `&to=${to.toISOString()}`;
         this.dataSourceHTTPSettings.url = url;
         this.dataSource.setProtocolStrategy(new HTTPProtocolStrategy(
             this.dataSourceHTTPSettings));
 
         const data = await this.dataSource.getAll();
-        const transformedData = await this.transformation.transform(data);
+        const transformedData: any[] = await this.transformation.transform(data);
         await this.model.save(transformedData);
     }
 }

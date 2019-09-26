@@ -509,7 +509,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 23 * 60 * 1000,
                 },
                 worker: ParkomatsWorker,
                 workerMethod: "refreshDataInDB",

@@ -2,7 +2,7 @@
 
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
+    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
     WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
@@ -14,7 +14,7 @@ import "mocha";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
@@ -335,7 +335,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             let datasource;
 
             beforeEach(() => {
-                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: "data.items"});
+                const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "data.items" });
                 hoppyGoDataType.setFilter((item) =>
                     (item.localization && item.localization !== "" && item.localization !== ","));
                 datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
@@ -984,4 +984,42 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
+    describe("TSKParkomats", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            const dataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
+
+            const from = new Date();
+            from.setMinutes(from.getMinutes() - 12);
+            const to = new Date();
+            const url = config.datasources.TSKParkomats +
+                `/parkingsessions?from=${from.toISOString()}&to=${to.toISOString()}`;
+
+            const dataSourceHTTPSettings: IHTTPSettings = {
+                headers: {
+                    authorization: config.datasources.TSKParkomatsToken,
+                },
+                method: "GET",
+                url,
+            };
+
+            datasource = new DataSource(Parkomats.name + "DataSource",
+                new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                dataTypeStrategy,
+                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
 });

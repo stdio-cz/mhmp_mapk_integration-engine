@@ -14,18 +14,18 @@ export class ParkomatsTransformation extends BaseTransformation implements ITran
     }
 
     protected transformElement = async (data: any): Promise<any> => {
-        const ticketBought = moment.tz(data.dateTime, "Europe/Prague");
-        const validityFrom = moment.tz(data.dateFrom, "Europe/Prague");
-        const validityTo = moment.tz(data.dateTo, "Europe/Prague");
+        const ticketBought = data.DateTime ? moment.tz(data.DateTime, "Europe/Prague") : null;
+        const validityFrom = data.DateFrom ? moment.tz(data.DateFrom, "Europe/Prague") : null;
+        const validityTo = data.DateTo ? moment.tz(data.DateTo, "Europe/Prague") : null;
 
         const res = {
-            channel: data.channel,
-            parking_zone: data.section,
-            price: data.price,
-            ticket_bought: ticketBought.isValid() ? ticketBought.toDate() : null,
-            transaction_id: data.id,
-            validity_from: validityFrom.isValid() ? validityFrom.toDate() : null,
-            validity_to: validityTo.isValid() ? validityTo.toDate() : null,
+            channel: data.Channel,
+            parking_zone: data.Section,
+            price: data.Price,
+            ticket_bought: ticketBought && ticketBought.isValid() ? ticketBought.toDate() : null,
+            transaction_id: data.Id,
+            validity_from: validityFrom && validityFrom.isValid() ? validityFrom.toDate() : null,
+            validity_to: validityTo && validityTo.isValid() ? validityTo.toDate() : null,
         };
 
         return res;
