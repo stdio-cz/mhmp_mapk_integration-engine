@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import { config } from "../config";
 import { InfluxConnector } from "../connectors";
 
@@ -59,11 +60,12 @@ logger.debug = (logText: any) => {
     winstonDebugLog(logText);
 };
 
-loggerEvents.on(LoggerEventType.NumberOfRecords, ({ name, numberOfRecords }: ILoggerEventNumberOfRecordsInputType) => {
+loggerEvents.on(LoggerEventType.NumberOfRecords,
+        async ({ name, numberOfRecords }: ILoggerEventNumberOfRecordsInputType) => {
     if (config.influx_db.enabled) {
         const influxDB = InfluxConnector.getConnection();
         try {
-            influxDB.writePoints([{
+            await influxDB.writePoints([{
                 fields: {
                     number_of_records: numberOfRecords,
                 },
@@ -73,11 +75,16 @@ loggerEvents.on(LoggerEventType.NumberOfRecords, ({ name, numberOfRecords }: ILo
                 },
             }]);
         } catch (err) {
-            logger.error(`But error saving data to InfluxDB! ${err.message}`);
+            loggerEvents.emit("error", new CustomError("Error while saving data to InfluxDB.", true,
+                    LoggerEventType.NumberOfRecords, 1004, err));
         }
     } else {
         logger.verbose(`NumberOfRecordsLogger: ${name} : ${numberOfRecords}`);
     }
+});
+
+loggerEvents.on("error", (error: Error | CustomError) => {
+    ErrorHandler.handle(error);
 });
 
 export { logger as log, loggerEvents, LoggerEventType };

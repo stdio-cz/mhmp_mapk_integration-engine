@@ -214,21 +214,34 @@ export class SortedWasteStationsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await Promise.all([
-            this.iprContainersDatasource.getAll(),
-            this.iprStationsDatasource.getAll(),
-            this.oictDatasource.getAll(),
-            this.potexDatasource.getAll(),
-        ]);
+        let iprStations = [];
+        let oict = [];
+        let potex = [];
 
-        this.iprTransformation.setContainers(data[0]);
-        const transformedData = await Promise.all([
-            this.iprTransformation.transform(data[1]),
-            this.oictTransformation.transform(data[2]),
-            this.potexTransformation.transform(data[3]),
-        ]);
+        try {
+            const iprContainers = await this.iprContainersDatasource.getAll();
+            this.iprTransformation.setContainers(iprContainers);
+            iprStations = await this.iprTransformation
+                .transform(await this.iprStationsDatasource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
 
-        const [merged, remainingStations] = await this.mergeContainersIntoStations(transformedData);
+        try {
+            oict = await this.oictTransformation
+                .transform(await this.oictDatasource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        try {
+            potex = await this.potexTransformation
+                .transform(await this.potexDatasource.getAll());
+        } catch (err) {
+            log.warn((err instanceof CustomError) ? err.toString() : err);
+        }
+
+        const [merged, remainingStations] = await this.mergeContainersIntoStations(iprStations, [ ...oict, ...potex ]);
         const sortedStations = _.sortBy(merged, (a) => a.properties.id);
         let lastId = sortedStations[sortedStations.length - 1].properties.id;
         const remaining = remainingStations.map(async (station) => {
@@ -248,6 +261,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             }
         });
         await Promise.all(promises);
+
         // send message to get and pair sensors
         this.sendMessageToExchange("workers." + this.queuePrefix + ".getSensorsAndPairThemWithContainers",
             new Buffer("Just Do It!"));
@@ -461,11 +475,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
         }
     }
 
-    private mergeContainersIntoStations = async (transformedData: any[]): Promise<any> => {
+    private mergeContainersIntoStations = async (stations: any[], containers: any[]): Promise<any> => {
         return new Promise((resolve, reject) => {
-            const stations = transformedData[0]; // IPR dataset
-            const containers = transformedData[1].concat(transformedData[2]);
-
             // JS Closure
             const stationsIterator = (i, icb) => {
                 if (stations.length === i) {
