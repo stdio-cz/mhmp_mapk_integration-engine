@@ -8,7 +8,7 @@ import * as sinon from "sinon";
 import { HomeportLocationsTransformation } from "../../../src/modules/sharedbikes";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

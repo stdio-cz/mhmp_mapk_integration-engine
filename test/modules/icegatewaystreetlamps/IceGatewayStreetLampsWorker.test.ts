@@ -4,7 +4,7 @@ import "mocha";
 import * as sinon from "sinon";
 import { IceGatewayStreetLampsWorker } from "../../../src/modules/icegatewaystreetlamps";
 
-const request = require("request-promise");
+import request from "request-promise";
 
 describe("IceGatewayStreetLampsWorker", () => {
 

@@ -7,7 +7,7 @@ import "mocha";
 import { BicycleParkingsTransformation } from "../../../src/modules/bicycleparkings";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

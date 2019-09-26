@@ -10,7 +10,7 @@ import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
 
-const moment = require("moment");
+import moment from "moment";
 
 export class ParkingsWorker extends BaseWorker {
 

@@ -1,9 +1,9 @@
 "use strict";
 
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import * as express from "express";
+import express from "express";
 import { FieldType } from "influx";
-import * as httpLogger from "morgan";
+import httpLogger from "morgan";
 
 import * as fs from "fs";
 import * as path from "path";
@@ -19,7 +19,7 @@ import { log } from "./core/helpers";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
-const http = require("http");
+import http = require("http");
 
 export default class App {
 

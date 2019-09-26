@@ -3,7 +3,7 @@
 import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const moment = require("moment-timezone");
+import moment from "moment-timezone";
 
 export class SkodaPalaceQueuesTransformation extends BaseTransformation implements ITransformation {
 

@@ -1,6 +1,7 @@
 "use strict";
 
-const moment = require("moment");
+import moment from "moment";
+import "moment-timezone";
 
 import { CustomError } from "@golemio/errors";
 import { ZtpParkings } from "@golemio/schema-definitions";

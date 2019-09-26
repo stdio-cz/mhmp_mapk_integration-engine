@@ -3,7 +3,7 @@
 import { MedicalInstitutions } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class HealthCareTransformation extends BaseTransformation implements ITransformation {
 

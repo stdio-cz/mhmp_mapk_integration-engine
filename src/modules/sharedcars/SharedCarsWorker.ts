@@ -10,7 +10,7 @@ import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { CeskyCarsharingTransformation, HoppyGoTransformation } from "./";
 
-const cheapruler = require("cheap-ruler");
+import cheapruler from "cheap-ruler";
 const ruler = cheapruler(50);
 
 export class SharedCarsWorker extends BaseWorker {

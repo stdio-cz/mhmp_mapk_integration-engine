@@ -228,7 +228,7 @@ export class RopidGTFSWorker extends BaseWorker {
                 duplicates[item.cis] = item;
             }
         });
-        log.debug(Object.keys(unique).length);
+        log.debug(`${Object.keys(unique).length}`);
         log.debug(JSON.stringify(duplicates));
 
         // save meta

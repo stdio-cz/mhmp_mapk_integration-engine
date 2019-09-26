@@ -1,6 +1,6 @@
 "use strict";
 
-const moment = require("moment");
+import moment from "moment";
 
 import { ZtpParkings } from "@golemio/schema-definitions";
 import { config } from "../../core/config";

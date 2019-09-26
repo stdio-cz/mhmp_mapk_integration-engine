@@ -6,10 +6,10 @@ import { log } from "../helpers";
 import { RedisModel } from "../models";
 import { IFTPSettings, IProtocolStrategy } from "./";
 
-const decompress = require("decompress");
-const fs = require("fs");
-const ftp = require("basic-ftp");
-const moment = require("moment");
+import ftp = require("basic-ftp");
+import decompress = require("decompress");
+import fs = require("fs");
+import moment = require("moment");
 
 export class FTPProtocolStrategy implements IProtocolStrategy {
 

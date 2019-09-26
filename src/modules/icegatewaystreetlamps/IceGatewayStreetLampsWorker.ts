@@ -9,7 +9,7 @@ import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { IceGatewayStreetLampsTransformation } from "./";
 
-const request = require("request-promise");
+import request from "request-promise";
 
 export class IceGatewayStreetLampsWorker extends BaseWorker {
 

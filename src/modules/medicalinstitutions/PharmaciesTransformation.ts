@@ -7,8 +7,8 @@ import { Readable } from "stream";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
-const iconv = require("iconv-lite");
+import iconv from "iconv-lite";
+import slug from "slugify";
 
 export class PharmaciesTransformation extends BaseTransformation implements ITransformation {
 
