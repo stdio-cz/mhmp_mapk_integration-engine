@@ -2,6 +2,7 @@
 
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
 import * as express from "express";
+import { FieldType } from "influx";
 import * as httpLogger from "morgan";
 
 import * as fs from "fs";
@@ -18,7 +19,6 @@ import { log } from "./core/helpers";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
-const Influx = require("influx");
 const http = require("http");
 
 export default class App {
@@ -72,7 +72,7 @@ export default class App {
             await InfluxConnector.connect([
                 {
                     fields: {
-                        number_of_records: Influx.FieldType.INTEGER,
+                        number_of_records: FieldType.INTEGER,
                     },
                     measurement: "number_of_records",
                     tags: [

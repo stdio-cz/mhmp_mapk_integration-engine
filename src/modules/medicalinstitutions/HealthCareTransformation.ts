@@ -15,35 +15,34 @@ export class HealthCareTransformation extends BaseTransformation implements ITra
     }
 
     protected transformElement = async (element: any): Promise<any> => {
-        const coords = element.poskytovatel_souřadnice.replace("POINT(", "").replace(")", "").split(" ");
         const res = {
             geometry: {
-                coordinates: [parseFloat(coords[1]), parseFloat(coords[0])],
+                coordinates: [parseFloat(element.Lng), parseFloat(element.Lat)],
                 type: "Point",
             },
             properties: {
                 address: {
                     address_country: "Česko",
-                    address_formatted: element.adresa_název_ulice + " " + element.adresa_číslo_domovní + ", "
-                        + element.adresa_psč + " " + element.adresa_název_obce + ", Česko",
-                    address_locality: element.adresa_název_obce,
-                    postal_code: element.adresa_psč,
-                    street_address: element.adresa_název_ulice + " " + element.adresa_číslo_domovní,
+                    address_formatted: element.Ulice + " " + element.CisloDomovniOrientacni + ", "
+                        + element.Psc + " " + element.Obec + ", Česko",
+                    address_locality: element.Obec,
+                    postal_code: element.Psc,
+                    street_address: element.Ulice + " " + element.CisloDomovniOrientacni,
                 },
-                email: (element.kontakt_email) ? element.kontakt_email.trim().split(",") : [],
-                id: slug(element.id + "-" + element.název, {lower: true}),
-                institution_code: element.id,
-                name: element.název,
+                email: (element.PoskytovatelEmail) ? element.PoskytovatelEmail.trim().split(",") : [],
+                id: slug(element.ZdravotnickeZarizeniId + "-" + element.NazevZarizeni, {lower: true}),
+                institution_code: element.ZdravotnickeZarizeniId,
+                name: element.NazevZarizeni,
                 opening_hours: [],
                 pharmacy_code: null,
-                telephone: (element.kontakt_telefon) ? element.kontakt_telefon.trim().split(",") : [],
+                telephone: (element.PoskytovatelTelefon) ? element.PoskytovatelTelefon.trim().split(",") : [],
                 type: {
-                    description: element.typ,
+                    description: element.DruhZarizeni,
                     group: "health_care",
-                    id: this.getTypeId(element.typ),
+                    id: this.getTypeId(element.DruhZarizeni),
                 },
                 updated_at: new Date().getTime(),
-                web: (element.kontakt_url) ? element.kontakt_url.trim().split(",") : [],
+                web: (element.PoskytovatelWeb) ? element.PoskytovatelWeb.trim().split(",") : [],
             },
             type: "Feature",
         };

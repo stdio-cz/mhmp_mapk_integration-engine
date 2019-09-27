@@ -28,14 +28,14 @@ describe("SharedCarsWorker", () => {
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
         sandbox.assert.calledOnce(worker.ceskyCarsharingDataSource.getAll);
-        sandbox.assert.calledOnce(worker.hoppyGoDataSource.getAll);
         sandbox.assert.calledOnce(worker.ceskyCarsharingTransformation.transform);
+        sandbox.assert.calledOnce(worker.hoppyGoDataSource.getAll);
         sandbox.assert.calledOnce(worker.hoppyGoTransformation.transform);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.callOrder(
             worker.ceskyCarsharingDataSource.getAll,
-            worker.hoppyGoDataSource.getAll,
             worker.ceskyCarsharingTransformation.transform,
+            worker.hoppyGoDataSource.getAll,
             worker.hoppyGoTransformation.transform,
             worker.model.save);
     });
