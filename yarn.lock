@@ -99,10 +99,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.1.16-dev.3180":
-  version "0.1.16-dev.3180"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.16-dev.3180.tgz#8326266a2dab0f2d2b6efdfe9de3c57db75963ce"
-  integrity sha512-wY9p8mEQbx1flYCeoGm3O0pcw/2XdS2wmdweC06TpxXYZFdqdZXFicEQiNH6YUZJcvaZW+6KjPrCKsO2bGEkBQ==
+"@golemio/schema-definitions@0.1.16-dev.3193":
+  version "0.1.16-dev.3193"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.16-dev.3193.tgz#0c32d9d5594e77c9d256f95557dd8de236b58732"
+  integrity sha512-VPmdsobFXd242JGlObKOn19EgJyqJ8rQem2Ln59gER/dElrbHE8BaMc+CWendgCw7PnnkkZynWtqSUSnUo3Qqw==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"

@@ -1,8 +1,11 @@
 "use strict";
 
 import { CustomError, ErrorHandler } from "@golemio/errors";
+import { ErrorLog } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import { config } from "../config";
 import { InfluxConnector } from "../connectors";
+import { PostgresModel } from "../models";
 
 const { EventEmitter } = require("events");
 
@@ -21,6 +24,7 @@ const loggerEvents = new EventEmitter();
 
 enum LoggerEventType {
     NumberOfRecords = "number-of-records",
+    PostgresErrorLog = "postgres-error-log",
 }
 
 interface ILoggerEventNumberOfRecordsInputType {
@@ -85,6 +89,46 @@ loggerEvents.on(LoggerEventType.NumberOfRecords,
 
 loggerEvents.on("error", (error: Error | CustomError) => {
     ErrorHandler.handle(error);
+});
+
+/**
+ * Postgres Error Log Model
+ */
+let pgErrorLogModel: PostgresModel;
+
+/**
+ * Postgres Error Log
+ */
+loggerEvents.on(LoggerEventType.PostgresErrorLog, async ({ error }: {error: Error | CustomError}) => {
+    if (!pgErrorLogModel) {
+        pgErrorLogModel = new PostgresModel(ErrorLog.name + "Model", {
+                outputSequelizeAttributes: ErrorLog.outputSequelizeAttributes,
+                pgTableName: ErrorLog.pgTableName,
+                savingType: "insertOnly",
+            },
+            new Validator(ErrorLog.name + "ModelValidator", ErrorLog.outputMongooseSchemaObject),
+        );
+    }
+
+    try {
+        const transformedData = {
+            class_name: null,
+            info: null,
+            message: error.message,
+            service: "integration-engine",
+            stack_trace: error.stack || null,
+            status: null,
+        };
+        if (error instanceof CustomError) {
+            const errorObject = error.toObject();
+            transformedData.class_name = errorObject.error_class_name || null;
+            transformedData.info = errorObject.error_info || null;
+            transformedData.status = errorObject.error_status || null;
+        }
+        await pgErrorLogModel.save(transformedData);
+    } catch (err) {
+        loggerEvents.emit(err);
+    }
 });
 
 export { logger as log, loggerEvents, LoggerEventType };

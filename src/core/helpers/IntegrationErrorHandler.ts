@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError, ErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import { log } from "./";
+import { log, loggerEvents, LoggerEventType } from "./";
 
 export interface IExtendedCustomErrorObject extends ICustomErrorObject {
     ack: boolean;
@@ -20,6 +20,9 @@ export class IntegrationErrorHandler extends ErrorHandler {
      * @param err Error (CustomError) object to catch and process
      */
     public static handle(err: Error | CustomError): IExtendedCustomErrorObject {
+
+        // logging error to postgres
+        loggerEvents.emit(LoggerEventType.PostgresErrorLog, { error: err });
 
         const warningErrorCodes: number[] = [
             5001, // Error while updating {name}.
