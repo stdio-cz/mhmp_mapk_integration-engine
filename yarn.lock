@@ -99,10 +99,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.1.16-dev.3155":
-  version "0.1.16-dev.3155"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.16-dev.3155.tgz#ddf0b42078bfe28c2aced5abc4931571340dc806"
-  integrity sha512-Y2eLPWoRBRMX5jvzez4+5zqoZyoyFCVtmxTB+7pBC24ZzbHAqBROwRb1pOwLy4Uc27Bs58D8ICzSm9qJfyzUIw==
+"@golemio/schema-definitions@0.1.16-dev.3180":
+  version "0.1.16-dev.3180"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.16-dev.3180.tgz#8326266a2dab0f2d2b6efdfe9de3c57db75963ce"
+  integrity sha512-wY9p8mEQbx1flYCeoGm3O0pcw/2XdS2wmdweC06TpxXYZFdqdZXFicEQiNH6YUZJcvaZW+6KjPrCKsO2bGEkBQ==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"
@@ -1480,6 +1480,13 @@
   version "5.2.5"
   resolved "http://gitlab.oict.cz:10007/@types%2fmocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
   integrity sha512-lAVp+Kj54ui/vLUFxsJTMtWvZraZxum3w3Nwkble2dNuV5VnPA+Mi2oGX9XYJAaIvZi3tn3cbjS/qcJXRb6Bww==
+
+"@types/moment-timezone@^0.5.12":
+  version "0.5.12"
+  resolved "http://gitlab.oict.cz:10007/@types%2fmoment-timezone/-/moment-timezone-0.5.12.tgz#0fb680c03db194fe8ff4551eaeb1eec8d3d80e9f"
+  integrity sha512-hnHH2+Efg2vExr/dSz+IX860nSiyk9Sk4pJF2EmS11lRpMcNXeB4KBW5xcgw2QPsb9amTXdsVNEe5IoJXiT0uw==
+  dependencies:
+    moment ">=2.14.0"
 
 "@types/mongodb@*":
   version "3.3.1"
@@ -3808,7 +3815,7 @@ moment-timezone@^0.5.14:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.20.0:
+"moment@>= 2.9.0", moment@>=2.14.0, moment@^2.20.0:
   version "2.24.0"
   resolved "http://gitlab.oict.cz:10007/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==

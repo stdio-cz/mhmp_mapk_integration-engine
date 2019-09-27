@@ -8,6 +8,7 @@
     "MOSMobileApplication": [],
     "MunicipalAuthorities": [],
     "ParkingZones": ["updateTariffs"],
+    "Parkomats": [],
     "Purge": [],
     "RopidGTFS": [],
     "SharedBikes": [],
