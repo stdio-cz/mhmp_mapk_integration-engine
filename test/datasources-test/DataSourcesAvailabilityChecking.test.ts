@@ -2,7 +2,7 @@
 
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
+    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
     WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
@@ -11,10 +11,11 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
@@ -335,7 +336,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             let datasource;
 
             beforeEach(() => {
-                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: "data.items"});
+                const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "data.items" });
                 hoppyGoDataType.setFilter((item) =>
                     (item.localization && item.localization !== "" && item.localization !== ","));
                 datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
@@ -984,4 +985,41 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
+    describe("TSKParkomats", () => {
+
+        let datasource: DataSource;
+
+        beforeEach(() => {
+            const to = moment.tz(new Date(), "Europe/Prague");
+            const from = to.clone();
+            from.subtract(12, "minutes");
+            const url = config.datasources.TSKParkomats +
+                `/parkingsessions?from=${from.format("YYYY-MM-DDTHH:mm:ss")}&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
+
+            const dataSourceHTTPSettings: IHTTPSettings = {
+                headers: {
+                    authorization: config.datasources.TSKParkomatsToken,
+                },
+                method: "GET",
+                url,
+            };
+
+            datasource = new DataSource(Parkomats.name + "DataSource",
+                new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject),
+            );
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
 });
