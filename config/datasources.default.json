@@ -56,5 +56,7 @@
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",
     "TSKZtpParkings": "http://tsk.3nicom.cloud/api/all",
     "TSKZtpParkingsToken": "",
+    "TSKParkomats": "http://vyvoj.ctgroup.cz/cisservice/cisictservice.svc",
+    "TSKParkomatsToken": "",
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json"
 }

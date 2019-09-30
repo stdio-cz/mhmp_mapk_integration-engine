@@ -4,7 +4,7 @@ import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
-    MunicipalPoliceStations, Parkings, ParkingZones, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
+    MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
@@ -27,6 +27,7 @@ import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
 import { ParkingsWorker } from "../modules/parkings";
 import { ParkingZonesWorker } from "../modules/parkingzones";
+import { ParkomatsWorker } from "../modules/parkomats";
 import { PlaygroundsWorker } from "../modules/playgrounds";
 import { PublicToiletsWorker } from "../modules/publictoilets";
 import { PurgeWorker } from "../modules/purge";
@@ -64,7 +65,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: AirQualityStationsWorker,
                 workerMethod: "refreshDataInDB",
@@ -83,7 +84,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: AirQualityStationsWorker,
                 workerMethod: "updateDistrict",
@@ -99,7 +100,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: BicycleParkingsWorker,
                 workerMethod: "refreshDataInDB",
@@ -109,7 +110,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: BicycleParkingsWorker,
                 workerMethod: "updateDistrict",
@@ -125,7 +126,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 15 * 24 * 60 * 60 * 1000,
+                    messageTtl: 15 * 24 * 60 * 60 * 1000, // 15 days
                 },
                 worker: CityDistrictsWorker,
                 workerMethod: "refreshDataInDB",
@@ -141,7 +142,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: GardensWorker,
                 workerMethod: "refreshDataInDB",
@@ -157,7 +158,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: IceGatewaySensorsWorker,
                 workerMethod: "refreshDataInDB",
@@ -182,7 +183,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 14 * 60 * 1000,
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
                 },
                 worker: IceGatewayStreetLampsWorker,
                 workerMethod: "refreshDataInDB",
@@ -207,7 +208,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 25 * 24 * 60 * 1000,
+                    messageTtl: 25 * 24 * 60 * 60 * 1000, // 25 days
                 },
                 worker: MedicalInstitutionsWorker,
                 workerMethod: "refreshDataInDB",
@@ -217,7 +218,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 25 * 24 * 60 * 1000,
+                    messageTtl: 25 * 24 * 60 * 60 * 1000, // 25 days
                 },
                 worker: MedicalInstitutionsWorker,
                 workerMethod: "updateGeoAndDistrict",
@@ -248,7 +249,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "refreshDataInDB",
@@ -267,7 +268,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "updateDistrict",
@@ -367,7 +368,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: MunicipalAuthoritiesWorker,
                 workerMethod: "refreshDataInDB",
@@ -377,7 +378,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000, // 1 minute
                 },
                 worker: MunicipalAuthoritiesWorker,
                 workerMethod: "refreshWaitingQueues",
@@ -402,7 +403,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: MunicipalPoliceStationsWorker,
                 workerMethod: "refreshDataInDB",
@@ -412,7 +413,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: MunicipalPoliceStationsWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -428,7 +429,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: ParkingsWorker,
                 workerMethod: "refreshDataInDB",
@@ -447,7 +448,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: ParkingsWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -457,7 +458,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000,
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: ParkingsWorker,
                 workerMethod: "updateAverageOccupancy",
@@ -482,7 +483,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: ParkingZonesWorker,
                 workerMethod: "refreshDataInDB",
@@ -492,10 +493,26 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: ParkingZonesWorker,
                 workerMethod: "updateTariffs",
+            },
+        ],
+    },
+    {
+        name: Parkomats.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Parkomats.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 2 * 60 * 1000, // 2 minutes
+                },
+                worker: ParkomatsWorker,
+                workerMethod: "refreshDataInDB",
             },
         ],
     },
@@ -508,7 +525,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: PlaygroundsWorker,
                 workerMethod: "refreshDataInDB",
@@ -518,7 +535,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: PlaygroundsWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -534,7 +551,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: PublicToiletsWorker,
                 workerMethod: "refreshDataInDB",
@@ -544,7 +561,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: PublicToiletsWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -611,7 +628,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 14 * 60 * 1000,
+                    messageTtl: 19 * 60 * 1000, // 19 minutes
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "checkForNewData",
@@ -621,7 +638,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "downloadFiles",
@@ -631,7 +648,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "transformData",
@@ -641,7 +658,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "saveDataToDB",
@@ -688,7 +705,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: undefined,
                 workerMethod: undefined,
@@ -698,7 +715,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // minutes
                 },
                 worker: RopidGTFSWorker,
                 workerMethod: "downloadCisStops",
@@ -714,7 +731,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000, // 1 minute
                 },
                 worker: SharedBikesWorker,
                 workerMethod: "refreshDataInDB",
@@ -730,7 +747,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000, // 1 minute
                 },
                 worker: SharedCarsWorker,
                 workerMethod: "refreshDataInDB",
@@ -746,7 +763,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 15 * 24 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "refreshDataInDB",
@@ -756,7 +773,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 15 * 24 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateDistrict",
@@ -766,7 +783,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 24 * 60 * 60 * 1000,
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "getSensorsAndPairThemWithContainers",
@@ -776,7 +793,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 30 * 60 * 1000,
+                    messageTtl: 29 * 60 * 1000, // 29 minutes
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateSensorsMeasurement",
@@ -786,7 +803,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 30 * 60 * 1000,
+                    messageTtl: 29 * 60 * 1000, // 29 minutes
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateSensorsMeasurementInContainer",
@@ -796,7 +813,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 30 * 60 * 1000,
+                    messageTtl: 29 * 60 * 1000, // 29 minutes
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateSensorsPicks",
@@ -806,7 +823,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 30 * 60 * 1000,
+                    messageTtl: 29 * 60 * 1000, // 29 minutes
                 },
                 worker: SortedWasteStationsWorker,
                 workerMethod: "updateSensorsPicksInContainer",
@@ -822,7 +839,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000, // 1 minute
                 },
                 worker: TrafficCamerasWorker,
                 workerMethod: "refreshDataInDB",
@@ -841,7 +858,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 1 * 60 * 1000, // 1 minute
                 },
                 worker: TrafficCamerasWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -899,7 +916,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: WasteCollectionYardsWorker,
                 workerMethod: "refreshDataInDB",
@@ -909,7 +926,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: WasteCollectionYardsWorker,
                 workerMethod: "updateDistrict",
@@ -925,7 +942,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: ZtpParkingsWorker,
                 workerMethod: "refreshDataInDB",
@@ -944,7 +961,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 1 * 60 * 1000,
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: ZtpParkingsWorker,
                 workerMethod: "updateAddressAndDistrict",
@@ -971,7 +988,7 @@ const definitions: IQueueDefinition[] = [
                     options: {
                         deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                         deadLetterRoutingKey: "dead",
-                        messageTtl: 4 * 60 * 1000,
+                        messageTtl: 4 * 60 * 1000, // in milliseconds
                     },
                     worker: TemplateWorker,
                     workerMethod: "TemplateQueue",
