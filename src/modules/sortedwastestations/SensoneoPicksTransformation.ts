@@ -16,7 +16,7 @@ export class SensoneoPicksTransformation extends BaseTransformation implements I
 
         const res = {
             ...element,
-            picked_at_utc: new Date(element.picked_at).getTime(),
+            pick_at_utc: new Date(element.picked_at).getTime(),
             updated_at: new Date().getTime(),
         };
         delete res.picked_at;
