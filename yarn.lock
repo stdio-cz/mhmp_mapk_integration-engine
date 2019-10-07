@@ -98,14 +98,14 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.1.16":
-  version "0.1.16"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.16.tgz#774809bb4a8ee7c56706c03b7b0a9d645fabd940"
-  integrity sha512-6jFu7d+wF7tUcLMHWXfxy7Z4zJgn4SZu4Is6mPT7OLNfreSwsfx9K5ZLVx2uK1sIKs7oCbKNlGLi9f/Z08ZtEQ==
+"@golemio/schema-definitions@0.1.17-dev.3260":
+  version "0.1.17-dev.3260"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.17-dev.3260.tgz#18d95ec37f8c5d35f744edaaed94f070c26c6545"
+  integrity sha512-MGZxnluoRfXHQ0lYqBrJHFAOWixiAzqhC+I18V9v+gVkam28753HI8TPi8CfXqu4Zj8avVc9vEjFDwte8fvFCg==
   dependencies:
     db-migrate "0.11.5"
-    db-migrate-mongodb "1.5.0"
     db-migrate-pg "0.5.0"
+    migrate-mongo "6.0.2"
     mongoose "5.3.14"
     sequelize "4.41.2"
 
@@ -1853,7 +1853,7 @@ bson@^1.1.0, bson@^1.1.1, bson@~1.1.0, bson@~1.1.1:
   resolved "http://gitlab.oict.cz:10007/bson/-/bson-1.1.1.tgz#4330f5e99104c4e751e7351859e2d408279f2f13"
   integrity sha512-jCGVYLoYMHDkOsbwJZBCqwMHyH4c+wzgI9hG7Z6SZJRXWr+x58pdIbm2i9a/jFGCkRJqRUr8eoI7lDWa0hTkxg==
 
-bson@~1.0.4, bson@~1.0.5:
+bson@~1.0.5:
   version "1.0.9"
   resolved "http://gitlab.oict.cz:10007/bson/-/bson-1.0.9.tgz#12319f8323b1254739b7c6bef8d3e89ae05a2f57"
   integrity sha512-IQX9/h7WdMBIW/q/++tGd+emQr0XMdeZ6icnT/74Xk9fnabWn+gZgpE+9V+gujL3hhJOoNrnDVY7tWdzc7NUTg==
@@ -1890,11 +1890,6 @@ buffer-more-ints@0.0.2:
   version "0.0.2"
   resolved "http://gitlab.oict.cz:10007/buffer-more-ints/-/buffer-more-ints-0.0.2.tgz#26b3885d10fa13db7fc01aae3aab870199e0124c"
   integrity sha1-JrOIXRD6E9t/wBquOquHAZngEkw=
-
-buffer-shims@~1.0.0:
-  version "1.0.0"
-  resolved "http://gitlab.oict.cz:10007/buffer-shims/-/buffer-shims-1.0.0.tgz#9978ce317388c649ad8793028c3477ef044a8b51"
-  integrity sha1-mXjOMXOIxkmth5MCjDR37wRKi1E=
 
 buffer-writer@2.0.0:
   version "2.0.0"
@@ -2025,6 +2020,13 @@ ci-info@^2.0.0:
   resolved "http://gitlab.oict.cz:10007/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
+cli-table@0.3.1:
+  version "0.3.1"
+  resolved "http://gitlab.oict.cz:10007/cli-table/-/cli-table-0.3.1.tgz#f53b05266a8b1a0b934b3d0821e6e2dc5914ae23"
+  integrity sha1-9TsFJmqLGguTSz0IIebi3FkUriM=
+  dependencies:
+    colors "1.0.3"
+
 cliui@^4.0.0:
   version "4.1.0"
   resolved "http://gitlab.oict.cz:10007/cliui/-/cliui-4.1.0.tgz#348422dbe82d800b3022eef4f6ac10bf2e4d1b49"
@@ -2090,7 +2092,7 @@ colornames@^1.1.1:
   resolved "http://gitlab.oict.cz:10007/colornames/-/colornames-1.1.1.tgz#f8889030685c7c4ff9e2a559f5077eb76a816f96"
   integrity sha1-+IiQMGhcfE/54qVZ9Qd+t2qBb5Y=
 
-colors@1.0.x:
+colors@1.0.3, colors@1.0.x:
   version "1.0.3"
   resolved "http://gitlab.oict.cz:10007/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
   integrity sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
@@ -2124,6 +2126,11 @@ commander@2.15.1:
   version "2.15.1"
   resolved "http://gitlab.oict.cz:10007/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
   integrity sha512-VlfT9F3V0v+jr4yxPc5gg9s62/fIVWsd2Bk2iD435um1NlGMYdVCq+MjcXnhYq2icNOizHr1kK+5TI6H0Hy0ag==
+
+commander@3.0.0:
+  version "3.0.0"
+  resolved "http://gitlab.oict.cz:10007/commander/-/commander-3.0.0.tgz#0641ea00838c7a964627f04cddc336a2deddd60a"
+  integrity sha512-pl3QrGOBa9RZaslQiqnnKX2J068wcQw7j9AIaBQ9/JEp5RY6je4jKTImg0Bd+rpoONSe7GUFSgkxLeo17m3Pow==
 
 commander@~2.8.1:
   version "2.8.1"
@@ -2271,6 +2278,11 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+date-fns@2.0.1:
+  version "2.0.1"
+  resolved "http://gitlab.oict.cz:10007/date-fns/-/date-fns-2.0.1.tgz#c5f30e31d3294918e6b6a82753a4e719120e203d"
+  integrity sha512-C14oTzTZy8DH1Eq8N78owrCWvf3+cnJw88BTK/N3DYWVxDJuJzPaNdplzYxDYuuXXGvqBcO4Vy5SOrwAooXSWw==
+
 dateformat@~1.0.4-1.2.3:
   version "1.0.12"
   resolved "http://gitlab.oict.cz:10007/dateformat/-/dateformat-1.0.12.tgz#9f124b67594c937ff706932e4a642cca8dbbfee9"
@@ -2279,21 +2291,12 @@ dateformat@~1.0.4-1.2.3:
     get-stdin "^4.0.1"
     meow "^3.3.0"
 
-db-migrate-base@^1.3.3, db-migrate-base@^1.6.3:
+db-migrate-base@^1.6.3:
   version "1.6.3"
   resolved "http://gitlab.oict.cz:10007/db-migrate-base/-/db-migrate-base-1.6.3.tgz#5fa63e2745fd353ffd90be6754a0d79b41167cd8"
   integrity sha512-O6Kh72Yh0DfvRAKg9QKzu1KkMwI5iI0dFHO6RmDLvbiYvtRW3faFXJNFwJYeioVBx22QA3AkVFbDIcw4j4QxGw==
   dependencies:
     bluebird "^3.1.1"
-
-db-migrate-mongodb@1.5.0:
-  version "1.5.0"
-  resolved "http://gitlab.oict.cz:10007/db-migrate-mongodb/-/db-migrate-mongodb-1.5.0.tgz#c252658ee0fbcbb32732b1b8b3a756e511dc4011"
-  integrity sha512-kNIxbzEdFKpwlSrjgaFieAU0dT5ukZXjvO1/Otnaa6Vw9f4HXbqk151SbL4EpS6cA4HVQLzUZL6XMEGhcYvP6g==
-  dependencies:
-    bluebird "^3.5.0"
-    db-migrate-base "^1.3.3"
-    mongodb "^2.2.34"
 
 db-migrate-pg@0.5.0:
   version "0.5.0"
@@ -2621,11 +2624,6 @@ es6-error@^4.0.1:
   resolved "http://gitlab.oict.cz:10007/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
-es6-promise@3.2.1:
-  version "3.2.1"
-  resolved "http://gitlab.oict.cz:10007/es6-promise/-/es6-promise-3.2.1.tgz#ec56233868032909207170c39448e24449dd1fc4"
-  integrity sha1-7FYjOGgDKQkgcXDDlEjiREndH8Q=
-
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "http://gitlab.oict.cz:10007/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -2856,6 +2854,11 @@ flexbuffer@0.0.6:
   resolved "http://gitlab.oict.cz:10007/flexbuffer/-/flexbuffer-0.0.6.tgz#039fdf23f8823e440c38f3277e6fef1174215b30"
   integrity sha1-A5/fI/iCPkQMOPMnfm/vEXQhWzA=
 
+fn-args@5.0.0:
+  version "5.0.0"
+  resolved "http://gitlab.oict.cz:10007/fn-args/-/fn-args-5.0.0.tgz#7a18e105c8fb3bf0a51c30389bf16c9ebe740bb3"
+  integrity sha512-CtbfI3oFFc3nbdIoHycrfbrxiGgxXBXXuyOl49h47JawM1mYrqpiRqnH5CB2mBatdXvHHOUO6a+RiAuuvKt0lw==
+
 foreground-child@^1.5.6:
   version "1.5.6"
   resolved "http://gitlab.oict.cz:10007/foreground-child/-/foreground-child-1.5.6.tgz#4fd71ad2dfde96789b980a5c0a295937cb2f5ce9"
@@ -2906,6 +2909,15 @@ fs-constants@^1.0.0:
   version "1.0.0"
   resolved "http://gitlab.oict.cz:10007/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
+
+fs-extra@8.1.0:
+  version "8.1.0"
+  resolved "http://gitlab.oict.cz:10007/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
+  integrity sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
 
 fs-extra@^7.0.0:
   version "7.0.1"
@@ -3028,7 +3040,7 @@ globals@^11.1.0:
   resolved "http://gitlab.oict.cz:10007/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
+graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   version "4.2.2"
   resolved "http://gitlab.oict.cz:10007/graceful-fs/-/graceful-fs-4.2.2.tgz#6f0952605d0140c1cfdb138ed005775b92d67b02"
   integrity sha512-IItsdsea19BoLC7ELy13q1iJFNmd7ofZH5+X/pJr90/nRoPEX0DJo1dHDbgtYWOhJhcCgMDTOw84RZ72q6lB+Q==
@@ -3605,7 +3617,7 @@ lodash.get@4.4.2, lodash.get@^4.4.2:
   resolved "http://gitlab.oict.cz:10007/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
-lodash@^4.13.1, lodash@^4.17.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
+lodash@4.17.15, lodash@^4.13.1, lodash@^4.17.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
   version "4.17.15"
   resolved "http://gitlab.oict.cz:10007/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -3739,6 +3751,20 @@ methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
   resolved "http://gitlab.oict.cz:10007/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
+migrate-mongo@6.0.2:
+  version "6.0.2"
+  resolved "http://gitlab.oict.cz:10007/migrate-mongo/-/migrate-mongo-6.0.2.tgz#c34be88c734c6cc85397ed0053c5f6e587077c83"
+  integrity sha512-NeFYjLcvvxOPxV0twyLMpyrnWhdp6b+UCul2YGVX+p8xKh1fwbGcEnm9iJaDK7p18hYJXKziDA5yp1tf3Fn32g==
+  dependencies:
+    cli-table "0.3.1"
+    commander "3.0.0"
+    date-fns "2.0.1"
+    fn-args "5.0.0"
+    fs-extra "8.1.0"
+    lodash "4.17.15"
+    mongodb "3.3.1"
+    p-each-series "2.1.0"
+
 mime-db@1.40.0:
   version "1.40.0"
   resolved "http://gitlab.oict.cz:10007/mime-db/-/mime-db-1.40.0.tgz#a65057e998db090f732a68f6c276d387d4126c32"
@@ -3826,14 +3852,6 @@ moment@*, "moment@>= 2.9.0", moment@>=2.14.0, moment@^2.20.0:
   resolved "http://gitlab.oict.cz:10007/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
-mongodb-core@2.1.20:
-  version "2.1.20"
-  resolved "http://gitlab.oict.cz:10007/mongodb-core/-/mongodb-core-2.1.20.tgz#fece8dd76b59ee7d7f2d313b65322c160492d8f1"
-  integrity sha512-IN57CX5/Q1bhDq6ShAR6gIv4koFsZP7L8WOK1S0lR0pVDQaScffSMV5jxubLsmZ7J+UdqmykKw4r9hG3XQEGgQ==
-  dependencies:
-    bson "~1.0.4"
-    require_optional "~1.0.0"
-
 mongodb-core@3.1.5:
   version "3.1.5"
   resolved "http://gitlab.oict.cz:10007/mongodb-core/-/mongodb-core-3.1.5.tgz#59ca67d7f6cea570d5437624a7afec8d752d477a"
@@ -3877,6 +3895,15 @@ mongodb@3.1.6:
     mongodb-core "3.1.5"
     safe-buffer "^5.1.2"
 
+mongodb@3.3.1:
+  version "3.3.1"
+  resolved "http://gitlab.oict.cz:10007/mongodb/-/mongodb-3.3.1.tgz#31947e3050872d325415694f89119f37d2107a91"
+  integrity sha512-Q92LLlPUTBj/Z4DyeznwPJjvgOYUcxZsBfek3Ba9mVhzH41n70vSubo+BmemI98kOefHTSncrTyb3OaxdLSgDw==
+  dependencies:
+    bson "^1.1.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+
 mongodb@3.3.2:
   version "3.3.2"
   resolved "http://gitlab.oict.cz:10007/mongodb/-/mongodb-3.3.2.tgz#ff086b5f552cf07e24ce098694210f3d42d668b2"
@@ -3885,15 +3912,6 @@ mongodb@3.3.2:
     bson "^1.1.1"
     require_optional "^1.0.1"
     safe-buffer "^5.1.2"
-
-mongodb@^2.2.34:
-  version "2.2.36"
-  resolved "http://gitlab.oict.cz:10007/mongodb/-/mongodb-2.2.36.tgz#1c573680b2849fb0f47acbba3dc5fa228de975f5"
-  integrity sha512-P2SBLQ8Z0PVx71ngoXwo12+FiSfbNfGOClAao03/bant5DgLNkOPAck5IaJcEk4gKlQhDEURzfR3xuBG1/B+IA==
-  dependencies:
-    es6-promise "3.2.1"
-    mongodb-core "2.1.20"
-    readable-stream "2.2.7"
 
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
@@ -4229,6 +4247,11 @@ os-locale@^2.0.0:
     execa "^0.7.0"
     lcid "^1.0.0"
     mem "^1.1.0"
+
+p-each-series@2.1.0:
+  version "2.1.0"
+  resolved "http://gitlab.oict.cz:10007/p-each-series/-/p-each-series-2.1.0.tgz#961c8dd3f195ea96c747e636b262b800a6b1af48"
+  integrity sha512-ZuRs1miPT4HrjFa+9fRfOFXxGJfORgelKV9f9nNOWw2gl6gVsRaVDOQP0+MI0G0wGKns1Yacsu0GjOFbTK0JFQ==
 
 p-finally@^1.0.0:
   version "1.0.0"
@@ -4578,11 +4601,6 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-process-nextick-args@~1.0.6:
-  version "1.0.7"
-  resolved "http://gitlab.oict.cz:10007/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
-  integrity sha1-FQ4gt1ZZCtP5EJPyWk8q2L/zC6M=
-
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "http://gitlab.oict.cz:10007/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -4771,19 +4789,6 @@ read@1.0.x:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2.2.7:
-  version "2.2.7"
-  resolved "http://gitlab.oict.cz:10007/readable-stream/-/readable-stream-2.2.7.tgz#07057acbe2467b22042d36f98c5ad507054e95b1"
-  integrity sha1-BwV6y+JGeyIELTb5jFrVBwVOlbE=
-  dependencies:
-    buffer-shims "~1.0.0"
-    core-util-is "~1.0.0"
-    inherits "~2.0.1"
-    isarray "~1.0.0"
-    process-nextick-args "~1.0.6"
-    string_decoder "~1.0.0"
-    util-deprecate "~1.0.1"
-
 readable-stream@^2.3.0, readable-stream@^2.3.5, readable-stream@^2.3.6:
   version "2.3.6"
   resolved "http://gitlab.oict.cz:10007/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
@@ -4927,7 +4932,7 @@ require-main-filename@^2.0.0:
   resolved "http://gitlab.oict.cz:10007/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
 
-require_optional@^1.0.1, require_optional@~1.0.0:
+require_optional@^1.0.1:
   version "1.0.1"
   resolved "http://gitlab.oict.cz:10007/require_optional/-/require_optional-1.0.1.tgz#4cf35a4247f64ca3df8c2ef208cc494b1ca8fc2e"
   integrity sha512-qhM/y57enGWHAe3v/NcwML6a3/vfESLe/sGM2dII+gEO0BpKRUkWZow/tyloNqJyN6kXSl3RyyM8Ll5D/sJP8g==
@@ -5392,13 +5397,6 @@ string_decoder@~0.10.x:
   version "0.10.31"
   resolved "http://gitlab.oict.cz:10007/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
   integrity sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=
-
-string_decoder@~1.0.0:
-  version "1.0.3"
-  resolved "http://gitlab.oict.cz:10007/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
-  integrity sha512-4AH6Z5fzNNBcH+6XDMfA/BTt87skxqJlO0lAh3Dker5zThcAxG6mKz+iGu308UKoPPQ8Dcqx/4JhujzltRa+hQ==
-  dependencies:
-    safe-buffer "~5.1.0"
 
 string_decoder@~1.1.1:
   version "1.1.1"
