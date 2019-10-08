@@ -39,7 +39,7 @@ class MyMongoose {
 
     public getConnection = (): mongoose.Connection => {
         if (mongoose.connection.readyState !== 1) {
-            throw new CustomError("Mongoose connection not exists. Firts call connect() method.", false,
+            throw new CustomError("Mongoose connection does not exist. First call connect() method.", false,
                 this.constructor.name, 1002);
         }
         return mongoose.connection;
