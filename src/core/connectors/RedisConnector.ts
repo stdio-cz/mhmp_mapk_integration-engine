@@ -43,7 +43,7 @@ class MyRedis {
 
     public getConnection = (): Redis.Redis => {
         if (!this.connection) {
-            throw new CustomError("Redis connection not exists. Firts call connect() method.", false,
+            throw new CustomError("Redis connection does not exists. First call connect() method.", false,
                 this.constructor.name, 1002);
         }
         return this.connection;

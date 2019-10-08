@@ -627,8 +627,8 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("MedicalInstitutions", () => {
 
-        let pharmaciesDatasource;
-        let healthCareDatasource;
+        let pharmaciesDatasource: DataSource;
+        let healthCareDatasource: DataSource;
 
         beforeEach(() => {
             pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
@@ -649,26 +649,37 @@ describe("DataSourcesAvailabilityChecking", () => {
             const hcDataTypeStrategy = new CSVDataTypeStrategy({
                 fastcsvParams: { headers: true },
                 subscribe: ((json: any) => {
-                    delete json.poskytovatel_ič;
-                    delete json.poskytovatel_právní_forma_osoba;
-                    delete json.poskytovatel_právní_forma;
-                    delete json.sídlo_adresa_kód_kraje;
-                    delete json.sídlo_adresa_název_kraje;
-                    delete json.sídlo_adresa_kód_okresu;
-                    delete json.sídlo_adresa_název_okresu;
-                    delete json.sídlo_adresa_psč;
-                    delete json.sídlo_adresa_název_obce;
-                    delete json.sídlo_adresa_název_ulice;
-                    delete json.sídlo_adresa_číslo_domovní;
+                    delete json.CisloDomovniOrientacniSidlo;
+                    delete json.DruhPece;
+                    delete json.FormaPece;
+                    delete json.Ico;
+                    delete json.Kod;
+                    delete json.Kraj;
+                    delete json.KrajCodeSidlo;
+                    delete json.MistoPoskytovaniId;
+                    delete json.ObecSidlo;
+                    delete json.OborPece;
+                    delete json.OdbornyZastupce;
+                    delete json.Okres;
+                    delete json.OkresCode;
+                    delete json.OkresCodeSidlo;
+                    delete json.PoskytovatelFax;
+                    delete json.PravniFormaKod;
+                    delete json.PscSidlo;
+                    delete json.SpravniObvod;
+                    delete json.TypOsoby;
+                    delete json.UliceSidlo;
                     return json;
                 }),
             });
             hcDataTypeStrategy.setFilter((item) => {
-                return item.adresa_kód_kraje === "CZ010"
-                    && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
-                        "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
-                        "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                        "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+                return item.KrajCode === "CZ010"
+                && item.Lat
+                && item.Lng
+                && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
+                    "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                    "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
             });
             healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
                 new HTTPProtocolStrategy({
@@ -1022,4 +1033,5 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
 
     });
+
 });
