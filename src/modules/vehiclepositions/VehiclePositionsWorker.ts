@@ -329,6 +329,10 @@ export class VehiclePositionsWorker extends BaseWorker {
                 ...shapes,
             };
 
+            if (!trip.shape_id || !trip.shapes || trip.shapes.length === 0) {
+                throw new Error(`"trip.shape_id" or "trip.shapes" was not found.`);
+            }
+
             const tmpGtfs = {
                 ...await this.getStopTimesForDelayComputation(trip),
                 shapes_anchor_points: await this.getShapesAnchorPointsForDelayComputation(trip.shape_id, trip.shapes),
