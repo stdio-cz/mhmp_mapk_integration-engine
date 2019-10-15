@@ -58,7 +58,7 @@ export class DataSource implements IDataSource {
             const body = await this.protocolStrategy.getData();
             const content = await this.dataTypeStrategy.parseData(body);
             if (this.isEmpty(content)) {
-                log.warn("Data source returned empty data.");
+                log.warn(`${this.name}: Data source returned empty data.`);
                 // logging number of records
                 loggerEvents.emit(
                     LoggerEventType.NumberOfRecords, { name: this.name, numberOfRecords: 0 });

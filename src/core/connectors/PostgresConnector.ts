@@ -63,7 +63,7 @@ class MySequelize {
 
     public getConnection = (): Sequelize.Sequelize => {
         if (!this.connection) {
-            throw new CustomError("Sequelize connection not exists. Firts call connect() method.", false,
+            throw new CustomError("Sequelize connection does not exist. First call connect() method.", false,
                 this.constructor.name, 1002);
         }
         return this.connection;
