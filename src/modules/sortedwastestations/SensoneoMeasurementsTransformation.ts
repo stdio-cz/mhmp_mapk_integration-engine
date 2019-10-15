@@ -16,8 +16,8 @@ export class SensoneoMeasurementsTransformation extends BaseTransformation imple
 
         const res = {
             ...element,
-            measured_at_utc: element.measured_at,
-            prediction_utc: element.prediction,
+            measured_at_utc: new Date(element.measured_at).getTime(),
+            prediction_utc: new Date(element.prediction).getTime(),
             updated_at: new Date().getTime(),
         };
         delete res.measured_at;
