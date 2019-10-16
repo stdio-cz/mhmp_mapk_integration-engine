@@ -1,9 +1,9 @@
 "use strict";
 
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import express from "express";
+import * as express from "express";
 import { FieldType } from "influx";
-import httpLogger from "morgan";
+import * as httpLogger from "morgan";
 
 import * as fs from "fs";
 import * as path from "path";

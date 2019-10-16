@@ -2,12 +2,12 @@
 
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { GeneralTransformation } from "../../../src/modules/general";
 
 chai.use(chaiAsPromised);
-import fs from "fs";
+import * as fs from "fs";
 
 describe("GeneralTransformation", () => {
 

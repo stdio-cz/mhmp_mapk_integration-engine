@@ -5,7 +5,7 @@ import { SortedWasteStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 import slug from "slugify";
-import _ from "underscore";
+import * as _ from "underscore";
 
 export class IPRSortedWasteStationsTransformation extends BaseTransformation implements ITransformation {
 

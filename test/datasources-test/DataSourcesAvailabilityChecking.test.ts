@@ -9,7 +9,7 @@ import {
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";

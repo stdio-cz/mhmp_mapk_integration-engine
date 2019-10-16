@@ -2,13 +2,13 @@
 
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 import { HomeportOutOfLocationsTransformation } from "../../../src/modules/sharedbikes";
 
 chai.use(chaiAsPromised);
-import fs from "fs";
+import * as fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

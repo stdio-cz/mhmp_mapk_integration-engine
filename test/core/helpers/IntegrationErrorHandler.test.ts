@@ -3,7 +3,7 @@
 import { CustomError } from "@golemio/errors";
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 import { IntegrationErrorHandler } from "../../../src/core/helpers";

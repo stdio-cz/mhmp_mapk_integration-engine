@@ -7,7 +7,7 @@ import { Readable } from "stream";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-import iconv from "iconv-lite";
+import * as iconv from "iconv-lite";
 import slug from "slugify";
 
 export class PharmaciesTransformation extends BaseTransformation implements ITransformation {

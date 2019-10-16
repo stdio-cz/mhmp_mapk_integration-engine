@@ -3,7 +3,7 @@
 import { VehiclePositions } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-import moment from "moment-timezone";
+import * as moment from "moment-timezone";
 
 export class VehiclePositionsTransformation extends BaseTransformation implements ITransformation {
 

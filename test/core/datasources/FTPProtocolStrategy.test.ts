@@ -2,14 +2,14 @@
 
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 import { RedisConnector } from "../../../src/core/connectors";
 import { FTPProtocolStrategy, IFTPSettings } from "../../../src/core/datasources";
 
-import ftp from "basic-ftp";
-import fs from "fs";
+import * as ftp from "basic-ftp";
+import * as fs from "fs";
 chai.use(chaiAsPromised);
 
 describe("FTPProtocolStrategy", () => {

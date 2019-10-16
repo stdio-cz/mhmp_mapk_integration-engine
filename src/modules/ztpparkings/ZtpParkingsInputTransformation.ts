@@ -1,6 +1,6 @@
 "use strict";
 
-import moment from "moment";
+import * as moment from "moment";
 import "moment-timezone";
 
 import { CustomError } from "@golemio/errors";

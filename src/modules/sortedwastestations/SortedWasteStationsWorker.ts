@@ -16,7 +16,7 @@ import {
     SensoneoPicksTransformation,
 } from "./";
 
-import _ from "underscore";
+import * as _ from "underscore";
 
 export class SortedWasteStationsWorker extends BaseWorker {
 

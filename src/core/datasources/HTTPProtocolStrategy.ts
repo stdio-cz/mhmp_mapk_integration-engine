@@ -7,7 +7,7 @@ import { RedisModel } from "../models";
 import { IHTTPSettings, IProtocolStrategy } from "./";
 
 import decompress = require("decompress");
-import moment = require("moment");
+import * as moment from "moment";
 import request = require("request-promise");
 
 export class HTTPProtocolStrategy implements IProtocolStrategy {

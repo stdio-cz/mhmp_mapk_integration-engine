@@ -10,7 +10,7 @@ import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
 
-import moment from "moment";
+import * as moment from "moment";
 
 export class ParkingsWorker extends BaseWorker {
 

@@ -3,12 +3,12 @@
 import { CustomError } from "@golemio/errors";
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
 import { HTTPProtocolStrategy, IHTTPSettings } from "../../../src/core/datasources";
 
-import nock from "nock";
+import * as nock from "nock";
 chai.use(chaiAsPromised);
 
 describe("HTTPProtocolStrategy", () => {

@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import Redis from "ioredis";
+import * as Redis from "ioredis";
 import { config } from "../config";
 import { log } from "../helpers";
 

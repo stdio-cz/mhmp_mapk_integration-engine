@@ -1,6 +1,6 @@
 "use strict";
 
-import moment from "moment";
+import * as moment from "moment";
 
 import { ZtpParkings } from "@golemio/schema-definitions";
 import { config } from "../../core/config";

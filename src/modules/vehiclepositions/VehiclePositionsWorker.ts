@@ -15,8 +15,8 @@ import {
     VehiclePositionsTripsModel,
 } from "./";
 
-import turf from "@turf/turf";
-import cheapruler from "cheap-ruler";
+import * as turf from "@turf/turf";
+import * as cheapruler from "cheap-ruler";
 
 const ruler: any = cheapruler(50);
 

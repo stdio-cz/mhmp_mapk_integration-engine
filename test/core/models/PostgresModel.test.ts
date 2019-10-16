@@ -4,7 +4,7 @@ import { CustomError } from "@golemio/errors";
 import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import { SchemaDefinition } from "mongoose";
 import * as Sequelize from "sequelize";

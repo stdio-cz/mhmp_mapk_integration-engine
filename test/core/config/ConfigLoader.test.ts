@@ -2,7 +2,7 @@
 
 import * as chai from "chai";
 import { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import * as chaiAsPromised from "chai-as-promised";
 import * as fs from "fs";
 import "mocha";
 import { config, ConfigLoader } from "../../../src/core/config";

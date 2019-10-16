@@ -4,7 +4,7 @@ import { CustomError, ErrorHandler } from "@golemio/errors";
 import { config } from "../config";
 import { InfluxConnector } from "../connectors";
 
-import Debug from "debug";
+import * as Debug from "debug";
 import { EventEmitter } from "events";
 import winston = require("winston");
 

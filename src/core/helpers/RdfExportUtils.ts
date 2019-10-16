@@ -3,7 +3,7 @@
 import { config } from "../config";
 import { log } from "./";
 
-import fs from "fs";
+import * as fs from "fs";
 import request from "request";
 
 /**

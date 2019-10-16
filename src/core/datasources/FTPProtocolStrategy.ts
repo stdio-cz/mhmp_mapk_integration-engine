@@ -8,8 +8,8 @@ import { IFTPSettings, IProtocolStrategy } from "./";
 
 import ftp = require("basic-ftp");
 import decompress = require("decompress");
-import fs = require("fs");
-import moment = require("moment");
+import * as fs from "fs";
+import * as moment from "moment";
 
 export class FTPProtocolStrategy implements IProtocolStrategy {
 
