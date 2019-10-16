@@ -23,7 +23,7 @@ export class CityDistrictsTransformation extends BaseTransformation implements I
             properties: {
                 id: parseInt(element.properties.KOD_MC, 10),
                 name: element.properties.NAZEV_MC,
-                slug: slug(element.properties.NAZEV_MC, { lower: true }),
+                slug: slug(element.properties.NAZEV_MC, { lower: true, remove: /[*+~.()'"!:@]/g }),
                 updated_at: new Date().getTime(),
             },
             type: element.type,

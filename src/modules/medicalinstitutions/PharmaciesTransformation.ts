@@ -88,7 +88,7 @@ export class PharmaciesTransformation extends BaseTransformation implements ITra
                     street_address: element.ULICE,
                 },
                 email: (element.EMAIL) ? element.EMAIL.trim().split(",") : [],
-                id: slug(element.KOD_PRACOVISTE + "-" + element.NAZEV, {lower: true}),
+                id: slug(element.KOD_PRACOVISTE + "-" + element.NAZEV, { lower: true, remove: /[*+~.()'"!:@]/g }),
                 institution_code: element.KOD_PRACOVISTE,
                 name: element.NAZEV,
                 opening_hours: [],

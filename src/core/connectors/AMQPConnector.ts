@@ -43,7 +43,7 @@ class MyAMQP {
 
     public getChannel = (): amqplib.Channel => {
         if (!this.channel) {
-            throw new CustomError("AMQP channel not exists. Firts call connect() method.", false,
+            throw new CustomError("AMQP channel does not exist. First call connect() method.", false,
                 this.constructor.name, 1002);
         }
         return this.channel;

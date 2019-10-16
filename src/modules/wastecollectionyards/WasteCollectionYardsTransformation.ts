@@ -22,7 +22,7 @@ export class WasteCollectionYardsTransformation extends BaseTransformation imple
                     address_formatted: element.properties.ADRESA,
                 },
                 contact: element.properties.KONTAKT,
-                id: slug(element.properties.NAZEV, { lower: true }),
+                id: slug(element.properties.NAZEV, { lower: true, remove: /[*+~.()'"!:@]/g }),
                 name: element.properties.NAZEV,
                 operating_hours: element.properties.PROVOZNIDOBA,
                 operator: element.properties.PROVOZOVATEL,

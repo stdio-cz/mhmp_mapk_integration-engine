@@ -325,8 +325,10 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         // create new stations with sensors as its containers
         await Promise.all(Object.keys(clusteredSensorsByStationNumber).map((stationNumber) => {
-            return this.createNewStationFromSensors(stationNumber, ++lastId[0].lastId,
-                clusteredSensorsByStationNumber[stationNumber]);
+            return (clusteredSensorsByStationNumber[stationNumber].length > 0)
+                ? this.createNewStationFromSensors(stationNumber, ++lastId[0].lastId,
+                    clusteredSensorsByStationNumber[stationNumber])
+                : Promise.resolve();
         }));
     }
 

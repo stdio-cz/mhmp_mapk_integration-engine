@@ -2,7 +2,7 @@
 
 import {
     AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones,
+    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
     WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
@@ -11,10 +11,11 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings,
     JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
@@ -335,7 +336,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             let datasource;
 
             beforeEach(() => {
-                const hoppyGoDataType = new JSONDataTypeStrategy({resultsPath: "data.items"});
+                const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "data.items" });
                 hoppyGoDataType.setFilter((item) =>
                     (item.localization && item.localization !== "" && item.localization !== ","));
                 datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
@@ -626,8 +627,8 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("MedicalInstitutions", () => {
 
-        let pharmaciesDatasource;
-        let healthCareDatasource;
+        let pharmaciesDatasource: DataSource;
+        let healthCareDatasource: DataSource;
 
         beforeEach(() => {
             pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
@@ -648,26 +649,37 @@ describe("DataSourcesAvailabilityChecking", () => {
             const hcDataTypeStrategy = new CSVDataTypeStrategy({
                 fastcsvParams: { headers: true },
                 subscribe: ((json: any) => {
-                    delete json.poskytovatel_ič;
-                    delete json.poskytovatel_právní_forma_osoba;
-                    delete json.poskytovatel_právní_forma;
-                    delete json.sídlo_adresa_kód_kraje;
-                    delete json.sídlo_adresa_název_kraje;
-                    delete json.sídlo_adresa_kód_okresu;
-                    delete json.sídlo_adresa_název_okresu;
-                    delete json.sídlo_adresa_psč;
-                    delete json.sídlo_adresa_název_obce;
-                    delete json.sídlo_adresa_název_ulice;
-                    delete json.sídlo_adresa_číslo_domovní;
+                    delete json.CisloDomovniOrientacniSidlo;
+                    delete json.DruhPece;
+                    delete json.FormaPece;
+                    delete json.Ico;
+                    delete json.Kod;
+                    delete json.Kraj;
+                    delete json.KrajCodeSidlo;
+                    delete json.MistoPoskytovaniId;
+                    delete json.ObecSidlo;
+                    delete json.OborPece;
+                    delete json.OdbornyZastupce;
+                    delete json.Okres;
+                    delete json.OkresCode;
+                    delete json.OkresCodeSidlo;
+                    delete json.PoskytovatelFax;
+                    delete json.PravniFormaKod;
+                    delete json.PscSidlo;
+                    delete json.SpravniObvod;
+                    delete json.TypOsoby;
+                    delete json.UliceSidlo;
                     return json;
                 }),
             });
             hcDataTypeStrategy.setFilter((item) => {
-                return item.adresa_kód_kraje === "CZ010"
-                    && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
-                        "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
-                        "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                        "Zdravotnické středisko"].indexOf(item.typ) !== -1;
+                return item.KrajCode === "CZ010"
+                && item.Lat
+                && item.Lng
+                && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
+                    "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                    "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
             });
             healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
                 new HTTPProtocolStrategy({
@@ -970,6 +982,44 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new JSONDataTypeStrategy({ resultsPath: "elements" }),
                 new Validator(BicycleParkings.name + "DataSource",
                     BicycleParkings.datasourceMongooseSchemaObject));
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
+
+    });
+
+    describe("TSKParkomats", () => {
+
+        let datasource: DataSource;
+
+        beforeEach(() => {
+            const to = moment.tz(new Date(), "Europe/Prague");
+            const from = to.clone();
+            from.subtract(12, "minutes");
+            const url = config.datasources.TSKParkomats +
+                `/parkingsessions?from=${from.format("YYYY-MM-DDTHH:mm:ss")}&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
+
+            const dataSourceHTTPSettings: IHTTPSettings = {
+                headers: {
+                    authorization: config.datasources.TSKParkomatsToken,
+                },
+                method: "GET",
+                url,
+            };
+
+            datasource = new DataSource(Parkomats.name + "DataSource",
+                new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject),
+            );
         });
 
         it("should returns all objects", async () => {
