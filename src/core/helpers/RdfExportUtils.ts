@@ -4,7 +4,7 @@ import { config } from "../config";
 import { log } from "./";
 
 import * as fs from "fs";
-import request from "request";
+import * as request from "request";
 
 /**
  * TODO refaktoring, neukladat do filesystemu
