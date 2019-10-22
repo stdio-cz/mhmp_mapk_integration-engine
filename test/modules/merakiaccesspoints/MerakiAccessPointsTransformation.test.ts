@@ -32,11 +32,14 @@ describe("MerakiAccessPointsTransformation", () => {
 
     let transformation;
     let testSourceData;
-    let validator;
+    let observationsValidator;
+    let tagsValidator;
 
     before(() => {
-        validator = new Validator(MerakiAccessPoints.observations.name + "ModelValidator",
+        observationsValidator = new Validator(MerakiAccessPoints.observations.name + "ModelValidator",
             MerakiAccessPoints.observations.outputMongooseSchemaObject);
+        tagsValidator = new Validator(MerakiAccessPoints.tags.name + "ModelValidator",
+                MerakiAccessPoints.tags.outputMongooseSchemaObject);
     });
 
     beforeEach(async () => {
@@ -56,7 +59,9 @@ describe("MerakiAccessPointsTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
-        await expect(validator.Validate(data)).to.be.fulfilled;
+        await expect(observationsValidator.Validate(data.observations)).to.be.fulfilled;
+        await expect(tagsValidator.Validate(data.tags)).to.be.fulfilled;
+
         expect(data).to.have.property("observations");
         expect(data).to.have.property("tags");
     });

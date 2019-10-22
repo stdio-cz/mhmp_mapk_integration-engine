@@ -82,7 +82,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         timestamp.add(isOverMidnight, "d");
 
         // primary key -> start_timestamp, cis_id, cis_short_name, cis_number
-        const primaryKey = startDate.utc().valueOf()
+        const primaryKey = startDate.utc().format()
             + "_" + attributes.lin + "_" + attributes.alias + "_" + attributes.spoj;
 
         const res = {
