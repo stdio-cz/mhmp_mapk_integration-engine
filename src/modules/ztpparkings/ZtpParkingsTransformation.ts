@@ -1,9 +1,7 @@
 "use strict";
 
-const moment = require("moment");
-
 import { ZtpParkings } from "@golemio/schema-definitions";
-import { config } from "../../core/config";
+import * as moment from "moment";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ZtpParkingsTransformation extends BaseTransformation implements ITransformation {
