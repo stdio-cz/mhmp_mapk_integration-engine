@@ -1,5 +1,7 @@
 "use strict";
 
+import { SortedWasteStations } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -30,6 +32,12 @@ describe("SensoneoPicksTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let validator;
+
+    before(() => {
+        validator = new Validator(SortedWasteStations.sensorsPicks.name + "ModelValidator",
+            SortedWasteStations.sensorsPicks.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new SensoneoPicksTransformation();
@@ -48,6 +56,8 @@ describe("SensoneoPicksTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("code");
             expect(data[i]).to.have.property("container_id");
