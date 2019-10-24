@@ -8,7 +8,7 @@ import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
-import * as moment from "moment";
+const moment = require("moment");
 
 export class VehiclePositionsTripsModel extends PostgresModel implements IModel {
 

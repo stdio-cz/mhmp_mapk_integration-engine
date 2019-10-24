@@ -1,7 +1,5 @@
 "use strict";
 
-import { MerakiAccessPoints } from "@golemio/schema-definitions";
-import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -32,15 +30,6 @@ describe("MerakiAccessPointsTransformation", () => {
 
     let transformation;
     let testSourceData;
-    let observationsValidator;
-    let tagsValidator;
-
-    before(() => {
-        observationsValidator = new Validator(MerakiAccessPoints.observations.name + "ModelValidator",
-            MerakiAccessPoints.observations.outputMongooseSchemaObject);
-        tagsValidator = new Validator(MerakiAccessPoints.tags.name + "ModelValidator",
-                MerakiAccessPoints.tags.outputMongooseSchemaObject);
-    });
 
     beforeEach(async () => {
         transformation = new MerakiAccessPointsTransformation();
@@ -59,10 +48,8 @@ describe("MerakiAccessPointsTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
-        await expect(observationsValidator.Validate(data.observations)).to.be.fulfilled;
-        await expect(tagsValidator.Validate(data.tags)).to.be.fulfilled;
-
         expect(data).to.have.property("observations");
         expect(data).to.have.property("tags");
     });
+
 });

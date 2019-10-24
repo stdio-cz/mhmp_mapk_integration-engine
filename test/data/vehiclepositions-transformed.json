@@ -7,7 +7,7 @@
             "lat": 50.04042,
             "lng": 14.50057,
             "origin_time": "11:50:08",
-            "origin_timestamp": 1549018208000,
+            "origin_timestamp": "2019-02-01T10:50:08Z",
             "tracking": 2,
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -18,7 +18,7 @@
             "lat": 50.04042,
             "lng": 14.50057,
             "origin_time": "11:50:08",
-            "origin_timestamp": 1549018208000,
+            "origin_timestamp": "2019-02-01T10:50:08Z",
             "tracking": 0,
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -29,7 +29,7 @@
             "lat": 50.04042,
             "lng": 14.50057,
             "origin_time": "11:50:08",
-            "origin_timestamp": 1549018208000,
+            "origin_timestamp": "2019-02-01T10:50:08Z",
             "tracking": 0,
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -40,7 +40,7 @@
             "lat": 50.04366,
             "lng": 14.45033,
             "origin_time": "11:49:35",
-            "origin_timestamp": 1549018175000,
+            "origin_timestamp": "2019-02-01T10:49:35Z",
             "tracking": 0,
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -51,7 +51,7 @@
             "lat": 50.01715,
             "lng": 14.43265,
             "origin_time": "11:49:40",
-            "origin_timestamp": 1549018180000,
+            "origin_timestamp": "2019-02-01T10:49:40Z",
             "tracking": 2,
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         }
@@ -67,7 +67,7 @@
             "delay_departure": 78,
             "delay_type": 3,
             "departure_time": "11:45",
-            "departure_timestamp": 1549017900000,
+            "departure_timestamp": "2019-02-01T10:45:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -81,7 +81,7 @@
             "delay_departure": 90,
             "delay_type": 3,
             "departure_time": "11:47",
-            "departure_timestamp": 1549018020000,
+            "departure_timestamp": "2019-02-01T10:47:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -95,7 +95,7 @@
             "delay_departure": 90,
             "delay_type": 2,
             "departure_time": "11:49",
-            "departure_timestamp": 1549018140000,
+            "departure_timestamp": "2019-02-01T10:49:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -109,7 +109,7 @@
             "delay_departure": 90,
             "delay_type": 2,
             "departure_time": "11:51",
-            "departure_timestamp": 1549018260000,
+            "departure_timestamp": "2019-02-01T10:51:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -123,7 +123,7 @@
             "delay_departure": 90,
             "delay_type": 2,
             "departure_time": "11:52",
-            "departure_timestamp": 1549018320000,
+            "departure_timestamp": "2019-02-01T10:52:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -137,7 +137,7 @@
             "delay_departure": 90,
             "delay_type": 2,
             "departure_time": "11:55",
-            "departure_timestamp": 1549018500000,
+            "departure_timestamp": "2019-02-01T10:55:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
@@ -151,13 +151,13 @@
             "delay_departure": 90,
             "delay_type": 2,
             "departure_time": "11:56",
-            "departure_timestamp": 1549018560000,
+            "departure_timestamp": "2019-02-01T10:56:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:45:00Z_100115_115_103"
         },
         {
             "arrival_time": "11:58",
-            "arrival_timestamp": 1549018680000,
+            "arrival_timestamp": "2019-02-01T10:58:00Z",
             "cis_stop_id": 56714,
             "cis_stop_platform_code": "B",
             "cis_stop_sequence": 8,
@@ -179,7 +179,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:15",
-            "departure_timestamp": 1549019700000,
+            "departure_timestamp": "2019-02-01T11:15:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -193,7 +193,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:17",
-            "departure_timestamp": 1549019820000,
+            "departure_timestamp": "2019-02-01T11:17:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -207,7 +207,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:19",
-            "departure_timestamp": 1549019940000,
+            "departure_timestamp": "2019-02-01T11:19:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -221,7 +221,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:21",
-            "departure_timestamp": 1549020060000,
+            "departure_timestamp": "2019-02-01T11:21:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -235,7 +235,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:22",
-            "departure_timestamp": 1549020120000,
+            "departure_timestamp": "2019-02-01T11:22:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -249,7 +249,7 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:25",
-            "departure_timestamp": 1549020300000,
+            "departure_timestamp": "2019-02-01T11:25:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
@@ -263,13 +263,13 @@
             "delay_departure": 0,
             "delay_type": 2,
             "departure_time": "12:26",
-            "departure_timestamp": 1549020360000,
+            "departure_timestamp": "2019-02-01T11:26:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T11:15:00Z_100115_115_109"
         },
         {
             "arrival_time": "12:28",
-            "arrival_timestamp": 1549020480000,
+            "arrival_timestamp": "2019-02-01T11:28:00Z",
             "cis_stop_id": 56714,
             "cis_stop_platform_code": "B",
             "cis_stop_sequence": 8,
@@ -291,7 +291,7 @@
             "delay_departure": 74,
             "delay_type": 3,
             "departure_time": "11:15",
-            "departure_timestamp": 1549016100000,
+            "departure_timestamp": "2019-02-01T10:15:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -305,7 +305,7 @@
             "delay_departure": 88,
             "delay_type": 3,
             "departure_time": "11:17",
-            "departure_timestamp": 1549016220000,
+            "departure_timestamp": "2019-02-01T10:17:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -319,7 +319,7 @@
             "delay_departure": 108,
             "delay_type": 3,
             "departure_time": "11:19",
-            "departure_timestamp": 1549016340000,
+            "departure_timestamp": "2019-02-01T10:19:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -333,7 +333,7 @@
             "delay_departure": 117,
             "delay_type": 3,
             "departure_time": "11:21",
-            "departure_timestamp": 1549016460000,
+            "departure_timestamp": "2019-02-01T10:21:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -347,7 +347,7 @@
             "delay_departure": 117,
             "delay_type": 3,
             "departure_time": "11:22",
-            "departure_timestamp": 1549016520000,
+            "departure_timestamp": "2019-02-01T10:22:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -361,7 +361,7 @@
             "delay_departure": 22,
             "delay_type": 3,
             "departure_time": "11:25",
-            "departure_timestamp": 1549016700000,
+            "departure_timestamp": "2019-02-01T10:25:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
@@ -375,13 +375,13 @@
             "delay_departure": 34,
             "delay_type": 3,
             "departure_time": "11:26",
-            "departure_timestamp": 1549016760000,
+            "departure_timestamp": "2019-02-01T10:26:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:15:00Z_100115_115_97"
         },
         {
             "arrival_time": "11:28",
-            "arrival_timestamp": 1549016880000,
+            "arrival_timestamp": "2019-02-01T10:28:00Z",
             "cis_stop_id": 56714,
             "cis_stop_platform_code": "B",
             "cis_stop_sequence": 8,
@@ -403,7 +403,7 @@
             "delay_departure": 0,
             "delay_type": 3,
             "departure_time": "11:10",
-            "departure_timestamp": 1549015800000,
+            "departure_timestamp": "2019-02-01T10:10:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -417,7 +417,7 @@
             "delay_departure": 45,
             "delay_type": 3,
             "departure_time": "11:11",
-            "departure_timestamp": 1549015860000,
+            "departure_timestamp": "2019-02-01T10:11:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -431,7 +431,7 @@
             "delay_departure": 87,
             "delay_type": 3,
             "departure_time": "11:12",
-            "departure_timestamp": 1549015920000,
+            "departure_timestamp": "2019-02-01T10:12:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -445,7 +445,7 @@
             "delay_departure": 63,
             "delay_type": 3,
             "departure_time": "11:14",
-            "departure_timestamp": 1549016040000,
+            "departure_timestamp": "2019-02-01T10:14:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -459,7 +459,7 @@
             "delay_departure": -2,
             "delay_type": 3,
             "departure_time": "11:16",
-            "departure_timestamp": 1549016160000,
+            "departure_timestamp": "2019-02-01T10:16:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -473,7 +473,7 @@
             "delay_departure": 42,
             "delay_type": 3,
             "departure_time": "11:17",
-            "departure_timestamp": 1549016220000,
+            "departure_timestamp": "2019-02-01T10:17:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -487,7 +487,7 @@
             "delay_departure": 67,
             "delay_type": 3,
             "departure_time": "11:18",
-            "departure_timestamp": 1549016280000,
+            "departure_timestamp": "2019-02-01T10:18:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -501,7 +501,7 @@
             "delay_departure": 28,
             "delay_type": 3,
             "departure_time": "11:20",
-            "departure_timestamp": 1549016400000,
+            "departure_timestamp": "2019-02-01T10:20:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -515,7 +515,7 @@
             "delay_departure": 15,
             "delay_type": 3,
             "departure_time": "11:21",
-            "departure_timestamp": 1549016460000,
+            "departure_timestamp": "2019-02-01T10:21:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -529,7 +529,7 @@
             "delay_departure": 44,
             "delay_type": 3,
             "departure_time": "11:22",
-            "departure_timestamp": 1549016520000,
+            "departure_timestamp": "2019-02-01T10:22:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -543,7 +543,7 @@
             "delay_departure": 27,
             "delay_type": 3,
             "departure_time": "11:24",
-            "departure_timestamp": 1549016640000,
+            "departure_timestamp": "2019-02-01T10:24:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -557,7 +557,7 @@
             "delay_departure": 32,
             "delay_type": 3,
             "departure_time": "11:25",
-            "departure_timestamp": 1549016700000,
+            "departure_timestamp": "2019-02-01T10:25:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -571,7 +571,7 @@
             "delay_departure": 46,
             "delay_type": 3,
             "departure_time": "11:26",
-            "departure_timestamp": 1549016760000,
+            "departure_timestamp": "2019-02-01T10:26:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -585,7 +585,7 @@
             "delay_departure": 33,
             "delay_type": 3,
             "departure_time": "11:27",
-            "departure_timestamp": 1549016820000,
+            "departure_timestamp": "2019-02-01T10:27:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -599,7 +599,7 @@
             "delay_departure": 19,
             "delay_type": 3,
             "departure_time": "11:28",
-            "departure_timestamp": 1549016880000,
+            "departure_timestamp": "2019-02-01T10:28:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -613,7 +613,7 @@
             "delay_departure": 39,
             "delay_type": 3,
             "departure_time": "11:29",
-            "departure_timestamp": 1549016940000,
+            "departure_timestamp": "2019-02-01T10:29:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -627,7 +627,7 @@
             "delay_departure": 30,
             "delay_type": 3,
             "departure_time": "11:30",
-            "departure_timestamp": 1549017000000,
+            "departure_timestamp": "2019-02-01T10:30:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -641,7 +641,7 @@
             "delay_departure": 35,
             "delay_type": 3,
             "departure_time": "11:31",
-            "departure_timestamp": 1549017060000,
+            "departure_timestamp": "2019-02-01T10:31:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -655,7 +655,7 @@
             "delay_departure": 72,
             "delay_type": 3,
             "departure_time": "11:33",
-            "departure_timestamp": 1549017180000,
+            "departure_timestamp": "2019-02-01T10:33:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -669,7 +669,7 @@
             "delay_departure": 55,
             "delay_type": 3,
             "departure_time": "11:34",
-            "departure_timestamp": 1549017240000,
+            "departure_timestamp": "2019-02-01T10:34:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -683,7 +683,7 @@
             "delay_departure": 29,
             "delay_type": 3,
             "departure_time": "11:36",
-            "departure_timestamp": 1549017360000,
+            "departure_timestamp": "2019-02-01T10:36:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -697,7 +697,7 @@
             "delay_departure": 41,
             "delay_type": 3,
             "departure_time": "11:38",
-            "departure_timestamp": 1549017480000,
+            "departure_timestamp": "2019-02-01T10:38:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -711,7 +711,7 @@
             "delay_departure": 102,
             "delay_type": 3,
             "departure_time": "11:41",
-            "departure_timestamp": 1549017660000,
+            "departure_timestamp": "2019-02-01T10:41:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -725,7 +725,7 @@
             "delay_departure": 85,
             "delay_type": 3,
             "departure_time": "11:43",
-            "departure_timestamp": 1549017780000,
+            "departure_timestamp": "2019-02-01T10:43:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -739,7 +739,7 @@
             "delay_departure": 70,
             "delay_type": 3,
             "departure_time": "11:44",
-            "departure_timestamp": 1549017840000,
+            "departure_timestamp": "2019-02-01T10:44:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -753,7 +753,7 @@
             "delay_departure": 84,
             "delay_type": 3,
             "departure_time": "11:45",
-            "departure_timestamp": 1549017900000,
+            "departure_timestamp": "2019-02-01T10:45:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
@@ -767,13 +767,13 @@
             "delay_departure": 85,
             "delay_type": 3,
             "departure_time": "11:47",
-            "departure_timestamp": 1549018020000,
+            "departure_timestamp": "2019-02-01T10:47:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:10:00Z_100117_117_40"
         },
         {
             "arrival_time": "11:49",
-            "arrival_timestamp": 1549018140000,
+            "arrival_timestamp": "2019-02-01T10:49:00Z",
             "cis_stop_id": 57408,
             "cis_stop_platform_code": "M",
             "cis_stop_sequence": 28,
@@ -795,7 +795,7 @@
             "delay_departure": 145,
             "delay_type": 3,
             "departure_time": "11:25",
-            "departure_timestamp": 1549016700000,
+            "departure_timestamp": "2019-02-01T10:25:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -809,7 +809,7 @@
             "delay_departure": 212,
             "delay_type": 3,
             "departure_time": "11:26",
-            "departure_timestamp": 1549016760000,
+            "departure_timestamp": "2019-02-01T10:26:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -823,7 +823,7 @@
             "delay_departure": 212,
             "delay_type": 2,
             "departure_time": "11:28",
-            "departure_timestamp": 1549016880000,
+            "departure_timestamp": "2019-02-01T10:28:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -837,7 +837,7 @@
             "delay_departure": 212,
             "delay_type": 2,
             "departure_time": "11:29",
-            "departure_timestamp": 1549016940000,
+            "departure_timestamp": "2019-02-01T10:29:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -851,7 +851,7 @@
             "delay_departure": 212,
             "delay_type": 2,
             "departure_time": "11:30",
-            "departure_timestamp": 1549017000000,
+            "departure_timestamp": "2019-02-01T10:30:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -865,7 +865,7 @@
             "delay_departure": 141,
             "delay_type": 3,
             "departure_time": "11:32",
-            "departure_timestamp": 1549017120000,
+            "departure_timestamp": "2019-02-01T10:32:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -879,7 +879,7 @@
             "delay_departure": 161,
             "delay_type": 3,
             "departure_time": "11:35",
-            "departure_timestamp": 1549017300000,
+            "departure_timestamp": "2019-02-01T10:35:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -893,7 +893,7 @@
             "delay_departure": 222,
             "delay_type": 3,
             "departure_time": "11:36",
-            "departure_timestamp": 1549017360000,
+            "departure_timestamp": "2019-02-01T10:36:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -907,7 +907,7 @@
             "delay_departure": 215,
             "delay_type": 3,
             "departure_time": "11:37",
-            "departure_timestamp": 1549017420000,
+            "departure_timestamp": "2019-02-01T10:37:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -921,7 +921,7 @@
             "delay_departure": 263,
             "delay_type": 3,
             "departure_time": "11:39",
-            "departure_timestamp": 1549017540000,
+            "departure_timestamp": "2019-02-01T10:39:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -935,7 +935,7 @@
             "delay_departure": 267,
             "delay_type": 3,
             "departure_time": "11:40",
-            "departure_timestamp": 1549017600000,
+            "departure_timestamp": "2019-02-01T10:40:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -949,7 +949,7 @@
             "delay_departure": 267,
             "delay_type": 2,
             "departure_time": "11:42",
-            "departure_timestamp": 1549017720000,
+            "departure_timestamp": "2019-02-01T10:42:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -963,7 +963,7 @@
             "delay_departure": 220,
             "delay_type": 3,
             "departure_time": "11:43",
-            "departure_timestamp": 1549017780000,
+            "departure_timestamp": "2019-02-01T10:43:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -977,7 +977,7 @@
             "delay_departure": 227,
             "delay_type": 3,
             "departure_time": "11:44",
-            "departure_timestamp": 1549017840000,
+            "departure_timestamp": "2019-02-01T10:44:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -991,7 +991,7 @@
             "delay_departure": 210,
             "delay_type": 3,
             "departure_time": "11:45",
-            "departure_timestamp": 1549017900000,
+            "departure_timestamp": "2019-02-01T10:45:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1005,7 +1005,7 @@
             "delay_departure": 220,
             "delay_type": 3,
             "departure_time": "11:46",
-            "departure_timestamp": 1549017960000,
+            "departure_timestamp": "2019-02-01T10:46:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1019,7 +1019,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:47",
-            "departure_timestamp": 1549018020000,
+            "departure_timestamp": "2019-02-01T10:47:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1033,7 +1033,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:48",
-            "departure_timestamp": 1549018080000,
+            "departure_timestamp": "2019-02-01T10:48:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1047,7 +1047,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:49",
-            "departure_timestamp": 1549018140000,
+            "departure_timestamp": "2019-02-01T10:49:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1061,7 +1061,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:50",
-            "departure_timestamp": 1549018200000,
+            "departure_timestamp": "2019-02-01T10:50:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1075,7 +1075,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:51",
-            "departure_timestamp": 1549018260000,
+            "departure_timestamp": "2019-02-01T10:51:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1089,7 +1089,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:53",
-            "departure_timestamp": 1549018380000,
+            "departure_timestamp": "2019-02-01T10:53:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1103,7 +1103,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:55",
-            "departure_timestamp": 1549018500000,
+            "departure_timestamp": "2019-02-01T10:55:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1117,7 +1117,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:57",
-            "departure_timestamp": 1549018620000,
+            "departure_timestamp": "2019-02-01T10:57:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1131,7 +1131,7 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "11:58",
-            "departure_timestamp": 1549018680000,
+            "departure_timestamp": "2019-02-01T10:58:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
@@ -1145,13 +1145,13 @@
             "delay_departure": 220,
             "delay_type": 2,
             "departure_time": "12:00",
-            "departure_timestamp": 1549018800000,
+            "departure_timestamp": "2019-02-01T11:00:00Z",
             "modified": "2019-02-01T11:36:50Z",
             "trips_id": "2019-02-01T10:25:00Z_100117_117_43"
         },
         {
             "arrival_time": "12:02",
-            "arrival_timestamp": 1549018920000,
+            "arrival_timestamp": "2019-02-01T11:02:00Z",
             "cis_stop_id": 51228,
             "cis_stop_platform_code": "D",
             "cis_stop_sequence": 27,
@@ -1175,7 +1175,7 @@
             "start_cis_stop_id": 56714,
             "start_cis_stop_platform_code": "D",
             "start_time": "11:45",
-            "start_timestamp": 1549017900000,
+            "start_timestamp": "2019-02-01T10:45:00Z",
             "vehicle_type": 3,
             "wheelchair_accessible": true
         },
@@ -1189,7 +1189,7 @@
             "start_cis_stop_id": 56714,
             "start_cis_stop_platform_code": "D",
             "start_time": "12:15",
-            "start_timestamp": 1549019700000,
+            "start_timestamp": "2019-02-01T11:15:00Z",
             "vehicle_type": 3,
             "wheelchair_accessible": true
         },
@@ -1203,7 +1203,7 @@
             "start_cis_stop_id": 56714,
             "start_cis_stop_platform_code": "D",
             "start_time": "11:15",
-            "start_timestamp": 1549016100000,
+            "start_timestamp": "2019-02-01T10:15:00Z",
             "vehicle_type": 3,
             "wheelchair_accessible": true
         },
@@ -1217,7 +1217,7 @@
             "start_cis_stop_id": 51228,
             "start_cis_stop_platform_code": "C",
             "start_time": "11:10",
-            "start_timestamp": 1549015800000,
+            "start_timestamp": "2019-02-01T10:10:00Z",
             "vehicle_type": 3,
             "wheelchair_accessible": true
         },
@@ -1231,7 +1231,7 @@
             "start_cis_stop_id": 57408,
             "start_cis_stop_platform_code": "E",
             "start_time": "11:25",
-            "start_timestamp": 1549016700000,
+            "start_timestamp": "2019-02-01T10:25:00Z",
             "vehicle_type": 3,
             "wheelchair_accessible": true
         }

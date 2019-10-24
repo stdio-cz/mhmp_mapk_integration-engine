@@ -1,7 +1,6 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import * as moment from "moment";
 import * as path from "path";
 import { log } from "../helpers";
 import { RedisModel } from "../models";
@@ -9,6 +8,7 @@ import { IHTTPSettings, IProtocolStrategy } from "./";
 
 const decompress = require("decompress");
 const request = require("request-promise");
+const moment = require("moment");
 
 export class HTTPProtocolStrategy implements IProtocolStrategy {
 
@@ -56,7 +56,7 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    public getLastModified = async (): Promise<string | null> => {
+    public getLastModified = async (): Promise<string|null> => {
         try {
             const s = this.connectionSettings;
             s.method = "HEAD";

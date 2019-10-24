@@ -1,53 +1,53 @@
 {
-   "last_updated": 1551864480000,
-   "municipal_authority_id": "skoduv-palac",
-   "served_activities": [
-      {
-         "activity": "OSV:Žádosti, formuláře, konzultace, schůzky a informace odborů MHMP",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 6
-      },
-      {
-         "activity": "Pokladna",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 0
-      },
-      {
-         "activity": "Podatelna",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 0
-      },
-      {
-         "activity": "Oddělení služeb veřejnosti",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 6
-      },
-      {
-         "activity": "OSV: CzechPoint",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 6
-      },
-      {
-         "activity": "OSV: Doprava",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 6
-      },
-      {
-         "activity": "Lítačka: Prodej papírových průkazek MHD",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 7
-      },
-      {
-         "activity": "Lítačka: Vyhotovovení karty (žádost o 1.kartu, reklamace, duplikáty, konec platnosti)",
-         "number_of_person_in_queue": 0,
-         "number_of_serving_counters": 9
-      },
-      {
-         "activity": "Pražské služby",
-         "number_of_person_in_queue": 1,
-         "number_of_serving_counters": 1
-      }
-   ],
-   "title": "Monitoring odbavování klientů ve Škodově paláci",
-   "updated_at": 1571901609364
-}
+    "last_updated": "2019-03-06T11:28:00+01:00",
+    "municipal_authority_id": "skoduv-palac",
+    "served_activities": [
+       {
+          "activity": "OSV:Žádosti, formuláře, konzultace, schůzky a informace odborů MHMP",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 6
+       },
+       {
+          "activity": "Pokladna",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 0
+       },
+       {
+          "activity": "Podatelna",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 0
+       },
+       {
+          "activity": "Oddělení služeb veřejnosti",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 6
+       },
+       {
+          "activity": "OSV: CzechPoint",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 6
+       },
+       {
+          "activity": "OSV: Doprava",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 6
+       },
+       {
+          "activity": "Lítačka: Prodej papírových průkazek MHD",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 7
+       },
+       {
+          "activity": "Lítačka: Vyhotovovení karty (žádost o 1.kartu, reklamace, duplikáty, konec platnosti)",
+          "number_of_person_in_queue": 0,
+          "number_of_serving_counters": 9
+       },
+       {
+          "activity": "Pražské služby",
+          "number_of_person_in_queue": 1,
+          "number_of_serving_counters": 1
+       }
+    ],
+    "created_at": 1551870371174,
+    "title": "Monitoring odbavování klientů ve Škodově paláci"
+ }

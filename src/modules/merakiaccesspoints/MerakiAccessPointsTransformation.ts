@@ -15,7 +15,7 @@ export class MerakiAccessPointsTransformation extends BaseTransformation impleme
     /**
      * Overrides BaseTransformation::transform
      */
-    public transform = async (data: any | any[]): Promise<any | any[]> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
         const res = {
             observations: [],
             tags: [],
@@ -46,7 +46,7 @@ export class MerakiAccessPointsTransformation extends BaseTransformation impleme
                 os: (observation.os) ? observation.os : null,
                 rssi: (observation.rssi) ? observation.rssi : null,
                 ssid: (observation.ssid) ? observation.ssid : null,
-                timestamp: observation.seenEpoch * 1000,
+                timestamp: new Date(observation.seenEpoch * 1000).toUTCString(),
                 type: data.type,
                 unc: (observation.location && observation.location.unc)
                     ? observation.location.unc
