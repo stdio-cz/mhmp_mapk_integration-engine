@@ -10,6 +10,8 @@ import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ZtpParkingsInputTransformation, ZtpParkingsTransformation } from "./";
 
+const moment = require("moment");
+
 export class ZtpParkingsWorker extends BaseWorker {
 
     private dataSource: DataSource;

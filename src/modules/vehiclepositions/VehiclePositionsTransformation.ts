@@ -1,8 +1,9 @@
 "use strict";
 
 import { VehiclePositions } from "@golemio/schema-definitions";
-import * as moment from "moment-timezone";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
+
+const moment = require("moment-timezone");
 
 export class VehiclePositionsTransformation extends BaseTransformation implements ITransformation {
 
@@ -16,7 +17,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
     /**
      * Overrides BaseTransformation::transform
      */
-    public transform = async (data: any | any[]): Promise<any | any[]> => {
+    public transform = async (data: any|any[]): Promise<any|any[]> => {
         const res = {
             positions: [],
             stops: [],
@@ -108,7 +109,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     ? parseFloat(attributes.lng)
                     : null,
                 origin_time: attributes.cpoz,
-                origin_timestamp: timestamp.utc().valueOf(),
+                origin_timestamp: timestamp.utc().format(),
                 speed: (attributes.rychl)
                     ? parseInt(attributes.rychl, 10)
                     : null,
@@ -139,7 +140,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 start_cis_stop_id: parseInt(stops[0].$.zast, 10),
                 start_cis_stop_platform_code: stops[0].$.stan,
                 start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
-                start_timestamp: startDate.utc().valueOf(),
+                start_timestamp: startDate.utc().format(),
                 vehicle_type: (attributes.t)
                     ? parseInt(attributes.t, 10)
                     : null,
@@ -181,8 +182,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             const cisStopSequence = i + 1;
             // finding cis_last_stop_sequence (positions table)
             if (res.position.cis_last_stop_id === parseInt(stop.$.zast, 10)
-                && ((stop.$.zpoz_typ && parseInt(stop.$.zpoz_typ, 10) === 3)
-                    || (stop.$.zpoz_typ_prij && parseInt(stop.$.zpoz_typ_prij, 10) === 3))) {
+                    && ((stop.$.zpoz_typ && parseInt(stop.$.zpoz_typ, 10) === 3)
+                        || (stop.$.zpoz_typ_prij && parseInt(stop.$.zpoz_typ_prij, 10) === 3))) {
                 res.position.cis_last_stop_sequence = cisStopSequence;
             }
 
@@ -191,7 +192,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     ? parseInt(stop.$.zpoz_typ_prij, 10)
                     : null,
                 arrival_time: (arrival) ? stop.$.prij : null,
-                arrival_timestamp: (arrival) ? arrival.utc().valueOf() : null,
+                arrival_timestamp: (arrival) ? arrival.utc().format() : null,
                 cis_stop_id: parseInt(stop.$.zast, 10),
                 cis_stop_platform_code: stop.$.stan,
                 cis_stop_sequence: cisStopSequence,
@@ -205,7 +206,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     ? parseInt(stop.$.zpoz_typ, 10)
                     : null,
                 departure_time: (departure) ? stop.$.odj : null,
-                departure_timestamp: (departure) ? departure.utc().valueOf() : null,
+                departure_timestamp: (departure) ? departure.utc().format() : null,
                 trips_id: primaryKey,
             };
         });

@@ -33,6 +33,6 @@ describe("PurgeWorker", () => {
         await worker.deleteOldMerakiAccessPointsObservations();
         sandbox.assert.calledOnce(queryStub);
         sandbox.assert.calledWith(queryStub,
-            "SELECT * FROM retention_bigint('merakiaccesspoints_observations','timestamp',168);");
+            "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);");
     });
 });

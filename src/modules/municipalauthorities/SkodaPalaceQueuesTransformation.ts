@@ -1,8 +1,9 @@
 "use strict";
 
 import { MunicipalAuthorities } from "@golemio/schema-definitions";
-import * as moment from "moment-timezone";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
+
+const moment = require("moment-timezone");
 
 export class SkodaPalaceQueuesTransformation extends BaseTransformation implements ITransformation {
 
@@ -16,11 +17,11 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
     /**
      * Overrides BaseTransformation::transformHistory
      */
-    public transformHistory = async (data: any | any[]): Promise<any | any[]> => {
+    public transformHistory = async (data: any|any[]): Promise<any|any[]> => {
         const promises = data.served_activities.map(async (activity) => {
             return {
                 activity: activity.activity,
-                last_updated: new Date(data.last_updated).getTime(),
+                last_updated: data.last_updated,
                 municipal_authority_id: data.municipal_authority_id,
                 number_of_person_in_queue: activity.number_of_person_in_queue,
                 number_of_serving_counters: activity.number_of_serving_counters,
@@ -45,7 +46,7 @@ export class SkodaPalaceQueuesTransformation extends BaseTransformation implemen
         lastUpdated.millisecond(0);
 
         const res = {
-            last_updated: lastUpdated.valueOf(),
+            last_updated: lastUpdated.format(),
             municipal_authority_id: "skoduv-palac",
             served_activities: [],
             title: "Monitoring odbavování klientů ve Škodově paláci",

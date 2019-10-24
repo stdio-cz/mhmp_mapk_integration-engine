@@ -71,7 +71,7 @@ export class PurgeWorker {
     public deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<void> => {
         try {
             const res = await PostgresConnector.getConnection().query(
-                "SELECT * FROM retention_bigint('merakiaccesspoints_observations','timestamp',168);",
+                "SELECT * FROM retention('merakiaccesspoints_observations','timestamp',168);",
             );
             log.debug(res);
         } catch (err) {

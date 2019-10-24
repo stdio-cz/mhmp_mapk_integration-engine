@@ -13,17 +13,15 @@ describe("VehiclePositionsWorker", () => {
     let testData;
 
     beforeEach(() => {
-        testData = {
-            inserted: [{
-                cis_short_name: "999",
-                id: "999",
-                start_cis_stop_id: "999",
-                start_cis_stop_platform_code: "a",
-                start_timestamp: null,
-            }], updated: []
-        };
+        testData = {inserted: [{
+            cis_short_name: "999",
+            id: "999",
+            start_cis_stop_id: "999",
+            start_cis_stop_platform_code: "a",
+            start_timestamp: "",
+        }], updated: []};
 
-        sandbox = sinon.createSandbox({ useFakeTimers: true });
+        sandbox = sinon.createSandbox({ useFakeTimers : true });
         sequelizeModelStub = Object.assign({
             hasMany: sandbox.stub(),
             removeAttribute: sandbox.stub(),
@@ -32,7 +30,7 @@ describe("VehiclePositionsWorker", () => {
             .callsFake(() => Object.assign({
                 define: sandbox.stub().callsFake(() => sequelizeModelStub),
                 query: sandbox.stub().callsFake(() => [true]),
-                transaction: sandbox.stub().callsFake(() => Object.assign({ commit: sandbox.stub() })),
+                transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
             }));
         sandbox.stub(RedisConnector, "getConnection");
 
@@ -41,7 +39,7 @@ describe("VehiclePositionsWorker", () => {
             .callsFake(() => Object.assign({ positions: [], stops: [], trips: [] }));
         sandbox.stub(worker.modelPositions, "save");
         sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
-            .callsFake(() => [{ gtfs_trip_id: "0000", delay: null }]);
+            .callsFake(() => [{gtfs_trip_id: "0000", delay: null}]);
         sandbox.stub(worker.modelPositions, "updateDelay");
         sandbox.stub(worker.modelStops, "save");
         sandbox.stub(worker.modelTrips, "save")
@@ -50,9 +48,9 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelTrips, "update");
         sandbox.stub(worker, "sendMessageToExchange");
         sandbox.stub(worker.delayComputationTripsModel, "getData")
-            .callsFake(() => Object.assign({ shape_points: [] }));
+            .callsFake(() => Object.assign({shape_points: []}));
         sandbox.stub(worker, "getEstimatedPoint")
-            .callsFake(() => Object.assign({ properties: { time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00" } }));
+            .callsFake(() => Object.assign({properties: {time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00"}}));
     });
 
     afterEach(() => {
@@ -60,7 +58,7 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB({ content: new Buffer(JSON.stringify({ m: { spoj: {} } })) });
+        await worker.saveDataToDB({content: new Buffer(JSON.stringify({m: {spoj: {}}}))});
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.modelPositions.save);
         sandbox.assert.calledWith(worker.modelPositions.save, []);
@@ -76,13 +74,13 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId({ content: new Buffer(JSON.stringify({ id: 0 })) });
+        await worker.updateGTFSTripId({content: new Buffer(JSON.stringify({id: 0}))});
         sandbox.assert.calledOnce(worker.modelTrips.findGTFSTripId);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by updateDelay method", async () => {
-        await worker.updateDelay({ content: new Buffer("0") });
+        await worker.updateDelay({content: new Buffer("0")});
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
         sandbox.assert.calledOnce(worker.getEstimatedPoint);

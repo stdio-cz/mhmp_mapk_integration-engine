@@ -11,7 +11,7 @@
             "os": null,
             "rssi": -96,
             "ssid": null,
-            "timestamp": 1545140114000,
+            "timestamp": "Tue, 18 Dec 2018 13:35:14 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 33.341496727382115
         },
@@ -26,7 +26,7 @@
             "os": null,
             "rssi": -96,
             "ssid": null,
-            "timestamp": 1545140128000,
+            "timestamp": "Tue, 18 Dec 2018 13:35:28 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 33.52705113569469
         },
@@ -41,7 +41,7 @@
             "os": null,
             "rssi": -88,
             "ssid": null,
-            "timestamp": 1545140112000,
+            "timestamp": "Tue, 18 Dec 2018 13:35:12 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 49
         },
@@ -56,7 +56,7 @@
             "os": null,
             "rssi": -92,
             "ssid": null,
-            "timestamp": 1545140056000,
+            "timestamp": "Tue, 18 Dec 2018 13:34:16 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 55.680422836331914
         },
@@ -71,7 +71,7 @@
             "os": null,
             "rssi": -89,
             "ssid": null,
-            "timestamp": 1545140128000,
+            "timestamp": "Tue, 18 Dec 2018 13:35:28 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 27.418048302057837
         },
@@ -86,7 +86,7 @@
             "os": null,
             "rssi": -98,
             "ssid": null,
-            "timestamp": 1545140127000,
+            "timestamp": "Tue, 18 Dec 2018 13:35:27 GMT",
             "type": "BluetoothDevicesSeen",
             "unc": 84.369368649154
         }

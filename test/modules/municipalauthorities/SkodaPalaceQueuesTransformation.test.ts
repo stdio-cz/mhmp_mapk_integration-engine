@@ -1,7 +1,5 @@
 "use strict";
 
-import { MunicipalAuthorities } from "@golemio/schema-definitions";
-import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -32,15 +30,6 @@ describe("SkodaPalaceQueuesTransformation", () => {
 
     let transformation;
     let testSourceData;
-    let validator;
-    let historyValidator;
-
-    before(() => {
-        validator = new Validator(MunicipalAuthorities.waitingQueues.name + "ModelValidator",
-            MunicipalAuthorities.waitingQueues.outputMongooseSchemaObject);
-        historyValidator = new Validator(MunicipalAuthorities.waitingQueues.history.name + "ModelValidator",
-            MunicipalAuthorities.waitingQueues.history.outputMongooseSchemaObject);
-    });
 
     beforeEach(async () => {
         transformation = new SkodaPalaceQueuesTransformation();
@@ -59,8 +48,6 @@ describe("SkodaPalaceQueuesTransformation", () => {
 
     it("should properly transform", async () => {
         const data = await transformation.transform(testSourceData);
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
         expect(data).to.have.property("last_updated");
         expect(data).to.have.property("municipal_authority_id");
         expect(data).to.have.property("served_activities");
@@ -84,8 +71,6 @@ describe("SkodaPalaceQueuesTransformation", () => {
 
         it("should properly transform history", async () => {
             const data = await transformation.transformHistory(testTransformedData);
-            await expect(historyValidator.Validate(data)).to.be.fulfilled;
-
             for (let i = 0, imax = data.length; i < imax; i++) {
                 expect(data[0]).to.have.property("last_updated");
                 expect(data[0]).to.have.property("municipal_authority_id");
