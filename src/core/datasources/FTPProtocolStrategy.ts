@@ -1,6 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
+import * as moment from "moment";
 import * as path from "path";
 import { log } from "../helpers";
 import { RedisModel } from "../models";
@@ -9,7 +10,6 @@ import { IFTPSettings, IProtocolStrategy } from "./";
 import ftp = require("basic-ftp");
 import decompress = require("decompress");
 import * as fs from "fs";
-import * as moment from "moment";
 
 export class FTPProtocolStrategy implements IProtocolStrategy {
 
@@ -85,7 +85,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    public async getLastModified(): Promise<string|null> {
+    public async getLastModified(): Promise<string | null> {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;

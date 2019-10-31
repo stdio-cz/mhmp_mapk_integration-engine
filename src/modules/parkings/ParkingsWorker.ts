@@ -162,7 +162,7 @@ export class ParkingsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.properties.id;
         const dbData = await this.model.findOneById(id);
-        const timestampMonthAgo = moment().subtract(1, "months").unix();
+        const timestampMonthAgo = moment().subtract(1, "months").valueOf();
 
         const aggregation = [
             { $match: { $and: [{ id }, { updated_at: { $gte: timestampMonthAgo } }] } },

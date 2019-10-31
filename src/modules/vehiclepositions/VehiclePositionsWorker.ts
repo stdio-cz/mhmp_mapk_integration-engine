@@ -94,69 +94,73 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public updateDelay = async (msg: any): Promise<void> => {
-        const tripId = msg.content.toString();
-        const positionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripId);
+        try {
+            const tripId = msg.content.toString();
+            const positionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripId);
 
-        if (positionsToUpdate.length === 0) {
-            return;
-        }
+            if (positionsToUpdate.length === 0) {
+                return;
+            }
 
-        const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
-        let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
+            const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
+            let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
 
-        if (!gtfs) {
-            log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + gtfsTripId + ")");
-            gtfs = await this.getResultObjectForDelayCalculation(gtfsTripId);
-            await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
-        }
+            if (!gtfs) {
+                log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + gtfsTripId + ")");
+                gtfs = await this.getResultObjectForDelayCalculation(gtfsTripId);
+                await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
+            }
 
-        const tripShapePoints = gtfs.shape_points;
-        let newLastDelay = null;
+            const tripShapePoints = gtfs.shape_points;
+            let newLastDelay = null;
 
-        const promises = positionsToUpdate.map(async (position, key) => {
-            if (position.delay === null || newLastDelay !== null) {
-                const currentPosition = {
-                    geometry: {
-                        coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
-                        type: "Point",
-                    },
-                    properties: {
-                        origin_time: position.origin_time,
-                        origin_timestamp: position.origin_timestamp,
-                    },
-                    type: "Feature",
-                };
-                const lastPosition = (key > 0)
-                    ? {
+            const promises = positionsToUpdate.map(async (position, key) => {
+                if (position.delay === null || newLastDelay !== null) {
+                    const currentPosition = {
                         geometry: {
-                            coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
-                            parseFloat(positionsToUpdate[key - 1].lat)],
+                            coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
                             type: "Point",
                         },
                         properties: {
-                            time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
+                            origin_time: position.origin_time,
+                            origin_timestamp: position.origin_timestamp,
                         },
                         type: "Feature",
-                    }
-                    : null;
+                    };
+                    const lastPosition = (key > 0)
+                        ? {
+                            geometry: {
+                                coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
+                                parseFloat(positionsToUpdate[key - 1].lat)],
+                                type: "Point",
+                            },
+                            properties: {
+                                time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
+                            },
+                            type: "Feature",
+                        }
+                        : null;
 
-                // CORE processing
-                const estimatedPoint = await this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
-                newLastDelay = estimatedPoint.properties.time_delay;
-                if (estimatedPoint.properties.time_delay !== undefined
-                    && estimatedPoint.properties.time_delay !== null) {
-                    return this.modelPositions.updateDelay(position.id, position.origin_time,
-                        estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                        estimatedPoint.properties.next_stop_id);
+                    // CORE processing
+                    const estimatedPoint = await this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
+                    newLastDelay = estimatedPoint.properties.time_delay;
+                    if (estimatedPoint.properties.time_delay !== undefined
+                        && estimatedPoint.properties.time_delay !== null) {
+                        return this.modelPositions.updateDelay(position.id, position.origin_time,
+                            estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
+                            estimatedPoint.properties.next_stop_id);
+                    } else {
+                        return Promise.resolve();
+                    }
                 } else {
+                    newLastDelay = null;
                     return Promise.resolve();
                 }
-            } else {
-                newLastDelay = null;
-                return Promise.resolve();
-            }
-        });
-        await Promise.all(promises);
+            });
+            await Promise.all(promises);
+        } catch (err) {
+            throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
+        }
     }
 
     private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition): Promise<any> => {
@@ -329,6 +333,10 @@ export class VehiclePositionsWorker extends BaseWorker {
                 ...stopTimes,
                 ...shapes,
             };
+
+            if (!trip.shape_id || !trip.shapes || trip.shapes.length === 0) {
+                throw new Error(`"trip.shape_id" or "trip.shapes" was not found for id ${tripId}.`);
+            }
 
             const tmpGtfs = {
                 ...await this.getStopTimesForDelayComputation(trip),
