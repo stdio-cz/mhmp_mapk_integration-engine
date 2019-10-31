@@ -10,7 +10,7 @@ import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
 
-const moment = require("moment");
+import * as moment from "moment";
 
 export class ParkingsWorker extends BaseWorker {
 
@@ -162,7 +162,7 @@ export class ParkingsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.properties.id;
         const dbData = await this.model.findOneById(id);
-        const timestampMonthAgo = moment().subtract(1, "months").unix();
+        const timestampMonthAgo = moment().subtract(1, "months").valueOf();
 
         const aggregation = [
             { $match: { $and: [{ id }, { updated_at: { $gte: timestampMonthAgo } }] } },
