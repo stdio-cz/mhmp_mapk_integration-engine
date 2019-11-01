@@ -7,7 +7,7 @@ import "mocha";
 import { PlaygroundsTransformation } from "../../../src/modules/playgrounds";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import * as fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

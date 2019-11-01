@@ -9,7 +9,7 @@ import "mocha";
 import { IPRSortedWasteStationsTransformation } from "../../../src/modules/sortedwastestations";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import * as fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {

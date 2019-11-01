@@ -8,8 +8,8 @@ import * as sinon from "sinon";
 import { RedisConnector } from "../../../src/core/connectors";
 import { FTPProtocolStrategy, IFTPSettings } from "../../../src/core/datasources";
 
-const ftp = require("basic-ftp");
-const fs = require("fs");
+import * as ftp from "basic-ftp";
+import * as fs from "fs";
 chai.use(chaiAsPromised);
 
 describe("FTPProtocolStrategy", () => {

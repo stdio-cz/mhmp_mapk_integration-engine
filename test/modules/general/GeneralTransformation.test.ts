@@ -7,7 +7,7 @@ import "mocha";
 import { GeneralTransformation } from "../../../src/modules/general";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import * as fs from "fs";
 
 describe("GeneralTransformation", () => {
 

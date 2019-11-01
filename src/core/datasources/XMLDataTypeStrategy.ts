@@ -4,7 +4,7 @@ import { CustomError } from "@golemio/errors";
 import { getSubProperty } from "@golemio/utils";
 import { IDataTypeStrategy, IXMLSettings } from "./";
 
-const xml2js = require("xml2js-es6-promise");
+import xml2js = require("xml2js-es6-promise");
 
 export class XMLDataTypeStrategy implements IDataTypeStrategy {
 

@@ -19,7 +19,7 @@ import { log } from "./core/helpers";
 import { QueueProcessor } from "./core/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
-const http = require("http");
+import http = require("http");
 
 export default class App {
 

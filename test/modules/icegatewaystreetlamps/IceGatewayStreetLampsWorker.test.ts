@@ -4,7 +4,7 @@ import "mocha";
 import * as sinon from "sinon";
 import { IceGatewayStreetLampsWorker } from "../../../src/modules/icegatewaystreetlamps";
 
-const request = require("request-promise");
+import * as request from "request-promise";
 
 describe("IceGatewayStreetLampsWorker", () => {
 
@@ -37,9 +37,9 @@ describe("IceGatewayStreetLampsWorker", () => {
             worker.model.save);
     });
 
-    it("should calls the correct methods by setDimValue method", async () => {
+    it("should call the correct methods by setDimValue method", async () => {
         await worker.setDimValue({content: new Buffer(JSON.stringify({id: 0}))});
-        sandbox.assert.calledOnce(request.Request);
+        sandbox.assert.calledOnce((request as any).Request);
     });
 
 });

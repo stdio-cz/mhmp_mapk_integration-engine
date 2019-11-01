@@ -3,7 +3,7 @@
 import { WasteCollectionYards } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class WasteCollectionYardsTransformation extends BaseTransformation implements ITransformation {
 

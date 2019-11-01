@@ -4,7 +4,8 @@ import { CustomError } from "@golemio/errors";
 import { SortedWasteStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const _ = require("underscore");
+import slug from "slugify";
+import * as _ from "underscore";
 
 export class IPRSortedWasteStationsTransformation extends BaseTransformation implements ITransformation {
 

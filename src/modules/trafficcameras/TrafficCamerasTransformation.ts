@@ -3,7 +3,7 @@
 import { TrafficCameras } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const request = require("request-promise");
+import * as request from "request-promise";
 
 export class TrafficCamerasTransformation extends BaseTransformation implements ITransformation {
 

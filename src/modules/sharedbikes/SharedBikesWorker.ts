@@ -10,7 +10,7 @@ import { MongoModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { HomeportLocationsTransformation, HomeportOutOfLocationsTransformation, RekolaTransformation } from "./";
 
-const cheapruler = require("cheap-ruler");
+import * as cheapruler from "cheap-ruler";
 const ruler = cheapruler(50);
 
 export class SharedBikesWorker extends BaseWorker {

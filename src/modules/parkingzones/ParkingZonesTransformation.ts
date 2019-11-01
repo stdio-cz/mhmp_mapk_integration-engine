@@ -4,7 +4,7 @@ import { ParkingZones } from "@golemio/schema-definitions";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const lodash = require("lodash");
+import * as lodash from "lodash";
 
 export class ParkingZonesTransformation extends BaseTransformation implements ITransformation {
 

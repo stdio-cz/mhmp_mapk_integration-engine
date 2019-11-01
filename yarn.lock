@@ -98,10 +98,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.1.17":
-  version "0.1.17"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.17.tgz#5f58c9bdf7cd4eb6deadb1263c5413e35a401c7c"
-  integrity sha512-fOiYhYT7xRmRMuYdNJ3Vew3xnKMXrDKFRKHOEpI+xKrYuyucYQ8WMeSwn4tByHnrFbd7sa7SORFwoT2OJK4GGw==
+"@golemio/schema-definitions@0.1.18":
+  version "0.1.18"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.18.tgz#a2477144b192d29c1daf1a4d0d8b1e890c140a44"
+  integrity sha512-dS4gi659BJZYh2iSoWYTRikBIrd3YdXx48coK1fgfN50b2bW0tAhcv74TYguiiKnDuZkUhAriQkLyQSefyFzKw==
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
@@ -1358,6 +1358,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/caseless@*":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
+  integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
+
 "@types/chai-as-promised@7.1.2":
   version "7.1.2"
   resolved "http://gitlab.oict.cz:10007/@types%2fchai-as-promised/-/chai-as-promised-7.1.2.tgz#2f564420e81eaf8650169e5a3a6b93e096e5068b"
@@ -1393,6 +1398,13 @@
   version "0.0.31"
   resolved "http://gitlab.oict.cz:10007/@types%2fdebug/-/debug-0.0.31.tgz#bac8d8aab6a823e91deb7f79083b2a35fa638f33"
   integrity sha512-LS1MCPaQKqspg7FvexuhmDbWUhE2yIJ+4AgVIyObfc06/UKZ8REgxGNjZc82wPLWmbeOm7S+gSsLgo75TanG4A==
+
+"@types/decompress@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/@types/decompress/-/decompress-4.2.3.tgz#98eed48af80001038aa05690b2094915f296fe65"
+  integrity sha512-W24e3Ycz1UZPgr1ZEDHlK4XnvOr+CpJH3qNsFeqXwwlW/9END9gxn3oJSsp7gYdiQxrXUHwUUd3xuzVz37MrZQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/events@*":
   version "3.0.0"
@@ -1483,14 +1495,14 @@
 
 "@types/moment-timezone@^0.5.12":
   version "0.5.12"
-  resolved "http://gitlab.oict.cz:10007/@types%2fmoment-timezone/-/moment-timezone-0.5.12.tgz#0fb680c03db194fe8ff4551eaeb1eec8d3d80e9f"
+  resolved "https://registry.yarnpkg.com/@types/moment-timezone/-/moment-timezone-0.5.12.tgz#0fb680c03db194fe8ff4551eaeb1eec8d3d80e9f"
   integrity sha512-hnHH2+Efg2vExr/dSz+IX860nSiyk9Sk4pJF2EmS11lRpMcNXeB4KBW5xcgw2QPsb9amTXdsVNEe5IoJXiT0uw==
   dependencies:
     moment ">=2.14.0"
 
 "@types/moment@^2.13.0":
   version "2.13.0"
-  resolved "http://gitlab.oict.cz:10007/@types%2fmoment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
+  resolved "https://registry.yarnpkg.com/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
   integrity sha1-YE69GJvDvDShVIaJQE5hoqSqyJY=
   dependencies:
     moment "*"
@@ -1528,6 +1540,13 @@
   resolved "http://gitlab.oict.cz:10007/@types%2fnode/-/node-10.12.0.tgz#ea6dcbddbc5b584c83f06c60e82736d8fbb0c235"
   integrity sha512-3TUHC3jsBAB7qVRGxT6lWyYo2v96BMmD2PTcl47H25Lu7UXtFH/2qqmKiVrnel6Ne//0TFYf6uvNX+HW2FRkLQ==
 
+"@types/nodemailer@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.2.1.tgz#8f089bf0ef826f04b9d8dd8750233b04978cb675"
+  integrity sha512-6f46rxxaFwyOW39psPoQiM7jHjL7apDRNT5WPHIuv+TZFv+7sBGSI9J7blIC3/NWff4O9/VSzgoQtO6aPLUdvQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "http://gitlab.oict.cz:10007/@types%2fnormalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -1538,10 +1557,28 @@
   resolved "http://gitlab.oict.cz:10007/@types%2frange-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/sequelize@4.27.32":
-  version "4.27.32"
-  resolved "http://gitlab.oict.cz:10007/@types%2fsequelize/-/sequelize-4.27.32.tgz#0f42e75e8d7b485cece3561b2d097c11d0e8fdbc"
-  integrity sha512-M4iFjZLXDdjqnyKaxz9I5XlVFr4/WBvFYyd8oLU5YsKcXGeppMl6nNo9EBsdDgOOirJcyH2JkJEUhbhegZ6MqA==
+"@types/request-promise@^4.1.44":
+  version "4.1.44"
+  resolved "https://registry.yarnpkg.com/@types/request-promise/-/request-promise-4.1.44.tgz#05b59cd18445832fae16b68d5bb3d4621b549485"
+  integrity sha512-RId7eFsUKxfal1LirDDIcOp9u3MM3NXFDBcC3sqIMcmu7f4U6DsCEMD8RbLZtnPrQlN5Jc79di/WPsIEDO4keg==
+  dependencies:
+    "@types/bluebird" "*"
+    "@types/request" "*"
+
+"@types/request@*":
+  version "2.48.3"
+  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.3.tgz#970b8ed2317568c390361d29c555a95e74bd6135"
+  integrity sha512-3Wo2jNYwqgXcIz/rrq18AdOZUQB8cQ34CXZo+LUwPJNpvRAL86+Kc2wwI8mqpz9Cr1V+enIox5v+WZhy/p3h8w==
+  dependencies:
+    "@types/caseless" "*"
+    "@types/node" "*"
+    "@types/tough-cookie" "*"
+    form-data "^2.5.0"
+
+"@types/sequelize@^4.28.4":
+  version "4.28.4"
+  resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.28.4.tgz#89262cca5de285d115afefd56c91cb46050d9def"
+  integrity sha512-kN9pBVtl6ed0xB0XwCUWNO7xJRREVBglo95TsEkAhs1JILsnDrJitUcUXQp+bqohKLqxRFfR56qT28OXZ7CiEA==
   dependencies:
     "@types/bluebird" "*"
     "@types/continuation-local-storage" "*"
@@ -1593,6 +1630,16 @@
   integrity sha512-0TvOJ+6XVMSImgqc2ClNllfVffCxHQhFbsbwOGzGTjdFydoaG052LPqnP8SnmSlnokOcQiPPcbz+Yi30LxWPyA==
   dependencies:
     "@types/superagent" "*"
+
+"@types/tough-cookie@*":
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
+  integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
+
+"@types/underscore@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@types/underscore/-/underscore-1.9.3.tgz#d7d9dc5a5ff76fa3d001b29bc7cc95ab0ccfe85e"
+  integrity sha512-SwbHKB2DPIDlvYqtK5O+0LFtZAyrUSw4c0q+HWwmH1Ve3KMQ0/5PlV3RX97+3dP7yMrnNQ8/bCWWvQpPl03Mug==
 
 "@types/validator@*":
   version "10.11.3"
@@ -1696,7 +1743,7 @@ arrify@^1.0.1:
 
 asn1@~0.2.0, asn1@~0.2.3:
   version "0.2.4"
-  resolved "http://gitlab.oict.cz:10007/asn1/-/asn1-0.2.4.tgz#8d2475dfab553bb33e77b54e59e880bb8ce23136"
+  resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.4.tgz#8d2475dfab553bb33e77b54e59e880bb8ce23136"
   integrity sha512-jxwzQpLQjSmWXgwaCZE9Nz+glAG01yF1QnWgbhGwHI5A6FRIEY6IVqtHhIepHqI7/kyEyQEagBC5mBEFlIYvdg==
   dependencies:
     safer-buffer "~2.1.0"
@@ -1734,12 +1781,12 @@ async@^2.6.1:
 
 async@~0.9.0:
   version "0.9.2"
-  resolved "http://gitlab.oict.cz:10007/async/-/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
+  resolved "https://registry.yarnpkg.com/async/-/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
   integrity sha1-rqdNXmHB+JlhO/ZL2mbUx48v0X0=
 
 async@~1.0.0:
   version "1.0.0"
-  resolved "http://gitlab.oict.cz:10007/async/-/async-1.0.0.tgz#f8fc04ca3a13784ade9e1641af98578cfbd647a9"
+  resolved "https://registry.yarnpkg.com/async/-/async-1.0.0.tgz#f8fc04ca3a13784ade9e1641af98578cfbd647a9"
   integrity sha1-+PwEyjoTeErenhZBr5hXjPvWR6k=
 
 asynckit@^0.4.0:
@@ -1851,12 +1898,12 @@ browser-stdout@1.3.1:
 
 bson@^1.1.0, bson@^1.1.1, bson@~1.1.0, bson@~1.1.1:
   version "1.1.1"
-  resolved "http://gitlab.oict.cz:10007/bson/-/bson-1.1.1.tgz#4330f5e99104c4e751e7351859e2d408279f2f13"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-1.1.1.tgz#4330f5e99104c4e751e7351859e2d408279f2f13"
   integrity sha512-jCGVYLoYMHDkOsbwJZBCqwMHyH4c+wzgI9hG7Z6SZJRXWr+x58pdIbm2i9a/jFGCkRJqRUr8eoI7lDWa0hTkxg==
 
 bson@~1.0.5:
   version "1.0.9"
-  resolved "http://gitlab.oict.cz:10007/bson/-/bson-1.0.9.tgz#12319f8323b1254739b7c6bef8d3e89ae05a2f57"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-1.0.9.tgz#12319f8323b1254739b7c6bef8d3e89ae05a2f57"
   integrity sha512-IQX9/h7WdMBIW/q/++tGd+emQr0XMdeZ6icnT/74Xk9fnabWn+gZgpE+9V+gujL3hhJOoNrnDVY7tWdzc7NUTg==
 
 buffer-alloc-unsafe@^1.1.0:
@@ -2095,7 +2142,7 @@ colornames@^1.1.1:
 
 colors@1.0.3, colors@1.0.x:
   version "1.0.3"
-  resolved "http://gitlab.oict.cz:10007/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
   integrity sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs=
 
 colors@^1.1.2, colors@^1.2.1:
@@ -2259,7 +2306,7 @@ currently-unhandled@^0.4.1:
 
 cycle@1.0.x:
   version "1.0.3"
-  resolved "http://gitlab.oict.cz:10007/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
+  resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
   integrity sha1-IegLK+hYD5i0aPN5QwZisEbDStI=
 
 d3-array@1:
@@ -2301,14 +2348,14 @@ dateformat@~1.0.4-1.2.3:
 
 db-migrate-base@^1.6.3:
   version "1.6.3"
-  resolved "http://gitlab.oict.cz:10007/db-migrate-base/-/db-migrate-base-1.6.3.tgz#5fa63e2745fd353ffd90be6754a0d79b41167cd8"
+  resolved "https://registry.yarnpkg.com/db-migrate-base/-/db-migrate-base-1.6.3.tgz#5fa63e2745fd353ffd90be6754a0d79b41167cd8"
   integrity sha512-O6Kh72Yh0DfvRAKg9QKzu1KkMwI5iI0dFHO6RmDLvbiYvtRW3faFXJNFwJYeioVBx22QA3AkVFbDIcw4j4QxGw==
   dependencies:
     bluebird "^3.1.1"
 
 db-migrate-pg@0.5.0:
   version "0.5.0"
-  resolved "http://gitlab.oict.cz:10007/db-migrate-pg/-/db-migrate-pg-0.5.0.tgz#d0536604078e45b9a34e146102ce22cba4982f76"
+  resolved "https://registry.yarnpkg.com/db-migrate-pg/-/db-migrate-pg-0.5.0.tgz#d0536604078e45b9a34e146102ce22cba4982f76"
   integrity sha512-w2dEET339c+FiRgyWWtYo2s5Va0HOzQjLdtAmccB5hMmHsivuAlZd7etzewQCcE2wZPOe9GvMh70/UBt/yE24A==
   dependencies:
     bluebird "^3.1.1"
@@ -2318,12 +2365,12 @@ db-migrate-pg@0.5.0:
 
 db-migrate-shared@^1.2.0:
   version "1.2.0"
-  resolved "http://gitlab.oict.cz:10007/db-migrate-shared/-/db-migrate-shared-1.2.0.tgz#6125be1b3a5e661229fc75d50c85f6c3ffadbede"
+  resolved "https://registry.yarnpkg.com/db-migrate-shared/-/db-migrate-shared-1.2.0.tgz#6125be1b3a5e661229fc75d50c85f6c3ffadbede"
   integrity sha512-65k86bVeHaMxb2L0Gw3y5V+CgZSRwhVQMwDMydmw5MvIpHHwD6SmBciqIwHsZfzJ9yzV/yYhdRefRM6FV5/siw==
 
 db-migrate@0.11.5:
   version "0.11.5"
-  resolved "http://gitlab.oict.cz:10007/db-migrate/-/db-migrate-0.11.5.tgz#39c7559ed5fd0619de4f07d7f94ed9e40efb1340"
+  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-0.11.5.tgz#39c7559ed5fd0619de4f07d7f94ed9e40efb1340"
   integrity sha512-2HSBOQBaKwq93OpMfdBR9O9gm3eTRgj4HB+Zzy7/YJxxNuxGKY9JDCe/Mb0QRlYqxVQDFUJCJRZcDVxadAUDgg==
   dependencies:
     balanced-match "^1.0.0"
@@ -2460,12 +2507,12 @@ deep-equal@^1.0.0:
 
 deep-equal@~0.2.1:
   version "0.2.2"
-  resolved "http://gitlab.oict.cz:10007/deep-equal/-/deep-equal-0.2.2.tgz#84b745896f34c684e98f2ce0e42abaf43bba017d"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-0.2.2.tgz#84b745896f34c684e98f2ce0e42abaf43bba017d"
   integrity sha1-hLdFiW80xoTpjyzg5Cq69Du6AX0=
 
 deep-extend@^0.6.0:
   version "0.6.0"
-  resolved "http://gitlab.oict.cz:10007/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
+  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==
 
 default-require-extensions@^2.0.0:
@@ -2533,7 +2580,7 @@ dotenv@6.1.0:
 
 dotenv@^5.0.1:
   version "5.0.1"
-  resolved "http://gitlab.oict.cz:10007/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   integrity sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
 
 dotenv@^8.0.0:
@@ -2736,7 +2783,7 @@ extsprintf@^1.2.0:
 
 eyes@0.1.x:
   version "0.1.8"
-  resolved "http://gitlab.oict.cz:10007/eyes/-/eyes-0.1.8.tgz#62cf120234c683785d902348a800ef3e0cc20bc0"
+  resolved "https://registry.yarnpkg.com/eyes/-/eyes-0.1.8.tgz#62cf120234c683785d902348a800ef3e0cc20bc0"
   integrity sha1-Ys8SAjTGg3hdkCNIqADvPgzCC8A=
 
 fast-csv@3.0.1:
@@ -2799,7 +2846,7 @@ filewatcher@~3.0.0:
 
 final-fs@^1.6.0:
   version "1.6.1"
-  resolved "http://gitlab.oict.cz:10007/final-fs/-/final-fs-1.6.1.tgz#d6dcd92ef6fe4fe8c07abd568c7135610ede3236"
+  resolved "https://registry.yarnpkg.com/final-fs/-/final-fs-1.6.1.tgz#d6dcd92ef6fe4fe8c07abd568c7135610ede3236"
   integrity sha1-1tzZLvb+T+jAer1WjHE1YQ7eMjY=
   dependencies:
     node-fs "~0.1.5"
@@ -2880,7 +2927,7 @@ forever-agent@~0.6.1:
   resolved "http://gitlab.oict.cz:10007/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data@^2.3.1:
+form-data@^2.3.1, form-data@^2.5.0:
   version "2.5.1"
   resolved "http://gitlab.oict.cz:10007/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
   integrity sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
@@ -3181,7 +3228,7 @@ husky@^3.0.0:
 
 i@0.3.x:
   version "0.3.6"
-  resolved "http://gitlab.oict.cz:10007/i/-/i-0.3.6.tgz#d96c92732076f072711b6b10fd7d4f65ad8ee23d"
+  resolved "https://registry.yarnpkg.com/i/-/i-0.3.6.tgz#d96c92732076f072711b6b10fd7d4f65ad8ee23d"
   integrity sha1-2WyScyB28HJxG2sQ/X1PZa2O4j0=
 
 iconv-lite@0.4.24:
@@ -3246,7 +3293,7 @@ inherits@2.0.3:
 
 ini@~1.3.0:
   version "1.3.5"
-  resolved "http://gitlab.oict.cz:10007/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
 interpret@^1.0.0:
@@ -3402,7 +3449,7 @@ isexe@^2.0.0:
 
 isstream@0.1.x, isstream@~0.1.2:
   version "0.1.2"
-  resolved "http://gitlab.oict.cz:10007/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
+  resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
 istanbul-lib-coverage@^2.0.1, istanbul-lib-coverage@^2.0.5:
@@ -3607,7 +3654,7 @@ locate-path@^5.0.0:
 
 lodash.defaults@^4.1.0, lodash.defaults@^4.2.0:
   version "4.2.0"
-  resolved "http://gitlab.oict.cz:10007/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
   integrity sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
 
 lodash.flatten@^4.4.0:
@@ -3809,7 +3856,7 @@ minimist@0.0.8:
 
 minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
-  resolved "http://gitlab.oict.cz:10007/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
 
 minimist@~0.0.1:
@@ -3819,7 +3866,7 @@ minimist@~0.0.1:
 
 mkdirp@0.5.1, mkdirp@0.x.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   version "0.5.1"
-  resolved "http://gitlab.oict.cz:10007/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
@@ -3841,14 +3888,7 @@ mocha@5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
-moment-timezone@0.5.23:
-  version "0.5.23"
-  resolved "http://gitlab.oict.cz:10007/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
-  integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
-  dependencies:
-    moment ">= 2.9.0"
-
-moment-timezone@^0.5.14:
+moment-timezone@^0.5.14, moment-timezone@^0.5.26:
   version "0.5.26"
   resolved "http://gitlab.oict.cz:10007/moment-timezone/-/moment-timezone-0.5.26.tgz#c0267ca09ae84631aa3dc33f65bedbe6e8e0d772"
   integrity sha512-sFP4cgEKTCymBBKgoxZjYzlSovC20Y6J7y3nanDc5RoBIXKlZhoYwBoZGe3flwU6A372AcRwScH8KiwV6zjy1g==
@@ -3873,7 +3913,7 @@ mongodb-core@3.1.5:
 
 mongodb-core@3.1.9:
   version "3.1.9"
-  resolved "http://gitlab.oict.cz:10007/mongodb-core/-/mongodb-core-3.1.9.tgz#c31ee407bf932b0149eaed775c17ee09974e4ca3"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.1.9.tgz#c31ee407bf932b0149eaed775c17ee09974e4ca3"
   integrity sha512-MJpciDABXMchrZphh3vMcqu8hkNf/Mi+Gk6btOimVg1XMxLXh87j6FAvRm+KmwD1A9fpu3qRQYcbQe4egj23og==
   dependencies:
     bson "^1.1.0"
@@ -3884,12 +3924,12 @@ mongodb-core@3.1.9:
 
 "mongodb-uri@>= 0.9.7":
   version "0.9.7"
-  resolved "http://gitlab.oict.cz:10007/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
+  resolved "https://registry.yarnpkg.com/mongodb-uri/-/mongodb-uri-0.9.7.tgz#0f771ad16f483ae65f4287969428e9fbc4aa6181"
   integrity sha1-D3ca0W9IOuZfQoeWlCjp+8SqYYE=
 
 mongodb@3.1.10:
   version "3.1.10"
-  resolved "http://gitlab.oict.cz:10007/mongodb/-/mongodb-3.1.10.tgz#45ad9b74ea376f4122d0881b75e5489b9e504ed7"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.1.10.tgz#45ad9b74ea376f4122d0881b75e5489b9e504ed7"
   integrity sha512-Uml42GeFxhTGQVml1XQ4cD0o/rp7J2ROy0fdYUcVitoE7vFqEhKH4TYVqRDpQr/bXtCJVxJdNQC1ntRxNREkPQ==
   dependencies:
     mongodb-core "3.1.9"
@@ -3928,7 +3968,7 @@ mongoose-legacy-pluralize@1.0.2:
 
 mongoose@5.3.14:
   version "5.3.14"
-  resolved "http://gitlab.oict.cz:10007/mongoose/-/mongoose-5.3.14.tgz#14fb782423561187e8e4264deb9e213156ca3ea6"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.14.tgz#14fb782423561187e8e4264deb9e213156ca3ea6"
   integrity sha512-Vt7uC0+/SuPb+x6IwbtXl4tkUER1xU9INlfrDK1RdfsvvEMfG3FJUGNPVGeTWQaj8xqMBtZKIdUNt58rIAsCYg==
   dependencies:
     async "2.6.1"
@@ -4049,12 +4089,12 @@ ms@2.1.2, ms@^2.1.1:
 
 mute-stream@~0.0.4:
   version "0.0.8"
-  resolved "http://gitlab.oict.cz:10007/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
+  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
 ncp@1.0.x:
   version "1.0.1"
-  resolved "http://gitlab.oict.cz:10007/ncp/-/ncp-1.0.1.tgz#d15367e5cb87432ba117d2bf80fdf45aecfb4246"
+  resolved "https://registry.yarnpkg.com/ncp/-/ncp-1.0.1.tgz#d15367e5cb87432ba117d2bf80fdf45aecfb4246"
   integrity sha1-0VNn5cuHQyuhF9K/gP30Wuz7QkY=
 
 negotiator@0.6.2:
@@ -4100,7 +4140,7 @@ nock@10.0.6:
 
 node-fs@~0.1.5:
   version "0.1.7"
-  resolved "http://gitlab.oict.cz:10007/node-fs/-/node-fs-0.1.7.tgz#32323cccb46c9fbf0fc11812d45021cc31d325bb"
+  resolved "https://registry.yarnpkg.com/node-fs/-/node-fs-0.1.7.tgz#32323cccb46c9fbf0fc11812d45021cc31d325bb"
   integrity sha1-MjI8zLRsn78PwRgS1FAhzDHTJbs=
 
 node-notifier@^5.4.0:
@@ -4236,7 +4276,7 @@ opencollective-postinstall@^2.0.2:
 
 optimist@^0.6.1, optimist@~0.6.1:
   version "0.6.1"
-  resolved "http://gitlab.oict.cz:10007/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
+  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
   integrity sha1-2j6nRob6IaGaERwybpDrFaAZZoY=
   dependencies:
     minimist "~0.0.1"
@@ -4328,12 +4368,12 @@ packet-reader@0.3.1:
 
 packet-reader@1.0.0:
   version "1.0.0"
-  resolved "http://gitlab.oict.cz:10007/packet-reader/-/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
+  resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
   integrity sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==
 
 parse-database-url@~0.3.0:
   version "0.3.0"
-  resolved "http://gitlab.oict.cz:10007/parse-database-url/-/parse-database-url-0.3.0.tgz#369666321e927c9ade63cdfc1aaaf6fb37453d0d"
+  resolved "https://registry.yarnpkg.com/parse-database-url/-/parse-database-url-0.3.0.tgz#369666321e927c9ade63cdfc1aaaf6fb37453d0d"
   integrity sha1-NpZmMh6SfJreY838Gqr2+zdFPQ0=
   dependencies:
     mongodb-uri ">= 0.9.7"
@@ -4457,17 +4497,17 @@ pg-hstore@2.3.2:
 
 pg-int8@1.0.1:
   version "1.0.1"
-  resolved "http://gitlab.oict.cz:10007/pg-int8/-/pg-int8-1.0.1.tgz#943bd463bf5b71b4170115f80f8efc9a0c0eb78c"
+  resolved "https://registry.yarnpkg.com/pg-int8/-/pg-int8-1.0.1.tgz#943bd463bf5b71b4170115f80f8efc9a0c0eb78c"
   integrity sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==
 
 pg-pool@^2.0.4, pg-pool@~2.0.3:
   version "2.0.7"
-  resolved "http://gitlab.oict.cz:10007/pg-pool/-/pg-pool-2.0.7.tgz#f14ecab83507941062c313df23f6adcd9fd0ce54"
+  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.7.tgz#f14ecab83507941062c313df23f6adcd9fd0ce54"
   integrity sha512-UiJyO5B9zZpu32GSlP0tXy8J2NsJ9EFGFfz5v6PSbdz/1hBLX1rNiiy5+mAm5iJJYwfCv4A0EBcQLGWwjbpzZw==
 
 pg-types@^2.1.0:
   version "2.2.0"
-  resolved "http://gitlab.oict.cz:10007/pg-types/-/pg-types-2.2.0.tgz#2d0250d636454f7cfa3b6ae0382fdfa8063254a3"
+  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-2.2.0.tgz#2d0250d636454f7cfa3b6ae0382fdfa8063254a3"
   integrity sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==
   dependencies:
     pg-int8 "1.0.1"
@@ -4501,7 +4541,7 @@ pg@7.6.1:
 
 pg@^7.8.0:
   version "7.12.1"
-  resolved "http://gitlab.oict.cz:10007/pg/-/pg-7.12.1.tgz#880636d46d2efbe0968e64e9fe0eeece8ef72a7e"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.12.1.tgz#880636d46d2efbe0968e64e9fe0eeece8ef72a7e"
   integrity sha512-l1UuyfEvoswYfcUe6k+JaxiN+5vkOgYcVSbSuw3FvdLqDbaoa2RJo1zfJKfPsSYPFVERd4GHvX3s2PjG1asSDA==
   dependencies:
     buffer-writer "2.0.0"
@@ -4562,12 +4602,12 @@ pkg-dir@^4.2.0:
 
 pkginfo@0.3.x:
   version "0.3.1"
-  resolved "http://gitlab.oict.cz:10007/pkginfo/-/pkginfo-0.3.1.tgz#5b29f6a81f70717142e09e765bbeab97b4f81e21"
+  resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.3.1.tgz#5b29f6a81f70717142e09e765bbeab97b4f81e21"
   integrity sha1-Wyn2qB9wcXFC4J52W76rl7T4HiE=
 
 pkginfo@0.x.x, pkginfo@^0.4.0:
   version "0.4.1"
-  resolved "http://gitlab.oict.cz:10007/pkginfo/-/pkginfo-0.4.1.tgz#b5418ef0439de5425fc4995042dced14fb2a84ff"
+  resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.4.1.tgz#b5418ef0439de5425fc4995042dced14fb2a84ff"
   integrity sha1-tUGO8EOd5UJfxJlQQtztFPsqhP8=
 
 please-upgrade-node@^3.2.0:
@@ -4589,7 +4629,7 @@ postgres-array@~1.0.0:
 
 postgres-array@~2.0.0:
   version "2.0.0"
-  resolved "http://gitlab.oict.cz:10007/postgres-array/-/postgres-array-2.0.0.tgz#48f8fce054fbc69671999329b8834b772652d82e"
+  resolved "https://registry.yarnpkg.com/postgres-array/-/postgres-array-2.0.0.tgz#48f8fce054fbc69671999329b8834b772652d82e"
   integrity sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==
 
 postgres-bytea@~1.0.0:
@@ -4599,7 +4639,7 @@ postgres-bytea@~1.0.0:
 
 postgres-date@~1.0.0, postgres-date@~1.0.4:
   version "1.0.4"
-  resolved "http://gitlab.oict.cz:10007/postgres-date/-/postgres-date-1.0.4.tgz#1c2728d62ef1bff49abdd35c1f86d4bdf118a728"
+  resolved "https://registry.yarnpkg.com/postgres-date/-/postgres-date-1.0.4.tgz#1c2728d62ef1bff49abdd35c1f86d4bdf118a728"
   integrity sha512-bESRvKVuTrjoBluEcpv2346+6kgB7UlnqWZsnbnCccTNq/pqfj1j6oBaN5+b/NrDXepYUT/HKadqv3iS9lJuVA==
 
 postgres-interval@^1.1.0:
@@ -4621,7 +4661,7 @@ progress@^2.0.0:
 
 prompt@^1.0.0:
   version "1.0.0"
-  resolved "http://gitlab.oict.cz:10007/prompt/-/prompt-1.0.0.tgz#8e57123c396ab988897fb327fd3aedc3e735e4fe"
+  resolved "https://registry.yarnpkg.com/prompt/-/prompt-1.0.0.tgz#8e57123c396ab988897fb327fd3aedc3e735e4fe"
   integrity sha1-jlcSPDlquYiJf7Mn/Trtw+c15P4=
   dependencies:
     colors "^1.1.2"
@@ -4728,7 +4768,7 @@ rbush@^2.0.1:
 
 rc@^1.2.8:
   version "1.2.8"
-  resolved "http://gitlab.oict.cz:10007/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
+  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
   integrity sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
   dependencies:
     deep-extend "^0.6.0"
@@ -4782,7 +4822,7 @@ read-pkg@^5.1.1:
 
 read@1.0.x:
   version "1.0.7"
-  resolved "http://gitlab.oict.cz:10007/read/-/read-1.0.7.tgz#b3da19bd052431a97671d44a42634adf710b40c4"
+  resolved "https://registry.yarnpkg.com/read/-/read-1.0.7.tgz#b3da19bd052431a97671d44a42634adf710b40c4"
   integrity sha1-s9oZvQUkMal2cdRKQmNK33ELQMQ=
   dependencies:
     mute-stream "~0.0.4"
@@ -4980,12 +5020,12 @@ retry-as-promised@^2.3.2:
 
 revalidator@0.1.x:
   version "0.1.8"
-  resolved "http://gitlab.oict.cz:10007/revalidator/-/revalidator-0.1.8.tgz#fece61bfa0c1b52a206bd6b18198184bdd523a3b"
+  resolved "https://registry.yarnpkg.com/revalidator/-/revalidator-0.1.8.tgz#fece61bfa0c1b52a206bd6b18198184bdd523a3b"
   integrity sha1-/s5hv6DBtSoga9axgZgYS91SOjs=
 
 rimraf@2.x.x, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.7.1"
-  resolved "http://gitlab.oict.cz:10007/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
   integrity sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
   dependencies:
     glob "^7.1.3"
@@ -5307,7 +5347,7 @@ sprintf-js@~1.0.2:
 
 ssh2-streams@~0.1.15:
   version "0.1.20"
-  resolved "http://gitlab.oict.cz:10007/ssh2-streams/-/ssh2-streams-0.1.20.tgz#51118d154555df5469ee1f67e0cf1e7e8a2c0e3a"
+  resolved "https://registry.yarnpkg.com/ssh2-streams/-/ssh2-streams-0.1.20.tgz#51118d154555df5469ee1f67e0cf1e7e8a2c0e3a"
   integrity sha1-URGNFUVV31Rp7h9n4M8efoosDjo=
   dependencies:
     asn1 "~0.2.0"
@@ -5316,7 +5356,7 @@ ssh2-streams@~0.1.15:
 
 ssh2@0.5.4:
   version "0.5.4"
-  resolved "http://gitlab.oict.cz:10007/ssh2/-/ssh2-0.5.4.tgz#1bf6b6b28c96eaef267f4d6c46a5a2517a599e27"
+  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-0.5.4.tgz#1bf6b6b28c96eaef267f4d6c46a5a2517a599e27"
   integrity sha1-G/a2soyW6u8mf01sRqWiUXpZnic=
   dependencies:
     ssh2-streams "~0.1.15"
@@ -5358,7 +5398,7 @@ stealthy-require@^1.1.0:
 
 streamsearch@~0.1.2:
   version "0.1.2"
-  resolved "http://gitlab.oict.cz:10007/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
+  resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
   integrity sha1-gIudDlb8Jz2Am6VzOOkpkZoanxo=
 
 string-width@^1.0.1:
@@ -5460,7 +5500,7 @@ strip-indent@^1.0.1:
 
 strip-json-comments@^2.0.0, strip-json-comments@~2.0.1:
   version "2.0.1"
-  resolved "http://gitlab.oict.cz:10007/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+  resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
 superagent@^3.8.3:
@@ -5710,7 +5750,7 @@ tunnel-agent@^0.6.0:
 
 tunnel-ssh@^4.0.0:
   version "4.1.4"
-  resolved "http://gitlab.oict.cz:10007/tunnel-ssh/-/tunnel-ssh-4.1.4.tgz#b301f7733c73dcea1616466b9c87b607f4958b45"
+  resolved "https://registry.yarnpkg.com/tunnel-ssh/-/tunnel-ssh-4.1.4.tgz#b301f7733c73dcea1616466b9c87b607f4958b45"
   integrity sha512-CjBqboGvAbM7iXSX2F95kzoI+c2J81YkrHbyyo4SWNKCzU6w5LfEvXBCHu6PPriYaNvfhMKzD8bFf5Vl14YTtg==
   dependencies:
     debug "2.6.9"
@@ -5846,7 +5886,7 @@ util.promisify@~1.0.0:
 
 utile@0.3.x:
   version "0.3.0"
-  resolved "http://gitlab.oict.cz:10007/utile/-/utile-0.3.0.tgz#1352c340eb820e4d8ddba039a4fbfaa32ed4ef3a"
+  resolved "https://registry.yarnpkg.com/utile/-/utile-0.3.0.tgz#1352c340eb820e4d8ddba039a4fbfaa32ed4ef3a"
   integrity sha1-E1LDQOuCDk2N26A5pPv6oy7U7zo=
   dependencies:
     async "~0.9.0"
@@ -5895,7 +5935,7 @@ verror@1.10.0:
 
 when@~2.0.1:
   version "2.0.1"
-  resolved "http://gitlab.oict.cz:10007/when/-/when-2.0.1.tgz#8d872fe15e68424c91b4b724e848e0807dab6642"
+  resolved "https://registry.yarnpkg.com/when/-/when-2.0.1.tgz#8d872fe15e68424c91b4b724e848e0807dab6642"
   integrity sha1-jYcv4V5oQkyRtLck6EjggH2rZkI=
 
 which-module@^2.0.0:
@@ -5920,7 +5960,7 @@ winston-transport@^4.3.0:
 
 winston@2.1.x:
   version "2.1.1"
-  resolved "http://gitlab.oict.cz:10007/winston/-/winston-2.1.1.tgz#3c9349d196207fd1bdff9d4bc43ef72510e3a12e"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-2.1.1.tgz#3c9349d196207fd1bdff9d4bc43ef72510e3a12e"
   integrity sha1-PJNJ0ZYgf9G9/51LxD73JRDjoS4=
   dependencies:
     async "~1.0.0"

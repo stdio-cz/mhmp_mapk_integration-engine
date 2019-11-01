@@ -7,9 +7,9 @@ import { log } from "../helpers";
 import { RedisModel } from "../models";
 import { IFTPSettings, IProtocolStrategy } from "./";
 
-const decompress = require("decompress");
-const fs = require("fs");
-const ftp = require("basic-ftp");
+import ftp = require("basic-ftp");
+import decompress = require("decompress");
+import * as fs from "fs";
 
 export class FTPProtocolStrategy implements IProtocolStrategy {
 
