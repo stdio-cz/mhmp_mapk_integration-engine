@@ -8,7 +8,7 @@ const config = {
     mail_from: process.env.MAILER_FROM,
     mail_password: process.env.MAILER_PASSWORD,
     mail_port: process.env.MAILER_PORT,
-    mail_reciever: process.env.MAILER_RECEIVER,
+    mail_receiver: process.env.MAILER_RECEIVER,
     mail_service: process.env.MAILER_HOST,
     mail_username: process.env.MAILER_USERNAME,
 };
@@ -60,14 +60,14 @@ fs.readFile(`${__dirname}/report.txt`, "utf8", (err, data) => {
     if (data.indexOf("failing") !== -1) {
         if (config.mail_enable) {
             send({
-                to: config.mail_reciever,
+                to: config.mail_receiver,
                 subject: "Golemio Integration Engine - datasources test reporting",
                 text: data,
                 html: "",
                 from: config.mail_from || `<${config.mail_username}>`
             } , (error) => {
                 if (!error) {
-                    console.log(`Report was sent by email to ${config.mail_reciever}`);
+                    console.log(`Report was sent by email to ${config.mail_receiver}`);
                 } else {
                     throw error;
                 }

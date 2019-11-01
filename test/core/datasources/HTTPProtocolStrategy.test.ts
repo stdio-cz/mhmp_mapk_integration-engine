@@ -8,7 +8,7 @@ import "mocha";
 import { RedisConnector } from "../../../src/core/connectors";
 import { HTTPProtocolStrategy, IHTTPSettings } from "../../../src/core/datasources";
 
-const nock = require("nock");
+import * as nock from "nock";
 chai.use(chaiAsPromised);
 
 describe("HTTPProtocolStrategy", () => {

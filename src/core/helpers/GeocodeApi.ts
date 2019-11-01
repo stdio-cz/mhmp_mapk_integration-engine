@@ -4,7 +4,7 @@ import { CustomError } from "@golemio/errors";
 import { config } from "../config";
 import { log } from "./";
 
-const request = require("request-promise");
+import request = require("request-promise");
 
 interface IPostalAddress {
     address_formatted: string;

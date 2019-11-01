@@ -7,11 +7,12 @@ import { config } from "../config";
 import { InfluxConnector } from "../connectors";
 import { PostgresModel } from "../models";
 
-const { EventEmitter } = require("events");
+import * as Debug from "debug";
+import { EventEmitter } from "events";
+import winston = require("winston");
 
-const sillyLog = require("debug")("golemio:integration-engine:silly");
-const debugLog = require("debug")("golemio:integration-engine:debug");
-const winston = require("winston");
+const sillyLog = Debug("golemio:integration-engine:silly");
+const debugLog = Debug("golemio:integration-engine:debug");
 const { combine, timestamp, printf, colorize, align } = winston.format;
 
 const logFormat = (info: any) => {
@@ -53,13 +54,13 @@ const winstonDebugLog = logger.debug;
 const winstonSillyLog = logger.silly;
 
 // Log all "SILLY" logs also to debug module
-logger.silly = (logText: any) => {
+logger.silly = (logText: any): any => {
     sillyLog(logText);
     winstonSillyLog(logText);
 };
 
 // Log all "DEBUG" logs also to debug module
-logger.debug = (logText: any) => {
+logger.debug = (logText: any): any => {
     debugLog(logText);
     winstonDebugLog(logText);
 };

@@ -3,7 +3,7 @@
 import { MunicipalPoliceStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class MunicipalPoliceStationsTransformation extends BaseTransformation implements ITransformation {
 

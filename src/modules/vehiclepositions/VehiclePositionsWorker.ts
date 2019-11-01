@@ -15,9 +15,10 @@ import {
     VehiclePositionsTripsModel,
 } from "./";
 
-const turf = require("@turf/turf");
-const cheapruler = require("cheap-ruler");
-const ruler = cheapruler(50);
+import * as turf from "@turf/turf";
+import * as cheapruler from "cheap-ruler";
+
+const ruler: any = cheapruler(50);
 
 export class VehiclePositionsWorker extends BaseWorker {
 
@@ -289,7 +290,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 ptsInRadiusIterator(0, () => {
 
                     // DECIDE WHICH POINT IS PROBABLY RIGHT
-                    const rightPoint = turf.point(pt.geometry.coordinates, {});
+                    const rightPoint: any = turf.point(pt.geometry.coordinates, {});
                     rightPoint.properties.timestamp = pt.properties.timestamp;
 
                     if (closestPts.length > 0) {
