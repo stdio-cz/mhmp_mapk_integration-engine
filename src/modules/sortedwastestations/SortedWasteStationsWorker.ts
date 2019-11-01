@@ -224,7 +224,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
             iprStations = await this.iprTransformation
                 .transform(await this.iprStationsDatasource.getAll());
         } catch (err) {
-            log.warn((err instanceof CustomError) ? err.toString() : err);
+            // this datasources are important so throw error if something went wrong
+            throw err;
         }
 
         try {
