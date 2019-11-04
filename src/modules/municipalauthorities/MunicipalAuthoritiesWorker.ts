@@ -84,6 +84,10 @@ export class MunicipalAuthoritiesWorker extends BaseWorker {
                 ? { municipal_authority_id: { $in: id } }
                 : { municipal_authority_id: id },
             updateValues: (a, b) => {
+                a.last_updated = b.last_updated;
+                a.served_activities = b.served_activities;
+                a.title = b.title;
+                a.updated_at = b.updated_at;
                 return a;
             },
         },
