@@ -23,11 +23,12 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
     constructor() {
         super(RopidGTFS.metadata.name + "Model", {
-            outputSequelizeAttributes: RopidGTFS.metadata.outputSequelizeAttributes,
-            pgTableName: RopidGTFS.metadata.pgTableName,
-            savingType: "insertOnly",
-        },
-            null,
+                outputSequelizeAttributes: RopidGTFS.metadata.outputSequelizeAttributes,
+                pgTableName: RopidGTFS.metadata.pgTableName,
+                savingType: "insertOnly",
+            },
+            new Validator(RopidGTFS.metadata.name + "ModelValidator",
+                RopidGTFS.metadata.outputMongooseSchemaObject),
         );
     }
 

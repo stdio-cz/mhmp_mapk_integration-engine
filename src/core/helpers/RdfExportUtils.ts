@@ -3,8 +3,8 @@
 import { config } from "../config";
 import { log } from "./";
 
-const fs = require("fs");
-const request = require("request");
+import * as fs from "fs";
+import * as request from "request";
 
 /**
  * TODO refaktoring, neukladat do filesystemu
@@ -50,7 +50,7 @@ class RdfExportUtils {
                             log.debug(file.name + " dataset successfully uploaded to endpoint.");
                             resolve({ file: file.name, result: JSON.parse(body) });
                         } else {
-                            log.error(response.statusCode);
+                            log.error(`${response.statusCode}`);
                             reject(error || response.statusCode);
                         }
                     });

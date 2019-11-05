@@ -1,5 +1,7 @@
 "use strict";
 
+import { SortedWasteStations } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -7,7 +9,7 @@ import "mocha";
 import { IPRSortedWasteStationsTransformation } from "../../../src/modules/sortedwastestations";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
+import * as fs from "fs";
 
 const readFile = (file: string): Promise<Buffer> => {
     return new Promise((resolve, reject) => {
@@ -31,6 +33,12 @@ describe("IPRSortedWasteStationsTransformation", () => {
     let transformation;
     let testSourceDataContainers;
     let testSourceDataStations;
+    let validator;
+
+    before(() => {
+        validator = new Validator(SortedWasteStations.ipr.name + "ModelValidator",
+            SortedWasteStations.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new IPRSortedWasteStationsTransformation();
@@ -52,6 +60,8 @@ describe("IPRSortedWasteStationsTransformation", () => {
     it("should properly transform collection", async () => {
         transformation.setContainers(testSourceDataContainers);
         const data = await transformation.transform(testSourceDataStations);
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");

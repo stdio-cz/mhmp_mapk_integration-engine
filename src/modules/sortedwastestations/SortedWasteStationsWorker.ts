@@ -16,7 +16,7 @@ import {
     SensoneoPicksTransformation,
 } from "./";
 
-const _ = require("underscore");
+import * as _ from "underscore";
 
 export class SortedWasteStationsWorker extends BaseWorker {
 
@@ -224,7 +224,8 @@ export class SortedWasteStationsWorker extends BaseWorker {
             iprStations = await this.iprTransformation
                 .transform(await this.iprStationsDatasource.getAll());
         } catch (err) {
-            log.warn((err instanceof CustomError) ? err.toString() : err);
+            // this datasources are important so throw error if something went wrong
+            throw err;
         }
 
         try {
@@ -242,7 +243,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         }
 
         const [merged, remainingStations] = await this.mergeContainersIntoStations(iprStations, [ ...oict, ...potex ]);
-        const sortedStations = _.sortBy(merged, (a) => a.properties.id);
+        const sortedStations = _.sortBy(merged, (a: any) => a.properties.id);
         let lastId = sortedStations[sortedStations.length - 1].properties.id;
         const remaining = remainingStations.map(async (station) => {
             station.properties.station_number = station.properties.id;

@@ -3,7 +3,7 @@
 import { SortedWasteStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class POTEXSortedWasteStationsTransformation extends BaseTransformation implements ITransformation {
 
@@ -34,7 +34,7 @@ export class POTEXSortedWasteStationsTransformation extends BaseTransformation i
                     description: (element.address) ? element.address : null,
                     trash_type: { description: "Textil", id: 8 },
                 }],
-                id: "potex-" + slug(element.title, { lower: true }),
+                id: "potex-" + slug(element.title, { lower: true, remove: /[*+~.()'"!:@]/g }),
                 name: element.title,
                 station_number: null,
                 updated_at: new Date().getTime(),

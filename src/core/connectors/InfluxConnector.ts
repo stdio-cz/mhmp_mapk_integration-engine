@@ -37,7 +37,7 @@ class MyInflux {
 
     public getConnection = (): any => {
         if (!this.influx) {
-            throw new CustomError("InfluxDB connection not exists. Firts call connect() method.", false,
+            throw new CustomError("InfluxDB connection does not exist. First call connect() method.", false,
                 this.constructor.name, 1002);
         }
         return this.influx;

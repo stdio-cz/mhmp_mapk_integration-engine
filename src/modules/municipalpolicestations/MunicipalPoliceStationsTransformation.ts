@@ -3,7 +3,7 @@
 import { MunicipalPoliceStations } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class MunicipalPoliceStationsTransformation extends BaseTransformation implements ITransformation {
 
@@ -20,7 +20,7 @@ export class MunicipalPoliceStationsTransformation extends BaseTransformation im
             properties: {
                 cadastral_area: element.properties.NKU,
                 id: slug(element.properties.NKU + "-" + element.properties.NVPK + "-" + element.properties.CPOP,
-                    { lower: true }),
+                    { lower: true, remove: /[*+~.()'"!:@]/g }),
                 note: (element.properties.POZN) ? element.properties.POZN : null,
                 updated_at: new Date().getTime(),
             },

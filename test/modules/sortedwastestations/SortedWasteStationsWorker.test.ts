@@ -63,9 +63,9 @@ describe("SortedWasteStationsWorker", () => {
             container_id: 29823,
             firealarm: 0,
             id: 12536378,
-            measured_at_utc: "2019-05-16T08:47:22.000Z",
+            measured_at_utc: "1557806982000",
             percent_calculated: 56,
-            prediction_utc: "2019-05-20T16:29:09.000Z",
+            prediction_utc: "1557806982000",
             temperature: 10,
             updated_at: 1559737670311,
             upturned: 0,
@@ -78,7 +78,7 @@ describe("SortedWasteStationsWorker", () => {
             id: 12495474,
             percent_before: 100,
             percent_now: 10,
-            pick_at_utc: "2019-05-14T04:09:42.000Z",
+            pick_at_utc: "1557806982000",
             pick_minfilllevel: 30,
             updated_at: 1559737670311,
         }];
@@ -106,6 +106,7 @@ describe("SortedWasteStationsWorker", () => {
             .callsFake(() => [[testTransformedData[0]], [testTransformedData[1], testTransformedData[2]]]);
         sandbox.stub(worker.model, "updateOne");
         sandbox.stub(worker, "pairSensorWithContainer");
+        sandbox.stub(worker.model, "aggregate");
 
         sandbox.stub(worker.sensorsContainersDatasource, "getAll").callsFake(() => testSensorContainersData);
         sandbox.stub(worker.sensorsMeasurementsDatasource, "getAll").callsFake(() => testSensorMeasurementData);

@@ -3,7 +3,7 @@
 import { MedicalInstitutions } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
-const slug = require("slugify");
+import slug from "slugify";
 
 export class HealthCareTransformation extends BaseTransformation implements ITransformation {
 
@@ -30,7 +30,8 @@ export class HealthCareTransformation extends BaseTransformation implements ITra
                     street_address: element.Ulice + " " + element.CisloDomovniOrientacni,
                 },
                 email: (element.PoskytovatelEmail) ? element.PoskytovatelEmail.trim().split(",") : [],
-                id: slug(element.ZdravotnickeZarizeniId + "-" + element.NazevZarizeni, {lower: true}),
+                id: slug(element.ZdravotnickeZarizeniId + "-" + element.NazevZarizeni,
+                    { lower: true, remove: /[*+~.()'"!:@]/g }),
                 institution_code: element.ZdravotnickeZarizeniId,
                 name: element.NazevZarizeni,
                 opening_hours: [],
