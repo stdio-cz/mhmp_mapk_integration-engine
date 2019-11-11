@@ -1,0 +1,661 @@
+[
+  {
+    "bikecounter": "BC_AL-STPL",
+    "name": "Anděl (Plzeňská)",
+    "route": "A14",
+    "lat": 50.0718897,
+    "lon": 14.3986383,
+    "directions": [
+      {
+        "id": "BC_AL-ST",
+        "name": "Štefánikova (centrum)"
+      },
+      {
+        "id": "BC_AL-PL",
+        "name": "Plzeňská (z centra)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_AT-STLA",
+    "name": "Altetická",
+    "route": "A140",
+    "lat": 50.0793736,
+    "lon": 14.3785794,
+    "directions": [
+      {
+        "id": "BC_AT-ST",
+        "name": "Strahov"
+      },
+      {
+        "id": "BC_AT-LA",
+        "name": "Ladronka"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_BS-BMZL",
+    "name": "Barrandovský most",
+    "route": "A 12",
+    "lat": 50.0420991,
+    "lon": 14.407247,
+    "directions": [
+      {
+        "id": "BC_BS-BM",
+        "name": "Barrandovský most"
+      },
+      {
+        "id": "BC_BS-ZL",
+        "name": "Zlíchov"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_CB-CHTU",
+    "name": "Chodov",
+    "route": "A 22",
+    "lat": 50.031113,
+    "lon": 14.492876,
+    "directions": [
+      {
+        "id": "BC_CB-CH",
+        "name": "Chodov centrum"
+      },
+      {
+        "id": "LO_CB-TU",
+        "name": "ul. Türkova"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_CL-PVLI",
+    "name": "U Českých loděnic",
+    "route": "A2",
+    "lat": 50.1135103,
+    "lon": 14.4581003,
+    "directions": [
+      {
+        "id": "BC_CL-PV",
+        "name": "Povltavská"
+      },
+      {
+        "id": "BC_CL-LI",
+        "name": "Libeň"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_CT-OTPB",
+    "name": "Celetná",
+    "route": "A 1",
+    "lat": 50.087262,
+    "lon": 14.425974,
+    "directions": [
+      {
+        "id": "BC_CT-OT",
+        "name": "Ovocný trh"
+      },
+      {
+        "id": "BC_CT-PB",
+        "name": "Prašná brána"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_DE-EVSA",
+    "name": "Divoká Šárka",
+    "route": "A 33",
+    "lat": 50.093562,
+    "lon": 14.320898,
+    "directions": [
+      {
+        "id": "LO_DE-EV",
+        "name": "ul. Evropská"
+      },
+      {
+        "id": "LO_DE-SA",
+        "name": "Šárka"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_DS-KJVL",
+    "name": "Dukelských hrdinů",
+    "route": "A 310",
+    "lat": 50.0973149,
+    "lon": 14.432982,
+    "directions": [
+      {
+        "id": "BC_DS-KJ",
+        "name": "centrum"
+      },
+      {
+        "id": "BC_DS-VL",
+        "name": "z centra"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_DU-KRST",
+    "name": "Dubeč",
+    "route": "A 24",
+    "lat": 50.059714879868,
+    "lon": 14.594435691833,
+    "directions": [
+      {
+        "id": "DU-ST",
+        "name": "Štěrboholy (Běchovice)"
+      },
+      {
+        "id": "DU-KR",
+        "name": "Uhříněves (Netluky)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_EU-KTOT",
+    "name": "Elsnicovo náměstí x U Českých loděnic",
+    "route": "A 2",
+    "lat": 50.106999,
+    "lon": 14.470749,
+    "directions": [
+      {
+        "id": "BC_EU-KT",
+        "name": "k Thomayerovým sadům"
+      },
+      {
+        "id": "BC_EU-OT",
+        "name": "od Thomayerových sadů"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_HY-WINP",
+    "name": "Hybernská",
+    "route": "A25",
+    "lat": 50.0872642,
+    "lon": 14.4344272,
+    "directions": [
+      {
+        "id": "BC_HY-WI",
+        "name": "Wilsonova"
+      },
+      {
+        "id": "BC_HY-NP",
+        "name": "Na Příkopě"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_HZ-CE",
+    "name": "Hlubočepská",
+    "route": "A 12",
+    "lat": 50.040233,
+    "lon": 14.403657,
+    "directions": [
+      {
+        "id": "BC_HZ-CE",
+        "name": "centrum"
+      },
+      {
+        "id": "BC_HZ-HL",
+        "name": "Hlubočepy"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_JG-PNPC",
+    "name": "Jeremenkova",
+    "route": "A 221",
+    "lat": 50.044236,
+    "lon": 14.422613,
+    "directions": [
+      {
+        "id": "BC_JG-PN",
+        "name": "Podolské nábřeží"
+      },
+      {
+        "id": "BC_JG-PC",
+        "name": "Pankrác"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_KA-KMML",
+    "name": "Kampa",
+    "route": "A1",
+    "lat": 50.08312,
+    "lon": 14.4077472,
+    "directions": [
+      {
+        "id": "BC_KA-KM",
+        "name": "Karlův most"
+      },
+      {
+        "id": "BC_KA-ML",
+        "name": "most Legií"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_KJ-HRHO",
+    "name": "Nábřeží Kapitána Jaroše",
+    "route": "A 1",
+    "lat": 50.096722485653,
+    "lon": 14.433524608612,
+    "directions": [
+      {
+        "id": "KJ-HO",
+        "name": "Libeň"
+      },
+      {
+        "id": "KJ-HR",
+        "name": "Malá Strana"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_KO-LEPR",
+    "name": "Letňany",
+    "route": "A 27",
+    "lat": 50.1269227,
+    "lon": 14.507327,
+    "directions": [
+      {
+        "id": "BC_KO-LE",
+        "name": "z centra"
+      },
+      {
+        "id": "BC_KO-PR",
+        "name": "centrum"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_KO-VYHO",
+    "name": "Kolčavka",
+    "route": "A 26",
+    "lat": 50.109662,
+    "lon": 14.494891,
+    "directions": [
+      {
+        "id": "KO-HO",
+        "name": "Holešovice"
+      },
+      {
+        "id": "KO-VY",
+        "name": "Vysočany"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_KR-RAZB",
+    "name": "Radotín",
+    "route": "A 11",
+    "lat": 49.9803678,
+    "lon": 14.3634271,
+    "directions": [
+      {
+        "id": "BC_KR-RA",
+        "name": "Radotín"
+      },
+      {
+        "id": "BC_KR-ZB",
+        "name": "Zbraslav"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_MB-PRVI",
+    "name": "Mladoboleslavská",
+    "route": "A267",
+    "lat": 50.1256708,
+    "lon": 14.5346419,
+    "directions": [
+      {
+        "id": "BC_MB-PR",
+        "name": "Prosek"
+      },
+      {
+        "id": "BC_MB-VI",
+        "name": "Vinoř"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_NM-CEKV",
+    "name": "Nuselský most",
+    "route": "A 41",
+    "lat": 50.0682472,
+    "lon": 14.430294,
+    "directions": [
+      {
+        "id": "BC_NM-CE",
+        "name": "centrum"
+      },
+      {
+        "id": "BC_NM-KV",
+        "name": "ul. 5. května"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_NS-PAVL",
+    "name": "Střešovice",
+    "route": "A 165X",
+    "lat": 50.0928879,
+    "lon": 14.371382,
+    "directions": [
+      {
+        "id": "BC_NS-PA",
+        "name": "do centra"
+      },
+      {
+        "id": "LO_NS-VL",
+        "name": "z centra"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_PM-MHJA",
+    "name": "Pelléova",
+    "route": "A 160",
+    "lat": 50.098333,
+    "lon": 14.407471,
+    "directions": [
+      {
+        "id": "PM-MH",
+        "name": "Milady Horákové"
+      },
+      {
+        "id": "PM-JA",
+        "name": "Jaselská"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_PN-VYBR",
+    "name": "Podolské nábřeží - stezka",
+    "route": "A 2",
+    "lat": 50.062168593505,
+    "lon": 14.417523890734,
+    "directions": [
+      {
+        "id": "PN-VY",
+        "name": "do centra (Výtoň)"
+      },
+      {
+        "id": "PN-BR",
+        "name": "z centra (Braník)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_PN-VYBR2",
+    "name": "Podolské nábřeží - vozovka",
+    "route": "A 2",
+    "lat": 50.061932,
+    "lon": 14.418152,
+    "directions": [
+      {
+        "id": "PN-VY",
+        "name": "do centra (Výtoň)"
+      },
+      {
+        "id": "PN-BR",
+        "name": "z centra (Braník)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_PP-ROJP",
+    "name": "Podbabská",
+    "route": "A 1",
+    "lat": 50.1174747,
+    "lon": 14.391871,
+    "directions": [
+      {
+        "id": "BC_PP-RO",
+        "name": "ul. Roztocká"
+      },
+      {
+        "id": "LO_PP-JP",
+        "name": "ul. Jugoslávkých partyzánů"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_PT-ZOVO",
+    "name": "Povltavská",
+    "route": "A 2",
+    "lat": 50.1145896,
+    "lon": 14.4136674,
+    "directions": [
+      {
+        "id": "BC_PT-ZO",
+        "name": "ZOO"
+      },
+      {
+        "id": "BC_PT-VO",
+        "name": " ul. Vodácká"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_RN-JK",
+    "name": "Rohanské nábřeží",
+    "route": "A 2",
+    "lat": 50.094067,
+    "lon": 14.437973,
+    "directions": [
+      {
+        "id": "RN-KA",
+        "name": "z centra (Karlín)"
+      },
+      {
+        "id": "RN-JO",
+        "name": "do centra (náb. L. Svobody)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_SH-SEKU",
+    "name": "Šeberov",
+    "route": "A 21",
+    "lat": 50.0118531,
+    "lon": 14.5008735,
+    "directions": [
+      {
+        "id": "BC_SH-SE",
+        "name": "Šeberov"
+      },
+      {
+        "id": "BC_SH-KU",
+        "name": "Kunratice"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_SN-NDKM",
+    "name": "Smetanovo nábřeží",
+    "route": "A2",
+    "lat": 50.0842178,
+    "lon": 14.4133714,
+    "directions": [
+      {
+        "id": "BC_SN-ND",
+        "name": "Národní divadlo"
+      },
+      {
+        "id": "BC_SN-KM",
+        "name": "Karlův most"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_ST-RABA",
+    "name": "Lahovičky (Strakonická)",
+    "route": "A 1",
+    "lat": 49.995005244109,
+    "lon": 14.398425221443,
+    "directions": [
+      {
+        "id": "ST-BA",
+        "name": "do centra (M. Chuchle)"
+      },
+      {
+        "id": "ST-RA",
+        "name": "z centra (Radotín)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_SU-KRKA",
+    "name": "Krč (Sulická)",
+    "route": "A 22",
+    "lat": 50.034619532046,
+    "lon": 14.443668723106,
+    "directions": [
+      {
+        "id": "SU-KA",
+        "name": "Lhotka"
+      },
+      {
+        "id": "SU-KR",
+        "name": "Krč"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_SU-VS",
+    "name": "V Šáreckém údolí",
+    "route": "A 17",
+    "lat": 50.118771,
+    "lon": 14.382879,
+    "directions": [
+      {
+        "id": "SU-SE",
+        "name": "Podbaba"
+      },
+      {
+        "id": "SU-VO",
+        "name": "Nebušice"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_TL-TRHO",
+    "name": "Císařský ostrov",
+    "route": "A 310",
+    "lat": 50.111242315108,
+    "lon": 14.417871236801,
+    "directions": [
+      {
+        "id": "TL-HO",
+        "name": "do centra (Stromovka)"
+      },
+      {
+        "id": "TL-TR",
+        "name": "z centra (Trója)"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_VF-ARUE",
+    "name": "Stezka okolo Rokytky",
+    "route": "A 26",
+    "lat": 50.10495,
+    "lon": 14.502937,
+    "directions": [
+      {
+        "id": "BC_VF-AR",
+        "name": "O2 Aréna"
+      },
+      {
+        "id": "BC_VF-UE",
+        "name": "ul. U Elektry"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_VK-HRUP",
+    "name": "Drážní stezka - Vítkov",
+    "route": "A 25",
+    "lat": 50.089491724101,
+    "lon": 14.460735619068,
+    "directions": [
+      {
+        "id": "BC_VK-HR",
+        "name": "Hrdlořezy"
+      },
+      {
+        "id": "BC_VK-UP",
+        "name": "U památníku"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_VK-MOKO",
+    "name": "Modřany",
+    "route": "A 2",
+    "lat": 50.003207,
+    "lon": 14.402872,
+    "directions": [
+      {
+        "id": "BC_VK-MO",
+        "name": "centrum"
+      },
+      {
+        "id": "BC_VK-KO",
+        "name": "z centra"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_VR-ST",
+    "name": "Vršovická",
+    "route": "A 23",
+    "lat": 50.065996136179,
+    "lon": 14.446957111359,
+    "directions": [
+      {
+        "id": "VR-VY",
+        "name": "Nusle"
+      },
+      {
+        "id": "VR-ST",
+        "name": "Strašnice"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_VS-CE",
+    "name": "Košíře",
+    "route": "A 14",
+    "lat": 50.0704264,
+    "lon": 14.3857008,
+    "directions": [
+      {
+        "id": "BC_VS-CE",
+        "name": "centrum"
+      }
+    ]
+  },
+  {
+    "bikecounter": "BC_ZA-KLBO",
+    "name": "V Zámcích",
+    "route": "A2",
+    "lat": 50.1433144,
+    "lon": 14.3993322,
+    "directions": [
+      {
+        "id": "BC_ZA-KL",
+        "name": "Klecany"
+      },
+      {
+        "id": "BC_ZA-BO",
+        "name": "Bohnice"
+      }
+    ]
+  }
+]
