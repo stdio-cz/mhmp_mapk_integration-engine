@@ -2,7 +2,7 @@
 
 import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
-    AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
@@ -12,6 +12,7 @@ import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { GardensWorker } from "../modules/gardens";
@@ -88,6 +89,52 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: AirQualityStationsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: BicycleCounters.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshCameaDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataInDB",
+            },
+            {
+                name: "refreshEcoCounterDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshEcoCounterDataInDB",
+            },
+            {
+                name: "updateCamea",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "updateCamea",
+            },
+            {
+                name: "updateEcoCounter",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "updateEcoCounter",
             },
         ],
     },
