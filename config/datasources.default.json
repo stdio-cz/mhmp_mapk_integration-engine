@@ -27,7 +27,7 @@
     "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
     "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
     "BicycleCountersEcoCounter": "https://apieco.eco-counter-tools.com/api/1.0/site",
-    "BicycleCountersEcoCounterToken": "28acd37b81ebd919eb6c60144874801",
+    "BicycleCountersEcoCounterToken": "",
     "BicycleCountersEcoCounterMeasurements": "https://apieco.eco-counter-tools.com/api/1.0/data/site/:id?begin=:from&end=:to&step=:step&complete=:complete",
     "POTEXSortedWasteContainers": "http://www.recyklujemetextil.cz/Api/places.json",
     "ParkingZones": "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
