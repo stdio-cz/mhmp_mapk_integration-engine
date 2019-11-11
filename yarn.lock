@@ -98,9 +98,9 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@file:./../schema-definitions/golemio-schema-definitions-0.1.20r.tgz":
+"@golemio/schema-definitions@file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz":
   version "0.1.20"
-  resolved "file:./../schema-definitions/golemio-schema-definitions-0.1.20r.tgz#49323d3886b425df6a01dd6d138ff458ac2a7a5d"
+  resolved "file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz#7f37e7945e3cc4db7d1e392800328a4fd78e970a"
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
@@ -109,9 +109,10 @@
     mongoose "5.3.14"
     sequelize "4.41.2"
 
-"@golemio/schema-definitions@file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz":
+"@golemio/schema-definitions@file:./golemio-schema-definitions-0.1.20s.tgz":
   version "0.1.20"
-  resolved "file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz#7f37e7945e3cc4db7d1e392800328a4fd78e970a"
+  uid "7f37e7945e3cc4db7d1e392800328a4fd78e970a"
+  resolved "file:./golemio-schema-definitions-0.1.20s.tgz#7f37e7945e3cc4db7d1e392800328a4fd78e970a"
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
