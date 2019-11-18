@@ -29,20 +29,20 @@ describe("BicycleCountersWorker", () => {
 
         testData = [1, 2];
         testTransformedData = [
-            { properties: { extern_id: "101" } },
-            { properties: { extern_id: "102" } },
+            { properties: { id: "101", directions: [{ id: "100101" }, { id: "100102" }] } },
+            { properties: { id: "102", directions: [{ id: "100201" }, { id: "100202" }] } },
         ];
         data0 = { _id: "1001" };
         data1 = { _id: "1002", save: sandbox.stub().resolves(true) };
         testSavedData = [
-            { id: "1001", properties: { extern_id: "101", directions: [{ id: "100101" }, { id: "100102" }] } },
-            { id: "1002", properties: { extern_id: "102", directions: [{ id: "100201" }, { id: "100202" }] } },
+            { properties: { id: "101", directions: [{ id: "100101" }, { id: "100102" }] } },
+            { properties: { id: "102", directions: [{ id: "100201" }, { id: "100202" }] } },
         ];
-        testQueueDataCamea = testSavedData.map((x) => ({ id: x.id, extern_id: x.properties.extern_id }));
+        testQueueDataCamea = testSavedData.map((x) => ({ id: x.properties.id }));
         testQueueDataEcoCounter = [];
         testSavedData.forEach((x) => {
             x.properties.directions.forEach((d) => {
-                testQueueDataEcoCounter.push({ id: x.id, direction_id: d.id });
+                testQueueDataEcoCounter.push({ id: x.properties.id, direction_id: d.id });
             });
         });
 
@@ -78,10 +78,6 @@ describe("BicycleCountersWorker", () => {
         sandbox.stub(worker.measurementsModel, "save");
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
-        sandbox.stub(worker.model, "findOneById")
-            .callsFake(() => data1);
-        sandbox.stub(worker.model, "findOne")
-            .callsFake(() => Promise.resolve(data1));
         sandbox.stub(worker.measurementsModel, "find")
             .callsFake(() => [measurementsData0, measurementsData1]);
 
@@ -96,7 +92,6 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceCamea.getAll);
         sandbox.assert.calledOnce(worker.cameaTransformation.transform);
         sandbox.assert.calledWith(worker.cameaTransformation.transform, testData);
-        sandbox.assert.calledTwice(worker.model.findOne);
         sandbox.assert.calledOnce(worker.model.save);
         sandbox.assert.calledTwice(worker.sendMessageToExchange);
         testQueueDataCamea.map((f) => {
@@ -107,7 +102,6 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
             worker.cameaTransformation.transform,
-            worker.model.findOne,
             worker.model.save,
             worker.sendMessageToExchange);
     });
@@ -135,7 +129,6 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceEcoCounter.getAll);
         sandbox.assert.calledOnce(worker.ecoCounterTransformation.transform);
         sandbox.assert.calledWith(worker.ecoCounterTransformation.transform, testData);
-        sandbox.assert.calledTwice(worker.model.findOne);
         sandbox.assert.calledOnce(worker.model.save);
         // sandbox.assert.calledTwice(worker.sendMessageToExchange);
         testQueueDataEcoCounter.map((f) => {
@@ -146,7 +139,6 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.callOrder(
             worker.dataSourceEcoCounter.getAll,
             worker.ecoCounterTransformation.transform,
-            worker.model.findOne,
             worker.model.save,
             worker.sendMessageToExchange);
     });

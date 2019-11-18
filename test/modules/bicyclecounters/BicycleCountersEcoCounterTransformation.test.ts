@@ -1,5 +1,7 @@
 "use strict";
 
+import { BicycleCounters } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -30,6 +32,11 @@ describe("BicycleCountersEcoCounterTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let validator;
+
+    before(() => {
+        validator = new Validator(BicycleCounters.name + "ModelValidator", BicycleCounters.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new BicycleCountersEcoCounterTransformation();
@@ -53,9 +60,7 @@ describe("BicycleCountersEcoCounterTransformation", () => {
         expect(data).to.have.property("type");
         expect(data.properties).to.have.property("directions");
         expect(data.properties.directions).to.be.an("array");
-        expect(data.properties).to.have.property("extern_id");
-        expect(data.properties).to.have.property("extern_source");
-        expect(data.properties.extern_source).is.equal("ecoCounter");
+        expect(data.properties).to.have.property("id");
         expect(data.properties).to.have.property("name");
         expect(data.properties).to.have.property("route");
         expect(data.properties).to.have.property("updated_at");
@@ -63,15 +68,15 @@ describe("BicycleCountersEcoCounterTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("geometry");
             expect(data[i]).to.have.property("properties");
             expect(data[i]).to.have.property("type");
             expect(data[i].properties).to.have.property("directions");
             expect(data[i].properties.directions).to.be.an("array");
-            expect(data[i].properties).to.have.property("extern_id");
-            expect(data[i].properties).to.have.property("extern_source");
-            expect(data[i].properties.extern_source).is.equal("ecoCounter");
+            expect(data[i].properties).to.have.property("id");
             expect(data[i].properties).to.have.property("name");
             expect(data[i].properties).to.have.property("route");
             expect(data[i].properties).to.have.property("updated_at");

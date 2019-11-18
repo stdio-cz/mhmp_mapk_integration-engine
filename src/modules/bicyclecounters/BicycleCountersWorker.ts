@@ -78,14 +78,14 @@ export class BicycleCountersWorker extends BaseWorker {
         //#region mongo models
 
         this.model = new MongoModel(BicycleCounters.name + "Model", {
-            identifierPath: "_id",
+            identifierPath: "properties.id",
             mongoCollectionName: BicycleCounters.mongoCollectionName,
             outputMongooseSchemaObject: BicycleCounters.outputMongooseSchemaObject,
             resultsPath: "properties",
             savingType: "insertOrUpdate",
             searchPath: (id, multiple) => (multiple)
-                ? { _id: { $in: id } }
-                : { _id: id },
+                ? { "properties.id": { $in: id } }
+                : { "properties.id": id },
             updateValues: (a, b) => {
                 a.properties.directions = b.properties.directions;
                 a.properties.name = b.properties.name;
@@ -141,27 +141,12 @@ export class BicycleCountersWorker extends BaseWorker {
     public refreshCameaDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCamea.getAll();
         const transformedData = await this.cameaTransformation.transform(data);
-
-        const dbReadPromises = [];
-        transformedData.forEach((x) => {
-            const promise = this.model.findOne({
-                "properties.extern_id": x.properties.extern_id,
-                "properties.extern_source": "camea",
-            })
-                .then((item) => {
-                    return item ? { ...x, _id: item._id } : x;
-                });
-
-            dbReadPromises.push(promise);
-        });
-
-        let dbData = await Promise.all(dbReadPromises);
-        dbData = await this.model.save(dbData);
+        await this.model.save(transformedData);
 
         // send messages for updating measurements data
-        const promises = dbData.map((p) => {
+        const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
-                new Buffer(JSON.stringify({ id: p.id, extern_id: p.properties.extern_id })));
+                new Buffer(JSON.stringify({ id: p.properties.id })));
         });
         await Promise.all(promises);
     }
@@ -169,7 +154,7 @@ export class BicycleCountersWorker extends BaseWorker {
     public updateCamea = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id;
-        const extern_id = inputData.extern_id;
+        const externId = id.replace("camea-", "");
 
         const now = moment.utc();
         const step = 5;
@@ -181,7 +166,7 @@ export class BicycleCountersWorker extends BaseWorker {
         const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
 
         let url = config.datasources.BicycleCountersCameaMeasurements;
-        url = url.replace(":id", extern_id);
+        url = url.replace(":id", externId);
         url = url.replace(":from", strNowMinus12h);
         url = url.replace(":to", strNow);
 
@@ -194,13 +179,12 @@ export class BicycleCountersWorker extends BaseWorker {
 
         const data = await this.dataSourceCameaMeasurements.getAll();
         let transformedData = await this.cameaMeasurementsTransformation.transform(data);
-        transformedData.forEach((x) => {
-            x.counter_id = id;
-        });
 
+        // add property counter_id to each item
         // insert only those that have at least 1 direction with value
         transformedData = transformedData
             .map((x) => {
+                x.counter_id = id;
                 return {
                     ...x,
                     directions: x.directions ? x.directions.filter((d) => d.value != null) : [],
@@ -250,30 +234,15 @@ export class BicycleCountersWorker extends BaseWorker {
     public refreshEcoCounterDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceEcoCounter.getAll();
         const transformedData = await this.ecoCounterTransformation.transform(data);
-
-        const dbReadPromises = [];
-        transformedData.forEach((x) => {
-            const promise = this.model.findOne({
-                "properties.extern_id": x.properties.extern_id,
-                "properties.extern_source": "ecoCounter",
-            })
-                .then((item) => {
-                    return item ? { ...x, _id: item._id } : x;
-                });
-
-            dbReadPromises.push(promise);
-        });
-
-        let dbData = await Promise.all(dbReadPromises);
-        dbData = await this.model.save(dbData);
+        await this.model.save(transformedData);
 
         // send messages for updating measurements data
         const promises = [];
-        dbData.forEach((p) => {
+        transformedData.forEach((p) => {
             if (p.properties.directions) {
                 const directionPromisses = p.properties.directions.map((ch) =>
                     this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
-                        new Buffer(JSON.stringify({ id: p.id, direction_id: ch.id }))),
+                        new Buffer(JSON.stringify({ id: p.properties.id, direction_id: ch.id }))),
                 );
                 promises.push(...directionPromisses);
             }
@@ -285,7 +254,7 @@ export class BicycleCountersWorker extends BaseWorker {
     public updateEcoCounter = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id;
-        const direction_id = inputData.direction_id;
+        const directionId = inputData.direction_id.toString();
 
         // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
         // so we have to send local time to request.
@@ -301,7 +270,7 @@ export class BicycleCountersWorker extends BaseWorker {
         const strFrom = nowRounded.clone().subtract(12, "hours").format("YYYY-MM-DDTHH:mm:ss");
 
         let url = config.datasources.BicycleCountersEcoCounterMeasurements;
-        url = url.replace(":id", direction_id);
+        url = url.replace(":id", directionId);
         url = url.replace(":from", strFrom);
         url = url.replace(":to", strTo);
         url = url.replace(":step", `${step}m`);
@@ -318,16 +287,14 @@ export class BicycleCountersWorker extends BaseWorker {
 
         const data = await this.dataSourceEcoCounterMeasurements.getAll();
         let transformedData = await this.ecoCounterMeasurementsTransformation.transform(data);
-        transformedData.forEach((x) => {
-            x.counter_id = id;
-            x.directions.forEach((d) => {
-                d.id = direction_id;
-            });
-        });
 
         // insert only those that have at least 1 direction with value
         transformedData = transformedData
             .map((x) => {
+                x.counter_id = id;
+                x.directions.forEach((d) => {
+                    d.id = directionId;
+                });
                 return {
                     ...x,
                     directions: x.directions ? x.directions.filter((d) => d.value != null) : [],
@@ -351,11 +318,11 @@ export class BicycleCountersWorker extends BaseWorker {
             if (!dbData) {
                 newOrModifiedMeasures.push(x);
             } else {
-                const dbDirection = this.findDirectionById(dbData, direction_id);
+                const dbDirection = this.findDirectionById(dbData, directionId);
                 if (!dbDirection) {
                     // if the direction is not found in the DB, we have to update it
                     // (via measurementsModel.updateValues function)
-                    newOrModifiedMeasures.push({ ...x, _id: dbData.id });
+                    newOrModifiedMeasures.push({ ...x, _id: dbData._id });
                 }
             }
         });

@@ -1034,69 +1034,72 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("BicycleCounters - Camea", () => {
+    describe("BicycleCounters", () => {
 
-        let datasource: DataSource;
+        describe("Camea", () => {
 
-        beforeEach(() => {
-            const url = config.datasources.BicycleCountersCamea;
+            let datasource: DataSource;
 
-            const dataSourceHTTPSettings: IHTTPSettings = {
-                headers: {},
-                method: "GET",
-                url,
-            };
+            beforeEach(() => {
+                const url = config.datasources.BicycleCountersCamea;
 
-            datasource = new DataSource(BicycleCounters.name + "CameaDataSource",
-                new HTTPProtocolStrategy(dataSourceHTTPSettings),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new ObjectKeysValidator(BicycleCounters.name + "CameaDataSource",
-                    BicycleCounters.datasourceCameaMongooseSchemaObject),
-            );
+                const dataSourceHTTPSettings: IHTTPSettings = {
+                    headers: {},
+                    method: "GET",
+                    url,
+                };
+
+                datasource = new DataSource(BicycleCounters.name + "CameaDataSource",
+                    new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new ObjectKeysValidator(BicycleCounters.name + "CameaDataSource",
+                        BicycleCounters.datasourceCameaMongooseSchemaObject),
+                );
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
         });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
+        describe("EcoCounter", () => {
 
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-    });
+            let datasource: DataSource;
 
-    describe("BicycleCounters - EcoCounter", () => {
+            beforeEach(() => {
+                const url = config.datasources.BicycleCountersEcoCounter;
 
-        let datasource: DataSource;
+                const dataSourceHTTPSettings: IHTTPSettings = {
+                    headers: {
+                        Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                    },
+                    method: "GET",
+                    url,
+                };
 
-        beforeEach(() => {
-            const url = config.datasources.BicycleCountersEcoCounter;
+                datasource = new DataSource(BicycleCounters.name + "EcoCounterDataSource",
+                    new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new ObjectKeysValidator(BicycleCounters.name + "EcoCounterDataSource",
+                        BicycleCounters.datasourceEcoCounterMongooseSchemaObject),
+                );
+            });
 
-            const dataSourceHTTPSettings: IHTTPSettings = {
-                headers: {
-                    Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
-                },
-                method: "GET",
-                url,
-            };
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
 
-            datasource = new DataSource(BicycleCounters.name + "EcoCounterDataSource",
-                new HTTPProtocolStrategy(dataSourceHTTPSettings),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new ObjectKeysValidator(BicycleCounters.name + "EcoCounterDataSource",
-                    BicycleCounters.datasourceEcoCounterMongooseSchemaObject),
-            );
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
         });
     });
 

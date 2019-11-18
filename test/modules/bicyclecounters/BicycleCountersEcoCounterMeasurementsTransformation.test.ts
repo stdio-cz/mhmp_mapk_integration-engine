@@ -1,5 +1,7 @@
 "use strict";
 
+import { BicycleCounters } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -30,6 +32,12 @@ describe("BicycleCountersEcoCounterMeasurementsTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let validator;
+
+    before(() => {
+        validator = new Validator(BicycleCounters.measurements.name + "ModelValidator",
+            BicycleCounters.measurements.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new BicycleCountersEcoCounterMeasurementsTransformation();
@@ -49,12 +57,17 @@ describe("BicycleCountersEcoCounterMeasurementsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.transform(testSourceData[0]);
+        data.counter_id = "ecoCounter-100047647";
+        data.directions = [
+            { id : "103047647", value : 2 },
+            { id : "104047647", value : 0 },
+        ];
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         expect(data).to.have.property("directions");
         expect(data.directions).to.be.an("array");
         expect(data).to.have.property("measured_from");
-        expect(data).to.have.property("measured_from_iso");
         expect(data).to.have.property("measured_to");
-        expect(data).to.have.property("measured_to_iso");
         expect(data).to.have.property("temperature");
         expect(data).to.have.property("updated_at");
     });
@@ -65,9 +78,7 @@ describe("BicycleCountersEcoCounterMeasurementsTransformation", () => {
             expect(data[i]).to.have.property("directions");
             expect(data[i].directions).to.be.an("array");
             expect(data[i]).to.have.property("measured_from");
-            expect(data[i]).to.have.property("measured_from_iso");
             expect(data[i]).to.have.property("measured_to");
-            expect(data[i]).to.have.property("measured_to_iso");
             expect(data[i]).to.have.property("temperature");
             expect(data[i]).to.have.property("updated_at");
         }

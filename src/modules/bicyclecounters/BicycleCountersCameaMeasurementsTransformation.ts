@@ -14,15 +14,8 @@ export class BicycleCountersCameaMeasurementsTransformation extends BaseTransfor
     }
 
     protected transformElement = async (element: any): Promise<any> => {
-        const updatedAt = new Date().getTime();
-
         const measuredTo = moment.tz(element.datetime, "Europe/Prague");
-        const measuredToAsNumber = measuredTo.unix();
         const measuredFrom = measuredTo.clone().subtract(5, "minutes");
-        const measuredFromAsNumber = measuredFrom.unix();
-
-        const temperatureValue = element.temperature && !isNaN(parseFloat(element.temperature)) ?
-            parseFloat(element.temperature) : null;
 
         const res = {
             counter_id: null, // assign later
@@ -30,16 +23,14 @@ export class BicycleCountersCameaMeasurementsTransformation extends BaseTransfor
                 id: x.id,
                 value: x.detections,
             })) : [],
-            measured_from: measuredFromAsNumber,
-            measured_from_iso: measuredFrom.toISOString(),
-            measured_to: measuredToAsNumber,
-            measured_to_iso: measuredTo.toISOString(),
-            temperature: temperatureValue != null ? {
-                unit: "°C",
-                updated_at: updatedAt,
-                value: temperatureValue,
-            } : null,
-            updated_at: updatedAt,
+            measured_from: measuredFrom.valueOf(),
+            measured_to: measuredTo.valueOf(),
+            temperature: element.temperature && !isNaN(parseFloat(element.temperature))
+                ? {
+                    unit: "°C",
+                    value: parseFloat(element.temperature),
+                } : null,
+            updated_at: new Date().getTime(),
         };
 
         return res;

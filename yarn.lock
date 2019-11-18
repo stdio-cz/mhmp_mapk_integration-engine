@@ -98,21 +98,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz":
-  version "0.1.20"
-  resolved "file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz#7f37e7945e3cc4db7d1e392800328a4fd78e970a"
-  dependencies:
-    connection-string-parser "^1.0.2"
-    db-migrate "0.11.5"
-    db-migrate-pg "0.5.0"
-    migrate-mongo "6.0.2"
-    mongoose "5.3.14"
-    sequelize "4.41.2"
-
-"@golemio/schema-definitions@file:./golemio-schema-definitions-0.1.20s.tgz":
-  version "0.1.20"
-  uid "7f37e7945e3cc4db7d1e392800328a4fd78e970a"
-  resolved "file:./golemio-schema-definitions-0.1.20s.tgz#7f37e7945e3cc4db7d1e392800328a4fd78e970a"
+"@golemio/schema-definitions@0.1.20-dev.3411":
+  version "0.1.20-dev.3411"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.20-dev.3411.tgz#51e21d02d6028ee0be82f5e866d009dc23c1e37e"
+  integrity sha512-zkx2HQEYnxkQFuKHBkBRbzwHDwJfbIFuO9A4GEkzzPlTCjfiKlUe/eQV2xvnsnIZfqcJmwi6oh1+PxwFwBeoHA==
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"

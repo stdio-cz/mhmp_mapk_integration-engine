@@ -24,9 +24,7 @@ export class BicycleCountersEcoCounterMeasurementsTransformation extends BaseTra
         const repairedUtcDate = moment(wrongUtcDate.format("YYYY-MM-DDTHH:mm:ss")).tz("Europe/Prague");
 
         const measuredFrom = repairedUtcDate;
-        const measuredFromAsNumber = measuredFrom.unix();
         const measuredTo = measuredFrom.clone().add(15, "minutes");
-        const measuredToAsNumber = measuredTo.unix();
 
         const res = {
             counter_id: null, // assign later
@@ -34,10 +32,8 @@ export class BicycleCountersEcoCounterMeasurementsTransformation extends BaseTra
                 id: null, // assign later
                 value: element.counts,
             }],
-            measured_from: measuredFromAsNumber,
-            measured_from_iso: measuredFrom.toISOString(),
-            measured_to: measuredToAsNumber,
-            measured_to_iso: measuredTo.toISOString(),
+            measured_from: measuredFrom.valueOf(),
+            measured_to: measuredTo.valueOf(),
             temperature: null,
             updated_at: updatedAt,
         };
