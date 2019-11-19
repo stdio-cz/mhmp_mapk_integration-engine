@@ -1,10 +1,10 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors, IceGatewayStreetLamps,
-    MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
-    Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras,
-    WasteCollectionYards, ZtpParkings,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors,
+    IceGatewayStreetLamps, MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
+    ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
+    TrafficCameras, WasteCollectionYards, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import * as chai from "chai";
@@ -15,8 +15,8 @@ import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings,
-    JSONDataTypeStrategy, XMLDataTypeStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy,
+    XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
 chai.use(chaiAsPromised);
@@ -674,12 +674,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             });
             hcDataTypeStrategy.setFilter((item) => {
                 return item.KrajCode === "CZ010"
-                && item.Lat
-                && item.Lng
-                && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
-                    "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
-                    "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                    "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
+                    && item.Lat
+                    && item.Lng
+                    && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
+                        "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
+                        "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
+                        "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
             });
             healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
                 new HTTPProtocolStrategy({
@@ -1032,6 +1032,75 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.null;
         });
 
+    });
+
+    describe("BicycleCounters", () => {
+
+        describe("Camea", () => {
+
+            let datasource: DataSource;
+
+            beforeEach(() => {
+                const url = config.datasources.BicycleCountersCamea;
+
+                const dataSourceHTTPSettings: IHTTPSettings = {
+                    headers: {},
+                    method: "GET",
+                    url,
+                };
+
+                datasource = new DataSource(BicycleCounters.name + "CameaDataSource",
+                    new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new ObjectKeysValidator(BicycleCounters.name + "CameaDataSource",
+                        BicycleCounters.datasourceCameaMongooseSchemaObject),
+                );
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
+        });
+
+        describe("EcoCounter", () => {
+
+            let datasource: DataSource;
+
+            beforeEach(() => {
+                const url = config.datasources.BicycleCountersEcoCounter;
+
+                const dataSourceHTTPSettings: IHTTPSettings = {
+                    headers: {
+                        Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                    },
+                    method: "GET",
+                    url,
+                };
+
+                datasource = new DataSource(BicycleCounters.name + "EcoCounterDataSource",
+                    new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new ObjectKeysValidator(BicycleCounters.name + "EcoCounterDataSource",
+                        BicycleCounters.datasourceEcoCounterMongooseSchemaObject),
+                );
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.null;
+            });
+        });
     });
 
 });

@@ -1,0 +1,83 @@
+[
+  {
+    "id": 100047647,
+    "name": "Praha - Podolí",
+    "domain": "PRAHA  ",
+    "latitude": 50.05949686563836,
+    "longitude": 14.419192187464143,
+    "userType": 7,
+    "timezone": "(UTC+01:00) Europe/Prague;DST",
+    "interval": 15,
+    "sens": 0,
+    "installationDate": "2018-09-14T00:00:00+0200",
+    "photos": [
+      "15380385573882.jpg",
+      "15380385575921.jpg",
+      "15380385604483.jpg",
+      "15380385611850.jpg"
+    ],
+    "counter": "COM18090165",
+    "channels": [
+      {
+        "id": 101047647,
+        "name": "Praha Pěší do centra",
+        "domain": "PRAHA  ",
+        "latitude": 50.05949686563836,
+        "longitude": 14.419192187464143,
+        "userType": 1,
+        "timezone": "(UTC+01:00) Europe/Prague;DST",
+        "interval": 15,
+        "sens": 1,
+        "installationDate": "2018-09-14T00:00:00+0200",
+        "photos": null,
+        "counter": "COM18090165",
+        "channels": null
+      },
+      {
+        "id": 102047647,
+        "name": "Praha Pěší z centra",
+        "domain": "PRAHA  ",
+        "latitude": 50.05949686563836,
+        "longitude": 14.419192187464143,
+        "userType": 1,
+        "timezone": "(UTC+01:00) Europe/Prague;DST",
+        "interval": 15,
+        "sens": 2,
+        "installationDate": "2018-09-14T00:00:00+0200",
+        "photos": null,
+        "counter": "COM18090165",
+        "channels": null
+      },
+      {
+        "id": 103047647,
+        "name": "Praha Cyklisté do centra",
+        "domain": "PRAHA  ",
+        "latitude": 50.05949686563836,
+        "longitude": 14.419192187464143,
+        "userType": 2,
+        "timezone": "(UTC+01:00) Europe/Prague;DST",
+        "interval": 15,
+        "sens": 1,
+        "installationDate": "2018-09-14T00:00:00+0200",
+        "photos": null,
+        "counter": "COM18090165",
+        "channels": null
+      },
+      {
+        "id": 104047647,
+        "name": "Praha Cyklisté z centra",
+        "domain": "PRAHA  ",
+        "latitude": 50.05949686563836,
+        "longitude": 14.419192187464143,
+        "userType": 2,
+        "timezone": "(UTC+01:00) Europe/Prague;DST",
+        "interval": 15,
+        "sens": 2,
+        "installationDate": "2018-09-14T00:00:00+0200",
+        "photos": null,
+        "counter": "COM18090165",
+        "channels": null
+      }
+    ]
+  }
+]
