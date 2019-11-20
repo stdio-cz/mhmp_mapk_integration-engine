@@ -5,7 +5,7 @@ import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
-    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
+    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
@@ -39,6 +39,7 @@ import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
+import { WazeCCPWorker } from "../modules/wazeccp";
 import { ZtpParkingsWorker } from "../modules/ztpparkings";
 
 const definitions: IQueueDefinition[] = [
@@ -977,6 +978,52 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: WasteCollectionYardsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: WazeCCP.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + WazeCCP.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshAllDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshAllDataInDB",
+            },
+            {
+                name: "refreshAlertsInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshAlertsInDB",
+            },
+            {
+                name: "refreshIrregularitiesInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshIrregularitiesInDB",
+            },
+            {
+                name: "refreshJamsInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshJamsInDB",
             },
         ],
     },

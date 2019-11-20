@@ -1,4 +1,5 @@
 {
+    "BicycleCounters": [],
     "Gardens": [],
     "IceGatewaySensors": [],
     "IceGatewayStreetLamps": [],
@@ -20,5 +21,6 @@
         "updateSensorsPicksInContainer"
     ],
     "VehiclePositions": [],
+    "WazeCCP": [],
     "ZtpParkings": []
 }

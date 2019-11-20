@@ -4,7 +4,7 @@ import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
     ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, WasteCollectionYards, ZtpParkings,
+    TrafficCameras, WasteCollectionYards, WazeCCP, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import * as chai from "chai";
@@ -1100,6 +1100,90 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
+        });
+    });
+
+    describe("WazeCCP", () => {
+
+        let dataSourceAlerts: DataSource;
+        let dataSourceIrregularities: DataSource;
+        let dataSourceJams: DataSource;
+
+        beforeEach(() => {
+            const to = moment.tz(new Date(), "Europe/Prague");
+            const from = to.clone();
+            from.subtract(12, "minutes");
+            const url = config.datasources.WazeCCP;
+
+            dataSourceAlerts = new DataSource(
+                WazeCCP.alerts.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: url + "&types=alerts",
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new Validator(
+                    WazeCCP.alerts.name + "DataSource",
+                    WazeCCP.alerts.datasourceMongooseSchemaObject,
+                ),
+            );
+            dataSourceIrregularities = new DataSource(
+                WazeCCP.irregularities.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: url + "&types=irregularities",
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new Validator(
+                    WazeCCP.irregularities.name + "DataSource",
+                    WazeCCP.irregularities.datasourceMongooseSchemaObject,
+                ),
+            );
+            dataSourceJams = new DataSource(
+                WazeCCP.jams.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: url + "&types=traffic",
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new Validator(
+                    WazeCCP.jams.name + "DataSource",
+                    WazeCCP.jams.datasourceMongooseSchemaObject,
+                ),
+            );
+        });
+
+        it("should return all objects in Alerts", async () => {
+            const data = await dataSourceAlerts.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should return last modified in Alerts", async () => {
+            const data = await dataSourceAlerts.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+        it("should return all objects in Irregularities", async () => {
+            const data = await dataSourceIrregularities.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should return last modified in Irregularities", async () => {
+            const data = await dataSourceIrregularities.getLastModified();
+            expect(data).to.be.not.null;
+        });
+
+        it("should return all objects in Traffic Jams", async () => {
+            const data = await dataSourceJams.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should return last modified in Traffic Jams", async () => {
+            const data = await dataSourceJams.getLastModified();
+            expect(data).to.be.not.null;
         });
     });
 

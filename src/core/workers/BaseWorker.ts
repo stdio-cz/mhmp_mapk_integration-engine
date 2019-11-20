@@ -10,7 +10,7 @@ export class BaseWorker {
         try {
             const channel = await AMQPConnector.getChannel();
             channel.assertExchange(config.RABBIT_EXCHANGE_NAME, "topic", { durable: false });
-            channel.publish(config.RABBIT_EXCHANGE_NAME, key, new Buffer(msg), options);
+            channel.publish(config.RABBIT_EXCHANGE_NAME, key, Buffer.from(msg), options);
         } catch (err) {
             throw new CustomError("Sending the message to exchange failed.", true, this.constructor.name, 1003, err);
         }
