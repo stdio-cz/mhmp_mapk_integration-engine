@@ -2,6 +2,7 @@
 
 import { WazeCCP } from "@golemio/schema-definitions";
 import moment = require("moment");
+import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 import { generateAJIUniqueIdentifierHash } from "./";
 
@@ -19,6 +20,11 @@ export class WazeCCPAlertsTransformation extends BaseTransformation
      */
     public transform = async (data: any | any[]): Promise<any | any[]> => {
         const rootStart = data.startTimeMillis;
+
+        if (!data.alerts) {
+            log.warn(`${this.name}: Data source returned empty data.`);
+            return [];
+        }
 
         const promises = data.alerts.map((element) => {
             element.rootStart = rootStart;
