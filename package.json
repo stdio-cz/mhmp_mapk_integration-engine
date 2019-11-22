@@ -10,6 +10,7 @@
 		"start": "node -r dotenv/config dist/index.js",
 		"debug": "node --inspect-brk=9230 -r dotenv/config dist/index.js",
 		"build": "tsc",
+		"build-minimal": "tsc --sourceMap false --declaration false",
 		"build-watch": "tsc --watch --preserveWatchOutput",
 		"test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/modules/**/*.test.ts test/App.test.ts --exclude test/datasources-test/*.{ts,js,txt} --exit",
 		"test-debug": "mocha --inspect-brk=9230 --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/core/**/*.test.ts test/modules/**/*.test.ts test/App.test.ts --exclude test/datasources-test/*.{ts,js,txt} --exit",
