@@ -54,7 +54,7 @@ export class WazeCCPIrregularitiesTransformation extends BaseTransformation
             is_highway: irregularity.highway,
             jam_level: irregularity.jamLevel,
             length: irregularity.length,
-            line: JSON.stringify(irregularity.line),
+            line: irregularity.line,
             n_comments: irregularity.nComments,
             n_images: irregularity.nImages,
             n_thumbs_up: irregularity.nThumbsUp,

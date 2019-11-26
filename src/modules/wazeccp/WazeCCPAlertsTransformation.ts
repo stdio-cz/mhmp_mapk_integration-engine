@@ -45,7 +45,7 @@ export class WazeCCPAlertsTransformation extends BaseTransformation
             country: alert.country,
             id: alertHash,
             jam_uuid: alert.jamUuid,
-            location: JSON.stringify(alert.location),
+            location: alert.location,
             magvar: alert.magvar,
             pub_millis: alert.pubMillis,
             pub_utc_date: moment.utc(alert.pubMillis).toDate(),
