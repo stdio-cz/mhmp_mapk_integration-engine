@@ -405,6 +405,15 @@ const definitions: IQueueDefinition[] = [
                 worker: MosMAWorker,
                 workerMethod: "saveTicketPurchasesDataToDB",
             },
+            {
+                name: "transformAndSaveChunkedData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "transformAndSaveChunkedData",
+            },
         ],
     },
     {

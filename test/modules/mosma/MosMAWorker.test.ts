@@ -29,6 +29,9 @@ describe("MosMAWorker", () => {
         sandbox.stub(worker.ticketActivationsModel, "save");
         sandbox.stub(worker.ticketInspectionsModel, "save");
         sandbox.stub(worker.ticketPurchasesModel, "save");
+
+        sandbox.stub(worker, "parseBigJsonAndSend");
+        sandbox.stub(worker, "sendMessageToExchange");
     });
 
     afterEach(() => {
@@ -36,7 +39,7 @@ describe("MosMAWorker", () => {
     });
 
     it("should calls the correct methods by saveDeviceModelsDataToDB method", async () => {
-        await worker.saveDeviceModelsDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveDeviceModelsDataToDB({content: Buffer.from(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.deviceModelTransformation.transform);
         sandbox.assert.calledOnce(worker.deviceModelModel.truncate);
         sandbox.assert.calledOnce(worker.deviceModelModel.save);
@@ -48,32 +51,28 @@ describe("MosMAWorker", () => {
     });
 
     it("should calls the correct methods by saveTicketActivationsDataToDB method", async () => {
-        await worker.saveTicketActivationsDataToDB({content: new Buffer(JSON.stringify([]))});
-        sandbox.assert.calledOnce(worker.ticketActivationsTransformation.transform);
-        sandbox.assert.calledOnce(worker.ticketActivationsModel.save);
-        sandbox.assert.callOrder(
-            worker.ticketActivationsTransformation.transform,
-            worker.ticketActivationsModel.save);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        await worker.saveTicketActivationsDataToDB({content: Buffer.from(JSON.stringify([]))});
+        sandbox.assert.calledOnce(worker.parseBigJsonAndSend);
     });
 
     it("should calls the correct methods by saveTicketInspectionsDataToDB method", async () => {
-        await worker.saveTicketInspectionsDataToDB({content: new Buffer(JSON.stringify([]))});
-        sandbox.assert.calledOnce(worker.ticketInspectionsTransformation.transform);
-        sandbox.assert.calledOnce(worker.ticketInspectionsModel.save);
-        sandbox.assert.callOrder(
-            worker.ticketInspectionsTransformation.transform,
-            worker.ticketInspectionsModel.save);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        await worker.saveTicketInspectionsDataToDB({content: Buffer.from(JSON.stringify([]))});
+        sandbox.assert.calledOnce(worker.parseBigJsonAndSend);
     });
 
     it("should calls the correct methods by saveTicketPurchasesDataToDB method", async () => {
-        await worker.saveTicketPurchasesDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveTicketPurchasesDataToDB({content: Buffer.from(JSON.stringify([]))});
+        sandbox.assert.calledOnce(worker.parseBigJsonAndSend);
+    });
+
+    it("should calls the correct methods by transformAndSaveChunkedData method", async () => {
+        await worker.transformAndSaveChunkedData({content: Buffer.from(JSON.stringify({
+            data: [],
+            saveMethod: "ticketPurchasesModel",
+            transformMethod: "ticketPurchasesTransformation",
+        }))});
         sandbox.assert.calledOnce(worker.ticketPurchasesTransformation.transform);
         sandbox.assert.calledOnce(worker.ticketPurchasesModel.save);
-        sandbox.assert.callOrder(
-            worker.ticketPurchasesTransformation.transform,
-            worker.ticketPurchasesModel.save);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });
 

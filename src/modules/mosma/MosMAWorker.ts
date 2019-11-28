@@ -2,6 +2,9 @@
 
 import { MOS } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
+import * as JSONStream from "JSONStream";
+import { Readable } from "stream";
+import { config } from "../../core/config";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
@@ -21,6 +24,7 @@ export class MosMAWorker extends BaseWorker {
     private ticketActivationsTransformation: MosMATicketActivationsTransformation;
     private ticketInspectionsTransformation: MosMATicketInspectionsTransformation;
     private ticketPurchasesTransformation: MosMATicketPurchasesTransformation;
+    private queuePrefix: string;
 
     constructor() {
         super();
@@ -60,6 +64,7 @@ export class MosMAWorker extends BaseWorker {
         this.ticketActivationsTransformation = new MosMATicketActivationsTransformation();
         this.ticketInspectionsTransformation = new MosMATicketInspectionsTransformation();
         this.ticketPurchasesTransformation = new MosMATicketPurchasesTransformation();
+        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + MOS.MA.name.toLowerCase();
     }
 
     public saveDeviceModelsDataToDB = async (msg: any): Promise<void> => {
@@ -70,21 +75,66 @@ export class MosMAWorker extends BaseWorker {
     }
 
     public saveTicketActivationsDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.ticketActivationsTransformation.transform(inputData);
-        await this.ticketActivationsModel.save(transformedData);
+        await this.parseBigJsonAndSend(msg.content, "ticketActivationsTransformation", "ticketActivationsModel");
     }
 
     public saveTicketInspectionsDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.ticketInspectionsTransformation.transform(inputData);
-        await this.ticketInspectionsModel.save(transformedData);
+        await this.parseBigJsonAndSend(msg.content, "ticketInspectionsTransformation", "ticketInspectionsModel");
     }
 
     public saveTicketPurchasesDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.ticketPurchasesTransformation.transform(inputData);
-        await this.ticketPurchasesModel.save(transformedData);
+        await this.parseBigJsonAndSend(msg.content, "ticketPurchasesTransformation", "ticketPurchasesModel");
+    }
+
+    public transformAndSaveChunkedData = async (msg: any): Promise<void> => {
+        const input = JSON.parse(msg.content.toString());
+        const inputData = input.data;
+        const transformMethod = input.transformMethod;
+        const saveMethod = input.saveMethod;
+        const transformedData = await this[transformMethod].transform(inputData);
+        await this[saveMethod].save(transformedData);
+    }
+
+    private parseBigJsonAndSend = (bigJson: Buffer, transformMethod: string, saveMethod: string): Promise<any> => {
+        return new Promise<any>((resolve, reject) => {
+            const readable = new Readable();
+            let output = [];
+            const chunks = [];
+
+            readable._read = () => {
+                // _read is required but you can noop it
+            };
+            readable.push(bigJson);
+            readable.push(null);
+
+            readable
+                .pipe(JSONStream.parse("*"))
+                .on("data", (d: any) => {
+                    output.push(d);
+                    if (output.length % 1000 === 0) {
+                        chunks.push(output);
+                        output = [];
+                    }
+                })
+                .on("error", (err: any) => {
+                    return reject(err);
+                })
+                .on("end", () => {
+                    if (output.length > 0) {
+                        chunks.push(output);
+                    }
+                    return Promise.all(chunks.map(async (chunk) => {
+                        await this.sendMessageToExchange("workers." + this.queuePrefix + ".transformAndSaveChunkedData",
+                            Buffer.from(JSON.stringify({
+                                data: chunk,
+                                saveMethod,
+                                transformMethod,
+                            })));
+                        }))
+                        .then(() => resolve())
+                        .catch((err) => reject(err));
+                });
+        });
     }
 
 }
