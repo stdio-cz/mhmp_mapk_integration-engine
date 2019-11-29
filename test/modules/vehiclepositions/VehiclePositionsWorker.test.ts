@@ -20,7 +20,7 @@ describe("VehiclePositionsWorker", () => {
                 start_cis_stop_id: "999",
                 start_cis_stop_platform_code: "a",
                 start_timestamp: null,
-            }], updated: []
+            }], updated: [],
         };
 
         sandbox = sinon.createSandbox({ useFakeTimers: true });
@@ -52,7 +52,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.delayComputationTripsModel, "getData")
             .callsFake(() => Object.assign({ shape_points: [] }));
         sandbox.stub(worker, "getEstimatedPoint")
-            .callsFake(() => Object.assign({ properties: { time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00" } }));
+            .callsFake(() => Object.assign({
+                properties: { time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00" } }));
     });
 
     afterEach(() => {

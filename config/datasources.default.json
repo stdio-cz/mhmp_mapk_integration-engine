@@ -24,6 +24,11 @@
     "OICTSortedWasteContainers": "https://www.mojepraha.eu/api/sorted-waste-stations",
     "OICTEndpointApikey": "",
     "BicycleParkings": "https://overpass-api.de/api/interpreter/?data=[out:json];(node[amenity=bicycle_parking](poly:'50.1785 14.5295 50.152266272562684 14.37286376953125 50.1131 14.2053 49.9327 14.342 49.9954 14.6619 50.0902 14.7279 50.1785 14.5295'););out;",
+    "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
+    "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
+    "BicycleCountersEcoCounter": "https://apieco.eco-counter-tools.com/api/1.0/site",
+    "BicycleCountersEcoCounterToken": "",
+    "BicycleCountersEcoCounterMeasurements": "https://apieco.eco-counter-tools.com/api/1.0/data/site/:id?begin=:from&end=:to&step=:step&complete=:complete",
     "POTEXSortedWasteContainers": "http://www.recyklujemetextil.cz/Api/places.json",
     "ParkingZones": "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",
@@ -58,5 +63,6 @@
     "TSKZtpParkingsToken": "",
     "TSKParkomats": "http://vyvoj.ctgroup.cz/cisservice/cisictservice.svc",
     "TSKParkomatsToken": "",
-    "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json"
+    "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",
+    "WazeCCP": "https://world-georss.waze.com/rtserver/web/TGeoRSS?format=JSON&polygon=14.613000,50.291000;14.468000,50.308000;14.324000,50.287000;14.290000,50.231000;14.178000,50.132000;14.153000,49.974000;14.465000,49.885000;14.863000,49.929000;14.752000,50.128000;14.829000,50.250000;14.613000,50.291000;14.613000,50.291000"
 }

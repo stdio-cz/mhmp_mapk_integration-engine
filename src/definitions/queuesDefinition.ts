@@ -2,16 +2,17 @@
 
 import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
-    AirQualityStations, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
     MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
-    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, ZtpParkings,
+    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { AMQPConnector } from "../core/connectors";
 import { log } from "../core/helpers";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { GardensWorker } from "../modules/gardens";
@@ -38,6 +39,7 @@ import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
+import { WazeCCPWorker } from "../modules/wazeccp";
 import { ZtpParkingsWorker } from "../modules/ztpparkings";
 
 const definitions: IQueueDefinition[] = [
@@ -88,6 +90,52 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: AirQualityStationsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: BicycleCounters.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshCameaDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataInDB",
+            },
+            {
+                name: "refreshEcoCounterDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshEcoCounterDataInDB",
+            },
+            {
+                name: "updateCamea",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "updateCamea",
+            },
+            {
+                name: "updateEcoCounter",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "updateEcoCounter",
             },
         ],
     },
@@ -356,6 +404,15 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MosMAWorker,
                 workerMethod: "saveTicketPurchasesDataToDB",
+            },
+            {
+                name: "transformAndSaveChunkedData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosMAWorker,
+                workerMethod: "transformAndSaveChunkedData",
             },
         ],
     },
@@ -930,6 +987,52 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: WasteCollectionYardsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: WazeCCP.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + WazeCCP.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshAllDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshAllDataInDB",
+            },
+            {
+                name: "refreshAlertsInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshAlertsInDB",
+            },
+            {
+                name: "refreshIrregularitiesInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshIrregularitiesInDB",
+            },
+            {
+                name: "refreshJamsInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: WazeCCPWorker,
+                workerMethod: "refreshJamsInDB",
             },
         ],
     },
