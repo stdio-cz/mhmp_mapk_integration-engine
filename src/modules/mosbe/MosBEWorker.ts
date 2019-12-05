@@ -65,25 +65,25 @@ export class MosBEWorker extends BaseWorker {
     public saveAccountsDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.accountsTransformation.transform(inputData);
-        await this.accountsModel.save(transformedData);
+        await this.accountsModel.saveBySqlFunction(transformedData, [ "day" ]);
     }
 
     public saveCouponsDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.couponsTransformation.transform(inputData);
-        await this.couponsModel.save(transformedData);
+        await this.couponsModel.saveBySqlFunction(transformedData, [ "coupon_id" ]);
     }
 
     public saveCustomersDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.customersTransformation.transform(inputData);
-        await this.customersModel.save(transformedData);
+        await this.customersModel.saveBySqlFunction(transformedData, [ "customer_id" ]);
     }
 
     public saveZonesDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.zonesTransformation.transform(inputData);
-        await this.zonesModel.save(transformedData);
+        await this.zonesModel.saveBySqlFunction(transformedData, [ "coupon_id", "zone_name" ]);
     }
 
 }

@@ -52,9 +52,9 @@ describe("WazeCCPWorker", () => {
         sandbox.stub(worker.transformationJams, "transform")
             .callsFake(() => testTransformedData);
 
-        sandbox.stub(worker.modelAlerts, "save");
-        sandbox.stub(worker.modelIrregularities, "save");
-        sandbox.stub(worker.modelJams, "save");
+        sandbox.stub(worker.modelAlerts, "saveBySqlFunction");
+        sandbox.stub(worker.modelIrregularities, "saveBySqlFunction");
+        sandbox.stub(worker.modelJams, "saveBySqlFunction");
 
         sandbox.stub(worker, "sendMessageToExchange");
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + WazeCCP.name.toLowerCase();
@@ -69,11 +69,11 @@ describe("WazeCCPWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceAlerts.getAll);
         sandbox.assert.calledOnce(worker.transformationAlerts.transform);
         sandbox.assert.calledWith(worker.transformationAlerts.transform, testDataAlerts);
-        sandbox.assert.calledOnce(worker.modelAlerts.save);
+        sandbox.assert.calledOnce(worker.modelAlerts.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.dataSourceAlerts.getAll,
             worker.transformationAlerts.transform,
-            worker.modelAlerts.save);
+            worker.modelAlerts.saveBySqlFunction);
     });
 
     it("should calls the correct methods by refreshIrregularitiesInDB method", async () => {
@@ -81,11 +81,11 @@ describe("WazeCCPWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceIrregularities.getAll);
         sandbox.assert.calledOnce(worker.transformationIrregularities.transform);
         sandbox.assert.calledWith(worker.transformationIrregularities.transform, testDataIrregularities);
-        sandbox.assert.calledOnce(worker.modelIrregularities.save);
+        sandbox.assert.calledOnce(worker.modelIrregularities.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.dataSourceIrregularities.getAll,
             worker.transformationIrregularities.transform,
-            worker.modelIrregularities.save);
+            worker.modelIrregularities.saveBySqlFunction);
     });
 
     it("should calls the correct methods by refreshJamsInDB method", async () => {
@@ -93,11 +93,11 @@ describe("WazeCCPWorker", () => {
         sandbox.assert.calledOnce(worker.dataSourceJams.getAll);
         sandbox.assert.calledOnce(worker.transformationJams.transform);
         sandbox.assert.calledWith(worker.transformationJams.transform, testDataJams);
-        sandbox.assert.calledOnce(worker.modelJams.save);
+        sandbox.assert.calledOnce(worker.modelJams.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.dataSourceJams.getAll,
             worker.transformationJams.transform,
-            worker.modelJams.save);
+            worker.modelJams.saveBySqlFunction);
     });
 
     it("should calls the correct methods by refreshAllDataInDB method", async () => {

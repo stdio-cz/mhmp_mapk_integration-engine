@@ -24,10 +24,10 @@ describe("MosBEWorker", () => {
             .callsFake(() => []);
         sandbox.stub(worker.zonesTransformation, "transform")
             .callsFake(() => []);
-        sandbox.stub(worker.accountsModel, "save");
-        sandbox.stub(worker.couponsModel, "save");
-        sandbox.stub(worker.customersModel, "save");
-        sandbox.stub(worker.zonesModel, "save");
+        sandbox.stub(worker.accountsModel, "saveBySqlFunction");
+        sandbox.stub(worker.couponsModel, "saveBySqlFunction");
+        sandbox.stub(worker.customersModel, "saveBySqlFunction");
+        sandbox.stub(worker.zonesModel, "saveBySqlFunction");
     });
 
     afterEach(() => {
@@ -37,40 +37,40 @@ describe("MosBEWorker", () => {
     it("should calls the correct methods by saveAccountsDataToDB method", async () => {
         await worker.saveAccountsDataToDB({content: new Buffer(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.accountsTransformation.transform);
-        sandbox.assert.calledOnce(worker.accountsModel.save);
+        sandbox.assert.calledOnce(worker.accountsModel.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.accountsTransformation.transform,
-            worker.accountsModel.save);
+            worker.accountsModel.saveBySqlFunction);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });
 
     it("should calls the correct methods by saveCouponsDataToDB method", async () => {
         await worker.saveCouponsDataToDB({content: new Buffer(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.couponsTransformation.transform);
-        sandbox.assert.calledOnce(worker.couponsModel.save);
+        sandbox.assert.calledOnce(worker.couponsModel.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.couponsTransformation.transform,
-            worker.couponsModel.save);
+            worker.couponsModel.saveBySqlFunction);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });
 
     it("should calls the correct methods by saveCustomersDataToDB method", async () => {
         await worker.saveCustomersDataToDB({content: new Buffer(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.customersTransformation.transform);
-        sandbox.assert.calledOnce(worker.customersModel.save);
+        sandbox.assert.calledOnce(worker.customersModel.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.customersTransformation.transform,
-            worker.customersModel.save);
+            worker.customersModel.saveBySqlFunction);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });
 
     it("should calls the correct methods by saveZonesDataToDB method", async () => {
         await worker.saveZonesDataToDB({content: new Buffer(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.zonesTransformation.transform);
-        sandbox.assert.calledOnce(worker.zonesModel.save);
+        sandbox.assert.calledOnce(worker.zonesModel.saveBySqlFunction);
         sandbox.assert.callOrder(
             worker.zonesTransformation.transform,
-            worker.zonesModel.save);
+            worker.zonesModel.saveBySqlFunction);
         sandbox.assert.callCount(PostgresConnector.getConnection, 4);
     });
 

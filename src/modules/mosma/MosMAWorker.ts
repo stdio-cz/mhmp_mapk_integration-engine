@@ -75,15 +75,21 @@ export class MosMAWorker extends BaseWorker {
     }
 
     public saveTicketActivationsDataToDB = async (msg: any): Promise<void> => {
-        await this.parseBigJsonAndSend(msg.content, "ticketActivationsTransformation", "ticketActivationsModel");
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.ticketActivationsTransformation.transform(inputData);
+        await this.ticketActivationsModel.saveBySqlFunction(transformedData, [ "ticket_id" ]);
     }
 
     public saveTicketInspectionsDataToDB = async (msg: any): Promise<void> => {
-        await this.parseBigJsonAndSend(msg.content, "ticketInspectionsTransformation", "ticketInspectionsModel");
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.ticketInspectionsTransformation.transform(inputData);
+        await this.ticketInspectionsModel.save(transformedData);
     }
 
     public saveTicketPurchasesDataToDB = async (msg: any): Promise<void> => {
-        await this.parseBigJsonAndSend(msg.content, "ticketPurchasesTransformation", "ticketPurchasesModel");
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.ticketPurchasesTransformation.transform(inputData);
+        await this.ticketPurchasesModel.saveBySqlFunction(transformedData, [ "ticket_id" ]);
     }
 
     public transformAndSaveChunkedData = async (msg: any): Promise<void> => {
