@@ -1098,6 +1098,24 @@ const definitions: IQueueDefinition[] = [
                 },
             ],
         },
+        {
+            customProcessFunction: async (msg: any): Promise<void> => {
+                const channel = await AMQPConnector.getChannel();
+
+                console.log(msg.content.toString());
+
+                // process is not done, wait
+                await new Promise((done) => setTimeout(done, 10000)); // sleeps for 10 seconds
+                channel.reject(msg);
+            },
+            name: "TemplateQueue",
+            options: {
+                deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                deadLetterRoutingKey: "dead",
+            },
+            worker: undefined,
+            workerMethod: undefined,
+        },
     */
 ];
 

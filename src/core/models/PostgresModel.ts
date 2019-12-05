@@ -19,9 +19,12 @@ export class PostgresModel implements IModel {
     protected validator: Validator;
     /** Type/Strategy of saving the data */
     protected savingType: "insertOnly" | "insertOrUpdate";
+    /** Table name */
+    protected tableName: string;
 
     constructor(name: string, settings: ISequelizeSettings, validator: Validator) {
         this.name = name;
+        this.tableName = settings.pgTableName;
 
         this.sequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
             settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "public" });
@@ -63,6 +66,42 @@ export class PostgresModel implements IModel {
 
         // calling the method based on savingType (this.insertOnly() or this.insertOrUpdate())
         return this[this.savingType](model, data);
+    }
+
+    public saveBySqlFunction = async (data: any, primaryKeys: string[], useTmpTable: boolean = false): Promise<any> => {
+        // data validation
+        if (this.validator) {
+            try {
+                await this.validator.Validate(data);
+            } catch (err) {
+                throw new CustomError("Error while validating data.", true, this.name, 4005, err);
+            }
+        } else {
+            log.warn(this.name + ": Model validator is not set.");
+        }
+
+        if (useTmpTable) {
+            throw new CustomError("Saving to tmp table is not implemented for this function.", true, this.name);
+        }
+
+        try {
+            const connection = PostgresConnector.getConnection();
+            // TODO doplnit batch_id a author
+            await connection.query(
+                "SELECT meta.import_from_json("
+                + "-1, " // p_batch_id bigint
+                + "'" + JSON.stringify(data) + "'::json, " // p_data json
+                + "'" + ((useTmpTable) ? "tmp" : "public") + "', " // p_table_schema character varying
+                + "'" + this.tableName + "', " // p_table_name character varying
+                + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
+                + "NULL, " // p_sort json
+                + "'integration-engine'" // p_worker_name character varying
+                + ") ",
+                { type: Sequelize.QueryTypes.SELECT },
+            );
+        } catch (err) {
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
+        }
     }
 
     public truncate = async (useTmpTable: boolean = false): Promise<any> => {
