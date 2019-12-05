@@ -64,7 +64,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "0.2.0",
+		"@golemio/schema-definitions": "0.2.1",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "^0.0.4",
 		"@turf/turf": "5.1.6",
