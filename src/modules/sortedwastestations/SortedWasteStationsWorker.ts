@@ -258,14 +258,14 @@ export class SortedWasteStationsWorker extends BaseWorker {
         const promises = results.map((p) => {
             if (!p.properties.district) {
                 this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-                    new Buffer(JSON.stringify(p)));
+                    JSON.stringify(p));
             }
         });
         await Promise.all(promises);
 
         // send message to get and pair sensors
         this.sendMessageToExchange("workers." + this.queuePrefix + ".getSensorsAndPairThemWithContainers",
-            new Buffer("Just Do It!"));
+            "Just do it!");
     }
 
     public updateDistrict = async (msg: any): Promise<void> => {
@@ -363,7 +363,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         // send messages for pairing with containers
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsMeasurementInContainer",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }
@@ -437,7 +437,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
         // send messages for pairing with containers
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateSensorsPicksInContainer",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }
@@ -567,7 +567,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
 
         // send message to update district
         this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-            new Buffer(JSON.stringify(saved)));
+            JSON.stringify(saved));
         log.warn("New station '" + stationNumber + "' was created.");
     }
 

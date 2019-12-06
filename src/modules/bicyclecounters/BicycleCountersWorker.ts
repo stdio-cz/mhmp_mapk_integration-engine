@@ -146,7 +146,7 @@ export class BicycleCountersWorker extends BaseWorker {
         // send messages for updating measurements data
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
-                new Buffer(JSON.stringify({ id: p.properties.id })));
+                JSON.stringify({ id: p.properties.id }));
         });
         await Promise.all(promises);
     }
@@ -242,7 +242,7 @@ export class BicycleCountersWorker extends BaseWorker {
             if (p.properties.directions) {
                 const directionPromisses = p.properties.directions.map((ch) =>
                     this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
-                        new Buffer(JSON.stringify({ id: p.properties.id, direction_id: ch.id }))),
+                        JSON.stringify({ id: p.properties.id, direction_id: ch.id })),
                 );
                 promises.push(...directionPromisses);
             }

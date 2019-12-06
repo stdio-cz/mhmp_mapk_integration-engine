@@ -53,7 +53,7 @@ export class TrafficCamerasTransformation extends BaseTransformation implements 
         const noImageCode = "ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiuu1Dwdp2j+"
             + "FbfU9Q8SWv8AadyN0Wl2iCdwO3mOHAT36n6nIAByNFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUU"
             + "UUAFFFFABRRRQAUUUUAFd/8GtI0/XPiLa2OqWcV3atBKzRSrlSQuRxXAV6Z8Bf+SqWf/XvN/wCgGgDr7T4baJ";
-        const imageData = new Buffer(response.body).toString("base64");
+        const imageData = Buffer.from(response.body).toString("base64");
         if (contentLength === 0 || (contentLength === 13439 && imageData.indexOf(noImageCode, 833) !== -1)) {
             res.properties.image.type = null;
             res.properties.image.data = null;

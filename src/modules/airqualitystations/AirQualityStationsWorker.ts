@@ -84,12 +84,12 @@ export class AirQualityStationsWorker extends BaseWorker {
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(transformedData)), { persistent: true });
+            JSON.stringify(transformedData), { persistent: true });
 
         // send messages for updating district and address and average occupancy
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }

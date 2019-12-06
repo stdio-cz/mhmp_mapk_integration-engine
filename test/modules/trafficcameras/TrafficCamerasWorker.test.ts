@@ -60,11 +60,11 @@ describe("TrafficCamerasWorker", () => {
         sandbox.assert.calledThrice(worker.sendMessageToExchange);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(testTransformedData)));
+            JSON.stringify(testTransformedData));
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAddressAndDistrict",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
@@ -74,7 +74,7 @@ describe("TrafficCamerasWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
+        await worker.saveDataToHistory({content: Buffer.from(JSON.stringify(testTransformedData))});
         sandbox.assert.calledOnce(worker.transformation.transformHistory);
         sandbox.assert.calledWith(worker.transformation.transformHistory, testTransformedData);
         sandbox.assert.calledOnce(worker.historyModel.save);
@@ -86,7 +86,7 @@ describe("TrafficCamerasWorker", () => {
     });
 
     it("should calls the correct methods by updateAddressAndDistrict method (different geo)", async () => {
-        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAddressAndDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
@@ -104,7 +104,7 @@ describe("TrafficCamerasWorker", () => {
                 id: 1},
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAddressAndDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 

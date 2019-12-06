@@ -78,7 +78,7 @@ describe("MunicipalAuthoritiesWorker", () => {
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveWaitingQueuesDataToHistory",
-            new Buffer(JSON.stringify(testQueuesTransformedData)));
+            JSON.stringify(testQueuesTransformedData));
         sandbox.assert.callOrder(
             worker.skodaPalaceQueuesDataSource.getAll,
             worker.skodaPalaceQueuesTransformation.transform,
@@ -87,7 +87,7 @@ describe("MunicipalAuthoritiesWorker", () => {
     });
 
     it("should calls the correct methods by saveWaitingQueuesDataToHistory method", async () => {
-        await worker.saveWaitingQueuesDataToHistory({content: new Buffer(JSON.stringify(testQueuesTransformedData))});
+        await worker.saveWaitingQueuesDataToHistory({content: Buffer.from(JSON.stringify(testQueuesTransformedData))});
         sandbox.assert.calledOnce(worker.skodaPalaceQueuesTransformation.transformHistory);
         sandbox.assert.calledWith(worker.skodaPalaceQueuesTransformation.transformHistory, testTransformedData);
         sandbox.assert.calledOnce(worker.waitingQueuesHistoryModel.save);

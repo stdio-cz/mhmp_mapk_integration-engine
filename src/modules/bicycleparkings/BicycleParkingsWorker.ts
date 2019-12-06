@@ -70,7 +70,7 @@ export class BicycleParkingsWorker extends BaseWorker {
         // send messages for updating district and address and average occupancy
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }

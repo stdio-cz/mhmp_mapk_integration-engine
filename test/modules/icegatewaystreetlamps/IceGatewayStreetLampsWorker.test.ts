@@ -38,7 +38,7 @@ describe("IceGatewayStreetLampsWorker", () => {
     });
 
     it("should call the correct methods by setDimValue method", async () => {
-        await worker.setDimValue({content: new Buffer(JSON.stringify({id: 0}))});
+        await worker.setDimValue({content: Buffer.from(JSON.stringify({id: 0}))});
         sandbox.assert.calledOnce((request as any).Request);
     });
 

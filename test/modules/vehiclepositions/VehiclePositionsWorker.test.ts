@@ -61,7 +61,7 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB({ content: new Buffer(JSON.stringify({ m: { spoj: {} } })) });
+        await worker.saveDataToDB({ content: Buffer.from(JSON.stringify({ m: { spoj: {} } })) });
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.modelPositions.save);
         sandbox.assert.calledWith(worker.modelPositions.save, []);
@@ -77,13 +77,13 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId({ content: new Buffer(JSON.stringify({ id: 0 })) });
+        await worker.updateGTFSTripId({ content: Buffer.from(JSON.stringify({ id: 0 })) });
         sandbox.assert.calledOnce(worker.modelTrips.findGTFSTripId);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by updateDelay method", async () => {
-        await worker.updateDelay({ content: new Buffer("0") });
+        await worker.updateDelay({ content: Buffer.from("0") });
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
         sandbox.assert.calledOnce(worker.getEstimatedPoint);
