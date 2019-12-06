@@ -162,7 +162,7 @@ export class MedicalInstitutionsWorker extends BaseWorker {
         // send messages for updating district and geo
         const promises = concatenatedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGeoAndDistrict",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }

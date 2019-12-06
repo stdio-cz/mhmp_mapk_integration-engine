@@ -132,7 +132,7 @@ export class WazeCCPWorker extends BaseWorker {
 
         await Promise.all(queueNames.map((queueName: string) => {
             return this.sendMessageToExchange("workers." + this.queuePrefix + "." + queueName,
-                Buffer.from("Just do it!"));
+                "Just do it!");
         }));
     }
 }

@@ -98,11 +98,11 @@ describe("RopidGTFSWorker", () => {
         testData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".transformData",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".checkingIfDone",
-            new Buffer(JSON.stringify({count: testData.length})));
+            JSON.stringify({count: testData.length}));
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
             worker.metaModel.save,
@@ -110,7 +110,7 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by transformData method", async () => {
-        await worker.transformData({content: new Buffer(JSON.stringify(testData[0]))});
+        await worker.transformData({content: Buffer.from(JSON.stringify(testData[0]))});
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledWith(worker.transformation.transform, testData[0]);
         sandbox.assert.calledOnce(worker.getModelByName);
@@ -121,15 +121,15 @@ describe("RopidGTFSWorker", () => {
         testTransformedData.data.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".saveDataToDB",
-                new Buffer(JSON.stringify({
+                JSON.stringify({
                     data: f,
                     name: testTransformedData.name,
-                })));
+                }));
         });
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
-        await worker.saveDataToDB({content: new Buffer(JSON.stringify(testTransformedData))});
+        await worker.saveDataToDB({content: Buffer.from(JSON.stringify(testTransformedData))});
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelSaveStub);
@@ -138,7 +138,7 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {
-        await worker.checkSavedRowsAndReplaceTables({content: new Buffer(JSON.stringify({count: 8}))});
+        await worker.checkSavedRowsAndReplaceTables({content: Buffer.from(JSON.stringify({count: 8}))});
         sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
         sandbox.assert.calledOnce(worker.metaModel.replaceTables);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.truncate);

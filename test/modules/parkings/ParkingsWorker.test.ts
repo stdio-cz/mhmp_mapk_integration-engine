@@ -83,14 +83,14 @@ describe("ParkingsWorker", () => {
         sandbox.assert.callCount(worker.sendMessageToExchange, 5);
         sandbox.assert.calledWith(worker.sendMessageToExchange,
             "workers." + queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(testTransformedData)));
+            JSON.stringify(testTransformedData));
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAddressAndDistrict",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateAverageOccupancy",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
@@ -100,7 +100,7 @@ describe("ParkingsWorker", () => {
     });
 
     it("should calls the correct methods by saveDataToHistory method", async () => {
-        await worker.saveDataToHistory({content: new Buffer(JSON.stringify(testTransformedData))});
+        await worker.saveDataToHistory({content: Buffer.from(JSON.stringify(testTransformedData))});
         sandbox.assert.calledOnce(worker.transformation.transformHistory);
         sandbox.assert.calledWith(worker.transformation.transformHistory, testTransformedData);
         sandbox.assert.calledOnce(worker.historyModel.save);
@@ -112,7 +112,7 @@ describe("ParkingsWorker", () => {
     });
 
     it("should calls the correct methods by updateAddressAndDistrict method (different geo)", async () => {
-        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAddressAndDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
@@ -130,7 +130,7 @@ describe("ParkingsWorker", () => {
                 id: 1},
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateAddressAndDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAddressAndDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
@@ -140,7 +140,7 @@ describe("ParkingsWorker", () => {
     });
 
     it("should calls the correct methods by updateAverageOccupancy method", async () => {
-        await worker.updateAverageOccupancy({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateAverageOccupancy({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
         sandbox.assert.calledOnce(worker.historyModel.aggregate);
@@ -148,7 +148,7 @@ describe("ParkingsWorker", () => {
     });
 
     it("should calls the correct methods by saveOccupanciesToDB method", async () => {
-        await worker.saveOccupanciesToDB({content: new Buffer(JSON.stringify(testOccData))});
+        await worker.saveOccupanciesToDB({content: Buffer.from(JSON.stringify(testOccData))});
         sandbox.assert.calledOnce(worker.occupanciesTransformation.transform);
         sandbox.assert.calledOnce(worker.occupanciesModel.save);
         sandbox.assert.callOrder(

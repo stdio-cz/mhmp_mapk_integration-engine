@@ -70,7 +70,7 @@ describe("GeneralWorker", () => {
 
     it("should call the correct methods by saveData method", async () => {
         await worker.saveData({
-            content: new Buffer(JSON.stringify(testJsonData)),
+            content: Buffer.from(JSON.stringify(testJsonData)),
         });
         sandbox.assert.calledOnce(worker.createModel);
         sandbox.assert.calledWith(worker.createModel, providerName);

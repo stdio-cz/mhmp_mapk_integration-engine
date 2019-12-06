@@ -53,7 +53,7 @@ describe("WasteCollectionYardsWorker", () => {
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
@@ -63,7 +63,7 @@ describe("WasteCollectionYardsWorker", () => {
     });
 
     it("should calls the correct methods by updateDistrict method (different geo)", async () => {
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 
@@ -80,7 +80,7 @@ describe("WasteCollectionYardsWorker", () => {
                 id: 1},
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(data0))});
+        await worker.updateDistrict({content: Buffer.from(JSON.stringify(data0))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, data0.properties.id);
 

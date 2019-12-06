@@ -35,7 +35,7 @@ describe("MosBEWorker", () => {
     });
 
     it("should calls the correct methods by saveAccountsDataToDB method", async () => {
-        await worker.saveAccountsDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveAccountsDataToDB({content: Buffer.from(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.accountsTransformation.transform);
         sandbox.assert.calledOnce(worker.accountsModel.saveBySqlFunction);
         sandbox.assert.callOrder(
@@ -45,7 +45,7 @@ describe("MosBEWorker", () => {
     });
 
     it("should calls the correct methods by saveCouponsDataToDB method", async () => {
-        await worker.saveCouponsDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveCouponsDataToDB({content: Buffer.from(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.couponsTransformation.transform);
         sandbox.assert.calledOnce(worker.couponsModel.saveBySqlFunction);
         sandbox.assert.callOrder(
@@ -55,7 +55,7 @@ describe("MosBEWorker", () => {
     });
 
     it("should calls the correct methods by saveCustomersDataToDB method", async () => {
-        await worker.saveCustomersDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveCustomersDataToDB({content: Buffer.from(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.customersTransformation.transform);
         sandbox.assert.calledOnce(worker.customersModel.saveBySqlFunction);
         sandbox.assert.callOrder(
@@ -65,7 +65,7 @@ describe("MosBEWorker", () => {
     });
 
     it("should calls the correct methods by saveZonesDataToDB method", async () => {
-        await worker.saveZonesDataToDB({content: new Buffer(JSON.stringify([]))});
+        await worker.saveZonesDataToDB({content: Buffer.from(JSON.stringify([]))});
         sandbox.assert.calledOnce(worker.zonesTransformation.transform);
         sandbox.assert.calledOnce(worker.zonesModel.saveBySqlFunction);
         sandbox.assert.callOrder(

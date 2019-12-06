@@ -97,7 +97,7 @@ export class RopidGTFSWorker extends BaseWorker {
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
         if (serverLastModified !== dbLastModified.lastModified) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadFiles",
-                new Buffer("Just do it!"));
+                "Just do it!");
         }
 
         // checking CIS_STOPS dataset
@@ -105,7 +105,7 @@ export class RopidGTFSWorker extends BaseWorker {
         const CISdbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
         if (CISserverLastModified !== CISdbLastModified.lastModified) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadCisStops",
-                new Buffer("Just do it!"));
+                "Just do it!");
         }
     }
 
@@ -132,13 +132,13 @@ export class RopidGTFSWorker extends BaseWorker {
                 version: dbLastModified.version + 1 || 1,
             });
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".transformData",
-                new Buffer(JSON.stringify(file)));
+                JSON.stringify(file));
         });
         await Promise.all(promises);
 
         // send message to checking if process is done
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDone",
-            new Buffer(JSON.stringify({ count: files.length })));
+            JSON.stringify({ count: files.length }));
     }
 
     public transformData = async (msg: any): Promise<void> => {
@@ -165,10 +165,10 @@ export class RopidGTFSWorker extends BaseWorker {
         // send messages for saving to DB
         const promises = transformedData.data.map((chunk) => {
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
-                new Buffer(JSON.stringify({
+                JSON.stringify({
                     data: chunk,
                     name: transformedData.name,
-                })));
+                }));
         });
         await Promise.all(promises);
     }

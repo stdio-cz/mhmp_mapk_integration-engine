@@ -56,18 +56,18 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         // send message for save stops
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveStopsToDB",
-            new Buffer(JSON.stringify(transformedData.stops)));
+            JSON.stringify(transformedData.stops));
 
         // send message for update GTFSTripIds
         let promises = rows.inserted.map((trip) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
-                new Buffer(JSON.stringify(trip)));
+                JSON.stringify(trip));
         });
         await Promise.all(promises);
         // send message for update delay
         promises = rows.updated.map((trip) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-                new Buffer(trip));
+                trip);
         });
         await Promise.all(promises);
     }
@@ -87,7 +87,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 },
             });
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-                new Buffer(inputData.id));
+                inputData.id);
         } catch (err) {
             throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
         }

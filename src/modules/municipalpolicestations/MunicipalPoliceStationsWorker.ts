@@ -73,7 +73,7 @@ export class MunicipalPoliceStationsWorker extends BaseWorker {
         // send messages for updating district and address
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateAddressAndDistrict",
-                new Buffer(JSON.stringify(p)));
+                JSON.stringify(p));
         });
         await Promise.all(promises);
     }

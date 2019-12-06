@@ -120,7 +120,7 @@ export class MunicipalAuthoritiesWorker extends BaseWorker {
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveWaitingQueuesDataToHistory",
-            new Buffer(JSON.stringify(transformedData)), { persistent: true });
+            JSON.stringify(transformedData), { persistent: true });
     }
 
     public saveWaitingQueuesDataToHistory = async (msg: any): Promise<void> => {

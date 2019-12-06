@@ -97,7 +97,7 @@ describe("BicycleCountersWorker", () => {
         testQueueDataCamea.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateCamea",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
@@ -107,7 +107,7 @@ describe("BicycleCountersWorker", () => {
     });
 
     it("should calls the correct methods by updateCamea method (different geo)", async () => {
-        await worker.updateCamea({ content: new Buffer(JSON.stringify(testQueueDataCamea[1])) });
+        await worker.updateCamea({ content: Buffer.from(JSON.stringify(testQueueDataCamea[1])) });
 
         sandbox.assert.calledOnce(worker.dataSourceCameaMeasurements.getAll);
         sandbox.assert.calledOnce(worker.cameaMeasurementsTransformation.transform);
@@ -134,7 +134,7 @@ describe("BicycleCountersWorker", () => {
         testQueueDataEcoCounter.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateEcoCounter",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.dataSourceEcoCounter.getAll,
@@ -144,7 +144,7 @@ describe("BicycleCountersWorker", () => {
     });
 
     it("should calls the correct methods by updateEcoCounter method (different geo)", async () => {
-        await worker.updateEcoCounter({ content: new Buffer(JSON.stringify(testQueueDataEcoCounter[1])) });
+        await worker.updateEcoCounter({ content: Buffer.from(JSON.stringify(testQueueDataEcoCounter[1])) });
 
         sandbox.assert.calledOnce(worker.dataSourceEcoCounterMeasurements.getAll);
         sandbox.assert.calledOnce(worker.ecoCounterMeasurementsTransformation.transform);

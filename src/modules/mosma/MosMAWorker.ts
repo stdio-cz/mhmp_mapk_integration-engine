@@ -131,11 +131,11 @@ export class MosMAWorker extends BaseWorker {
                     }
                     return Promise.all(chunks.map(async (chunk) => {
                         await this.sendMessageToExchange("workers." + this.queuePrefix + ".transformAndSaveChunkedData",
-                            Buffer.from(JSON.stringify({
+                            JSON.stringify({
                                 data: chunk,
                                 saveMethod,
                                 transformMethod,
-                            })));
+                            }));
                         }))
                         .then(() => resolve())
                         .catch((err) => reject(err));

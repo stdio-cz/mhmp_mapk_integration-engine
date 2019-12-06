@@ -141,7 +141,7 @@ describe("SortedWasteStationsWorker", () => {
         testTransformedData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateDistrict",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
         sandbox.assert.callOrder(
             worker.iprContainersDatasource.getAll,
@@ -157,7 +157,7 @@ describe("SortedWasteStationsWorker", () => {
     });
 
     it("should calls the correct methods by updateDistrict method (different geo)", async () => {
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(testTransformedData[0]))});
+        await worker.updateDistrict({content: Buffer.from(JSON.stringify(testTransformedData[0]))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, testTransformedData[0].properties.id);
 
@@ -176,7 +176,7 @@ describe("SortedWasteStationsWorker", () => {
             remove: sandbox.stub().resolves(true),
             save: sandbox.stub().resolves(true),
         };
-        await worker.updateDistrict({content: new Buffer(JSON.stringify(testTransformedData[0]))});
+        await worker.updateDistrict({content: Buffer.from(JSON.stringify(testTransformedData[0]))});
         sandbox.assert.calledOnce(worker.model.findOneById);
         sandbox.assert.calledWith(worker.model.findOneById, testTransformedData[0].properties.id);
 
@@ -200,12 +200,12 @@ describe("SortedWasteStationsWorker", () => {
         testSensorMeasurementData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateSensorsMeasurementInContainer",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
     });
 
     it("should calls the correct methods by updateSensorsMeasurementInContainer method", async () => {
-        await worker.updateSensorsMeasurementInContainer({content: new Buffer(
+        await worker.updateSensorsMeasurementInContainer({content: Buffer.from(
             JSON.stringify(testSensorMeasurementData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
         sandbox.assert.calledOnce(worker.model.updateOne);
@@ -219,12 +219,12 @@ describe("SortedWasteStationsWorker", () => {
         testSensorPicksData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateSensorsPicksInContainer",
-                new Buffer(JSON.stringify(f)));
+                JSON.stringify(f));
         });
     });
 
     it("should calls the correct methods by updateSensorsPicksInContainer method", async () => {
-        await worker.updateSensorsPicksInContainer({content: new Buffer(JSON.stringify(testSensorPicksData[0]))});
+        await worker.updateSensorsPicksInContainer({content: Buffer.from(JSON.stringify(testSensorPicksData[0]))});
         sandbox.assert.calledOnce(worker.model.findOne);
         sandbox.assert.calledOnce(worker.model.updateOne);
     });

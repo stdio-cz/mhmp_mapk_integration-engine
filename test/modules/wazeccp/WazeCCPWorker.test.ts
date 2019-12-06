@@ -106,7 +106,7 @@ describe("WazeCCPWorker", () => {
         [ "refreshAlertsInDB", "refreshIrregularitiesInDB", "refreshJamsInDB" ].map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + "." + f,
-                Buffer.from("Just do it!"));
+                "Just do it!");
         });
     });
 

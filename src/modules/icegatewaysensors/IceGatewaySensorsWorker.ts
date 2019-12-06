@@ -65,7 +65,7 @@ export class IceGatewaySensorsWorker extends BaseWorker {
 
         // send message for historization
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            new Buffer(JSON.stringify(transformedData)), { persistent: true });
+            JSON.stringify(transformedData), { persistent: true });
     }
 
     public saveDataToHistory = async (msg: any): Promise<void> => {

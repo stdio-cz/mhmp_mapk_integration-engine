@@ -71,7 +71,7 @@ export class ParkingZonesWorker extends BaseWorker {
         // send messages for updating tariffs
         const promises = transformedData.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateTariffs",
-                new Buffer(JSON.stringify(p.properties.id)));
+                JSON.stringify(p.properties.id));
         });
         await Promise.all(promises);
     }

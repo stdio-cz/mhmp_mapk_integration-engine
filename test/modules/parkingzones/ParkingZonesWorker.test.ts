@@ -41,7 +41,7 @@ describe("ParkingZonesWorker", () => {
     });
 
     it("should calls the correct methods by updateTariffs method", async () => {
-        await worker.updateTariffs({content: new Buffer(JSON.stringify("test"))});
+        await worker.updateTariffs({content: Buffer.from(JSON.stringify("test"))});
         sandbox.assert.calledOnce(worker.dataSourceTariffs.setProtocolStrategy);
         sandbox.assert.calledOnce(worker.dataSourceTariffs.getAll);
         sandbox.assert.calledOnce(worker.transformation.transformTariffs);
