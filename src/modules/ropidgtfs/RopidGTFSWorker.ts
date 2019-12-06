@@ -217,26 +217,31 @@ export class RopidGTFSWorker extends BaseWorker {
 
         const transformedData = await this.transformationCisStops.transform(data);
 
-        // TODO osetrit duplicity cis_id
-        log.debug(transformedData.cis_stop_groups.length);
-        const unique = {};
-        const duplicates = {};
+        // duplicity checking
+        // TODO is it ok if all duplicate items are removed?
+        const uniqueMap = new Map();
+        const duplicateCisStopGroups = [];
         transformedData.cis_stop_groups.forEach((item) => {
-            if (!unique[item.cis]) {
-                unique[item.cis] = item;
+            if (uniqueMap.has(item.cis)) {
+                duplicateCisStopGroups.push(item.cis);
+                uniqueMap.delete(item.cis);
             } else {
-                duplicates[item.cis] = item;
+                uniqueMap.set(item.cis, item);
             }
         });
-        log.debug(`${Object.keys(unique).length}`);
-        log.debug(JSON.stringify(duplicates));
+        const uniqueCisStopGroups = [...uniqueMap.values()];
+
+        if (duplicateCisStopGroups.length > 0) {
+            log.warn("CIS_STOP_GROUPS contains duplicate cis. Items with this cis was removed: "
+                + JSON.stringify(duplicateCisStopGroups));
+        }
 
         // save meta
         await this.metaModel.save([{
             dataset: "CIS_STOPS",
             key: "cis_stop_groups",
             type: "TABLE_TOTAL_COUNT",
-            value: transformedData.cis_stop_groups.length,
+            value: uniqueCisStopGroups.length,
             version: dbLastModified.version + 1,
         }, {
             dataset: "CIS_STOPS",
@@ -247,7 +252,7 @@ export class RopidGTFSWorker extends BaseWorker {
         }]);
         try {
             await this.cisStopGroupsModel.truncate(true);
-            await this.cisStopGroupsModel.save(transformedData.cis_stop_groups, true);
+            await this.cisStopGroupsModel.save(uniqueCisStopGroups, true);
             await this.cisStopsModel.truncate(true);
             await this.cisStopsModel.save(transformedData.cis_stops, true);
             await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1, 2);
