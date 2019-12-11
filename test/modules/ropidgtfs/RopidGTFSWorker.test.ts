@@ -4,10 +4,8 @@ import { RopidGTFS } from "@golemio/schema-definitions";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as csv from "csv-parser";
 import "mocha";
 import * as sinon from "sinon";
-import { Readable } from "stream";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { RopidGTFSWorker } from "../../../src/modules/ropidgtfs";
@@ -29,16 +27,8 @@ describe("RopidGTFSWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
 
-        const buffer = Buffer.from("a,b\n1,2", "hex");
-        const readable = new Readable();
-        readable._read = () => {
-            // _read is required but you can noop it
-        };
-        readable.push(buffer);
-        readable.push(null);
-
         testData = [{data: 1, filepath: 11}, {data: 2, filepath: 22}];
-        testTransformedData = {data: readable.pipe(csv()), name: "fake"};
+        testTransformedData = {data: [1], name: "fake"};
         testDataCis = [];
         testTransformedDataCis = {cis_stop_groups: [1], cis_stops: [2]};
 

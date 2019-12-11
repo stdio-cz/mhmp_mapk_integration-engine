@@ -17,7 +17,7 @@ cache:
 
 run_tests:
   stage: build
-  image: node:8
+  image: node:12
   services:
     - postgres:10.5
     - mongo:4.0.10
@@ -58,7 +58,7 @@ registry_deployment:
 
 pages:
   stage: deploy
-  image: node:8
+  image: node:12
   script:
   - cat $VERDACCIO_NPMRC_PATH > .npmrc
   - yarn install && rm -f .npmrc
