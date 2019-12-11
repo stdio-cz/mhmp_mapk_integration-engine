@@ -1,12 +1,13 @@
 "use strict";
 
-import { CustomError } from "@golemio/errors";
 import { RopidGTFS } from "@golemio/schema-definitions";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as csv from "csv-parser";
 import "mocha";
 import * as sinon from "sinon";
+import { Readable } from "stream";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { RopidGTFSWorker } from "../../../src/modules/ropidgtfs";
@@ -28,8 +29,16 @@ describe("RopidGTFSWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
 
+        const buffer = Buffer.from("a,b\n1,2", "hex");
+        const readable = new Readable();
+        readable._read = () => {
+            // _read is required but you can noop it
+        };
+        readable.push(buffer);
+        readable.push(null);
+
         testData = [{data: 1, filepath: 11}, {data: 2, filepath: 22}];
-        testTransformedData = {data: [1], name: "fake"};
+        testTransformedData = {data: readable.pipe(csv()), name: "fake"};
         testDataCis = [];
         testTransformedDataCis = {cis_stop_groups: [1], cis_stops: [2]};
 
@@ -130,7 +139,6 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(modelTruncateStub);
         sandbox.assert.calledOnce(worker.metaModel.save);
         sandbox.assert.calledOnce(worker.metaModel.updateState);
-        sandbox.assert.callCount(worker.sendMessageToExchange, 1);
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
@@ -138,7 +146,6 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelSaveStub);
-        sandbox.assert.calledWith(modelSaveStub, testTransformedData.data);
         sandbox.assert.calledOnce(worker.metaModel.updateSavedRows);
     });
 
