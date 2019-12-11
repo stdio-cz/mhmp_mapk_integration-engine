@@ -58,13 +58,11 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         }
     }
 
-    public checkSavedRows = async (dataset: string, version: number, numOfTables: number): Promise<void> => {
+    public checkSavedRows = async (dataset: string, version: number): Promise<void> => {
         const meta = await this.getTotalFromMeta(dataset, version);
         const tables = await this.getTotalFromTables(dataset, version);
         if (meta.totalRows !== tables.totalRows
-            || meta.numOfTables !== tables.numOfTables
-            || meta.numOfTables !== numOfTables
-            || tables.numOfTables !== numOfTables) {
+            || meta.numOfTables !== tables.numOfTables) {
             throw new CustomError(this.name + ": checkSavedRows() failed.", true);
         }
     }
@@ -79,6 +77,19 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             },
         });
         return (notSaved === 0) ? true : false;
+    }
+
+    public checkIfNewVersionIsAlreadyDeployed = async (dataset: string, version: number): Promise<boolean> => {
+        const alreadyDeployed = await this.sequelizeModel.count({
+            where: {
+                dataset,
+                key: "deployed",
+                type: "DATASET_INFO",
+                value: "true",
+                version,
+            },
+        });
+        return (alreadyDeployed === 0) ? false : true;
     }
 
     public replaceTables = async (dataset: string, version: number): Promise<boolean> => {
