@@ -1,11 +1,16 @@
 "use strict";
 
 import { RopidGTFS } from "@golemio/schema-definitions";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { PostgresConnector, RedisConnector } from "../../../src/core/connectors";
 import { RopidGTFSWorker } from "../../../src/modules/ropidgtfs";
+
+chai.use(chaiAsPromised);
 
 describe("RopidGTFSWorker", () => {
 
@@ -23,7 +28,7 @@ describe("RopidGTFSWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
 
         testData = [{data: 1, filepath: 11}, {data: 2, filepath: 22}];
-        testTransformedData = {data: [1], filepath: 11, name: "fake"};
+        testTransformedData = {data: [1], name: "fake"};
         testDataCis = [];
         testTransformedDataCis = {cis_stop_groups: [1], cis_stops: [2]};
 
@@ -46,6 +51,8 @@ describe("RopidGTFSWorker", () => {
         sandbox.stub(worker.metaModel, "rollbackFailedSaving");
         sandbox.stub(worker.metaModel, "updateState");
         sandbox.stub(worker.metaModel, "updateSavedRows");
+        sandbox.stub(worker.metaModel, "checkIfNewVersionIsAlreadyDeployed");
+        sandbox.stub(worker.metaModel, "checkAllTablesHasSavedState");
 
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => testTransformedData);
@@ -57,7 +64,11 @@ describe("RopidGTFSWorker", () => {
         modelTruncateStub = sandbox.stub();
         modelSaveStub = sandbox.stub();
         sandbox.stub(worker, "getModelByName")
-            .callsFake(() => Object.assign({truncate: modelTruncateStub, save: modelSaveStub}));
+            .callsFake(() => Object.assign({
+                save: modelSaveStub,
+                saveBySqlFunction: modelSaveStub,
+                truncate: modelTruncateStub,
+            }));
 
         sandbox.stub(worker.dataSourceCisStops, "getAll")
             .callsFake(() => testDataCis);
@@ -118,14 +129,6 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(modelTruncateStub);
         sandbox.assert.calledOnce(worker.metaModel.save);
         sandbox.assert.calledOnce(worker.metaModel.updateState);
-        testTransformedData.data.map((f) => {
-            sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".saveDataToDB",
-                JSON.stringify({
-                    data: f,
-                    name: testTransformedData.name,
-                }));
-        });
     });
 
     it("should calls the correct methods by saveDataToDB method", async () => {
@@ -133,15 +136,15 @@ describe("RopidGTFSWorker", () => {
         sandbox.assert.calledOnce(worker.getModelByName);
         sandbox.assert.calledWith(worker.getModelByName, testTransformedData.name);
         sandbox.assert.calledOnce(modelSaveStub);
-        sandbox.assert.calledWith(modelSaveStub, testTransformedData.data);
         sandbox.assert.calledOnce(worker.metaModel.updateSavedRows);
     });
 
     it("should calls the correct methods by checkSavedRowsAndReplaceTables method", async () => {
-        await worker.checkSavedRowsAndReplaceTables({content: Buffer.from(JSON.stringify({count: 8}))});
-        sandbox.assert.calledOnce(worker.metaModel.checkSavedRows);
-        sandbox.assert.calledOnce(worker.metaModel.replaceTables);
-        sandbox.assert.calledOnce(worker.delayComputationTripsModel.truncate);
+        try {
+            await worker.checkSavedRowsAndReplaceTables({content: Buffer.from("")});
+        } catch (err) {
+            expect(err).not.to.be.null;
+        }
     });
 
     it("should calls the correct methods by downloadCisStops method", async () => {

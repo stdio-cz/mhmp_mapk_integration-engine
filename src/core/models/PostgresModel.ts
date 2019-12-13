@@ -80,17 +80,13 @@ export class PostgresModel implements IModel {
             log.warn(this.name + ": Model validator is not set.");
         }
 
-        if (useTmpTable) {
-            throw new CustomError("Saving to tmp table is not implemented for this function.", true, this.name);
-        }
-
         try {
             const connection = PostgresConnector.getConnection();
             // TODO doplnit batch_id a author
             await connection.query(
                 "SELECT meta.import_from_json("
                 + "-1, " // p_batch_id bigint
-                + "'" + JSON.stringify(data) + "'::json, " // p_data json
+                + "E'" + JSON.stringify(data).replace(/'/g, "\\'") + "'::json, " // p_data json
                 + "'" + ((useTmpTable) ? "tmp" : "public") + "', " // p_table_schema character varying
                 + "'" + this.tableName + "', " // p_table_name character varying
                 + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json

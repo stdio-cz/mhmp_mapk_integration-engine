@@ -50,7 +50,6 @@ describe("RopidGTFSTransformation", () => {
         const data = await transformation.transform(testSourceData);
         expect(data).to.have.property("name");
         expect(data).to.have.property("data");
-        expect(data).to.have.property("total");
     });
 
 });

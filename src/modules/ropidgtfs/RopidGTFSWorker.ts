@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { RopidGTFS } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
@@ -150,33 +151,49 @@ export class RopidGTFSWorker extends BaseWorker {
 
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
 
+        let parsed = [];
+        let rowCount = 0;
+        for await (const row of transformedData.data) {
+            rowCount++;
+            parsed.push(row);
+            if (parsed.length % 1000 === 0) {
+                await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
+                    JSON.stringify({
+                        data: parsed,
+                        name: transformedData.name,
+                    }));
+                parsed = [];
+            }
+        }
+
+        if (parsed.length > 0) {
+            await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
+                JSON.stringify({
+                    data: parsed,
+                    name: transformedData.name,
+                }));
+            parsed = [];
+        }
+
         // save meta
         await this.metaModel.save({
             dataset: "PID_GTFS",
             key: transformedData.name,
             type: "TABLE_TOTAL_COUNT",
-            value: transformedData.total,
+            value: rowCount,
             version: dbLastModified.version,
         });
 
         // save meta
         await this.metaModel.updateState("PID_GTFS", transformedData.name, "TRANSFORMED", dbLastModified.version);
-
-        // send messages for saving to DB
-        const promises = transformedData.data.map((chunk) => {
-            return this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToDB",
-                JSON.stringify({
-                    data: chunk,
-                    name: transformedData.name,
-                }));
-        });
-        await Promise.all(promises);
+        log.debug(`${transformedData.name}: parsed and sent ${rowCount} rows`);
     }
 
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
-        await model.save(inputData.data, true);
+        // await model.save(inputData.data, true);
+        await model.saveBySqlFunction(inputData.data, this.getPrimaryKeyByName(inputData.name), true);
 
         // save meta
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
@@ -189,17 +206,34 @@ export class RopidGTFSWorker extends BaseWorker {
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
-        const inputData = JSON.parse(msg.content.toString());
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        const alreadyDeployed = await this.metaModel
+            .checkIfNewVersionIsAlreadyDeployed("PID_GTFS", dbLastModified.version);
+        const allSaved = await this.metaModel.checkAllTablesHasSavedState("PID_GTFS", dbLastModified.version);
+
+        if (alreadyDeployed) {
+            return true;
+        }
+
         try {
-            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version, inputData.count);
+            if (!allSaved) {
+                throw new Error("Some tables are not completely saved.");
+            }
+            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
             await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
             await this.delayComputationTripsModel.truncate();
+            // save meta
+            await this.metaModel.save({
+                dataset: "PID_GTFS",
+                key: "deployed",
+                type: "DATASET_INFO",
+                value: "true",
+                version: dbLastModified.version,
+            });
             return true;
         } catch (err) {
-            log.error(err);
             await this.metaModel.rollbackFailedSaving("PID_GTFS", dbLastModified.version);
-            return false;
+            throw new CustomError("Error while checking RopidGTFS saved rows.", true, this.constructor.name, 5004, err);
         }
     }
 
@@ -255,7 +289,7 @@ export class RopidGTFSWorker extends BaseWorker {
             await this.cisStopGroupsModel.save(uniqueCisStopGroups, true);
             await this.cisStopsModel.truncate(true);
             await this.cisStopsModel.save(transformedData.cis_stops, true);
-            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1, 2);
+            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
             await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
         } catch (err) {
             log.error(err);
@@ -276,6 +310,29 @@ export class RopidGTFSWorker extends BaseWorker {
             );
         }
         return null;
+    }
+
+    private getPrimaryKeyByName = (name: string): string[] => {
+        switch (name) {
+            case "agency":
+                return [ "agency_id" ];
+            case "calendar":
+                return [ "service_id" ];
+            case "calendar_dates":
+                return [ "date", "service_id" ];
+            case "routes":
+                return [ "route_id" ];
+            case "shapes":
+                return [ "shape_id", "shape_pt_sequence" ];
+            case "stop_times":
+                return [ "stop_sequence", "trip_id" ];
+            case "stops":
+                return [ "stop_id" ];
+            case "trips":
+                return [ "trip_id" ];
+            default:
+                return null;
+        }
     }
 
 }

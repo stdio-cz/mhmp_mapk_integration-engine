@@ -721,51 +721,14 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "saveDataToDB",
             },
             {
-                customProcessFunction: async (msg: any): Promise<void> => {
-                    const channel = await AMQPConnector.getChannel();
-                    const queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + RopidGTFS.name.toLowerCase();
-                    try {
-                        const worker = new RopidGTFSWorker();
-
-                        // getting info about queues
-                        const transformQueue = await channel.checkQueue(queuePrefix + ".transformData");
-                        const saveQueue = await channel.checkQueue(queuePrefix + ".saveDataToDB");
-                        // getting info from metadata table
-                        const allSaved: boolean = await worker.checkAllTablesHasSavedState(msg);
-
-                        log.debug(JSON.stringify({ allSaved, saveQueue, transformQueue }));
-
-                        // checking if all queues are empty and all rows are saved
-                        if (transformQueue.messageCount === 0 && saveQueue.messageCount === 0 && allSaved) {
-                            // checking number of saved rows of all tables
-                            // and process switch between tmp and public schema
-                            if (await worker.checkSavedRowsAndReplaceTables(msg)) {
-                                channel.ack(msg);
-                            } else {
-                                // numbers of saved rows are not equal with number of downloaded rows
-                                ErrorHandler.handle(new CustomError("Error while checking RopidGTFS saved rows.", true,
-                                    undefined, 5004));
-                                channel.nack(msg, false, false);
-                            }
-                            log.verbose("[<] " + queuePrefix + ".checkingIfDone: done");
-                        } else {
-                            // process is not done, wait
-                            await new Promise((done) => setTimeout(done, 60000)); // sleeps for 1 minute
-                            channel.reject(msg);
-                        }
-                    } catch (err) {
-                        ErrorHandler.handle(err);
-                        channel.nack(msg, false, false);
-                    }
-                },
-                name: "checkingIfDone",
+                name: "checkSavedRowsAndReplaceTables",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 23 * 60 * 60 * 1000, // 23 hours
                 },
-                worker: undefined,
-                workerMethod: undefined,
+                worker: RopidGTFSWorker,
+                workerMethod: "checkSavedRowsAndReplaceTables",
             },
             {
                 name: "downloadCisStops",
