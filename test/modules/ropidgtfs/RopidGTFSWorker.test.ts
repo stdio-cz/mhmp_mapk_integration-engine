@@ -105,15 +105,12 @@ describe("RopidGTFSWorker", () => {
         await worker.downloadFiles();
         sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledThrice(worker.metaModel.save);
-        sandbox.assert.callCount(worker.sendMessageToExchange, 3);
+        sandbox.assert.callCount(worker.sendMessageToExchange, 2);
         testData.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".transformData",
                 JSON.stringify(f));
         });
-        sandbox.assert.calledWith(worker.sendMessageToExchange,
-            "workers." + queuePrefix + ".checkingIfDone",
-            JSON.stringify({count: testData.length}));
         sandbox.assert.callOrder(
             worker.dataSource.getAll,
             worker.metaModel.save,

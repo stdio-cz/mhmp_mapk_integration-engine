@@ -121,7 +121,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 const columnsString = columns.map((c) => '"' + c.column_name + '"').join(", ");
 
                 return connection.query(
-                    "TRUNCATE TABLE " + tableName + "; "
+                    "DELETE FROM " + tableName + "; "
                     + "INSERT INTO " + tableName + " SELECT " + columnsString + " FROM " + tmpTableName + "; "
                     + "DROP TABLE IF EXISTS " + tmpTableName + "; ",
                     { type: Sequelize.QueryTypes.SELECT, transaction: t });

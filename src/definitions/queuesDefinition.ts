@@ -1,6 +1,5 @@
 "use strict";
 
-import { CustomError, ErrorHandler } from "@golemio/errors";
 import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
     IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
@@ -8,8 +7,6 @@ import {
     SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
-import { AMQPConnector } from "../core/connectors";
-import { log } from "../core/helpers";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";

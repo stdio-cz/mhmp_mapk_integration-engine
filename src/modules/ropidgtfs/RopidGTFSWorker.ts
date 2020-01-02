@@ -136,10 +136,6 @@ export class RopidGTFSWorker extends BaseWorker {
                 JSON.stringify(file));
         });
         await Promise.all(promises);
-
-        // send message to checking if process is done
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkingIfDone",
-            JSON.stringify({ count: files.length }));
     }
 
     public transformData = async (msg: any): Promise<void> => {
