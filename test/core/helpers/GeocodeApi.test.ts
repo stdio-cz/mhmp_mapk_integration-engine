@@ -16,12 +16,12 @@ describe("GeocodeApi", () => {
 
     it("should returns address by lat lng using Open Street Map API", async () => {
         const data = await GeocodeApi.getAddressByLatLng(50.102864, 14.445868);
-        expect(data).to.have.property("address_formatted", "Dělnická 213/10, 17000 Praha-Holešovice, Česko");
+        expect(data).to.have.property("address_formatted", "Dělnická 213/10, 17000 Praha-Holešovice, Česká republika");
         expect(data).to.have.property("street_address", "Dělnická 213/10");
         expect(data).to.have.property("postal_code", "17000");
         expect(data).to.have.property("address_locality", "Praha");
         expect(data).to.have.property("address_region", "Holešovice");
-        expect(data).to.have.property("address_country", "Česko");
+        expect(data).to.have.property("address_country", "Česká republika");
     });
 
     it("should throws error if getting address by lat lng using Open Street Map API failed", async () => {
