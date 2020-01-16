@@ -1,6 +1,6 @@
 /* modules/BicycleCounters/index.ts */
-export * from "./BicycleCountersCameaMeasurementsTransformation";
-export * from "./BicycleCountersCameaTransformation";
-export * from "./BicycleCountersEcoCounterMeasurementsTransformation";
-export * from "./BicycleCountersEcoCounterTransformation";
+export * from "./CameaMeasurementsTransformation";
+export * from "./CameaTransformation";
+export * from "./EcoCounterMeasurementsTransformation";
+export * from "./EcoCounterTransformation";
 export * from "./BicycleCountersWorker";
