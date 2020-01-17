@@ -5,8 +5,6 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"dev-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/modules/bicyclecounters/*Transformation.test.ts --exit",
-
 		"dev-start": "ts-node-dev -r dotenv/config ./src/index.ts",
 		"dev-start-debug": "ts-node-dev --inspect-brk=9230 -r dotenv/config ./src/index.ts",
 		"start": "node -r dotenv/config dist/index.js",
@@ -66,7 +64,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "../schema-definitions/golemio-schema-definitions-0.2.2-3.tgz",
+		"@golemio/schema-definitions": "0.2.2-dev.3599",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "^0.0.4",
 		"@turf/turf": "5.1.6",
