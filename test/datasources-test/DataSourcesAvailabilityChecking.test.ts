@@ -1049,11 +1049,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url,
                 };
 
-                datasource = new DataSource(BicycleCounters.name + "CameaDataSource",
+                datasource = new DataSource(BicycleCounters.camea.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new ObjectKeysValidator(BicycleCounters.name + "CameaDataSource",
-                        BicycleCounters.datasourceCameaMongooseSchemaObject),
+                    new Validator(BicycleCounters.camea.name + "DataSource",
+                        BicycleCounters.camea.datasourceMongooseSchemaObject),
                 );
             });
 
@@ -1065,6 +1065,50 @@ describe("DataSourcesAvailabilityChecking", () => {
             it("should returns last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
+            });
+
+            describe("measurements", () => {
+
+                let measurementsDatasource: DataSource;
+
+                beforeEach(() => {
+                    const now = moment.utc();
+                    const step = 5;
+                    const remainder = step - (now.minute() % step);
+                    // rounded to nearest next 5 minutes
+                    const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
+                    const nowMinus12h = nowRounded.clone().subtract(12, "hours");
+                    const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
+                    const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
+
+                    let url = config.datasources.BicycleCountersCameaMeasurements;
+                    url = url.replace(":id", "BC_AT-STLA");
+                    url = url.replace(":from", strNowMinus12h);
+                    url = url.replace(":to", strNow);
+
+                    measurementsDatasource = new DataSource(BicycleCounters.camea.name + "MeasurementsDataSource",
+                        new HTTPProtocolStrategy({
+                            headers: {},
+                            json: true,
+                            method: "GET",
+                            url,
+                        }),
+                        new JSONDataTypeStrategy({ resultsPath: "" }),
+                        new Validator(BicycleCounters.camea.name + "MeasurementsDataSource",
+                            BicycleCounters.camea.measurementsDatasourceMongooseSchemaObject),
+                    );
+                });
+
+                it("should returns all measurements objects", async () => {
+                    const data = await measurementsDatasource.getAll();
+                    expect(data).to.be.an.instanceOf(Object);
+                });
+
+                it("should returns measurements last modified", async () => {
+                    const data = await measurementsDatasource.getLastModified();
+                    expect(data).to.be.null;
+                });
+
             });
         });
 
@@ -1083,11 +1127,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url,
                 };
 
-                datasource = new DataSource(BicycleCounters.name + "EcoCounterDataSource",
+                datasource = new DataSource(BicycleCounters.ecoCounter.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new ObjectKeysValidator(BicycleCounters.name + "EcoCounterDataSource",
-                        BicycleCounters.datasourceEcoCounterMongooseSchemaObject),
+                    new Validator(BicycleCounters.ecoCounter.name + "DataSource",
+                        BicycleCounters.ecoCounter.datasourceMongooseSchemaObject),
                 );
             });
 
@@ -1100,6 +1144,59 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
+        });
+
+        describe("measurements", () => {
+
+            let measurementsDatasource: DataSource;
+
+            beforeEach(() => {
+                // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
+                // so we have to send local time to request.
+                // Furthermore, the returned dates are START of the measurement interval, so if we want measurements
+                // from interval between 06:00 and 07:00 UTC (which is local 07:00 - 08:00), we have to send parameters
+                // from=07:00 and to=07:45, because it returns all the measurements where
+                // from and to parameters are INCLUDED.
+                const now = moment.utc().tz("Europe/Prague");
+                const step = 15;
+                const remainder = (now.minute() % step);
+                // rounded to nearest next 15 minutes
+                const nowRounded = now.clone().subtract(remainder, "minutes").seconds(0).milliseconds(0);
+                const strTo = nowRounded.clone().subtract(step, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+                const strFrom = nowRounded.clone().subtract(12, "hours").format("YYYY-MM-DDTHH:mm:ss");
+
+                let url = config.datasources.BicycleCountersEcoCounterMeasurements;
+                url = url.replace(":id", "103047647"); // 100047647
+                url = url.replace(":from", strFrom);
+                url = url.replace(":to", strTo);
+                url = url.replace(":step", `${step}m`);
+                url = url.replace(":complete", "true");
+
+                measurementsDatasource = new DataSource(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {
+                            Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                        },
+                        json: true,
+                        method: "GET",
+                        url,
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new Validator(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                        BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject),
+                );
+            });
+
+            it("should returns all measurements objects", async () => {
+                const data = await measurementsDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns measurements last modified", async () => {
+                const data = await measurementsDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
         });
     });
 

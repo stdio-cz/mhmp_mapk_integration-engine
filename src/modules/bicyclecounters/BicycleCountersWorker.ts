@@ -5,11 +5,11 @@ import { Validator } from "@golemio/validator";
 import * as moment from "moment-timezone";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { MongoModel } from "../../core/models";
+import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
-    BicycleCountersCameaMeasurementsTransformation, BicycleCountersCameaTransformation,
-    BicycleCountersEcoCounterMeasurementsTransformation, BicycleCountersEcoCounterTransformation,
+    CameaMeasurementsTransformation, CameaTransformation,
+    EcoCounterMeasurementsTransformation, EcoCounterTransformation,
 } from "./";
 
 export class BicycleCountersWorker extends BaseWorker {
@@ -18,41 +18,39 @@ export class BicycleCountersWorker extends BaseWorker {
     private dataSourceCameaMeasurements: DataSource;
     private dataSourceEcoCounter: DataSource;
     private dataSourceEcoCounterMeasurements: DataSource;
-    private cameaTransformation: BicycleCountersCameaTransformation;
-    private ecoCounterTransformation: BicycleCountersEcoCounterTransformation;
-    private cameaMeasurementsTransformation: BicycleCountersCameaMeasurementsTransformation;
-    private ecoCounterMeasurementsTransformation: BicycleCountersEcoCounterMeasurementsTransformation;
-    private model: MongoModel;
-    private measurementsModel: MongoModel;
+
+    private cameaTransformation: CameaTransformation;
+    private ecoCounterTransformation: EcoCounterTransformation;
+    private cameaMeasurementsTransformation: CameaMeasurementsTransformation;
+    private ecoCounterMeasurementsTransformation: EcoCounterMeasurementsTransformation;
+
+    private locationsModel: PostgresModel;
+    private directionsModel: PostgresModel;
+    private detectionsModel: PostgresModel;
+    private temperaturesModel: PostgresModel;
     private queuePrefix: string;
 
     constructor() {
         super();
-        //#region Camea
 
-        this.dataSourceCamea = new DataSource(BicycleCounters.name + "CameaDataSource",
+        this.dataSourceCamea = new DataSource(BicycleCounters.camea.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers: {},
                 method: "GET",
                 url: config.datasources.BicycleCountersCamea,
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(BicycleCounters.name + "CameaDataSource",
-                BicycleCounters.datasourceCameaMongooseSchemaObject));
-        this.dataSourceCameaMeasurements = new DataSource(BicycleCounters.measurements.name + "CameaDataSource",
+            new Validator(BicycleCounters.camea.name + "DataSource",
+                BicycleCounters.camea.datasourceMongooseSchemaObject));
+        this.dataSourceCameaMeasurements = new DataSource(BicycleCounters.camea.name + "MeasurementsDataSource",
             undefined,
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(BicycleCounters.measurements.name + "CameaDataSource",
-                BicycleCounters.measurements.datasourceCameaMongooseSchemaObject));
+            new Validator(BicycleCounters.camea.name + "MeasurementsDataSource",
+                BicycleCounters.camea.measurementsDatasourceMongooseSchemaObject));
+        this.cameaTransformation = new CameaTransformation();
+        this.cameaMeasurementsTransformation = new CameaMeasurementsTransformation();
 
-        this.cameaTransformation = new BicycleCountersCameaTransformation();
-        this.cameaMeasurementsTransformation = new BicycleCountersCameaMeasurementsTransformation();
-
-        //#endregion
-
-        //#region Eco Counter
-
-        this.dataSourceEcoCounter = new DataSource(BicycleCounters.name + "EcoCounterDataSource",
+        this.dataSourceEcoCounter = new DataSource(BicycleCounters.ecoCounter.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers: {
                     Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
@@ -61,92 +59,79 @@ export class BicycleCountersWorker extends BaseWorker {
                 url: config.datasources.BicycleCountersEcoCounter,
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(BicycleCounters.name + "EcoCounterDataSource",
-                BicycleCounters.datasourceEcoCounterMongooseSchemaObject));
-        this.dataSourceEcoCounterMeasurements = new DataSource(BicycleCounters.measurements.name +
-            "EcoCounterDataSource",
+            new Validator(BicycleCounters.ecoCounter.name + "DataSource",
+                BicycleCounters.ecoCounter.datasourceMongooseSchemaObject));
+        this.dataSourceEcoCounterMeasurements = new DataSource(BicycleCounters.ecoCounter.name
+                + "MeasurementsDataSource",
             undefined,
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(BicycleCounters.measurements.name + "EcoCounterDataSource",
-                BicycleCounters.measurements.datasourceEcoCounterMongooseSchemaObject));
+            new Validator(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject));
+        this.ecoCounterTransformation = new EcoCounterTransformation();
+        this.ecoCounterMeasurementsTransformation = new EcoCounterMeasurementsTransformation();
 
-        this.ecoCounterTransformation = new BicycleCountersEcoCounterTransformation();
-        this.ecoCounterMeasurementsTransformation = new BicycleCountersEcoCounterMeasurementsTransformation();
-
-        //#endregion
-
-        //#region mongo models
-
-        this.model = new MongoModel(BicycleCounters.name + "Model", {
-            identifierPath: "properties.id",
-            mongoCollectionName: BicycleCounters.mongoCollectionName,
-            outputMongooseSchemaObject: BicycleCounters.outputMongooseSchemaObject,
-            resultsPath: "properties",
-            savingType: "insertOrUpdate",
-            searchPath: (id, multiple) => (multiple)
-                ? { "properties.id": { $in: id } }
-                : { "properties.id": id },
-            updateValues: (a, b) => {
-                a.properties.directions = b.properties.directions;
-                a.properties.name = b.properties.name;
-                a.properties.route = b.properties.route;
-                a.properties.updated_at = b.properties.updated_at;
-                return a;
+        this.locationsModel = new PostgresModel(
+            BicycleCounters.locations.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.locations.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.locations.pgTableName,
+                savingType: "insertOrUpdate",
             },
-        },
-            new Validator(BicycleCounters.name + "ModelValidator", BicycleCounters.outputMongooseSchemaObject),
+            new Validator(
+                BicycleCounters.locations.name + "ModelValidator",
+                BicycleCounters.locations.outputMongooseSchemaObject,
+            ),
         );
-
-        this.measurementsModel = new MongoModel(BicycleCounters.measurements.name + "Model", {
-            identifierPath: "_id",
-            mongoCollectionName: BicycleCounters.measurements.mongoCollectionName,
-            outputMongooseSchemaObject: BicycleCounters.measurements.outputMongooseSchemaObject,
-            savingType: "insertOrUpdate",
-            searchPath: (id, multiple) => (multiple)
-                ? { _id: { $in: id } }
-                : { _id: id },
-            updateValues: (a, b) => {
-                if (b.directions) {
-                    if (!a.directions) {
-                        a.directions = [];
-                    }
-                    b.directions.forEach((bd) => {
-                        const found = a.directions.find((ad) => ad.id === bd.id);
-                        if (!found) {
-                            a.directions.push(bd);
-                        }
-                    });
-                }
-
-                // a.measured_to = b.measured_to;
-                // a.measured_from = b.measured_from;
-                if (!a.temperature) {
-                    a.temperature = b.temperature;
-                }
-                a.updated_at = b.updated_at;
-                return a;
+        this.directionsModel = new PostgresModel(
+            BicycleCounters.directions.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.directions.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.directions.pgTableName,
+                savingType: "insertOrUpdate",
             },
-        },
-            new Validator(BicycleCounters.measurements.name + "ModelValidator",
-                BicycleCounters.measurements.outputMongooseSchemaObject),
+            new Validator(
+                BicycleCounters.directions.name + "ModelValidator",
+                BicycleCounters.directions.outputMongooseSchemaObject,
+            ),
+        );
+        this.detectionsModel = new PostgresModel(
+            BicycleCounters.detections.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.detections.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.detections.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.detections.name + "ModelValidator",
+                BicycleCounters.detections.outputMongooseSchemaObject,
+            ),
+        );
+        this.temperaturesModel = new PostgresModel(
+            BicycleCounters.temperatures.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.temperatures.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.temperatures.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.temperatures.name + "ModelValidator",
+                BicycleCounters.temperatures.outputMongooseSchemaObject,
+            ),
         );
 
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
-
-        //#endregion
     }
-
-    //#region Camea
 
     public refreshCameaDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCamea.getAll();
         const transformedData = await this.cameaTransformation.transform(data);
-        await this.model.save(transformedData);
+        await this.locationsModel.save(transformedData.locations);
+        await this.directionsModel.save(transformedData.directions);
 
         // send messages for updating measurements data
-        const promises = transformedData.map((p) => {
+        const promises = transformedData.locations.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
-                JSON.stringify({ id: p.properties.id }));
+                JSON.stringify({ id: p.vendor_id }));
         });
         await Promise.all(promises);
     }
@@ -154,7 +139,6 @@ export class BicycleCountersWorker extends BaseWorker {
     public updateCamea = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id;
-        const externId = id.replace("camea-", "");
 
         const now = moment.utc();
         const step = 5;
@@ -166,7 +150,7 @@ export class BicycleCountersWorker extends BaseWorker {
         const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
 
         let url = config.datasources.BicycleCountersCameaMeasurements;
-        url = url.replace(":id", externId);
+        url = url.replace(":id", id);
         url = url.replace(":from", strNowMinus12h);
         url = url.replace(":to", strNow);
 
@@ -178,83 +162,37 @@ export class BicycleCountersWorker extends BaseWorker {
         }));
 
         const data = await this.dataSourceCameaMeasurements.getAll();
-        let transformedData = await this.cameaMeasurementsTransformation.transform(data);
+        const transformedData = await this.cameaMeasurementsTransformation.transform(data);
 
-        // add property counter_id to each item
-        // insert only those that have at least 1 direction with value
-        transformedData = transformedData
-            .map((x) => {
-                x.counter_id = id;
-                return {
-                    ...x,
-                    directions: x.directions ? x.directions.filter((d) => d.value != null) : [],
-                };
-            })
-            .filter((x) => x.directions && x.directions.length > 0);
-
-        const measuredAtArray = transformedData.map((x) => x.measured_to);
-
-        // check the existing measurements in the database
-        const found = await this.measurementsModel.find({
-            counter_id: id,
-            measured_to: { $in: measuredAtArray },
-        });
-
-        // for Camea the record could already exist because it could have only 1 direction saved
-        // (2nd was without value)
-        const newOrModifiedMeasures = [];
-        transformedData.forEach((x) => {
-            const dbData = found.find((db) => db.measured_to === x.measured_to);
-            if (!dbData) {
-                newOrModifiedMeasures.push(x);
-            } else {
-                let alreadyAdded = false;
-                x.directions.forEach((d) => {
-                    if (!alreadyAdded) {
-                        const dbDirection = this.findDirectionById(dbData, d.id);
-                        if (!dbDirection) {
-                            // if the direction is not found in the DB, we have to update it
-                            // (via measurementsModel.updateValues function)
-                            newOrModifiedMeasures.push({ ...x, _id: dbData.id });
-                            alreadyAdded = true;
-                        }
-                    }
-                });
-            }
-        });
-
-        // insert only new or modified measures
-        await this.measurementsModel.save(newOrModifiedMeasures);
+        await this.detectionsModel.saveBySqlFunction(
+            transformedData.detections,
+            [ "locations_id", "directions_id", "measured_from" ],
+        );
+        await this.temperaturesModel.saveBySqlFunction(
+            transformedData.temperatures,
+            [ "locations_id", "measured_from" ],
+        );
     }
-
-    //#endregion
-
-    //#region Eco Counter
 
     public refreshEcoCounterDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceEcoCounter.getAll();
         const transformedData = await this.ecoCounterTransformation.transform(data);
-        await this.model.save(transformedData);
+        await this.locationsModel.save(transformedData.locations);
+        await this.directionsModel.save(transformedData.directions);
 
         // send messages for updating measurements data
-        const promises = [];
-        transformedData.forEach((p) => {
-            if (p.properties.directions) {
-                const directionPromisses = p.properties.directions.map((ch) =>
-                    this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
-                        JSON.stringify({ id: p.properties.id, direction_id: ch.id })),
-                );
-                promises.push(...directionPromisses);
-            }
-
+        const promises = transformedData.directions.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
+                JSON.stringify({ id: p.vendor_id, directions_id: p.id, locations_id: p.locations_id }));
         });
         await Promise.all(promises);
     }
 
     public updateEcoCounter = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
+        const locationsId = inputData.locations_id;
+        const directionsId = inputData.directions_id;
         const id = inputData.id;
-        const directionId = inputData.direction_id.toString();
 
         // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
         // so we have to send local time to request.
@@ -270,7 +208,7 @@ export class BicycleCountersWorker extends BaseWorker {
         const strFrom = nowRounded.clone().subtract(12, "hours").format("YYYY-MM-DDTHH:mm:ss");
 
         let url = config.datasources.BicycleCountersEcoCounterMeasurements;
-        url = url.replace(":id", directionId);
+        url = url.replace(":id", id);
         url = url.replace(":from", strFrom);
         url = url.replace(":to", strTo);
         url = url.replace(":step", `${step}m`);
@@ -288,54 +226,16 @@ export class BicycleCountersWorker extends BaseWorker {
         const data = await this.dataSourceEcoCounterMeasurements.getAll();
         let transformedData = await this.ecoCounterMeasurementsTransformation.transform(data);
 
-        // insert only those that have at least 1 direction with value
         transformedData = transformedData
             .map((x) => {
-                x.counter_id = id;
-                x.directions.forEach((d) => {
-                    d.id = directionId;
-                });
-                return {
-                    ...x,
-                    directions: x.directions ? x.directions.filter((d) => d.value != null) : [],
-                };
-            })
-            .filter((x) => x.directions && x.directions.length > 0);
+                x.directions_id = directionsId;
+                x.locations_id = locationsId;
+                return x;
+            });
 
-        const measuredAtArray = transformedData.map((x) => x.measured_to);
-
-        // check the existing measurements in the database
-        const found = await this.measurementsModel.find({
-            counter_id: id,
-            measured_to: { $in: measuredAtArray },
-        });
-
-        // for EcoCounter the record could already exist because they are fetched individually
-        // (for each direction separated request is performed)
-        const newOrModifiedMeasures = [];
-        transformedData.forEach((x) => {
-            const dbData = found.find((db) => db.measured_to === x.measured_to);
-            if (!dbData) {
-                newOrModifiedMeasures.push(x);
-            } else {
-                const dbDirection = this.findDirectionById(dbData, directionId);
-                if (!dbDirection) {
-                    // if the direction is not found in the DB, we have to update it
-                    // (via measurementsModel.updateValues function)
-                    newOrModifiedMeasures.push({ ...x, _id: dbData._id });
-                }
-            }
-        });
-
-        await this.measurementsModel.save(newOrModifiedMeasures);
+        await this.detectionsModel.saveBySqlFunction(
+            transformedData,
+            [ "locations_id", "directions_id", "measured_from" ],
+        );
     }
-
-    private findDirectionById = (element: any, id: string) => {
-        if (element.directions) {
-            return element.directions.find((x) => x.id === id);
-        }
-        return null;
-    }
-
-    //#endregion
 }
