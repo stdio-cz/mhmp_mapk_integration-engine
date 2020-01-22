@@ -17,11 +17,9 @@ export class EcoCounterMeasurementsTransformation extends BaseTransformation imp
         // Repair UTC date, because EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
         // Returned value 07:00:00+0000 is some hybrid between UTC time with offset 07:00:00+0100 and pure UTC
         // 06:00:00+0000
-        const wrongUtcDate = moment.utc(element.date);
-        // repairing offset
-        const repairedUtcDate = moment(wrongUtcDate.format("YYYY-MM-DDTHH:mm:ss")).tz("Europe/Prague");
+        const utcDate = moment.tz(element.date.split("+")[0], "Europe/Prague");
 
-        const measuredFrom = repairedUtcDate;
+        const measuredFrom = utcDate;
         const measuredTo = measuredFrom.clone().add(15, "minutes");
 
         const res = {
