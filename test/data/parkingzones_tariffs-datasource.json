@@ -1,6 +1,34 @@
 [
     {
-        "tariff": [],
+        "tariff": [
+            {
+                "timeFrom": "PT8H",
+                "payAtHoliday": true,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT8H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            }
+        ],
         "day": "Sunday"
     },
     {
@@ -8,20 +36,29 @@
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": true,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 20,
-                "maxPrice": 20,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             },
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": false,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 30,
-                "maxPrice": 360,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             }
         ],
         "day": "Monday"
@@ -31,20 +68,29 @@
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": true,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 20,
-                "maxPrice": 20,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             },
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": false,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 30,
-                "maxPrice": 360,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             }
         ],
         "day": "Tuesday"
@@ -54,20 +100,29 @@
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": true,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 20,
-                "maxPrice": 20,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             },
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": false,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 30,
-                "maxPrice": 360,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             }
         ],
         "day": "Wednesday"
@@ -77,20 +132,29 @@
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": true,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 20,
-                "maxPrice": 20,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             },
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": false,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 30,
-                "maxPrice": 360,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             }
         ],
         "day": "Thursday"
@@ -100,26 +164,63 @@
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": true,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 20,
-                "maxPrice": 20,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             },
             {
                 "timeFrom": "PT8H",
                 "payAtHoliday": false,
-                "maxParkingTime": "PT12H",
-                "timeTo": "PT20H",
-                "pricePerHour": 30,
-                "maxPrice": 360,
-                "divisibility": "PT20M"
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
             }
         ],
         "day": "Friday"
     },
     {
-        "tariff": [],
+        "tariff": [
+            {
+                "timeFrom": "PT8H",
+                "payAtHoliday": true,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT8H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT19H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            },
+            {
+                "timeFrom": "PT20H",
+                "payAtHoliday": false,
+                "maxParkingTime": "PT1H",
+                "timeTo": "PT5H59M",
+                "pricePerHour": 80.0000,
+                "maxPrice": 0.0000,
+                "divisibility": "PT15M"
+            }
+        ],
         "day": "Saturday"
     }
 ]

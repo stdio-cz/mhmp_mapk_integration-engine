@@ -6,6 +6,26 @@ import { BaseTransformation, ITransformation } from "../../core/transformations"
 
 import * as lodash from "lodash";
 
+interface IDatasourceTariff {
+    timeFrom: string;
+    payAtHoliday: boolean;
+    maxParkingTime: string;
+    timeTo: string;
+    pricePerHour: number;
+    maxPrice: number;
+    divisibility: string;
+}
+
+interface IOutputTariff {
+    divisibility: string;
+    max_parking_time: string;
+    max_price: number;
+    pay_at_holiday: boolean;
+    price_per_hour: number;
+    time_from: string;
+    time_to: string;
+}
+
 export class ParkingZonesTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
@@ -99,17 +119,33 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
      * Tariff processing
      */
     public transformTariffs = async (id: string, data: any): Promise<any> => {
-        const resultTariffs = [];
+        const resultTariffs: Array<{ tariff: IOutputTariff[], days: string[]}> = [];
 
         if (!data) {
             throw Error(`Tarif pro ${id} nebyl nalezen.`);
         }
 
-        const promises1 = data.map(async (tariff) => {
+        const promises1 = data.map(async (tariff: { tariff: IDatasourceTariff[], day: string}) => {
             const dayOfWeek = tariff.day;
 
             const exist = lodash.findIndex(resultTariffs, (o) => {
-                return JSON.stringify(o.tariff) === JSON.stringify(tariff.tariff);
+                if (o.tariff.length !== tariff.tariff.length) {
+                    return false;
+                }
+                for (let i = 0; i < o.tariff.length; i++) {
+                    if (
+                        o.tariff[i].divisibility !== tariff.tariff[i].divisibility
+                        || o.tariff[i].max_parking_time !== tariff.tariff[i].maxParkingTime
+                        || o.tariff[i].max_price !== tariff.tariff[i].maxPrice
+                        || o.tariff[i].pay_at_holiday !== tariff.tariff[i].payAtHoliday
+                        || o.tariff[i].price_per_hour !== tariff.tariff[i].pricePerHour
+                        || o.tariff[i].time_from !== tariff.tariff[i].timeFrom
+                        || o.tariff[i].time_to !== tariff.tariff[i].timeTo
+                    ) {
+                        return false;
+                    }
+                }
+                return true;
             });
 
             if (resultTariffs.length === 0) {
@@ -135,7 +171,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
         };
     }
 
-    protected transformTariffItem = (value: any) => {
+    protected transformTariffItem = (value: IDatasourceTariff): IOutputTariff => {
         return {
             divisibility: value.divisibility,
             max_parking_time: value.maxParkingTime,
