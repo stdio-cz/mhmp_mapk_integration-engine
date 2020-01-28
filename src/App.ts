@@ -93,18 +93,22 @@ export default class App {
 
         // filtering queue definitions by blacklist
         let filteredQueuesDefinitions = queuesDefinition;
-        Object.keys(config.queuesBlacklist).map((b: string) => {
-            if (config.queuesBlacklist[b].length === 0) {
-                filteredQueuesDefinitions = filteredQueuesDefinitions.filter((a) => a.name !== b);
-            } else {
-                config.queuesBlacklist[b].map((d: string) => {
-                    filteredQueuesDefinitions = filteredQueuesDefinitions.map((a) => {
-                        a.queues = a.queues.filter((c) => c.name !== d);
-                        return a;
-                    });
-                });
+
+        for (const datasetName in config.queuesBlacklist) {
+            if (config.queuesBlacklist[datasetName].length === 0) { // all dataset queues are filtered
+                filteredQueuesDefinitions = filteredQueuesDefinitions
+                    .filter((queueDef) => queueDef.name !== datasetName);
+            } else { // only named queues of dataset are filtered
+                for (let i = 0, imax = filteredQueuesDefinitions.length; i < imax; i++) {
+                    if (filteredQueuesDefinitions[i].name === datasetName) {
+                        filteredQueuesDefinitions[i].queues = filteredQueuesDefinitions[i].queues
+                            .filter(function(queue) {
+                                return this.indexOf(queue.name) < 0;
+                            }, config.queuesBlacklist[datasetName]);
+                    }
+                }
             }
-        });
+        }
 
         // use generic queue processor for register (filtered) queues
         const promises = filteredQueuesDefinitions.map((queueDefinition) => {
