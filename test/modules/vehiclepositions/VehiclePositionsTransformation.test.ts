@@ -54,7 +54,7 @@ describe("VehiclePositionsTransformation", () => {
         expect(data).to.have.property("stops");
         expect(data.stops.length).to.equal(28);
         expect(data).to.have.property("trips");
-        expect(data.trips[0]).to.have.property("cis_id", 100110);
+        expect(data.trips[0]).to.have.property("cis_line_id", 100110);
     });
 
     it("should properly transform collection", async () => {
