@@ -1,5 +1,7 @@
 "use strict";
 
+import { VehiclePositions } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -30,6 +32,18 @@ describe("VehiclePositionsTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let positionsValidator;
+    let stopsValidator;
+    let tripsValidator;
+
+    before(() => {
+        positionsValidator = new Validator(VehiclePositions.positions.name + "ModelValidator",
+            VehiclePositions.positions.outputMongooseSchemaObject);
+        stopsValidator = new Validator(VehiclePositions.positions.name + "ModelValidator",
+            VehiclePositions.positions.outputMongooseSchemaObject);
+        tripsValidator = new Validator(VehiclePositions.trips.name + "ModelValidator",
+            VehiclePositions.trips.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new VehiclePositionsTransformation();
@@ -59,6 +73,10 @@ describe("VehiclePositionsTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData.m.spoj);
+        await expect(positionsValidator.Validate(data.positions)).to.be.fulfilled;
+        await expect(stopsValidator.Validate(data.stops)).to.be.fulfilled;
+        await expect(tripsValidator.Validate(data.trips)).to.be.fulfilled;
+
         expect(data).to.have.property("positions");
         expect(data.positions.length).to.equal(321);
         expect(data).to.have.property("stops");
