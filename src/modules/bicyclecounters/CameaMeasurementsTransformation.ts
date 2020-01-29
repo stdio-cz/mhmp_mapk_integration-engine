@@ -48,8 +48,8 @@ export class CameaMeasurementsTransformation extends BaseTransformation implemen
     }
 
     protected transformElement = async (element: any): Promise<any> => {
-        const measuredTo = moment.tz(element.datetime, "Europe/Prague");
-        const measuredFrom = measuredTo.clone().subtract(5, "minutes");
+        const measuredFrom = moment.tz(element.datetime, "Europe/Prague");
+        const measuredTo = measuredFrom.clone().add(5, "minutes");
 
         const res = {
             detections: element.directions

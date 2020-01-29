@@ -83,6 +83,7 @@
 		"iconv-lite": "0.4.24",
 		"influx": "5.4.0",
 		"ioredis": "4.6.2",
+		"iso8601-duration": "^1.2.0",
 		"moment-timezone": "^0.5.26",
 		"mongoose": "5.3.6",
 		"morgan": "^1.9.1",

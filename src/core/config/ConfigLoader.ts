@@ -67,7 +67,7 @@ export const config = { // TODO prejmenovat na lower-case
     SPARQL_ENDPOINT_AUTH: process.env.SPARQL_ENDPOINT_AUTH,
     SPARQL_ENDPOINT_URL: process.env.SPARQL_ENDPOINT_URL,
     app_version: process.env.npm_package_version,
-    datasources: new ConfigLoader("datasources").conf,
+    datasources: new ConfigLoader("datasources").conf as {[key: string]: any},
     influx_db: {
         database: process.env.INFLUX_DB_DATABASE,
         enabled: (process.env.INFLUX_DB_ENABLED === "true") ? true : false,
@@ -81,5 +81,5 @@ export const config = { // TODO prejmenovat na lower-case
         username: process.env.INFLUX_DB_USERNAME,
     },
     port: process.env.PORT,
-    queuesBlacklist: new ConfigLoader("queuesBlacklist", true).conf,
+    queuesBlacklist: new ConfigLoader("queuesBlacklist", true).conf as {[dataset: string]: string[]},
 };
