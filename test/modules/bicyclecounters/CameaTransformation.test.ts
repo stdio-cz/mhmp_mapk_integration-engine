@@ -6,7 +6,7 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
-import { BicycleCountersCameaMeasurementsTransformation } from "../../../src/modules/bicyclecounters";
+import { CameaTransformation } from "../../../src/modules/bicyclecounters";
 
 chai.use(chaiAsPromised);
 import * as fs from "fs";
@@ -28,26 +28,29 @@ const readFile = (file: string): Promise<Buffer> => {
     });
 };
 
-describe("BicycleCountersCameaMeasurementsTransformation", () => {
+describe("CameaTransformation", () => {
 
     let transformation;
     let testSourceData;
-    let validator;
+    let locationsValidator;
+    let directionsValidator;
 
     before(() => {
-        validator = new Validator(BicycleCounters.measurements.name + "ModelValidator",
-            BicycleCounters.measurements.outputMongooseSchemaObject);
+        locationsValidator = new Validator(BicycleCounters.camea.name + "LocModelValidator",
+            BicycleCounters.locations.outputMongooseSchemaObject);
+        directionsValidator = new Validator(BicycleCounters.camea.name + "DirModelValidator",
+            BicycleCounters.directions.outputMongooseSchemaObject);
     });
 
     beforeEach(async () => {
-        transformation = new BicycleCountersCameaMeasurementsTransformation();
-        const buffer = await readFile(__dirname + "/../../data/bicyclecounters-camea-measurements-datasource.json");
+        transformation = new CameaTransformation();
+        const buffer = await readFile(__dirname + "/../../data/bicyclecounters-camea-datasource.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("BicycleCountersCameaMeasurements");
+        expect(transformation.name).is.equal("CameaBicycleCounters");
     });
 
     it("should has transform method", async () => {
@@ -56,27 +59,18 @@ describe("BicycleCountersCameaMeasurementsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.transform(testSourceData[0]);
-        data.counter_id = "camea-BC_PP-ROJP";
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
         expect(data).to.have.property("directions");
-        expect(data.directions).to.be.an("array");
-        expect(data).to.have.property("measured_from");
-        expect(data).to.have.property("measured_to");
-        expect(data).to.have.property("temperature");
-        expect(data).to.have.property("updated_at");
+        expect(data).to.have.property("locations");
     });
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
-        for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("directions");
-            expect(data[i].directions).to.be.an("array");
-            expect(data[i]).to.have.property("measured_from");
-            expect(data[i]).to.have.property("measured_to");
-            expect(data[i]).to.have.property("temperature");
-            expect(data[i]).to.have.property("updated_at");
-        }
+
+        await expect(locationsValidator.Validate(data.locations)).to.be.fulfilled;
+        await expect(directionsValidator.Validate(data.directions)).to.be.fulfilled;
+
+        expect(data).to.have.property("directions");
+        expect(data).to.have.property("locations");
     });
 
 });

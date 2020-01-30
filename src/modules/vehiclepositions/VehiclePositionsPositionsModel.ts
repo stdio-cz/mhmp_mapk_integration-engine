@@ -79,14 +79,16 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         });
     }
 
-    public updateDelay = async (tripsId, originTime, delay, gtfsShapeDistTraveled, gtfsNextStopId): Promise<any> => {
+    public updateDelay = async (
+        tripsId, originTime, delay, shapeDistTraveled, gtfsNextStopId, gtfsLastStopId): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
         try {
             await this.sequelizeModel.update({
                 delay,
-                gtfs_next_stop_id: gtfsNextStopId,
-                gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
+                last_stop_id: gtfsLastStopId,
+                next_stop_id: gtfsNextStopId,
+                shape_dist_traveled: shapeDistTraveled,
             },
                 {
                     transaction: t,
