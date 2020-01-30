@@ -47,4 +47,31 @@ export class PostgresProtocolStrategy implements IProtocolStrategy {
         throw new Error("Method not implemented.");
     }
 
+    public deleteData = async (): Promise<void> => {
+        try {
+            const connector = new MySequelize();
+            const connection = await connector.connect(this.connectionSettings.connectionString);
+
+            const model = connection.define(
+                this.connectionSettings.tableName,
+                this.connectionSettings.modelAttributes,
+                {
+                    ...((this.connectionSettings.sequelizeAdditionalSettings)
+                        ? this.connectionSettings.sequelizeAdditionalSettings
+                        : { freezeTableName: true, timestamps: true, underscored: true }), // default values
+                    ...((this.connectionSettings.schemaName)
+                        ? { schema: this.connectionSettings.schemaName }
+                        : {}),
+                },
+            );
+
+            await model.destroy({
+                cascade: false,
+                truncate: true,
+            });
+        } catch (err) {
+            throw new CustomError("Error while deleting data from server.", true, this.constructor.name, 2002, err);
+        }
+    }
+
 }

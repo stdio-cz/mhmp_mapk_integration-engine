@@ -80,6 +80,12 @@ describe("PostgresProtocolStrategy", () => {
         expect(res).to.be.deep.equal([{ id: 1, value: "a" }, { id: 2, value: "b" }]);
     });
 
+    it("should properly delete data", async () => {
+        await strategy.deleteData();
+        const res = await strategy.getData();
+        expect(res).to.be.deep.equal([]);
+    });
+
     it("should throw error if getting data failed", async () => {
         testSettings.connectionString = config.POSTGRES_CONN + "snvodsvnsvnsn";
         strategy.setConnectionSettings(testSettings);

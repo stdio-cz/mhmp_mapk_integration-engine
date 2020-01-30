@@ -99,10 +99,9 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.2.2-dev.3629":
-  version "0.2.2-dev.3629"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.2.2-dev.3629.tgz#17246704cdd769609eb266b1df774ca12912ea3a"
-  integrity sha512-lWGn7a6FP3KiUzFNe4b71PIYE6gidcY63d7S63stRWsMrl6G3dwmscm0j9VZvtnpxhpvxx4mxhzTDI1tpbloeg==
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-0.2.2-5.tgz":
+  version "0.2.2"
+  resolved "../schema-definitions/golemio-schema-definitions-0.2.2-5.tgz#c33991a921555fb4089425601cb93de98958ae87"
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
