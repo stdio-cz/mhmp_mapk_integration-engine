@@ -148,7 +148,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                         && estimatedPoint.properties.time_delay !== null) {
                         return this.modelPositions.updateDelay(position.id, position.origin_time,
                             estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                            estimatedPoint.properties.next_stop_id);
+                            estimatedPoint.properties.next_stop_id, estimatedPoint.properties.last_stop_id);
                     } else {
                         return Promise.resolve();
                     }
@@ -274,6 +274,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 rightPoint.properties.shape_dist_traveled =
                     Math.round(closestPts[i].shape_dist_traveled * 1000) / 1000;
                 rightPoint.properties.next_stop_id = closestPts[i].next_stop;
+                rightPoint.properties.last_stop_id = closestPts[i].last_stop;
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
             }
