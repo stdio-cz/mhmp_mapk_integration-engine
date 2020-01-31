@@ -35,9 +35,15 @@ export class PostgresProtocolStrategy implements IProtocolStrategy {
             );
 
             // getting data and returning it as array of obejcts
-            return await model
+            const results = await model
                 .findAll(this.connectionSettings.findOptions)
                 .map((r: any) => r.dataValues);
+
+            // Close all connections used by this sequelize instance,
+            // and free all references so the instance can be garbage collected.
+            await connection.close();
+
+            return results;
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }
@@ -69,6 +75,10 @@ export class PostgresProtocolStrategy implements IProtocolStrategy {
                 cascade: false,
                 truncate: true,
             });
+
+            // Close all connections used by this sequelize instance,
+            // and free all references so the instance can be garbage collected.
+            await connection.close();
         } catch (err) {
             throw new CustomError("Error while deleting data from server.", true, this.constructor.name, 2002, err);
         }
