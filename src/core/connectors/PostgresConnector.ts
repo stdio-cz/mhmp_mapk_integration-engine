@@ -5,22 +5,22 @@ import * as Sequelize from "sequelize";
 import { config } from "../config";
 import { log } from "../helpers";
 
-class MySequelize {
+export class MySequelize {
 
     private connection: Sequelize.Sequelize | undefined;
 
-    public connect = async (): Promise<Sequelize.Sequelize> => {
+    public connect = async (connectionString: string = config.POSTGRES_CONN): Promise<Sequelize.Sequelize> => {
         try {
             if (this.connection) {
                 return this.connection;
             }
 
-            if (!config.POSTGRES_CONN) {
+            if (!connectionString) {
                 throw new CustomError("The ENV variable POSTGRES_CONN cannot be undefined.", true,
                     this.constructor.name, 6003);
             }
 
-            this.connection = new Sequelize(config.POSTGRES_CONN, {
+            this.connection = new Sequelize(connectionString, {
                 define: {
                     freezeTableName: true,
                     timestamps: true, // adds createdAt and updatedAt
