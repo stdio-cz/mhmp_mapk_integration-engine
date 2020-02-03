@@ -49,7 +49,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         const results = await this.tripsModel.findAll({
             attributes: [
                 Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
-                "id", "gtfs_trip_id",
+                "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
                 attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay"],
@@ -80,14 +80,25 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
     }
 
     public updateDelay = async (
-        tripsId, originTime, delay, shapeDistTraveled, gtfsNextStopId, gtfsLastStopId): Promise<any> => {
+            tripsId, originTime, delay, shapeDistTraveled,
+            nextStopId, lastStopId,
+            nextStopSequence, lastStopSequence,
+            nextStopArrivalTime, lastStopArrivalTime,
+            nextStopDepartureTime, lastStopDepartureTime,
+        ): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
         try {
             await this.sequelizeModel.update({
                 delay,
-                last_stop_id: gtfsLastStopId,
-                next_stop_id: gtfsNextStopId,
+                last_stop_arrival_time: lastStopArrivalTime,
+                last_stop_departure_time: lastStopDepartureTime,
+                last_stop_id: lastStopId,
+                last_stop_sequence: lastStopSequence,
+                next_stop_arrival_time: nextStopArrivalTime,
+                next_stop_departure_time: nextStopDepartureTime,
+                next_stop_id: nextStopId,
+                next_stop_sequence: nextStopSequence,
                 shape_dist_traveled: shapeDistTraveled,
             },
                 {
