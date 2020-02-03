@@ -539,19 +539,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 + parseInt(dtArray[1], 10) * 60 // minutes
                 + parseInt(dtArray[2], 10); // seconds
 
-            // ADD DAY IN SECONDS IF TRIP IS OVER MIDNIGHT
-            // (if last stop time given by number of seconds from start of the trip is greater than next stop time)
-            if (i > 0) {
-                const dayInSeconds = 24 * 60 * 60;
-                trip.stop_times[i].arrival_time_seconds +=
-                    ( trip.stop_times[i - 1].arrival_time_seconds > trip.stop_times[i].arrival_time_seconds ) ?
-                        dayInSeconds : 0;
-
-                trip.stop_times[i].departure_time_seconds +=
-                    ( trip.stop_times[i - 1].departure_time_seconds > trip.stop_times[i].departure_time_seconds ) ?
-                        dayInSeconds : 0;
-            }
-
             // ADD stop_times TO trip_id
             tripsStopTimes.push(trip.stop_times[i]);
             // ADD stop_times TO stops FOR THAT trip_id
