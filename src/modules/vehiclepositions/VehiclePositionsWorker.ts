@@ -266,10 +266,10 @@ export class VehiclePositionsWorker extends BaseWorker {
             let timeDelay = originTimeSecond - closestPts[i].time_scheduled_seconds;
 
             if (timeDelay > (12 * 60 * 60) && originTimeSecond > (12 * 60 * 60)) {
-                originTimeSecond += (24 * 60 * 60);
-            }
-            if (timeDelay < (-1 * 12 * 60 * 60) && originTimeSecond < (-1 * 12 * 60 * 60)) {
                 originTimeSecond -= (24 * 60 * 60);
+            }
+            if (timeDelay < (-1 * 12 * 60 * 60) && originTimeSecond < (1 * 12 * 60 * 60)) {
+                originTimeSecond += (24 * 60 * 60);
             }
 
             timeDelay = originTimeSecond - closestPts[i].time_scheduled_seconds;
