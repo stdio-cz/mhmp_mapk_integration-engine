@@ -103,6 +103,7 @@ export class VehiclePositionsWorker extends BaseWorker {
             }
 
             const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
+            const originTimestamp = parseInt(positionsToUpdate[0].origin_timestamp, 10);
             let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
 
             if (!gtfs) {
@@ -142,13 +143,27 @@ export class VehiclePositionsWorker extends BaseWorker {
                         : null;
 
                     // CORE processing
-                    const estimatedPoint = await this.getEstimatedPoint(tripShapePoints, currentPosition, lastPosition);
+                    const estimatedPoint = await this.getEstimatedPoint(
+                        tripShapePoints, currentPosition, lastPosition, originTimestamp,
+                    );
                     newLastDelay = estimatedPoint.properties.time_delay;
                     if (estimatedPoint.properties.time_delay !== undefined
                         && estimatedPoint.properties.time_delay !== null) {
-                        return this.modelPositions.updateDelay(position.id, position.origin_time,
-                            estimatedPoint.properties.time_delay, estimatedPoint.properties.shape_dist_traveled,
-                            estimatedPoint.properties.next_stop_id, estimatedPoint.properties.last_stop_id);
+
+                        return this.modelPositions.updateDelay(
+                            position.id,
+                            position.origin_time,
+                            estimatedPoint.properties.time_delay,
+                            estimatedPoint.properties.shape_dist_traveled,
+                            estimatedPoint.properties.next_stop_id,
+                            estimatedPoint.properties.last_stop_id,
+                            estimatedPoint.properties.next_stop_sequence,
+                            estimatedPoint.properties.last_stop_sequence,
+                            estimatedPoint.properties.next_stop_arrival_time,
+                            estimatedPoint.properties.last_stop_arrival_time,
+                            estimatedPoint.properties.next_stop_departure_time,
+                            estimatedPoint.properties.last_stop_departure_time,
+                        );
                     } else {
                         return Promise.resolve();
                     }
@@ -163,7 +178,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
     }
 
-    private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition): Promise<any> => {
+    private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition, originTimestamp): Promise<any> => {
 
         const pt = currentPosition;
         // init radius around GPS position ( 200 meters radius, 16 points polygon aka circle)
@@ -251,10 +266,10 @@ export class VehiclePositionsWorker extends BaseWorker {
             let timeDelay = originTimeSecond - closestPts[i].time_scheduled_seconds;
 
             if (timeDelay > (12 * 60 * 60) && originTimeSecond > (12 * 60 * 60)) {
-                originTimeSecond += (24 * 60 * 60);
-            }
-            if (timeDelay < (-1 * 12 * 60 * 60) && originTimeSecond < (-1 * 12 * 60 * 60)) {
                 originTimeSecond -= (24 * 60 * 60);
+            }
+            if (timeDelay < (-1 * 12 * 60 * 60) && originTimeSecond < (1 * 12 * 60 * 60)) {
+                originTimeSecond += (24 * 60 * 60);
             }
 
             timeDelay = originTimeSecond - closestPts[i].time_scheduled_seconds;
@@ -275,6 +290,16 @@ export class VehiclePositionsWorker extends BaseWorker {
                     Math.round(closestPts[i].shape_dist_traveled * 1000) / 1000;
                 rightPoint.properties.next_stop_id = closestPts[i].next_stop;
                 rightPoint.properties.last_stop_id = closestPts[i].last_stop;
+                rightPoint.properties.next_stop_sequence = closestPts[i].next_stop_sequence;
+                rightPoint.properties.last_stop_sequence = closestPts[i].last_stop_sequence;
+                rightPoint.properties.next_stop_arrival_time = originTimestamp
+                    + closestPts[i].next_stop_arrival_time_seconds * 1000;
+                rightPoint.properties.last_stop_arrival_time = originTimestamp
+                    + closestPts[i].last_stop_arrival_time_seconds * 1000;
+                rightPoint.properties.next_stop_departure_time = originTimestamp
+                    + closestPts[i].next_stop_departure_time_seconds * 1000;
+                rightPoint.properties.last_stop_departure_time = originTimestamp
+                    + closestPts[i].last_stop_departure_time_seconds * 1000;
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
             }
@@ -326,6 +351,7 @@ export class VehiclePositionsWorker extends BaseWorker {
     private getResultObjectForDelayCalculation = async (tripId: string): Promise<any> => {
         try {
             const tripsModel = new RopidGTFSTripsModel();
+            // const tripObject = await tripsModel.find({trip_id: tripId});
             const stopTimes = await tripsModel.findByIdWithStopTimes(tripId);
             const shapes = await tripsModel.findByIdWithShapes(tripId);
 
@@ -334,6 +360,8 @@ export class VehiclePositionsWorker extends BaseWorker {
                 ...stopTimes,
                 ...shapes,
             };
+
+            // console.log(trip);
 
             if (!trip.shape_id || !trip.shapes || trip.shapes.length === 0) {
                 throw new Error(`"trip.shape_id" or "trip.shapes" was not found for id ${tripId}.`);
@@ -367,7 +395,13 @@ export class VehiclePositionsWorker extends BaseWorker {
                     coordinates: [],
                     distance_from_last_stop: null,
                     last_stop: null,
+                    last_stop_arrival_time_seconds: null,
+                    last_stop_departure_time_seconds: null,
+                    last_stop_sequence: null,
                     next_stop: null,
+                    next_stop_arrival_time_seconds: null,
+                    next_stop_departure_time_seconds: null,
+                    next_stop_sequence: null,
                     shape_dist_traveled: {},
                     time_scheduled_seconds: null,
                 };
@@ -388,6 +422,16 @@ export class VehiclePositionsWorker extends BaseWorker {
                 // ID FOR LAST AND NEXT STOPS
                 shapePoint.last_stop = stops[lastStop].stop_id;
                 shapePoint.next_stop = stops[nextStop].stop_id;
+
+                // SEQUENCE FOR LAST AND NEXT STOPS (stop_sequence is indexed from 1)
+                shapePoint.last_stop_sequence = lastStop + 1;
+                shapePoint.next_stop_sequence = nextStop + 1;
+
+                // TIMES FOR LAST AND NEXT STOPS
+                shapePoint.last_stop_arrival_time_seconds = tmpStopTimes[lastStop].arrival_time_seconds;
+                shapePoint.last_stop_departure_time_seconds = tmpStopTimes[lastStop].departure_time_seconds;
+                shapePoint.next_stop_arrival_time_seconds = tmpStopTimes[nextStop].arrival_time_seconds;
+                shapePoint.next_stop_departure_time_seconds = tmpStopTimes[nextStop].departure_time_seconds;
 
                 // MAYBE NOT NECESSARY
                 shapePoint.distance_from_last_stop = Math.round((
@@ -477,6 +521,9 @@ export class VehiclePositionsWorker extends BaseWorker {
             if (trip.stop_times.length === i) {
                 return cb();
             }
+
+            // ADD stop_sequence
+            trip.stop_times[i].stop_sequence = parseFloat(trip.stop_times[i].stop_sequence);
 
             // CAST shape_dist_traveled TO FLOAT
             trip.stop_times[i].shape_dist_traveled = parseFloat(trip.stop_times[i].shape_dist_traveled);
