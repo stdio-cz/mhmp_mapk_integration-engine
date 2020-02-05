@@ -97,14 +97,24 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
         queues: [
             {
-                name: "refreshCameaDataInDB",
+                name: "refreshCameaDataLastXHoursInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: BicycleCountersWorker,
-                workerMethod: "refreshCameaDataInDB",
+                workerMethod: "refreshCameaDataLastXHoursInDB",
+            },
+            {
+                name: "refreshCameaDataPreviousDayInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataPreviousDayInDB",
             },
             {
                 name: "refreshEcoCounterDataInDB",
@@ -117,14 +127,24 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "refreshEcoCounterDataInDB",
             },
             {
-                name: "updateCamea",
+                name: "updateCameaLastXHours",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: BicycleCountersWorker,
-                workerMethod: "updateCamea",
+                workerMethod: "updateCameaLastXHours",
+            },
+            {
+                name: "updateCameaPreviousDay",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 30 * 60 * 1000, // 30 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "updateCameaPreviousDay",
             },
             {
                 name: "updateEcoCounter",

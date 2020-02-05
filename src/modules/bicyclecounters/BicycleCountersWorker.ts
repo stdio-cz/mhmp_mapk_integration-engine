@@ -122,7 +122,7 @@ export class BicycleCountersWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
     }
 
-    public refreshCameaDataInDB = async (msg: any): Promise<void> => {
+    public refreshCameaDataLastXHoursInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCamea.getAll();
         const transformedData = await this.cameaTransformation.transform(data);
         await this.locationsModel.save(transformedData.locations);
@@ -130,13 +130,27 @@ export class BicycleCountersWorker extends BaseWorker {
 
         // send messages for updating measurements data
         const promises = transformedData.locations.map((p) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCameaLastXHours",
                 JSON.stringify({ id: p.vendor_id }));
         });
         await Promise.all(promises);
     }
 
-    public updateCamea = async (msg: any): Promise<void> => {
+    public refreshCameaDataPreviousDayInDB = async (msg: any): Promise<void> => {
+        const data = await this.dataSourceCamea.getAll();
+        const transformedData = await this.cameaTransformation.transform(data);
+        await this.locationsModel.save(transformedData.locations);
+        await this.directionsModel.save(transformedData.directions);
+
+        // send messages for updating measurements data
+        const promises = transformedData.locations.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCameaPreviousDay",
+                JSON.stringify({ id: p.vendor_id }));
+        });
+        await Promise.all(promises);
+    }
+
+    public updateCameaLastXHours = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id;
 
@@ -145,13 +159,49 @@ export class BicycleCountersWorker extends BaseWorker {
         const remainder = step - (now.minute() % step);
         // rounded to nearest next 5 minutes
         const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
-        const nowMinus12h = nowRounded.clone().subtract(12, "hours");
+        const nowMinus12h = nowRounded.clone().subtract(3, "hours");
         const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
         const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
 
         let url = config.datasources.BicycleCountersCameaMeasurements;
         url = url.replace(":id", id);
         url = url.replace(":from", strNowMinus12h);
+        url = url.replace(":to", strNow);
+
+        this.dataSourceCameaMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
+            headers: {},
+            json: true,
+            method: "GET",
+            url,
+        }));
+
+        const data = await this.dataSourceCameaMeasurements.getAll();
+        const transformedData = await this.cameaMeasurementsTransformation.transform(data);
+
+        await this.detectionsModel.saveBySqlFunction(
+            transformedData.detections,
+            [ "locations_id", "directions_id", "measured_from" ],
+        );
+        await this.temperaturesModel.saveBySqlFunction(
+            transformedData.temperatures,
+            [ "locations_id", "measured_from" ],
+        );
+    }
+
+    public updateCameaPreviousDay = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const id = inputData.id;
+
+        const now = moment.utc();
+        // rounded to nearest next 5 minutes
+        const nowRounded = now.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
+        const nowMinusDay = nowRounded.clone().subtract(1, "day");
+        const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
+        const strNowMinusDay = nowMinusDay.format("YYYY-MM-DD HH:mm:ss");
+
+        let url = config.datasources.BicycleCountersCameaMeasurements;
+        url = url.replace(":id", id);
+        url = url.replace(":from", strNowMinusDay);
         url = url.replace(":to", strNow);
 
         this.dataSourceCameaMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
