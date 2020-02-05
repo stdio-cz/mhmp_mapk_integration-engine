@@ -29,7 +29,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
 
         // is it ok?
         // same DB server but different DB name
-        const connectionString = config.POSTGRES_CONN.replace(new URL(config.POSTGRES_CONN).pathname, "/keboola");
+        const connectionString = config.POSTGRES_CONN.replace(new URL(config.POSTGRES_CONN).pathname, "/stage");
 
         this.appLaunchProtocolStrategy = new PostgresProtocolStrategy({
             connectionString,
@@ -52,7 +52,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         this.eventsProtocolStrategy = new PostgresProtocolStrategy({
             connectionString,
             modelAttributes: FirebasePidlitacka.events.datasourceSequelizeAttributes,
-            schemaName: "public",
+            schemaName: "keboola",
             sequelizeAdditionalSettings: {
                 timestamps: false,
             },
