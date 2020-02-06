@@ -126,8 +126,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     ? attributes.dopr
                     : null,
                 cis_line_id: parseInt(attributes.lin, 10),
-                cis_line_number: parseInt(attributes.spoj, 10),
                 cis_line_short_name: attributes.alias,
+                cis_trip_number: parseInt(attributes.spoj, 10),
                 id: primaryKey,
                 origin_route_name: (attributes.kmenl)
                     ? parseInt(attributes.kmenl, 10)
