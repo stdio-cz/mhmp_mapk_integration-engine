@@ -89,8 +89,8 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledTwice(worker.sendMessageToExchange);
         testTransformedData.locations.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".updateCameaLastXHours",
-                JSON.stringify({ id: f.vendor_id }));
+                "workers." + queuePrefix + ".updateCamea",
+                JSON.stringify({ id: f.vendor_id, duration: "last3Hours" }));
         });
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
@@ -110,8 +110,8 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledTwice(worker.sendMessageToExchange);
         testTransformedData.locations.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
-                "workers." + queuePrefix + ".updateCameaPreviousDay",
-                JSON.stringify({ id: f.vendor_id }));
+                "workers." + queuePrefix + ".updateCamea",
+                JSON.stringify({ id: f.vendor_id, duration: "previousDay" }));
         });
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
@@ -121,19 +121,8 @@ describe("BicycleCountersWorker", () => {
             worker.sendMessageToExchange);
     });
 
-    it("should calls the correct methods by updateCameaLastXHours method (different geo)", async () => {
-        await worker.updateCameaLastXHours({ content: Buffer.from(JSON.stringify({id: "BC_BS-BMZL"})) });
-
-        sandbox.assert.calledOnce(worker.dataSourceCameaMeasurements.getAll);
-        sandbox.assert.calledOnce(worker.cameaMeasurementsTransformation.transform);
-        sandbox.assert.calledWith(worker.cameaMeasurementsTransformation.transform, testMeasurementsData);
-
-        sandbox.assert.calledOnce(worker.detectionsModel.saveBySqlFunction);
-        sandbox.assert.calledOnce(worker.temperaturesModel.saveBySqlFunction);
-    });
-
-    it("should calls the correct methods by updateCameaPreviousDay method (different geo)", async () => {
-        await worker.updateCameaPreviousDay({ content: Buffer.from(JSON.stringify({id: "BC_BS-BMZL"})) });
+    it("should calls the correct methods by updateCamea method (different geo)", async () => {
+        await worker.updateCamea({ content: Buffer.from(JSON.stringify({id: "BC_BS-BMZL", duration: "last3Hours"})) });
 
         sandbox.assert.calledOnce(worker.dataSourceCameaMeasurements.getAll);
         sandbox.assert.calledOnce(worker.cameaMeasurementsTransformation.transform);

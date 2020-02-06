@@ -127,24 +127,14 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "refreshEcoCounterDataInDB",
             },
             {
-                name: "updateCameaLastXHours",
+                name: "updateCamea",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 4 * 60 * 1000, // 4 minutes
                 },
                 worker: BicycleCountersWorker,
-                workerMethod: "updateCameaLastXHours",
-            },
-            {
-                name: "updateCameaPreviousDay",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 30 * 60 * 1000, // 30 minutes
-                },
-                worker: BicycleCountersWorker,
-                workerMethod: "updateCameaPreviousDay",
+                workerMethod: "updateCamea",
             },
             {
                 name: "updateEcoCounter",

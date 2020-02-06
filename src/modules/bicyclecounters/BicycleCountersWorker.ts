@@ -130,8 +130,8 @@ export class BicycleCountersWorker extends BaseWorker {
 
         // send messages for updating measurements data
         const promises = transformedData.locations.map((p) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCameaLastXHours",
-                JSON.stringify({ id: p.vendor_id }));
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
+                JSON.stringify({ id: p.vendor_id, duration: "last3Hours"  }));
         });
         await Promise.all(promises);
     }
@@ -144,65 +144,49 @@ export class BicycleCountersWorker extends BaseWorker {
 
         // send messages for updating measurements data
         const promises = transformedData.locations.map((p) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCameaPreviousDay",
-                JSON.stringify({ id: p.vendor_id }));
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
+                JSON.stringify({ id: p.vendor_id, duration: "previousDay" }));
         });
         await Promise.all(promises);
     }
 
-    public updateCameaLastXHours = async (msg: any): Promise<void> => {
+    public updateCamea = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id;
+        const duration = inputData.duration;
 
         const now = moment.utc();
-        const step = 5;
-        const remainder = step - (now.minute() % step);
-        // rounded to nearest next 5 minutes
-        const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
-        const nowMinus12h = nowRounded.clone().subtract(3, "hours");
-        const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
-        const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
-
         let url = config.datasources.BicycleCountersCameaMeasurements;
-        url = url.replace(":id", id);
-        url = url.replace(":from", strNowMinus12h);
-        url = url.replace(":to", strNow);
 
-        this.dataSourceCameaMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
-            headers: {},
-            json: true,
-            method: "GET",
-            url,
-        }));
+        switch (duration) {
+            case "last3Hours":
+                const step = 5;
+                const remainder = step - (now.minute() % step);
+                // rounded to nearest next 5 minutes
+                const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
+                const nowMinus12h = nowRounded.clone().subtract(3, "hours");
+                const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
+                const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
 
-        const data = await this.dataSourceCameaMeasurements.getAll();
-        const transformedData = await this.cameaMeasurementsTransformation.transform(data);
+                url = url.replace(":id", id);
+                url = url.replace(":from", strNowMinus12h);
+                url = url.replace(":to", strNow);
 
-        await this.detectionsModel.saveBySqlFunction(
-            transformedData.detections,
-            [ "locations_id", "directions_id", "measured_from" ],
-        );
-        await this.temperaturesModel.saveBySqlFunction(
-            transformedData.temperatures,
-            [ "locations_id", "measured_from" ],
-        );
-    }
+                break;
+            case "previousDay":
+                const todayStart = now.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
+                const yesterdayStart = todayStart.clone().subtract(1, "day");
+                const strTodayStart = todayStart.format("YYYY-MM-DD HH:mm:ss");
+                const strYesterdayStart = yesterdayStart.format("YYYY-MM-DD HH:mm:ss");
 
-    public updateCameaPreviousDay = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const id = inputData.id;
+                url = url.replace(":id", id);
+                url = url.replace(":from", strYesterdayStart);
+                url = url.replace(":to", strTodayStart);
 
-        const now = moment.utc();
-        // rounded to nearest next 5 minutes
-        const nowRounded = now.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
-        const nowMinusDay = nowRounded.clone().subtract(1, "day");
-        const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
-        const strNowMinusDay = nowMinusDay.format("YYYY-MM-DD HH:mm:ss");
-
-        let url = config.datasources.BicycleCountersCameaMeasurements;
-        url = url.replace(":id", id);
-        url = url.replace(":from", strNowMinusDay);
-        url = url.replace(":to", strNow);
+                break;
+            default:
+                break;
+        }
 
         this.dataSourceCameaMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
             headers: {},
