@@ -75,6 +75,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 lng: r["vehiclepositions_positions.lng"],
                 origin_time: r["vehiclepositions_positions.origin_time"],
                 origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
+                start_timestamp: r.start_timestamp,
             };
         });
     }
