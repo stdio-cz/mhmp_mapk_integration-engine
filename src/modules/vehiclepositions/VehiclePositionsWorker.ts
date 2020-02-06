@@ -17,6 +17,7 @@ import {
 
 import * as turf from "@turf/turf";
 import * as cheapruler from "cheap-ruler";
+import * as moment from "moment-timezone";
 
 const ruler: any = cheapruler(50);
 
@@ -103,7 +104,8 @@ export class VehiclePositionsWorker extends BaseWorker {
             }
 
             const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
-            const originTimestamp = parseInt(positionsToUpdate[0].origin_timestamp, 10);
+            const startTimestamp = parseInt(positionsToUpdate[0].start_timestamp, 10);
+            const startDayTimestamp = moment(startTimestamp).hours(0).minutes(0).seconds(0);
             let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
 
             if (!gtfs) {
@@ -144,7 +146,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
                     // CORE processing
                     const estimatedPoint = await this.getEstimatedPoint(
-                        tripShapePoints, currentPosition, lastPosition, originTimestamp,
+                        tripShapePoints, currentPosition, lastPosition, startDayTimestamp,
                     );
                     newLastDelay = estimatedPoint.properties.time_delay;
                     if (estimatedPoint.properties.time_delay !== undefined
@@ -178,7 +180,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
     }
 
-    private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition, originTimestamp): Promise<any> => {
+    private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition, startDayTimestamp): Promise<any> => {
 
         const pt = currentPosition;
         // init radius around GPS position ( 200 meters radius, 16 points polygon aka circle)
@@ -292,13 +294,13 @@ export class VehiclePositionsWorker extends BaseWorker {
                 rightPoint.properties.last_stop_id = closestPts[i].last_stop;
                 rightPoint.properties.next_stop_sequence = closestPts[i].next_stop_sequence;
                 rightPoint.properties.last_stop_sequence = closestPts[i].last_stop_sequence;
-                rightPoint.properties.next_stop_arrival_time = originTimestamp
+                rightPoint.properties.next_stop_arrival_time = startDayTimestamp
                     + closestPts[i].next_stop_arrival_time_seconds * 1000;
-                rightPoint.properties.last_stop_arrival_time = originTimestamp
+                rightPoint.properties.last_stop_arrival_time = startDayTimestamp
                     + closestPts[i].last_stop_arrival_time_seconds * 1000;
-                rightPoint.properties.next_stop_departure_time = originTimestamp
+                rightPoint.properties.next_stop_departure_time = startDayTimestamp
                     + closestPts[i].next_stop_departure_time_seconds * 1000;
-                rightPoint.properties.last_stop_departure_time = originTimestamp
+                rightPoint.properties.last_stop_departure_time = startDayTimestamp
                     + closestPts[i].last_stop_departure_time_seconds * 1000;
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
