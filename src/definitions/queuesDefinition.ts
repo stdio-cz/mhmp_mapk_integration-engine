@@ -97,14 +97,24 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
         queues: [
             {
-                name: "refreshCameaDataInDB",
+                name: "refreshCameaDataLastXHoursInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                    messageTtl: 14 * 60 * 1000, // 4 minutes
                 },
                 worker: BicycleCountersWorker,
-                workerMethod: "refreshCameaDataInDB",
+                workerMethod: "refreshCameaDataLastXHoursInDB",
+            },
+            {
+                name: "refreshCameaDataPreviousDayInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000, // 4 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataPreviousDayInDB",
             },
             {
                 name: "refreshEcoCounterDataInDB",
