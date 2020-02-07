@@ -5,7 +5,7 @@ import "mocha";
 import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { PostgresConnector } from "../../../src/core/connectors";
-import { BicycleCountersWorker } from "../../../src/modules/bicyclecounters";
+import { BicycleCountersWorker, CameaRefreshDurations } from "../../../src/modules/bicyclecounters";
 
 describe("BicycleCountersWorker", () => {
 
@@ -90,7 +90,7 @@ describe("BicycleCountersWorker", () => {
         testTransformedData.locations.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateCamea",
-                JSON.stringify({ id: f.vendor_id, duration: "last3Hours" }));
+                JSON.stringify({ id: f.vendor_id, duration: CameaRefreshDurations.last3Hours }));
         });
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
@@ -111,7 +111,7 @@ describe("BicycleCountersWorker", () => {
         testTransformedData.locations.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateCamea",
-                JSON.stringify({ id: f.vendor_id, duration: "previousDay" }));
+                JSON.stringify({ id: f.vendor_id, duration: CameaRefreshDurations.previousDay }));
         });
         sandbox.assert.callOrder(
             worker.dataSourceCamea.getAll,
@@ -122,7 +122,10 @@ describe("BicycleCountersWorker", () => {
     });
 
     it("should calls the correct methods by updateCamea method (different geo)", async () => {
-        await worker.updateCamea({ content: Buffer.from(JSON.stringify({id: "BC_BS-BMZL", duration: "last3Hours"})) });
+        await worker.updateCamea({ content: Buffer.from(JSON.stringify({
+            duration: CameaRefreshDurations.last3Hours,
+            id: "BC_BS-BMZL",
+        })) });
 
         sandbox.assert.calledOnce(worker.dataSourceCameaMeasurements.getAll);
         sandbox.assert.calledOnce(worker.cameaMeasurementsTransformation.transform);
