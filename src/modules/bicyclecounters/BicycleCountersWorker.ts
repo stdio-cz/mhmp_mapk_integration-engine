@@ -1,5 +1,6 @@
 "use strict";
 
+import { CustomError } from "@golemio/errors";
 import { BicycleCounters } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import * as moment from "moment-timezone";
@@ -11,6 +12,11 @@ import {
     CameaMeasurementsTransformation, CameaTransformation,
     EcoCounterMeasurementsTransformation, EcoCounterTransformation,
 } from "./";
+
+export enum CameaRefreshDurations {
+    last3Hours,
+    previousDay,
+}
 
 export class BicycleCountersWorker extends BaseWorker {
 
@@ -122,7 +128,7 @@ export class BicycleCountersWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
     }
 
-    public refreshCameaDataInDB = async (msg: any): Promise<void> => {
+    public refreshCameaDataLastXHoursInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCamea.getAll();
         const transformedData = await this.cameaTransformation.transform(data);
         await this.locationsModel.save(transformedData.locations);
@@ -131,28 +137,58 @@ export class BicycleCountersWorker extends BaseWorker {
         // send messages for updating measurements data
         const promises = transformedData.locations.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
-                JSON.stringify({ id: p.vendor_id }));
+                JSON.stringify({ id: p.vendor_id, duration: CameaRefreshDurations.last3Hours }));
+        });
+        await Promise.all(promises);
+    }
+
+    public refreshCameaDataPreviousDayInDB = async (msg: any): Promise<void> => {
+        const data = await this.dataSourceCamea.getAll();
+        const transformedData = await this.cameaTransformation.transform(data);
+        await this.locationsModel.save(transformedData.locations);
+        await this.directionsModel.save(transformedData.directions);
+
+        // send messages for updating measurements data
+        const promises = transformedData.locations.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
+                JSON.stringify({ id: p.vendor_id, duration: CameaRefreshDurations.previousDay }));
         });
         await Promise.all(promises);
     }
 
     public updateCamea = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        const id = inputData.id;
+        const id = inputData.id as string;
+        const duration = inputData.duration as CameaRefreshDurations;
 
         const now = moment.utc();
-        const step = 5;
-        const remainder = step - (now.minute() % step);
-        // rounded to nearest next 5 minutes
-        const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
-        const nowMinus12h = nowRounded.clone().subtract(12, "hours");
-        const strNow = nowRounded.format("YYYY-MM-DD HH:mm:ss");
-        const strNowMinus12h = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
+        let from: string;
+        let to: string;
+
+        switch (duration) {
+            case CameaRefreshDurations.last3Hours:
+                const step = 5;
+                const remainder = step - (now.minute() % step);
+                // rounded to nearest next 5 minutes
+                const nowRounded = now.clone().add(remainder, "minutes").seconds(0).milliseconds(0);
+                const nowMinus12h = nowRounded.clone().subtract(3, "hours");
+                to = nowRounded.format("YYYY-MM-DD HH:mm:ss");
+                from = nowMinus12h.format("YYYY-MM-DD HH:mm:ss");
+                break;
+            case CameaRefreshDurations.previousDay:
+                const todayStart = now.clone().hours(0).minutes(0).seconds(0).milliseconds(0);
+                const yesterdayStart = todayStart.clone().subtract(1, "day");
+                to = todayStart.format("YYYY-MM-DD HH:mm:ss");
+                from = yesterdayStart.format("YYYY-MM-DD HH:mm:ss");
+                break;
+            default:
+                throw new CustomError(`Undefined Camea refresh duration value.`, true, this.constructor.name, 5001);
+        }
 
         let url = config.datasources.BicycleCountersCameaMeasurements;
         url = url.replace(":id", id);
-        url = url.replace(":from", strNowMinus12h);
-        url = url.replace(":to", strNow);
+        url = url.replace(":from", from);
+        url = url.replace(":to", to);
 
         this.dataSourceCameaMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
             headers: {},
