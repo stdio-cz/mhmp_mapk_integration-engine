@@ -105,7 +105,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
             const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
             const startTimestamp = parseInt(positionsToUpdate[0].start_timestamp, 10);
-            const startDayTimestamp = moment(startTimestamp).hours(0).minutes(0).seconds(0);
+            const startDayTimestamp = moment.utc(startTimestamp).startOf("day");
             let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
 
             if (!gtfs) {
@@ -295,13 +295,21 @@ export class VehiclePositionsWorker extends BaseWorker {
                 rightPoint.properties.next_stop_sequence = closestPts[i].next_stop_sequence;
                 rightPoint.properties.last_stop_sequence = closestPts[i].last_stop_sequence;
                 rightPoint.properties.next_stop_arrival_time = startDayTimestamp
-                    + closestPts[i].next_stop_arrival_time_seconds * 1000;
+                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
+                    .add(closestPts[i].next_stop_arrival_time_seconds, "seconds")
+                    .valueOf();
                 rightPoint.properties.last_stop_arrival_time = startDayTimestamp
-                    + closestPts[i].last_stop_arrival_time_seconds * 1000;
+                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
+                    .add(closestPts[i].last_stop_arrival_time_seconds, "seconds")
+                    .valueOf();
                 rightPoint.properties.next_stop_departure_time = startDayTimestamp
-                    + closestPts[i].next_stop_departure_time_seconds * 1000;
+                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
+                    .add(closestPts[i].next_stop_departure_time_seconds, "seconds")
+                    .valueOf();
                 rightPoint.properties.last_stop_departure_time = startDayTimestamp
-                    + closestPts[i].last_stop_departure_time_seconds * 1000;
+                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
+                    .add(closestPts[i].last_stop_departure_time_seconds, "seconds")
+                    .valueOf();
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
             }
