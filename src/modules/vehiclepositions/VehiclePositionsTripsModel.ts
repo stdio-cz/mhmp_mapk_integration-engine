@@ -57,6 +57,8 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         const t = await connection.transaction();
 
         try {
+            // TODO use postgres function meta.import_from_json
+
             const i = []; // inserted
             const u = []; // updated
 

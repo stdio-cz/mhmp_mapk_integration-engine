@@ -52,6 +52,8 @@ export class VehiclePositionsStopsModel extends PostgresModel implements IModel 
         }
 
         try {
+            // TODO use postgres function meta.import_from_json
+
             const connection = PostgresConnector.getConnection();
             // TODO doplnit batch_id a author
             await connection.query(
