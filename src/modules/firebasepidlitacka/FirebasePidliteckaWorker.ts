@@ -34,7 +34,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         this.appLaunchProtocolStrategy = new PostgresProtocolStrategy({
             connectionString,
             modelAttributes: FirebasePidlitacka.appLaunch.datasourceSequelizeAttributes,
-            schemaName: "public",
+            schemaName: "keboola",
             sequelizeAdditionalSettings: {
                 timestamps: false,
             },
@@ -70,7 +70,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         this.routeProtocolStrategy = new PostgresProtocolStrategy({
             connectionString,
             modelAttributes: FirebasePidlitacka.route.datasourceSequelizeAttributes,
-            schemaName: "public",
+            schemaName: "keboola",
             sequelizeAdditionalSettings: {
                 timestamps: false,
             },
@@ -88,7 +88,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         this.webEventsProtocolStrategy = new PostgresProtocolStrategy({
             connectionString,
             modelAttributes: FirebasePidlitacka.webEvents.datasourceSequelizeAttributes,
-            schemaName: "public",
+            schemaName: "keboola",
             sequelizeAdditionalSettings: {
                 timestamps: false,
             },
