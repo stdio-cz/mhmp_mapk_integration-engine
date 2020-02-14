@@ -49,7 +49,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         const results = await this.tripsModel.findAll({
             attributes: [
                 Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
-                "id", "gtfs_trip_id",
+                "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
                 attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay"],
@@ -75,18 +75,32 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 lng: r["vehiclepositions_positions.lng"],
                 origin_time: r["vehiclepositions_positions.origin_time"],
                 origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
+                start_timestamp: r.start_timestamp,
             };
         });
     }
 
-    public updateDelay = async (tripsId, originTime, delay, gtfsShapeDistTraveled, gtfsNextStopId): Promise<any> => {
+    public updateDelay = async (
+            tripsId, originTime, delay, shapeDistTraveled,
+            nextStopId, lastStopId,
+            nextStopSequence, lastStopSequence,
+            nextStopArrivalTime, lastStopArrivalTime,
+            nextStopDepartureTime, lastStopDepartureTime,
+        ): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
         try {
             await this.sequelizeModel.update({
                 delay,
-                gtfs_next_stop_id: gtfsNextStopId,
-                gtfs_shape_dist_traveled: gtfsShapeDistTraveled,
+                last_stop_arrival_time: lastStopArrivalTime,
+                last_stop_departure_time: lastStopDepartureTime,
+                last_stop_id: lastStopId,
+                last_stop_sequence: lastStopSequence,
+                next_stop_arrival_time: nextStopArrivalTime,
+                next_stop_departure_time: nextStopDepartureTime,
+                next_stop_id: nextStopId,
+                next_stop_sequence: nextStopSequence,
+                shape_dist_traveled: shapeDistTraveled,
             },
                 {
                     transaction: t,

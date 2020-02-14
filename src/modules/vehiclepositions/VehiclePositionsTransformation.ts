@@ -119,28 +119,28 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             },
             stops: [],
             trip: {
-                cis_agency_name: (attributes.dopr)
-                    ? attributes.dopr
-                    : null,
-                cis_id: parseInt(attributes.lin, 10),
-                cis_number: parseInt(attributes.spoj, 10),
-                cis_order: parseInt(attributes.po, 10),
-                cis_parent_route_name: (attributes.kmenl)
-                    ? parseInt(attributes.kmenl, 10)
-                    : null,
-                cis_real_agency_name: (attributes.doprSkut)
+                agency_name_real: (attributes.doprSkut)
                     ? attributes.doprSkut
                     : null,
-                cis_short_name: attributes.alias,
-                cis_vehicle_registration_number: (attributes.vuzevc)
-                    ? parseInt(attributes.vuzevc, 10)
+                agency_name_scheduled: (attributes.dopr)
+                    ? attributes.dopr
                     : null,
+                cis_line_id: parseInt(attributes.lin, 10),
+                cis_line_short_name: attributes.alias,
+                cis_trip_number: parseInt(attributes.spoj, 10),
                 id: primaryKey,
+                origin_route_name: (attributes.kmenl)
+                    ? parseInt(attributes.kmenl, 10)
+                    : null,
+                sequence_id: parseInt(attributes.po, 10),
                 start_cis_stop_id: parseInt(stops[0].$.zast, 10),
                 start_cis_stop_platform_code: stops[0].$.stan,
                 start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
                 start_timestamp: startDate.utc().valueOf(),
-                vehicle_type: (attributes.t)
+                vehicle_registration_number: (attributes.vuzevc)
+                    ? parseInt(attributes.vuzevc, 10)
+                    : null,
+                vehicle_type_id: (attributes.t)
                     ? parseInt(attributes.t, 10)
                     : null,
                 wheelchair_accessible: (attributes.np === "true") ? true : false,

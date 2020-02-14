@@ -38,6 +38,7 @@ export class PublicToiletsWorker extends BaseWorker {
                 ? { "properties.id": { $in: id } }
                 : { "properties.id": id },
             updateValues: (a, b) => {
+                a.geometry.coordinates = b.geometry.coordinates;
                 a.properties.opened = b.properties.opened;
                 a.properties.price = b.properties.price;
                 a.properties.updated_at = b.properties.updated_at;

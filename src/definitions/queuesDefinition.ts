@@ -1,10 +1,11 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, GeneralImport, IceGatewaySensors,
-    IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
-    MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes,
-    SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP, ZtpParkings,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens, GeneralImport,
+    IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS,
+    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
+    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards,
+    WazeCCP, ZtpParkings,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
@@ -12,6 +13,7 @@ import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
+import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
 import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
@@ -95,14 +97,24 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
         queues: [
             {
-                name: "refreshCameaDataInDB",
+                name: "refreshCameaDataLastXHoursInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000, // 4 minutes
+                    messageTtl: 14 * 60 * 1000, // 4 minutes
                 },
                 worker: BicycleCountersWorker,
-                workerMethod: "refreshCameaDataInDB",
+                workerMethod: "refreshCameaDataLastXHoursInDB",
+            },
+            {
+                name: "refreshCameaDataPreviousDayInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 1000, // 4 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataPreviousDayInDB",
             },
             {
                 name: "refreshEcoCounterDataInDB",
@@ -175,6 +187,62 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: CityDistrictsWorker,
                 workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: FirebasePidlitacka.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + FirebasePidlitacka.name.toLowerCase(),
+        queues: [
+            {
+                name: "moveAll",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FirebasePidlitackaWorker,
+                workerMethod: "moveAll",
+            },
+            {
+                name: "moveAppLaunch",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FirebasePidlitackaWorker,
+                workerMethod: "moveAppLaunch",
+            },
+            {
+                name: "moveEvents",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FirebasePidlitackaWorker,
+                workerMethod: "moveEvents",
+            },
+            {
+                name: "moveRoute",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FirebasePidlitackaWorker,
+                workerMethod: "moveRoute",
+            },
+            {
+                name: "moveWebEvents",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FirebasePidlitackaWorker,
+                workerMethod: "moveWebEvents",
             },
         ],
     },

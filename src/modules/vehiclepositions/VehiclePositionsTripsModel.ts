@@ -57,6 +57,8 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         const t = await connection.transaction();
 
         try {
+            // TODO use postgres function meta.import_from_json
+
             const i = []; // inserted
             const u = []; // updated
 
@@ -65,7 +67,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     const res = await this.sequelizeModel.upsert(d, { transaction: t });
                     if (res) {
                         i.push({
-                            cis_short_name: d.cis_short_name,
+                            cis_line_short_name: d.cis_line_short_name,
                             id: d.id,
                             start_cis_stop_id: d.start_cis_stop_id,
                             start_cis_stop_platform_code: d.start_cis_stop_platform_code,
@@ -83,7 +85,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 const res = await this.sequelizeModel.upsert(data, { transaction: t });
                 if (res) {
                     i.push({
-                        cis_short_name: data.cis_short_name,
+                        cis_line_short_name: data.cis_line_short_name,
                         id: data.id,
                         start_cis_stop_id: data.start_cis_stop_id,
                         start_cis_stop_platform_code: data.start_cis_stop_platform_code,
@@ -112,13 +114,14 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         // gtfs_trip_id obsahuje POS, rozlisit podle cis_order
         const result = await connection.query(`
             SELECT ropidgtfs_trips.trip_id as gtfs_trip_id,
+                ropidgtfs_trips.trip_headsign as gtfs_trip_headsign,
                 ropidgtfs_routes.route_id as gtfs_route_id,
                 ropidgtfs_routes.route_short_name as gtfs_route_short_name
             FROM ropidgtfs_trips
             INNER JOIN ropidgtfs_routes ON ropidgtfs_trips.route_id=ropidgtfs_routes.route_id
             INNER JOIN ropidgtfs_stop_times ON ropidgtfs_trips.trip_id=ropidgtfs_stop_times.trip_id
             WHERE
-            ( ropidgtfs_routes.route_short_name LIKE '${trip.cis_short_name}'
+            ( ropidgtfs_routes.route_short_name LIKE '${trip.cis_line_short_name}'
               OR CASE WHEN ('115' = 'IKEA') THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM' ELSE 'FALSE' END
             )
             AND ropidgtfs_stop_times.stop_id IN

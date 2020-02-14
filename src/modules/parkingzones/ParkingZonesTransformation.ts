@@ -1,10 +1,31 @@
 "use strict";
 
 import { ParkingZones } from "@golemio/schema-definitions";
+import { parse, toSeconds } from "iso8601-duration";
 import { config } from "../../core/config";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 import * as lodash from "lodash";
+
+interface IDatasourceTariff {
+    timeFrom: string;
+    payAtHoliday: boolean;
+    maxParkingTime: string;
+    timeTo: string;
+    pricePerHour: number;
+    maxPrice: number;
+    divisibility: string;
+}
+
+interface IOutputTariff {
+    divisibility: string;
+    max_parking_time: string;
+    max_price: number;
+    pay_at_holiday: boolean;
+    price_per_hour: number;
+    time_from: string;
+    time_to: string;
+}
 
 export class ParkingZonesTransformation extends BaseTransformation implements ITransformation {
 
@@ -99,17 +120,33 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
      * Tariff processing
      */
     public transformTariffs = async (id: string, data: any): Promise<any> => {
-        const resultTariffs = [];
+        const resultTariffs: Array<{ tariff: IOutputTariff[], days: string[]}> = [];
 
         if (!data) {
             throw Error(`Tarif pro ${id} nebyl nalezen.`);
         }
 
-        const promises1 = data.map(async (tariff) => {
+        const promises1 = data.map(async (tariff: { tariff: IDatasourceTariff[], day: string}) => {
             const dayOfWeek = tariff.day;
 
             const exist = lodash.findIndex(resultTariffs, (o) => {
-                return JSON.stringify(o.tariff) === JSON.stringify(tariff.tariff);
+                if (o.tariff.length !== tariff.tariff.length) {
+                    return false;
+                }
+                for (let i = 0; i < o.tariff.length; i++) {
+                    if (
+                        o.tariff[i].divisibility !== tariff.tariff[i].divisibility
+                        || o.tariff[i].max_parking_time !== tariff.tariff[i].maxParkingTime
+                        || o.tariff[i].max_price !== tariff.tariff[i].maxPrice
+                        || o.tariff[i].pay_at_holiday !== tariff.tariff[i].payAtHoliday
+                        || o.tariff[i].price_per_hour !== tariff.tariff[i].pricePerHour
+                        || o.tariff[i].time_from !== tariff.tariff[i].timeFrom
+                        || o.tariff[i].time_to !== tariff.tariff[i].timeTo
+                    ) {
+                        return false;
+                    }
+                }
+                return true;
             });
 
             if (resultTariffs.length === 0) {
@@ -135,7 +172,7 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
         };
     }
 
-    protected transformTariffItem = (value: any) => {
+    protected transformTariffItem = (value: IDatasourceTariff): IOutputTariff => {
         return {
             divisibility: value.divisibility,
             max_parking_time: value.maxParkingTime,
@@ -333,11 +370,11 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
             for (let j = 0, jmax = t.tariff.length; j < jmax; j++) {
                 resultString.push(days
                     + ((t.tariff[j].pay_at_holiday) ? " (ve svátek)" : "")
-                    + " " + this.parsePT(t.tariff[j].time_from, true)
-                    + "-" + this.parsePT(t.tariff[j].time_to, true)
+                    + " " + this.periodToFormattedString(t.tariff[j].time_from)
+                    + "-" + this.periodToFormattedString(t.tariff[j].time_to)
                     + " " + t.tariff[j].price_per_hour + " Kč/hod."
                     + " (max. "
-                    + parseInt(this.parsePT(t.tariff[j].max_parking_time, false), 10) / 1000 / 60 / 60
+                    + this.periodToMilis(t.tariff[j].max_parking_time) / 1000 / 60 / 60
                     + " hod.)");
             }
         }
@@ -346,46 +383,32 @@ export class ParkingZonesTransformation extends BaseTransformation implements IT
 
     /**
      * Tariff processing
-     * helper function for parse durations format
+     * helper function for parse duration format and return it as string
      */
-    private parsePT = (PT, format) => {
-        const matches = PT.toLowerCase().match(/pt{1}(\d{1,2}h){0,1}(\d{1,2}m){0,1}(\d{1,2}s){0,1}/);
-        let sum = 0;
+    private periodToFormattedString = (PT: string): string => {
+        const milis = toSeconds(parse(PT)) * 1000;
+        const hours = Math.trunc(milis / 1000 / 60 / 60);
+        const minutes = (milis / 1000 / 60) - (Math.trunc(milis / 1000 / 60 / 60) * 60);
 
-        if (matches && matches.length) {
-            for (let i = 1; i < matches.length; i++) {
-                let value = matches[i];
-                if (value && value.indexOf("h") > -1) {
-                    value = parseInt(value.replace(/[hms]+/, ""), 10) * 60 * 60 * 1000;
-                } else if (value && value.indexOf("m") > -1) {
-                    value = parseInt(value.replace(/[hms]+/, ""), 10) * 60 * 1000;
-                } else if (value && value.indexOf("s") > -1) {
-                    value = parseInt(value.replace(/[hms]+/, ""), 10) * 1000;
-                } else {
-                    value = 0;
-                }
-                sum += value;
-            }
+        let hoursString = hours.toString();
+        if (hoursString.length < 2) {
+            hoursString = "0" + hoursString;
         }
 
-        if (format) {
-            const hours = Math.trunc(sum / 1000 / 60 / 60);
-            const minutes = (sum / 1000 / 60) - (Math.trunc(sum / 1000 / 60 / 60) * 60);
-
-            let hoursString = hours.toString();
-            if (hoursString.length < 2) {
-                hoursString = "0" + hoursString;
-            }
-
-            let minutesString = minutes.toString();
-            if (minutesString.length < 2) {
-                minutesString = "0" + minutesString;
-            }
-
-            return hoursString + ":" + minutesString;
-        } else {
-            return sum.toString();
+        let minutesString = minutes.toString();
+        if (minutesString.length < 2) {
+            minutesString = "0" + minutesString;
         }
+
+        return hoursString + ":" + minutesString;
+    }
+
+    /**
+     * Tariff processing
+     * helper function for parse duration format and return it in milliseconds
+     */
+    private periodToMilis = (PT: string): number => {
+        return toSeconds(parse(PT)) * 1000;
     }
 
 }

@@ -82,11 +82,13 @@ export class PostgresModel implements IModel {
 
         try {
             const connection = PostgresConnector.getConnection();
+            // json stringify and escape quotes
+            const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
             // TODO doplnit batch_id a author
             await connection.query(
                 "SELECT meta.import_from_json("
                 + "-1, " // p_batch_id bigint
-                + "E'" + JSON.stringify(data).replace(/'/g, "\\'") + "'::json, " // p_data json
+                + "E'" + stringifiedData + "'::json, " // p_data json
                 + "'" + ((useTmpTable) ? "tmp" : "public") + "', " // p_table_schema character varying
                 + "'" + this.tableName + "', " // p_table_name character varying
                 + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
