@@ -1,10 +1,9 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors,
-    IceGatewayStreetLamps, MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
-    ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, WasteCollectionYards, WazeCCP, ZtpParkings,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, MedicalInstitutions, Meteosensors,
+    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
+    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import * as chai from "chai";
@@ -51,65 +50,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.a("string");
         });
-    });
-
-    describe("IceGatewaySensors", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(IceGatewaySensors.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        Authorization: "Token " + config.datasources.IGToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.IGSensors,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(IceGatewaySensors.name + "DataSource", IceGatewaySensors.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("IceGatewayStreetLamps", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(IceGatewayStreetLamps.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        Authorization: "Token " + config.datasources.IGToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.IGStreetLamps,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(IceGatewayStreetLamps.name + "DataSource",
-                    IceGatewayStreetLamps.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
     });
 
     describe("ParkingZones", () => {
@@ -255,35 +195,6 @@ describe("DataSourcesAvailabilityChecking", () => {
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "results" }),
                 new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("TSKZtpParkings", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(ZtpParkings.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        user_key: config.datasources.TSKZtpParkingsToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.TSKZtpParkings,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "data" }),
-                new ObjectKeysValidator(ZtpParkings.name + "DataSource", ZtpParkings.datasourceMongooseSchemaObject));
         });
 
         it("should returns all objects", async () => {
