@@ -264,6 +264,13 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         }
     }
 
+    public refreshMaterializedViews = async (): Promise<any> => {
+        const connection = PostgresConnector.getConnection();
+        return connection.query(
+            `REFRESH MATERIALIZED VIEW "public"."v_ropidgtfs_services_first14days"`,
+            { type: Sequelize.QueryTypes.SELECT });
+    }
+
     private getTotalFromMeta = async (dataset: string, version: number): Promise<any> => {
         const tables = await this.sequelizeModel.findAll({
             attributes: [["key", "tn"]],
