@@ -1,7 +1,6 @@
 ## Custom gitignore rules
 
 .idea/
-.npmrc
 .vscode
 dist/
 docs/typedoc/
