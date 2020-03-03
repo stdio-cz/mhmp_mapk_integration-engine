@@ -39,7 +39,7 @@ export class AppStoreConnectWorker extends BaseWorker {
             pgTableName: AppStoreConnect.pgTableName,
             savingType: "insertOnly",
         },
-        new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject));
+        null /*new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject)*/);
     }
 
     public refreshDataInDb = async (msg: any): Promise<void> => {
