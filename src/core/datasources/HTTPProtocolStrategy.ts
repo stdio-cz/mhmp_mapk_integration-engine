@@ -10,6 +10,10 @@ import { IHTTPSettings, IProtocolStrategy } from "./";
 import decompress = require("decompress");
 import request = require("request-promise");
 
+const zlib = require("zlib");
+const util = require("util");
+const gunzip = util.promisify(zlib.gunzip);
+
 export class HTTPProtocolStrategy implements IProtocolStrategy {
 
     private connectionSettings: IHTTPSettings;
@@ -25,6 +29,10 @@ export class HTTPProtocolStrategy implements IProtocolStrategy {
     public getData = async (): Promise<any> => {
         try {
             let result = await request(this.connectionSettings);
+
+            if (this.connectionSettings.isGunZipped) {
+                result = await gunzip(result);
+            }
 
             if (this.connectionSettings.isCompressed) {
                 const prefix = path.parse(this.connectionSettings.url).name + "/";

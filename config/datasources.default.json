@@ -1,4 +1,10 @@
 {
+    "AppStoreConnect": "https://api.appstoreconnect.apple.com/v1/salesReports?filter[frequency]=DAILY&filter[reportDate]={}&filter[reportSubType]=SUMMARY&filter[reportType]=SALES&filter[vendorNumber]=85867124",
+    "AppStoreConnectCredentials": {
+        "iss": "",
+        "kid": "",
+        "private_key": ""
+    },
     "AirQualityStations": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/AIMdata_hourly.xml",
     "CeskyCarsharingSharedCars": "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
     "CeskyCarsharingSharedCarsEndpointCredentials": {
