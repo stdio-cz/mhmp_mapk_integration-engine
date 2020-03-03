@@ -32,14 +32,14 @@ export class AppStoreConnectWorker extends BaseWorker {
                 fastcsvParams: { headers: true, delimiter: "\t" },
                 subscribe: (json: any) => json,
             }),
-            new Validator(AppStoreConnect.name, AppStoreConnect.datasourceMongooseSchemaObject));
+            null/*new Validator(AppStoreConnect.name, AppStoreConnect.datasourceMongooseSchemaObject)*/);
         this.appStoreTransformation = new AppStoreConnectTransformation();
         this.model = new PostgresModel(AppStoreConnect.name, {
             outputSequelizeAttributes: AppStoreConnect.outputSequelizeAttributes,
             pgTableName: AppStoreConnect.pgTableName,
             savingType: "insertOnly",
         },
-        null /*new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject)*/);
+        new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject));
     }
 
     public refreshDataInDb = async (msg: any): Promise<void> => {

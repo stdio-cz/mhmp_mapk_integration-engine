@@ -77,7 +77,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     },
                     isGunZipped: true,
                     method: "GET",
-                    url: config.datasources.AppStoreConnect,
+                    url: config.datasources.AppStoreConnect.replace("{}", "2020-02-23"),
                 }),
                 new CSVDataTypeStrategy({
                     fastcsvParams: { headers: true, delimiter: "\t" },
@@ -90,7 +90,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             console.log(data);
         });
     });
-
+    /*
     describe("CityDistricts", () => {
 
         let datasource;
@@ -1319,4 +1319,5 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.not.null;
         });
     });
+     */
 });
