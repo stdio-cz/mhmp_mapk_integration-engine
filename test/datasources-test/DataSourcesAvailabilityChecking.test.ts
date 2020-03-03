@@ -1,14 +1,34 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, MedicalInstitutions, Meteosensors,
-    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
-    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras, WasteCollectionYards, WazeCCP,
+    AirQualityStations,
+    AppStoreConnect,
+    BicycleCounters,
+    BicycleParkings,
+    CityDistricts,
+    Gardens,
+    MedicalInstitutions,
+    Meteosensors,
+    MunicipalAuthorities,
+    MunicipalPoliceStations,
+    Parkings,
+    ParkingZones,
+    Parkomats,
+    Playgrounds,
+    PublicToilets,
+    RopidGTFS,
+    SharedBikes,
+    SharedCars,
+    SortedWasteStations,
+    TrafficCameras,
+    WasteCollectionYards,
+    WazeCCP,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import {sign} from "jsonwebtoken";
 import "mocha";
 import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
@@ -26,7 +46,112 @@ describe("DataSourcesAvailabilityChecking", () => {
         await RedisConnector.connect();
     });
 
+    describe("Appstore", () => {
+
+        let appStoreDataSource: DataSource;
+        let bearerToken: string;
+
+        bearerToken = sign({
+                aud: "appstoreconnect-v1",
+                exp: Math.floor(Date.now() / 1000) + (20 * 60),
+                iss: config.datasources.AppStoreConnectCredentials.iss,
+            },
+            config.datasources.AppStoreConnectCredentials.private_key,
+            {
+                header: {
+                    alg: "ES256",
+                    kid: config.datasources.AppStoreConnectCredentials.kid,
+                    typ: "JWT",
+                },
+            });
+
+        console.log(bearerToken);
+
+        beforeEach(() => {
+            appStoreDataSource = new DataSource("AppStoreConnectDataSource",
+                new HTTPProtocolStrategy({
+                    encoding: null,
+                    headers: {
+                        Accept: "application/a-gzip",
+                        Authorization: `Bearer ${bearerToken}`,
+                    },
+                    isGunZipped: true,
+                    method: "GET",
+                    url: config.datasources.AppStoreConnect,
+                }),
+                new CSVDataTypeStrategy({
+                    fastcsvParams: { headers: true, delimiter: "\t" },
+                    subscribe: (json: any) => json,
+                }),
+                new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject));
+        });
+        it("should returns data from appstore", async () => {
+            const data = await appStoreDataSource.getAll();
+            console.log(data);
+        });
+    });
+
     describe("CityDistricts", () => {
+
+        let datasource;
+
+        beforeEach(() => {
+            datasource = new DataSource(CityDistricts.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: config.datasources.CityDistricts,
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "features" }),
+                new Validator(CityDistricts.name + "DataSource", CityDistricts.datasourceMongooseSchemaObject));
+        });
+
+        describe("Appstore", () => {
+
+            let appStoreDataSource: DataSource;
+            let bearerToken: string;
+
+            bearerToken = sign({
+                    aud: "appstoreconnect-v1",
+                    exp: Math.floor(Date.now() / 1000) + (20 * 60),
+                    iss: config.datasources.AppStoreConnectCredentials.iss,
+                },
+                config.datasources.AppStoreConnectCredentials.private_key,
+                {
+                    header: {
+                        alg: "ES256",
+                        kid: config.datasources.AppStoreConnectCredentials.kid,
+                        typ: "JWT",
+                    },
+                });
+
+            console.log(bearerToken);
+
+            beforeEach(() => {
+                appStoreDataSource = new DataSource("AppStoreConnectDataSource",
+                    new HTTPProtocolStrategy({
+                        encoding: null,
+                        headers: {
+                            Accept: "application/a-gzip",
+                            Authorization: `Bearer ${bearerToken}`,
+                        },
+                        isGunZipped: true,
+                        method: "GET",
+                        url: config.datasources.AppStoreConnect,
+                    }),
+                    new CSVDataTypeStrategy({
+                        fastcsvParams: { headers: true, delimiter: "\t" },
+                        subscribe: (json: any) => json,
+                    }),
+                    null);
+            });
+            it("should returns data from appstore", async () => {
+                const data = await appStoreDataSource.getAll();
+                console.log(data);
+            });
+        });
+
+        describe("CityDistricts", () => {
 
         let datasource;
 
@@ -52,7 +177,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-    describe("ParkingZones", () => {
+        describe("ParkingZones", () => {
 
         let datasource;
         let datasourceTariffs;
@@ -102,7 +227,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-    describe("RopidGTFS", () => {
+        describe("RopidGTFS", () => {
 
         let datasource;
         let datasourceCisStops;
@@ -155,7 +280,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("TSKParkings", () => {
+        describe("TSKParkings", () => {
 
         let datasource;
 
@@ -182,7 +307,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("TSKTrafficCameras", () => {
+        describe("TSKTrafficCameras", () => {
 
         let datasource;
 
@@ -209,7 +334,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("SharedCars", () => {
+        describe("SharedCars", () => {
 
         describe("CeskyCarsharing", () => {
 
@@ -274,7 +399,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-    describe("Gardens", () => {
+        describe("Gardens", () => {
 
         let datasource;
 
@@ -303,7 +428,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("Playgrounds", () => {
+        describe("Playgrounds", () => {
 
         let datasource;
 
@@ -330,7 +455,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("PublicToilets", () => {
+        describe("PublicToilets", () => {
 
         let datasource;
 
@@ -357,7 +482,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("AirQualityStations", () => {
+        describe("AirQualityStations", () => {
 
         let datasource;
 
@@ -390,7 +515,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("TSKMeteosensors", () => {
+        describe("TSKMeteosensors", () => {
 
         let datasource;
 
@@ -417,7 +542,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("MunicipalAuthorities", () => {
+        describe("MunicipalAuthorities", () => {
 
         let datasource;
 
@@ -478,7 +603,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("WasteCollectionYards", () => {
+        describe("WasteCollectionYards", () => {
 
         let datasource;
 
@@ -508,7 +633,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("MunicipalPoliceStations", () => {
+        describe("MunicipalPoliceStations", () => {
 
         let datasource;
 
@@ -536,7 +661,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("MedicalInstitutions", () => {
+        describe("MedicalInstitutions", () => {
 
         let pharmaciesDatasource: DataSource;
         let healthCareDatasource: DataSource;
@@ -625,7 +750,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("SortedWasteStations", () => {
+        describe("SortedWasteStations", () => {
 
         let iprContainersDatasource;
         let iprStationsDatasource;
@@ -774,7 +899,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("SharedBikes", () => {
+        describe("SharedBikes", () => {
 
         describe("Rekola", () => {
 
@@ -879,7 +1004,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("BicycleParkings", () => {
+        describe("BicycleParkings", () => {
 
         let datasource;
 
@@ -907,7 +1032,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("TSKParkomats", () => {
+        describe("TSKParkomats", () => {
 
         let datasource: DataSource;
 
@@ -945,7 +1070,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-    describe("BicycleCounters", () => {
+        describe("BicycleCounters", () => {
 
         describe("Camea", () => {
 
@@ -1111,7 +1236,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-    describe("WazeCCP", () => {
+        describe("WazeCCP", () => {
 
         let dataSourceAlerts: DataSource;
         let dataSourceIrregularities: DataSource;
@@ -1194,5 +1319,4 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.not.null;
         });
     });
-
 });

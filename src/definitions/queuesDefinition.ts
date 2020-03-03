@@ -1,14 +1,16 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens, GeneralImport,
-    MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
-    ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
+    AirQualityStations, AppStoreConnect, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
+    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
+    MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
+    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
+import { AppStoreConnectWorker } from "../modules/appstoreconnect/AppStoreConnectWorker";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
@@ -50,6 +52,22 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: GeneralWorker,
                 workerMethod: "saveData",
+            },
+        ],
+    },
+    {
+        name: AppStoreConnect.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + AppStoreConnect.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDb",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: AppStoreConnectWorker,
+                workerMethod: "refreshDataInDb",
             },
         ],
     },

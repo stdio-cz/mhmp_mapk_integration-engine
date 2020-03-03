@@ -23,6 +23,7 @@ export interface IHTTPSettings {
     rejectUnauthorized?: boolean;
     isCompressed?: boolean;
     whitelistedFiles?: string[];
+    isGunZipped?: boolean;
 }
 
 export interface IFTPSettings {
