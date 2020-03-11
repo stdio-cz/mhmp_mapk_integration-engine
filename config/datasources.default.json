@@ -1,5 +1,5 @@
 {
-    "AppStoreConnect": "https://api.appstoreconnect.apple.com/v1/salesReports?filter[frequency]=DAILY&filter[reportDate]={}&filter[reportSubType]=SUMMARY&filter[reportType]=SALES&filter[vendorNumber]=85867124",
+    "AppStoreConnect": "https://api.appstoreconnect.apple.com/v1/salesReports?filter[frequency]=DAILY&filter[reportDate]=:reportDate&filter[reportSubType]=SUMMARY&filter[reportType]=SALES&filter[vendorNumber]=85867124",
     "AppStoreConnectCredentials": {
         "iss": "",
         "kid": "",
@@ -36,6 +36,7 @@
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",
     "ParkingZonesTariffsAuth": "",
     "Playgrounds": "http://www.hristepraha.cz/api/get-all-items?type=hriste",
+    "PlayStoreKeyFilename": "config/filename.json",
     "PublicToilets": "http://opendata.iprpraha.cz/CUR/FSV/FSV_VerejnaWC_b/WGS_84/FSV_VerejnaWC_b.json",
     "RekolaSharedBikes": "https://www.rekola.cz/api/mobile/regions/1/trackables?mapLat=0&mapLng=0&mapZoom=0&gpsLat=0&gpsLng=0&gpsAcc=0",
     "RekolaSharedBikesHeaders": {
