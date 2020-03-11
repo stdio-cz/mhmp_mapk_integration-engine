@@ -2,13 +2,13 @@
 
 import {
     AirQualityStations,
-    AppStoreConnect,
     BicycleCounters,
     BicycleParkings,
     CityDistricts,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
+    MobileAppStatistics,
     MunicipalAuthorities,
     MunicipalPoliceStations,
     Parkings,
@@ -25,17 +25,18 @@ import {
     WazeCCP,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
+import { File } from "@google-cloud/storage";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import {sign} from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import "mocha";
 import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy,
-    XMLDataTypeStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy, HTTPProtocolStrategy,
+    IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
 chai.use(chaiAsPromised);
@@ -46,112 +47,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         await RedisConnector.connect();
     });
 
-    describe("Appstore", () => {
-
-        let appStoreDataSource: DataSource;
-        let bearerToken: string;
-
-        bearerToken = sign({
-                aud: "appstoreconnect-v1",
-                exp: Math.floor(Date.now() / 1000) + (20 * 60),
-                iss: config.datasources.AppStoreConnectCredentials.iss,
-            },
-            config.datasources.AppStoreConnectCredentials.private_key,
-            {
-                header: {
-                    alg: "ES256",
-                    kid: config.datasources.AppStoreConnectCredentials.kid,
-                    typ: "JWT",
-                },
-            });
-
-        console.log(bearerToken);
-
-        beforeEach(() => {
-            appStoreDataSource = new DataSource("AppStoreConnectDataSource",
-                new HTTPProtocolStrategy({
-                    encoding: null,
-                    headers: {
-                        Accept: "application/a-gzip",
-                        Authorization: `Bearer ${bearerToken}`,
-                    },
-                    isGunZipped: true,
-                    method: "GET",
-                    url: config.datasources.AppStoreConnect.replace("{}", "2020-02-23"),
-                }),
-                new CSVDataTypeStrategy({
-                    fastcsvParams: { headers: true, delimiter: "\t" },
-                    subscribe: (json: any) => json,
-                }),
-                new Validator(AppStoreConnect.name, AppStoreConnect.outputMongooseSchemaObject));
-        });
-        it("should returns data from appstore", async () => {
-            const data = await appStoreDataSource.getAll();
-            console.log(data);
-        });
-    });
-    /*
     describe("CityDistricts", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(CityDistricts.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {},
-                    method: "GET",
-                    url: config.datasources.CityDistricts,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(CityDistricts.name + "DataSource", CityDistricts.datasourceMongooseSchemaObject));
-        });
-
-        describe("Appstore", () => {
-
-            let appStoreDataSource: DataSource;
-            let bearerToken: string;
-
-            bearerToken = sign({
-                    aud: "appstoreconnect-v1",
-                    exp: Math.floor(Date.now() / 1000) + (20 * 60),
-                    iss: config.datasources.AppStoreConnectCredentials.iss,
-                },
-                config.datasources.AppStoreConnectCredentials.private_key,
-                {
-                    header: {
-                        alg: "ES256",
-                        kid: config.datasources.AppStoreConnectCredentials.kid,
-                        typ: "JWT",
-                    },
-                });
-
-            console.log(bearerToken);
-
-            beforeEach(() => {
-                appStoreDataSource = new DataSource("AppStoreConnectDataSource",
-                    new HTTPProtocolStrategy({
-                        encoding: null,
-                        headers: {
-                            Accept: "application/a-gzip",
-                            Authorization: `Bearer ${bearerToken}`,
-                        },
-                        isGunZipped: true,
-                        method: "GET",
-                        url: config.datasources.AppStoreConnect,
-                    }),
-                    new CSVDataTypeStrategy({
-                        fastcsvParams: { headers: true, delimiter: "\t" },
-                        subscribe: (json: any) => json,
-                    }),
-                    null);
-            });
-            it("should returns data from appstore", async () => {
-                const data = await appStoreDataSource.getAll();
-                console.log(data);
-            });
-        });
-
-        describe("CityDistricts", () => {
 
         let datasource;
 
@@ -177,7 +73,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-        describe("ParkingZones", () => {
+    describe("ParkingZones", () => {
 
         let datasource;
         let datasourceTariffs;
@@ -227,7 +123,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-        describe("RopidGTFS", () => {
+    describe("RopidGTFS", () => {
 
         let datasource;
         let datasourceCisStops;
@@ -280,7 +176,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("TSKParkings", () => {
+    describe("TSKParkings", () => {
 
         let datasource;
 
@@ -307,7 +203,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("TSKTrafficCameras", () => {
+    describe("TSKTrafficCameras", () => {
 
         let datasource;
 
@@ -334,7 +230,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("SharedCars", () => {
+    describe("SharedCars", () => {
 
         describe("CeskyCarsharing", () => {
 
@@ -399,7 +295,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-        describe("Gardens", () => {
+    describe("Gardens", () => {
 
         let datasource;
 
@@ -428,7 +324,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("Playgrounds", () => {
+    describe("Playgrounds", () => {
 
         let datasource;
 
@@ -455,7 +351,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("PublicToilets", () => {
+    describe("PublicToilets", () => {
 
         let datasource;
 
@@ -482,7 +378,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("AirQualityStations", () => {
+    describe("AirQualityStations", () => {
 
         let datasource;
 
@@ -515,7 +411,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("TSKMeteosensors", () => {
+    describe("TSKMeteosensors", () => {
 
         let datasource;
 
@@ -542,7 +438,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("MunicipalAuthorities", () => {
+    describe("MunicipalAuthorities", () => {
 
         let datasource;
 
@@ -603,7 +499,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("WasteCollectionYards", () => {
+    describe("WasteCollectionYards", () => {
 
         let datasource;
 
@@ -633,7 +529,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("MunicipalPoliceStations", () => {
+    describe("MunicipalPoliceStations", () => {
 
         let datasource;
 
@@ -661,7 +557,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("MedicalInstitutions", () => {
+    describe("MedicalInstitutions", () => {
 
         let pharmaciesDatasource: DataSource;
         let healthCareDatasource: DataSource;
@@ -750,7 +646,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("SortedWasteStations", () => {
+    describe("SortedWasteStations", () => {
 
         let iprContainersDatasource;
         let iprStationsDatasource;
@@ -899,7 +795,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("SharedBikes", () => {
+    describe("SharedBikes", () => {
 
         describe("Rekola", () => {
 
@@ -1004,7 +900,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("BicycleParkings", () => {
+    describe("BicycleParkings", () => {
 
         let datasource;
 
@@ -1032,7 +928,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("TSKParkomats", () => {
+    describe("TSKParkomats", () => {
 
         let datasource: DataSource;
 
@@ -1070,7 +966,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     });
 
-        describe("BicycleCounters", () => {
+    describe("BicycleCounters", () => {
 
         describe("Camea", () => {
 
@@ -1236,7 +1132,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
     });
 
-        describe("WazeCCP", () => {
+    describe("WazeCCP", () => {
 
         let dataSourceAlerts: DataSource;
         let dataSourceIrregularities: DataSource;
@@ -1319,5 +1215,85 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.not.null;
         });
     });
-     */
+
+    describe("MobileAppStatistics", () => {
+
+        describe("AppStore", () => {
+
+            let appStoreDataSource: DataSource;
+            let bearerToken: string;
+
+            bearerToken = sign({
+                    aud: "appstoreconnect-v1",
+                    exp: Math.floor(Date.now() / 1000) + (20 * 60),
+                    iss: config.datasources.AppStoreConnectCredentials.iss,
+                },
+                config.datasources.AppStoreConnectCredentials.private_key,
+                {
+                    header: {
+                        alg: "ES256",
+                        kid: config.datasources.AppStoreConnectCredentials.kid,
+                        typ: "JWT",
+                    },
+                });
+
+            beforeEach(() => {
+                appStoreDataSource = new DataSource("AppStoreConnectDataSource",
+                    new HTTPProtocolStrategy({
+                        encoding: null,
+                        headers: {
+                            Accept: "application/a-gzip",
+                            Authorization: `Bearer ${bearerToken}`,
+                        },
+                        isGunZipped: true,
+                        method: "GET",
+                        url: config.datasources.AppStoreConnect.replace(":reportDate", "2020-03-09"),
+                    }),
+                    new CSVDataTypeStrategy({
+                        fastcsvParams: { headers: true, delimiter: "\t" },
+                        subscribe: (json: any) => json,
+                    }),
+                    new Validator(MobileAppStatistics.appStore.name,
+                        MobileAppStatistics.appStore.datasourceMongooseSchemaObject));
+            });
+
+            it("should returns data from AppStore", async () => {
+                const data = await appStoreDataSource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should return last modified in AppStore", async () => {
+                const data = await appStoreDataSource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+        });
+
+        describe("PlayStore", async () => {
+
+            let playStoreDataSource: DataSource;
+
+            beforeEach(() => {
+                playStoreDataSource = new DataSource(MobileAppStatistics.playStore.name + "DataSource",
+                    new GoogleCloudStorageProtocolStrategy({
+                            bucketName: "pubsite_prod_rev_01447282685199189351",
+                            filesFilter: (f: File) => f.name.indexOf("_overview.csv") !== -1,
+                            filesPrefix: "stats/installs",
+                            keyFilename: config.datasources.PlayStoreKeyFilename,
+                        }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new Validator(MobileAppStatistics.playStore.name + "DataSource",
+                        MobileAppStatistics.playStore.datasourceMongooseSchemaObject),
+                );
+            });
+
+            it("should returns data from PlayStore", async () => {
+                const data = await playStoreDataSource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+        });
+
+    });
+
 });

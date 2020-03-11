@@ -1,16 +1,15 @@
 "use strict";
 
 import {
-    AirQualityStations, AppStoreConnect, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
-    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS, MunicipalAuthorities,
-    MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
+    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
+    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
     RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
 import { AirQualityStationsWorker } from "../modules/airqualitystations";
-import { AppStoreConnectWorker } from "../modules/appstoreconnect/AppStoreConnectWorker";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
@@ -20,6 +19,7 @@ import { GeneralWorker } from "../modules/general";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
 import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
+import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
 import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
@@ -52,22 +52,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: GeneralWorker,
                 workerMethod: "saveData",
-            },
-        ],
-    },
-    {
-        name: AppStoreConnect.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + AppStoreConnect.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDb",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
-                },
-                worker: AppStoreConnectWorker,
-                workerMethod: "refreshDataInDb",
             },
         ],
     },
@@ -349,6 +333,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: MobileAppStatistics.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MobileAppStatistics.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshAppStoreDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: MobileAppStatisticsWorker,
+                workerMethod: "refreshAppStoreDataInDB",
+            },
+            {
+                name: "refreshPlayStoreDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: MobileAppStatisticsWorker,
+                workerMethod: "refreshPlayStoreDataInDB",
             },
         ],
     },

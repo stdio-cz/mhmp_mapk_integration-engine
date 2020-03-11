@@ -72,9 +72,25 @@ export interface IPostgresSettings {
     findOptions?: object;
 }
 
+export interface IGoogleCloudStorageSettings {
+
+    /** Path to json key file downloaded from the Google Developers Console */
+    keyFilename: string;
+
+    /** Name of the bucket. */
+    bucketName: string;
+
+    /** Filter results to objects whose names begin with this prefix. */
+    filesPrefix?: string;
+
+    /** Custom function to filter files, e.g. by name. */
+    filesFilter?: (item: any) => any;
+}
+
 export interface IProtocolStrategy {
 
-    setConnectionSettings(settings: IHTTPSettings | IFTPSettings | IPostgresSettings): void;
+    setConnectionSettings(settings: IHTTPSettings | IFTPSettings | IPostgresSettings
+        | IGoogleCloudStorageSettings): void;
 
     getData(): Promise<any>;
 
