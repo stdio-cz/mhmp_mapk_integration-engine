@@ -4,15 +4,17 @@ import { CityDistricts } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { MongoModel } from "../../core/models";
+import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import { CityDistrictsTransformation } from "./";
+import { CityDistrictsMongoTransformation, CityDistrictsPostgresTransformation } from "./";
 
 export class CityDistrictsWorker extends BaseWorker {
 
-    private model: MongoModel;
     private dataSource: DataSource;
-    private transformation: CityDistrictsTransformation;
+    private transformation: CityDistrictsMongoTransformation;
+    private model: MongoModel;
+    private postgresTransformation: CityDistrictsPostgresTransformation;
+    private postgresModel: PostgresModel;
 
     constructor() {
         super();
@@ -23,33 +25,49 @@ export class CityDistrictsWorker extends BaseWorker {
                 url: config.datasources.CityDistricts,
             }),
             new JSONDataTypeStrategy({ resultsPath: "features" }),
-            new Validator(CityDistricts.name + "DataSourceValidator", CityDistricts.datasourceMongooseSchemaObject));
+            new Validator(CityDistricts.name + "DataSourceValidator", CityDistricts.datasourceMongooseSchemaObject),
+        );
         this.model = new MongoModel(CityDistricts.name + "Model", {
-            identifierPath: "properties.id",
-            mongoCollectionName: CityDistricts.mongoCollectionName,
-            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-            resultsPath: "properties",
-            savingType: "insertOrUpdate",
-            searchPath: (id, multiple) => (multiple)
-                ? { "properties.id": { $in: id } }
-                : { "properties.id": id },
-            updateValues: (a, b) => {
-                a.geometry.coordinates = b.geometry.coordinates;
-                a.properties.name = b.properties.name;
-                a.properties.slug = b.properties.slug;
-                a.properties.updated_at = b.properties.updated_at;
-                return a;
+                identifierPath: "properties.id",
+                mongoCollectionName: CityDistricts.mongoCollectionName,
+                outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
+                resultsPath: "properties",
+                savingType: "insertOrUpdate",
+                searchPath: (id, multiple) => (multiple)
+                    ? { "properties.id": { $in: id } }
+                    : { "properties.id": id },
+                updateValues: (a, b) => {
+                    a.geometry.coordinates = b.geometry.coordinates;
+                    a.properties.name = b.properties.name;
+                    a.properties.slug = b.properties.slug;
+                    a.properties.updated_at = b.properties.updated_at;
+                    return a;
+                },
             },
-        },
             new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
         );
-        this.transformation = new CityDistrictsTransformation();
+        this.transformation = new CityDistrictsMongoTransformation();
+
+        this.postgresModel = new PostgresModel(CityDistricts.name + "PGModel", {
+                outputSequelizeAttributes: CityDistricts.postgres.outputSequelizeAttributes,
+                pgTableName: CityDistricts.postgres.pgTableName,
+                savingType: "insertOrUpdate",
+                sequelizeAdditionalSettings: {
+                    schema: "common",
+                    timestamps: false,
+                },
+            },
+            new Validator(CityDistricts.name + "ModelPGValidator", CityDistricts.postgres.outputMongooseSchemaObject),
+        );
+        this.postgresTransformation = new CityDistrictsPostgresTransformation();
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSource.getAll();
         const transformedData = await this.transformation.transform(data);
+        const transformedPostgresData = await this.postgresTransformation.transform(data);
         await this.model.save(transformedData);
+        await this.postgresModel.save(transformedPostgresData);
     }
 
 }
