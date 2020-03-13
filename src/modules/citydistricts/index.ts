@@ -1,3 +1,4 @@
 /* modules/CityDistricts/index.ts */
-export * from "./CityDistrictsTransformation";
+export * from "./CityDistrictsMongoTransformation";
+export * from "./CityDistrictsPostgresTransformation";
 export * from "./CityDistrictsWorker";

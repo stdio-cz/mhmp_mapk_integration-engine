@@ -27,7 +27,7 @@ export class PostgresModel implements IModel {
         this.tableName = settings.pgTableName;
 
         this.sequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
-            settings.outputSequelizeAttributes, { ...settings.sequelizeAdditionalSettings, schema: "public" });
+            settings.outputSequelizeAttributes, { schema: "public", ...settings.sequelizeAdditionalSettings });
 
         if (settings.hasTmpTable) {
             this.tmpSequelizeModel = PostgresConnector.getConnection().define(settings.pgTableName,
