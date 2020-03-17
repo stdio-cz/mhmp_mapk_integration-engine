@@ -20,7 +20,15 @@ export class CityDistrictsPostgresTransformation extends BaseTransformation impl
             create_date: element.properties.DAT_VZNIK,
             district_name: element.properties.NAZEV_MC,
             district_short_name: element.properties.NAZEV_1,
-            geom: element.geometry,
+            geom: {
+                ...element.geometry,
+                crs: {
+                    properties: {
+                        name: "EPSG:4326",
+                    },
+                    type: "name",
+                },
+            },
             id: element.properties.ID,
             id_provider: element.properties.ID_POSKYT,
             kod_mo: element.properties.KOD_MO,
