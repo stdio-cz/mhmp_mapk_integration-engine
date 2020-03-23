@@ -1,7 +1,7 @@
 FROM node:12
 WORKDIR /user/src/app/
 
-COPY package.json ./
+COPY package.json yarn.lock ./
 RUN yarn install
 COPY --chown=node:node . .
 RUN npm run build-minimal && \
