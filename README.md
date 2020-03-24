@@ -62,7 +62,7 @@ Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
 Before start the databases have to be created and migrated. In this case is used `db-migrate` from the `@golemio/schema-definitions` module.
 
-For more informations see [`@golemio/schema-definitions` README](https://gitlab.oict.cz/data-platform/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
+For more informations see [`@golemio/schema-definitions` README](https://gitlab.com/operator-ict/golemio/code/schema-definitions/blob/master/README.md#data-platform-database-schema-definitions).
 
 ### Build & Run
 

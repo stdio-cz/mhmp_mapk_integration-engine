@@ -1,8 +1,6 @@
 {
     "BicycleCounters": [],
     "Gardens": [],
-    "IceGatewaySensors": [],
-    "IceGatewayStreetLamps": [],
     "MerakiAccessPoints": [],
     "MOSBackend": [],
     "MOSMobileApplication": [],
@@ -21,6 +19,5 @@
         "updateSensorsPicksInContainer"
     ],
     "VehiclePositions": [],
-    "WazeCCP": [],
-    "ZtpParkings": []
+    "WazeCCP": []
 }

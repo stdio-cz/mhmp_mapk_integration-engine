@@ -218,6 +218,7 @@ export class RopidGTFSWorker extends BaseWorker {
             await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
             await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
             await this.delayComputationTripsModel.truncate();
+            await this.metaModel.refreshMaterializedViews();
             // save meta
             await this.metaModel.save({
                 dataset: "PID_GTFS",

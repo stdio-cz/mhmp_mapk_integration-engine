@@ -1,11 +1,11 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens, GeneralImport,
-    IceGatewaySensors, IceGatewayStreetLamps, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MOS,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
+    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
-    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations, TrafficCameras, VehiclePositions, WasteCollectionYards,
-    WazeCCP, ZtpParkings,
+    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
+    TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
@@ -16,11 +16,10 @@ import { CityDistrictsWorker } from "../modules/citydistricts";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
-import { IceGatewaySensorsWorker } from "../modules/icegatewaysensors";
-import { IceGatewayStreetLampsWorker } from "../modules/icegatewaystreetlamps";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
 import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
+import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
 import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
@@ -39,7 +38,6 @@ import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 import { WazeCCPWorker } from "../modules/wazeccp";
-import { ZtpParkingsWorker } from "../modules/ztpparkings";
 
 const definitions: IQueueDefinition[] = [
     {
@@ -263,56 +261,6 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
-        name: IceGatewaySensors.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + IceGatewaySensors.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 4 * 60 * 1000, // 4 minutes
-                },
-                worker: IceGatewaySensorsWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: IceGatewaySensorsWorker,
-                workerMethod: "saveDataToHistory",
-            },
-        ],
-    },
-    {
-        name: IceGatewayStreetLamps.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + IceGatewayStreetLamps.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 14 * 60 * 1000, // 14 minutes
-                },
-                worker: IceGatewayStreetLampsWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "setDimValue",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: IceGatewayStreetLampsWorker,
-                workerMethod: "setDimValue",
-            },
-        ],
-    },
-    {
         name: MedicalInstitutions.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MedicalInstitutions.name.toLowerCase(),
         queues: [
@@ -385,6 +333,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MeteosensorsWorker,
                 workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
+        name: MobileAppStatistics.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MobileAppStatistics.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshAppStoreDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: MobileAppStatisticsWorker,
+                workerMethod: "refreshAppStoreDataInDB",
+            },
+            {
+                name: "refreshPlayStoreDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: MobileAppStatisticsWorker,
+                workerMethod: "refreshPlayStoreDataInDB",
             },
         ],
     },
@@ -1061,50 +1035,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: WazeCCPWorker,
                 workerMethod: "refreshJamsInDB",
-            },
-        ],
-    },
-    {
-        name: ZtpParkings.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + ZtpParkings.name.toLowerCase(),
-        queues: [
-            {
-                name: "refreshDataInDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000, // 59 minutes
-                },
-                worker: ZtpParkingsWorker,
-                workerMethod: "refreshDataInDB",
-            },
-            {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: ZtpParkingsWorker,
-                workerMethod: "saveDataToHistory",
-            },
-            {
-                name: "updateAddressAndDistrict",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                    messageTtl: 59 * 60 * 1000, // 59 minutes
-                },
-                worker: ZtpParkingsWorker,
-                workerMethod: "updateAddressAndDistrict",
-            },
-            {
-                name: "updateStatusAndDevice",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: ZtpParkingsWorker,
-                workerMethod: "updateStatusAndDevice",
             },
         ],
     },

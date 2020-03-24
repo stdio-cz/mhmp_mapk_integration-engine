@@ -1,4 +1,10 @@
 {
+    "AppStoreConnect": "https://api.appstoreconnect.apple.com/v1/salesReports?filter[frequency]=DAILY&filter[reportDate]=:reportDate&filter[reportSubType]=SUMMARY&filter[reportType]=SALES&filter[vendorNumber]=85867124",
+    "AppStoreConnectCredentials": {
+        "iss": "",
+        "kid": "",
+        "private_key": ""
+    },
     "AirQualityStations": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/AIMdata_hourly.xml",
     "CeskyCarsharingSharedCars": "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
     "CeskyCarsharingSharedCarsEndpointCredentials": {
@@ -11,10 +17,6 @@
     "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
     "HomeportSettingsSharedBikes": "https://prague.freebike.com/api/setting?Lang=cs",
     "HoppyGoSharedCars": "",
-    "IGSensors": "https://prague-city.ice-gateway.com/iceapi/v1/iot/data/all/?per_page=200",
-    "IGStreetLamp": "https://prague-city.ice-gateway.com/iceapi/v1/streetlamp/",
-    "IGStreetLamps": "https://prague-city.ice-gateway.com/iceapi/v1/streetlamps/",
-    "IGToken": "myStringToken",
     "IPRSortedWasteContainers": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOitem_b/WGS_84/ZPK_O_Kont_TOitem_b.json",
     "IPRSortedWasteStations": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOstan_b/WGS_84/ZPK_O_Kont_TOstan_b.json",
     "MedicalInstitutionsHealthCare": "https://opendata.mzcr.cz/data/nrpzs/narodni-registr-poskytovatelu-zdravotnich-sluzeb.csv",
@@ -34,6 +36,7 @@
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",
     "ParkingZonesTariffsAuth": "",
     "Playgrounds": "http://www.hristepraha.cz/api/get-all-items?type=hriste",
+    "PlayStoreKeyFilename": "config/filename.json",
     "PublicToilets": "http://opendata.iprpraha.cz/CUR/FSV/FSV_VerejnaWC_b/WGS_84/FSV_VerejnaWC_b.json",
     "RekolaSharedBikes": "https://www.rekola.cz/api/mobile/regions/1/trackables?mapLat=0&mapLng=0&mapZoom=0&gpsLat=0&gpsLng=0&gpsAcc=0",
     "RekolaSharedBikesHeaders": {
@@ -59,8 +62,6 @@
     "TSKMeteosensors": "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     "TSKParkings": "http://www.tsk-praha.cz/tskexport3/json/parkings",
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",
-    "TSKZtpParkings": "http://tsk.3nicom.cloud/api/all",
-    "TSKZtpParkingsToken": "",
     "TSKParkomats": "http://vyvoj.ctgroup.cz/cisservice/cisictservice.svc",
     "TSKParkomatsToken": "",
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",

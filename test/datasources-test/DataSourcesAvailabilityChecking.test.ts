@@ -1,22 +1,42 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Gardens, IceGatewaySensors,
-    IceGatewayStreetLamps, MedicalInstitutions, Meteosensors, MunicipalAuthorities, MunicipalPoliceStations, Parkings,
-    ParkingZones, Parkomats, Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, WasteCollectionYards, WazeCCP, ZtpParkings,
+    AirQualityStations,
+    BicycleCounters,
+    BicycleParkings,
+    CityDistricts,
+    Gardens,
+    MedicalInstitutions,
+    Meteosensors,
+    MobileAppStatistics,
+    MunicipalAuthorities,
+    MunicipalPoliceStations,
+    Parkings,
+    ParkingZones,
+    Parkomats,
+    Playgrounds,
+    PublicToilets,
+    RopidGTFS,
+    SharedBikes,
+    SharedCars,
+    SortedWasteStations,
+    TrafficCameras,
+    WasteCollectionYards,
+    WazeCCP,
 } from "@golemio/schema-definitions";
 import { ObjectKeysValidator, Validator } from "@golemio/validator";
+import { File } from "@google-cloud/storage";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import { sign } from "jsonwebtoken";
 import "mocha";
 import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, HTTPProtocolStrategy, IHTTPSettings, JSONDataTypeStrategy,
-    XMLDataTypeStrategy,
+    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy, HTTPProtocolStrategy,
+    IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
 
 chai.use(chaiAsPromised);
@@ -51,65 +71,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.a("string");
         });
-    });
-
-    describe("IceGatewaySensors", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(IceGatewaySensors.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        Authorization: "Token " + config.datasources.IGToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.IGSensors,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(IceGatewaySensors.name + "DataSource", IceGatewaySensors.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("IceGatewayStreetLamps", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(IceGatewayStreetLamps.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        Authorization: "Token " + config.datasources.IGToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.IGStreetLamps,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(IceGatewayStreetLamps.name + "DataSource",
-                    IceGatewayStreetLamps.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
     });
 
     describe("ParkingZones", () => {
@@ -255,35 +216,6 @@ describe("DataSourcesAvailabilityChecking", () => {
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "results" }),
                 new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("TSKZtpParkings", () => {
-
-        let datasource;
-
-        beforeEach(() => {
-            datasource = new DataSource(ZtpParkings.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {
-                        user_key: config.datasources.TSKZtpParkingsToken,
-                    },
-                    method: "GET",
-                    url: config.datasources.TSKZtpParkings,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "data" }),
-                new ObjectKeysValidator(ZtpParkings.name + "DataSource", ZtpParkings.datasourceMongooseSchemaObject));
         });
 
         it("should returns all objects", async () => {
@@ -1282,6 +1214,86 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await dataSourceJams.getLastModified();
             expect(data).to.be.not.null;
         });
+    });
+
+    describe("MobileAppStatistics", () => {
+
+        describe("AppStore", () => {
+
+            let appStoreDataSource: DataSource;
+            let bearerToken: string;
+
+            bearerToken = sign({
+                    aud: "appstoreconnect-v1",
+                    exp: Math.floor(Date.now() / 1000) + (20 * 60),
+                    iss: config.datasources.AppStoreConnectCredentials.iss,
+                },
+                config.datasources.AppStoreConnectCredentials.private_key,
+                {
+                    header: {
+                        alg: "ES256",
+                        kid: config.datasources.AppStoreConnectCredentials.kid,
+                        typ: "JWT",
+                    },
+                });
+
+            beforeEach(() => {
+                appStoreDataSource = new DataSource("AppStoreConnectDataSource",
+                    new HTTPProtocolStrategy({
+                        encoding: null,
+                        headers: {
+                            Accept: "application/a-gzip",
+                            Authorization: `Bearer ${bearerToken}`,
+                        },
+                        isGunZipped: true,
+                        method: "GET",
+                        url: config.datasources.AppStoreConnect.replace(":reportDate", "2020-03-09"),
+                    }),
+                    new CSVDataTypeStrategy({
+                        fastcsvParams: { headers: true, delimiter: "\t" },
+                        subscribe: (json: any) => json,
+                    }),
+                    new Validator(MobileAppStatistics.appStore.name,
+                        MobileAppStatistics.appStore.datasourceMongooseSchemaObject));
+            });
+
+            it("should returns data from AppStore", async () => {
+                const data = await appStoreDataSource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should return last modified in AppStore", async () => {
+                const data = await appStoreDataSource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+        });
+
+        describe("PlayStore", async () => {
+
+            let playStoreDataSource: DataSource;
+
+            beforeEach(() => {
+                playStoreDataSource = new DataSource(MobileAppStatistics.playStore.name + "DataSource",
+                    new GoogleCloudStorageProtocolStrategy({
+                            bucketName: "pubsite_prod_rev_01447282685199189351",
+                            filesFilter: (f: File) => f.name.indexOf("_overview.csv") !== -1,
+                            filesPrefix: "stats/installs",
+                            keyFilename: config.datasources.PlayStoreKeyFilename,
+                        }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new Validator(MobileAppStatistics.playStore.name + "DataSource",
+                        MobileAppStatistics.playStore.datasourceMongooseSchemaObject),
+                );
+            });
+
+            it("should returns data from PlayStore", async () => {
+                const data = await playStoreDataSource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+        });
+
     });
 
 });
