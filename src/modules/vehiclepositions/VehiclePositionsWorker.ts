@@ -9,6 +9,7 @@ import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";
 import {
+    VehiclePositionsLastPositionsModel,
     VehiclePositionsPositionsModel,
     VehiclePositionsStopsModel,
     VehiclePositionsTransformation,
@@ -18,14 +19,17 @@ import {
 import * as turf from "@turf/turf";
 import * as cheapruler from "cheap-ruler";
 import * as moment from "moment-timezone";
-
+import * as Sequelize from "sequelize";
 const ruler: any = cheapruler(50);
+const fs = require("fs").promises;
+const gtfsRealtime = require("gtfs-realtime-bindings").transit_realtime;
 
 export class VehiclePositionsWorker extends BaseWorker {
 
     private modelPositions: VehiclePositionsPositionsModel;
     private modelStops: PostgresModel;
     private modelTrips: VehiclePositionsTripsModel;
+    private modelLastPositions: VehiclePositionsLastPositionsModel;
     private transformation: VehiclePositionsTransformation;
     private delayComputationTripsModel: RedisModel;
     private queuePrefix: string;
@@ -35,6 +39,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         this.modelPositions = new VehiclePositionsPositionsModel();
         this.modelStops = new VehiclePositionsStopsModel();
         this.modelTrips = new VehiclePositionsTripsModel();
+        this.modelLastPositions = new VehiclePositionsLastPositionsModel();
         this.transformation = new VehiclePositionsTransformation();
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
             decodeDataAfterGet: JSON.parse,
@@ -45,6 +50,8 @@ export class VehiclePositionsWorker extends BaseWorker {
             new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
                 RopidGTFS.delayComputationTrips.outputMongooseSchemaObject));
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
+
+        this.modelTrips.associate(this.modelLastPositions.sequelizeModel);
     }
 
     public saveDataToDB = async (msg: any): Promise<void> => {
@@ -91,6 +98,96 @@ export class VehiclePositionsWorker extends BaseWorker {
                 inputData.id);
         } catch (err) {
             throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
+        }
+    }
+
+    public generateGtfsRt = async (msg: any): Promise<void> => {
+
+        const results = await this.modelTrips.findAll({
+            include: [{
+                as: "last_position",
+                model: this.modelLastPositions.sequelizeModel,
+                where: {
+                    tracking: 2,
+                },
+            }],
+            where: {
+                gtfs_trip_id: { [Sequelize.Op.ne]: null },
+            },
+        });
+
+        const updatesMessage = gtfsRealtime.FeedMessage.create();
+        const positionsMessage = gtfsRealtime.FeedMessage.create();
+        const header = {
+            gtfsRealtimeVersion: "2.0",
+            incrementality: "FULL_DATASET",
+            timestamp: Math.round(new Date().valueOf() / 1000),
+        };
+        updatesMessage.header = gtfsRealtime.FeedHeader.fromObject(header);
+        positionsMessage.header = gtfsRealtime.FeedHeader.fromObject(header);
+
+        const promises = results.map(async (r: any) => {
+            const tripDescriptor = {
+                scheduleRelationship: r.is_canceled ? "CANCELED" : "SCHEDULED",
+                startDate: moment(r.timestamp).utc().format("YYYYMMDD"),
+                startTime: r.origin_time,
+                tripId: r.gtfs_trip_id,
+            };
+            const entityTimestamp = Math.round(r.last_position.origin_timestamp / 1000);
+
+            const updateEntity = {
+                id: r.id,
+                tripUpdate: {
+                    stopTimeUpdate: [
+                        {
+                            arrival: r.last_position.delay_stop_arrival === null ? null : {
+                                delay: r.last_position.delay_stop_arrival,
+                            },
+                            departure: r.last_position.delay_stop_departure === null ? null : {
+                                delay: r.last_position.delay_stop_departure,
+                            },
+                            stopSequence: r.last_position.cis_last_stop_sequence,
+                        },
+                    ],
+                    timestamp: entityTimestamp,
+                    trip: tripDescriptor,
+                },
+            };
+            const positionEntity = {
+                id: r.gtfs_trip_id,
+                vehicle: {
+                    currentStopSequence: r.last_position.cis_last_stop_sequence,
+                    position: {
+                        bearing: r.last_position.bearing,
+                        latitude: r.last_position.lat,
+                        longitude: r.last_position.lon,
+                        speed: (r.last_position.speed / 3.6).toFixed(2),
+                    },
+                    timestamp: entityTimestamp,
+                    trip: tripDescriptor,
+                },
+            };
+
+            updatesMessage.entity.push(gtfsRealtime.FeedEntity.fromObject(updateEntity));
+            positionsMessage.entity.push(gtfsRealtime.FeedEntity.fromObject(positionEntity));
+        });
+
+        await Promise.all(promises);
+
+        if (gtfsRealtime.FeedMessage.verify(updatesMessage) === null) {
+            const buffer = gtfsRealtime.FeedMessage.encode(updatesMessage).finish();
+
+            // TODO save to Public File Storage
+            await fs.writeFile("trip_updates.pb", buffer);
+            await fs.writeFile("trip_updates.json", JSON.stringify(updatesMessage));
+        }
+
+        if (gtfsRealtime.FeedMessage.verify(positionsMessage) === null) {
+            const buffer = gtfsRealtime.FeedMessage.encode(positionsMessage).finish();
+
+            // TODO save to Public File Storage
+            await fs.writeFile("vehicle_positions.pb", buffer);
+            await fs.writeFile("vehicle_positions.json", JSON.stringify(positionsMessage));
         }
     }
 

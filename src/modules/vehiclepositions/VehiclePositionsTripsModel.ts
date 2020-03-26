@@ -34,6 +34,13 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         );
     }
 
+    public associate = (lastPositionsModel: Sequelize.Model<any, any>): any => {
+        this.sequelizeModel.hasOne(lastPositionsModel, {
+            as: "last_position",
+            foreignKey: "trips_id",
+        });
+    }
+
     /**
      * Overrides PostgresModel::save
      */
@@ -157,6 +164,14 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 this.constructor.name, 4003);
         }
         return result[0];
+    }
+
+    public hasOne = (model: any, options: any): any => {
+        return this.sequelizeModel.hasOne(model, options);
+    }
+
+    public findAll = async (options: any): Promise<any> => {
+        return this.sequelizeModel.findAll(options);
     }
 
 }

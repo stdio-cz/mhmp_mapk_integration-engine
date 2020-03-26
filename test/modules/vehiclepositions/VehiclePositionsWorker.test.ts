@@ -26,6 +26,7 @@ describe("VehiclePositionsWorker", () => {
         sandbox = sinon.createSandbox({ useFakeTimers: true });
         sequelizeModelStub = Object.assign({
             hasMany: sandbox.stub(),
+            hasOne: sandbox.stub(),
             removeAttribute: sandbox.stub(),
         });
         sandbox.stub(PostgresConnector, "getConnection")
@@ -46,6 +47,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelStops, "save");
         sandbox.stub(worker.modelTrips, "save")
             .callsFake(() => testData);
+        sandbox.stub(worker.modelTrips, "findAll")
+            .callsFake((options) => Object.assign([]));
         sandbox.stub(worker.modelTrips, "findGTFSTripId");
         sandbox.stub(worker.modelTrips, "update");
         sandbox.stub(worker, "sendMessageToExchange");
@@ -73,7 +76,12 @@ describe("VehiclePositionsWorker", () => {
             worker.modelPositions.save,
             worker.modelTrips.save,
             worker.sendMessageToExchange);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
+    });
+
+    it("should calls the correct methods by generateGtfsRt method", async () => {
+        await worker.generateGtfsRt({ content: Buffer.from("0")  });
+        sandbox.assert.calledOnce(worker.modelTrips.findAll);
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {

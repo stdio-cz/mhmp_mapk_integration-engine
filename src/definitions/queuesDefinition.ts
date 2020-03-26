@@ -964,6 +964,15 @@ const definitions: IQueueDefinition[] = [
                 worker: VehiclePositionsWorker,
                 workerMethod: "updateDelay",
             },
+            {
+                name: "generateGtfsRt",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: VehiclePositionsWorker,
+                workerMethod: "generateGtfsRt",
+            },
         ],
     },
     {
