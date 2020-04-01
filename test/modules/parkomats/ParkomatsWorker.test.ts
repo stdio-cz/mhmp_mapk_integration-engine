@@ -4,6 +4,8 @@ import "mocha";
 import * as sinon from "sinon";
 import { ParkomatsWorker } from "../../../src/modules/parkomats";
 
+import { PostgresConnector } from "../../../src/core/connectors";
+
 describe("ParkomatsWorker", () => {
 
     let worker;
@@ -13,6 +15,11 @@ describe("ParkomatsWorker", () => {
 
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers: true });
+
+        sandbox.stub(PostgresConnector, "getConnection")
+            .callsFake(() => Object.assign({
+                define: sandbox.stub(),
+            }));
 
         testData = [1, 2];
         testTransformedData = [1, 2];

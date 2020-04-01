@@ -9,8 +9,12 @@ import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../co
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
-    CameaMeasurementsTransformation, CameaTransformation,
-    EcoCounterMeasurementsTransformation, EcoCounterTransformation,
+    ApiLogsFailuresTransformation,
+    ApiLogsHitsTransformation,
+    CameaMeasurementsTransformation,
+    CameaTransformation,
+    EcoCounterMeasurementsTransformation,
+    EcoCounterTransformation,
 } from "./";
 
 export enum CameaRefreshDurations {
@@ -24,12 +28,18 @@ export class BicycleCountersWorker extends BaseWorker {
     private dataSourceCameaMeasurements: DataSource;
     private dataSourceEcoCounter: DataSource;
     private dataSourceEcoCounterMeasurements: DataSource;
+    private dataSourceApiLogsFailures: DataSource;
+    private dataSourceApiLogsHits: DataSource;
 
+    private apiLogsFailuresTransformation: ApiLogsFailuresTransformation;
+    private apiLogsHitsTransformation: ApiLogsHitsTransformation;
     private cameaTransformation: CameaTransformation;
     private ecoCounterTransformation: EcoCounterTransformation;
     private cameaMeasurementsTransformation: CameaMeasurementsTransformation;
     private ecoCounterMeasurementsTransformation: EcoCounterMeasurementsTransformation;
 
+    private apiLogsFailuresModel: PostgresModel;
+    private apiLogsHitsModel: PostgresModel;
     private locationsModel: PostgresModel;
     private directionsModel: PostgresModel;
     private detectionsModel: PostgresModel;
@@ -76,6 +86,47 @@ export class BicycleCountersWorker extends BaseWorker {
         this.ecoCounterTransformation = new EcoCounterTransformation();
         this.ecoCounterMeasurementsTransformation = new EcoCounterMeasurementsTransformation();
 
+        this.dataSourceApiLogsFailures = new DataSource(BicycleCounters.apiLogsFailures.name + "DataSource",
+            undefined,
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new Validator(BicycleCounters.apiLogsFailures.name + "ApiLogsFailuresDataSource",
+                BicycleCounters.apiLogsFailures.datasourceMongooseSchemaObject),
+            );
+
+        this.dataSourceApiLogsHits = new DataSource(BicycleCounters.apiLogsHits.name + "DataSource",
+            undefined,
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new Validator(BicycleCounters.apiLogsHits.name + "ApiLogsHitsDataSource",
+                BicycleCounters.apiLogsHits.datasourceMongooseSchemaObject),
+            );
+
+        this.apiLogsFailuresTransformation = new ApiLogsFailuresTransformation();
+        this.apiLogsHitsTransformation = new ApiLogsHitsTransformation();
+
+        this.apiLogsFailuresModel = new PostgresModel(
+            BicycleCounters.apiLogsFailures.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.apiLogsFailures.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.apiLogsFailures.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.apiLogsFailures.name + "ModelValidator",
+                BicycleCounters.apiLogsFailures.outputMongooseSchemaObject,
+            ),
+        );
+        this.apiLogsHitsModel = new PostgresModel(
+            BicycleCounters.apiLogsHits.name + "Model",
+            {
+                outputSequelizeAttributes: BicycleCounters.apiLogsHits.outputSequelizeAttributes,
+                pgTableName: BicycleCounters.apiLogsHits.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.apiLogsHits.name + "ModelValidator",
+                BicycleCounters.apiLogsHits.outputMongooseSchemaObject,
+            ),
+        );
         this.locationsModel = new PostgresModel(
             BicycleCounters.locations.name + "Model",
             {
@@ -126,6 +177,44 @@ export class BicycleCountersWorker extends BaseWorker {
         );
 
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
+    }
+
+    public getApiLogs = async (): Promise<void> => {
+        const now = Math.round(new Date().getTime() / 1000);
+
+        await this.getApiLogsData(
+            "hit",
+            now - config.datasources.BicycleCountersStatPing.startOffsetSec,
+            now,
+        );
+
+        await this.getApiLogsData(
+            "fail",
+            now - config.datasources.BicycleCountersStatPing.startOffsetSec,
+            now,
+        );
+    }
+
+    public saveApiLogs = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        let transformation: ApiLogsHitsTransformation | ApiLogsFailuresTransformation;
+        let model: PostgresModel;
+
+        switch (inputData.type) {
+            case "hit":
+                transformation = this.apiLogsHitsTransformation;
+                model = this.apiLogsHitsModel;
+                break;
+            case "fail":
+                transformation = this.apiLogsFailuresTransformation;
+                model = this.apiLogsFailuresModel;
+                break;
+
+          }
+
+        const data =  await transformation.transform(inputData.data);
+
+        await model.save(data);
     }
 
     public refreshCameaDataLastXHoursInDB = async (msg: any): Promise<void> => {
@@ -273,5 +362,61 @@ export class BicycleCountersWorker extends BaseWorker {
             transformedData,
             [ "locations_id", "directions_id", "measured_from" ],
         );
+    }
+
+    private getApiLogsData = async (
+        type: "hit" | "fail",
+        startTS: number,
+        endTS: number,
+    ): Promise<void> => {
+        let dataSource: DataSource;
+        let statpingUrl = config.datasources.BicycleCountersStatPing.url;
+        let offset: number = 0;
+        let hasData = true;
+
+        const messagePromises = [];
+
+        switch (type) {
+            case "hit":
+              dataSource = this.dataSourceApiLogsHits;
+              statpingUrl += "/hits";
+              break;
+            case "fail":
+                dataSource = this.dataSourceApiLogsFailures;
+                statpingUrl += "/failures";
+                break;
+            default:
+                dataSource = this.dataSourceApiLogsHits;
+                statpingUrl += "/hits";
+          }
+
+        do {
+            dataSource.setProtocolStrategy(new HTTPProtocolStrategy({
+                headers: {},
+                json: true,
+                method: "GET",
+                // spreading the interval just for sure
+                url: `${statpingUrl}?start=${startTS - 1}&end=${endTS + 1}\
+&offset=${offset}&limit=${config.datasources.BicycleCountersStatPing.batchLimit}`,
+            }));
+
+            const data = await dataSource.getAll();
+
+            if (data && Array.isArray(data) && data.length > 0) {
+                messagePromises.push(this.sendMessageToExchange("workers." + this.queuePrefix + ".saveApiLogs",
+                    JSON.stringify({
+                        data,
+                        type,
+                    }),
+                ));
+            } else {
+                hasData = false;
+            }
+
+            offset += config.datasources.BicycleCountersStatPing.batchLimit;
+
+        } while (hasData);
+
+        await Promise.all(messagePromises);
     }
 }
