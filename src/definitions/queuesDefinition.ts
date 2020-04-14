@@ -414,6 +414,15 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "saveCustomersDataToDB",
             },
             {
+                name: "saveTokensDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveTokensDataToDB",
+            },
+            {
                 name: "saveZonesDataToDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,

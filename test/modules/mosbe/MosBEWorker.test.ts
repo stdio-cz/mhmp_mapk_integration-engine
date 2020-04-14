@@ -11,7 +11,7 @@ describe("MosBEWorker", () => {
     let sandbox;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox = sinon.createSandbox();
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({define: sandbox.stub()}));
 
@@ -22,11 +22,14 @@ describe("MosBEWorker", () => {
             .callsFake(() => []);
         sandbox.stub(worker.customersTransformation, "transform")
             .callsFake(() => []);
+        sandbox.stub(worker.tokensTransformation, "transform")
+            .callsFake(() => []);
         sandbox.stub(worker.zonesTransformation, "transform")
             .callsFake(() => []);
         sandbox.stub(worker.accountsModel, "saveBySqlFunction");
         sandbox.stub(worker.couponsModel, "saveBySqlFunction");
         sandbox.stub(worker.customersModel, "saveBySqlFunction");
+        sandbox.stub(worker.tokensModel, "saveBySqlFunction");
         sandbox.stub(worker.zonesModel, "saveBySqlFunction");
     });
 
@@ -41,7 +44,7 @@ describe("MosBEWorker", () => {
         sandbox.assert.callOrder(
             worker.accountsTransformation.transform,
             worker.accountsModel.saveBySqlFunction);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
     it("should calls the correct methods by saveCouponsDataToDB method", async () => {
@@ -51,7 +54,7 @@ describe("MosBEWorker", () => {
         sandbox.assert.callOrder(
             worker.couponsTransformation.transform,
             worker.couponsModel.saveBySqlFunction);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
     it("should calls the correct methods by saveCustomersDataToDB method", async () => {
@@ -61,7 +64,17 @@ describe("MosBEWorker", () => {
         sandbox.assert.callOrder(
             worker.customersTransformation.transform,
             worker.customersModel.saveBySqlFunction);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
+    });
+
+    it("should calls the correct methods by saveTokensDataToDB method", async () => {
+        await worker.saveTokensDataToDB({content: Buffer.from(JSON.stringify([]))});
+        sandbox.assert.calledOnce(worker.tokensTransformation.transform);
+        sandbox.assert.calledOnce(worker.tokensModel.saveBySqlFunction);
+        sandbox.assert.callOrder(
+            worker.tokensTransformation.transform,
+            worker.tokensModel.saveBySqlFunction);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
     it("should calls the correct methods by saveZonesDataToDB method", async () => {
@@ -71,7 +84,7 @@ describe("MosBEWorker", () => {
         sandbox.assert.callOrder(
             worker.zonesTransformation.transform,
             worker.zonesModel.saveBySqlFunction);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
 });
