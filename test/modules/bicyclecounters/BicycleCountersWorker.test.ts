@@ -17,6 +17,10 @@ describe("BicycleCountersWorker", () => {
     let testMeasurementsData;
     let testCameaMeasurementsTransformedData;
     let testEcoCounterMeasurementsTransformedData;
+    let testApiLogsHitsData;
+    let testApiLogsHitsTransformedData;
+    let testApiLogsFailuresData;
+    let testApiLogsFailuresTransformedData;
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -47,6 +51,74 @@ describe("BicycleCountersWorker", () => {
             value: 1,
         }];
 
+        testApiLogsHitsData = [
+            {
+              created_at: "2020-04-01T12:10:00.448511Z",
+              id: 17657,
+              latency: 351808,
+              ping_time: 11067,
+            },
+            {
+              created_at: "2020-04-01T12:11:00.417693Z",
+              id: 17658,
+              latency: 328694,
+              ping_time: 3737,
+            },
+        ];
+
+        testApiLogsHitsTransformedData = [
+            {
+              id: 17657,
+              latency: 351808,
+              measured_at: "2020-04-01T12:10:00.448511Z",
+              ping_time: 11067,
+            },
+            {
+              id: 17658,
+              latency: 328694,
+              measured_at: "2020-04-01T12:11:00.417693Z",
+              ping_time: 3737,
+            },
+        ];
+
+        /* tslint:disable max-line-length */
+        testApiLogsFailuresData = [
+            {
+              created_at: "2020-03-30T09:37:15.092323Z",
+              error_code: 200,
+              id: 2058,
+              issue: "HTTP Error Get \"https://unicam.camea.cz/api/bike-counter/get-all-sensors\": dial tcp 46.13.4.221:443: i/o timeout (Client.Timeout exceeded while awaiting headers)",
+              method_id: 0,
+              ping: 6703,
+            },
+            {
+              created_at: "2020-03-31T22:46:15.100396Z",
+              error_code: 200,
+              id: 2059,
+              issue: "HTTP Error Get \"https://unicam.camea.cz/api/bike-counter/get-all-sensors\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)",
+              method_id: 0,
+              ping: 14819,
+            },
+        ];
+
+        testApiLogsFailuresTransformedData = [
+            {
+              error_code: 200,
+              id: 2058,
+              issue: "HTTP Error Get \"https://unicam.camea.cz/api/bike-counter/get-all-sensors\": dial tcp 46.13.4.221:443: i/o timeout (Client.Timeout exceeded while awaiting headers)",
+              measured_at: "2020-03-30T09:37:15.092323Z",
+              ping: 6703,
+            },
+            {
+              error_code: 200,
+              id: 2059,
+              issue: "HTTP Error Get \"https://unicam.camea.cz/api/bike-counter/get-all-sensors\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)",
+              measured_at: "2020-03-31T22:46:15.100396Z",
+              ping: 14819,
+            },
+        ];
+
+        /* tslint:enable */
         worker = new BicycleCountersWorker();
 
         sandbox.stub(worker.dataSourceCamea, "getAll")
@@ -57,6 +129,14 @@ describe("BicycleCountersWorker", () => {
             .callsFake(() => testData);
         sandbox.stub(worker.dataSourceEcoCounterMeasurements, "getAll")
             .callsFake(() => testMeasurementsData);
+        sandbox.stub(worker.dataSourceApiLogsHits, "getAll")
+            .onCall(0).returns(testApiLogsHitsData)
+            .onCall(1).returns(testApiLogsHitsData)
+            .returns([]);
+        sandbox.stub(worker.dataSourceApiLogsFailures, "getAll")
+            .onCall(0).returns(testApiLogsFailuresData)
+            .onCall(1).returns(testApiLogsFailuresData)
+            .returns([]);
 
         sandbox.stub(worker.cameaTransformation, "transform")
             .callsFake(() => testTransformedData);
@@ -66,12 +146,21 @@ describe("BicycleCountersWorker", () => {
             .callsFake(() => testTransformedData);
         sandbox.stub(worker.ecoCounterMeasurementsTransformation, "transform")
             .callsFake(() => testEcoCounterMeasurementsTransformedData);
+        sandbox.stub(worker.apiLogsHitsTransformation, "transform")
+            .callsFake(() => testApiLogsHitsTransformedData);
+        sandbox.stub(worker.apiLogsFailuresTransformation, "transform")
+            .callsFake(() => testApiLogsFailuresTransformedData);
+        sandbox.stub(worker, "sendMessageToExchange").resolves();
 
         sandbox.stub(worker.locationsModel, "save");
         sandbox.stub(worker.directionsModel, "save");
         sandbox.stub(worker.detectionsModel, "saveBySqlFunction");
         sandbox.stub(worker.temperaturesModel, "saveBySqlFunction");
-        sandbox.stub(worker, "sendMessageToExchange");
+        sandbox.stub(worker.apiLogsHitsModel, "save");
+        sandbox.stub(worker.apiLogsFailuresModel, "save");
+
+        sandbox.spy(worker, "getApiLogsData");
+
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
     });
 
@@ -170,4 +259,59 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledOnce(worker.detectionsModel.saveBySqlFunction);
     });
 
+    it("should calls the correct methods by getApiLogs method", async () => {
+        const now = Math.round(new Date().getTime() / 1000);
+        config.datasources.BicycleCountersStatPing.startOffsetSec = 7200;
+        config.datasources.BicycleCountersStatPing.timeWindowSec = 3600;
+        config.datasources.BicycleCountersStatPing.batchLimit = 1;
+
+        await worker.getApiLogs();
+
+        sandbox.assert.calledTwice(worker.getApiLogsData);
+        sandbox.assert.calledWith(
+            worker.getApiLogsData,
+            "hit",
+            now - config.datasources.BicycleCountersStatPing.startOffsetSec,
+            now,
+        );
+        sandbox.assert.calledWith(
+            worker.getApiLogsData,
+            "fail",
+            now - config.datasources.BicycleCountersStatPing.startOffsetSec,
+            now,
+        );
+
+        sandbox.assert.callCount(worker.dataSourceApiLogsFailures.getAll, 3);
+        sandbox.assert.callCount(worker.dataSourceApiLogsHits.getAll, 3);
+        sandbox.assert.callCount(worker.sendMessageToExchange, 4);
+
+        sandbox.assert.callOrder(
+            worker.getApiLogsData,
+            worker.dataSourceApiLogsHits.getAll,
+            worker.sendMessageToExchange,
+            worker.getApiLogsData,
+            worker.dataSourceApiLogsFailures.getAll,
+            worker.sendMessageToExchange,
+        );
+    });
+
+    it("should calls the correct methods by saveApiLogs method with hits", async () => {
+        await worker.saveApiLogs({
+            content: Buffer.from(JSON.stringify({
+                data: testApiLogsHitsData,
+                type: "hit",
+                })),
+            },
+        );
+
+        sandbox.assert.calledOnce(worker.apiLogsHitsTransformation.transform);
+        sandbox.assert.calledWith(worker.apiLogsHitsTransformation.transform, testApiLogsHitsData);
+        sandbox.assert.calledOnce(worker.apiLogsHitsModel.save);
+        sandbox.assert.calledWith(worker.apiLogsHitsModel.save, testApiLogsHitsTransformedData);
+
+        sandbox.assert.callOrder(
+            worker.apiLogsHitsTransformation.transform,
+            worker.apiLogsHitsModel.save,
+        );
+    });
 });

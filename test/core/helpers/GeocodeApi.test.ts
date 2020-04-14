@@ -15,10 +15,11 @@ describe("GeocodeApi", () => {
     });
 
     it("should returns address by lat lng using Open Street Map API", async () => {
-        const data = await GeocodeApi.getAddressByLatLng(50.102864, 14.445868);
-        expect(data).to.have.property("address_formatted", "Dělnická 213/10, 17000 Praha-Holešovice, Česká republika");
+        const data = await GeocodeApi.getAddressByLatLng(50.102864, 14.445868); // TODO GeocodeApi should be imho mocked
+
+        expect(data.address_formatted).to.include("Dělnická 213/10");
         expect(data).to.have.property("street_address", "Dělnická 213/10");
-        expect(data).to.have.property("postal_code", "17000");
+        // expect(data).to.have.property("postal_code", "17000"); not returned by OSM any more
         expect(data).to.have.property("address_locality", "Praha");
         expect(data).to.have.property("address_region", "Holešovice");
         expect(data).to.have.property("address_country", "Česká republika");

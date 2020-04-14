@@ -85,7 +85,7 @@ export class QueueProcessor {
         this.channel.prefetch(1);
         // Bind queue to exchange
         this.channel.bindQueue(q.queue, config.RABBIT_EXCHANGE_NAME, key);
-        log.verbose("[*] Waiting for messages in " + name + ".");
+        log.verbose("[*] Waiting for messages in " + name + ". {key " + key + "}");
         // Listen and consume messages in queue
         this.channel.consume(name, processor, { noAck: false });
     }
