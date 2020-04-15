@@ -1,25 +1,32 @@
 "use strict";
 
+import { Readable } from "stream";
+
 import { FirebasePidlitacka } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
-import { DataSource, JSONDataTypeStrategy, PostgresProtocolStrategy } from "../../core/datasources";
+import {
+    DataSourceStreamed,
+    JSONDataTypeStrategy,
+    PostgresProtocolStrategyStreamed ,
+} from "../../core/datasources";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 
 export class FirebasePidlitackaWorker extends BaseWorker {
 
-    private appLaunchProtocolStrategy: PostgresProtocolStrategy;
-    private appLaunchDatasource: DataSource;
+    public dataStream: Readable;
+    private appLaunchProtocolStrategy: PostgresProtocolStrategyStreamed;
+    private appLaunchDatasource: DataSourceStreamed;
     private appLaunchModel: PostgresModel;
-    private eventsProtocolStrategy: PostgresProtocolStrategy;
-    private eventsDatasource: DataSource;
+    private eventsProtocolStrategy: PostgresProtocolStrategyStreamed;
+    private eventsDatasource: DataSourceStreamed;
     private eventsModel: PostgresModel;
-    private routeProtocolStrategy: PostgresProtocolStrategy;
-    private routeDatasource: DataSource;
+    private routeProtocolStrategy: PostgresProtocolStrategyStreamed;
+    private routeDatasource: DataSourceStreamed;
     private routeModel: PostgresModel;
-    private webEventsProtocolStrategy: PostgresProtocolStrategy;
-    private webEventsDatasource: DataSource;
+    private webEventsProtocolStrategy: PostgresProtocolStrategyStreamed;
+    private webEventsDatasource: DataSourceStreamed;
     private webEventsModel: PostgresModel;
 
     private queuePrefix: string;
@@ -31,7 +38,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         // same DB server but different DB name
         const connectionString = config.POSTGRES_CONN.replace(new URL(config.POSTGRES_CONN).pathname, "/stage");
 
-        this.appLaunchProtocolStrategy = new PostgresProtocolStrategy({
+        this.appLaunchProtocolStrategy = new PostgresProtocolStrategyStreamed({
             connectionString,
             modelAttributes: FirebasePidlitacka.appLaunch.datasourceSequelizeAttributes,
             schemaName: "keboola",
@@ -40,7 +47,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
             },
             tableName: "firebase_pidlitacka_applaunch_par",
         }),
-        this.appLaunchDatasource = new DataSource(
+        this.appLaunchDatasource = new DataSourceStreamed(
             FirebasePidlitacka.appLaunch.name + "DataSource",
             this.appLaunchProtocolStrategy,
             new JSONDataTypeStrategy({ resultsPath: "" }),
@@ -49,7 +56,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
                 FirebasePidlitacka.appLaunch.datasourceMongooseSchemaObject,
             ),
         );
-        this.eventsProtocolStrategy = new PostgresProtocolStrategy({
+        this.eventsProtocolStrategy = new PostgresProtocolStrategyStreamed({
             connectionString,
             modelAttributes: FirebasePidlitacka.events.datasourceSequelizeAttributes,
             schemaName: "keboola",
@@ -58,7 +65,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
             },
             tableName: "firebase_pidlitacka_events",
         });
-        this.eventsDatasource = new DataSource(
+        this.eventsDatasource = new DataSourceStreamed(
             FirebasePidlitacka.events.name + "DataSource",
             this.eventsProtocolStrategy,
             new JSONDataTypeStrategy({ resultsPath: "" }),
@@ -67,7 +74,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
                 FirebasePidlitacka.events.datasourceMongooseSchemaObject,
             ),
         );
-        this.routeProtocolStrategy = new PostgresProtocolStrategy({
+        this.routeProtocolStrategy = new PostgresProtocolStrategyStreamed({
             connectionString,
             modelAttributes: FirebasePidlitacka.route.datasourceSequelizeAttributes,
             schemaName: "keboola",
@@ -76,7 +83,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
             },
             tableName: "firebase_pidlitacka_route",
         });
-        this.routeDatasource = new DataSource(
+        this.routeDatasource = new DataSourceStreamed(
             FirebasePidlitacka.route.name + "DataSource",
             this.routeProtocolStrategy,
             new JSONDataTypeStrategy({ resultsPath: "" }),
@@ -85,7 +92,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
                 FirebasePidlitacka.route.datasourceMongooseSchemaObject,
             ),
         );
-        this.webEventsProtocolStrategy = new PostgresProtocolStrategy({
+        this.webEventsProtocolStrategy = new PostgresProtocolStrategyStreamed({
             connectionString,
             modelAttributes: FirebasePidlitacka.webEvents.datasourceSequelizeAttributes,
             schemaName: "keboola",
@@ -94,7 +101,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
             },
             tableName: "firebase_pidlitacka_web_events",
         });
-        this.webEventsDatasource = new DataSource(
+        this.webEventsDatasource = new DataSourceStreamed(
             FirebasePidlitacka.webEvents.name + "DataSource",
             this.webEventsProtocolStrategy,
             new JSONDataTypeStrategy({ resultsPath: "" }),
@@ -158,39 +165,57 @@ export class FirebasePidlitackaWorker extends BaseWorker {
     }
 
     public async moveAppLaunch(msg: any): Promise<void> {
-        // getting data from source DB
-        const data = await this.appLaunchDatasource.getAll();
-        // saving data to target DB
-        await this.appLaunchModel.saveBySqlFunction(data, [ "event_date" ]);
-        // deleting data from source DB
-        await this.appLaunchProtocolStrategy.deleteData();
+        await this.moveData(
+            this.appLaunchDatasource,
+            this.appLaunchModel,
+            [ "event_date" ],
+            this.appLaunchProtocolStrategy,
+        );
     }
 
     public async moveEvents(msg: any): Promise<void> {
-        // getting data from source DB
-        const data = await this.eventsDatasource.getAll();
-        // saving data to target DB
-        await this.eventsModel.saveBySqlFunction(data, [ "event_date", "event_name" ]);
-        // deleting data from source DB
-        await this.eventsProtocolStrategy.deleteData();
+        await this.moveData(
+            this.eventsDatasource,
+            this.eventsModel,
+            [ "event_date", "event_name" ],
+            this.eventsProtocolStrategy,
+        );
     }
 
     public async moveRoute(msg: any): Promise<void> {
-        // getting data from source DB
-        const data = await this.routeDatasource.getAll();
-        // saving data to target DB
-        await this.routeModel.saveBySqlFunction(data, [ "s_from", "s_to", "reference_date" ]);
-        // deleting data from source DB
-        await this.routeProtocolStrategy.deleteData();
+        await this.moveData(
+            this.routeDatasource,
+            this.routeModel,
+            [ "s_from", "s_to", "reference_date" ],
+            this.routeProtocolStrategy,
+        );
     }
 
     public async moveWebEvents(msg: any): Promise<void> {
-        // getting data from source DB
-        const data = await this.webEventsDatasource.getAll();
-        // saving data to target DB
-        await this.webEventsModel.saveBySqlFunction(data, [ "reference_date" ]);
-        // deleting data from source DB
-        await this.webEventsProtocolStrategy.deleteData();
+        await this.moveData(
+            this.webEventsDatasource,
+            this.webEventsModel,
+            [ "reference_date" ],
+            this.webEventsProtocolStrategy,
+        );
     }
 
+    private async moveData(
+        datasource: DataSourceStreamed,
+        model: PostgresModel,
+        primaryKeys: string[],
+        strategy: PostgresProtocolStrategyStreamed,
+    ): Promise<void> {
+        this.dataStream = await datasource.getAll();
+        this.dataStream.on("data", async (data: any) => {
+            this.dataStream.pause();
+            await model.saveBySqlFunction(data, primaryKeys);
+            this.dataStream.resume();
+        });
+
+        this.dataStream.on("end", async () => {
+            await strategy.deleteData();
+
+        });
+    }
 }

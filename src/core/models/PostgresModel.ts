@@ -68,7 +68,13 @@ export class PostgresModel implements IModel {
         return this[this.savingType](model, data);
     }
 
-    public saveBySqlFunction = async (data: any, primaryKeys: string[], useTmpTable: boolean = false): Promise<any> => {
+    public saveBySqlFunction = async (
+        data: any,
+        primaryKeys: string[],
+        useTmpTable: boolean = false,
+        transaction: Sequelize.Transaction = null,
+        connection: Sequelize.Sequelize = null,
+        ): Promise<any> => {
         // data validation
         if (this.validator) {
             try {
@@ -81,7 +87,7 @@ export class PostgresModel implements IModel {
         }
 
         try {
-            const connection = PostgresConnector.getConnection();
+            connection = connection || PostgresConnector.getConnection();
             // json stringify and escape quotes
             const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
             // TODO doplnit batch_id a author
@@ -95,7 +101,10 @@ export class PostgresModel implements IModel {
                 + "NULL, " // p_sort json
                 + "'integration-engine'" // p_worker_name character varying
                 + ") ",
-                { type: Sequelize.QueryTypes.SELECT },
+                {
+                    transaction,
+                    type: Sequelize.QueryTypes.SELECT,
+                },
             );
         } catch (err) {
             throw new CustomError("Error while saving to database.", true, this.name, 4001, err);

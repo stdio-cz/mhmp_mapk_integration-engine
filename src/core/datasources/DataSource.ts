@@ -8,9 +8,9 @@ import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
 export class DataSource implements IDataSource {
 
     public name: string;
-    private protocolStrategy: IProtocolStrategy;
-    private dataTypeStrategy: IDataTypeStrategy;
-    private validator: Validator;
+    protected protocolStrategy: IProtocolStrategy;
+    protected dataTypeStrategy: IDataTypeStrategy;
+    protected validator: Validator;
 
     constructor(
         name: string,
@@ -79,7 +79,7 @@ export class DataSource implements IDataSource {
         }
     }
 
-    private isEmpty = (content: any): boolean => {
+    protected isEmpty = (content: any): boolean => {
         if (!content) {
             return true;
         } else if (content instanceof Array && content.length === 0) {
