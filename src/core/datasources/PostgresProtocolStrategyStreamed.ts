@@ -51,49 +51,57 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
             return new Readable({
                 objectMode: true,
                 async read() {
-                    const results = await model
-                        .findAll({
-                            ...findOptions,
-                            limit: batchLimit,
-                            offset,
-                            raw: true,
-                        });
+                    try {
+                        const results = await model
+                            .findAll({
+                                ...findOptions,
+                                limit: batchLimit,
+                                offset,
+                                raw: true,
+                            });
 
-                    // some data in correct format
-                    if (results && Array.isArray(results) && results.length !== 0) {
-                        resultsCount += results.length;
-                        this.push(results);
-                        // but less than requested amount
-                        if (results.length < batchLimit) {
+                        // some data in correct format
+                        if (results && Array.isArray(results) && results.length !== 0) {
+                            resultsCount += results.length;
+                            this.push(results);
+                            // but less than requested amount
+                            if (results.length < batchLimit) {
+                                gotAllData = true;
+                            }
+                        }  else {
                             gotAllData = true;
                         }
-                    }  else {
-                        gotAllData = true;
-                    }
 
-                    // requested data count reached
-                    if (limit && resultsCount >= limit) {
-                        gotAllData = true;
-                    }
-
-                    if (gotAllData) {
-                        // end the stream
-                        this.push(null);
-
-                        if (dbConnectionOpened) {
-                            await connection.close();
-                            dbConnectionOpened = false;
+                        // requested data count reached
+                        if (limit && resultsCount >= limit) {
+                            gotAllData = true;
                         }
-                    } else {
-                        offset += batchLimit;
-                        // select min(remaining,batch size) in next round
-                        batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
+
+                        if (gotAllData) {
+                            // end the stream
+                            this.push(null);
+
+                            if (dbConnectionOpened) {
+                                await connection.close();
+                                dbConnectionOpened = false;
+                            }
+                        } else {
+                            offset += batchLimit;
+                            // select min(remaining,batch size) in next round
+                            batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
+                        }
+                    } catch (err) {
+                        this.emit("error", err);
                     }
                 },
                 async destroy() {
                     if (dbConnectionOpened) {
-                        await connection.close();
-                        dbConnectionOpened = false;
+                        try {
+                            await connection.close();
+                            dbConnectionOpened = false;
+                        } catch (err) {
+                            this.emit("error", err);
+                        }
                     }
                 },
             });
