@@ -2,6 +2,7 @@
 
 import { Readable } from "stream";
 
+import { CustomError } from "@golemio/errors";
 import { FirebasePidlitacka } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
@@ -15,10 +16,10 @@ import { BaseWorker } from "../../core/workers";
 
 export class FirebasePidlitackaWorker extends BaseWorker {
 
-    public dataStream: Readable;
     private appLaunchProtocolStrategy: PostgresProtocolStrategyStreamed;
     private appLaunchDatasource: DataSourceStreamed;
     private appLaunchModel: PostgresModel;
+    private dataStream: Readable;
     private eventsProtocolStrategy: PostgresProtocolStrategyStreamed;
     private eventsDatasource: DataSourceStreamed;
     private eventsModel: PostgresModel;
@@ -206,16 +207,36 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         primaryKeys: string[],
         strategy: PostgresProtocolStrategyStreamed,
     ): Promise<void> {
-        this.dataStream = await datasource.getAll();
+        let processing = false;
+
+        try {
+            this.dataStream = await datasource.getAll();
+        } catch (err) {
+            throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
+        }
         this.dataStream.on("data", async (data: any) => {
             this.dataStream.pause();
+            processing = true;
             await model.saveBySqlFunction(data, primaryKeys);
+            processing = false;
             this.dataStream.resume();
         });
 
-        this.dataStream.on("end", async () => {
-            await strategy.deleteData();
-
-        });
+        try {
+            await new Promise((resolve, reject) => {
+                this.dataStream.on("error", (error) => reject(error));
+                this.dataStream.on("end", async () => {
+                    const checker = setInterval( async () => {
+                        if (!processing) {
+                            clearInterval(checker);
+                            await strategy.deleteData();
+                            resolve();
+                        }
+                    }, 100);
+                });
+            });
+        } catch (err) {
+            throw new CustomError("Error processing data.", true, this.constructor.name, 5051, err);
+        }
     }
 }
