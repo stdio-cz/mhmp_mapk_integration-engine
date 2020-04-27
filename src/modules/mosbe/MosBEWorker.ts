@@ -8,6 +8,7 @@ import {
     MosBEAccountsTransformation,
     MosBECouponsTransformation,
     MosBECustomersTransformation,
+    MosBETokensTransformation,
     MosBEZonesTransformation,
 } from "./";
 
@@ -16,10 +17,12 @@ export class MosBEWorker extends BaseWorker {
     private accountsModel: PostgresModel;
     private couponsModel: PostgresModel;
     private customersModel: PostgresModel;
+    private tokensModel: PostgresModel;
     private zonesModel: PostgresModel;
     private accountsTransformation: MosBEAccountsTransformation;
     private couponsTransformation: MosBECouponsTransformation;
     private customersTransformation: MosBECustomersTransformation;
+    private tokensTransformation: MosBETokensTransformation;
     private zonesTransformation: MosBEZonesTransformation;
 
     constructor() {
@@ -48,6 +51,14 @@ export class MosBEWorker extends BaseWorker {
             new Validator(MOS.BE.customers.name + "ModelValidator",
                 MOS.BE.customers.outputMongooseSchemaObject),
         );
+        this.tokensModel = new PostgresModel(MOS.BE.tokens.name + "Model", {
+                outputSequelizeAttributes: MOS.BE.tokens.outputSequelizeAttributes,
+                pgTableName: MOS.BE.tokens.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(MOS.BE.tokens.name + "ModelValidator",
+                MOS.BE.tokens.outputMongooseSchemaObject),
+        );
         this.zonesModel = new PostgresModel(MOS.BE.zones.name + "Model", {
                 outputSequelizeAttributes: MOS.BE.zones.outputSequelizeAttributes,
                 pgTableName: MOS.BE.zones.pgTableName,
@@ -59,6 +70,7 @@ export class MosBEWorker extends BaseWorker {
         this.accountsTransformation = new MosBEAccountsTransformation();
         this.couponsTransformation = new MosBECouponsTransformation();
         this.customersTransformation = new MosBECustomersTransformation();
+        this.tokensTransformation = new MosBETokensTransformation();
         this.zonesTransformation = new MosBEZonesTransformation();
     }
 
@@ -78,6 +90,12 @@ export class MosBEWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.customersTransformation.transform(inputData);
         await this.customersModel.saveBySqlFunction(transformedData, [ "customer_id" ]);
+    }
+
+    public saveTokensDataToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.tokensTransformation.transform(inputData);
+        await this.tokensModel.saveBySqlFunction(transformedData, [ "token_id" ]);
     }
 
     public saveZonesDataToDB = async (msg: any): Promise<void> => {

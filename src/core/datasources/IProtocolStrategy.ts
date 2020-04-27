@@ -2,6 +2,8 @@
 
 import * as Sequelize from "sequelize";
 
+import { Readable } from "stream";
+
 export interface IHTTPSettings {
     /** (optional) Data to send with request, e.g. credentials */
     body?: any;
@@ -69,7 +71,7 @@ export interface IPostgresSettings {
      * Sequelize findAll() options object.
      * https://sequelize.org/master/class/lib/model.js~Model.html#static-method-findAll
      */
-    findOptions?: object;
+    findOptions?: any;
 }
 
 export interface IGoogleCloudStorageSettings {
@@ -92,7 +94,7 @@ export interface IProtocolStrategy {
     setConnectionSettings(settings: IHTTPSettings | IFTPSettings | IPostgresSettings
         | IGoogleCloudStorageSettings): void;
 
-    getData(): Promise<any>;
+    getData(): Promise<any> | Promise<Readable>;
 
     getLastModified(): Promise<any>;
 
