@@ -1,5 +1,7 @@
 "use strict";
 
+import { MOS } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -30,6 +32,12 @@ describe("MosBECouponsTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let validator;
+
+    before(() => {
+        validator = new Validator(MOS.BE.coupons.name + "ModelValidator",
+            MOS.BE.coupons.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new MosBECouponsTransformation();
@@ -48,6 +56,8 @@ describe("MosBECouponsTransformation", () => {
 
     it("should properly transform element", async () => {
         const data = await transformation.transform(testSourceData[0]);
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         expect(data).to.have.property("coupon_custom_status_id");
         expect(data).to.have.property("coupon_id");
         expect(data).to.have.property("created");
@@ -62,10 +72,16 @@ describe("MosBECouponsTransformation", () => {
         expect(data).to.have.property("tariff_profile_name");
         expect(data).to.have.property("valid_from");
         expect(data).to.have.property("valid_till");
-    });
+        expect(data).to.have.property("created_by_id");
+        expect(data).to.have.property("order_payment_type");
+        expect(data).to.have.property("order_status");
+        expect(data).to.have.property("token_id");
+});
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
+        await expect(validator.Validate(data)).to.be.fulfilled;
+
         for (let i = 0, imax = data.length; i < imax; i++) {
             expect(data[i]).to.have.property("coupon_custom_status_id");
             expect(data[i]).to.have.property("coupon_id");
@@ -81,6 +97,10 @@ describe("MosBECouponsTransformation", () => {
             expect(data[i]).to.have.property("tariff_profile_name");
             expect(data[i]).to.have.property("valid_from");
             expect(data[i]).to.have.property("valid_till");
+            expect(data[i]).to.have.property("created_by_id");
+            expect(data[i]).to.have.property("order_payment_type");
+            expect(data[i]).to.have.property("order_status");
+            expect(data[i]).to.have.property("token_id");
         }
     });
 

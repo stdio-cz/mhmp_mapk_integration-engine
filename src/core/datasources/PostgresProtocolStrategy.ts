@@ -6,7 +6,7 @@ import { IPostgresSettings, IProtocolStrategy } from "./";
 
 export class PostgresProtocolStrategy implements IProtocolStrategy {
 
-    private connectionSettings: IPostgresSettings;
+    protected connectionSettings: IPostgresSettings;
 
     constructor(settings: IPostgresSettings) {
         this.connectionSettings = settings;

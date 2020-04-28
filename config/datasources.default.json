@@ -31,6 +31,11 @@
     "BicycleCountersEcoCounter": "https://apieco.eco-counter-tools.com/api/1.0/site",
     "BicycleCountersEcoCounterToken": "",
     "BicycleCountersEcoCounterMeasurements": "https://apieco.eco-counter-tools.com/api/1.0/data/site/:id?begin=:from&end=:to&step=:step&complete=:complete",
+    "BicycleCountersStatPing": {
+        "url": "http://10.228.1.81:6565/api/services/6",
+        "startOffsetSec": 186400,
+        "batchLimit": 100
+    },
     "POTEXSortedWasteContainers": "http://www.recyklujemetextil.cz/Api/places.json",
     "ParkingZones": "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",

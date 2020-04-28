@@ -95,11 +95,31 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase(),
         queues: [
             {
+                name: "getApiLogs",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "getApiLogs",
+            },
+            {
+                name: "saveApiLogs",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "saveApiLogs",
+            },
+            {
                 name: "refreshCameaDataLastXHoursInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 14 * 60 * 1000, // 4 minutes
+                    messageTtl: 14 * 60 * 1000, // 14 minutes
                 },
                 worker: BicycleCountersWorker,
                 workerMethod: "refreshCameaDataLastXHoursInDB",
@@ -109,7 +129,7 @@ const definitions: IQueueDefinition[] = [
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
-                    messageTtl: 23 * 60 * 1000, // 4 minutes
+                    messageTtl: 23 * 60 * 1000, // 23 minutes
                 },
                 worker: BicycleCountersWorker,
                 workerMethod: "refreshCameaDataPreviousDayInDB",
@@ -392,6 +412,15 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MosBEWorker,
                 workerMethod: "saveCustomersDataToDB",
+            },
+            {
+                name: "saveTokensDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: MosBEWorker,
+                workerMethod: "saveTokensDataToDB",
             },
             {
                 name: "saveZonesDataToDB",
