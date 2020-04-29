@@ -1,12 +1,15 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
+import { DataSourceStream } from "./DataSourceStream";
+
 import { Validator } from "@golemio/validator";
 import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
 
 export class DataSource implements IDataSource {
 
+    public dataStream: DataSourceStream;
     public name: string;
     protected protocolStrategy: IProtocolStrategy;
     protected dataTypeStrategy: IDataTypeStrategy;

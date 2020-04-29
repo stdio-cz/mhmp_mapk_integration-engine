@@ -1,5 +1,4 @@
 "use strict";
-import { Readable } from "stream";
 
 import { FirebasePidlitacka } from "@golemio/schema-definitions";
 import "mocha";
@@ -7,6 +6,8 @@ import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { FirebasePidlitackaWorker } from "../../../src/modules/firebasepidlitacka";
+
+import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream"
 
 describe("FirebasePidlitackaWorker", () => {
 
@@ -19,16 +20,22 @@ describe("FirebasePidlitackaWorker", () => {
     let testDataRoute;
     let testDataWebEvents;
 
-    const getAll = async (data) => {
-        const stream =  new Readable({
-            objectMode: true,
-        });
-        stream.push(data);
-        stream.push(null);
-        return stream;
-    };
 
     beforeEach(() => {
+
+        const getRawData = async (data, stream) => {
+          stream.push(data);
+          stream.push(null);
+          return stream;
+        };
+
+        const dataStream =  new DataSourceStream({
+          objectMode: true,
+          read: () => {
+              return;
+          },
+        });
+
         sandbox = sinon.createSandbox();
         sequelizeModelStub = Object.assign({
             hasMany: sandbox.stub(),
@@ -117,14 +124,19 @@ describe("FirebasePidlitackaWorker", () => {
 
         worker = new FirebasePidlitackaWorker();
 
-        sandbox.stub(worker.appLaunchDatasource, "getAll")
-            .callsFake(async () => getAll(testDataAppLaunch));
-        sandbox.stub(worker.eventsDatasource, "getAll")
-            .callsFake(() => getAll(testDataEvents));
-        sandbox.stub(worker.routeDatasource, "getAll")
-            .callsFake(() => getAll(testDataRoute));
-        sandbox.stub(worker.webEventsDatasource, "getAll")
-            .callsFake(() => getAll(testDataWebEvents));
+        sandbox.stub(worker.appLaunchDatasource, "getRawData")
+            .callsFake(async () => getRawData(testDataAppLaunch, dataStream));
+        sandbox.stub(worker.eventsDatasource, "getRawData")
+            .callsFake(() => getRawData(testDataEvents, dataStream));
+        sandbox.stub(worker.routeDatasource, "getRawData")
+            .callsFake(() => getRawData(testDataRoute, dataStream));
+        sandbox.stub(worker.webEventsDatasource, "getRawData")
+            .callsFake(() => getRawData(testDataWebEvents, dataStream));
+
+        sandbox.spy(worker.appLaunchDatasource, "getAll");
+        sandbox.spy(worker.eventsDatasource, "getAll");
+        sandbox.spy(worker.routeDatasource, "getAll");
+        sandbox.spy(worker.webEventsDatasource, "getAll");
 
         sandbox.stub(worker.appLaunchProtocolStrategy, "deleteData");
         sandbox.stub(worker.eventsProtocolStrategy, "deleteData");

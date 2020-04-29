@@ -1,6 +1,6 @@
 "use strict";
 
-import { Readable } from "stream";
+import { DataSourceStream } from "../../core/datasources/DataSourceStream";
 
 import { CustomError } from "@golemio/errors";
 import { FirebasePidlitacka } from "@golemio/schema-definitions";
@@ -19,7 +19,7 @@ export class FirebasePidlitackaWorker extends BaseWorker {
     private appLaunchProtocolStrategy: PostgresProtocolStrategyStreamed;
     private appLaunchDatasource: DataSourceStreamed;
     private appLaunchModel: PostgresModel;
-    private dataStream: Readable;
+    private dataStream: DataSourceStream;
     private eventsProtocolStrategy: PostgresProtocolStrategyStreamed;
     private eventsDatasource: DataSourceStreamed;
     private eventsModel: PostgresModel;
@@ -208,19 +208,20 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         strategy: PostgresProtocolStrategyStreamed,
     ): Promise<void> {
         let processing = false;
-
         try {
             this.dataStream = await datasource.getAll();
         } catch (err) {
             throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
         }
-        this.dataStream.on("data", async (data: any) => {
+        this.dataStream.onDataListeners.push(async (data: any) => {
             this.dataStream.pause();
             processing = true;
             await model.saveBySqlFunction(data, primaryKeys);
             processing = false;
             this.dataStream.resume();
         });
+
+        datasource.proceed();
 
         try {
             await new Promise((resolve, reject) => {
