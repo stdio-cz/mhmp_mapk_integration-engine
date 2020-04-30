@@ -57,6 +57,7 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker, "getEstimatedPoint")
             .callsFake(() => Object.assign({
                 properties: { time_delay: 0, shape_dist_traveled: 0, next_stop_id: "00" } }));
+        sandbox.stub(worker.gtfsRtModel, "save");
     });
 
     afterEach(() => {
@@ -80,8 +81,9 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by generateGtfsRt method", async () => {
-        await worker.generateGtfsRt({ content: Buffer.from("0")  });
+        await worker.generateGtfsRt({ content: Buffer.from("0") });
         sandbox.assert.calledOnce(worker.modelTrips.findAll);
+        sandbox.assert.callCount(worker.gtfsRtModel.save, 4);
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {

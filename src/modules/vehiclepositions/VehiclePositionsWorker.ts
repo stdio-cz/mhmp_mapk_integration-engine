@@ -53,7 +53,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
         this.gtfsRtModel = new RedisModel("GTFSRealTimeModel", {
             isKeyConstructedFromData: false,
-            prefix: "ropidgtfs_realtime",
+            prefix: "files",
         }, null);
 
         this.modelTrips.associate(this.modelLastPositions.sequelizeModel);
