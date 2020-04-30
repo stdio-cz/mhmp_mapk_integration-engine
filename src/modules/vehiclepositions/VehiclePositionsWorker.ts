@@ -21,7 +21,7 @@ import * as cheapruler from "cheap-ruler";
 import * as moment from "moment-timezone";
 import * as Sequelize from "sequelize";
 const ruler: any = cheapruler(50);
-const fs = require("fs").promises;
+// const fs = require("fs").promises;
 const gtfsRealtime = require("gtfs-realtime-bindings").transit_realtime;
 
 export class VehiclePositionsWorker extends BaseWorker {
@@ -116,6 +116,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                     tracking: 2,
                 },
             }],
+            raw: true,
             where: {
                 gtfs_trip_id: { [Sequelize.Op.ne]: null },
             },
@@ -138,20 +139,20 @@ export class VehiclePositionsWorker extends BaseWorker {
                 startTime: r.origin_time,
                 tripId: r.gtfs_trip_id,
             };
-            const entityTimestamp = Math.round(r.last_position.origin_timestamp / 1000);
+            const entityTimestamp = Math.round(r["last_position.origin_timestamp"] / 1000);
 
             const updateEntity = {
                 id: r.id,
                 tripUpdate: {
                     stopTimeUpdate: [
                         {
-                            arrival: r.last_position.delay_stop_arrival === null ? null : {
-                                delay: r.last_position.delay_stop_arrival,
+                            arrival: r["last_position.delay_stop_arrival"] === null ? null : {
+                                delay: r["last_position.delay_stop_arrival"],
                             },
-                            departure: r.last_position.delay_stop_departure === null ? null : {
-                                delay: r.last_position.delay_stop_departure,
+                            departure: r["last_position.delay_stop_departure"] === null ? null : {
+                                delay: r["last_position.delay_stop_departure"],
                             },
-                            stopSequence: r.last_position.cis_last_stop_sequence,
+                            stopSequence: r["last_position.cis_last_stop_sequence"],
                         },
                     ],
                     timestamp: entityTimestamp,
@@ -161,12 +162,12 @@ export class VehiclePositionsWorker extends BaseWorker {
             const positionEntity = {
                 id: r.gtfs_trip_id,
                 vehicle: {
-                    currentStopSequence: r.last_position.cis_last_stop_sequence,
+                    currentStopSequence: r["last_position.cis_last_stop_sequence"],
                     position: {
-                        bearing: r.last_position.bearing,
-                        latitude: r.last_position.lat,
-                        longitude: r.last_position.lon,
-                        speed: (r.last_position.speed / 3.6).toFixed(2),
+                        bearing: r["last_position.bearing"],
+                        latitude: r["last_position.lat"],
+                        longitude: r["last_position.lon"],
+                        speed: (r["last_position.speed"] / 3.6).toFixed(2),
                     },
                     timestamp: entityTimestamp,
                     trip: tripDescriptor,
@@ -181,7 +182,8 @@ export class VehiclePositionsWorker extends BaseWorker {
             const buffer = gtfsRealtime.FeedMessage.encode(updatesMessage).finish();
 
             // save to Redis
-            await this.gtfsRtModel.save("trip_updates.pb", buffer);
+            await this.gtfsRtModel.save("trip_updates.pb", buffer.toString("hex"));
+            // await fs.writeFile("trip_updates.pb", buffer); // debug
             await this.gtfsRtModel.save("trip_updates.json", JSON.stringify(updatesMessage));
         }
 
@@ -189,7 +191,8 @@ export class VehiclePositionsWorker extends BaseWorker {
             const buffer = gtfsRealtime.FeedMessage.encode(positionsMessage).finish();
 
             // save to Redis
-            await this.gtfsRtModel.save("vehicle_positions.pb", buffer);
+            await this.gtfsRtModel.save("vehicle_positions.pb", buffer.toString("hex"));
+            // await fs.writeFile("vehicle_positions.pb", buffer); // debug
             await this.gtfsRtModel.save("vehicle_positions.json", JSON.stringify(updatesMessage));
         }
     }
