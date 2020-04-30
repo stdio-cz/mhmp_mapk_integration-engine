@@ -32,6 +32,7 @@ export class VehiclePositionsWorker extends BaseWorker {
     private modelLastPositions: VehiclePositionsLastPositionsModel;
     private transformation: VehiclePositionsTransformation;
     private delayComputationTripsModel: RedisModel;
+    private gtfsRtModel: RedisModel;
     private queuePrefix: string;
 
     constructor() {
@@ -50,6 +51,10 @@ export class VehiclePositionsWorker extends BaseWorker {
             new Validator(RopidGTFS.delayComputationTrips.name + "ModelValidator",
                 RopidGTFS.delayComputationTrips.outputMongooseSchemaObject));
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + VehiclePositions.name.toLowerCase();
+        this.gtfsRtModel = new RedisModel("GTFSRealTimeModel", {
+            isKeyConstructedFromData: false,
+            prefix: "ropidgtfs_realtime",
+        }, null);
 
         this.modelTrips.associate(this.modelLastPositions.sequelizeModel);
     }
@@ -126,7 +131,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         updatesMessage.header = gtfsRealtime.FeedHeader.fromObject(header);
         positionsMessage.header = gtfsRealtime.FeedHeader.fromObject(header);
 
-        const promises = results.map(async (r: any) => {
+        results.forEach((r: any) => {
             const tripDescriptor = {
                 scheduleRelationship: r.is_canceled ? "CANCELED" : "SCHEDULED",
                 startDate: moment(r.timestamp).utc().format("YYYYMMDD"),
@@ -172,22 +177,20 @@ export class VehiclePositionsWorker extends BaseWorker {
             positionsMessage.entity.push(gtfsRealtime.FeedEntity.fromObject(positionEntity));
         });
 
-        await Promise.all(promises);
-
         if (gtfsRealtime.FeedMessage.verify(updatesMessage) === null) {
             const buffer = gtfsRealtime.FeedMessage.encode(updatesMessage).finish();
 
-            // TODO save to Public File Storage
-            await fs.writeFile("trip_updates.pb", buffer);
-            await fs.writeFile("trip_updates.json", JSON.stringify(updatesMessage));
+            // save to Redis
+            await this.gtfsRtModel.save("trip_updates.pb", buffer);
+            await this.gtfsRtModel.save("trip_updates.json", JSON.stringify(updatesMessage));
         }
 
         if (gtfsRealtime.FeedMessage.verify(positionsMessage) === null) {
             const buffer = gtfsRealtime.FeedMessage.encode(positionsMessage).finish();
 
-            // TODO save to Public File Storage
-            await fs.writeFile("vehicle_positions.pb", buffer);
-            await fs.writeFile("vehicle_positions.json", JSON.stringify(positionsMessage));
+            // save to Redis
+            await this.gtfsRtModel.save("vehicle_positions.pb", buffer);
+            await this.gtfsRtModel.save("vehicle_positions.json", JSON.stringify(updatesMessage));
         }
     }
 
