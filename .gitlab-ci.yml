@@ -49,10 +49,9 @@ registry_deployment:
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
-  only:
-    refs:
-      - master
-      - development
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "development"
 
 pages:
   stage: deploy
@@ -64,5 +63,5 @@ pages:
   artifacts:
     paths:
     - public
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
