@@ -207,12 +207,15 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         primaryKeys: string[],
         strategy: PostgresProtocolStrategyStreamed,
     ): Promise<void> {
+        // TO DO - move to hejper f-cion
         let processing = false;
+
         try {
             this.dataStream = await datasource.getAll();
         } catch (err) {
             throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
         }
+
         this.dataStream.onDataListeners.push(async (data: any) => {
             this.dataStream.pause();
             processing = true;

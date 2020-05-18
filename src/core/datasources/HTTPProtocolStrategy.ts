@@ -16,7 +16,7 @@ const gunzip = util.promisify(zlib.gunzip);
 
 export class HTTPProtocolStrategy implements IProtocolStrategy {
 
-    private connectionSettings: IHTTPSettings;
+    protected connectionSettings: IHTTPSettings;
 
     constructor(settings: IHTTPSettings) {
         this.connectionSettings = settings;
