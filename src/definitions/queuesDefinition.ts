@@ -60,33 +60,24 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase(),
         queues: [
             {
-                name: "refreshDataInDB",
+                name: "refresh1HDataInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: AirQualityStationsWorker,
-                workerMethod: "refreshDataInDB",
+                workerMethod: "refresh1HDataInDB",
             },
             {
-                name: "saveDataToHistory",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: AirQualityStationsWorker,
-                workerMethod: "saveDataToHistory",
-            },
-            {
-                name: "updateDistrict",
+                name: "refresh3HDataInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 59 * 60 * 1000, // 59 minutes
                 },
                 worker: AirQualityStationsWorker,
-                workerMethod: "updateDistrict",
+                workerMethod: "refresh3HDataInDB",
             },
         ],
     },
