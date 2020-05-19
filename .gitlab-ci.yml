@@ -3,7 +3,7 @@ image: docker:stable
 variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
-  POSTGRES_PASS: test-pass
+  POSTGRES_PASSWORD: test-pass
   POSTGRES_DB: testdb
 
 stages:
@@ -19,17 +19,17 @@ run_tests:
   stage: build
   image: node:12
   services:
-    - postgres:10.5
-    - mongo:4.0.10
+    - postgres:12.3
+    - mongo:4.0
     - redis:5.0-alpine
-    - rabbitmq:3.7.14
+    - rabbitmq:3.8
   script:
     - export NODE_ENV=development
     - yarn
     - yarn run tslint
     - yarn run build
     - export MONGO_CONN=mongodb://mongo/testdb
-    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
     - export REDIS_CONN=redis://redis/
     - export NODE_ENV=test
     - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
