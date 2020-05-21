@@ -42,16 +42,15 @@ build_image:
   stage: build
   script:
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest .
+    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest .
 
 registry_deployment:
   stage: deploy
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
   rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-    - if: $CI_COMMIT_BRANCH == "development"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
 
 pages:
   stage: deploy
