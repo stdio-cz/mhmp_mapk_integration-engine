@@ -87,8 +87,9 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
 
         const res = {
             position: {
+                // fix source negative value due to overflow by adding 256
                 bearing: (attributes.azimut)
-                    ? parseInt(attributes.azimut, 10)
+                    ? ( (azimut) => azimut < 0 ? azimut + 256 : azimut )(parseInt(attributes.azimut, 10))
                     : null,
                 cis_last_stop_id: (attributes.zast)
                     ? parseInt(attributes.zast, 10)
