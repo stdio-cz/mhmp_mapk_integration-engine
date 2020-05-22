@@ -67,7 +67,7 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
                                                 && (component.Flag === "ok" || component.Flag === "no_data"))
                                                 || (component.Val && !component.Flag)) {
                                             res.measurements.push({
-                                                agregation_interval: component.Int,
+                                                aggregation_interval: component.Int,
                                                 component_code: component.Code,
                                                 measured_from: dateFrom.valueOf(),
                                                 measured_to: dateTo.valueOf(),
