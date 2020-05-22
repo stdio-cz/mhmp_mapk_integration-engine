@@ -60,7 +60,7 @@ describe("VehiclePositionsTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
+    it("should properly transform element (negative bearing)", async () => {
         const data = await transformation.transform(testSourceData.m.spoj[0]);
         expect(data).to.have.property("positions");
         expect(data.positions[0]).to.have.property("lat", 50.16252);
@@ -68,6 +68,18 @@ describe("VehiclePositionsTransformation", () => {
         expect(data.positions[0]).to.have.property("bearing", -10 + 256);
         expect(data).to.have.property("stops");
         expect(data.stops.length).to.equal(28);
+        expect(data).to.have.property("trips");
+        expect(data.trips[0]).to.have.property("cis_line_id", 100110);
+    });
+
+    it("should properly transform element (positive bearing)", async () => {
+        const data = await transformation.transform(testSourceData.m.spoj[1]);
+        expect(data).to.have.property("positions");
+        expect(data.positions[0]).to.have.property("lat", 50.1053);
+        expect(data.positions[0]).to.have.property("lng", 14.54619);
+        expect(data.positions[0]).to.have.property("bearing", 114);
+        expect(data).to.have.property("stops");
+        expect(data.stops.length).to.equal(24);
         expect(data).to.have.property("trips");
         expect(data.trips[0]).to.have.property("cis_line_id", 100110);
     });
