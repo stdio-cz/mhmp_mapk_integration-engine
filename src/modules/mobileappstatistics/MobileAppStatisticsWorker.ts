@@ -90,7 +90,7 @@ export class MobileAppStatisticsWorker extends BaseWorker {
         } catch (err) {
             // setting default date (normal situation)
             date = moment.tz(new Date(), "Europe/Prague");
-            date.subtract(1, "day");
+            date.subtract(2, "day");
         }
 
         log.debug(`Used date: ${date.format("YYYY-MM-DD")}`);
