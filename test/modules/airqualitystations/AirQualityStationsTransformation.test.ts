@@ -1,5 +1,7 @@
 "use strict";
 
+import { AirQualityStations } from "@golemio/schema-definitions";
+import { Validator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -7,34 +9,29 @@ import "mocha";
 import { AirQualityStationsTransformation } from "../../../src/modules/airqualitystations";
 
 chai.use(chaiAsPromised);
-import * as fs from "fs";
-
-const readFile = (file: string): Promise<Buffer> => {
-    return new Promise((resolve, reject) => {
-        const stream = fs.createReadStream(file);
-        const chunks = [];
-
-        stream.on("error", (err) => {
-            reject(err);
-        });
-        stream.on("data", (data) => {
-            chunks.push(data);
-        });
-        stream.on("close", () => {
-            resolve(Buffer.concat(chunks));
-        });
-    });
-};
+import { promises as fs } from "fs";
 
 describe("AirQualityStationsTransformation", () => {
 
     let transformation;
     let testSourceData;
+    let stationsValidator;
+    let measurementsValidator;
+    let indexesValidator;
+
+    before(() => {
+        stationsValidator = new Validator(AirQualityStations.stations.name + "ModelValidator",
+            AirQualityStations.stations.outputMongooseSchemaObject);
+        measurementsValidator = new Validator(AirQualityStations.measurements.name + "ModelValidator",
+            AirQualityStations.measurements.outputMongooseSchemaObject);
+        indexesValidator = new Validator(AirQualityStations.indexes.name + "ModelValidator",
+            AirQualityStations.indexes.outputMongooseSchemaObject);
+    });
 
     beforeEach(async () => {
         transformation = new AirQualityStationsTransformation();
-        const buffer = await readFile(__dirname + "/../../data/airqualitystations-datasource.json");
-        testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        const buffer = await fs.readFile(__dirname + "/../../data/airqualitystations_3h-datasource.json");
+        testSourceData = JSON.parse(buffer.toString("utf8"));
     });
 
     it("should has name", async () => {
@@ -46,58 +43,16 @@ describe("AirQualityStationsTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
-        expect(data).to.have.property("geometry");
-        expect(data).to.have.property("properties");
-        expect(data).to.have.property("type");
-        expect(data.properties).to.have.property("id");
-        expect(data.properties).to.have.property("name");
-        expect(data.properties).to.have.property("updated_at");
-    });
-
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
-        for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("geometry");
-            expect(data[i]).to.have.property("properties");
-            expect(data[i]).to.have.property("type");
-            expect(data[i].properties).to.have.property("id");
-            expect(data[i].properties).to.have.property("name");
-            expect(data[i].properties).to.have.property("updated_at");
-        }
-    });
 
-    describe("history", () => {
+        await expect(stationsValidator.Validate(data.stations)).to.be.fulfilled;
+        await expect(measurementsValidator.Validate(data.measurements)).to.be.fulfilled;
+        await expect(indexesValidator.Validate(data.indexes)).to.be.fulfilled;
 
-        let testTransformedData;
-
-        beforeEach(async () => {
-            transformation = new AirQualityStationsTransformation();
-            const buffer = await readFile(__dirname + "/../../data/airqualitystations-transformed.json");
-            testTransformedData = JSON.parse(Buffer.from(buffer).toString("utf8"));
-        });
-
-        it("should has transformHistory method", async () => {
-            expect(transformation.transformHistory).not.to.be.undefined;
-        });
-
-        it("should properly transform element", async () => {
-            const data = await transformation.transformHistory(testTransformedData[0]);
-            expect(data).to.have.property("id");
-            expect(data).to.have.property("measurement");
-            expect(data).to.have.property("updated_at");
-        });
-
-        it("should properly transform collection", async () => {
-            const data = await transformation.transformHistory(testTransformedData);
-            for (let i = 0, imax = data.length; i < imax; i++) {
-                expect(data[i]).to.have.property("id");
-                expect(data[i]).to.have.property("measurement");
-                expect(data[i]).to.have.property("updated_at");
-            }
-        });
-
+        expect(data).to.have.property("stations");
+        expect(data).to.have.property("measurements");
+        expect(data).to.have.property("indexes");
     });
 
 });

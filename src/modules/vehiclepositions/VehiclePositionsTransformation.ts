@@ -88,7 +88,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         const res = {
             position: {
                 bearing: (attributes.azimut)
-                    ? parseInt(attributes.azimut, 10)
+                    ? this.fixSourceNegativeBearing(parseInt(attributes.azimut, 10))
                     : null,
                 cis_last_stop_id: (attributes.zast)
                     ? parseInt(attributes.zast, 10)
@@ -221,6 +221,16 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             return 1;
         }
         return 0; // same day
+    }
+
+    /**
+     * Fix source negative bearing value due to overflow by adding 256
+     *
+     * @param {number} bearing
+     * @returns {number}
+     */
+    private fixSourceNegativeBearing(bearing: number): number {
+        return bearing < 0 ? bearing + 256 : bearing;
     }
 
 }
