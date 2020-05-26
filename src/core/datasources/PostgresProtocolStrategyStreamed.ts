@@ -10,7 +10,7 @@ import { IProtocolStrategy, PostgresProtocolStrategy } from "./";
 
 export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy implements IProtocolStrategy {
 
-    public getData = async (): Promise<DataSourceStream> => {
+    public getRawData = async (): Promise<DataSourceStream> => {
         const findOptions = this.connectionSettings.findOptions;
 
         let batchLimit: number;

@@ -12,24 +12,17 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
 
     private dataBuffer = [];
     public proceed = (): void => {
-        this.dataStream.emit("streamReady");
+        this.dataStream.proceed();
     }
 
     public getAll = async (useDataBuffer = false): Promise<DataSourceStream> => {
         this.dataStream = await this.getOutputStream(useDataBuffer);
-
-        this.dataStream.on("streamReady", () => {
-            this.dataStream.onDataListeners.forEach((listener) => {
-                this.dataStream.on("data", listener);
-            });
-        });
 
         this.dataStream.on("end", () => {
             this.dataStream.destroy();
         });
 
         this.dataStream.onDataListeners.push(async (data: any) => {
-
             if (this.validator) {
                 this.dataStream.pause();
                 try {
@@ -62,7 +55,7 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
 
         const inputStream = await this.protocolStrategy.getData();
 
-        inputStream.on("data", async ( data: any ): Promise<void> => {
+        inputStream.onDataListeners.push(async ( data: any ): Promise<void> => {
             inputStream.pause();
 
             if (useDataBuffer) {
@@ -82,6 +75,8 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
             // end the stream
             this.dataStream.push(null);
         });
+
+        inputStream.proceed();
 
         return this.dataStream;
     }

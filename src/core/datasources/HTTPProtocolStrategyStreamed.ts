@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { HTTPProtocolStrategy, IProtocolStrategy} from "./";
+import { DataSourceStream, HTTPProtocolStrategy, IProtocolStrategy} from "./";
 
 import request = require("request");
 
@@ -16,7 +16,41 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
         this.streamTransform = streamTransform;
     }
 
-    public getData = async (): Promise<any> => {
+    public async getData(): Promise<DataSourceStream>  {
+        const dataStream = await super.getData();
+
+        const outStream =  new DataSourceStream({
+            objectMode: true,
+            read: () => {
+                return;
+            },
+        });
+
+        if (this.streamTransform) {
+            dataStream.on("data", (data: any) => {
+                this.streamTransform.write(data);
+            });
+            dataStream.on("end", () => {
+                this.streamTransform.end();
+            });
+            this.streamTransform.on("data", (data) => {
+                outStream.push(data);
+            });
+            this.streamTransform.on("end", () => {
+                outStream.push(null);
+            });
+        } else {
+            dataStream.on("data", (data: any) => {
+                outStream.push(data);
+            });
+            dataStream.on("close", () => {
+                outStream.push(null);
+            });
+        }
+        return outStream;
+    }
+
+    public getRawData = async (): Promise<any> => {
         try {
             const result = request(this.connectionSettings);
 
@@ -28,16 +62,6 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
                 throw new Error("Compressed resources are not supported in HTTPProtocolStrategyStreamed yet");
             }
 
-            if (this.streamTransform) {
-                result.on("data", (data) => {
-                    this.streamTransform.write(data);
-                });
-                result.on("close", (data) => {
-                    this.streamTransform.end();
-                });
-                return this.streamTransform;
-
-            }
             return result;
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);

@@ -8,6 +8,8 @@ import * as sinon from "sinon";
 import { RedisConnector } from "../../../src/core/connectors";
 import { FTPProtocolStrategy, IFTPSettings } from "../../../src/core/datasources";
 
+import * as RawDaraStore from "../../../src/core/helpers/RawDaraStore";
+
 import * as ftp from "basic-ftp";
 import * as fs from "fs";
 chai.use(chaiAsPromised);
@@ -16,7 +18,7 @@ describe("FTPProtocolStrategy", () => {
 
     let testSettings: IFTPSettings;
     let strategy: any;
-    let sandbox;
+    let sandbox: any;
     let downloadStub;
     let lastmodStub;
     let now;
@@ -55,6 +57,9 @@ describe("FTPProtocolStrategy", () => {
             },
         };
         strategy = new FTPProtocolStrategy(testSettings);
+
+        sandbox.spy(strategy, "getRawData");
+        sandbox.spy(RawDaraStore, "save");
     });
 
     afterEach(() => {
@@ -63,6 +68,10 @@ describe("FTPProtocolStrategy", () => {
 
     it("should has getData method", async () => {
         expect(strategy.getData).not.to.be.undefined;
+    });
+
+    it("should has getRawData method", async () => {
+        expect(strategy.getRawData).not.to.be.undefined;
     });
 
     it("should has getLastModified method", async () => {
@@ -76,6 +85,8 @@ describe("FTPProtocolStrategy", () => {
     it("should properly get data", async () => {
         const res = await strategy.getData();
         expect(res).to.be.a("string");
+        sandbox.assert.calledOnce(strategy.getRawData);
+        sandbox.assert.calledOnce(RawDaraStore.save);
     });
 
     it("should throw error if getting data failed", async () => {

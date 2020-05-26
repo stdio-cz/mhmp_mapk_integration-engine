@@ -7,6 +7,8 @@ import { log } from "../helpers";
 import { RedisModel } from "../models";
 import { IHTTPSettings, IProtocolStrategy } from "./";
 
+import { ProtocolStrategy } from "./ProtocolStrategy";
+
 import decompress = require("decompress");
 import request = require("request-promise");
 
@@ -14,19 +16,19 @@ const zlib = require("zlib");
 const util = require("util");
 const gunzip = util.promisify(zlib.gunzip);
 
-export class HTTPProtocolStrategy implements IProtocolStrategy {
+export class HTTPProtocolStrategy extends ProtocolStrategy implements IProtocolStrategy {
 
     protected connectionSettings: IHTTPSettings;
 
     constructor(settings: IHTTPSettings) {
-        this.connectionSettings = settings;
+        super(settings);
     }
 
     public setConnectionSettings = (settings: IHTTPSettings): void => {
         this.connectionSettings = settings;
     }
 
-    public getData = async (): Promise<any> => {
+    public getRawData = async (): Promise<any> => {
         try {
             let result = await request(this.connectionSettings);
 

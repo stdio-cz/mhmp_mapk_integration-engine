@@ -5,13 +5,15 @@ import { File, Storage } from "@google-cloud/storage";
 import { RedisModel } from "../models";
 import { IGoogleCloudStorageSettings, IProtocolStrategy } from "./";
 
-export class GoogleCloudStorageProtocolStrategy implements IProtocolStrategy {
+import { ProtocolStrategy } from "./ProtocolStrategy";
 
-    private connectionSettings: IGoogleCloudStorageSettings;
+export class GoogleCloudStorageProtocolStrategy extends ProtocolStrategy implements IProtocolStrategy {
+
+    protected connectionSettings: IGoogleCloudStorageSettings;
     private storage: Storage;
 
     constructor(settings: IGoogleCloudStorageSettings) {
-        this.connectionSettings = settings;
+        super(settings);
         this.storage = new Storage({ keyFilename: settings.keyFilename });
     }
 
@@ -20,7 +22,7 @@ export class GoogleCloudStorageProtocolStrategy implements IProtocolStrategy {
         this.storage = new Storage({ keyFilename: settings.keyFilename });
     }
 
-    public getData = async (): Promise<any> => {
+    public getRawData = async (): Promise<any> => {
         try {
             // Lists files in the bucket
             let [ files ] = await this.storage

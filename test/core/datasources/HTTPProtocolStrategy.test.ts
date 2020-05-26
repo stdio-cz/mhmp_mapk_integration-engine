@@ -5,8 +5,12 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
+import * as sinon from "sinon";
+
 import { RedisConnector } from "../../../src/core/connectors";
 import { HTTPProtocolStrategy, IHTTPSettings } from "../../../src/core/datasources";
+
+import * as RawDaraStore from "../../../src/core/helpers/RawDaraStore";
 
 import * as nock from "nock";
 chai.use(chaiAsPromised);
@@ -14,14 +18,17 @@ chai.use(chaiAsPromised);
 describe("HTTPProtocolStrategy", () => {
 
     let testSettings: IHTTPSettings;
+    let sandbox: any;
     let strategy: HTTPProtocolStrategy;
-    let scope;
+    let scope: any;
 
     before(async () => {
         await RedisConnector.connect();
     });
 
     beforeEach(() => {
+        sandbox = sinon.createSandbox();
+
         testSettings = {
             headers : {},
             method: "GET",
@@ -43,10 +50,21 @@ describe("HTTPProtocolStrategy", () => {
             .replyWithFile(200, __dirname + "/../../data/testzip.zip", {
                 "Content-Type": "application/zip",
             });
+
+        sandbox.spy(strategy, "getRawData");
+        sandbox.spy(RawDaraStore, "save");
+    });
+
+    afterEach(() => {
+        sandbox.restore();
     });
 
     it("should has getData method", async () => {
         expect(strategy.getData).not.to.be.undefined;
+    });
+
+    it("should has getRawData method", async () => {
+        expect(strategy.getRawData).not.to.be.undefined;
     });
 
     it("should has getLastModified method", async () => {
@@ -60,6 +78,8 @@ describe("HTTPProtocolStrategy", () => {
     it("should properly get data", async () => {
         const res = await strategy.getData();
         expect(res).to.be.equal('{"get":"ok"}');
+        sandbox.assert.calledOnce(strategy.getRawData);
+        sandbox.assert.calledOnce(RawDaraStore.save);
     });
 
     it("should throw error if getting data failed", async () => {
