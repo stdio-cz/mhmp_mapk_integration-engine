@@ -111,19 +111,25 @@ export class WazeCCPWorker extends BaseWorker {
 
     public refreshAlertsInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceAlerts.getAll();
-        const transformedData = await this.transformationAlerts.transform(data);
+        // enrich data by downloadedAt unix timestamp
+        const dataWithDownloadAt = { ...data, downloadedAt: new Date().valueOf() };
+        const transformedData = await this.transformationAlerts.transform(dataWithDownloadAt);
         await this.modelAlerts.saveBySqlFunction(transformedData, [ "id" ]);
     }
 
     public refreshIrregularitiesInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceIrregularities.getAll();
-        const transformedData = await this.transformationIrregularities.transform(data);
+        // enrich data by downloadedAt unix timestamp
+        const dataWithDownloadAt = { ...data, downloadedAt: new Date().valueOf() };
+        const transformedData = await this.transformationIrregularities.transform(dataWithDownloadAt);
         await this.modelIrregularities.saveBySqlFunction(transformedData, [ "id" ]);
     }
 
     public refreshJamsInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceJams.getAll();
-        const transformedData = await this.transformationJams.transform(data);
+        // enrich data by downloadedAt unix timestamp
+        const dataWithDownloadAt = { ...data, downloadedAt: new Date().valueOf() };
+        const transformedData = await this.transformationJams.transform(dataWithDownloadAt);
         await this.modelJams.saveBySqlFunction(transformedData, [ "id" ]);
     }
 

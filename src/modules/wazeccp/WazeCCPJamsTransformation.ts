@@ -20,23 +20,32 @@ export class WazeCCPJamsTransformation extends BaseTransformation
      */
     public transform = async (data: any | any[]): Promise<any | any[]> => {
         const rootStart = data.startTimeMillis;
+        const downloadedAt = data.downloadedAt;
 
         if (!data.jams) {
             log.warn(`${this.name}: Data source returned empty data.`);
             return [];
         }
 
-        const promises = data.jams.map((element) => {
-            element.rootStart = rootStart;
-            return this.transformElement(element);
+        const results = [];
+        data.jams.forEach((element) => {
+            const res = this.transformElement({
+                ...element,
+                downloadedAt,
+                rootStart,
+            });
+            if (res) {
+                results.push(res);
+            }
         });
-        const results = await Promise.all(promises);
-        return results.filter((r) => r);
+        return results;
     }
 
-    protected transformElement = async (jam: any): Promise<any> => {
+    protected transformElement = (jam: any): any => {
         const rootStart = jam.rootStart;
         delete jam.rootStart;
+        const downloadedAt = jam.downloadedAt;
+        delete jam.downloadedAt;
         const jamHash = generateAJIUniqueIdentifierHash(jam, rootStart);
 
         const res = {
@@ -60,6 +69,9 @@ export class WazeCCPJamsTransformation extends BaseTransformation
             turn_type: jam.turnType,
             type: jam.type,
             uuid: jam.uuid,
+
+            // TODO add downloadedAt timestamp
+            downloaded_at: downloadedAt,
         };
 
         return res;
