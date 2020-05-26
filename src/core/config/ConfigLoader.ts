@@ -50,6 +50,7 @@ export class ConfigLoader {
 
 /** Exporting all configurations */
 export const config = { // TODO prejmenovat na lower-case
+    DATA_BATCH_SIZE: process.env.DATA_BATCH_SIZE || 1000,
     HOPPYGO_BASE_URL: process.env.HOPPYGO_BASE_URL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     MOJEPRAHA_ENDPOINT_BASEURL: process.env.MOJEPRAHA_ENDPOINT_BASEURL,
@@ -59,7 +60,6 @@ export const config = { // TODO prejmenovat na lower-case
     OPEN_STREET_MAP_API_URL_SEARCH: process.env.OPEN_STREET_MAP_API_URL_SEARCH,
     PARKINGS_PAYMENT_URL: process.env.PARKINGS_PAYMENT_URL,
     PARKING_ZONES_PAYMENT_URL: process.env.PARKING_ZONES_PAYMENT_URL,
-    POSTGRES_BATCH_SIZE: process.env.POSTGRES_BATCH_SIZE || 1000,
     POSTGRES_CONN: process.env.POSTGRES_CONN,
     POSTGRES_POOL_MAX_CONNECTIONS: process.env.POSTGRES_POOL_MAX_CONNECTIONS,
     RABBIT_CONN: process.env.RABBIT_CONN,

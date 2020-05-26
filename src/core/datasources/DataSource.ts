@@ -4,9 +4,11 @@ import { CustomError } from "@golemio/errors";
 import { IValidator } from "@golemio/validator";
 import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
+import { DataSourceStream } from "./DataSourceStream";
 
 export class DataSource implements IDataSource {
 
+    public dataStream: DataSourceStream;
     public name: string;
     protected protocolStrategy: IProtocolStrategy;
     protected dataTypeStrategy: IDataTypeStrategy;

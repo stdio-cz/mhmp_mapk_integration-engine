@@ -4,6 +4,7 @@ export * from "./DataSource";
 export * from "./DataSourceStreamed";
 export * from "./FTPProtocolStrategy";
 export * from "./HTTPProtocolStrategy";
+export * from "./HTTPProtocolStrategyStreamed";
 export * from "./IDataSource";
 export * from "./IDataTypeStrategy";
 export * from "./IProtocolStrategy";

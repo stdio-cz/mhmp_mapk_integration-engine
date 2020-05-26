@@ -28,6 +28,7 @@ export class JSONDataTypeStrategy implements IDataTypeStrategy {
                 data = JSON.parse(data);
             }
             let parsed = getSubProperty<any>(this.resultsPath, data);
+
             if (this.filter) {
                 parsed = parsed.filter(this.filter);
             }

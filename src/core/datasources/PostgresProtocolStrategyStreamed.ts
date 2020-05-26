@@ -1,20 +1,16 @@
 "use strict";
 
-import { Readable } from "stream";
-
 import { config } from "../../core/config";
 
 import { CustomError } from "@golemio/errors";
+import { DataSourceStream } from "./DataSourceStream";
+
 import { MySequelize } from "../connectors";
-import { IPostgresSettings, IProtocolStrategy, PostgresProtocolStrategy } from "./";
+import { IProtocolStrategy, PostgresProtocolStrategy } from "./";
 
 export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy implements IProtocolStrategy {
 
-    public setConnectionSettings = (settings: IPostgresSettings): void => {
-        this.connectionSettings = settings;
-    }
-
-    public getData = async (): Promise<Readable> => {
+    public getData = async (): Promise<DataSourceStream> => {
         const findOptions = this.connectionSettings.findOptions;
 
         let batchLimit: number;
@@ -24,10 +20,11 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
         let gotAllData = false;
         let resultsCount = 0;
 
-        if (limit && limit <= config.POSTGRES_BATCH_SIZE) {
+        // TO DO - move to helper f-cion
+        if (limit && limit <= config.DATA_BATCH_SIZE) {
             batchLimit = limit;
         } else {
-            batchLimit = +config.POSTGRES_BATCH_SIZE;
+            batchLimit = +config.DATA_BATCH_SIZE;
         }
 
         try {
@@ -48,7 +45,7 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
                 },
             );
 
-            return new Readable({
+            return new DataSourceStream({
                 objectMode: true,
                 async read() {
                     try {
