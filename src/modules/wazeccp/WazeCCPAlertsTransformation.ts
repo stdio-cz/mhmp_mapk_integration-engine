@@ -20,29 +20,39 @@ export class WazeCCPAlertsTransformation extends BaseTransformation
      */
     public transform = async (data: any | any[]): Promise<any | any[]> => {
         const rootStart = data.startTimeMillis;
+        const downloadedAt = data.downloadedAt;
 
         if (!data.alerts) {
             log.warn(`${this.name}: Data source returned empty data.`);
             return [];
         }
 
-        const promises = data.alerts.map((element) => {
-            element.rootStart = rootStart;
-            return this.transformElement(element);
+        const results = [];
+        data.alerts.forEach((element) => {
+            const res = this.transformElement({
+                ...element,
+                downloadedAt,
+                rootStart,
+            });
+            if (res) {
+                results.push(res);
+            }
         });
-        const results = await Promise.all(promises);
-        return results.filter((r) => r);
+        return results;
     }
 
-    protected transformElement = async (alert: any): Promise<any> => {
+    protected transformElement = (alert: any): any => {
         const rootStart = alert.rootStart;
         delete alert.rootStart;
+        const downloadedAt = alert.downloadedAt;
+        delete alert.downloadedAt;
         const alertHash = generateAJIUniqueIdentifierHash(alert, rootStart);
 
         const res = {
             city: alert.city,
             confidence: alert.confidence,
             country: alert.country,
+            downloaded_at: downloadedAt,
             id: alertHash,
             jam_uuid: alert.jamUuid,
             location: alert.location,

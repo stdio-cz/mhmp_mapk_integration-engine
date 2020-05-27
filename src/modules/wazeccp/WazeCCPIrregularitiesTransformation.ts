@@ -20,23 +20,32 @@ export class WazeCCPIrregularitiesTransformation extends BaseTransformation
      */
     public transform = async (data: any | any[]): Promise<any | any[]> => {
         const rootStart = data.startTimeMillis;
+        const downloadedAt = data.downloadedAt;
 
         if (!data.irregularities) {
             log.warn(`${this.name}: Data source returned empty data.`);
             return [];
         }
 
-        const promises = data.irregularities.map((element) => {
-            element.rootStart = rootStart;
-            return this.transformElement(element);
+        const results = [];
+        data.irregularities.forEach((element) => {
+            const res = this.transformElement({
+                ...element,
+                downloadedAt,
+                rootStart,
+            });
+            if (res) {
+                results.push(res);
+            }
         });
-        const results = await Promise.all(promises);
-        return results.filter((r) => r);
+        return results;
     }
 
-    protected transformElement = async (irregularity: any): Promise<any> => {
+    protected transformElement = (irregularity: any): any => {
         const rootStart = irregularity.rootStart;
         delete irregularity.rootStart;
+        const downloadedAt = irregularity.downloadedAt;
+        delete irregularity.downloadedAt;
         const irregularityHash = generateAJIUniqueIdentifierHash(irregularity, rootStart);
 
         const res = {
@@ -48,6 +57,7 @@ export class WazeCCPIrregularitiesTransformation extends BaseTransformation
             detection_date: irregularity.detectionDate,
             detection_date_millis: irregularity.detectionDateMillis,
             detection_utc_date: moment.utc(irregularity.detectionDateMillis).toDate(),
+            downloaded_at: downloadedAt,
             drivers_count: irregularity.driversCount,
             end_node: irregularity.endNode,
             id: irregularityHash,

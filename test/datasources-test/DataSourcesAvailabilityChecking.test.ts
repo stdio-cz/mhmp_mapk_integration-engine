@@ -1179,9 +1179,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=alerts",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.alerts.name + "DataSource",
-                    WazeCCP.alerts.datasourceMongooseSchemaObject,
+                    WazeCCP.alerts.datasourceJsonSchema,
                 ),
             );
             dataSourceIrregularities = new DataSource(
@@ -1192,9 +1192,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=irregularities",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.irregularities.name + "DataSource",
-                    WazeCCP.irregularities.datasourceMongooseSchemaObject,
+                    WazeCCP.irregularities.datasourceJsonSchema,
                 ),
             );
             dataSourceJams = new DataSource(
@@ -1205,9 +1205,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=traffic",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.jams.name + "DataSource",
-                    WazeCCP.jams.datasourceMongooseSchemaObject,
+                    WazeCCP.jams.datasourceJsonSchema,
                 ),
             );
         });

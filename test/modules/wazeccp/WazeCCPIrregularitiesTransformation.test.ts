@@ -55,7 +55,9 @@ describe("WazeCCPIrregularitiesTransformation", () => {
     });
 
     it("should properly transform collection", async () => {
-        const data = await transformation.transform(testSourceData);
+        // enrich data by timestamp of download
+        const dataWithDownloadAt = { ...testSourceData, downloadedAt: new Date().valueOf() };
+        const data = await transformation.transform(dataWithDownloadAt);
         await expect(validator.Validate(data)).to.be.fulfilled;
 
         for (let i = 0, imax = data.length; i < imax; i++) {
