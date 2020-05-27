@@ -389,7 +389,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
-                        url: "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/actual_hour_data_cze.json",
+                        url: config.datasources.AirQualityStations1H,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
                     new JSONSchemaValidator(AirQualityStations.name + "1HDataSource",
@@ -417,7 +417,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
-                        url: "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/aqindex_3h_cze.json",
+                        url: config.datasources.AirQualityStations3H,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
                     new JSONSchemaValidator(AirQualityStations.name + "3HDataSource",
