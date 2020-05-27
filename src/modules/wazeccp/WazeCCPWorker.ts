@@ -1,7 +1,7 @@
 "use strict";
 
 import { WazeCCP } from "@golemio/schema-definitions";
-import { Validator } from "@golemio/validator";
+import { JSONSchemaValidator, Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
 import { PostgresModel } from "../../core/models";
@@ -31,9 +31,9 @@ export class WazeCCPWorker extends BaseWorker {
                 url: config.datasources.WazeCCP + "&types=alerts",
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(
+            new JSONSchemaValidator(
                 WazeCCP.alerts.name + "DataSource",
-                WazeCCP.alerts.datasourceMongooseSchemaObject,
+                WazeCCP.alerts.datasourceJsonSchema,
             ),
         );
         this.dataSourceIrregularities = new DataSource(
@@ -44,9 +44,9 @@ export class WazeCCPWorker extends BaseWorker {
                 url: config.datasources.WazeCCP + "&types=irregularities",
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(
+            new JSONSchemaValidator(
                 WazeCCP.irregularities.name + "DataSource",
-                WazeCCP.irregularities.datasourceMongooseSchemaObject,
+                WazeCCP.irregularities.datasourceJsonSchema,
             ),
         );
         this.dataSourceJams = new DataSource(
@@ -57,9 +57,9 @@ export class WazeCCPWorker extends BaseWorker {
                 url: config.datasources.WazeCCP + "&types=traffic",
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(
+            new JSONSchemaValidator(
                 WazeCCP.jams.name + "DataSource",
-                WazeCCP.jams.datasourceMongooseSchemaObject,
+                WazeCCP.jams.datasourceJsonSchema,
             ),
         );
 

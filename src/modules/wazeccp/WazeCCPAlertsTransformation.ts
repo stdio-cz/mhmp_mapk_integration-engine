@@ -52,6 +52,7 @@ export class WazeCCPAlertsTransformation extends BaseTransformation
             city: alert.city,
             confidence: alert.confidence,
             country: alert.country,
+            downloaded_at: downloadedAt,
             id: alertHash,
             jam_uuid: alert.jamUuid,
             location: alert.location,
@@ -68,9 +69,6 @@ export class WazeCCPAlertsTransformation extends BaseTransformation
             thumbs_up: alert.nThumbsUp,
             type: alert.type,
             uuid: alert.uuid,
-
-            // TODO add downloadedAt timestamp
-            downloaded_at: downloadedAt,
         };
 
         return res;

@@ -57,6 +57,7 @@ export class WazeCCPIrregularitiesTransformation extends BaseTransformation
             detection_date: irregularity.detectionDate,
             detection_date_millis: irregularity.detectionDateMillis,
             detection_utc_date: moment.utc(irregularity.detectionDateMillis).toDate(),
+            downloaded_at: downloadedAt,
             drivers_count: irregularity.driversCount,
             end_node: irregularity.endNode,
             id: irregularityHash,
@@ -79,9 +80,6 @@ export class WazeCCPIrregularitiesTransformation extends BaseTransformation
             update_date_millis: irregularity.updateDateMillis,
             update_utc_date: moment.utc(irregularity.updateDateMillis).toDate(),
             uuid: irregularity.id,
-
-            // TODO add downloadedAt timestamp
-            downloaded_at: downloadedAt,
         };
 
         return res;

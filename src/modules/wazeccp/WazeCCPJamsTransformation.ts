@@ -53,6 +53,7 @@ export class WazeCCPJamsTransformation extends BaseTransformation
             city: jam.city,
             country: jam.country,
             delay: jam.delay,
+            downloaded_at: downloadedAt,
             end_node: jam.endNode,
             id: jamHash,
             length: jam.length,
@@ -69,9 +70,6 @@ export class WazeCCPJamsTransformation extends BaseTransformation
             turn_type: jam.turnType,
             type: jam.type,
             uuid: jam.uuid,
-
-            // TODO add downloadedAt timestamp
-            downloaded_at: downloadedAt,
         };
 
         return res;
