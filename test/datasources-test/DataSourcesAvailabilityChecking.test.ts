@@ -1249,6 +1249,8 @@ describe("DataSourcesAvailabilityChecking", () => {
 
             let appStoreDataSource: DataSource;
             let bearerToken: string;
+            const date = moment.tz(new Date(), "Europe/Prague");
+            date.subtract(2, "day");
 
             bearerToken = sign({
                     aud: "appstoreconnect-v1",
@@ -1274,7 +1276,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                         },
                         isGunZipped: true,
                         method: "GET",
-                        url: config.datasources.AppStoreConnect.replace(":reportDate", "2020-03-09"),
+                        url: config.datasources.AppStoreConnect.replace(":reportDate", date.format("YYYY-MM-DD")),
                     }),
                     new CSVDataTypeStrategy({
                         fastcsvParams: { headers: true, delimiter: "\t" },
