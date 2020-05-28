@@ -18,5 +18,6 @@
         "updateSensorsPicks",
         "updateSensorsPicksInContainer"
     ],
-    "VehiclePositions": []
+    "VehiclePositions": [],
+    "WazeCCP": []
 }

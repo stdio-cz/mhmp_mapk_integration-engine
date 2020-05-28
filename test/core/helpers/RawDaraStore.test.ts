@@ -30,7 +30,9 @@ describe("RawDaraStore", () => {
 
       config.s3.enabled = true;
       config.saveRawDataWhitelist = {
-          test: [],
+          test: {
+            saveHeaders: true,
+          },
       };
   });
 
@@ -43,10 +45,17 @@ describe("RawDaraStore", () => {
   });
 
   it("should call upload on S3 sdk", async () => {
-      RawDaraStore.save({}, "test");
+      RawDaraStore.save({}, {}, "test");
       sandbox.assert.calledOnce(upload);
   });
 
+  it("should call upload  on S3 sdk to headers if non 200 status code is provided", async () => {
+    RawDaraStore.save({}, {
+      headers: {},
+      statusCode: 400,
+    }, "test");
+    sandbox.assert.calledTwice(upload);
+});
 
 
 });

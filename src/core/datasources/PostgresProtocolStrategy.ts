@@ -79,7 +79,9 @@ export class PostgresProtocolStrategy extends ProtocolStrategy  implements IProt
             // and free all references so the instance can be garbage collected.
             await connection.close();
 
-            return results;
+            return {
+                data: results,
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }

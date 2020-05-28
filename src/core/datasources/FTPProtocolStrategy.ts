@@ -81,7 +81,9 @@ export class FTPProtocolStrategy extends ProtocolStrategy implements IProtocolSt
                 const buffer = await this.readFile(path.join(tmpDir, this.connectionSettings.filename));
                 result = Buffer.from(buffer).toString("utf8");
             }
-            return result;
+            return {
+                data: result,
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }

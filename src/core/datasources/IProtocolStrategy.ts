@@ -26,6 +26,7 @@ export interface IHTTPSettings {
     isCompressed?: boolean;
     whitelistedFiles?: string[];
     isGunZipped?: boolean;
+    resolveWithFullResponse?: boolean;
 }
 
 export interface IFTPSettings {

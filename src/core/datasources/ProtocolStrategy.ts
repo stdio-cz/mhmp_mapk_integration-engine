@@ -29,7 +29,11 @@ export class ProtocolStrategy implements IProtocolStrategy {
     }
 
     public async getData(...args): Promise<any | DataSourceStream> {
-        const rawData = await this.getRawData(...args);
+        const result = await this.getRawData(...args);
+        const rawData = result.data;
+        const meta = result.meta || {};
+        let dataSaveCalled = false;
+
         let protocolDataStream: any;
 
         // bit paranoid but ...
@@ -53,6 +57,12 @@ export class ProtocolStrategy implements IProtocolStrategy {
             protocolDataStream.on("data", (data) => {
                 dataStream.push(data);
                 this.pushRawDataToS3Stream(data, S3Stream);
+
+                // because of headers - need to be sure that `response` event has been called before saving raw data
+                if (!dataSaveCalled) {
+                    RawDaraStore.save(S3Stream, meta, this.caller);
+                    dataSaveCalled = true;
+                }
             });
 
             protocolDataStream.on("error", (err) => {
@@ -72,10 +82,14 @@ export class ProtocolStrategy implements IProtocolStrategy {
                 log.error(`Error on saving raw data for ${this.caller}`, err);
             });
 
-            RawDaraStore.save(S3Stream, this.caller);
+            protocolDataStream.on("response", (res) => {
+                meta.statusCode = res.statusCode;
+                meta.headers = res.headers;
+            });
+
             return dataStream;
         } else {
-            RawDaraStore.save(this.prepareRawData(rawData), this.caller);
+            RawDaraStore.save(this.prepareRawData(rawData), meta, this.caller);
             return rawData;
         }
 

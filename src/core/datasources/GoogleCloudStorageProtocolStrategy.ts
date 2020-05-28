@@ -62,7 +62,9 @@ export class GoogleCloudStorageProtocolStrategy extends ProtocolStrategy impleme
                 };
             });
 
-            return await Promise.all(result);
+            return {
+                data: await Promise.all(result),
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }

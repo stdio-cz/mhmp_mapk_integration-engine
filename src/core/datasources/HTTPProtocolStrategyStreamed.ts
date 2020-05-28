@@ -62,7 +62,9 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
                 throw new Error("Compressed resources are not supported in HTTPProtocolStrategyStreamed yet");
             }
 
-            return result;
+            return {
+                data: result,
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }

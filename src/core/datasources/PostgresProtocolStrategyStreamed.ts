@@ -10,7 +10,7 @@ import { IProtocolStrategy, PostgresProtocolStrategy } from "./";
 
 export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy implements IProtocolStrategy {
 
-    public getRawData = async (): Promise<DataSourceStream> => {
+    public getRawData = async (): Promise<any> => {
         const findOptions = this.connectionSettings.findOptions;
 
         let batchLimit: number;
@@ -45,64 +45,65 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
                 },
             );
 
-            return new DataSourceStream({
-                objectMode: true,
-                async read() {
-                    try {
-                        const results = await model
-                            .findAll({
-                                ...findOptions,
-                                limit: batchLimit,
-                                offset,
-                                raw: true,
-                            });
+            return {
+                data: new DataSourceStream({
+                    objectMode: true,
+                    async read() {
+                        try {
+                            const results = await model
+                                .findAll({
+                                    ...findOptions,
+                                    limit: batchLimit,
+                                    offset,
+                                    raw: true,
+                                });
 
-                        // some data in correct format
-                        if (results && Array.isArray(results) && results.length !== 0) {
-                            resultsCount += results.length;
-                            this.push(results);
-                            // but less than requested amount
-                            if (results.length < batchLimit) {
+                            // some data in correct format
+                            if (results && Array.isArray(results) && results.length !== 0) {
+                                resultsCount += results.length;
+                                this.push(results);
+                                // but less than requested amount
+                                if (results.length < batchLimit) {
+                                    gotAllData = true;
+                                }
+                            }  else {
                                 gotAllData = true;
                             }
-                        }  else {
-                            gotAllData = true;
-                        }
 
-                        // requested data count reached
-                        if (limit && resultsCount >= limit) {
-                            gotAllData = true;
-                        }
-
-                        if (gotAllData) {
-                            // end the stream
-                            this.push(null);
-
-                            if (dbConnectionOpened) {
-                                await connection.close();
-                                dbConnectionOpened = false;
+                            // requested data count reached
+                            if (limit && resultsCount >= limit) {
+                                gotAllData = true;
                             }
-                        } else {
-                            offset += batchLimit;
-                            // select min(remaining,batch size) in next round
-                            batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
-                        }
-                    } catch (err) {
-                        this.emit("error", err);
-                    }
-                },
-                async destroy() {
-                    if (dbConnectionOpened) {
-                        try {
-                            await connection.close();
-                            dbConnectionOpened = false;
+
+                            if (gotAllData) {
+                                // end the stream
+                                this.push(null);
+
+                                if (dbConnectionOpened) {
+                                    await connection.close();
+                                    dbConnectionOpened = false;
+                                }
+                            } else {
+                                offset += batchLimit;
+                                // select min(remaining,batch size) in next round
+                                batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
+                            }
                         } catch (err) {
                             this.emit("error", err);
                         }
-                    }
-                },
-            });
-
+                    },
+                    async destroy() {
+                        if (dbConnectionOpened) {
+                            try {
+                                await connection.close();
+                                dbConnectionOpened = false;
+                            } catch (err) {
+                                this.emit("error", err);
+                            }
+                        }
+                    },
+                }),
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }
