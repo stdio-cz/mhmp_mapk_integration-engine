@@ -50,6 +50,9 @@ describe("HTTPProtocolStrategy", () => {
             .replyWithFile(200, __dirname + "/../../data/testzip.zip", {
                 "Content-Type": "application/zip",
             });
+        scope = nock("https://notfound.com")
+            .get("/")
+            .reply(404);
 
         sandbox.spy(strategy, "getRawData");
         sandbox.spy(RawDaraStore, "save");
