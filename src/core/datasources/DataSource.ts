@@ -23,10 +23,17 @@ export class DataSource implements IDataSource {
         this.protocolStrategy = protocolStrategy;
         this.dataTypeStrategy = dataTypeStrategy;
         this.validator = validator;
+
+        if (this.protocolStrategy && this.protocolStrategy.setCallerName) {
+            this.protocolStrategy.setCallerName(this.name);
+        }
     }
 
     public setProtocolStrategy = (strategy: IProtocolStrategy): void => {
         this.protocolStrategy = strategy;
+        if (this.protocolStrategy.setCallerName) {
+            this.protocolStrategy.setCallerName(this.name);
+        }
     }
 
     public setDataTypeStrategy = (strategy: IDataTypeStrategy): void => {
@@ -39,6 +46,7 @@ export class DataSource implements IDataSource {
 
     public getAll = async (): Promise<any> => {
         const data = await this.getRawData();
+
         if (this.validator) {
             try {
                 await this.validator.Validate(data);
@@ -58,6 +66,7 @@ export class DataSource implements IDataSource {
     protected getRawData = async (): Promise<any> => {
         try {
             const body = await this.protocolStrategy.getData();
+
             const content = await this.dataTypeStrategy.parseData(body);
             if (this.isEmpty(content)) {
                 log.warn(`${this.name}: Data source returned empty data.`);

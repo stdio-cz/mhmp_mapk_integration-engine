@@ -44,6 +44,7 @@ describe("DataSourceStreamed", () => {
                     });
             }),
             getLastModified: sandbox.stub(),
+            setCallerName: sandbox.stub(),
         };
         dataTypeStub = {
             parseData: sandbox.stub().callsFake(() => Object.assign({message: "test"})),
@@ -61,6 +62,10 @@ describe("DataSourceStreamed", () => {
 
     afterEach(() => {
         sandbox.restore();
+    });
+
+    it("should call protocol.setCallerName in constructor", () => {
+        sandbox.assert.calledOnce(protocolStub.setCallerName);
     });
 
     it("should has name method", () => {
@@ -184,13 +189,15 @@ describe("DataSourceStreamed", () => {
     });
 
     it("should properly get last modified", async () => {
-        const lastMod = await datasource.getLastModified();
+        await datasource.getLastModified();
         sandbox.assert.calledOnce(protocolStub.getLastModified);
     });
 
     it("should set protocol strategy", async () => {
-        datasource.setProtocolStrategy(null);
-        chai.expect(datasource.protocolStrategy).to.be.null;
+        datasource.setProtocolStrategy(protocolStub);
+        sandbox.assert.calledTwice(protocolStub.setCallerName);
+        datasource.setProtocolStrategy({});
+        chai.expect(datasource.protocolStrategy).to.be.deep.equal({});
     });
 
     it("should set datatype strategy", async () => {

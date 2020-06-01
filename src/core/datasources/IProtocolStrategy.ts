@@ -2,7 +2,7 @@
 
 import * as Sequelize from "sequelize";
 
-import { DataSourceStream } from "./DataSourceStream";
+import { DataSourceStream } from "./";
 
 export interface IHTTPSettings {
     /** (optional) Data to send with request, e.g. credentials */
@@ -26,6 +26,7 @@ export interface IHTTPSettings {
     isCompressed?: boolean;
     whitelistedFiles?: string[];
     isGunZipped?: boolean;
+    resolveWithFullResponse?: boolean;
 }
 
 export interface IFTPSettings {
@@ -90,11 +91,14 @@ export interface IGoogleCloudStorageSettings {
 }
 
 export interface IProtocolStrategy {
+    setCallerName( caller: string): void;
 
     setConnectionSettings(settings: IHTTPSettings | IFTPSettings | IPostgresSettings
         | IGoogleCloudStorageSettings): void;
 
-    getData(): Promise<any> | Promise<DataSourceStream>;
+    getData(): Promise<any | DataSourceStream>;
+
+    // getRawData(): Promise<any | DataSourceStream>;
 
     getLastModified(): Promise<any>;
 

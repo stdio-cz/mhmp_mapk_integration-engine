@@ -7,23 +7,25 @@ import { log } from "../helpers";
 import { RedisModel } from "../models";
 import { IFTPSettings, IProtocolStrategy } from "./";
 
+import { ProtocolStrategy } from "./ProtocolStrategy";
+
 import ftp = require("basic-ftp");
 import decompress = require("decompress");
 import * as fs from "fs";
 
-export class FTPProtocolStrategy implements IProtocolStrategy {
+export class FTPProtocolStrategy extends ProtocolStrategy implements IProtocolStrategy {
 
-    private connectionSettings: IFTPSettings;
+    protected connectionSettings: IFTPSettings;
 
     constructor(settings: IFTPSettings) {
+        super(settings);
+    }
+
+    public setConnectionSettings = (settings: IFTPSettings): void => {
         this.connectionSettings = settings;
     }
 
-    public setConnectionSettings(settings: IFTPSettings): void {
-        this.connectionSettings = settings;
-    }
-
-    public async getData(): Promise<any> {
+    public getRawData = async (): Promise<any> => {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;
@@ -79,13 +81,15 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
                 const buffer = await this.readFile(path.join(tmpDir, this.connectionSettings.filename));
                 result = Buffer.from(buffer).toString("utf8");
             }
-            return result;
+            return {
+                data: result,
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }
     }
 
-    public async getLastModified(): Promise<string | null> {
+    public getLastModified = async (): Promise<string | null> => {
         const ftpClient = new ftp.Client();
         ftpClient.ftp.log = log.silly;
         ftpClient.ftp.silly = true;
@@ -101,7 +105,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         }
     }
 
-    private readFile(file: string): Promise<Buffer> {
+    private readFile = (file: string): Promise<Buffer> => {
         return new Promise((resolve, reject) => {
             const stream = fs.createReadStream(file);
             const chunks: any[] = [];
@@ -118,7 +122,7 @@ export class FTPProtocolStrategy implements IProtocolStrategy {
         });
     }
 
-    private readDir(dirPath: string): Promise<any> {
+    private readDir = (dirPath: string): Promise<any> => {
         return new Promise((resolve, reject) => {
             fs.readdir(dirPath, (err: Error, files: any) => {
                 if (err) {

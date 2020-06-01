@@ -83,4 +83,14 @@ export const config = { // TODO prejmenovat na lower-case
     },
     port: process.env.PORT,
     queuesBlacklist: new ConfigLoader("queuesBlacklist", true).conf as {[dataset: string]: string[]},
+    s3: {
+        access_key_id: process.env.S3_ACCESS_KEY_ID,
+        bucket_name: process.env.S3_BUCKET_NAME,
+        enabled: (process.env.S3_ENABLED === "true") ? true : false,
+        endpoint: process.env.S3_ENDPOINT,
+        secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
+        upload_part_size: parseInt(process.env.S3_UPLOAD_PART_SIZE, 10) || 10, // in MB, default 10 MB
+        upload_queue_size: parseInt(process.env.S3_UPLOAD_QUEUE_SIZE, 10) || 2, // concurrency uploading, default 2
+    },
+    saveRawDataWhitelist: new ConfigLoader("saveRawDataWhitelist", true).conf as {[key: string]: any},
 };
