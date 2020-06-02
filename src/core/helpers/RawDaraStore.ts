@@ -1,5 +1,7 @@
 import { S3 } from "aws-sdk";
+import * as contentType from "content-type";
 import * as moment from "moment-timezone";
+import { contentTypeToExtension } from "../../core/helpers";
 import { config } from "../config";
 import { log } from "../helpers";
 
@@ -15,8 +17,8 @@ export const  save = (data: any, meta: any, name = "Unknown"): void =>  {
   if (config.s3.enabled && config.saveRawDataWhitelist[name]) {
 
     const now = moment().tz("Europe/Prague");
-    const fileName = `${name}/${now.format("YYYY-MM-DD")}/${now.format("HH_mm_ss.SSS")}`;
 
+    let ext = null;
     let headers = null;
 
     if (meta.headers) {
@@ -25,18 +27,25 @@ export const  save = (data: any, meta: any, name = "Unknown"): void =>  {
       } catch {
         null;
       }
+      try {
+        ext = `.${contentTypeToExtension[(contentType.parse(meta.headers["content-type"]) || {}).type]}`;
+      } catch {
+        null;
+      }
     }
+
+    const fileName = `${name}/${now.format("YYYY-MM-DD")}/${now.format("HH_mm_ss.SSS")}`;
 
     const paramsBodyData = {
       Body: data,
       Bucket: config.s3.bucket_name,
-      Key: fileName,
+      Key: `${fileName}${ext || ""}`,
     };
 
     const paramsBodyHeaders = {
       Body: headers,
       Bucket: config.s3.bucket_name,
-      Key: `${fileName}.headers`,
+      Key: `${fileName}_headers.json`,
     };
 
     const options = {

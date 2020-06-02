@@ -112,7 +112,15 @@ export class ProtocolStrategy implements IProtocolStrategy {
 
         if (!outData && typeof data === "object") {
             try {
-                outData = JSON.stringify(data);
+                outData = JSON.stringify(data, null, 2);
+            } catch {
+                null;
+            }
+        }
+
+        if (!outData && typeof data === "string") {
+            try {
+                outData = JSON.stringify(JSON.parse(data), null, 2);
             } catch {
                 null;
             }

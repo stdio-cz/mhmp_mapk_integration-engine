@@ -36,6 +36,9 @@ run_tests:
     - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE
     - export RABBIT_CONN=amqp://guest:guest@rabbitmq
     - export RABBIT_EXCHANGE_NAME=citests
+    - export S3_BUCKET_NAME=integration-engine
+    - export S3_UPLOAD_PART_SIZE=10
+    - export S3_UPLOAD_QUEUE_SIZE=2
     - yarn run code-coverage
 
 build_image:
