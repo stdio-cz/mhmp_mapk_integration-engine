@@ -3,7 +3,7 @@ image: docker:stable
 variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
-  POSTGRES_PASS: test-pass
+  POSTGRES_PASSWORD: test-pass
   POSTGRES_DB: testdb
 
 stages:
@@ -19,40 +19,41 @@ run_tests:
   stage: build
   image: node:12
   services:
-    - postgres:10.5
-    - mongo:4.0.10
+    - postgres:12.3
+    - mongo:4.0
     - redis:5.0-alpine
-    - rabbitmq:3.7.14
+    - rabbitmq:3.8
   script:
     - export NODE_ENV=development
     - yarn
     - yarn run tslint
     - yarn run build
     - export MONGO_CONN=mongodb://mongo/testdb
-    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
     - export REDIS_CONN=redis://redis/
     - export NODE_ENV=test
     - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
     - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE
     - export RABBIT_CONN=amqp://guest:guest@rabbitmq
     - export RABBIT_EXCHANGE_NAME=citests
+    - export S3_BUCKET_NAME=integration-engine
+    - export S3_UPLOAD_PART_SIZE=10
+    - export S3_UPLOAD_QUEUE_SIZE=2
     - yarn run code-coverage
 
 build_image:
   stage: build
   script:
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest .
+    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest .
 
 registry_deployment:
   stage: deploy
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
-  only:
-    refs:
-      - master
-      - development
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
 
 pages:
   stage: deploy
@@ -64,5 +65,5 @@ pages:
   artifacts:
     paths:
     - public
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"

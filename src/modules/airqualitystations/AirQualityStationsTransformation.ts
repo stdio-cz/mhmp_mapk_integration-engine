@@ -1,6 +1,7 @@
 "use strict";
 
 import { AirQualityStations } from "@golemio/schema-definitions";
+import * as moment from "moment";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class AirQualityStationsTransformation extends BaseTransformation implements ITransformation {
@@ -12,66 +13,85 @@ export class AirQualityStationsTransformation extends BaseTransformation impleme
         this.name = AirQualityStations.name;
     }
 
-    protected transformElement = async (element: any): Promise<any> => {
+    /**
+     * Transform the whole collection or one single element
+     */
+    public transform = async (data: any | any[]): Promise<{indexes: any[], measurements: any[], stations: any[]}> => {
         const res = {
-            geometry: {
-                coordinates: [ parseFloat(element.wgs84_longitude), parseFloat(element.wgs84_latitude)],
-                type: "Point",
-            },
-            properties: {
-                id: element.code,
-                measurement: {
-                    AQ_hourly_index: (element.AQ_hourly_index && element.AQ_hourly_index.value)
-                        ? parseInt(element.AQ_hourly_index.value, 10)
-                        : null,
-                    components: [],
-                },
-                name: element.name,
-                updated_at: new Date().getTime(),
-            },
-            type: "Feature",
+            indexes: [],
+            measurements: [],
+            stations: [],
         };
-        if (element.measurement) {
-            if (element.measurement.component instanceof Array) {
-                const components = element.measurement.component.map(async (c, i) => {
-                    const averagedTime = {
-                        averaged_hours: (element.measurement.averaged_time[i].averaged_hours)
-                            ? parseInt(element.measurement.averaged_time[i].averaged_hours, 10)
-                            : null,
-                        value: (element.measurement.averaged_time[i].value)
-                            ? parseFloat(element.measurement.averaged_time[i].value)
-                            : null,
-                    };
-                    return {
-                        averaged_time: averagedTime,
-                        type: c,
-                    };
+
+        data.States.forEach((state: any) => {
+            const dateFrom = moment(state.DateFromUTC.replace("UTC", "+0000"), "YYYY-MM-DD HH:mm:ss.S ZZ");
+            const dateTo = moment(state.DateToUTC.replace("UTC", "+0000"), "YYYY-MM-DD HH:mm:ss.S ZZ");
+
+            if (state.Regions && Array.isArray(state.Regions)) {
+                state.Regions.forEach((region: any) => {
+                    if (region.Stations && Array.isArray(region.Stations)) {
+                        region.Stations.forEach((station: any) => {
+                            if (station.Code && station.Code !== "") {
+                                // station identifier
+                                const id = `${state.Code}_${region.Code}_${station.Code}`;
+
+                                // stations
+                                res.stations.push({
+                                    classification: station.Classif,
+                                    id,
+                                    latitude: (station.Lat) ? parseFloat(station.Lat) : null,
+                                    longitude: (station.Lon) ? parseFloat(station.Lon) : null,
+                                    owner: station.Owner,
+                                    region_code: region.Code,
+                                    region_name: region.Name,
+                                    state_code: state.Code,
+                                    state_name: state.Name,
+                                    station_name: station.Name,
+                                    station_vendor_id: station.Code,
+                                });
+
+                                // indexes
+                                if (station.Ix) {
+                                    res.indexes.push({
+                                        index_code: station.Ix,
+                                        measured_from: dateFrom.valueOf(),
+                                        measured_to: dateTo.valueOf(),
+                                        station_id: id,
+                                    });
+                                }
+
+                                // measurements
+                                if (station.Components && Array.isArray(station.Components)) {
+                                    station.Components.forEach((component: any) => {
+                                        if ((component.Flag
+                                                && (component.Flag === "ok" || component.Flag === "no_data"))
+                                                || (component.Val && !component.Flag)) {
+                                            res.measurements.push({
+                                                aggregation_interval: component.Int,
+                                                component_code: component.Code,
+                                                measured_from: dateFrom.valueOf(),
+                                                measured_to: dateTo.valueOf(),
+                                                station_id: id,
+                                                value: (component.Val) // Flag no_data
+                                                    ? parseFloat(component.Val)
+                                                    : null,
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
                 });
-                res.properties.measurement.components = await Promise.all(components);
-            } else {
-                res.properties.measurement.components = [{
-                    averaged_time: {
-                        averaged_hours: (element.measurement.averaged_time.averaged_hours)
-                            ? parseInt(element.measurement.averaged_time.averaged_hours, 10)
-                            : null,
-                        value: (element.measurement.averaged_time.value)
-                            ? parseFloat(element.measurement.averaged_time.value)
-                            : null,
-                    },
-                    type: element.measurement.component,
-                }];
             }
-        }
+        });
+
         return res;
     }
 
-    protected transformHistoryElement = async (element: any): Promise<any> => {
-        const res = {
-            id: element.properties.id,
-            measurement: element.properties.measurement,
-            updated_at: element.properties.updated_at,
-        };
-        return res;
+    protected transformElement = async (element: any): Promise<any> => {
+        // Nothing to do.
+        return;
     }
 
 }

@@ -1,42 +1,52 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "@golemio/validator";
+import { IValidator } from "@golemio/validator";
 import { log, loggerEvents, LoggerEventType } from "../helpers";
 import { IDataSource, IDataTypeStrategy, IProtocolStrategy } from "./";
+import { DataSourceStream } from "./DataSourceStream";
 
 export class DataSource implements IDataSource {
 
+    public dataStream: DataSourceStream;
     public name: string;
     protected protocolStrategy: IProtocolStrategy;
     protected dataTypeStrategy: IDataTypeStrategy;
-    protected validator: Validator;
+    protected validator: IValidator;
 
     constructor(
         name: string,
         protocolStrategy: IProtocolStrategy,
         dataTypeStrategy: IDataTypeStrategy,
-        validator: Validator) {
+        validator: IValidator) {
         this.name = name;
         this.protocolStrategy = protocolStrategy;
         this.dataTypeStrategy = dataTypeStrategy;
         this.validator = validator;
+
+        if (this.protocolStrategy && this.protocolStrategy.setCallerName) {
+            this.protocolStrategy.setCallerName(this.name);
+        }
     }
 
     public setProtocolStrategy = (strategy: IProtocolStrategy): void => {
         this.protocolStrategy = strategy;
+        if (this.protocolStrategy.setCallerName) {
+            this.protocolStrategy.setCallerName(this.name);
+        }
     }
 
     public setDataTypeStrategy = (strategy: IDataTypeStrategy): void => {
         this.dataTypeStrategy = strategy;
     }
 
-    public setValidator = (validator: Validator): void => {
+    public setValidator = (validator: IValidator): void => {
         this.validator = validator;
     }
 
     public getAll = async (): Promise<any> => {
         const data = await this.getRawData();
+
         if (this.validator) {
             try {
                 await this.validator.Validate(data);
@@ -56,6 +66,7 @@ export class DataSource implements IDataSource {
     protected getRawData = async (): Promise<any> => {
         try {
             const body = await this.protocolStrategy.getData();
+
             const content = await this.dataTypeStrategy.parseData(body);
             if (this.isEmpty(content)) {
                 log.warn(`${this.name}: Data source returned empty data.`);

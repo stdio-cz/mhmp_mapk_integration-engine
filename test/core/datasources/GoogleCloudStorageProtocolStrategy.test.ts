@@ -10,7 +10,7 @@ import { GoogleCloudStorageProtocolStrategy, IGoogleCloudStorageSettings } from 
 
 chai.use(chaiAsPromised);
 
-describe("PostgresProtocolStrategy", () => {
+describe("GoogleCloudStorageProtocolStrategy", () => {
 
     let sandbox;
     let testSettings: IGoogleCloudStorageSettings;

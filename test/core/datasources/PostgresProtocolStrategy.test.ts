@@ -9,6 +9,10 @@ import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { IPostgresSettings, PostgresProtocolStrategy } from "../../../src/core/datasources";
 
+import * as RawDaraStore from "../../../src/core/helpers/RawDaraStore";
+
+import * as sinon from "sinon";
+
 import { config } from "../../../src/core/config";
 chai.use(chaiAsPromised);
 
@@ -16,6 +20,7 @@ describe("PostgresProtocolStrategy", () => {
 
     let testSettings: IPostgresSettings;
     let strategy: PostgresProtocolStrategy;
+    let sandbox: any;
 
     before(async () => {
         const connection = await PostgresConnector.connect();
@@ -45,6 +50,8 @@ describe("PostgresProtocolStrategy", () => {
     });
 
     beforeEach(() => {
+        sandbox = sinon.createSandbox();
+
         testSettings = {
             connectionString: config.POSTGRES_CONN,
             findOptions: {
@@ -61,10 +68,21 @@ describe("PostgresProtocolStrategy", () => {
             tableName: "test",
         };
         strategy = new PostgresProtocolStrategy(testSettings);
+
+        sandbox.spy(strategy, "getRawData");
+        sandbox.spy(RawDaraStore, "save");
+    });
+
+    afterEach(() => {
+        sandbox.restore();
     });
 
     it("should has getData method", async () => {
         expect(strategy.getData).not.to.be.undefined;
+    });
+
+    it("should has getRawData method", async () => {
+        expect(strategy.getRawData).not.to.be.undefined;
     });
 
     it("should has getLastModified method", async () => {
@@ -78,6 +96,8 @@ describe("PostgresProtocolStrategy", () => {
     it("should properly get data", async () => {
         const res = await strategy.getData();
         expect(res).to.be.deep.equal([{ id: 1, value: "a" }, { id: 2, value: "b" }]);
+        sandbox.assert.calledOnce(strategy.getRawData);
+        sandbox.assert.calledOnce(RawDaraStore.save);
     });
 
     it("should properly delete data", async () => {

@@ -24,7 +24,7 @@ import {
     WasteCollectionYards,
     WazeCCP,
 } from "@golemio/schema-definitions";
-import { ObjectKeysValidator, Validator } from "@golemio/validator";
+import { JSONSchemaValidator, ObjectKeysValidator, Validator } from "@golemio/validator";
 import { File } from "@google-cloud/storage";
 import * as chai from "chai";
 import { expect } from "chai";
@@ -380,33 +380,60 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("AirQualityStations", () => {
 
-        let datasource;
+        describe("Actual hour data", () => {
 
-        beforeEach(() => {
-            const stationsDataType = new XMLDataTypeStrategy({
-                resultsPath: "AQ_hourly_index.Data.station",
-                xml2jsParams: { explicitArray: false, trim: true },
+            let datasource;
+
+            beforeEach(() => {
+                datasource = new DataSource(AirQualityStations.name + "1HDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        url: config.datasources.AirQualityStations1H,
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(AirQualityStations.name + "1HDataSource",
+                        AirQualityStations.datasourceJsonSchema,
+                ));
             });
-            stationsDataType.setFilter((item) => item.code[0].indexOf("A") === 0);
-            datasource = new DataSource(AirQualityStations.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {},
-                    method: "GET",
-                    url: config.datasources.AirQualityStations,
-                }),
-                stationsDataType,
-                new Validator(AirQualityStations.name + "DataSource",
-                    AirQualityStations.datasourceMongooseSchemaObject));
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.not.null;
+            });
         });
 
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
+        describe("AQIndex 3 hours data", () => {
 
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.not.null;
+            let datasource;
+
+            beforeEach(() => {
+                datasource = new DataSource(AirQualityStations.name + "3HDataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        url: config.datasources.AirQualityStations3H,
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(AirQualityStations.name + "3HDataSource",
+                        AirQualityStations.datasourceJsonSchema,
+                ));
+            });
+
+            it("should returns all objects", async () => {
+                const data = await datasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should returns last modified", async () => {
+                const data = await datasource.getLastModified();
+                expect(data).to.be.not.null;
+            });
         });
 
     });
@@ -1152,9 +1179,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=alerts",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.alerts.name + "DataSource",
-                    WazeCCP.alerts.datasourceMongooseSchemaObject,
+                    WazeCCP.alerts.datasourceJsonSchema,
                 ),
             );
             dataSourceIrregularities = new DataSource(
@@ -1165,9 +1192,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=irregularities",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.irregularities.name + "DataSource",
-                    WazeCCP.irregularities.datasourceMongooseSchemaObject,
+                    WazeCCP.irregularities.datasourceJsonSchema,
                 ),
             );
             dataSourceJams = new DataSource(
@@ -1178,9 +1205,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=traffic",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(
+                new JSONSchemaValidator(
                     WazeCCP.jams.name + "DataSource",
-                    WazeCCP.jams.datasourceMongooseSchemaObject,
+                    WazeCCP.jams.datasourceJsonSchema,
                 ),
             );
         });
@@ -1222,6 +1249,8 @@ describe("DataSourcesAvailabilityChecking", () => {
 
             let appStoreDataSource: DataSource;
             let bearerToken: string;
+            const date = moment.tz(new Date(), "Europe/Prague");
+            date.subtract(2, "day");
 
             bearerToken = sign({
                     aud: "appstoreconnect-v1",
@@ -1247,7 +1276,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                         },
                         isGunZipped: true,
                         method: "GET",
-                        url: config.datasources.AppStoreConnect.replace(":reportDate", "2020-03-09"),
+                        url: config.datasources.AppStoreConnect.replace(":reportDate", date.format("YYYY-MM-DD")),
                     }),
                     new CSVDataTypeStrategy({
                         fastcsvParams: { headers: true, delimiter: "\t" },

@@ -1,5 +1,7 @@
 "use strict";
 
+import { DataSourceStream } from "./DataSourceStream";
+
 import { Validator } from "@golemio/validator";
 import { IDataTypeStrategy, IProtocolStrategy } from "./";
 
@@ -7,6 +9,8 @@ export interface IDataSource {
 
     /** The name of the data source. */
     name: string;
+
+    dataStream: DataSourceStream;
 
     setProtocolStrategy(strategy: IProtocolStrategy): void;
 

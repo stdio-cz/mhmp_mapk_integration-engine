@@ -1,20 +1,16 @@
 "use strict";
 
-import { Readable } from "stream";
-
 import { config } from "../../core/config";
 
 import { CustomError } from "@golemio/errors";
+import { DataSourceStream } from "./DataSourceStream";
+
 import { MySequelize } from "../connectors";
-import { IPostgresSettings, IProtocolStrategy, PostgresProtocolStrategy } from "./";
+import { IProtocolStrategy, PostgresProtocolStrategy } from "./";
 
 export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy implements IProtocolStrategy {
 
-    public setConnectionSettings = (settings: IPostgresSettings): void => {
-        this.connectionSettings = settings;
-    }
-
-    public getData = async (): Promise<Readable> => {
+    public getRawData = async (): Promise<any> => {
         const findOptions = this.connectionSettings.findOptions;
 
         let batchLimit: number;
@@ -24,10 +20,11 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
         let gotAllData = false;
         let resultsCount = 0;
 
-        if (limit && limit <= config.POSTGRES_BATCH_SIZE) {
+        // TO DO - move to helper f-cion
+        if (limit && limit <= config.DATA_BATCH_SIZE) {
             batchLimit = limit;
         } else {
-            batchLimit = +config.POSTGRES_BATCH_SIZE;
+            batchLimit = +config.DATA_BATCH_SIZE;
         }
 
         try {
@@ -48,64 +45,65 @@ export class PostgresProtocolStrategyStreamed extends PostgresProtocolStrategy i
                 },
             );
 
-            return new Readable({
-                objectMode: true,
-                async read() {
-                    try {
-                        const results = await model
-                            .findAll({
-                                ...findOptions,
-                                limit: batchLimit,
-                                offset,
-                                raw: true,
-                            });
+            return {
+                data: new DataSourceStream({
+                    objectMode: true,
+                    async read() {
+                        try {
+                            const results = await model
+                                .findAll({
+                                    ...findOptions,
+                                    limit: batchLimit,
+                                    offset,
+                                    raw: true,
+                                });
 
-                        // some data in correct format
-                        if (results && Array.isArray(results) && results.length !== 0) {
-                            resultsCount += results.length;
-                            this.push(results);
-                            // but less than requested amount
-                            if (results.length < batchLimit) {
+                            // some data in correct format
+                            if (results && Array.isArray(results) && results.length !== 0) {
+                                resultsCount += results.length;
+                                this.push(results);
+                                // but less than requested amount
+                                if (results.length < batchLimit) {
+                                    gotAllData = true;
+                                }
+                            }  else {
                                 gotAllData = true;
                             }
-                        }  else {
-                            gotAllData = true;
-                        }
 
-                        // requested data count reached
-                        if (limit && resultsCount >= limit) {
-                            gotAllData = true;
-                        }
-
-                        if (gotAllData) {
-                            // end the stream
-                            this.push(null);
-
-                            if (dbConnectionOpened) {
-                                await connection.close();
-                                dbConnectionOpened = false;
+                            // requested data count reached
+                            if (limit && resultsCount >= limit) {
+                                gotAllData = true;
                             }
-                        } else {
-                            offset += batchLimit;
-                            // select min(remaining,batch size) in next round
-                            batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
-                        }
-                    } catch (err) {
-                        this.emit("error", err);
-                    }
-                },
-                async destroy() {
-                    if (dbConnectionOpened) {
-                        try {
-                            await connection.close();
-                            dbConnectionOpened = false;
+
+                            if (gotAllData) {
+                                // end the stream
+                                this.push(null);
+
+                                if (dbConnectionOpened) {
+                                    await connection.close();
+                                    dbConnectionOpened = false;
+                                }
+                            } else {
+                                offset += batchLimit;
+                                // select min(remaining,batch size) in next round
+                                batchLimit = (limit - resultsCount) < batchLimit ? limit - resultsCount : batchLimit;
+                            }
                         } catch (err) {
                             this.emit("error", err);
                         }
-                    }
-                },
-            });
-
+                    },
+                    async destroy() {
+                        if (dbConnectionOpened) {
+                            try {
+                                await connection.close();
+                                dbConnectionOpened = false;
+                            } catch (err) {
+                                this.emit("error", err);
+                            }
+                        }
+                    },
+                }),
+            };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);
         }

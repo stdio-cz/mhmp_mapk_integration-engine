@@ -19,7 +19,7 @@ describe("WazeCCPWorker", () => {
     let testTransformedData;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox = sinon.createSandbox({ useFakeTimers: true }); // important for `downloadedAt`
         sequelizeModelStub = Object.assign({
             hasMany: sandbox.stub(),
             removeAttribute: sandbox.stub(),
@@ -31,9 +31,21 @@ describe("WazeCCPWorker", () => {
                 transaction: sandbox.stub().callsFake(() => Object.assign({commit: sandbox.stub()})),
             }));
 
-        testDataAlerts = { startTimeMillis: 1574245920000, alerts: [1, 2] };
-        testDataIrregularities = { startTimeMillis: 1574245920000, irregularities: [1, 2] };
-        testDataJams = { startTimeMillis: 1574245920000, jams: [1, 2] };
+        testDataAlerts = {
+            alerts: [1, 2],
+            downloadedAt: new Date().valueOf(),
+            startTimeMillis: 1574245920000,
+        };
+        testDataIrregularities = {
+            downloadedAt: new Date().valueOf(),
+            irregularities: [1, 2],
+            startTimeMillis: 1574245920000,
+        };
+        testDataJams = {
+            downloadedAt: new Date().valueOf(),
+            jams: [1, 2],
+            startTimeMillis: 1574245920000,
+        };
         testTransformedData = [1, 2];
 
         worker = new WazeCCPWorker();

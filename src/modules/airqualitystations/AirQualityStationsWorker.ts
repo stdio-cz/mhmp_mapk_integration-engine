@@ -1,131 +1,89 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { AirQualityStations, CityDistricts } from "@golemio/schema-definitions";
-import { Validator } from "@golemio/validator";
+import { AirQualityStations } from "@golemio/schema-definitions";
+import { JSONSchemaValidator, Validator } from "@golemio/validator";
 import { config } from "../../core/config";
-import { DataSource, HTTPProtocolStrategy, XMLDataTypeStrategy } from "../../core/datasources";
-import { MongoModel } from "../../core/models";
+import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
+import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { AirQualityStationsTransformation } from "./";
 
 export class AirQualityStationsWorker extends BaseWorker {
 
-    private dataSource: DataSource;
+    private dataSource1H: DataSource;
+    private dataSource3H: DataSource;
     private transformation: AirQualityStationsTransformation;
-    private model: MongoModel;
-    private historyModel: MongoModel;
-    private queuePrefix: string;
-    private cityDistrictsModel: MongoModel;
+    private indexesModel: PostgresModel;
+    private measurementsModel: PostgresModel;
+    private stationsModel: PostgresModel;
 
     constructor() {
         super();
-        const stationsDataType = new XMLDataTypeStrategy({
-            resultsPath: "AQ_hourly_index.Data.station",
-            xml2jsParams: { explicitArray: false, trim: true },
-        });
-        stationsDataType.setFilter((item) => item.code[0].indexOf("A") === 0);
-        this.dataSource = new DataSource(AirQualityStations.name + "DataSource",
+        this.dataSource1H = new DataSource(AirQualityStations.name + "1HDataSource",
             new HTTPProtocolStrategy({
                 headers: {},
                 method: "GET",
-                url: config.datasources.AirQualityStations,
+                url: config.datasources.AirQualityStations1H,
             }),
-            stationsDataType,
-            new Validator(AirQualityStations.name + "DataSource",
-                AirQualityStations.datasourceMongooseSchemaObject));
-        this.model = new MongoModel(AirQualityStations.name + "Model", {
-            identifierPath: "properties.id",
-            mongoCollectionName: AirQualityStations.mongoCollectionName,
-            outputMongooseSchemaObject: AirQualityStations.outputMongooseSchemaObject,
-            resultsPath: "properties",
-            savingType: "insertOrUpdate",
-            searchPath: (id, multiple) => (multiple)
-                ? { "properties.id": { $in: id } }
-                : { "properties.id": id },
-            updateValues: (a, b) => {
-                a.properties.name = b.properties.name;
-                a.properties.measurement = b.properties.measurement;
-                a.properties.updated_at = b.properties.updated_at;
-                return a;
-            },
-        },
-            new Validator(AirQualityStations.name + "ModelValidator", AirQualityStations.outputMongooseSchemaObject),
-        );
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new JSONSchemaValidator(AirQualityStations.name + "1HDataSource",
+                AirQualityStations.datasourceJsonSchema,
+        ));
+        this.dataSource3H = new DataSource(AirQualityStations.name + "3HDataSource",
+            new HTTPProtocolStrategy({
+                headers: {},
+                method: "GET",
+                url: config.datasources.AirQualityStations3H,
+            }),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new JSONSchemaValidator(AirQualityStations.name + "3HDataSource",
+                AirQualityStations.datasourceJsonSchema,
+        ));
         this.transformation = new AirQualityStationsTransformation();
-        this.historyModel = new MongoModel(AirQualityStations.history.name + "Model", {
-            identifierPath: "id",
-            mongoCollectionName: AirQualityStations.history.mongoCollectionName,
-            outputMongooseSchemaObject: AirQualityStations.history.outputMongooseSchemaObject,
-            savingType: "insertOnly",
-        },
-            new Validator(AirQualityStations.history.name + "ModelValidator",
-                AirQualityStations.history.outputMongooseSchemaObject),
+        this.stationsModel = new PostgresModel(AirQualityStations.stations.name + "Model", {
+                outputSequelizeAttributes: AirQualityStations.stations.outputSequelizeAttributes,
+                pgTableName: AirQualityStations.stations.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(AirQualityStations.stations.name + "ModelValidator",
+            AirQualityStations.stations.outputMongooseSchemaObject),
         );
-        this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + AirQualityStations.name.toLowerCase();
-        this.cityDistrictsModel = new MongoModel(CityDistricts.name + "Model", {
-            identifierPath: "properties.id",
-            mongoCollectionName: CityDistricts.mongoCollectionName,
-            outputMongooseSchemaObject: CityDistricts.outputMongooseSchemaObject,
-            resultsPath: "properties",
-            savingType: "readOnly",
-            searchPath: (id, multiple) => (multiple)
-                ? { "properties.id": { $in: id } }
-                : { "properties.id": id },
-        },
-            new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
+        this.measurementsModel = new PostgresModel(AirQualityStations.measurements.name + "Model", {
+                outputSequelizeAttributes: AirQualityStations.measurements.outputSequelizeAttributes,
+                pgTableName: AirQualityStations.measurements.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(AirQualityStations.measurements.name + "ModelValidator",
+            AirQualityStations.measurements.outputMongooseSchemaObject),
+        );
+        this.indexesModel = new PostgresModel(AirQualityStations.indexes.name + "Model", {
+                outputSequelizeAttributes: AirQualityStations.indexes.outputSequelizeAttributes,
+                pgTableName: AirQualityStations.indexes.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(AirQualityStations.indexes.name + "ModelValidator",
+            AirQualityStations.indexes.outputMongooseSchemaObject),
         );
     }
 
-    public refreshDataInDB = async (msg: any): Promise<void> => {
-        const data = await this.dataSource.getAll();
+    public refresh1HDataInDB = async (msg: any): Promise<void> => {
+        const data = await this.dataSource1H.getAll();
         const transformedData = await this.transformation.transform(data);
-        await this.model.save(transformedData);
-
-        // send message for historization
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveDataToHistory",
-            JSON.stringify(transformedData), { persistent: true });
-
-        // send messages for updating district and address and average occupancy
-        const promises = transformedData.map((p) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
-                JSON.stringify(p));
-        });
-        await Promise.all(promises);
+        await Promise.all([
+            this.stationsModel.save(transformedData.stations),
+            this.measurementsModel.save(transformedData.measurements),
+            this.indexesModel.save(transformedData.indexes),
+        ]);
     }
 
-    public saveDataToHistory = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const transformedData = await this.transformation.transformHistory(inputData);
-        await this.historyModel.save(transformedData);
+    public refresh3HDataInDB = async (msg: any): Promise<void> => {
+        const data = await this.dataSource3H.getAll();
+        const transformedData = await this.transformation.transform(data);
+        await Promise.all([
+            this.stationsModel.save(transformedData.stations),
+            this.measurementsModel.save(transformedData.measurements),
+            this.indexesModel.save(transformedData.indexes),
+        ]);
     }
-
-    public updateDistrict = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        const id = inputData.properties.id;
-        const dbData = await this.model.findOneById(id);
-
-        if (!dbData.properties.district
-            || inputData.geometry.coordinates[0] !== dbData.geometry.coordinates[0]
-            || inputData.geometry.coordinates[1] !== dbData.geometry.coordinates[1]) {
-            try {
-                const result = await this.cityDistrictsModel.findOne({ // find district by coordinates
-                    geometry: {
-                        $geoIntersects: {
-                            $geometry: {
-                                coordinates: dbData.geometry.coordinates,
-                                type: "Point",
-                            },
-                        },
-                    },
-                });
-                dbData.properties.district = (result) ? result.properties.slug : null;
-                await dbData.save();
-            } catch (err) {
-                throw new CustomError("Error while updating district.", true, this.constructor.name, 5001, err);
-            }
-        }
-        return dbData;
-    }
-
 }

@@ -5,7 +5,8 @@
         "kid": "",
         "private_key": ""
     },
-    "AirQualityStations": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/AIMdata_hourly.xml",
+    "AirQualityStations1H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/actual_hour_data_cze.json",
+    "AirQualityStations3H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/aqindex_3h_cze.json",
     "CeskyCarsharingSharedCars": "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
     "CeskyCarsharingSharedCarsEndpointCredentials": {
         "guid": "",

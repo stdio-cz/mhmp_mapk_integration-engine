@@ -1,0 +1,11 @@
+{
+    "WazeCCPJamsDataSource": {
+        "saveHeaders": true
+    },
+    "WazeCCPIrregularitiesDataSource": {
+        "saveHeaders": true
+    },
+    "WazeCCPAlertsDataSource": {
+        "saveHeaders": true
+    }
+}
