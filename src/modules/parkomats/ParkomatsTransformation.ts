@@ -1,7 +1,7 @@
 "use strict";
 
 import { Parkomats } from "@golemio/schema-definitions";
-import * as moment from "moment";
+import * as moment from "moment-timezone";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
 export class ParkomatsTransformation extends BaseTransformation implements ITransformation {
