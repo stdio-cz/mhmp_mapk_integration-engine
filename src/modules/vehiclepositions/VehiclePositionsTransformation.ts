@@ -85,13 +85,23 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         const primaryKey = startDate.utc().format()
             + "_" + attributes.lin + "_" + attributes.alias + "_" + attributes.spoj;
 
+        // DP PRAHA exception for missing attributes
+        const agencyNameException = "DP PRAHA";
+        const bearing = (attributes.dopr === agencyNameException) ? null : attributes.azimut;
+        const speed = (attributes.dopr === agencyNameException) ? null : attributes.rychl;
+        const aswLastStopId = (attributes.dopr === agencyNameException) ? attributes.zast : null;
+        const cisLastStopId = (attributes.dopr === agencyNameException) ? null : attributes.zast;
+
         const res = {
             position: {
-                bearing: (attributes.azimut)
-                    ? this.fixSourceNegativeBearing(parseInt(attributes.azimut, 10))
+                asw_last_stop_id: (aswLastStopId)
+                    ? this.formatASWStopId(aswLastStopId)
                     : null,
-                cis_last_stop_id: (attributes.zast)
-                    ? parseInt(attributes.zast, 10)
+                bearing: (bearing)
+                    ? this.fixSourceNegativeBearing(parseInt(bearing, 10))
+                    : null,
+                cis_last_stop_id: (cisLastStopId)
+                    ? parseInt(cisLastStopId, 10)
                     : null,
                 cis_last_stop_sequence: null,
                 delay_stop_arrival: (attributes.zpoz_prij)
@@ -109,8 +119,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     : null,
                 origin_time: attributes.cpoz,
                 origin_timestamp: timestamp.utc().valueOf(),
-                speed: (attributes.rychl)
-                    ? parseInt(attributes.rychl, 10)
+                speed: (speed)
+                    ? parseInt(speed, 10)
                     : null,
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
@@ -125,7 +135,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 agency_name_scheduled: (attributes.dopr)
                     ? attributes.dopr
                     : null,
-                cis_line_id: parseInt(attributes.lin, 10),
+                cis_line_id: attributes.lin,
                 cis_line_short_name: attributes.alias,
                 cis_trip_number: parseInt(attributes.spoj, 10),
                 id: primaryKey,
@@ -133,7 +143,10 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                     ? parseInt(attributes.kmenl, 10)
                     : null,
                 sequence_id: parseInt(attributes.po, 10),
-                start_cis_stop_id: parseInt(stops[0].$.zast, 10),
+                start_asw_stop_id: (attributes.dopr === agencyNameException) ?
+                    this.formatASWStopId(stops[0].$.zast) : null,
+                start_cis_stop_id: (attributes.dopr !== agencyNameException) ?
+                    parseInt(stops[0].$.zast, 10) : null,
                 start_cis_stop_platform_code: stops[0].$.stan,
                 start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
                 start_timestamp: startDate.utc().valueOf(),
@@ -186,13 +199,20 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 res.position.cis_last_stop_sequence = cisStopSequence;
             }
 
+            // assign formatted stop id according to agency's stop ids
+            const aswStopId = (attributes.dopr === agencyNameException) ?
+                this.formatASWStopId(stop.$.zast) : null;
+            const cisStopId = (attributes.dopr !== agencyNameException) ?
+                parseInt(stop.$.zast, 10) : null;
+
             return {
                 arrival_delay_type: (stop.$.zpoz_typ_prij)
                     ? parseInt(stop.$.zpoz_typ_prij, 10)
                     : null,
                 arrival_time: (arrival) ? stop.$.prij : null,
                 arrival_timestamp: (arrival) ? arrival.utc().valueOf() : null,
-                cis_stop_id: parseInt(stop.$.zast, 10),
+                asw_stop_id: aswStopId,
+                cis_stop_id: cisStopId,
                 cis_stop_platform_code: stop.$.stan,
                 cis_stop_sequence: cisStopSequence,
                 delay_arrival: (stop.$.zpoz_prij)
@@ -231,6 +251,19 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
      */
     private fixSourceNegativeBearing(bearing: number): number {
         return bearing < 0 ? bearing + 256 : bearing;
+    }
+
+    /**
+     * Format input stop id from DPP agency (XXX000Y to XXX/Y) to ASW id
+     *
+     * @param {string} stopId
+     * @returns {stringList}
+     */
+    private formatASWStopId(stopId: string): string {
+        const fixedRightPadFactor = 10000;
+        const aswParsedStopNodeId = Math.floor(parseInt(stopId, 10) / fixedRightPadFactor);
+        const aswParsedStopPostId = parseInt(stopId, 10) - aswParsedStopNodeId * fixedRightPadFactor;
+        return aswParsedStopNodeId + "/" + aswParsedStopPostId;
     }
 
 }

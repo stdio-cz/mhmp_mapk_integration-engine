@@ -76,6 +76,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                         i.push({
                             cis_line_short_name: d.cis_line_short_name,
                             id: d.id,
+                            start_asw_stop_id: d.start_asw_stop_id,
                             start_cis_stop_id: d.start_cis_stop_id,
                             start_cis_stop_platform_code: d.start_cis_stop_platform_code,
                             start_timestamp: d.start_timestamp,
@@ -94,6 +95,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     i.push({
                         cis_line_short_name: data.cis_line_short_name,
                         id: data.id,
+                        start_asw_stop_id: data.start_asw_stop_id,
                         start_cis_stop_id: data.start_cis_stop_id,
                         start_cis_stop_platform_code: data.start_cis_stop_platform_code,
                         start_timestamp: data.start_timestamp,
@@ -136,7 +138,8 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             WHERE stop_id LIKE
               (SELECT CONCAT('U',CAST(node AS TEXT),'Z%') FROM ropidgtfs_cis_stop_groups
               WHERE cis IN
-                (SELECT cis FROM ropidgtfs_cis_stops WHERE cis = '${trip.start_cis_stop_id}'))
+                (SELECT cis FROM ropidgtfs_cis_stops
+                    WHERE cis = '${trip.start_cis_stop_id || 0}' OR id = '${trip.start_asw_stop_id || ""}'))
               AND
                 (platform_code LIKE '${trip.start_cis_stop_platform_code}'
                 OR CASE WHEN (LENGTH(platform_code)<2) THEN platform_code LIKE

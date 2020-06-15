@@ -69,7 +69,7 @@ describe("VehiclePositionsTransformation", () => {
         expect(data).to.have.property("stops");
         expect(data.stops.length).to.equal(28);
         expect(data).to.have.property("trips");
-        expect(data.trips[0]).to.have.property("cis_line_id", 100110);
+        expect(data.trips[0]).to.have.property("cis_line_id", "100110");
     });
 
     it("should properly transform element (positive bearing)", async () => {
@@ -81,7 +81,7 @@ describe("VehiclePositionsTransformation", () => {
         expect(data).to.have.property("stops");
         expect(data.stops.length).to.equal(24);
         expect(data).to.have.property("trips");
-        expect(data.trips[0]).to.have.property("cis_line_id", 100110);
+        expect(data.trips[0]).to.have.property("cis_line_id", "100110");
     });
 
     it("should properly transform collection", async () => {
@@ -93,9 +93,21 @@ describe("VehiclePositionsTransformation", () => {
         expect(data).to.have.property("positions");
         expect(data.positions.length).to.equal(321);
         expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(5953);
+        expect(data.stops.length).to.equal(5925);
         expect(data).to.have.property("trips");
         expect(data.trips.length).to.equal(321);
+    });
+
+    it("should properly transform DPP stop id (to AWS id)", async () => {
+        const data = await transformation.transform(testSourceData.m.spoj[2]);
+        expect(data.trips[0]).to.have.property("agency_name_real", "DP PRAHA");
+        expect(data.trips[0]).to.have.property("start_asw_stop_id", "628/4");
+        expect(data).to.have.property("positions");
+        expect(data.positions[0]).to.have.property("asw_last_stop_id", "628/4");
+        expect(data).to.have.property("stops");
+        expect(data.stops.length).to.equal(2);
+        expect(data.stops[0]).to.have.property("asw_stop_id", "628/4");
+        expect(data.stops[1]).to.have.property("asw_stop_id", "1090/3");
     });
 
 });
