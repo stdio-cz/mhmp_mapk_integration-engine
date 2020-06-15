@@ -10,7 +10,7 @@ export class DataSource implements IDataSource {
 
     public dataStream: DataSourceStream;
     public name: string;
-    protected protocolStrategy: IProtocolStrategy;
+    public protocolStrategy: IProtocolStrategy;
     protected dataTypeStrategy: IDataTypeStrategy;
     protected validator: IValidator;
 

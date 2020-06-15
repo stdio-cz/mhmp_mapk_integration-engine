@@ -5,7 +5,7 @@ import {
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
     RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP,
+    TrafficCameras, TSKSTD, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
@@ -35,6 +35,7 @@ import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
 import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
+import { TrafficDetectorsWorker } from "../modules/trafficdetectors";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 import { WazeCCPWorker } from "../modules/wazeccp";
@@ -941,6 +942,22 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: TrafficCamerasWorker,
                 workerMethod: "updateAddressAndDistrict",
+            },
+        ],
+    },
+    {
+        name: TSKSTD.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TSKSTD.name.toLowerCase(),
+        queues: [
+            {
+                name: "saveNewTSKSTDDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000, // 1 minute
+                },
+                worker: TrafficDetectorsWorker,
+                workerMethod: "saveNewTSKSTDDataInDB",
             },
         ],
     },

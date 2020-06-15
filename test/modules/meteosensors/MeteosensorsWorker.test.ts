@@ -6,7 +6,6 @@ import * as sinon from "sinon";
 import { config } from "../../../src/core/config";
 import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream";
 import { MeteosensorsWorker} from "../../../src/modules/meteosensors";
-
 import { waitTillStreamEnds } from "../../helpers";
 
 describe("MeteosensorsWorker", () => {
@@ -103,7 +102,7 @@ describe("MeteosensorsWorker", () => {
                 wind_direction: null,
                 wind_speed: 1.17,
               },
-              type: "Feature"
+              type: "Feature",
             },
             {
               geometry: {
