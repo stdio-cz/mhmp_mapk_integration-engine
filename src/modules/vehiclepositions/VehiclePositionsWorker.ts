@@ -11,7 +11,6 @@ import { RopidGTFSTripsModel } from "../ropidgtfs";
 import {
     VehiclePositionsLastPositionsModel,
     VehiclePositionsPositionsModel,
-    VehiclePositionsStopsModel,
     VehiclePositionsTransformation,
     VehiclePositionsTripsModel,
 } from "./";
@@ -38,7 +37,15 @@ export class VehiclePositionsWorker extends BaseWorker {
     constructor() {
         super();
         this.modelPositions = new VehiclePositionsPositionsModel();
-        this.modelStops = new VehiclePositionsStopsModel();
+        this.modelStops = new PostgresModel(VehiclePositions.stops.name + "Model",
+            {
+                outputSequelizeAttributes: VehiclePositions.stops.outputSequelizeAttributes,
+                pgTableName: VehiclePositions.stops.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(VehiclePositions.stops.name + "ModelValidator",
+                VehiclePositions.stops.outputMongooseSchemaObject),
+        );
         this.modelTrips = new VehiclePositionsTripsModel();
         this.modelLastPositions = new VehiclePositionsLastPositionsModel();
         this.transformation = new VehiclePositionsTransformation();
@@ -87,7 +94,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public saveStopsToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        await this.modelStops.save(inputData);
+        await this.modelStops.saveBySqlFunction(inputData, [ "cis_stop_sequence", "trips_id" ]);
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
