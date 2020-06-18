@@ -87,6 +87,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
 
         // DP PRAHA exception for missing attributes
         const agencyNameException = "DP PRAHA";
+        const vehicleRegistrationNumber = (attributes.dopr === agencyNameException) ? null : attributes.vuzevc;
         const bearing = (attributes.dopr === agencyNameException) ? null : attributes.azimut;
         const speed = (attributes.dopr === agencyNameException) ? null : attributes.rychl;
         const aswLastStopId = (attributes.dopr === agencyNameException) ? attributes.zast : null;
@@ -150,8 +151,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 start_cis_stop_platform_code: stops[0].$.stan,
                 start_time: (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj,
                 start_timestamp: startDate.utc().valueOf(),
-                vehicle_registration_number: (attributes.vuzevc)
-                    ? parseInt(attributes.vuzevc, 10)
+                vehicle_registration_number: (vehicleRegistrationNumber)
+                    ? parseInt(vehicleRegistrationNumber, 10)
                     : null,
                 vehicle_type_id: (attributes.t)
                     ? parseInt(attributes.t, 10)
