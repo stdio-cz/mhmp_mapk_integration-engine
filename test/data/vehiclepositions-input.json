@@ -631,8 +631,8 @@
                 "lin": "100110",
                 "alias": "110",
                 "spoj": "95",
-                "dopr": "Jaroslav Štěpánek",
-                "doprSkut": "Jaroslav Štěpánek",
+                "dopr": "DP PRAHA",
+                "doprSkut": "DP PRAHA",
                 "kmenl": "110",
                 "t": "3",
                 "sled": "0",
@@ -644,13 +644,14 @@
                 "azimut": "0",
                 "rychl": "0",
                 "cpoz": "11:58:57",
-                "po": "1"
+                "po": "1",
+                "zast": "6280004"
               },
               "zast": [
                 {
                   "$": {
-                    "zast": "28010",
-                    "stan": "C",
+                    "zast": "6280004",
+                    "stan": "D",
                     "prij": "",
                     "odj": "12:01",
                     "zpoz_typ_prij": "0",
@@ -660,313 +661,13 @@
                 },
                 {
                   "$": {
-                    "zast": "47168",
-                    "stan": "A",
+                    "zast": "10900003",
+                    "stan": "C",
                     "prij": "",
                     "odj": "12:03",
                     "zpoz_typ_prij": "0",
                     "zpoz_typ": "2",
                     "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "28010",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:04",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "28011",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:05",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "56645",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:06",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "50706",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:07",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "51407",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:11",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "27957",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:12",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "50641",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:13",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "47892",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:15",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "54721",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:16",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "51121",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:17",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "47122",
-                    "stan": "C",
-                    "prij": "",
-                    "odj": "12:18",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "27859",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:20",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55231",
-                    "stan": "E",
-                    "prij": "",
-                    "odj": "12:22",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55202",
-                    "stan": "C",
-                    "prij": "",
-                    "odj": "12:25",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55192",
-                    "stan": "D",
-                    "prij": "",
-                    "odj": "12:27",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55244",
-                    "stan": "C",
-                    "prij": "",
-                    "odj": "12:28",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55246",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:30",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55273",
-                    "stan": "B",
-                    "prij": "",
-                    "odj": "12:31",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55191",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:32",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55261",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:33",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "2",
-                    "zpoz_odj": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55211",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:35",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55212",
-                    "stan": "C",
-                    "prij": "",
-                    "odj": "12:36",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55245",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:38",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55196",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:39",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55194",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:41",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55217",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:42",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55739",
-                    "stan": "A",
-                    "prij": "",
-                    "odj": "12:43",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
-                  }
-                },
-                {
-                  "$": {
-                    "zast": "55186",
-                    "stan": "A",
-                    "prij": "12:44",
-                    "odj": "",
-                    "zpoz_typ_prij": "0",
-                    "zpoz_typ": "0"
                   }
                 }
               ]
