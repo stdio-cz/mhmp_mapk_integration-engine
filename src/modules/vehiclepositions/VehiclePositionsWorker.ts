@@ -72,11 +72,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         // positions saving
         await this.modelPositions.save(transformedData.positions);
         // trips saving
-        const rows = await this.modelTrips.save(transformedData.trips);
-
-        // send message for save stops
-        await this.sendMessageToExchange("workers." + this.queuePrefix + ".saveStopsToDB",
-            JSON.stringify(transformedData.stops));
+        const rows = await this.modelTrips.saveBySqlFunction(transformedData.trips, ["id"]);
 
         // send message for update GTFSTripIds
         let promises = rows.inserted.map((trip) => {
@@ -93,8 +89,15 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public saveStopsToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
-        await this.modelStops.saveBySqlFunction(inputData, [ "cis_stop_sequence", "trips_id" ]);
+        let transformedData: any;
+        try {
+            const inputData = JSON.parse(msg.content.toString()).m.spoj;
+            transformedData = (await this.transformation.transform(inputData)).stops;
+        } catch (err) {
+            // back compatibility
+            transformedData = JSON.parse(msg.content.toString());
+        }
+        await this.modelStops.saveBySqlFunction(transformedData, ["cis_stop_sequence", "trips_id"]);
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
