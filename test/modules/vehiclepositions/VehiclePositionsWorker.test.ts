@@ -44,8 +44,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
             .callsFake(() => [{ gtfs_trip_id: "0000", delay: null }]);
         sandbox.stub(worker.modelPositions, "updateDelay");
-        sandbox.stub(worker.modelStops, "save");
-        sandbox.stub(worker.modelTrips, "save")
+        sandbox.stub(worker.modelStops, "saveBySqlFunction");
+        sandbox.stub(worker.modelTrips, "saveBySqlFunction")
             .callsFake(() => testData);
         sandbox.stub(worker.modelTrips, "findAll")
             .callsFake((options) => Object.assign([]));
@@ -69,14 +69,25 @@ describe("VehiclePositionsWorker", () => {
         sandbox.assert.calledOnce(worker.transformation.transform);
         sandbox.assert.calledOnce(worker.modelPositions.save);
         sandbox.assert.calledWith(worker.modelPositions.save, []);
-        sandbox.assert.calledOnce(worker.modelTrips.save);
-        sandbox.assert.calledWith(worker.modelTrips.save, []);
-        sandbox.assert.calledTwice(worker.sendMessageToExchange);
+        sandbox.assert.calledOnce(worker.modelTrips.saveBySqlFunction);
+        sandbox.assert.calledWith(worker.modelTrips.saveBySqlFunction, []);
+        sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
             worker.transformation.transform,
             worker.modelPositions.save,
-            worker.modelTrips.save,
+            worker.modelTrips.saveBySqlFunction,
             worker.sendMessageToExchange);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
+    });
+
+    it("should calls the correct methods by saveStopsToDB method", async () => {
+        await worker.saveStopsToDB({ content: Buffer.from(JSON.stringify({ m: { spoj: {} } })) });
+        sandbox.assert.calledOnce(worker.transformation.transform);
+        sandbox.assert.calledOnce(worker.modelStops.saveBySqlFunction);
+        sandbox.assert.calledWith(worker.modelStops.saveBySqlFunction, []);
+        sandbox.assert.callOrder(
+            worker.transformation.transform,
+            worker.modelStops.saveBySqlFunction);
         sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 

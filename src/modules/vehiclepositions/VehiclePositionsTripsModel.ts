@@ -64,8 +64,6 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         const t = await connection.transaction();
 
         try {
-            // TODO use postgres function meta.import_from_json
-
             const i = []; // inserted
             const u = []; // updated
 
@@ -109,6 +107,75 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         } catch (err) {
             log.error(JSON.stringify({ errors: err.errors, fields: err.fields }));
             await t.rollback();
+            throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
+        }
+    }
+
+    /**
+     * Overrides PostgresModel::saveBySqlFunction
+     */
+    public saveBySqlFunction = async (
+        data: any,
+        primaryKeys: string[],
+        useTmpTable: boolean = false,
+        transaction: Sequelize.Transaction = null,
+        connection: Sequelize.Sequelize = null,
+    ): Promise<any> => {
+        // data validation
+        if (this.validator) {
+            try {
+                await this.validator.Validate(data);
+            } catch (err) {
+                throw new CustomError("Error while validating data.", true, this.name, 4005, err);
+            }
+        } else {
+            log.warn(this.name + ": Model validator is not set.");
+        }
+
+        const i = []; // inserted
+        const u = []; // updated
+
+        try {
+            connection = connection || PostgresConnector.getConnection();
+            // json stringify and escape quotes
+            const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
+            // TODO doplnit batch_id a author
+            const rawRows = await connection.query(
+                "SELECT meta.import_from_json("
+                + "-1, " // p_batch_id bigint
+                + "E'" + stringifiedData + "'::json, " // p_data json
+                + "'" + ((useTmpTable) ? "tmp" : "public") + "', " // p_table_schema character varying
+                + "'" + this.tableName + "', " // p_table_name character varying
+                + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
+                + "NULL, " // p_sort json
+                + "'integration-engine'" // p_worker_name character varying
+                + ") ",
+                {
+                    transaction,
+                    type: Sequelize.QueryTypes.SELECT,
+                },
+            );
+            JSON.parse(rawRows[0].import_from_json
+                .replace('("', "")
+                .replace('",)', "")
+                .replace(/""/g, '"'),
+            ).forEach((r: { id: string, upd: boolean }) => {
+                if (r.upd === true) {
+                    u.push(r.id);
+                } else {
+                    const d = data.find((di) => di.id === r.id);
+                    i.push({
+                        cis_line_short_name: d.cis_line_short_name,
+                        id: r.id,
+                        start_asw_stop_id: d.start_asw_stop_id,
+                        start_cis_stop_id: d.start_cis_stop_id,
+                        start_cis_stop_platform_code: d.start_cis_stop_platform_code,
+                        start_timestamp: d.start_timestamp,
+                    });
+                }
+            });
+            return { inserted: i, updated: u };
+        } catch (err) {
             throw new CustomError("Error while saving to database.", true, this.name, 4001, err);
         }
     }
