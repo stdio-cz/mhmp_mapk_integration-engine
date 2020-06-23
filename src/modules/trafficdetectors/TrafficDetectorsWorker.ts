@@ -123,26 +123,15 @@ export class TrafficDetectorsWorker extends BaseWorker {
             url: this.tskstdURL,
         });
 
-        // TO DO - move to hejper f - cion
-        let processing = false;
-
         try {
             this.dataStream = (await this.dataSource.getAll(false));
         } catch (err) {
             throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
         }
-        this.dataStream.onDataListeners.push(async (data: any) => {
-            this.dataStream.pause();
-            processing = true;
-            let transformedData = null;
+        try {
+            await this.dataStream.setDataProcessor(async (data: any) => {
+                const transformedData = await this.transformation.transform(data);
 
-            try {
-                transformedData = await this.transformation.transform(data);
-            } catch (err) {
-                this.dataStream.emit("error", err);
-            }
-
-            try {
                 await this.measurementsModel.saveBySqlFunction(
                     transformedData.data,
                     ["detector_id", "measured_from", "measured_to", "measurement_type", "class_id"],
@@ -160,32 +149,9 @@ export class TrafficDetectorsWorker extends BaseWorker {
                     null,
                     transformedData.token,
                 );
-            } catch (err) {
-                this.dataStream.emit("error", err);
-            }
-
-            processing = false;
-            this.dataStream.resume();
-        });
-
-        // attach data listeners => start processing data
-        this.dataSource.proceed();
-
-        try {
-            // wait for stream to finish to report end
-            await new Promise((resolve, reject) => {
-                this.dataStream.on("error", (error) => reject(error));
-                this.dataStream.on("end", async () => {
-                    const checker = setInterval(async () => {
-                        if (!processing) {
-                            clearInterval(checker);
-                            resolve();
-                        }
-                    }, 100);
-                });
-            });
+            }).proceed();
         } catch (err) {
-            throw new CustomError("Error processing data.", true, this.constructor.name, 5051, err);
+            throw new CustomError("Error while processing data.", true, this.constructor.name, 5051, err);
         }
     }
 

@@ -207,38 +207,20 @@ export class FirebasePidlitackaWorker extends BaseWorker {
         primaryKeys: string[],
         strategy: PostgresProtocolStrategyStreamed,
     ): Promise<void> {
-        // TO DO - move to hejper f-cion
-        let processing = false;
-
         try {
             this.dataStream = await datasource.getAll();
         } catch (err) {
             throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
         }
 
-        this.dataStream.onDataListeners.push(async (data: any) => {
-            this.dataStream.pause();
-            processing = true;
-            await model.saveBySqlFunction(data, primaryKeys);
-            processing = false;
-            this.dataStream.resume();
-        });
-
-        datasource.proceed();
-
         try {
-            await new Promise((resolve, reject) => {
-                this.dataStream.on("error", (error) => reject(error));
-                this.dataStream.on("end", async () => {
-                    const checker = setInterval( async () => {
-                        if (!processing) {
-                            clearInterval(checker);
-                            await strategy.deleteData();
-                            resolve();
-                        }
-                    }, 100);
-                });
-            });
+            await this.dataStream.setDataProcessor(async (data: any) => {
+                await model.saveBySqlFunction(data, primaryKeys);
+            })
+            .setOnEndFunction(async () => {
+                await strategy.deleteData();
+            })
+            .proceed();
         } catch (err) {
             throw new CustomError("Error processing data.", true, this.constructor.name, 5051, err);
         }

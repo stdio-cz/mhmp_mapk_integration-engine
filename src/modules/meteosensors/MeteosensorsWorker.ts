@@ -92,19 +92,14 @@ export class MeteosensorsWorker extends BaseWorker {
     }
 
     public refreshDataInDB = async (msg: any): Promise<void> => {
-        {
-            // TO DO - move to hejper f-cion
-            let processing = false;
+        try {
+            this.dataStream = (await this.dataSource.getAll(true));
+        } catch (err) {
+            throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
+        }
 
-            try {
-                this.dataStream = (await this.dataSource.getAll(true));
-            } catch (err) {
-                throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
-            }
-            this.dataStream.onDataListeners.push(async (data: any) => {
-                this.dataStream.pause();
-                processing = true;
-
+        try {
+            await this.dataStream.setDataProcessor(async (data: any) => {
                 const transformedData = await this.transformation.transform(data);
 
                 await this.model.save(transformedData);
@@ -114,37 +109,15 @@ export class MeteosensorsWorker extends BaseWorker {
                 JSON.stringify(transformedData), { persistent: true });
 
                 // send messages for updating district and address and average occupancy
-                const promises = transformedData.map((p) => {
+                const promises = transformedData.map((p: any) => {
                     this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDistrict",
                         JSON.stringify(p));
                 });
 
                 await Promise.all(promises);
-
-                processing = false;
-
-                this.dataStream.resume();
-            });
-
-            // attach data listeners => start processing data
-            this.dataSource.proceed();
-
-            try {
-                // wait for stream to finish to report end
-                await new Promise((resolve, reject) => {
-                    this.dataStream.on("error", (error) => reject(error));
-                    this.dataStream.on("end", async () => {
-                        const checker = setInterval( async () => {
-                            if (!processing) {
-                                clearInterval(checker);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                });
-            } catch (err) {
-                throw new CustomError("Error processing data.", true, this.constructor.name, 5051, err);
-            }
+            }).proceed();
+        } catch (err) {
+            throw new CustomError("Error while processing data.", true, this.constructor.name, 5050, err);
         }
     }
 
