@@ -9,7 +9,6 @@ import { expect } from "chai";
 import { Readable } from "stream";
 
 import { S3 } from "aws-sdk";
-import { prototype } from "events";
 
 describe("RawDaraStore", () => {
 

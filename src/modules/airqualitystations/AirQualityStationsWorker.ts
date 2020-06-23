@@ -1,6 +1,5 @@
 "use strict";
 
-import { CustomError } from "@golemio/errors";
 import { AirQualityStations } from "@golemio/schema-definitions";
 import { JSONSchemaValidator, Validator } from "@golemio/validator";
 import { config } from "../../core/config";

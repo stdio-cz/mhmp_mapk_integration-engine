@@ -11,6 +11,7 @@ import { DataSource, IDataSource } from "./";
 export class DataSourceStreamed extends DataSource implements IDataSource {
 
     private dataBuffer = [];
+
     public proceed = (): void => {
         this.dataStream.proceed();
     }
@@ -85,7 +86,6 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
         if ((this.dataBuffer.length >= config.DATA_BATCH_SIZE) || force || data) {
             try {
                 const content = await this.dataTypeStrategy.parseData(data || this.dataBuffer);
-
                 if (this.isEmpty(content)) {
                     log.warn(`${this.name}: Data source returned empty data.`);
                     // logging number of records
