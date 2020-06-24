@@ -46,7 +46,7 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
     /**
      * @param {boolean} useDataBuffer data  is buffered and sent to output stream in `config.DATA_BATCH_SIZE` batches
      */
-    protected getOutputStream = async (useDataBuffer = false): Promise<DataSourceStream> => {
+    protected getOutputStream = async (useDataBuffer: boolean = false): Promise<DataSourceStream> => {
         this.dataStream =  new DataSourceStream({
             objectMode: true,
             read: () => {
