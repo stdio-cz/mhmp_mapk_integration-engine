@@ -261,6 +261,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                     const estimatedPoint = await this.getEstimatedPoint(
                         tripShapePoints, currentPosition, lastPosition, startDayTimestamp,
                     );
+
                     newLastDelay = estimatedPoint.properties.time_delay;
                     if (estimatedPoint.properties.time_delay !== undefined
                         && estimatedPoint.properties.time_delay !== null) {
@@ -278,6 +279,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                             estimatedPoint.properties.last_stop_arrival_time,
                             estimatedPoint.properties.next_stop_departure_time,
                             estimatedPoint.properties.last_stop_departure_time,
+                            (position.bearing !== undefined) ? position.bearing : estimatedPoint.properties.bearing,
                         );
                     } else {
                         return Promise.resolve();
@@ -400,6 +402,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 minTimeRealDiff = timeRealDiff;
 
                 // save it for result
+                rightPoint.properties.bearing = closestPts[i].bearing;
                 rightPoint.geometry.coordinates = closestPts[i].coordinates;
                 rightPoint.properties.shape_dist_traveled =
                     Math.round(closestPts[i].shape_dist_traveled * 1000) / 1000;
@@ -515,6 +518,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 }
 
                 const shapePoint = {
+                    bearing: null,
                     coordinates: [],
                     distance_from_last_stop: null,
                     last_stop: null,
@@ -534,6 +538,26 @@ export class VehiclePositionsWorker extends BaseWorker {
                     shapesAnchorPoints[i].coordinates[0],
                     shapesAnchorPoints[i].coordinates[1],
                 ];
+
+                // add bearing from shape computed for previous shapePoint
+                if (i > 0) {
+                    // compute bearing from two shape points
+                    let shapePointBearing = Math.round(turf.bearing(
+                        turf.point(shapePoints[i - 1].coordinates),
+                        turf.point(shapePoint.coordinates),
+                    ));
+                    // turf.bearing returns -180 to 180, when 0 is north
+                    // we need 0 to 359, for negative value we substract from 360
+                    if (shapePointBearing < 0) {
+                        shapePointBearing = 360 - Math.abs(shapePointBearing);
+                    }
+                    // save bearing
+                    shapePoints[i - 1].bearing = shapePointBearing;
+                    // for the last shapePoint copy the bearing from last one
+                    if (shapesAnchorPoints.length === i - 1) {
+                        shapePoint.bearing = shapePoints[i - 1].bearing;
+                    }
+                }
 
                 // DECIDE WHENEVER IS NEXT shapes_anchor_points[i] JUST AFTER NEXT stop (BY DISTANCE)
                 if (shapesAnchorPoints[i].shape_dist_traveled >= tmpStopTimes[nextStop].shape_dist_traveled
