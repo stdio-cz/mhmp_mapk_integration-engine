@@ -32,11 +32,11 @@ export class IntegrationErrorHandler extends ErrorHandler {
         if (err instanceof CustomError && err.isOperational) {
             // is warning
             if (err.code && warningErrorCodes.indexOf(err.code) !== -1) {
-                log.warn(err.toString());
+                log.warn(err);
                 return { ...err.toObject(), ...{ ack: true } };
             // is error
             } else {
-                log.error(err.toString());
+                log.error(err);
                 return { ...err.toObject(), ...{ ack: false } };
             }
         } else { // Unexpected non-operational error, handle it!

@@ -92,7 +92,7 @@ class GeocodeApi {
             const body = await request(options);
             const result = JSON.parse(body);
             if (result.length === 0) {
-                throw new CustomError("Geo coordinations was not found for address '"
+                throw new CustomError("Geo coordinations was not found for address: '"
                     + street + ", " + city + "'", true, this.constructor.name, 5001);
             }
             return [parseFloat(result[0].lon), parseFloat(result[0].lat)];
