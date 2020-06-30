@@ -1328,7 +1328,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("MunicipalLibraries", () => {
 
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
             datasource = new DataSource(MunicipalLibraries.name + "DataSource",
@@ -1341,7 +1341,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     resultsPath: "pobocky.pobocka",
                     xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
                 }),
-                null);
+                new JSONSchemaValidator(
+                    MunicipalLibraries.name + "DataSource",
+                    MunicipalLibraries.datasourceJsonSchema,
+                ),
+            );
         });
 
         it("should returns all objects", async () => {

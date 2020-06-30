@@ -3,8 +3,8 @@
 import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
-    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
-    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
+    MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
+    Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, TSKSTD, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
@@ -23,6 +23,7 @@ import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
 import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
+import { MunicipalLibrariesWorker } from "../modules/municipallibraries";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
 import { ParkingsWorker } from "../modules/parkings";
 import { ParkingZonesWorker } from "../modules/parkingzones";
@@ -508,6 +509,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MunicipalAuthoritiesWorker,
                 workerMethod: "saveWaitingQueuesDataToHistory",
+            },
+        ],
+    },
+    {
+        name: MunicipalLibraries.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MunicipalLibraries.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
+                },
+                worker: MunicipalLibrariesWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
+                },
+                worker: MunicipalLibrariesWorker,
+                workerMethod: "updateDistrict",
             },
         ],
     },
