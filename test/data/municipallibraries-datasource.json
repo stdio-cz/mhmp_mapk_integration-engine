@@ -176,12 +176,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -330,12 +325,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -699,35 +689,70 @@
             "url": "https://www.mlp.cz/cz/pobocky/dedina/"
         },
         "oteviracidoby": {
-            "oteviracidoba": {
-                "nazev": "Základní provozní doba",
-                "defaultni": "true",
-                "pondeli": "\n\t\t",
-                "utery": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "12:00"
+            "oteviracidoba": [
+                {
+                    "nazev": "Základní provozní doba",
+                    "defaultni": "true",
+                    "pondeli": "\n\t\t",
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    }
-                },
-                "streda": "\n\t\t",
-                "ctvrtek": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
+                    "streda": "\n\t\t",
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
+                    "patek": "\n\t\t",
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
                 },
-                "patek": "\n\t\t",
-                "sobota": "\n\t\t",
-                "nedele": "\n\t\t"
-            }
+                {
+                    "nazev": "Mimořádná provozní doba",
+                    "defaultni": "false",
+                    "platnost": {
+                        "od": "2020-07-01",
+                        "do": "2020-08-31"
+                    },
+                    "pondeli": "\n\t\t",
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": "\n\t\t",
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": "\n\t\t",
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
+                }
+            ]
         },
         "sluzby": {
             "sluzba": [
@@ -834,12 +859,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -1161,12 +1181,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -1670,12 +1685,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -1885,12 +1895,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -2087,12 +2092,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -2183,16 +2183,7 @@
                 },
                 "utery": "\n\t\t",
                 "streda": "\n\t\t",
-                "ctvrtek": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
+                "ctvrtek": "\n\t\t",
                 "patek": "\n\t\t",
                 "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
@@ -2301,12 +2292,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -2752,16 +2738,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "12:00"
-                    },
-                    "odpoledne": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -2908,71 +2885,133 @@
             "url": "https://www.mlp.cz/cz/pobocky/opatov-citarna-a-studovna/"
         },
         "oteviracidoby": {
-            "oteviracidoba": {
-                "nazev": "Základní provozní doba",
-                "defaultni": "true",
-                "pondeli": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
+            "oteviracidoba": [
+                {
+                    "nazev": "Základní provozní doba",
+                    "defaultni": "true",
+                    "pondeli": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
-                "utery": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "12:00"
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    }
-                },
-                "streda": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
+                    "streda": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
-                "ctvrtek": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
-                "patek": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "12:00"
+                    "patek": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    }
-                },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "12:00"
+                    "sobota": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
                     },
-                    "odpoledne": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    }
+                    "nedele": "\n\t\t"
                 },
-                "nedele": "\n\t\t"
-            }
+                {
+                    "nazev": "Mimořádná provozní doba",
+                    "defaultni": "false",
+                    "platnost": {
+                        "od": "2020-07-01",
+                        "do": "2020-08-31"
+                    },
+                    "pondeli": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
+                }
+            ]
         },
         "sluzby": {
             "sluzba": [
@@ -3487,16 +3526,7 @@
             "oteviracidoba": {
                 "nazev": "Základní provozní doba",
                 "defaultni": "true",
-                "pondeli": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
+                "pondeli": "\n\t\t",
                 "utery": {
                     "rano": {
                         "od": "09:00",
@@ -3537,12 +3567,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -3752,12 +3777,7 @@
                         "do": "15:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "09:00",
-                        "do": "13:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -4089,12 +4109,12 @@
                 },
                 "utery": {
                     "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
+                        "od": "09:00",
+                        "do": "12:00"
                     },
                     "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
+                        "od": "13:00",
+                        "do": "15:00"
                     }
                 },
                 "streda": {
@@ -4254,12 +4274,7 @@
                         "do": "19:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "14:00",
-                        "do": "18:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -4576,12 +4591,7 @@
                         "do": "19:00"
                     }
                 },
-                "sobota": {
-                    "rano": {
-                        "od": "14:00",
-                        "do": "18:00"
-                    }
-                },
+                "sobota": "\n\t\t",
                 "nedele": "\n\t\t"
             }
         },
@@ -4639,16 +4649,7 @@
                 "nazev": "Základní provozní doba",
                 "defaultni": "true",
                 "pondeli": "\n\t\t",
-                "utery": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
+                "utery": "\n\t\t",
                 "streda": "\n\t\t",
                 "ctvrtek": {
                     "rano": {
@@ -4710,16 +4711,7 @@
             "oteviracidoba": {
                 "nazev": "Základní provozní doba",
                 "defaultni": "true",
-                "pondeli": {
-                    "rano": {
-                        "od": "13:00",
-                        "do": "15:00"
-                    },
-                    "odpoledne": {
-                        "od": "16:00",
-                        "do": "18:00"
-                    }
-                },
+                "pondeli": "\n\t\t",
                 "utery": "\n\t\t",
                 "streda": {
                     "rano": {

@@ -1,6 +1,7 @@
 "use strict";
 
 import { MunicipalLibraries } from "@golemio/schema-definitions";
+import * as moment from "moment-timezone";
 import { log } from "../../core/helpers";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
@@ -69,7 +70,7 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
                 id: parseInt(element.id, 10),
                 name: element.nazev,
                 opening_hours: (element.oteviracidoby.oteviracidoba instanceof Array)
-                    ? [...element.oteviracidoby.oteviracidoba.map((o) => this.transformOpeningHours(o))]
+                    ? element.oteviracidoby.oteviracidoba.flatMap((o: any) => this.transformOpeningHours(o))
                     : this.transformOpeningHours(element.oteviracidoby.oteviracidoba),
                 sections_and_departments: (typeof element.oddeleni !== "string")
                     ? (element.oddeleni.oddeleni instanceof Array)
@@ -95,6 +96,16 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
         const res = [];
         const description = openingHoursObject.nazev;
         const isDefault = openingHoursObject.defaultni;
+        let validFrom: string | undefined;
+        let validThrough: string | undefined;
+        if (openingHoursObject.platnost) {
+            if (openingHoursObject.platnost.od) {
+                validFrom = moment.tz(openingHoursObject.platnost.od, "Europe/Prague").toISOString();
+            }
+            if (openingHoursObject.platnost.do) {
+                validThrough = moment.tz(openingHoursObject.platnost.do, "Europe/Prague").toISOString();
+            }
+        }
 
         Object.keys(openingHoursDaysKeys).forEach((day: string) => {
             if (openingHoursObject[day] && !(typeof openingHoursObject[day] === "string")) {
@@ -104,6 +115,8 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
                     description,
                     is_default: isDefault,
                     opens: openingHoursObject[day].rano.od,
+                    valid_from: validFrom,
+                    valid_through: validThrough,
                 });
                 if (openingHoursObject[day].odpoledne) {
                     res.push({
@@ -112,6 +125,8 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
                         description,
                         is_default: isDefault,
                         opens: openingHoursObject[day].odpoledne.od,
+                        valid_from: validFrom,
+                        valid_through: validThrough,
                     });
                 }
             }
