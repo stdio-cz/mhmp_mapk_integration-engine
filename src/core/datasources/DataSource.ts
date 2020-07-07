@@ -51,7 +51,13 @@ export class DataSource implements IDataSource {
             try {
                 await this.validator.Validate(data);
             } catch (err) {
-                throw new CustomError("Error while validating source data.", true, this.name, 2004, err);
+                throw new CustomError(
+                    `Error while validating source data. ( ${this.formatDataForError(data)} )`,
+                    true,
+                    this.name,
+                    2004,
+                    err,
+                );
             }
         } else {
             log.warn("DataSource validator is not set.");
@@ -99,5 +105,23 @@ export class DataSource implements IDataSource {
             return true;
         }
         return false;
+    }
+
+    private formatDataForError = (data: any): string => {
+        let strData = "";
+
+        try {
+            strData = JSON.stringify(data);
+        } catch {
+            if (data.toString) {
+                try {
+                    strData = data.toString();
+                } catch {
+                    null;
+                }
+            }
+        }
+
+        return strData;
     }
 }
