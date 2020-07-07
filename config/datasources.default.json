@@ -23,6 +23,7 @@
     "MedicalInstitutionsHealthCare": "https://opendata.mzcr.cz/data/nrpzs/narodni-registr-poskytovatelu-zdravotnich-sluzeb.csv",
     "MedicalInstitutionsPharmacies": "https://opendata.sukl.cz/soubory/SODERECEPT/LEKARNYAKTUALNI.zip",
     "MunicipalAuthorities": "https://www.mojepraha.eu/api/municipal-authorities",
+    "MunicipalLibraries": "https://www.mlp.cz/cz/pobocky/?export=xml",
     "MunicipalPoliceStations": "http://opendata.iprpraha.cz/CUR/FSB/BEZ_ObjektMPP_b/WGS_84/BEZ_ObjektMPP_b.json",
     "OICTSortedWasteContainers": "https://www.mojepraha.eu/api/sorted-waste-stations",
     "OICTEndpointApikey": "",

@@ -1,0 +1,5242 @@
+[
+    {
+        "nazev": "Barrandov",
+        "cislo": "62",
+        "id": "2",
+        "knoddel": "356",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Wassermannova",
+            "cislo": "926/16",
+            "mesto": "Praha 5",
+            "psc": "152 00",
+            "gps": "50.028402, 14.36824",
+            "url": "https://www.mlp.cz/cz/pobocky/barrandov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 262",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Bohnice",
+        "cislo": "52",
+        "id": "5",
+        "knoddel": "298",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Těšínská",
+            "cislo": "600/4",
+            "mesto": "Praha 8",
+            "psc": "181 00",
+            "gps": "50.128879, 14.418651",
+            "url": "https://www.mlp.cz/cz/pobocky/bohnice/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "6",
+                    "nazev": "Digitální piano",
+                    "popis": "Můžete si zahrát na digitální piano značky Yamaha."
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "16",
+                    "nazev": "Online tlumočení do českého znakového jazyka",
+                    "popis": ""
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "child-60",
+                    "nazev": "Hudební oddělení",
+                    "typ": "link",
+                    "url": "https://www.mlp.cz/cz/pobocky/bohnice-hudebni-oddeleni/"
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-10",
+                    "nazev": "Poslechová místa",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 252",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Bohnice - Hudební oddělení",
+        "cislo": "52",
+        "id": "60",
+        "knoddel": "298",
+        "nadrazena": "5",
+        "adresa": {
+            "ulice": "Těšínská",
+            "cislo": "600/4",
+            "mesto": "Praha 8",
+            "psc": "181 00",
+            "gps": "50.128879, 14.418651",
+            "url": "https://www.mlp.cz/cz/pobocky/bohnice-hudebni-oddeleni/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": {
+                "id": "6",
+                "nazev": "Digitální piano",
+                "popis": "Můžete si zahrát na digitální piano značky Yamaha."
+            }
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-7",
+                "nazev": "Fonotéka",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 252",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Brusnice - vzácné tisky",
+        "cislo": "0",
+        "id": "68",
+        "knoddel": "",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "U Brusnice",
+            "cislo": "324/9",
+            "mesto": "Praha 6 - Hradčany",
+            "psc": "16900",
+            "gps": "50.094008, 14.392211",
+            "url": "https://www.mlp.cz/cz/pobocky/brusnice-vzacne-tisky/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": "",
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 297",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Břevnov",
+        "cislo": "35",
+        "id": "6",
+        "knoddel": "209",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Bělohorská",
+            "cislo": "1666/56",
+            "mesto": "Praha 6",
+            "psc": "169 00",
+            "gps": "50.084426, 14.374038",
+            "url": "https://www.mlp.cz/cz/pobocky/brevnov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 235",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Cibulka",
+        "cislo": "30",
+        "id": "8",
+        "knoddel": "195",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Musílkova",
+            "cislo": "335/62",
+            "mesto": "Praha 5",
+            "psc": "150 00",
+            "gps": "50.0676633, 14.3665122",
+            "url": "https://www.mlp.cz/cz/pobocky/cibulka/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 230",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Černý Most",
+        "cislo": "87",
+        "id": "9",
+        "knoddel": "427",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Generála Janouška",
+            "cislo": "1060/2",
+            "mesto": "Praha 14",
+            "psc": "198 00",
+            "gps": "50.103078, 14.565272",
+            "url": "https://www.mlp.cz/cz/pobocky/cerny-most/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 287",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Dědina",
+        "cislo": "37",
+        "id": "11",
+        "knoddel": "222",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Žukovského",
+            "cislo": "888/2",
+            "mesto": "Praha 6",
+            "psc": "161 00",
+            "gps": "50.090728, 14.308937",
+            "url": "https://www.mlp.cz/cz/pobocky/dedina/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": [
+                {
+                    "nazev": "Základní provozní doba",
+                    "defaultni": "true",
+                    "pondeli": "\n\t\t",
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": "\n\t\t",
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": "\n\t\t",
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
+                },
+                {
+                    "nazev": "Mimořádná provozní doba",
+                    "defaultni": "false",
+                    "platnost": {
+                        "od": "2020-07-01",
+                        "do": "2020-08-31"
+                    },
+                    "pondeli": "\n\t\t",
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": "\n\t\t",
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": "\n\t\t",
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
+                }
+            ]
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 237",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Dejvice",
+        "cislo": "38",
+        "id": "12",
+        "knoddel": "226",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Technická",
+            "cislo": "2710/6",
+            "mesto": "Praha 6",
+            "psc": "160 80",
+            "gps": "50.1039, 14.3906",
+            "url": "https://www.mlp.cz/cz/pobocky/dejvice/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "9",
+                    "nazev": "Přebalovací pult",
+                    "popis": "Pobočka nabízí zvláštní místnost s přebalovacím pultem nebo přebalovací pult na toaletě"
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "18",
+                    "nazev": "Kavárna",
+                    "popis": "Posezení u kávy, zákusku i coffee to go."
+                },
+                {
+                    "id": "20",
+                    "nazev": "Skartovačka",
+                    "popis": "Použití skartovačky je bez poplatku a skartovačka je samoobslužná."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 238",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Dittrichova",
+        "cislo": "51",
+        "id": "15",
+        "knoddel": "291",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Dittrichova",
+            "cislo": "1543/2",
+            "mesto": "Praha 2",
+            "psc": "120 00",
+            "gps": "50.073719, 14.416502",
+            "url": "https://www.mlp.cz/cz/pobocky/dittrichova/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 251",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "DOK16",
+        "cislo": "16",
+        "id": "67",
+        "knoddel": "652",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Kobka č. 16, Hořejší nábřeží",
+            "cislo": "",
+            "mesto": "Praha 5 - Smíchov",
+            "psc": "150 00",
+            "gps": "50.0685992, 14.4115619",
+            "url": "https://www.mlp.cz/cz/pobocky/dok-16/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "16:00",
+                        "do": "20:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "16:00",
+                        "do": "20:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "16:00",
+                        "do": "20:00"
+                    }
+                },
+                "sobota": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "17:00"
+                    }
+                },
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "34",
+                    "nazev": "Ruční nářadí k zapůjčení",
+                    "popis": "Ruční nářadí k zapůjčení."
+                },
+                {
+                    "id": "35",
+                    "nazev": "Elektrické nářadí k zapůjčení",
+                    "popis": "Elektrické nářadí k zapůjčení."
+                },
+                {
+                    "id": "36",
+                    "nazev": "Laminace dokumentů (A3 - A5)",
+                    "popis": "Laminace dokumentů (A3 - A5)."
+                },
+                {
+                    "id": "37",
+                    "nazev": "Možnost nabrousit si kuchyňské nože na ostřiči V-sharp",
+                    "popis": "Možnost nabrousit si kuchyňské nože na ostřiči V-sharp."
+                },
+                {
+                    "id": "38",
+                    "nazev": "Prodej základního materiálu",
+                    "popis": "Prodej základního materiálu."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 216",
+            "email": "dok16@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Dům čtení (Ruská)",
+        "cislo": "56",
+        "id": "38",
+        "knoddel": "323",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Ruská",
+            "cislo": "1455/192",
+            "mesto": "Praha 10",
+            "psc": "10000",
+            "gps": "50.072703, 14.483362",
+            "url": "https://www.mlp.cz/cz/pobocky/dum-cteni-ruska/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "14",
+                    "nazev": "Indukční smyčka",
+                    "popis": "V některých prostorách knihovny (učebny, sály) je nainstalované zařízení pro indukční poslech"
+                },
+                {
+                    "id": "16",
+                    "nazev": "Online tlumočení do českého znakového jazyka",
+                    "popis": ""
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 256",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Hloubětín",
+        "cislo": "13",
+        "id": "16",
+        "knoddel": "98",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Hloubětínská",
+            "cislo": "1138/5",
+            "mesto": "Praha 9",
+            "psc": "198 00",
+            "gps": "50.1039175, 14.5345767",
+            "url": "https://www.mlp.cz/cz/pobocky/hloubetin/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 213",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Hostivař",
+        "cislo": "21",
+        "id": "18",
+        "knoddel": "147",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Golfová",
+            "cislo": "910/10",
+            "mesto": "Praha 15",
+            "psc": "102 00",
+            "gps": "50.049002, 14.547006",
+            "url": "https://www.mlp.cz/cz/pobocky/hostivar/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 221",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Hradčany",
+        "cislo": "3",
+        "id": "19",
+        "knoddel": "33",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Pohořelec",
+            "cislo": "111/25",
+            "mesto": "Praha 1",
+            "psc": "118 00",
+            "gps": "50.088114, 14.389788",
+            "url": "https://www.mlp.cz/cz/pobocky/hradcany/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 203",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Chodov",
+        "cislo": "89",
+        "id": "20",
+        "knoddel": "439",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Jírovcovo náměstí",
+            "cislo": "1782/1",
+            "mesto": "Praha 11",
+            "psc": "148 00",
+            "gps": "50.024191, 14.491924",
+            "url": "https://www.mlp.cz/cz/pobocky/chodov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "17",
+                    "nazev": "Herní konzole",
+                    "popis": "Hry sportovní, postřehové a dobrodružné."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 289",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Jezerka",
+        "cislo": "24",
+        "id": "66",
+        "knoddel": "161",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Nuselská",
+            "cislo": "603/94",
+            "mesto": "Praha 4",
+            "psc": "140 00",
+            "gps": "50.0579253, 14.4499814",
+            "url": "https://www.mlp.cz/cz/pobocky/jezerka/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": {
+                "id": "4",
+                "nazev": "Internet a Wi-Fi",
+                "popis": "Zdarma"
+            }
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 224",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Kobylisy",
+        "cislo": "7",
+        "id": "23",
+        "knoddel": "61",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Klapkova",
+            "cislo": "26/3",
+            "mesto": "Praha 8",
+            "psc": "182 00",
+            "gps": "50.124078, 14.456115",
+            "url": "https://www.mlp.cz/cz/pobocky/kobylisy/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "child-58",
+                    "nazev": "Oddělení pro děti",
+                    "typ": "link",
+                    "url": "https://www.mlp.cz/cz/pobocky/kobylisy-oddeleni-pro-deti/"
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 207",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Kobylisy - Oddělení pro děti",
+        "cislo": "7",
+        "id": "58",
+        "knoddel": "61",
+        "nadrazena": "23",
+        "adresa": {
+            "ulice": "Klapkova",
+            "cislo": "26/3",
+            "mesto": "Praha 8",
+            "psc": "182 00",
+            "gps": "50.124078, 14.456115",
+            "url": "https://www.mlp.cz/cz/pobocky/kobylisy-oddeleni-pro-deti/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": "\n\t\t",
+                "ctvrtek": "\n\t\t",
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": {
+                "id": "4",
+                "nazev": "Internet a Wi-Fi",
+                "popis": "Zdarma"
+            }
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 207",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Korunní",
+        "cislo": "18",
+        "id": "24",
+        "knoddel": "127",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Korunní",
+            "cislo": "2160/68",
+            "mesto": "Praha 10",
+            "psc": "100 00",
+            "gps": "50.075226, 14.450153",
+            "url": "https://www.mlp.cz/cz/pobocky/korunni/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 218",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Krč",
+        "cislo": "60",
+        "id": "25",
+        "knoddel": "345",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Štúrova",
+            "cislo": "1282/12",
+            "mesto": "Praha 4",
+            "psc": "140 00",
+            "gps": "50.023972, 14.451789",
+            "url": "https://www.mlp.cz/cz/pobocky/krc/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 260",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ládví",
+        "cislo": "88",
+        "id": "10",
+        "knoddel": "431",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Burešova",
+            "cislo": "1661/2",
+            "mesto": "Praha 8",
+            "psc": "182 00",
+            "gps": "50.127471, 14.470279",
+            "url": "https://www.mlp.cz/cz/pobocky/ladvi/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 288",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Letná",
+        "cislo": "39",
+        "id": "26",
+        "knoddel": "232",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Milady Horákové",
+            "cislo": "387/56",
+            "mesto": "Praha 7",
+            "psc": "170 00",
+            "gps": "50.100157, 14.425521",
+            "url": "https://www.mlp.cz/cz/pobocky/letna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": "\n\t\t",
+                "ctvrtek": "\n\t\t",
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 239",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Lužiny",
+        "cislo": "81",
+        "id": "27",
+        "knoddel": "411",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Archeologická",
+            "cislo": "2256/1",
+            "mesto": "Praha 13",
+            "psc": "155 00",
+            "gps": "50.044235, 14.331546",
+            "url": "https://www.mlp.cz/cz/pobocky/luziny/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "11",
+                    "nazev": "Bibliobox",
+                    "popis": "Plechový box umístěný u knihovny, kam se dají odkládat knihy půjčené z knihovny a určené k vrácení."
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "17",
+                    "nazev": "Herní konzole",
+                    "popis": "Hry sportovní, postřehové a dobrodružné."
+                },
+                {
+                    "id": "19",
+                    "nazev": "Kávovar",
+                    "popis": "Teplý nápoj z kapsle na přání."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-10",
+                    "nazev": "Poslechová místa",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 281",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Malešice",
+        "cislo": "61",
+        "id": "65",
+        "knoddel": "350",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Počernická",
+            "cislo": "524/64",
+            "mesto": "Praha 10",
+            "psc": "108 00",
+            "gps": "50.0815736, 14.5004947",
+            "url": "https://www.mlp.cz/cz/pobocky/malesice/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 261",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Modřany",
+        "cislo": "27",
+        "id": "29",
+        "knoddel": "173",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Vazovova",
+            "cislo": "3229/1",
+            "mesto": "Praha 12",
+            "psc": "143 00",
+            "gps": "50.005798, 14.433956",
+            "url": "https://www.mlp.cz/cz/pobocky/modrany/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 227",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Novodvorská",
+        "cislo": "41",
+        "id": "30",
+        "knoddel": "244",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Novodvorská",
+            "cislo": "1013/151",
+            "mesto": "Praha 4",
+            "psc": "140 00",
+            "gps": "50.024844, 14.432905",
+            "url": "https://www.mlp.cz/cz/pobocky/novodvorska/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 241",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Opatov",
+        "cislo": "58",
+        "id": "31",
+        "knoddel": "333",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Opatovská",
+            "cislo": "1754/14",
+            "mesto": "Praha 11",
+            "psc": "140 00",
+            "gps": "50.025599, 14.518434",
+            "url": "https://www.mlp.cz/cz/pobocky/opatov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "1",
+                    "nazev": "Kopírování",
+                    "popis": "Kopírujeme černobíle formáty A3, A4 z fondu knihovny"
+                },
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "7",
+                    "nazev": "Opencard",
+                    "popis": "Můžete si podat žádost o vystavení Opencard a také si zde kartu vyzvednout."
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "10",
+                    "nazev": "iMac",
+                    "popis": "iMac nabízejí úpravu fotek, mixážní nahrávací studio nebo program pro střih videa a tvorbu klipů."
+                },
+                {
+                    "id": "11",
+                    "nazev": "Bibliobox",
+                    "popis": "Plechový box umístěný u knihovny, kam se dají odkládat knihy půjčené z knihovny a určené k vrácení."
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "14",
+                    "nazev": "Indukční smyčka",
+                    "popis": "V některých prostorách knihovny (učebny, sály) je nainstalované zařízení pro indukční poslech"
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "16",
+                    "nazev": "Online tlumočení do českého znakového jazyka",
+                    "popis": ""
+                },
+                {
+                    "id": "17",
+                    "nazev": "Herní konzole",
+                    "popis": "Hry sportovní, postřehové a dobrodružné."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-10",
+                    "nazev": "Poslechová místa",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-11",
+                    "nazev": "Studovna",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "child-56",
+                    "nazev": "Čítárna a studovna",
+                    "typ": "link",
+                    "url": "https://www.mlp.cz/cz/pobocky/opatov-citarna-a-studovna/"
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 258",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Opatov - Čítárna a studovna",
+        "cislo": "58",
+        "id": "56",
+        "knoddel": "333",
+        "nadrazena": "31",
+        "adresa": {
+            "ulice": "Opatovská",
+            "cislo": "1754/14",
+            "mesto": "Praha 11",
+            "psc": "140 00",
+            "gps": "50.025599, 14.518434",
+            "url": "https://www.mlp.cz/cz/pobocky/opatov-citarna-a-studovna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": [
+                {
+                    "nazev": "Základní provozní doba",
+                    "defaultni": "true",
+                    "pondeli": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "sobota": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "nedele": "\n\t\t"
+                },
+                {
+                    "nazev": "Mimořádná provozní doba",
+                    "defaultni": "false",
+                    "platnost": {
+                        "od": "2020-07-01",
+                        "do": "2020-08-31"
+                    },
+                    "pondeli": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "utery": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "streda": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "ctvrtek": {
+                        "rano": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        },
+                        "odpoledne": {
+                            "od": "16:00",
+                            "do": "18:00"
+                        }
+                    },
+                    "patek": {
+                        "rano": {
+                            "od": "09:00",
+                            "do": "12:00"
+                        },
+                        "odpoledne": {
+                            "od": "13:00",
+                            "do": "15:00"
+                        }
+                    },
+                    "sobota": "\n\t\t",
+                    "nedele": "\n\t\t"
+                }
+            ]
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "10",
+                    "nazev": "iMac",
+                    "popis": "iMac nabízejí úpravu fotek, mixážní nahrávací studio nebo program pro střih videa a tvorbu klipů."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 258",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ostrčilovo náměstí",
+        "cislo": "4",
+        "id": "32",
+        "knoddel": "36",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Ostrčilovo nám.",
+            "cislo": "518/1",
+            "mesto": "Praha 2",
+            "psc": "120 00",
+            "gps": "50.065811, 14.424764",
+            "url": "https://www.mlp.cz/cz/pobocky/ostrcilovo-namesti/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 204",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ostrovského",
+        "cislo": "48",
+        "id": "33",
+        "knoddel": "277",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Na Skalce",
+            "cislo": "972/29",
+            "mesto": "Praha 5",
+            "psc": "150 00",
+            "gps": "50.068359, 14.400164",
+            "url": "https://www.mlp.cz/cz/pobocky/ostrovskeho/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 248",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Pankrác",
+        "cislo": "43",
+        "id": "50",
+        "knoddel": "259",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Na Veselí",
+            "cislo": "542/5",
+            "mesto": "Praha 4",
+            "psc": "140 00",
+            "gps": "50.054391, 14.438053",
+            "url": "https://www.mlp.cz/cz/pobocky/pankrac/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 243",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Petřiny",
+        "cislo": "42",
+        "id": "35",
+        "knoddel": "251",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Mahulenina",
+            "cislo": "31/17",
+            "mesto": "Praha 6",
+            "psc": "160 00",
+            "gps": "50.0857, 14.341398",
+            "url": "https://www.mlp.cz/cz/pobocky/petriny/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 242",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Pojízdná knihovna",
+        "cislo": "0",
+        "id": "63",
+        "knoddel": "",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "U Továren",
+            "cislo": "261/27",
+            "mesto": "Praha 15",
+            "psc": "10200",
+            "gps": "50.056592, 14.53993",
+            "url": "https://www.mlp.cz/cz/pobocky/pojizdna-knihovna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true"
+            }
+        },
+        "sluzby": "",
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 272 661 342",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Prosek",
+        "cislo": "54",
+        "id": "37",
+        "knoddel": "309",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Měšická",
+            "cislo": "806/3",
+            "mesto": "Praha 9",
+            "psc": "190 00",
+            "gps": "50.123006, 14.500268",
+            "url": "https://www.mlp.cz/cz/pobocky/prosek/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 254",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Sedmička",
+        "cislo": "5",
+        "id": "17",
+        "knoddel": "43",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Tusarova",
+            "cislo": "429/35",
+            "mesto": "Praha 7",
+            "psc": "170 00",
+            "gps": "50.101962222222, 14.450361111111",
+            "url": "https://www.mlp.cz/cz/pobocky/sedmicka/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 205",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Skalka",
+        "cislo": "70",
+        "id": "3",
+        "knoddel": "377",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Rubensova",
+            "cislo": "2237/2",
+            "mesto": "Praha 10",
+            "psc": "100 00",
+            "gps": "50.068513, 14.509599",
+            "url": "https://www.mlp.cz/cz/pobocky/skalka/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 270",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Smíchov",
+        "cislo": "29",
+        "id": "22",
+        "knoddel": "183",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Náměstí 14. října",
+            "cislo": "83/15",
+            "mesto": "Praha 5",
+            "psc": "150 00",
+            "gps": "50.073919, 14.406673",
+            "url": "https://www.mlp.cz/cz/pobocky/smichov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "9",
+                    "nazev": "Přebalovací pult",
+                    "popis": "Pobočka nabízí zvláštní místnost s přebalovacím pultem nebo přebalovací pult na toaletě"
+                },
+                {
+                    "id": "14",
+                    "nazev": "Indukční smyčka",
+                    "popis": "V některých prostorách knihovny (učebny, sály) je nainstalované zařízení pro indukční poslech"
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "17",
+                    "nazev": "Herní konzole",
+                    "popis": "Hry sportovní, postřehové a dobrodružné."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "23",
+                    "nazev": "Speciální počítačová jednotka",
+                    "popis": "Speciální počítačová jednotka se softwarem ABBY FineReader, který pomocí scanneru konvertuje tištěné dokumenty do textového formátu bez přepisování."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "27",
+                    "nazev": "Plackovač",
+                    "popis": "Stroj na výrobu placek (buttonků)."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 229",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Spořilov",
+        "cislo": "45",
+        "id": "39",
+        "knoddel": "267",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Postupická",
+            "cislo": "2932/7",
+            "mesto": "Praha 4",
+            "psc": "141 00",
+            "gps": "50.045213, 14.491654",
+            "url": "https://www.mlp.cz/cz/pobocky/sporilov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "1",
+                    "nazev": "Kopírování",
+                    "popis": "Kopírujeme černobíle formáty A3, A4 z fondu knihovny"
+                },
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 245",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Stodůlky",
+        "cislo": "84",
+        "id": "40",
+        "knoddel": "419",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Kovářova",
+            "cislo": "1615/4",
+            "mesto": "Praha 13",
+            "psc": "155 00",
+            "gps": "50.049051, 14.317017",
+            "url": "https://www.mlp.cz/cz/pobocky/stodulky/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "8",
+                    "nazev": "Stojany na kola",
+                    "popis": "Před pobočkou je možnost bezpečného uložení kola."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-2",
+                    "nazev": "Čítárna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 284",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Školská",
+        "cislo": "8",
+        "id": "41",
+        "knoddel": "68",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Školská",
+            "cislo": "1267/30",
+            "mesto": "Praha 1",
+            "psc": "110 00",
+            "gps": "50.079649, 14.424511",
+            "url": "https://www.mlp.cz/cz/pobocky/skolska/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-8",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 208",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ústřední knihovna",
+        "cislo": "1",
+        "id": "1",
+        "knoddel": "4",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Mariánské náměstí",
+            "cislo": "98/1",
+            "mesto": "Praha 1",
+            "psc": "115 72",
+            "gps": "50.08738, 14.41738",
+            "url": "https://www.mlp.cz/cz/pobocky/ustredni-knihovna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "19:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "1",
+                    "nazev": "Kopírování",
+                    "popis": "Kopírujeme černobíle formáty A3, A4 z fondu knihovny"
+                },
+                {
+                    "id": "2",
+                    "nazev": "Kamerová lupa",
+                    "popis": "V knihovně je k dispozici kamerová televizní lupa, která umožňuje několikanásobné zvětšení předlohy a tím snadnější práci s textem. Knihovníci Vám rádi poradí."
+                },
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "5",
+                    "nazev": "Zoom Text",
+                    "popis": "V knihovně je k dispozici ZoomText, pomůcka pro zrakově postižené uživatele, která zvětšuje a odečítá text, který je zobrazen na monitoru.Uživatel má tedy úplný přístup k aplikacím, dokumentům, elektronické poště a internetu."
+                },
+                {
+                    "id": "6",
+                    "nazev": "Digitální piano",
+                    "popis": "Můžete si zahrát na digitální piano značky Yamaha."
+                },
+                {
+                    "id": "10",
+                    "nazev": "iMac",
+                    "popis": "iMac nabízejí úpravu fotek, mixážní nahrávací studio nebo program pro střih videa a tvorbu klipů."
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "14",
+                    "nazev": "Indukční smyčka",
+                    "popis": "V některých prostorách knihovny (učebny, sály) je nainstalované zařízení pro indukční poslech"
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "16",
+                    "nazev": "Online tlumočení do českého znakového jazyka",
+                    "popis": ""
+                },
+                {
+                    "id": "17",
+                    "nazev": "Herní konzole",
+                    "popis": "Hry sportovní, postřehové a dobrodružné."
+                },
+                {
+                    "id": "18",
+                    "nazev": "Kavárna",
+                    "popis": "Posezení u kávy, zákusku i coffee to go."
+                },
+                {
+                    "id": "21",
+                    "nazev": "3D tiskárna",
+                    "popis": "Možnost tisku objektů pro registrované čtenáře knihovny."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "23",
+                    "nazev": "Speciální počítačová jednotka",
+                    "popis": "Speciální počítačová jednotka se softwarem ABBY FineReader, který pomocí scanneru konvertuje tištěné dokumenty do textového formátu bez přepisování."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                },
+                {
+                    "id": "28",
+                    "nazev": "Dílna - týmová studovna",
+                    "popis": "Dílna - prostor pro týmovou práci, doučování, vzdělávání."
+                },
+                {
+                    "id": "32",
+                    "nazev": "BookTube koutek",
+                    "popis": "Koutek k pořizování fotografii a videí o knihách"
+                },
+                {
+                    "id": "33",
+                    "nazev": "Stojany na kola",
+                    "popis": "V blízkosti pobočky je možnost bezpečného uložení kola."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": [
+                {
+                    "id": "child-13",
+                    "nazev": "Dílna",
+                    "typ": "link",
+                    "url": "https://www.mlp.cz/cz/pobocky/ustredni-knihovna-dilna/"
+                },
+                {
+                    "id": "code-7",
+                    "nazev": "Fonotéka",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "child-57",
+                    "nazev": "Oddělení pro děti a mládež",
+                    "typ": "link",
+                    "url": "https://www.mlp.cz/cz/pobocky/ustredni-knihovna-oddeleni-pro-deti-a-mladez/"
+                },
+                {
+                    "id": "code-10",
+                    "nazev": "Poslechová místa",
+                    "typ": "tag",
+                    "url": ""
+                },
+                {
+                    "id": "code-11",
+                    "nazev": "Studovna",
+                    "typ": "tag",
+                    "url": ""
+                }
+            ]
+        },
+        "kontakt": {
+            "telefon": "+420 222 113 555",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ústřední knihovna - Dílna",
+        "cislo": "1",
+        "id": "13",
+        "knoddel": "4",
+        "nadrazena": "1",
+        "adresa": {
+            "ulice": "Mariánské náměstí",
+            "cislo": "98/1",
+            "mesto": "Praha 1",
+            "psc": "115 72",
+            "gps": "50.08738, 14.41738",
+            "url": "https://www.mlp.cz/cz/pobocky/ustredni-knihovna-dilna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "19:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "39",
+                    "nazev": "Šití látkových šátků",
+                    "popis": "Šití látkových šátků z vlastních materiálů na šicím stroji. Rezervace na telefonu +420 222 113 387 nebo osobně v Dílně."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 222 113 387",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Ústřední knihovna - Oddělení pro děti a mládež",
+        "cislo": "1",
+        "id": "57",
+        "knoddel": "4",
+        "nadrazena": "1",
+        "adresa": {
+            "ulice": "Mariánské náměstí",
+            "cislo": "98/1",
+            "mesto": "Praha 1",
+            "psc": "115 72",
+            "gps": "50.08738, 14.41738",
+            "url": "https://www.mlp.cz/cz/pobocky/ustredni-knihovna-oddeleni-pro-deti-a-mladez/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "19:00"
+                    }
+                },
+                "utery": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "streda": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "ctvrtek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "patek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "14:00"
+                    },
+                    "odpoledne": {
+                        "od": "15:00",
+                        "do": "19:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "1",
+                    "nazev": "Kopírování",
+                    "popis": "Kopírujeme černobíle formáty A3, A4 z fondu knihovny"
+                },
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "27",
+                    "nazev": "Plackovač",
+                    "popis": "Stroj na výrobu placek (buttonků)."
+                },
+                {
+                    "id": "32",
+                    "nazev": "BookTube koutek",
+                    "popis": "Koutek k pořizování fotografii a videí o knihách"
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 222 113 342",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Velká Chuchle",
+        "cislo": "31",
+        "id": "42",
+        "knoddel": "198",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Starochuchelská",
+            "cislo": "20/7",
+            "mesto": "Praha 16",
+            "psc": "159 00",
+            "gps": "50.011705, 14.385132",
+            "url": "https://www.mlp.cz/cz/pobocky/velka-chuchle/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "10:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "17:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 231",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Vikova",
+        "cislo": "25",
+        "id": "43",
+        "knoddel": "164",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Vikova",
+            "cislo": "1223/4",
+            "mesto": "Praha 4",
+            "psc": "140 00",
+            "gps": "50.041235, 14.437536",
+            "url": "https://www.mlp.cz/cz/pobocky/vikova/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 225",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Vozovna",
+        "cislo": "66",
+        "id": "36",
+        "knoddel": "375",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Za Žižkovskou vozovnou",
+            "cislo": "2687/18",
+            "mesto": "Praha 3",
+            "psc": "130 00",
+            "gps": "50.0917275, 14.4783867",
+            "url": "https://www.mlp.cz/cz/pobocky/vozovna/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "18",
+                    "nazev": "Kavárna",
+                    "popis": "Posezení u kávy, zákusku i coffee to go."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": "\n\t    ",
+        "kontakt": {
+            "telefon": "+420 770 130 266",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Vysočany",
+        "cislo": "10",
+        "id": "45",
+        "knoddel": "84",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Zbuzkova",
+            "cislo": "285/34",
+            "mesto": "Praha 9",
+            "psc": "190 00",
+            "gps": "50.111288, 14.501039",
+            "url": "https://www.mlp.cz/cz/pobocky/vysocany/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 210",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Zahradní Město",
+        "cislo": "47",
+        "id": "46",
+        "knoddel": "273",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Topolová",
+            "cislo": "2961/12a",
+            "mesto": "Praha 10",
+            "psc": "106 00",
+            "gps": "50.056364, 14.508175",
+            "url": "https://www.mlp.cz/cz/pobocky/zahradni-mesto/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "13",
+                    "nazev": "Nápojový automat",
+                    "popis": "Instantní nabídka horkých nápojů - káva, čaj."
+                },
+                {
+                    "id": "15",
+                    "nazev": "Orientační hlasový majáček",
+                    "popis": "Nainstalován v prostoru vstupu do knihovny pro usnadnění orientace."
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 247",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Záhřebská",
+        "cislo": "65",
+        "id": "47",
+        "knoddel": "367",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Záhřebská",
+            "cislo": "158/20",
+            "mesto": "Praha 2",
+            "psc": "120 00",
+            "gps": "50.071889, 14.437047",
+            "url": "https://www.mlp.cz/cz/pobocky/zahrebska/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "utery": "\n\t\t",
+                "streda": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "ctvrtek": "\n\t\t",
+                "patek": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "3",
+                    "nazev": "Bezbariérový přístup",
+                    "popis": "Bezbariérový přístup pro vozíčkáře i rodiče s kočárky"
+                },
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "24",
+                    "nazev": "Prodej tašek",
+                    "popis": "Prodej tašek, případně dalších propagačních předmětů."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 265",
+            "email": "knihovna@mlp.cz"
+        }
+    },
+    {
+        "nazev": "Žižkov",
+        "cislo": "15",
+        "id": "48",
+        "knoddel": "109",
+        "nadrazena": "",
+        "adresa": {
+            "ulice": "Husitská",
+            "cislo": "110/70",
+            "mesto": "Praha 3",
+            "psc": "130 00",
+            "gps": "50.0867, 14.4499",
+            "url": "https://www.mlp.cz/cz/pobocky/zizkov/"
+        },
+        "oteviracidoby": {
+            "oteviracidoba": {
+                "nazev": "Základní provozní doba",
+                "defaultni": "true",
+                "pondeli": "\n\t\t",
+                "utery": {
+                    "rano": {
+                        "od": "09:00",
+                        "do": "12:00"
+                    },
+                    "odpoledne": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    }
+                },
+                "streda": "\n\t\t",
+                "ctvrtek": {
+                    "rano": {
+                        "od": "13:00",
+                        "do": "15:00"
+                    },
+                    "odpoledne": {
+                        "od": "16:00",
+                        "do": "18:00"
+                    }
+                },
+                "patek": "\n\t\t",
+                "sobota": "\n\t\t",
+                "nedele": "\n\t\t"
+            }
+        },
+        "sluzby": {
+            "sluzba": [
+                {
+                    "id": "4",
+                    "nazev": "Internet a Wi-Fi",
+                    "popis": "Zdarma"
+                },
+                {
+                    "id": "22",
+                    "nazev": "Dioptrické brýle",
+                    "popis": "Dioptrické brýle k zapůjčení zdarma. Bez čtenářského průkazu. Dioptrie 1 - 1,5 - 2."
+                },
+                {
+                    "id": "25",
+                    "nazev": "Čtecí lupy A4",
+                    "popis": "Čtecí lupy A4 k zapůjčení zdarma. Bez čtenářského průkazu."
+                },
+                {
+                    "id": "26",
+                    "nazev": "Platba kartou",
+                    "popis": "Možnost bezhotovostních plateb kartou."
+                }
+            ]
+        },
+        "oddeleni": {
+            "oddeleni": {
+                "id": "code-8",
+                "nazev": "Oddělení pro děti a mládež",
+                "typ": "tag",
+                "url": ""
+            }
+        },
+        "kontakt": {
+            "telefon": "+420 770 130 215",
+            "email": "knihovna@mlp.cz"
+        }
+    }
+]

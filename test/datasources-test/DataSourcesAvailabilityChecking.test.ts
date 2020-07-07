@@ -10,6 +10,7 @@ import {
     Meteosensors,
     MobileAppStatistics,
     MunicipalAuthorities,
+    MunicipalLibraries,
     MunicipalPoliceStations,
     Parkings,
     ParkingZones,
@@ -1321,6 +1322,40 @@ describe("DataSourcesAvailabilityChecking", () => {
                 expect(data).to.be.an.instanceOf(Object);
             });
 
+        });
+
+    });
+
+    describe("MunicipalLibraries", () => {
+
+        let datasource: DataSource;
+
+        beforeEach(() => {
+            datasource = new DataSource(MunicipalLibraries.name + "DataSource",
+                new HTTPProtocolStrategy({
+                    headers: {},
+                    method: "GET",
+                    url: config.datasources.MunicipalLibraries,
+                }),
+                new XMLDataTypeStrategy({
+                    resultsPath: "pobocky.pobocka",
+                    xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
+                }),
+                new JSONSchemaValidator(
+                    MunicipalLibraries.name + "DataSource",
+                    MunicipalLibraries.datasourceJsonSchema,
+                ),
+            );
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
         });
 
     });
