@@ -554,7 +554,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                     // save bearing
                     shapePoints[i - 1].bearing = shapePointBearing;
                     // for the last shapePoint copy the bearing from last one
-                    if (shapesAnchorPoints.length === i - 1) {
+                    if (shapesAnchorPoints.length - 1 === i) {
                         shapePoint.bearing = shapePoints[i - 1].bearing;
                     }
                 }
