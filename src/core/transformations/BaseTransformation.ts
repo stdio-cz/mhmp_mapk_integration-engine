@@ -15,6 +15,7 @@ export abstract class BaseTransformation implements ITransformation {
      */
     public transform = async (data: any | any[]): Promise<any | any[]> => {
         if (data instanceof Array) {
+
             const promises = data.map((element) => {
                 return this.transformElement(element);
             });

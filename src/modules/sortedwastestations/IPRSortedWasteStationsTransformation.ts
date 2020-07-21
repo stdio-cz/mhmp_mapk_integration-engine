@@ -83,6 +83,17 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         }
     }
 
+    public getAccessibilityByString = (key: string): { id: number, description: string } => {
+        switch (key) {
+            case "volně":
+                return { description: "volně", id: 1 };
+            case "obyvatelům domu":
+                return { description: "obyvatelům domu", id: 2 };
+            default:
+                return { description: "neznámá dostupnost", id: 3 };
+        }
+    }
+
     protected transformElement = async (element: any): Promise<any> => {
         const res = {
             geometry: element.geometry,
@@ -97,16 +108,5 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             type: element.type,
         };
         return res;
-    }
-
-    private getAccessibilityByString = (key: string): { id: number, description: string } => {
-        switch (key) {
-            case "volně":
-                return { description: "volně", id: 1 };
-            case "obyvatelům domu":
-                return { description: "obyvatelům domu", id: 2 };
-            default:
-                return { description: "neznámá dostupnost", id: 3 };
-        }
     }
 }
