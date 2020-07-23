@@ -1,6 +1,6 @@
 {
 	"name": "@golemio/integration-engine",
-	"version": "1.5.3",
+	"version": "1.6.0",
 	"description": "Integration Engine of the Golemio Data Platform System",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -67,7 +67,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "1.3.0-dev.163987958",
+		"@golemio/schema-definitions": "1.3.2",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "0.1.0-dev.163887901",
 		"@google-cloud/storage": "4.5.0",
