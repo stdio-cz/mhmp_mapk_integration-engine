@@ -48,6 +48,8 @@ run_tests:
     - yarn run code-coverage
   tags:
     - docker
+  rules:
+    - when: always
 
 build_image:
   stage: build
