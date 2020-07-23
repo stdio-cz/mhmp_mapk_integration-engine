@@ -1,6 +1,9 @@
 image: docker:stable
 
 variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass
@@ -9,6 +12,9 @@ variables:
 stages:
   - build
   - deploy
+
+services:
+  - docker:dind
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -40,20 +46,42 @@ run_tests:
     - export S3_UPLOAD_PART_SIZE=10
     - export S3_UPLOAD_QUEUE_SIZE=2
     - yarn run code-coverage
+  tags:
+    - docker
+  rules:
+    - when: always
 
 build_image:
   stage: build
   script:
-    - echo $CI_COMMIT_SHA > commitsha
-    - docker build --build-arg NODE_ENV=production -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest .
+    - >
+      docker build --build-arg NODE_ENV=production 
+      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
+      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest 
+      .
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "development"
+  tags:
+    - docker
 
 registry_deployment:
   stage: deploy
   script:
+    - echo $CI_COMMIT_SHA > commitsha
+    - >
+      docker build --build-arg NODE_ENV=production 
+      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
+      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest 
+      .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
+    - >
+      docker push
+      $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID &&
+      docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
+  tags:
+    - docker
 
 pages:
   stage: deploy
@@ -67,3 +95,5 @@ pages:
     - public
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+  tags:
+    - docker

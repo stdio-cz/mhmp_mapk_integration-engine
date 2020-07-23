@@ -74,6 +74,7 @@ export class PostgresModel implements IModel {
         useTmpTable: boolean = false,
         transaction: Sequelize.Transaction = null,
         connection: Sequelize.Sequelize = null,
+        batchId: number = null,
         ): Promise<any> => {
         // data validation
         if (this.validator) {
@@ -93,7 +94,7 @@ export class PostgresModel implements IModel {
             // TODO doplnit batch_id a author
             await connection.query(
                 "SELECT meta.import_from_json("
-                + "-1, " // p_batch_id bigint
+                + `${batchId || "-1"}, ` // p_batch_id bigint
                 + "E'" + stringifiedData + "'::json, " // p_data json
                 + "'" + ((useTmpTable) ? "tmp" : "public") + "', " // p_table_schema character varying
                 + "'" + this.tableName + "', " // p_table_name character varying

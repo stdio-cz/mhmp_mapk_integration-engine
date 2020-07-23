@@ -23,6 +23,7 @@
     "MedicalInstitutionsHealthCare": "https://opendata.mzcr.cz/data/nrpzs/narodni-registr-poskytovatelu-zdravotnich-sluzeb.csv",
     "MedicalInstitutionsPharmacies": "https://opendata.sukl.cz/soubory/SODERECEPT/LEKARNYAKTUALNI.zip",
     "MunicipalAuthorities": "https://www.mojepraha.eu/api/municipal-authorities",
+    "MunicipalLibraries": "https://www.mlp.cz/cz/pobocky/?export=xml",
     "MunicipalPoliceStations": "http://opendata.iprpraha.cz/CUR/FSB/BEZ_ObjektMPP_b/WGS_84/BEZ_ObjektMPP_b.json",
     "OICTSortedWasteContainers": "https://www.mojepraha.eu/api/sorted-waste-stations",
     "OICTEndpointApikey": "",
@@ -65,6 +66,11 @@
     "SkodaPalaceQueues": "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
     "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
     "SensoneoSortedWasteSensorsApiKey": "",
+    "TSKSTD": {
+        "user": "",
+        "pass": "",
+        "api_url": "https://185.176.138.144:45655/Transmitter3.svc"
+    },
     "TSKMeteosensors": "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     "TSKParkings": "http://www.tsk-praha.cz/tskexport3/json/parkings",
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",

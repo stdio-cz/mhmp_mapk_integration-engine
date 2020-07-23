@@ -26,6 +26,8 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
             },
         });
 
+        let dataStreamEnd = false;
+
         if (this.streamTransform) {
             dataStream.on("data", (data: any) => {
                 this.streamTransform.write(data);
@@ -44,7 +46,18 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
                 outStream.push(data);
             });
             dataStream.on("close", () => {
-                outStream.push(null);
+                // some streams does not emit end event
+                if (!dataStreamEnd) {
+                    outStream.push(null);
+                    dataStreamEnd = true;
+                }
+            });
+            dataStream.on("end", () => {
+                // some streams does not emit close event
+                if (!dataStreamEnd) {
+                    outStream.push(null);
+                    dataStreamEnd = true;
+                }
             });
         }
         return outStream;

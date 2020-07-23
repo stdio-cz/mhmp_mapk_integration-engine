@@ -3,9 +3,9 @@
 import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
-    MunicipalAuthorities, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats, Playgrounds, PublicToilets,
-    RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
-    TrafficCameras, VehiclePositions, WasteCollectionYards, WazeCCP,
+    MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
+    Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
+    TrafficCameras, TSKSTD, VehiclePositions, WasteCollectionYards, WazeCCP,
 } from "@golemio/schema-definitions";
 import { config } from "../core/config";
 import { IQueueDefinition } from "../core/queueprocessors";
@@ -23,6 +23,7 @@ import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
 import { MosMAWorker } from "../modules/mosma/";
 import { MunicipalAuthoritiesWorker } from "../modules/municipalauthorities";
+import { MunicipalLibrariesWorker } from "../modules/municipallibraries";
 import { MunicipalPoliceStationsWorker } from "../modules/municipalpolicestations";
 import { ParkingsWorker } from "../modules/parkings";
 import { ParkingZonesWorker } from "../modules/parkingzones";
@@ -35,6 +36,7 @@ import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
 import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
+import { TrafficDetectorsWorker } from "../modules/trafficdetectors";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
 import { WasteCollectionYardsWorker } from "../modules/wastecollectionyards";
 import { WazeCCPWorker } from "../modules/wazeccp";
@@ -511,6 +513,32 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
+        name: MunicipalLibraries.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MunicipalLibraries.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
+                },
+                worker: MunicipalLibrariesWorker,
+                workerMethod: "refreshDataInDB",
+            },
+            {
+                name: "updateDistrict",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 59 * 60 * 1000, // 59 minutes
+                },
+                worker: MunicipalLibrariesWorker,
+                workerMethod: "updateDistrict",
+            },
+        ],
+    },
+    {
         name: MunicipalPoliceStations.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MunicipalPoliceStations.name.toLowerCase(),
         queues: [
@@ -941,6 +969,22 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: TrafficCamerasWorker,
                 workerMethod: "updateAddressAndDistrict",
+            },
+        ],
+    },
+    {
+        name: TSKSTD.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + TSKSTD.name.toLowerCase(),
+        queues: [
+            {
+                name: "saveNewTSKSTDDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 1 * 60 * 1000, // 1 minute
+                },
+                worker: TrafficDetectorsWorker,
+                workerMethod: "saveNewTSKSTDDataInDB",
             },
         ],
     },

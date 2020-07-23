@@ -86,11 +86,13 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             nextStopSequence, lastStopSequence,
             nextStopArrivalTime, lastStopArrivalTime,
             nextStopDepartureTime, lastStopDepartureTime,
+            bearing,
         ): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const t = await connection.transaction();
         try {
             await this.sequelizeModel.update({
+                bearing,
                 delay,
                 last_stop_arrival_time: lastStopArrivalTime,
                 last_stop_departure_time: lastStopDepartureTime,

@@ -13,10 +13,17 @@ import winston = require("winston");
 
 const sillyLog = Debug("golemio:integration-engine:silly");
 const debugLog = Debug("golemio:integration-engine:debug");
-const { combine, timestamp, printf, colorize, align } = winston.format;
+const { combine, timestamp, printf, colorize } = winston.format;
 
 const logFormat = (info: any) => {
-    return `[${info.timestamp}] [${info.level}]: ${info.message}`;
+    let jsonObj = null;
+    try {
+
+        jsonObj = JSON.stringify(info);
+    } catch {
+        jsonObj = info.message;
+    }
+    return `[${info.timestamp}] [${info.level}]: ${jsonObj}`;
 };
 
 const logLevelToSet = config.LOG_LEVEL ? config.LOG_LEVEL.toLowerCase() : "info";
@@ -39,7 +46,6 @@ interface ILoggerEventNumberOfRecordsInputType {
 const setFormat = combine(
         timestamp(),
         colorize(),
-        align(),
         printf(logFormat),
     );
 

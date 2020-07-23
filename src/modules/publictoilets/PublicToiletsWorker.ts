@@ -111,7 +111,7 @@ export class PublicToiletsWorker extends BaseWorker {
                 dbData.properties.address = address;
                 await dbData.save();
             } catch (err) {
-                throw new CustomError("Error while updating adress.", true, this.constructor.name, 5001, err);
+                throw new CustomError("Error while updating address.", true, this.constructor.name, 5001, err);
             }
         }
         return dbData;
