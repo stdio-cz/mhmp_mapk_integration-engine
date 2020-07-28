@@ -47,10 +47,10 @@ let setFormat = null;
 
 if (["development", "test"].includes(config.NODE_ENV)) {
     setFormat = combine(
-            timestamp(),
-            colorize(),
-            printf(logFormat),
-        );
+        timestamp(),
+        colorize(),
+        printf(logFormat),
+    );
 } else {
     setFormat = combine(
         timestamp(),
