@@ -43,11 +43,20 @@ interface ILoggerEventNumberOfRecordsInputType {
 /**
  * Winston logger setup
  */
-const setFormat = combine(
+let setFormat = null;
+
+if (["development", "test"].includes(config.NODE_ENV)) {
+    setFormat = combine(
         timestamp(),
         colorize(),
         printf(logFormat),
     );
+} else {
+    setFormat = combine(
+        timestamp(),
+        printf(logFormat),
+    );
+}
 
 const logger = winston.createLogger({
     format: setFormat,
