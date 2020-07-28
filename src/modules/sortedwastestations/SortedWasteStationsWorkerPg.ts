@@ -467,7 +467,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                         },
                     });
 
-                    station.district = (result) ? result.properties.name : null;
+                    station.district = (result) ? result.properties.slug : null;
                     station.district_code = (result) ? result.properties.id : null;
 
                     // should be here ?
