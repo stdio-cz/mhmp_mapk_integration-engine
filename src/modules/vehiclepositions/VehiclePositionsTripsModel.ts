@@ -8,7 +8,7 @@ import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
-import * as moment from "moment";
+import * as moment from "moment-timezone";
 
 export class VehiclePositionsTripsModel extends PostgresModel implements IModel {
 
@@ -182,8 +182,13 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
     public findGTFSTripId = async (trip: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
-        const startdate = moment(trip.start_timestamp);
-        const startdateDayBefore = startdate.clone().subtract(1, "day");
+        const startDate = moment(trip.start_timestamp).tz("Europe/Prague");
+        const startDateDayBefore = moment(trip.start_timestamp).tz("Europe/Prague").subtract(1, "day");
+
+        const startDateYMD = startDate.format("YYYY-MM-DD");
+        const startDateDayName = startDate.format("dddd").toLowerCase();
+        const startDateDayBeforeYMD = startDateDayBefore.format("YYYY-MM-DD");
+        const startDateDayBeforeDayName = startDateDayBefore.format("dddd").toLowerCase();
 
         // TODO zbavit se raw query
         // TODO zbavit se sql injection
@@ -220,32 +225,32 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 MOD(SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int,24),
                 SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),3,6)
               )
-                =  TO_CHAR(('${startdate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
+                =  TO_CHAR(('${startDate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
             AND ( CASE WHEN SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int >= 24 THEN
                     ropidgtfs_trips.service_id IN (
                     SELECT service_id FROM ropidgtfs_calendar
-                    WHERE ${startdate.format("dddd").toLowerCase()} = 1
-                    AND to_date(start_date, 'YYYYMMDD') <= '${startdate.format("YYYY-MM-DD")}'
-                    AND to_date(end_date, 'YYYYMMDD') >= '${startdate.format("YYYY-MM-DD")}'
+                    WHERE ${startDateDayName} = 1
+                    AND to_date(start_date, 'YYYYMMDD') <= '${startDateYMD}'
+                    AND to_date(end_date, 'YYYYMMDD') >= '${startDateYMD}'
                     UNION SELECT service_id FROM ropidgtfs_calendar_dates
                     WHERE exception_type = 1
-                    AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+                    AND to_date(date, 'YYYYMMDD') = '${startDateYMD}'
                     EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
                     WHERE exception_type = 2
-                    AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+                    AND to_date(date, 'YYYYMMDD') = '${startDateYMD}'
                     )
                 ELSE
                     ropidgtfs_trips.service_id IN (
                     SELECT service_id FROM ropidgtfs_calendar
-                    WHERE ${startdateDayBefore.format("dddd").toLowerCase()} = 1
-                    AND to_date(start_date, 'YYYYMMDD') <= '${startdateDayBefore.format("YYYY-MM-DD")}'
-                    AND to_date(end_date, 'YYYYMMDD') >= '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    WHERE ${startDateDayBeforeDayName} = 1
+                    AND to_date(start_date, 'YYYYMMDD') <= '${startDateDayBeforeYMD}'
+                    AND to_date(end_date, 'YYYYMMDD') >= '${startDateDayBeforeYMD}'
                     UNION SELECT service_id FROM ropidgtfs_calendar_dates
                     WHERE exception_type = 1
-                    AND to_date(date, 'YYYYMMDD') = '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    AND to_date(date, 'YYYYMMDD') = '${startDateDayBeforeYMD}'
                     EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
                     WHERE exception_type = 2
-                    AND to_date(date, 'YYYYMMDD') = '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    AND to_date(date, 'YYYYMMDD') = '${startDateDayBeforeYMD}'
                     )
                 END
             )
