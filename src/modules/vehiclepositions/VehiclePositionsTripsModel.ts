@@ -183,6 +183,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
     public findGTFSTripId = async (trip: any): Promise<any> => {
         const connection = PostgresConnector.getConnection();
         const startdate = moment(trip.start_timestamp);
+        const startdateDayBefore = startdate.clone().subtract(1, "day");
 
         // TODO zbavit se raw query
         // TODO zbavit se sql injection
@@ -198,7 +199,9 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             INNER JOIN ropidgtfs_stop_times ON ropidgtfs_trips.trip_id=ropidgtfs_stop_times.trip_id
             WHERE
             ( ropidgtfs_routes.route_short_name LIKE '${trip.cis_line_short_name}'
-              OR CASE WHEN ('115' = 'IKEA') THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM' ELSE 'FALSE' END
+              OR CASE WHEN (ropidgtfs_routes.route_short_name = 'IKEA')
+                THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM'
+                ELSE 'FALSE' END
             )
             AND ropidgtfs_stop_times.stop_id IN
             ( SELECT stop_id FROM ropidgtfs_stops
@@ -213,20 +216,40 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                   (CAST((ASCII('${trip.start_cis_stop_platform_code}')-64) AS CHAR)) END)
             )
             AND stop_sequence = 1
-            AND ropidgtfs_stop_times.departure_time
-              = TO_CHAR(('${startdate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
-            AND ropidgtfs_trips.service_id IN (
-            SELECT service_id FROM ropidgtfs_calendar
-            WHERE ${startdate.format("dddd").toLowerCase()} = 1
-            AND to_date(start_date, 'YYYYMMDD') <= '${startdate.format("YYYY-MM-DD")}'
-            AND to_date(end_date, 'YYYYMMDD') >= '${startdate.format("YYYY-MM-DD")}'
-            UNION SELECT service_id FROM ropidgtfs_calendar_dates
-            WHERE exception_type = 1
-            AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
-            EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
-            WHERE exception_type = 2
-            AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
-            );`,
+            AND CONCAT(
+                MOD(SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int,24),
+                SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),3,6)
+              )
+                =  TO_CHAR(('${startdate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
+            AND ( CASE WHEN SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int >= 24 THEN
+                    ropidgtfs_trips.service_id IN (
+                    SELECT service_id FROM ropidgtfs_calendar
+                    WHERE ${startdate.format("dddd").toLowerCase()} = 1
+                    AND to_date(start_date, 'YYYYMMDD') <= '${startdate.format("YYYY-MM-DD")}'
+                    AND to_date(end_date, 'YYYYMMDD') >= '${startdate.format("YYYY-MM-DD")}'
+                    UNION SELECT service_id FROM ropidgtfs_calendar_dates
+                    WHERE exception_type = 1
+                    AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+                    EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
+                    WHERE exception_type = 2
+                    AND to_date(date, 'YYYYMMDD') = '${startdate.format("YYYY-MM-DD")}'
+                    )
+                ELSE
+                    ropidgtfs_trips.service_id IN (
+                    SELECT service_id FROM ropidgtfs_calendar
+                    WHERE ${startdateDayBefore.format("dddd").toLowerCase()} = 1
+                    AND to_date(start_date, 'YYYYMMDD') <= '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    AND to_date(end_date, 'YYYYMMDD') >= '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    UNION SELECT service_id FROM ropidgtfs_calendar_dates
+                    WHERE exception_type = 1
+                    AND to_date(date, 'YYYYMMDD') = '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    EXCEPT SELECT service_id FROM ropidgtfs_calendar_dates
+                    WHERE exception_type = 2
+                    AND to_date(date, 'YYYYMMDD') = '${startdateDayBefore.format("YYYY-MM-DD")}'
+                    )
+                END
+            )
+            ;`,
             { type: Sequelize.QueryTypes.SELECT });
 
         if (!result[0]) {
