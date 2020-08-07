@@ -13,7 +13,7 @@ describe("MosMAWorker", () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers : true });
         sandbox.stub(PostgresConnector, "getConnection")
-            .callsFake(() => Object.assign({define: sandbox.stub()}));
+            .callsFake(() => Object.assign({define: sandbox.stub(), query: sandbox.stub()}));
 
         worker = new MosMAWorker();
         sandbox.stub(worker.deviceModelTransformation, "transform")
@@ -58,7 +58,7 @@ describe("MosMAWorker", () => {
         sandbox.assert.callOrder(
             worker.ticketActivationsTransformation.transform,
             worker.ticketActivationsModel.saveBySqlFunction);
-        sandbox.assert.callCount(PostgresConnector.getConnection, 4);
+        sandbox.assert.callCount(PostgresConnector.getConnection, 5);
     });
 
     it("should calls the correct methods by saveTicketInspectionsDataToDB method", async () => {
