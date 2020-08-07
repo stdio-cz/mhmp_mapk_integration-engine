@@ -3,8 +3,10 @@
 import { MOS } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import * as JSONStream from "JSONStream";
+import * as Sequelize from "sequelize";
 import { Readable } from "stream";
 import { config } from "../../core/config";
+import { PostgresConnector } from "../../core/connectors";
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
@@ -78,6 +80,11 @@ export class MosMAWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.ticketActivationsTransformation.transform(inputData);
         await this.ticketActivationsModel.saveBySqlFunction(transformedData, [ "ticket_id" ]);
+
+        const connection = PostgresConnector.getConnection();
+        await connection.query(
+            `REFRESH MATERIALIZED VIEW "analytic"."v_ropidbi_ticket"`,
+            { type: Sequelize.QueryTypes.SELECT });
     }
 
     public saveTicketInspectionsDataToDB = async (msg: any): Promise<void> => {
