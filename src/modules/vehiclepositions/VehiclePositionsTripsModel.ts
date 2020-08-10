@@ -204,7 +204,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             INNER JOIN ropidgtfs_stop_times ON ropidgtfs_trips.trip_id=ropidgtfs_stop_times.trip_id
             WHERE
             ( ropidgtfs_routes.route_short_name LIKE '${trip.cis_line_short_name}'
-              OR CASE WHEN (ropidgtfs_routes.route_short_name = 'IKEA')
+              OR CASE WHEN ('${trip.cis_line_short_name}' = 'IKEA')
                 THEN ropidgtfs_routes.route_short_name LIKE 'IKEA ČM'
                 ELSE 'FALSE' END
             )
@@ -226,7 +226,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),3,6)
               )
                 =  TO_CHAR(('${startDate.utc().format()}' at time zone 'Europe/Prague'), 'FMHH24:MI:SS')
-            AND ( CASE WHEN SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int >= 24 THEN
+            AND ( CASE WHEN SUBSTRING(LPAD(ropidgtfs_stop_times.departure_time, 8, '0'),1,2)::int < 24 THEN
                     ropidgtfs_trips.service_id IN (
                     SELECT service_id FROM ropidgtfs_calendar
                     WHERE ${startDateDayName} = 1
