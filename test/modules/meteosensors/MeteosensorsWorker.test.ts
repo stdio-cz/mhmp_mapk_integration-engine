@@ -18,6 +18,7 @@ describe("MeteosensorsWorker", () => {
     let testTransformedHistoryData;
     let data0;
     let data1;
+    let dataStream;
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -138,7 +139,7 @@ describe("MeteosensorsWorker", () => {
             return stream;
           };
 
-        const dataStream =  new DataSourceStream({
+        dataStream =  new DataSourceStream({
         objectMode: true,
         read: () => {
             return;
@@ -168,7 +169,6 @@ describe("MeteosensorsWorker", () => {
 
     it("should calls the correct methods by refreshDataInDB method", async () => {
         await worker.refreshDataInDB();
-
         await waitTillStreamEnds(worker.dataStream);
 
         sandbox.assert.calledOnce(worker.dataSource.getAll);

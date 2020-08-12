@@ -5,6 +5,7 @@ import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
+
 import { DataSourceStreamed } from "../../../src/core/datasources";
 import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream";
 import { log } from "../../../src/core/helpers/Logger";
@@ -116,7 +117,7 @@ describe("DataSourceStreamed", () => {
 
     it("should throws error if data are not valid", async () => {
         validatorStub.Validate =  sandbox.stub().callsFake(() => {
-            throw new Error('oh noooooooooooooo')
+            throw new Error("oh noooooooooooooo")
         });
 
         datasource.setValidator(validatorStub);
@@ -132,11 +133,40 @@ describe("DataSourceStreamed", () => {
             dataStream.push(null);
         });
 
-        datasource.proceed();
+        await datasource.proceed();
 
         await waitTillStreamEnds(dataStream);
-        await chai.expect(error).to.be.an('error')
-        await chai.expect(error.cause.message).to.be.equal("oh noooooooooooooo");
+        chai.expect(error).to.be.an("error")
+        chai.expect(error.cause.message).to.be.equal("oh noooooooooooooo");
+    });
+
+    it("should throws error on error event on datastream", async () => {
+        validatorStub.Validate =  sandbox.stub().callsFake(() => {
+            return true;
+        });
+
+        datasource.setValidator(validatorStub);
+
+        const dataStream = await datasource.getAll();
+        let error = null;
+
+        dataStream.on("error", (err) => {
+            error = err;
+        });
+
+        dataStream.emit(
+            "error",
+            new CustomError("horrible error", true, "name", 2004, new Error("horrible error")),
+        );
+
+        dataStream.onDataListeners.push(() => {
+            dataStream.push(null);
+        });
+
+        await datasource.proceed();
+
+        await waitTillStreamEnds(dataStream);
+        chai.expect(error.cause.message).to.be.equal("horrible error");
     });
 
     it("should warn if data are empty array", async () => {
@@ -150,7 +180,8 @@ describe("DataSourceStreamed", () => {
         dataStream.push("somedata");
 
         dataStream.push(null);
-        datasource.proceed();
+
+        await datasource.proceed();
 
         await waitTillStreamEnds(dataStream);
         sandbox.assert.calledOnce(log.warn);
@@ -166,7 +197,8 @@ describe("DataSourceStreamed", () => {
         dataStream.push("somedata");
 
         dataStream.push(null);
-        datasource.proceed();
+
+        await datasource.proceed();
 
         await waitTillStreamEnds(dataStream);
         sandbox.assert.calledOnce(log.warn);
@@ -182,7 +214,8 @@ describe("DataSourceStreamed", () => {
         dataStream.push("somedata");
 
         dataStream.push(null);
-        datasource.proceed();
+
+        await datasource.proceed();
 
         await waitTillStreamEnds(dataStream);
         sandbox.assert.calledOnce(log.warn);
