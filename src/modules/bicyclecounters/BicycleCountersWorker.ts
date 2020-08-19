@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { BicycleCounters } from "@golemio/schema-definitions";
+import { BicycleCounters, Counters } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import * as moment from "moment-timezone";
 import { config } from "../../core/config";
@@ -45,6 +45,10 @@ export class BicycleCountersWorker extends BaseWorker {
     private detectionsModel: PostgresModel;
     private temperaturesModel: PostgresModel;
     private queuePrefix: string;
+
+    private countersLocationsModel: PostgresModel;
+    private countersDirectionsModel: PostgresModel;
+    private countersDetectionsModel: PostgresModel;
 
     constructor() {
         super();
@@ -176,6 +180,43 @@ export class BicycleCountersWorker extends BaseWorker {
             ),
         );
 
+        this.countersLocationsModel = new PostgresModel(
+            Counters.locations.name + "Model",
+            {
+                outputSequelizeAttributes: Counters.locations.outputSequelizeAttributes,
+                pgTableName: Counters.locations.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.locations.name + "ModelValidator",
+                BicycleCounters.locations.outputMongooseSchemaObject,
+            ),
+        );
+        this.countersDirectionsModel = new PostgresModel(
+            Counters.directions.name + "Model",
+            {
+                outputSequelizeAttributes: Counters.directions.outputSequelizeAttributes,
+                pgTableName: Counters.directions.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.directions.name + "ModelValidator",
+                BicycleCounters.directions.outputMongooseSchemaObject,
+            ),
+        );
+        this.countersDetectionsModel = new PostgresModel(
+            Counters.detections.name + "Model",
+            {
+                outputSequelizeAttributes: Counters.detections.outputSequelizeAttributes,
+                pgTableName: Counters.detections.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                BicycleCounters.detections.name + "ModelValidator",
+                BicycleCounters.detections.outputMongooseSchemaObject,
+            ),
+        );
+
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
     }
 
@@ -301,22 +342,44 @@ export class BicycleCountersWorker extends BaseWorker {
 
     public refreshEcoCounterDataInDB = async (msg: any): Promise<void> => {
         const data = await this.dataSourceEcoCounter.getAll();
+
         const transformedData = await this.ecoCounterTransformation.transform(data);
+
         await this.locationsModel.save(transformedData.locations);
         await this.directionsModel.save(transformedData.directions);
 
+        await this.countersLocationsModel.save(transformedData.locationsPedestrians);
+        await this.countersDirectionsModel.save(transformedData.directionsPedestrians);
+
         // send messages for updating measurements data
-        const promises = transformedData.directions.map((p) => {
+        const promisesBicycles = transformedData.directions.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
-                JSON.stringify({ id: p.vendor_id, directions_id: p.id, locations_id: p.locations_id }));
+                JSON.stringify({
+                    category: "bicycle",
+                    directions_id: p.id,
+                    id: p.vendor_id,
+                    locations_id: p.locations_id,
+                }));
         });
-        await Promise.all(promises);
+
+        const promisesPeds = transformedData.directionsPedestrians.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
+                JSON.stringify({
+                    category: "pedestrian",
+                    directions_id: p.id,
+                    id: p.vendor_id,
+                    locations_id: p.locations_id,
+                }));
+        });
+        await Promise.all(promisesBicycles);
+        await Promise.all(promisesPeds);
     }
 
     public updateEcoCounter = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const locationsId = inputData.locations_id;
         const directionsId = inputData.directions_id;
+        const category = inputData.category;
         const id = inputData.id;
 
         // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
@@ -349,19 +412,34 @@ export class BicycleCountersWorker extends BaseWorker {
         }));
 
         const data = await this.dataSourceEcoCounterMeasurements.getAll();
-        let transformedData = await this.ecoCounterMeasurementsTransformation.transform(data);
 
-        transformedData = transformedData
-            .map((x) => {
-                x.directions_id = directionsId;
-                x.locations_id = locationsId;
-                return x;
-            });
+        if (category === "bicycle") {
+            await this.detectionsModel.saveBySqlFunction(
+                (await this.ecoCounterMeasurementsTransformation.transform(
+                    data,
+                )).map((x: any) => {
+                    x.directions_id = directionsId;
+                    x.locations_id = locationsId;
+                    return x;
+                }),
+                [ "locations_id", "directions_id", "measured_from" ],
+            );
+        }
 
-        await this.detectionsModel.saveBySqlFunction(
-            transformedData,
-            [ "locations_id", "directions_id", "measured_from" ],
-        );
+        // pedestrians
+        if (category === "pedestrian") {
+            await this.countersDetectionsModel.saveBySqlFunction(
+                (await this.ecoCounterMeasurementsTransformation.transform(
+                    data,
+                )).map((x: any) => {
+                    x.directions_id = directionsId;
+                    x.locations_id = locationsId;
+                    x.category = "pedestrian";
+                    return x;
+                }),
+                [ "locations_id", "directions_id", "measured_from", "category" ],
+            );
+        }
     }
 
     private getApiLogsData = async (

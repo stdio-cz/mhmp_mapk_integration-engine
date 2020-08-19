@@ -12,8 +12,9 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
     /**
      * @param {TransformStream} streamTransform data will be piped  to this stream if provided
      */
-    public setStreamTransformer = (streamTransform): void => {
+    public setStreamTransformer = (streamTransform): HTTPProtocolStrategyStreamed => {
         this.streamTransform = streamTransform;
+        return this;
     }
 
     public async getData(): Promise<DataSourceStream>  {

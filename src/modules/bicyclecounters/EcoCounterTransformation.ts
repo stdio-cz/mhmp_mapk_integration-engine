@@ -15,10 +15,17 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
     /**
      * Overrides BaseTransformation::transform
      */
-    public transform = async (data: any | any[]): Promise<{directions: any[], locations: any[]}> => {
+    public transform = async (data: any | any[]): Promise<{
+        directions: any[],
+        directionsPedestrians: any[],
+        locations: any[],
+        locationsPedestrians: any[],
+    }> => {
         const res = {
             directions: [],
+            directionsPedestrians: [],
             locations: [],
+            locationsPedestrians: [],
         };
 
         if (data instanceof Array) {
@@ -26,7 +33,9 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
                 const elemRes = await this.transformElement(element);
                 if (elemRes) {
                     res.directions = res.directions.concat(elemRes.directions);
+                    res.directionsPedestrians = res.directionsPedestrians.concat(elemRes.directionsPedestrians);
                     res.locations.push(elemRes.location);
+                    res.locationsPedestrians.push(elemRes.locationPedestrians);
                 }
                 return;
             });
@@ -36,7 +45,9 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
             const elemRes = await this.transformElement(data);
             if (elemRes) {
                 res.directions = res.directions.concat(elemRes.directions);
+                res.directionsPedestrians = res.directionsPedestrians.concat(elemRes.directionsPedestrians);
                 res.locations.push(elemRes.location);
+                res.locationsPedestrians.push(elemRes.locationPedestrians);
             }
             return res;
         }
@@ -54,12 +65,31 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
                     vendor_id: direction.id,
                 }))
                 : [],
+            directionsPedestrians: element.channels
+                ? element.channels
+                .filter((direction) => direction.userType === 1)
+                .map((direction) => ({
+                    id: "ecoCounter-" + direction.id,
+                    locations_id: "ecoCounter-" + element.id,
+                    name: direction.name,
+                    vendor_id: direction.id,
+                }))
+                : [],
             location: {
                 id: "ecoCounter-" + element.id,
                 lat: element.latitude,
                 lng: element.longitude,
                 name: element.name,
                 route: null,
+                vendor_id: element.id,
+            },
+            locationPedestrians: {
+                id: "ecoCounter-" + element.id,
+                lat: element.latitude,
+                lng: element.longitude,
+                name: element.name,
+                route: null,
+                vendor: "ecoCounter",
                 vendor_id: element.id,
             },
         };

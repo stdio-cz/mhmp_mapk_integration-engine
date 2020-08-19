@@ -14,6 +14,7 @@ import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
+import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
@@ -254,6 +255,62 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: FirebasePidlitackaWorker,
                 workerMethod: "moveWebEvents",
+            },
+        ],
+    },
+    {
+        name: "flow",
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + ".flow",
+        queues: [
+            {
+                name: "refreshCubes",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "refreshCubes",
+            },
+            {
+                name: "getAnalytics",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getAnalytics",
+            },
+            {
+                name: "getSinks",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinks",
+            },
+            {
+                name: "getSinksHistoryPayloads",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinksHistoryPayloads",
+            },
+            {
+                name: "getSinksHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinksHistory",
             },
         ],
     },

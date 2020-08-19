@@ -99,18 +99,42 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.3.2.tgz#37dc2183cd2d0e63d24c741b806c3bb19d0758eb"
-  integrity sha512-rPdYORiT2GoGrqkX0JEnCp6aSk/kV54hclpJkl6EL2c9K+mBHbGFX8XnMaCgnrSK2cghTd6duii3b/Oz9alVXg==
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.4.6.tgz":
+  version "1.4.6"
+  resolved "../schema-definitions/golemio-schema-definitions-1.4.6.tgz#84a1765d14300c60c701f49a9c106327c76d3e35"
   dependencies:
+    "@golemio/utils" "0.0.4"
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
     db-migrate-pg "0.5.0"
     migrate-mongo "6.0.2"
     mongoose "^5.8.9"
+    mongoose-schema-jsonschema "1.4.3"
     sequelize "4.41.2"
     sequelize-typescript "0.6.11"
+
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.4.7.tgz":
+  version "1.4.7"
+  resolved "../schema-definitions/golemio-schema-definitions-1.4.7.tgz#55c46f173d48af1cbedfc5150215d86e394995c6"
+  dependencies:
+    "@golemio/utils" "0.0.4"
+    connection-string-parser "^1.0.2"
+    db-migrate "0.11.5"
+    db-migrate-pg "0.5.0"
+    migrate-mongo "6.0.2"
+    mongoose "^5.8.9"
+    mongoose-schema-jsonschema "1.4.3"
+    sequelize "4.41.2"
+    sequelize-typescript "0.6.11"
+
+"@golemio/utils@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-0.0.4.tgz#09df24ce7ba1b19611a15135e488fe3bbec459e7"
+  integrity sha512-SdHYNSRArYhyffiatrHITF68tsJlfiE8ifPtqnqHp+1chXPsjtoa1ehGiAt71FIxip1WguApwh0yFVy17haQIw==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
 
 "@golemio/utils@^0.0.3":
   version "0.0.3"
@@ -2014,6 +2038,13 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
+axios@:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+  dependencies:
+    follow-redirects "1.5.10"
+
 babel-code-frame@^6.22.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -2687,7 +2718,7 @@ debug@2.6.9, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0:
+debug@3.1.0, debug@=3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
@@ -3239,6 +3270,13 @@ fn-args@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/fn-args/-/fn-args-5.0.0.tgz#7a18e105c8fb3bf0a51c30389bf16c9ebe740bb3"
   integrity sha512-CtbfI3oFFc3nbdIoHycrfbrxiGgxXBXXuyOl49h47JawM1mYrqpiRqnH5CB2mBatdXvHHOUO6a+RiAuuvKt0lw==
+
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
+  dependencies:
+    debug "=3.1.0"
 
 foreground-child@^1.5.6:
   version "1.5.6"
@@ -4561,6 +4599,13 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
+mongoose-schema-jsonschema@1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/mongoose-schema-jsonschema/-/mongoose-schema-jsonschema-1.4.3.tgz#35618272d41535c42889fbe3b4d99e9a75e0dc2f"
+  integrity sha512-zM4qaEBwMRP01sguIxTWOrmJ6+y+axjCVLowrVkLntWb7NQzvcJRjUNAYG2JFpUyEEX7t4/7dqKUInCPpqaKlw==
+  dependencies:
+    pluralize "^8.0.0"
+
 mongoose@5.3.6:
   version "5.3.6"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.3.6.tgz#383532b5c5a75eddb078fc78c7ff64f345d8bb1b"
@@ -5240,6 +5285,11 @@ please-upgrade-node@^3.2.0:
   integrity sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==
   dependencies:
     semver-compare "^1.0.0"
+
+pluralize@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
+  integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
 
 point-in-polygon@^1.0.1:
   version "1.0.1"

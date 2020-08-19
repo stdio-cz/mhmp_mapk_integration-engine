@@ -37,21 +37,17 @@ export class TrafficDetectorsWorker extends BaseWorker {
         this.tskstdURL = config.datasources.TSKSTD.api_url;
         this.uuidv = uuidv4();
 
-        const HTTPProtocolStrategy = new HTTPProtocolStrategyStreamed({
-            headers: {},
-            method: "",
-            url: "",
-        });
-
         this.dataSource = new DataSourceStreamed(TSKSTD.name + "DataSource",
-            HTTPProtocolStrategy,
+            new HTTPProtocolStrategyStreamed({
+                headers: {},
+                method: "",
+                url: "",
+            }).setStreamTransformer(xmlStream().createStream()),
             new JSONDataTypeStrategy({
                 resultsPath: "",
             }),
             null,
         );
-
-        HTTPProtocolStrategy.setStreamTransformer(xmlStream().createStream());
 
         this.measurementsModel = new PostgresModel(
             TSKSTD.measurements.name + "Model",

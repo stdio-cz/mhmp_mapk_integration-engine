@@ -85,7 +85,14 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
     private processData = async (force = false, data = null): Promise<void> => {
         if ((this.dataBuffer.length >= config.DATA_BATCH_SIZE) || force || data) {
             try {
-                const content = await this.dataTypeStrategy.parseData(data || this.dataBuffer);
+                let content: any;
+
+                if (this.dataTypeStrategy?.parseData) {
+                    content = await this.dataTypeStrategy.parseData(data || this.dataBuffer);
+                } else {
+                    content = data || this.dataBuffer;
+                }
+
                 if (this.isEmpty(content)) {
                     log.warn(`${this.name}: Data source returned empty data.`);
                     // logging number of records
