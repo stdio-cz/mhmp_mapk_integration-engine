@@ -67,11 +67,20 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
     private getMPLAPaymentLink = (id: number): string => {
         const link = config.PARKINGS_PAYMENT_URL + "?shortname=";
         switch (id) {
+            case 534002: return link + "139"; // Holešovice
+            case 534004: return link + "142"; // Rajska Zahrada
+            case 534007: return link + "141"; // Radotín
+            case 534008: return link + "144"; // Zličín 1
+            case 534009: return link + "145"; // Zličín 2
+            case 534010: return link + "143"; // Skalka 2
+            case 534011: return link + "147"; // Černý most
+            case 534012: return link + "143"; // Skalka 1
+            case 534014: return link + "121"; // Ládví
+            case 534015: return link + "122"; // Depo Hostivař
+            case 534016: return link + "123"; // Letňany
+            case 534017: return link + "106"; // Westfield Chodov
             case 5340171: return link + "106"; // Chodov A
             case 5340172: return link + "106"; // Chodov E
-            case 534015: return link + "122"; // Depo Hostivař
-            case 534014: return link + "121"; // Ládví
-            case 534016: return link + "123"; // Letňany
             default: return null;
         }
     }
