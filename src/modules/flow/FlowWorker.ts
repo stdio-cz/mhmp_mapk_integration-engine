@@ -28,7 +28,7 @@ export class FlowWorker extends BaseWorker {
 
     private flowMeasurementModel: PostgresModel;
 
-    private queuePrefix: string = `${config.RABBIT_EXCHANGE_NAME}.flow`;
+    private queuePrefix: string = `${config.RABBIT_EXCHANGE_NAME}.${Flow.detections.name.toLowerCase()}`;
 
     constructor() {
         super();

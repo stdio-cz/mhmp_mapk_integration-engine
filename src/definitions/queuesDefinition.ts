@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Flow, Gardens,
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
@@ -259,8 +259,8 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
-        name: "flow",
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + ".flow",
+        name: Flow.detections.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Flow.detections.name.toLowerCase(),
         queues: [
             {
                 name: "refreshCubes",
