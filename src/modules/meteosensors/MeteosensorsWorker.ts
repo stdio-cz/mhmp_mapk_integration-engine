@@ -28,17 +28,14 @@ export class MeteosensorsWorker extends BaseWorker {
         const dataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
         // filter items with lastUpdated lower than two days
         dataTypeStrategy.setFilter((item) => item.lastUpdated > new Date().getTime() - (2 * 24 * 60 * 60 * 1000));
-        const HTTPProtocolStrategy = new HTTPProtocolStrategyStreamed({
-            headers: {},
-            method: "GET",
-            url: config.datasources.TSKMeteosensors,
-        });
-
-        HTTPProtocolStrategy.setStreamTransformer(JSONStream.parse("results.*"));
 
         this.dataSource = new DataSourceStreamed(
             Meteosensors.name + "DataSource",
-            HTTPProtocolStrategy,
+            new HTTPProtocolStrategyStreamed({
+                headers: {},
+                method: "GET",
+                url: config.datasources.TSKMeteosensors,
+            }).setStreamTransformer(JSONStream.parse("results.*")),
             dataTypeStrategy,
             new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject),
         );

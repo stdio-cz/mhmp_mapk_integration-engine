@@ -13,6 +13,10 @@
         "password": ""
     },
     "CityDistricts": "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
+    "FlowAPI": {
+        "url": "https://10.200.4.4:8080/api/cubes",
+        "token": ""
+    },
     "Gardens": "https://www.mojepraha.eu/api/gardens",
     "HomeportLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Location/Map/Extended?lang=cs",
     "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
