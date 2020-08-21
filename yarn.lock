@@ -121,10 +121,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/validator@0.1.0-dev.163887901":
-  version "0.1.0-dev.163887901"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.1.0-dev.163887901.tgz#b956fe3f928cb1b38fdf7711e4612544c68f9028"
-  integrity sha512-ne1P9zumjchXvU0O0Zns2XA+8G74SBnugJA0FYjGf95ffjVbJ3rhpqKzES5qBvSHz53RaMGH+gtUvxdoeelOMQ==
+"@golemio/validator@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.0.tgz#8a00aeb6e9ab68a556110a7e3538f97c8a973db0"
+  integrity sha512-PYL+6DVkgloanKrosgHVmB1UyH8h7YXq9U8Mu6857t9RxwBbYOzGp4kApF4NU36oF5W9wwttob6V/r9tRKax4g==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"
