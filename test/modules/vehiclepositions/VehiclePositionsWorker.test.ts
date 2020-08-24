@@ -107,7 +107,6 @@ describe("VehiclePositionsWorker", () => {
         await worker.updateDelay({ content: Buffer.from("0") });
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
-        sandbox.assert.calledOnce(worker.getEstimatedPoint);
         sandbox.assert.calledOnce(worker.modelPositions.updateDelay);
     });
 
