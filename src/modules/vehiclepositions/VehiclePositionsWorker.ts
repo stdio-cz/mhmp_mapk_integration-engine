@@ -229,65 +229,106 @@ export class VehiclePositionsWorker extends BaseWorker {
 
             const tripShapePoints = gtfs.shape_points;
             let newLastDelay = null;
+            let someTrackingPositionsBefore = false;
 
             const promises = positionsToUpdate.map(async (position, key) => {
-                if (position.delay === null || newLastDelay !== null) {
-                    const currentPosition = {
-                        geometry: {
-                            coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
-                            type: "Point",
-                        },
-                        properties: {
-                            origin_time: position.origin_time,
-                            origin_timestamp: position.origin_timestamp,
-                        },
-                        type: "Feature",
-                    };
-                    const lastPosition = (key > 0)
-                        ? {
+                if (position.tracking === 2) {
+                    someTrackingPositionsBefore = true;
+                    if (position.delay === null || newLastDelay !== null) {
+                        const currentPosition = {
                             geometry: {
-                                coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
-                                parseFloat(positionsToUpdate[key - 1].lat)],
+                                coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
                                 type: "Point",
                             },
                             properties: {
-                                time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
+                                origin_time: position.origin_time,
+                                origin_timestamp: position.origin_timestamp,
                             },
                             type: "Feature",
-                        }
-                        : null;
+                        };
+                        const lastPosition = (key > 0)
+                            ? {
+                                geometry: {
+                                    coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
+                                    parseFloat(positionsToUpdate[key - 1].lat)],
+                                    type: "Point",
+                                },
+                                properties: {
+                                    time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
+                                },
+                                type: "Feature",
+                            }
+                            : null;
 
-                    // CORE processing
-                    const estimatedPoint = await this.getEstimatedPoint(
-                        tripShapePoints, currentPosition, lastPosition, startDayTimestamp,
-                    );
-
-                    newLastDelay = estimatedPoint.properties.time_delay;
-                    if (estimatedPoint.properties.time_delay !== undefined
-                        && estimatedPoint.properties.time_delay !== null) {
-
-                        return this.modelPositions.updateDelay(
-                            position.id,
-                            position.origin_time,
-                            estimatedPoint.properties.time_delay,
-                            estimatedPoint.properties.shape_dist_traveled,
-                            estimatedPoint.properties.next_stop_id,
-                            estimatedPoint.properties.last_stop_id,
-                            estimatedPoint.properties.next_stop_sequence,
-                            estimatedPoint.properties.last_stop_sequence,
-                            estimatedPoint.properties.next_stop_arrival_time,
-                            estimatedPoint.properties.last_stop_arrival_time,
-                            estimatedPoint.properties.next_stop_departure_time,
-                            estimatedPoint.properties.last_stop_departure_time,
-                            (position.bearing !== undefined) ? position.bearing : estimatedPoint.properties.bearing,
+                        // CORE processing
+                        const estimatedPoint = await this.getEstimatedPoint(
+                            tripShapePoints, currentPosition, lastPosition, startDayTimestamp,
                         );
+
+                        newLastDelay = estimatedPoint.properties.time_delay;
+                        if (estimatedPoint.properties.time_delay !== undefined
+                            && estimatedPoint.properties.time_delay !== null) {
+                            return this.modelPositions.updateDelay(
+                                position.id,
+                                position.origin_time,
+                                estimatedPoint.properties.time_delay,
+                                estimatedPoint.properties.shape_dist_traveled,
+                                estimatedPoint.properties.next_stop_id,
+                                estimatedPoint.properties.last_stop_id,
+                                estimatedPoint.properties.next_stop_sequence,
+                                estimatedPoint.properties.last_stop_sequence,
+                                estimatedPoint.properties.next_stop_arrival_time,
+                                estimatedPoint.properties.last_stop_arrival_time,
+                                estimatedPoint.properties.next_stop_departure_time,
+                                estimatedPoint.properties.last_stop_departure_time,
+                                (position.bearing !== undefined) ? position.bearing : estimatedPoint.properties.bearing,
+                            );
+                        } else {
+                            return Promise.resolve();
+                        }
                     } else {
                         return Promise.resolve();
                     }
-                } else {
-                    newLastDelay = null;
-                    return Promise.resolve();
                 }
+                if (position.tracking === 0) {
+                    if (!someTrackingPositionsBefore) {
+                        return this.modelPositions.updateDelay(
+                            position.id,
+                            position.origin_time,
+                            null,
+                            0,
+                            gtfs.shape_points[0].last_stop,
+                            null,
+                            gtfs.shape_points[0].last_stop_sequence,
+                            null,
+                            null,
+                            null,
+                            startTimestamp
+                                + gtfs.shape_points[0].last_stop_departure_time_seconds * 1000,
+                            null,
+                            (position.bearing !== undefined) ? position.bearing : null,
+                        );
+                    } else {
+                        const lastShapePointsIndex = gtfs.shape_points.length - 1;
+                        return this.modelPositions.updateDelay(
+                            position.id,
+                            position.origin_time,
+                            null,
+                            gtfs.shape_points[lastShapePointsIndex].shape_dist_traveled,
+                            null,
+                            gtfs.shape_points[lastShapePointsIndex].next_stop,
+                            null,
+                            gtfs.shape_points[lastShapePointsIndex].next_stop_sequence,
+                            null,
+                            startTimestamp
+                                + gtfs.shape_points[lastShapePointsIndex].next_stop_arrival_time_seconds * 1000,
+                            null,
+                            null,
+                            (position.bearing !== undefined) ? position.bearing : null,
+                        );
+                    }
+                }
+                return Promise.resolve();
             });
             await Promise.all(promises);
         } catch (err) {
