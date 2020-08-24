@@ -56,6 +56,10 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
 
         const inputStream = await this.protocolStrategy.getData();
 
+        inputStream.on("error", (error) => {
+            this.dataStream.emit("error", error);
+        });
+
         inputStream.onDataListeners.push(async ( data: any ): Promise<void> => {
             inputStream.pause();
 

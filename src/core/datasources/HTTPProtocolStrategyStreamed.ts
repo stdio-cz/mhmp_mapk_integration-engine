@@ -41,6 +41,9 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
             this.streamTransform.on("end", () => {
                 outStream.push(null);
             });
+            dataStream.on("error", (error: any) => {
+                this.streamTransform.emit("error", error);
+            });
         } else {
             dataStream.on("data", (data: any) => {
                 outStream.push(data);
@@ -58,6 +61,9 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
                     outStream.push(null);
                     dataStreamEnd = true;
                 }
+            });
+            dataStream.on("error", (error: any) => {
+                outStream.emit("error", error);
             });
         }
         return outStream;
