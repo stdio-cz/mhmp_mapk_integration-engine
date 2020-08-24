@@ -45,11 +45,11 @@ export class BicycleCountersWorker extends BaseWorker {
     private detectionsModel: PostgresModel;
     private temperaturesModel: PostgresModel;
     private queuePrefix: string;
-
+/*
     private countersLocationsModel: PostgresModel;
     private countersDirectionsModel: PostgresModel;
     private countersDetectionsModel: PostgresModel;
-
+*/
     constructor() {
         super();
 
@@ -73,7 +73,7 @@ export class BicycleCountersWorker extends BaseWorker {
         this.dataSourceEcoCounter = new DataSource(BicycleCounters.ecoCounter.name + "DataSource",
             new HTTPProtocolStrategy({
                 headers: {
-                    Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                    Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
                 },
                 method: "GET",
                 url: config.datasources.BicycleCountersEcoCounter,
@@ -179,7 +179,7 @@ export class BicycleCountersWorker extends BaseWorker {
                 BicycleCounters.temperatures.outputMongooseSchemaObject,
             ),
         );
-
+/*
         this.countersLocationsModel = new PostgresModel(
             Counters.locations.name + "Model",
             {
@@ -216,7 +216,7 @@ export class BicycleCountersWorker extends BaseWorker {
                 BicycleCounters.detections.outputMongooseSchemaObject,
             ),
         );
-
+*/
         this.queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
     }
 
@@ -347,10 +347,10 @@ export class BicycleCountersWorker extends BaseWorker {
 
         await this.locationsModel.save(transformedData.locations);
         await this.directionsModel.save(transformedData.directions);
-
+/*
         await this.countersLocationsModel.save(transformedData.locationsPedestrians);
         await this.countersDirectionsModel.save(transformedData.directionsPedestrians);
-
+*/
         // send messages for updating measurements data
         const promisesBicycles = transformedData.directions.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
@@ -361,7 +361,7 @@ export class BicycleCountersWorker extends BaseWorker {
                     locations_id: p.locations_id,
                 }));
         });
-
+/*
         const promisesPeds = transformedData.directionsPedestrians.map((p) => {
             this.sendMessageToExchange("workers." + this.queuePrefix + ".updateEcoCounter",
                 JSON.stringify({
@@ -371,8 +371,9 @@ export class BicycleCountersWorker extends BaseWorker {
                     locations_id: p.locations_id,
                 }));
         });
+*/
         await Promise.all(promisesBicycles);
-        await Promise.all(promisesPeds);
+//        await Promise.all(promisesPeds);
     }
 
     public updateEcoCounter = async (msg: any): Promise<void> => {
@@ -404,7 +405,7 @@ export class BicycleCountersWorker extends BaseWorker {
 
         this.dataSourceEcoCounterMeasurements.setProtocolStrategy(new HTTPProtocolStrategy({
             headers: {
-                Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
             },
             json: true,
             method: "GET",
@@ -425,7 +426,7 @@ export class BicycleCountersWorker extends BaseWorker {
                 [ "locations_id", "directions_id", "measured_from" ],
             );
         }
-
+/*
         // pedestrians
         if (category === "pedestrian") {
             await this.countersDetectionsModel.saveBySqlFunction(
@@ -440,6 +441,7 @@ export class BicycleCountersWorker extends BaseWorker {
                 [ "locations_id", "directions_id", "measured_from", "category" ],
             );
         }
+*/
     }
 
     private getApiLogsData = async (

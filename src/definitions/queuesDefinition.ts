@@ -13,6 +13,7 @@ import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
+import { CountersWorker } from "../modules/counters";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
@@ -199,6 +200,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: CityDistrictsWorker,
                 workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: "Counters",
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + "counters",
+        queues: [
+            {
+                name: "refreshEcoCounterDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: CountersWorker,
+                workerMethod: "refreshEcoCounterDataInDB",
+            },
+            {
+                name: "updateEcoCounter",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: CountersWorker,
+                workerMethod: "updateEcoCounter",
             },
         ],
     },

@@ -163,11 +163,11 @@ describe("BicycleCountersWorker", () => {
         sandbox.stub(worker.temperaturesModel, "saveBySqlFunction");
         sandbox.stub(worker.apiLogsHitsModel, "save");
         sandbox.stub(worker.apiLogsFailuresModel, "save");
-
+/*
         sandbox.stub(worker.countersLocationsModel, "save");
         sandbox.stub(worker.countersDirectionsModel, "save");
         sandbox.stub(worker.countersDetectionsModel, "saveBySqlFunction");
-
+*/
         sandbox.spy(worker, "getApiLogsData");
 
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
@@ -240,7 +240,7 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledWith(worker.ecoCounterTransformation.transform, testData);
         sandbox.assert.calledOnce(worker.locationsModel.save);
         sandbox.assert.calledOnce(worker.directionsModel.save);
-        sandbox.assert.callCount(worker.sendMessageToExchange, 4);
+        sandbox.assert.callCount(worker.sendMessageToExchange, 2);
         testTransformedData.directions.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateEcoCounter",
@@ -250,7 +250,8 @@ describe("BicycleCountersWorker", () => {
                     id: f.vendor_id,
                     locations_id: f.locations_id,
                 }));
-            sandbox.assert.calledWith(worker.sendMessageToExchange,
+/*
+                sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateEcoCounter",
                 JSON.stringify({
                     category: "pedestrian",
@@ -258,6 +259,7 @@ describe("BicycleCountersWorker", () => {
                     id: f.vendor_id,
                     locations_id: f.locations_id,
                 }));
+*/
         });
         sandbox.assert.callOrder(
             worker.dataSourceEcoCounter.getAll,
