@@ -295,13 +295,13 @@ export class FlowWorker extends BaseWorker {
                 );
 
                 // does not work for some reason ...
-                // await this.flowMeasurementModel.saveBySqlFunction(
-                //     detections,
-                //     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
-                // );
-                await this.flowMeasurementModel.save(
+                await this.flowMeasurementModel.saveBySqlFunction(
                     detections,
+                    [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
                 );
+                // await this.flowMeasurementModel.save(
+                //     detections,
+                // );
             }).proceed();
         } catch (err) {
             throw new CustomError("Error while processing data.", true, this.constructor.name, 5050, err);
@@ -322,10 +322,10 @@ export class FlowWorker extends BaseWorker {
                             sink_id: element.id,
                             // tslint:disable-next-line: object-literal-sort-keys
                             cube_id,
-                            sequence_number,
+                            sequence_number: +sequence_number,
                             analytic_id,
-                            start_timestamp: meassutements.data_start_timestamp,
-                            end_timestamp: meassutements.data_end_timestamp,
+                            start_timestamp: +meassutements.data_start_timestamp,
+                            end_timestamp: +meassutements.data_end_timestamp,
                             category: meassutement.category,
                             value: meassutement.count,
                         });
