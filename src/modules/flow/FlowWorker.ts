@@ -294,13 +294,24 @@ export class FlowWorker extends BaseWorker {
                     input.analytic.id,
                 );
 
+                // filter duplicate data
+                const uniq = detections.filter((thing, index, self) =>
+                    index === self.findIndex((t) => (
+                        t.sink_id === thing.sink_id &&
+                        t.start_timestamp === thing.start_timestamp &&
+                        t.end_timestamp === thing.end_timestamp &&
+                        t.category === thing.category &&
+                        t.sequence_number === thing.sequence_number
+                    )),
+                );
+
                 // does not work for some reason ...
                 await this.flowMeasurementModel.saveBySqlFunction(
-                    detections,
+                    uniq,
                     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
                 );
                 // await this.flowMeasurementModel.save(
-                //     detections,
+                //     uniq,
                 // );
             }).proceed();
         } catch (err) {
