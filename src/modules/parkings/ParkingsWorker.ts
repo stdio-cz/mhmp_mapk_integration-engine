@@ -8,7 +8,10 @@ import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../co
 import { GeocodeApi } from "../../core/helpers";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
+import {
+    KoridParkingConfigTransformation, KoridParkingDataTransformation, ParkingsOccupanciesTransformation,
+    ParkingsTransformation,
+} from "./";
 
 import * as moment from "moment";
 
@@ -21,6 +24,10 @@ export class ParkingsWorker extends BaseWorker {
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
     private occupanciesTransformation: ParkingsOccupanciesTransformation;
+    private koridParkingConfigTransformation: KoridParkingConfigTransformation;
+    private koridParkingDataTransformation: KoridParkingDataTransformation;
+    private koridParkingConfigModel: PostgresModel;
+    private koridParkingDataModel: PostgresModel;
     private occupanciesModel: PostgresModel;
 
     constructor() {
@@ -89,6 +96,31 @@ export class ParkingsWorker extends BaseWorker {
         },
             new Validator(Parkings.occupancies.name + "ModelValidator",
                 Parkings.occupancies.outputMongooseSchemaObject),
+        );
+        this.koridParkingConfigTransformation = new KoridParkingConfigTransformation();
+        this.koridParkingDataTransformation = new KoridParkingDataTransformation();
+        this.koridParkingConfigModel = new PostgresModel(Parkings.korid.name + "Model", {
+            // TODO: Export postgre model in schema
+            // @ts-ignore
+            outputSequelizeAttributes: Parkings.outputMongooseSchemaObject,
+            pgTableName: Parkings.korid.name,
+            savingType: "insertOrUpdate",
+        },
+            new Validator(Parkings.korid.name + "ModelValidator",
+                // Todo: Metoo
+                Parkings.outputMongooseSchemaObject),
+        );
+        // Todo: Change name and add it to export in schema
+        this.koridParkingDataModel = new PostgresModel(Parkings.korid.name + "Model", {
+                // TODO: Export postgre model in schema
+                // @ts-ignore
+                outputSequelizeAttributes: Parkings.outputMongooseSchemaObject,
+                pgTableName: Parkings.korid.name,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(Parkings.korid.name + "ModelValidator",
+                // Todo: Metoo
+                Parkings.outputMongooseSchemaObject),
         );
     }
 
@@ -214,4 +246,15 @@ export class ParkingsWorker extends BaseWorker {
         await this.occupanciesModel.save(transformedData);
     }
 
+    // Korid parking data section
+    public saveKoridConfToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.koridParkingConfigTransformation.transform(inputData);
+        await this.koridParkingConfigModel.save(transformedData);
+    }
+    public saveKoridDataToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.koridParkingDataTransformation.transform(inputData);
+        await this.koridParkingDataModel.save(transformedData);
+    }
 }
