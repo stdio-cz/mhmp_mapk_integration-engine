@@ -12,15 +12,21 @@ export class KoridParkingConfigTransformation extends BaseTransformation impleme
         this.name = Parkings.korid.name;
     }
 
-    protected transformElement = async (element: any): Promise<any> => {
+    public transform = async (data: any): Promise<any> => {
+        const promises = [];
+        for (const element of data.geojson.features) {
+            promises.push(await this.transformElement(element, data.time));
+        }
+        return Promise.all(promises);
+    }
+
+    protected transformElement = async (element: any, dateModified?: number): Promise<any> => {
         const res = {
-            capacity: Number(element.gpreservation.zoneinfo.zonei.capacity),
-            occupation: Number(element.gpreservation.zoneinfo.zonei.occupation),
-            parking_id: element.gpreservation.zoneinfo.zonei.parking_id,
-            reservedcapacity: Number(element.gpreservation.zoneinfo.zonei.reservedcapacity),
-            reservedoccupation: Number(element.gpreservation.zoneinfo.zonei.reservedoccupation),
+            dataProvider: "korid",
+            dateModified: new Date(dateModified), // time
+            name: element.properties.title, // title
+            sourceId: Number(element.properties.groupid), // groupId
         };
         return res;
     }
-
 }

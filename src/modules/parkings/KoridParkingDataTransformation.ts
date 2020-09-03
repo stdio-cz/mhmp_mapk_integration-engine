@@ -28,6 +28,6 @@ export class KoridParkingDataTransformation extends BaseTransformation implement
             config: Number(elementKey),
             totalSpotNumber: Number(element.tot),
         };
-        return res;
+        return Promise.resolve(res);
     }
 }

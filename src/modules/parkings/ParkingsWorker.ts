@@ -102,25 +102,25 @@ export class ParkingsWorker extends BaseWorker {
         this.koridParkingConfigModel = new PostgresModel(Parkings.korid.name + "Model", {
             // TODO: Export postgre model in schema
             // @ts-ignore
-            outputSequelizeAttributes: Parkings.outputMongooseSchemaObject,
-            pgTableName: Parkings.korid.name,
+            outputSequelizeAttributes: Parkings.korid.koridConfigDataSDMA,
+            pgTableName: Parkings.korid.name + "Config",
             savingType: "insertOrUpdate",
         },
             new Validator(Parkings.korid.name + "ModelValidator",
                 // Todo: Metoo
-                Parkings.outputMongooseSchemaObject),
+                Parkings.korid.koridOutput.koridConfigMSO),
         );
         // Todo: Change name and add it to export in schema
         this.koridParkingDataModel = new PostgresModel(Parkings.korid.name + "Model", {
                 // TODO: Export postgre model in schema
                 // @ts-ignore
-                outputSequelizeAttributes: Parkings.outputMongooseSchemaObject,
-                pgTableName: Parkings.korid.name,
+                outputSequelizeAttributes: Parkings.korid.koridParkingDataSDMA,
+                pgTableName: Parkings.korid.name + "Data",
                 savingType: "insertOrUpdate",
             },
             new Validator(Parkings.korid.name + "ModelValidator",
                 // Todo: Metoo
-                Parkings.outputMongooseSchemaObject),
+                Parkings.korid.koridOutput.koridDataMSO),
         );
     }
 
@@ -253,7 +253,7 @@ export class ParkingsWorker extends BaseWorker {
         await this.koridParkingConfigModel.save(transformedData);
     }
     public saveKoridDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
+        const inputData = (JSON.parse(msg.content.toString())).data;
         const transformedData = await this.koridParkingDataTransformation.transform(inputData);
         await this.koridParkingDataModel.save(transformedData);
     }
