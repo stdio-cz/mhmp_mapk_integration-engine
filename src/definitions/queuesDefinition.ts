@@ -700,6 +700,24 @@ const definitions: IQueueDefinition[] = [
                 worker: ParkingsWorker,
                 workerMethod: "saveOccupanciesToDB",
             },
+            {
+                name: "saveKoridConfToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ParkingsWorker,
+                workerMethod: "saveKoridConfToDB",
+            },
+            {
+                name: "saveKoridDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ParkingsWorker,
+                workerMethod: "saveKoridDataToDB",
+            },
         ],
     },
     {

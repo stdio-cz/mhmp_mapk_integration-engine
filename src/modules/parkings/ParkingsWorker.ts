@@ -8,7 +8,10 @@ import { DataSource, HTTPProtocolStrategy, JSONDataTypeStrategy } from "../../co
 import { GeocodeApi } from "../../core/helpers";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import { ParkingsOccupanciesTransformation, ParkingsTransformation } from "./";
+import {
+    KoridParkingConfigTransformation, KoridParkingDataTransformation, ParkingsOccupanciesTransformation,
+    ParkingsTransformation,
+} from "./";
 
 import * as moment from "moment";
 
@@ -22,6 +25,10 @@ export class ParkingsWorker extends BaseWorker {
     private cityDistrictsModel: MongoModel;
     private occupanciesTransformation: ParkingsOccupanciesTransformation;
     private occupanciesModel: PostgresModel;
+    private koridParkingConfigTransformation: KoridParkingConfigTransformation;
+    private koridParkingDataTransformation: KoridParkingDataTransformation;
+    private parkingsModel: PostgresModel;
+    private parkingsMeasurementsModel: PostgresModel;
 
     constructor() {
         super();
@@ -89,6 +96,32 @@ export class ParkingsWorker extends BaseWorker {
         },
             new Validator(Parkings.occupancies.name + "ModelValidator",
                 Parkings.occupancies.outputMongooseSchemaObject),
+        );
+        this.koridParkingConfigTransformation = new KoridParkingConfigTransformation();
+        this.koridParkingDataTransformation = new KoridParkingDataTransformation();
+        this.parkingsModel = new PostgresModel(
+            Parkings.name + "Model",
+            {
+                outputSequelizeAttributes: Parkings.pg.outputSequelizeAttributes,
+                pgTableName: Parkings.pg.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new Validator(
+                Parkings.name + "PgModelValidator",
+                Parkings.pg.outputMongooseSchemaObject,
+            ),
+        );
+        this.parkingsMeasurementsModel = new PostgresModel(
+            Parkings.pg.measurements.name + "Model",
+            {
+                outputSequelizeAttributes: Parkings.pg.measurements.outputSequelizeAttributes,
+                pgTableName: Parkings.pg.measurements.pgTableName,
+                savingType: "insertOnly",
+            },
+            new Validator(
+                Parkings.pg.measurements.name + "PgModelValidator",
+                Parkings.pg.measurements.outputMongooseSchemaObject,
+            ),
         );
     }
 
@@ -214,4 +247,15 @@ export class ParkingsWorker extends BaseWorker {
         await this.occupanciesModel.save(transformedData);
     }
 
+    // Korid parking data section
+    public saveKoridConfToDB = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString());
+        const transformedData = await this.koridParkingConfigTransformation.transform(inputData);
+        await this.parkingsModel.save(transformedData);
+    }
+    public saveKoridDataToDB = async (msg: any): Promise<void> => {
+        const inputData = (JSON.parse(msg.content.toString()));
+        const transformedData = await this.koridParkingDataTransformation.transform(inputData);
+        await this.parkingsMeasurementsModel.save(transformedData);
+    }
 }
