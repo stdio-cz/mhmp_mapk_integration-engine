@@ -24,11 +24,11 @@ export class ParkingsWorker extends BaseWorker {
     private queuePrefix: string;
     private cityDistrictsModel: MongoModel;
     private occupanciesTransformation: ParkingsOccupanciesTransformation;
+    private occupanciesModel: PostgresModel;
     private koridParkingConfigTransformation: KoridParkingConfigTransformation;
     private koridParkingDataTransformation: KoridParkingDataTransformation;
-    private koridParkingConfigModel: PostgresModel;
-    private koridParkingDataModel: PostgresModel;
-    private occupanciesModel: PostgresModel;
+    private parkingsModel: PostgresModel;
+    private parkingsMeasurementsModel: PostgresModel;
 
     constructor() {
         super();
@@ -99,28 +99,29 @@ export class ParkingsWorker extends BaseWorker {
         );
         this.koridParkingConfigTransformation = new KoridParkingConfigTransformation();
         this.koridParkingDataTransformation = new KoridParkingDataTransformation();
-        this.koridParkingConfigModel = new PostgresModel(Parkings.korid.name + "Model", {
-            // TODO: Export postgre model in schema
-            // @ts-ignore
-            outputSequelizeAttributes: Parkings.korid.koridConfigDataSDMA,
-            pgTableName: Parkings.korid.name + "Config",
-            savingType: "insertOrUpdate",
-        },
-            new Validator(Parkings.korid.name + "ModelValidator",
-                // Todo: Metoo
-                Parkings.korid.koridOutput.koridConfigMSO),
-        );
-        // Todo: Change name and add it to export in schema
-        this.koridParkingDataModel = new PostgresModel(Parkings.korid.name + "Model", {
-                // TODO: Export postgre model in schema
-                // @ts-ignore
-                outputSequelizeAttributes: Parkings.korid.koridParkingDataSDMA,
-                pgTableName: Parkings.korid.name + "Data",
+        this.parkingsModel = new PostgresModel(
+            Parkings.name + "Model",
+            {
+                outputSequelizeAttributes: Parkings.pg.outputSequelizeAttributes,
+                pgTableName: Parkings.pg.pgTableName,
                 savingType: "insertOrUpdate",
             },
-            new Validator(Parkings.korid.name + "ModelValidator",
-                // Todo: Metoo
-                Parkings.korid.koridOutput.koridDataMSO),
+            new Validator(
+                Parkings.name + "PgModelValidator",
+                Parkings.pg.outputMongooseSchemaObject,
+            ),
+        );
+        this.parkingsMeasurementsModel = new PostgresModel(
+            Parkings.pg.measurements.name + "Model",
+            {
+                outputSequelizeAttributes: Parkings.pg.measurements.outputSequelizeAttributes,
+                pgTableName: Parkings.pg.measurements.pgTableName,
+                savingType: "insertOnly",
+            },
+            new Validator(
+                Parkings.pg.measurements.name + "PgModelValidator",
+                Parkings.pg.measurements.outputMongooseSchemaObject,
+            ),
         );
     }
 
@@ -250,11 +251,11 @@ export class ParkingsWorker extends BaseWorker {
     public saveKoridConfToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const transformedData = await this.koridParkingConfigTransformation.transform(inputData);
-        await this.koridParkingConfigModel.save(transformedData);
+        await this.parkingsModel.save(transformedData);
     }
     public saveKoridDataToDB = async (msg: any): Promise<void> => {
-        const inputData = (JSON.parse(msg.content.toString())).data;
+        const inputData = (JSON.parse(msg.content.toString()));
         const transformedData = await this.koridParkingDataTransformation.transform(inputData);
-        await this.koridParkingDataModel.save(transformedData);
+        await this.parkingsMeasurementsModel.save(transformedData);
     }
 }

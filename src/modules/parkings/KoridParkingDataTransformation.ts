@@ -9,25 +9,38 @@ export class KoridParkingDataTransformation extends BaseTransformation implement
 
     constructor() {
         super();
-        this.name = Parkings.korid.name;
+        this.name = Parkings.korid.name + "Data";
     }
 
     public transform = async (data: any): Promise<any> => {
-        const promises = [];
-        for (const elementKey in data) {
-            if (data.hasOwnProperty(elementKey)) {
-                promises.push(await this.transformElement(data[elementKey], elementKey));
+        const results = [];
+        for (const elementKey in data.data) {
+            if (data.data.hasOwnProperty(elementKey)) {
+                results.push(this.transformElement({
+                    ...data.data[elementKey],
+                    sourceId: elementKey,
+                    time: data.time,
+                }));
             }
         }
-        return Promise.all(promises);
+        return results;
     }
 
-    protected transformElement = async (element: any, elementKey?: any): Promise<any> => {
-        const res = {
-            availableSpotNumber: Number(element.fr),
-            config: Number(elementKey),
-            totalSpotNumber: Number(element.tot),
+    protected transformElement = (element: any): any => {
+        const dateModified = element.time;
+        delete element.time;
+        const sourceId = element.sourceId;
+        delete element.sourceId;
+
+        return {
+            // id: autoincrement
+            availableSpotNumber: element.fr,
+            closedSpotNumber: element.cls,
+            dateModified,
+            occupiedSpotNumber: element.occ,
+            source: "korid",
+            sourceId: "" + sourceId,
+            totalSpotNumber: element.tot,
         };
-        return Promise.resolve(res);
     }
 }

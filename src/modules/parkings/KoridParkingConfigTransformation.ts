@@ -9,24 +9,33 @@ export class KoridParkingConfigTransformation extends BaseTransformation impleme
 
     constructor() {
         super();
-        this.name = Parkings.korid.name;
+        this.name = Parkings.korid.name + "Config";
     }
 
     public transform = async (data: any): Promise<any> => {
-        const promises = [];
+        const results = [];
         for (const element of data.geojson.features) {
-            promises.push(await this.transformElement(element, data.time));
+            results.push(this.transformElement({
+                ...element,
+                time: data.time,
+            }));
         }
-        return Promise.all(promises);
+        return results;
     }
 
-    protected transformElement = async (element: any, dateModified?: number): Promise<any> => {
-        const res = {
-            dataProvider: "korid",
-            dateModified: new Date(dateModified), // time
-            name: element.properties.title, // title
-            sourceId: Number(element.properties.groupid), // groupId
+    protected transformElement = (element: any): any => {
+        const dateModified = element.time;
+        delete element.time;
+
+        return {
+            // id: autoincrement
+            dataProvider: "www.korid.cz",
+            dateModified,
+            location: element.geometry,
+            name: element.properties.title,
+            source: "korid",
+            sourceId: "" + element.properties.groupid,
+            totalSpotNumber: element.properties.total,
         };
-        return res;
     }
 }

@@ -67,6 +67,13 @@ describe("ParkingsWorker", () => {
         sandbox.stub(worker.occupanciesTransformation, "transform")
             .callsFake(() => testTransformedOccData);
         sandbox.stub(worker.occupanciesModel, "save");
+
+        sandbox.stub(worker.koridParkingConfigTransformation, "transform")
+            .callsFake(() => testTransformedData);
+        sandbox.stub(worker.parkingsModel, "save");
+        sandbox.stub(worker.koridParkingDataTransformation, "transform")
+            .callsFake(() => testTransformedData);
+        sandbox.stub(worker.parkingsMeasurementsModel, "save");
     });
 
     afterEach(() => {
@@ -154,6 +161,24 @@ describe("ParkingsWorker", () => {
         sandbox.assert.callOrder(
             worker.occupanciesTransformation.transform,
             worker.occupanciesModel.save);
+    });
+
+    it("should calls the correct methods by saveKoridConfToDB method", async () => {
+        await worker.saveKoridConfToDB({content: Buffer.from(JSON.stringify(testData))});
+        sandbox.assert.calledOnce(worker.koridParkingConfigTransformation.transform);
+        sandbox.assert.calledOnce(worker.parkingsModel.save);
+        sandbox.assert.callOrder(
+            worker.koridParkingConfigTransformation.transform,
+            worker.parkingsModel.save);
+    });
+
+    it("should calls the correct methods by saveKoridDataToDB method", async () => {
+        await worker.saveKoridDataToDB({content: Buffer.from(JSON.stringify(testData))});
+        sandbox.assert.calledOnce(worker.koridParkingDataTransformation.transform);
+        sandbox.assert.calledOnce(worker.parkingsMeasurementsModel.save);
+        sandbox.assert.callOrder(
+            worker.koridParkingDataTransformation.transform,
+            worker.parkingsMeasurementsModel.save);
     });
 
 });
