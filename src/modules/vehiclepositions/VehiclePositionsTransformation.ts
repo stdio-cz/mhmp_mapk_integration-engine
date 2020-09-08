@@ -59,7 +59,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
 
         // creating startDate and timestamp from zast[0].prij and cpoz
         const startDate = moment.tz("Europe/Prague");
-        let startDatePlain = (stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj;
+        let startDatePlain = (stops[0].$.prij && stops[0].$.prij !== "") ? stops[0].$.prij : stops[0].$.odj;
         startDatePlain = startDatePlain.split(":");
         startDate.hour(parseInt(startDatePlain[0], 10));
         startDate.minute(parseInt(startDatePlain[1], 10));
@@ -90,7 +90,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         const vehicleRegistrationNumber = (attributes.dopr === agencyNameException) ? null : attributes.vuzevc;
         const bearing = (attributes.dopr === agencyNameException) ? null : attributes.azimut;
         const speed = (attributes.dopr === agencyNameException) ? null : attributes.rychl;
-        const aswLastStopId = (attributes.dopr === agencyNameException) ? attributes.zast : null;
+        const aswLastStopId = (attributes.dopr === agencyNameException) ? attributes.asw : null;
         const cisLastStopId = (attributes.dopr === agencyNameException) ? null : attributes.zast;
 
         const res = {
@@ -143,9 +143,9 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 origin_route_name: (attributes.kmenl)
                     ? parseInt(attributes.kmenl, 10)
                     : null,
-                sequence_id: parseInt(attributes.po, 10),
+                sequence_id: (attributes.po !== undefined) ? parseInt(attributes.po, 10) : null,
                 start_asw_stop_id: (attributes.dopr === agencyNameException) ?
-                    this.formatASWStopId(stops[0].$.zast) : null,
+                    this.formatASWStopId(stops[0].$.asw) : null,
                 start_cis_stop_id: (attributes.dopr !== agencyNameException) ?
                     parseInt(stops[0].$.zast, 10) : null,
                 start_cis_stop_platform_code: stops[0].$.stan,
@@ -166,7 +166,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             let departure;
 
             // creating arival from stop.$.prij
-            if (stop.$.prij !== "") {
+            if (stop.$.prij && stop.$.prij !== "") {
                 arrival = moment.tz("Europe/Prague");
                 const arrivalPlain = stop.$.prij.split(":");
                 arrival.hour(parseInt(arrivalPlain[0], 10));
@@ -179,7 +179,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 arrival.add(isOverMidnight, "d");
             }
             // creating departure from stop.$.odj
-            if (stop.$.odj !== "") {
+            if (stop.$.odj && stop.$.odj !== "") {
                 departure = moment.tz("Europe/Prague");
                 const departurePlain = stop.$.odj.split(":");
                 departure.hour(parseInt(departurePlain[0], 10));
@@ -202,7 +202,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
 
             // assign formatted stop id according to agency's stop ids
             const aswStopId = (attributes.dopr === agencyNameException) ?
-                this.formatASWStopId(stop.$.zast) : null;
+                this.formatASWStopId(stop.$.asw) : null;
             const cisStopId = (attributes.dopr !== agencyNameException) ?
                 parseInt(stop.$.zast, 10) : null;
 
