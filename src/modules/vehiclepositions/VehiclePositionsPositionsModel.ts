@@ -52,9 +52,9 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
-                attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay"],
+                attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay", "tracking"],
                 model: this.sequelizeModel,
-                where: { tracking: { [Sequelize.Op.ne]: 0 } },
+                where: { },
             }],
             order: [
                 [{ model: this.sequelizeModel }, "origin_time"],
@@ -76,6 +76,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 origin_time: r["vehiclepositions_positions.origin_time"],
                 origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
                 start_timestamp: r.start_timestamp,
+                tracking: r["vehiclepositions_positions.tracking"],
             };
         });
     }
@@ -108,7 +109,6 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                     transaction: t,
                     where: {
                         origin_time: originTime,
-                        tracking: { [Sequelize.Op.ne]: 0 },
                         trips_id: tripsId,
                     },
                 },
