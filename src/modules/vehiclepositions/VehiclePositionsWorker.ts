@@ -69,10 +69,14 @@ export class VehiclePositionsWorker extends BaseWorker {
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString()).m.spoj;
         const transformedData = await this.transformation.transform(inputData);
+
         // positions saving
         await this.modelPositions.save(transformedData.positions);
         // trips saving
-        const rows = await this.modelTrips.saveBySqlFunction(transformedData.trips, ["id"]);
+        const rows = await this.modelTrips.saveBySqlFunction(
+            transformedData.trips,
+            ["id"],
+        );
 
         // send message for update GTFSTripIds
         let promises = rows.inserted.map((trip) => {
@@ -268,69 +272,84 @@ export class VehiclePositionsWorker extends BaseWorker {
                         newLastDelay = estimatedPoint.properties.time_delay;
                         if (estimatedPoint.properties.time_delay !== undefined
                             && estimatedPoint.properties.time_delay !== null) {
-                            return this.modelPositions.updateDelay(
-                                position.id,
-                                position.origin_time,
-                                estimatedPoint.properties.time_delay,
-                                estimatedPoint.properties.shape_dist_traveled,
-                                estimatedPoint.properties.next_stop_id,
-                                estimatedPoint.properties.last_stop_id,
-                                estimatedPoint.properties.next_stop_sequence,
-                                estimatedPoint.properties.last_stop_sequence,
-                                estimatedPoint.properties.next_stop_arrival_time,
-                                estimatedPoint.properties.last_stop_arrival_time,
-                                estimatedPoint.properties.next_stop_departure_time,
-                                estimatedPoint.properties.last_stop_departure_time,
-                                (position.bearing !== undefined) ? position.bearing : estimatedPoint.properties.bearing,
-                            );
+                            return {
+                                data: {
+                                    bearing: (position.bearing !== undefined) ?
+                                        position.bearing : estimatedPoint.properties.bearing,
+                                    delay: estimatedPoint.properties.time_delay,
+                                    id: position.id,
+                                    last_stop_arrival_time: estimatedPoint.properties.last_stop_arrival_time,
+                                    last_stop_departure_time: estimatedPoint.properties.last_stop_departure_time,
+                                    last_stop_id: estimatedPoint.properties.last_stop_id,
+                                    last_stop_sequence: estimatedPoint.properties.last_stop_sequence,
+                                    next_stop_arrival_time: estimatedPoint.properties.next_stop_arrival_time,
+                                    next_stop_departure_time: estimatedPoint.properties.next_stop_departure_time,
+                                    next_stop_id: estimatedPoint.properties.next_stop_id,
+                                    next_stop_sequence: estimatedPoint.properties.next_stop_sequence,
+                                    shape_dist_traveled: estimatedPoint.properties.shape_dist_traveled,
+                                },
+                                update: true,
+                            };
                         } else {
-                            return Promise.resolve();
+                            return Promise.resolve({ update: false });
                         }
                     } else {
-                        return Promise.resolve();
+                        return Promise.resolve({ update: false });
                     }
                 }
-                if (position.tracking === 0) {
+                if (position.tracking === 0 && position.shape_dist_traveled === null) {
                     if (!someTrackingPositionsBefore) {
-                        return this.modelPositions.updateDelay(
-                            position.id,
-                            position.origin_time,
-                            null,
-                            0,
-                            gtfs.shape_points[0].last_stop,
-                            null,
-                            gtfs.shape_points[0].last_stop_sequence,
-                            null,
-                            null,
-                            null,
-                            startTimestamp
-                                + gtfs.shape_points[0].last_stop_departure_time_seconds * 1000,
-                            null,
-                            (position.bearing !== undefined) ? position.bearing : null,
-                        );
+                        return {
+                            data: {
+                                bearing: (position.bearing !== undefined) ? position.bearing : null,
+                                delay: null,
+                                id: position.id,
+                                last_stop_arrival_time: null,
+                                last_stop_departure_time: null,
+                                last_stop_id: null,
+                                last_stop_sequence: null,
+                                next_stop_arrival_time: startTimestamp
+                                    + gtfs.shape_points[0].last_stop_arrival_time_seconds * 1000,
+                                next_stop_departure_time: startTimestamp
+                                    + gtfs.shape_points[0].last_stop_departure_time_seconds * 1000,
+                                next_stop_id: gtfs.shape_points[0].last_stop,
+                                next_stop_sequence: gtfs.shape_points[0].last_stop_sequence,
+                                shape_dist_traveled: gtfs.shape_points[0].shape_dist_traveled,
+                            },
+                            update: true,
+                        };
                     } else {
                         const lastShapePointsIndex = gtfs.shape_points.length - 1;
-                        return this.modelPositions.updateDelay(
-                            position.id,
-                            position.origin_time,
-                            null,
-                            gtfs.shape_points[lastShapePointsIndex].shape_dist_traveled,
-                            null,
-                            gtfs.shape_points[lastShapePointsIndex].next_stop,
-                            null,
-                            gtfs.shape_points[lastShapePointsIndex].next_stop_sequence,
-                            null,
-                            startTimestamp
-                                + gtfs.shape_points[lastShapePointsIndex].next_stop_arrival_time_seconds * 1000,
-                            null,
-                            null,
-                            (position.bearing !== undefined) ? position.bearing : null,
-                        );
+                        return {
+                            data: {
+                                bearing: (position.bearing !== undefined) ? position.bearing : null,
+                                delay: null,
+                                id: position.id,
+                                last_stop_arrival_time: startTimestamp
+                                    + gtfs.shape_points[lastShapePointsIndex].next_stop_arrival_time_seconds * 1000,
+                                last_stop_departure_time: startTimestamp
+                                    + gtfs.shape_points[lastShapePointsIndex].next_stop_departure_time_seconds * 1000,
+                                last_stop_id: gtfs.shape_points[lastShapePointsIndex].next_stop,
+                                last_stop_sequence: gtfs.shape_points[lastShapePointsIndex].next_stop_sequence,
+                                next_stop_arrival_time: null,
+                                next_stop_departure_time: null,
+                                next_stop_id: null,
+                                next_stop_sequence: null,
+                                shape_dist_traveled: gtfs.shape_points[lastShapePointsIndex].shape_dist_traveled,
+                            },
+                            update: true,
+                        };
                     }
                 }
-                return Promise.resolve();
+                return Promise.resolve({ update: false });
             });
-            await Promise.all(promises);
+            const positionsUpdated = await Promise.all(promises);
+
+            await this.modelPositions.bulkUpdate(
+                positionsUpdated
+                    .filter((e: any) => e.update)
+                    .map((e: any) => e.data),
+            );
         } catch (err) {
             throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
         }
