@@ -52,7 +52,8 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
-                attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay", "tracking"],
+                attributes: ["lat", "lng", "origin_time", "origin_timestamp",
+                    "delay", "tracking", "id", "shape_dist_traveled"],
                 model: this.sequelizeModel,
                 where: { },
             }],
@@ -70,13 +71,15 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             return {
                 delay: r["vehiclepositions_positions.delay"],
                 gtfs_trip_id: r.gtfs_trip_id,
-                id: r.id,
+                id: r["vehiclepositions_positions.id"],
                 lat: r["vehiclepositions_positions.lat"],
                 lng: r["vehiclepositions_positions.lng"],
                 origin_time: r["vehiclepositions_positions.origin_time"],
                 origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
+                shape_dist_traveled: r["vehiclepositions_positions.shape_dist_traveled"],
                 start_timestamp: r.start_timestamp,
                 tracking: r["vehiclepositions_positions.tracking"],
+                trips_id: r.id,
             };
         });
     }
@@ -116,6 +119,47 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             return await t.commit();
         } catch (err) {
             return await t.rollback();
+        }
+    }
+
+    public bulkUpdate = async (
+            data,
+        ): Promise<any> => {
+
+        const connection = PostgresConnector.getConnection();
+        const primaryKeys = ["id"];
+        const u = []; // updated
+
+        try {
+            // json stringify and escape quotes
+            const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
+            // TODO doplnit batch_id a author
+            const rawRows = await connection.query(
+                "SELECT meta.import_from_json("
+                + "-1, " // p_batch_id bigint
+                + "E'" + stringifiedData + "'::json, " // p_data json
+                + "'" + "public" + "', " // p_table_schema character varying
+                + "'" + "vehiclepositions_positions" + "', " // p_table_name character varying
+                + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
+                + "NULL, " // p_sort json
+                + "'integration-engine'" // p_worker_name character varying
+                + ") ",
+                {
+                    type: Sequelize.QueryTypes.SELECT,
+                },
+            );
+            JSON.parse(rawRows[0].import_from_json
+                .replace('("', "")
+                .replace('",)', "")
+                .replace(/""/g, '"'),
+            ).forEach((r: { id: string, upd: boolean }) => {
+                if (r.upd === true) {
+                    u.push(r.id);
+                }
+            });
+            return { updated: u };
+        } catch (err) {
+            return false;
         }
     }
 
