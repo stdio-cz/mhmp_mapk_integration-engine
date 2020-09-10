@@ -71,9 +71,14 @@ export class VehiclePositionsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString()).m.spoj;
 
         const transformedData = await this.transformation.transform(inputData);
+
+        // positions saving
         await this.modelPositions.save(transformedData.positions);
         // trips saving
-        const rows = await this.modelTrips.saveBySqlFunction(transformedData.trips, ["id"]);
+        const rows = await this.modelTrips.saveBySqlFunction(
+            transformedData.trips,
+            ["id"],
+        );
 
         // send message for update GTFSTripIds
         for (let i = 0, chunkSize = 50; i < rows.inserted.length; i += chunkSize) {
