@@ -44,44 +44,55 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         this.tripsModel.hasMany(this.sequelizeModel, { foreignKey: "trips_id", sourceKey: "id" });
     }
 
-    public getPositionsForUdpateDelay = async (tripId: string): Promise<any> => {
-        const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
+    public getPositionsForUdpateDelay = async (tripIds: [string]): Promise<any> => {
+        // TODO - check that origin_time is not duplicate for tracking == 2
+        // const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
         const results = await this.tripsModel.findAll({
             attributes: [
-                Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
+                // Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
                 "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
                 attributes: ["lat", "lng", "origin_time", "origin_timestamp",
                     "delay", "tracking", "id", "shape_dist_traveled"],
                 model: this.sequelizeModel,
-                where: { },
+                where: {
+                },
             }],
             order: [
-                [{ model: this.sequelizeModel }, "origin_time"],
+                [{ model: this.sequelizeModel }, "origin_time", "ASC"],
                 [{ model: this.sequelizeModel }, "created_at", "ASC"],
             ],
             raw: true,
             where: {
                 gtfs_trip_id: { [Sequelize.Op.ne]: null },
-                id: tripId,
+                id: tripIds,
             },
         });
-        return results.map((r) => {
-            return {
-                delay: r["vehiclepositions_positions.delay"],
-                gtfs_trip_id: r.gtfs_trip_id,
-                id: r["vehiclepositions_positions.id"],
-                lat: r["vehiclepositions_positions.lat"],
-                lng: r["vehiclepositions_positions.lng"],
-                origin_time: r["vehiclepositions_positions.origin_time"],
-                origin_timestamp: r["vehiclepositions_positions.origin_timestamp"],
-                shape_dist_traveled: r["vehiclepositions_positions.shape_dist_traveled"],
-                start_timestamp: r.start_timestamp,
-                tracking: r["vehiclepositions_positions.tracking"],
-                trips_id: r.id,
-            };
-        });
+
+        return results.reduce((p, c, i) => {
+            let pIndex = p.findIndex((e) => e.trips_id === c.id);
+            if (pIndex === -1) {
+                p.push({
+                    gtfs_trip_id: c.gtfs_trip_id,
+                    positions: [],
+                    start_timestamp: c.start_timestamp,
+                    trips_id: c.id,
+                });
+                pIndex = p.findIndex((e) => e.trips_id === c.id);
+            }
+            p[pIndex].positions.push({
+                delay: c["vehiclepositions_positions.delay"],
+                id: c["vehiclepositions_positions.id"],
+                lat: c["vehiclepositions_positions.lat"],
+                lng: c["vehiclepositions_positions.lng"],
+                origin_time: c["vehiclepositions_positions.origin_time"],
+                origin_timestamp: c["vehiclepositions_positions.origin_timestamp"],
+                shape_dist_traveled: c["vehiclepositions_positions.shape_dist_traveled"],
+                tracking: c["vehiclepositions_positions.tracking"],
+            });
+            return p;
+        }, []);
     }
 
     public updateDelay = async (

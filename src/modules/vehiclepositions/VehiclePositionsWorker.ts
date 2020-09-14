@@ -17,6 +17,7 @@ import {
 
 import * as turf from "@turf/turf";
 import * as cheapruler from "cheap-ruler";
+import * as _ from "lodash";
 import * as moment from "moment-timezone";
 import * as Sequelize from "sequelize";
 const ruler: any = cheapruler(50);
@@ -67,10 +68,17 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public saveDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString()).m.spoj;
+        const inputData = JSON.parse(msg.content.toString()).m.spoj
+            // .filter((e) => {
+            //     return true;
+            //     // return e['$'].alias == "193"
+            //     //     || e['$'].alias == "177"
+            //         // && e['$'].spoj == "138";
+            // })
+        ;
+
         const transformedData = await this.transformation.transform(inputData);
 
-        // positions saving
         await this.modelPositions.save(transformedData.positions);
         // trips saving
         const rows = await this.modelTrips.saveBySqlFunction(
@@ -79,17 +87,20 @@ export class VehiclePositionsWorker extends BaseWorker {
         );
 
         // send message for update GTFSTripIds
-        let promises = rows.inserted.map((trip) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateGTFSTripId",
-                JSON.stringify(trip));
-        });
-        await Promise.all(promises);
+        for (let i = 0, chunkSize = 50; i < rows.inserted.length; i += chunkSize) {
+            await this.sendMessageToExchange(
+                "workers." + this.queuePrefix + ".updateGTFSTripId",
+                JSON.stringify(rows.inserted.slice(i, i + chunkSize)),
+            );
+        }
+
         // send message for update delay
-        promises = rows.updated.map((trip) => {
-            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-                trip);
-        });
-        await Promise.all(promises);
+        for (let i = 0, chunkSize = 100; i < rows.updated.length; i += chunkSize) {
+            await this.sendMessageToExchange(
+                "workers." + this.queuePrefix + ".updateDelay",
+                JSON.stringify(rows.updated.slice(i, i + chunkSize)),
+            );
+        }
     }
 
     public saveStopsToDB = async (msg: any): Promise<void> => {
@@ -106,18 +117,33 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
-        try {
-            const result = await this.modelTrips.findGTFSTripId(inputData);
-            await this.modelTrips.update(result, {
-                where: {
-                    id: inputData.id,
-                },
-            });
+        const promiseValues = await Promise.all(
+            inputData.map(async (trip) => {
+                try {
+                    const result = await this.modelTrips.findGTFSTripId(trip);
+                    await this.modelTrips.update(result, {
+                        where: {
+                            id: trip.id,
+                        },
+                    });
+                    return Promise.resolve(trip.id);
+                } catch (err) {
+                    return Promise.resolve(err);
+                }
+            }),
+        );
+
+        const foundedTripsPromiseValues = promiseValues.filter((result) => !(result instanceof CustomError));
+        for (let i = 0, chunkSize = 100; i < foundedTripsPromiseValues.length; i += chunkSize) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-                inputData.id);
-        } catch (err) {
-            throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
+                JSON.stringify(foundedTripsPromiseValues.slice(i, i + chunkSize)),
+            );
         }
+
+        // TODO - do we need Error loging? Should by valid that sometimes no GTFS is given - To be moved into alerts.
+        // promiseValues.filter((result) => (result instanceof CustomError)).forEach(async (err) => {
+        //     throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
+        // });
     }
 
     public generateGtfsRt = async (msg: any): Promise<void> => {
@@ -211,145 +237,194 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
     }
 
-    public updateDelay = async (msg: any): Promise<void> => {
-        try {
-            const tripId = msg.content.toString();
-            const positionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripId);
+    public computePositions = async (tripPositions: any): Promise<any> => {
+        const startTimestamp = parseInt(tripPositions.start_timestamp, 10);
+        const startDayTimestamp = moment.utc(startTimestamp).startOf("day");
 
-            if (positionsToUpdate.length === 0) {
-                return;
+        const updatePositionsIterator = (i: number, options: any, cb: () => any): void => {
+            if (i === tripPositions.positions.length) {
+                return cb();
             }
+            const position = tripPositions.positions[i];
+            // console.log(i, tripPositions.positions.length, position);
 
-            const gtfsTripId = positionsToUpdate[0].gtfs_trip_id;
-            const startTimestamp = parseInt(positionsToUpdate[0].start_timestamp, 10);
-            const startDayTimestamp = moment.utc(startTimestamp).startOf("day");
-            let gtfs = await this.delayComputationTripsModel.getData(gtfsTripId);
-
-            if (!gtfs) {
-                log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + gtfsTripId + ")");
-                gtfs = await this.getResultObjectForDelayCalculation(gtfsTripId);
-                await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
-            }
-
-            const tripShapePoints = gtfs.shape_points;
-            let newLastDelay = null;
-            let someTrackingPositionsBefore = false;
-
-            const promises = positionsToUpdate.map(async (position, key) => {
-                if (position.tracking === 2) {
-                    someTrackingPositionsBefore = true;
-                    if (position.delay === null || newLastDelay !== null) {
-                        const currentPosition = {
+            if (position.tracking === 2) {
+                if (position.delay === null) {
+                    const currentPosition = {
+                        geometry: {
+                            coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
+                            type: "Point",
+                        },
+                        properties: {
+                            origin_time: position.origin_time,
+                            origin_timestamp: position.origin_timestamp,
+                        },
+                        type: "Feature",
+                    };
+                    const lastPosition = (options.lastPositionTracking !== null)
+                        ? {
                             geometry: {
-                                coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
+                                coordinates: options.lastPositionTracking.coordinates,
                                 type: "Point",
                             },
                             properties: {
-                                origin_time: position.origin_time,
-                                origin_timestamp: position.origin_timestamp,
+                                time_delay: options.lastPositionTracking.delay,
                             },
                             type: "Feature",
-                        };
-                        const lastPosition = (key > 0)
-                            ? {
-                                geometry: {
-                                    coordinates: [parseFloat(positionsToUpdate[key - 1].lng),
-                                    parseFloat(positionsToUpdate[key - 1].lat)],
-                                    type: "Point",
-                                },
-                                properties: {
-                                    time_delay: newLastDelay || positionsToUpdate[key - 1].delay,
-                                },
-                                type: "Feature",
-                            }
-                            : null;
+                        }
+                        : null;
 
-                        // CORE processing
-                        const estimatedPoint = await this.getEstimatedPoint(
-                            tripShapePoints, currentPosition, lastPosition, startDayTimestamp,
-                        );
-
-                        newLastDelay = estimatedPoint.properties.time_delay;
+                    // CORE processing
+                    this.getEstimatedPoint(
+                        tripPositions.gtfsData.shape_points, currentPosition, lastPosition, startDayTimestamp,
+                    ).then((estimatedPoint) => {
                         if (estimatedPoint.properties.time_delay !== undefined
                             && estimatedPoint.properties.time_delay !== null) {
-                            return {
-                                data: {
-                                    bearing: (position.bearing !== undefined) ?
-                                        position.bearing : estimatedPoint.properties.bearing,
-                                    delay: estimatedPoint.properties.time_delay,
-                                    id: position.id,
-                                    last_stop_arrival_time: estimatedPoint.properties.last_stop_arrival_time,
-                                    last_stop_departure_time: estimatedPoint.properties.last_stop_departure_time,
-                                    last_stop_id: estimatedPoint.properties.last_stop_id,
-                                    last_stop_sequence: estimatedPoint.properties.last_stop_sequence,
-                                    next_stop_arrival_time: estimatedPoint.properties.next_stop_arrival_time,
-                                    next_stop_departure_time: estimatedPoint.properties.next_stop_departure_time,
-                                    next_stop_id: estimatedPoint.properties.next_stop_id,
-                                    next_stop_sequence: estimatedPoint.properties.next_stop_sequence,
-                                    shape_dist_traveled: estimatedPoint.properties.shape_dist_traveled,
-                                },
-                                update: true,
-                            };
-                        } else {
-                            return Promise.resolve({ update: false });
-                        }
-                    } else {
-                        return Promise.resolve({ update: false });
-                    }
-                }
-                if (position.tracking === 0 && position.shape_dist_traveled === null) {
-                    if (!someTrackingPositionsBefore) {
-                        return {
-                            data: {
-                                bearing: (position.bearing !== undefined) ? position.bearing : null,
-                                delay: null,
-                                id: position.id,
-                                last_stop_arrival_time: null,
-                                last_stop_departure_time: null,
-                                last_stop_id: null,
-                                last_stop_sequence: null,
-                                next_stop_arrival_time: startTimestamp
-                                    + gtfs.shape_points[0].last_stop_arrival_time_seconds * 1000,
-                                next_stop_departure_time: startTimestamp
-                                    + gtfs.shape_points[0].last_stop_departure_time_seconds * 1000,
-                                next_stop_id: gtfs.shape_points[0].last_stop,
-                                next_stop_sequence: gtfs.shape_points[0].last_stop_sequence,
-                                shape_dist_traveled: gtfs.shape_points[0].shape_dist_traveled,
-                            },
-                            update: true,
-                        };
-                    } else {
-                        const lastShapePointsIndex = gtfs.shape_points.length - 1;
-                        return {
-                            data: {
-                                bearing: (position.bearing !== undefined) ? position.bearing : null,
-                                delay: null,
-                                id: position.id,
-                                last_stop_arrival_time: startTimestamp
-                                    + gtfs.shape_points[lastShapePointsIndex].next_stop_arrival_time_seconds * 1000,
-                                last_stop_departure_time: startTimestamp
-                                    + gtfs.shape_points[lastShapePointsIndex].next_stop_departure_time_seconds * 1000,
-                                last_stop_id: gtfs.shape_points[lastShapePointsIndex].next_stop,
-                                last_stop_sequence: gtfs.shape_points[lastShapePointsIndex].next_stop_sequence,
-                                next_stop_arrival_time: null,
-                                next_stop_departure_time: null,
-                                next_stop_id: null,
-                                next_stop_sequence: null,
-                                shape_dist_traveled: gtfs.shape_points[lastShapePointsIndex].shape_dist_traveled,
-                            },
-                            update: true,
-                        };
-                    }
-                }
-                return Promise.resolve({ update: false });
-            });
-            const positionsUpdated = await Promise.all(promises);
 
-            await this.modelPositions.bulkUpdate(
-                positionsUpdated
-                    .filter((e: any) => e.update)
-                    .map((e: any) => e.data),
-            );
+                            const positionUpdate = {
+                                bearing: (position.bearing !== undefined) ?
+                                    position.bearing : estimatedPoint.properties.bearing,
+                                delay: estimatedPoint.properties.time_delay,
+                                id: position.id,
+                                last_stop_arrival_time: estimatedPoint.properties.last_stop_arrival_time,
+                                last_stop_departure_time: estimatedPoint.properties.last_stop_departure_time,
+                                last_stop_id: estimatedPoint.properties.last_stop_id,
+                                last_stop_sequence: estimatedPoint.properties.last_stop_sequence,
+                                next_stop_arrival_time: estimatedPoint.properties.next_stop_arrival_time,
+                                next_stop_departure_time: estimatedPoint.properties.next_stop_departure_time,
+                                next_stop_id: estimatedPoint.properties.next_stop_id,
+                                next_stop_sequence: estimatedPoint.properties.next_stop_sequence,
+                                shape_dist_traveled: estimatedPoint.properties.shape_dist_traveled,
+                                trips_id: tripPositions.trips_id,
+                            };
+                            options.lastPositionTracking = {
+                                ...positionUpdate,
+                                coordinates: estimatedPoint.geometry.coordinates,
+                            };
+                            options.positions.push(positionUpdate);
+                        }
+                        // NEXT
+                        setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
+                    });
+
+                } else {
+                    options.lastPositionTracking = {
+                        ...position,
+                        coordinates: [parseFloat(position.lng), parseFloat(position.lat)],
+                    };
+                    // NEXT
+                    setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
+                }
+            } else if (position.tracking === 0 && position.shape_dist_traveled === null) {
+                if (options.lastPositionTracking === null) {
+                    const positionUpdate = {
+                        bearing: (position.bearing !== undefined) ? position.bearing : null,
+                        delay: null,
+                        id: position.id,
+                        last_stop_arrival_time: null,
+                        last_stop_departure_time: null,
+                        last_stop_id: null,
+                        last_stop_sequence: null,
+                        next_stop_arrival_time: startTimestamp
+                            + tripPositions.gtfsData.shape_points[0].last_stop_arrival_time_seconds * 1000,
+                        next_stop_departure_time: startTimestamp
+                            + tripPositions.gtfsData.shape_points[0].last_stop_departure_time_seconds * 1000,
+                        next_stop_id: tripPositions.gtfsData.shape_points[0].last_stop,
+                        next_stop_sequence: tripPositions.gtfsData.shape_points[0].last_stop_sequence,
+                        shape_dist_traveled: tripPositions.gtfsData.shape_points[0].shape_dist_traveled,
+                        trips_id: tripPositions.trips_id,
+                    };
+                    options.positions.push(positionUpdate);
+                } else {
+                    const lastShapePointsIndex = tripPositions.gtfsData.shape_points.length - 1;
+                    const positionUpdate = {
+                        bearing: (position.bearing !== undefined) ? position.bearing : null,
+                        delay: null,
+                        id: position.id,
+                        last_stop_arrival_time: startTimestamp
+                            + tripPositions.gtfsData.shape_points[lastShapePointsIndex]
+                                .next_stop_arrival_time_seconds * 1000,
+                        last_stop_departure_time: startTimestamp
+                            + tripPositions.gtfsData.shape_points[lastShapePointsIndex]
+                                .next_stop_departure_time_seconds * 1000,
+                        last_stop_id: tripPositions.gtfsData.shape_points[lastShapePointsIndex].next_stop,
+                        last_stop_sequence: tripPositions.gtfsData.shape_points[lastShapePointsIndex]
+                            .next_stop_sequence,
+                        next_stop_arrival_time: null,
+                        next_stop_departure_time: null,
+                        next_stop_id: null,
+                        next_stop_sequence: null,
+                        shape_dist_traveled: tripPositions.gtfsData.shape_points[lastShapePointsIndex]
+                            .shape_dist_traveled,
+                        trips_id: tripPositions.trips_id,
+                    };
+                    options.positions.push(positionUpdate);
+                }
+                // NEXT
+                setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
+            } else {
+                // NEXT
+                setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
+            }
+        };
+        return new Promise<any>((resolve, reject) => {
+            const options = {
+                lastPositionTracking: null,
+                positions: [],
+            };
+            updatePositionsIterator(0, options, () => {
+                // console.log(options.positions);
+                resolve(options.positions);
+            });
+        });
+    }
+
+    public updateDelay = async (msg: any): Promise<void> => {
+        try {
+            // const timeDebug = [];
+            const tripIds = JSON.parse(msg.content.toString());
+
+            const tripsPositionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripIds);
+
+            // console.log(tripsPositionsToUpdate.map(p=>p.positions));
+            const promisesGetGTFSData = tripsPositionsToUpdate.map(async (trip, i) => {
+                const gtfsData = await this.delayComputationTripsModel.getData(trip.gtfs_trip_id);
+                return {
+                    ...trip,
+                    gtfsData,
+                };
+            });
+            const tripsPositionsWithGTFSDataToUpdate = await Promise.all(promisesGetGTFSData);
+
+            const promisesToUpdate = [
+                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData !== null).map(async (trip: any) => {
+                    return this.computePositions(trip);
+                }),
+                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData === null).map(async (trip: any) => {
+                    log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + trip.gtfs_trip_id + ")");
+                    try {
+                        const gtfs = await this.getResultObjectForDelayCalculation(trip.gtfs_trip_id);
+                        await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
+                        trip.gtfsData = gtfs;
+
+                        return this.computePositions(trip);
+                    } catch (err) {
+                        return Promise.resolve();
+                    }
+                }),
+            ];
+
+            await Promise.all([
+                Promise.all(promisesToUpdate[0]).then((computedPositions: any[][]) => {
+                    // console.log('to update   > ', _.flatten(computedPositions).length);
+                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
+                }),
+                Promise.all(promisesToUpdate[1]).then((computedPositions) => {
+                    // console.log('to update >>> ', _.flatten(computedPositions).length);
+                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
+                }),
+            ]);
+
         } catch (err) {
             throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
         }
