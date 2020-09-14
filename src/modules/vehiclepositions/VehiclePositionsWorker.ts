@@ -246,7 +246,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 return cb();
             }
             const position = tripPositions.positions[i];
-            // console.log(i, tripPositions.positions.length, position);
 
             if (position.tracking === 2) {
                 if (position.delay === null) {
@@ -381,12 +380,12 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateDelay = async (msg: any): Promise<void> => {
         try {
-            // const timeDebug = [];
             const tripIds = JSON.parse(msg.content.toString());
 
+            // Get all positions for each trip
             const tripsPositionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripIds);
 
-            // console.log(tripsPositionsToUpdate.map(p=>p.positions));
+            // Append gtfs data to each trip
             const promisesGetGTFSData = tripsPositionsToUpdate.map(async (trip, i) => {
                 const gtfsData = await this.delayComputationTripsModel.getData(trip.gtfs_trip_id);
                 return {
@@ -397,9 +396,11 @@ export class VehiclePositionsWorker extends BaseWorker {
             const tripsPositionsWithGTFSDataToUpdate = await Promise.all(promisesGetGTFSData);
 
             const promisesToUpdate = [
+                // Lets process every position if gtfs shape points and schedules data is ready
                 tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData !== null).map(async (trip: any) => {
                     return this.computePositions(trip);
                 }),
+                // For those not ready firstly gather gtfs shape points and schedules
                 tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData === null).map(async (trip: any) => {
                     log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + trip.gtfs_trip_id + ")");
                     try {
@@ -414,13 +415,12 @@ export class VehiclePositionsWorker extends BaseWorker {
                 }),
             ];
 
+            // Both update in parallel and in one batch
             await Promise.all([
                 Promise.all(promisesToUpdate[0]).then((computedPositions: any[][]) => {
-                    // console.log('to update   > ', _.flatten(computedPositions).length);
                     return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
                 }),
-                Promise.all(promisesToUpdate[1]).then((computedPositions) => {
-                    // console.log('to update >>> ', _.flatten(computedPositions).length);
+                Promise.all(promisesToUpdate[1]).then((computedPositions: any[][]) => {
                     return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
                 }),
             ]);

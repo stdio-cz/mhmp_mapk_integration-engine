@@ -45,7 +45,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
     }
 
     public getPositionsForUdpateDelay = async (tripIds: [string]): Promise<any> => {
-        // TODO - check that origin_time is not duplicate for tracking == 2
+        // TODO - check that origin_time is not duplicate for tracking == 2.
         // const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
         const results = await this.tripsModel.findAll({
             attributes: [
@@ -70,6 +70,8 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             },
         });
 
+        // Sequlize return with raw==true flatten array of results, nest==true is available for Sequelize ver >5 only
+        // We return objects of positions grouped by trips_id
         return results.reduce((p, c, i) => {
             let pIndex = p.findIndex((e) => e.trips_id === c.id);
             if (pIndex === -1) {
@@ -95,47 +97,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         }, []);
     }
 
-    public updateDelay = async (
-            tripsId, originTime, delay, shapeDistTraveled,
-            nextStopId, lastStopId,
-            nextStopSequence, lastStopSequence,
-            nextStopArrivalTime, lastStopArrivalTime,
-            nextStopDepartureTime, lastStopDepartureTime,
-            bearing,
-        ): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-        const t = await connection.transaction();
-        try {
-            await this.sequelizeModel.update({
-                bearing,
-                delay,
-                last_stop_arrival_time: lastStopArrivalTime,
-                last_stop_departure_time: lastStopDepartureTime,
-                last_stop_id: lastStopId,
-                last_stop_sequence: lastStopSequence,
-                next_stop_arrival_time: nextStopArrivalTime,
-                next_stop_departure_time: nextStopDepartureTime,
-                next_stop_id: nextStopId,
-                next_stop_sequence: nextStopSequence,
-                shape_dist_traveled: shapeDistTraveled,
-            },
-                {
-                    transaction: t,
-                    where: {
-                        origin_time: originTime,
-                        trips_id: tripsId,
-                    },
-                },
-            );
-            return await t.commit();
-        } catch (err) {
-            return await t.rollback();
-        }
-    }
-
-    public bulkUpdate = async (
-            data,
-        ): Promise<any> => {
+    public bulkUpdate = async (data): Promise<any> => {
 
         const connection = PostgresConnector.getConnection();
         const primaryKeys = ["id"];
