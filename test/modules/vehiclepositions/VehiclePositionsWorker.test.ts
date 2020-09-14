@@ -98,13 +98,13 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId({ content: Buffer.from(JSON.stringify({ id: 0 })) });
+        await worker.updateGTFSTripId({ content: Buffer.from(JSON.stringify([{ id: 0 }])) });
         sandbox.assert.calledOnce(worker.modelTrips.findGTFSTripId);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 
     it("should calls the correct methods by updateDelay method", async () => {
-        await worker.updateDelay({ content: Buffer.from("0") });
+        await worker.updateDelay({ content: new Array(Buffer.from("0")) });
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
     });
