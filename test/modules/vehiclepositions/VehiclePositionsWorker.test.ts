@@ -41,8 +41,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.transformation, "transform")
             .callsFake(() => Object.assign({ positions: [], stops: [], trips: [] }));
         sandbox.stub(worker.modelPositions, "save");
-        sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")
-            .callsFake(() => [{ gtfs_trip_id: "0000", delay: null }]);
+        sandbox.stub(worker.modelPositions, "getPositionsForUdpateDelay")ze
+            .callsFake(() => { gtfs_trip_id: "0000", positions: [{ delay: null }]});
         sandbox.stub(worker.modelPositions, "updateDelay");
         sandbox.stub(worker.modelStops, "saveBySqlFunction");
         sandbox.stub(worker.modelTrips, "saveBySqlFunction")
