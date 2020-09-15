@@ -68,14 +68,7 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public saveDataToDB = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString()).m.spoj
-            // .filter((e) => {
-            //     return true;
-            //     // return e['$'].alias == "193"
-            //     //     || e['$'].alias == "177"
-            //         // && e['$'].spoj == "138";
-            // })
-        ;
+        const inputData = JSON.parse(msg.content.toString()).m.spoj;
 
         const transformedData = await this.transformation.transform(inputData);
 
