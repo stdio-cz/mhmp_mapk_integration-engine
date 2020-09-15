@@ -107,9 +107,9 @@ describe("VehiclePositionsWorker", () => {
 
     it("should calls the correct methods by updateDelay method", async () => {
         await worker.updateDelay({ content: Buffer.from(JSON.stringify(new Array("0"))) });
-        // sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
-        // sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
-        // sandbox.assert.calledOnce(worker.computePositions);
+        sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
+        sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
+        sandbox.assert.calledOnce(worker.computePositions);
     });
 
 });
