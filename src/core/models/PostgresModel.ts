@@ -122,7 +122,7 @@ export class PostgresModel implements IModel {
             await model.destroy({
                 cascade: false,
                 transaction: t,
-                truncate: false,
+                truncate: true,
                 where: {},
             });
             return await t.commit();
