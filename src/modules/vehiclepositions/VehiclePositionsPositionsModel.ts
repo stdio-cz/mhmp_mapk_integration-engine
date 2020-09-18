@@ -53,7 +53,8 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 "id", "gtfs_trip_id", "start_timestamp",
             ],
             include: [{
-                attributes: ["lat", "lng", "origin_time", "origin_timestamp", "delay"],
+                attributes: ["lat", "lng", "origin_time", "origin_timestamp",
+                    "delay", "tracking", "id", "shape_dist_traveled"],
                 model: this.sequelizeModel,
                 where: {
                 },
