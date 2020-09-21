@@ -3,7 +3,10 @@
 import { CustomError } from "@golemio/errors";
 import { DataSourceStream, HTTPProtocolStrategy, IProtocolStrategy} from "./";
 
+import axios, { AxiosRequestConfig, Method } from "axios";
 import request = require("request");
+
+import * as https from "https";
 
 export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implements IProtocolStrategy {
 
@@ -42,6 +45,9 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
             this.streamTransform.on("end", () => {
                 outStream.push(null);
             });
+            this.streamTransform.on("error", (error) => {
+                outStream.emit("error", error);
+            });
             dataStream.on("error", (error: any) => {
                 this.streamTransform.emit("error", error);
             });
@@ -72,7 +78,23 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
 
     public getRawData = async (): Promise<any> => {
         try {
-            const result = request(this.connectionSettings);
+            this.connectionSettings.httpsAgent = new https.Agent({
+                rejectUnauthorized: false,
+            });
+
+            const settings  = {
+                headers: this.connectionSettings.headers,
+                httpsAgent: this.connectionSettings.httpsAgent,
+                method: (this.connectionSettings.method || "GET") as Method,
+                responseType: "stream",
+                url: this.connectionSettings.url,
+            } as AxiosRequestConfig;
+
+            if (this.connectionSettings.body) {
+                settings.data = this.connectionSettings.body;
+            }
+
+            const result = await axios.request(settings);
 
             if (this.connectionSettings.isGunZipped) {
                 throw new Error("gZipped resources are not supported in HTTPProtocolStrategyStreamed yet");
@@ -83,7 +105,7 @@ export class HTTPProtocolStrategyStreamed extends HTTPProtocolStrategy implement
             }
 
             return {
-                data: result,
+                data: result.data,
             };
         } catch (err) {
             throw new CustomError("Error while getting data from server.", true, this.constructor.name, 2002, err);

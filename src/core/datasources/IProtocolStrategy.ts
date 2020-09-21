@@ -20,6 +20,7 @@ export interface IHTTPSettings {
     /** Url of the data source. */
     url: string;
 
+    httpsAgent?: any;
     strictSSL?: boolean;
     encoding?: any;
     rejectUnauthorized?: boolean;

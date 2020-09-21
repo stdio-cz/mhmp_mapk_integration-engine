@@ -1,4 +1,3 @@
-
 import { config } from "../../core/config";
 
 import { BaseWorker } from "../../core/workers";
@@ -19,6 +18,8 @@ import {
     IHTTPSettings,
 } from "../../core/datasources";
 
+import * as fs from "fs";
+
 export class FlowWorker extends BaseWorker {
 
     private cubesDataSource: DataSourceStreamed;
@@ -26,7 +27,9 @@ export class FlowWorker extends BaseWorker {
     private sinksDataSource: DataSourceStreamed;
     private sinksHistoryDataSource: DataSourceStreamed;
 
+    private flowCubesModel: PostgresModel;
     private flowMeasurementModel: PostgresModel;
+    private flowSinksModel: PostgresModel;
 
     private queuePrefix: string = `${config.RABBIT_EXCHANGE_NAME}.${Flow.detections.name.toLowerCase()}`;
 
@@ -38,6 +41,26 @@ export class FlowWorker extends BaseWorker {
             {
                 outputSequelizeAttributes: Flow.detections.outputSequelizeAttributes,
                 pgTableName: Flow.detections.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            null,
+        );
+
+        this.flowCubesModel = new PostgresModel(
+            Flow.cubes.name + "Model",
+            {
+                outputSequelizeAttributes: Flow.cubes.outputSequelizeAttributes,
+                pgTableName: Flow.cubes.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            null,
+        );
+
+        this.flowSinksModel = new PostgresModel(
+            Flow.sinks.name + "Model",
+            {
+                outputSequelizeAttributes: Flow.sinks.outputSequelizeAttributes,
+                pgTableName: Flow.sinks.pgTableName,
                 savingType: "insertOrUpdate",
             },
             null,
@@ -104,6 +127,12 @@ export class FlowWorker extends BaseWorker {
 
         try {
             await dataStream.setDataProcessor(async (data: any) => {
+                this.flowCubesModel.save(data.map((cube) => {
+                    return {
+                        id: cube.id,
+                        name: cube.name,
+                    };
+                }));
                 const promises = data.map((cube: any) => {
                     this.sendMessageToExchange(
                         "workers." + this.queuePrefix + ".getAnalytics",
@@ -203,6 +232,14 @@ export class FlowWorker extends BaseWorker {
 
         try {
             await dataStream.setDataProcessor(async (data: any) => {
+                this.flowSinksModel.save(data.map((sink) => {
+                    return {
+                        history_start_timestamp: sink.history_start_timestamp,
+                        id: sink.id,
+                        name: sink.name,
+                        output_value_type: sink.output_value_type,
+                    };
+                }));
 
                 data = data.filter((sink: any) => {
                     return sink?.output_value_type === "distribution";
@@ -305,7 +342,13 @@ export class FlowWorker extends BaseWorker {
                     )),
                 );
 
-                // does not work for some reason ...
+                if (input?.cube?.id === 10 && process.env.LOG_FLOW_CUBES) {
+                    const toLog = JSON.stringify(data, null, 2);
+                    fs.writeFileSync(`${(new Date()).getTime()}-flow.json`, toLog);
+                    // tslint:disable-next-line: no-console
+                    console.log(toLog);
+                }
+
                 await this.flowMeasurementModel.saveBySqlFunction(
                     uniq,
                     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],

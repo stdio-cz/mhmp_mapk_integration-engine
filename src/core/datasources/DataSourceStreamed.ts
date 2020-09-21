@@ -81,7 +81,11 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
             this.dataStream.push(null);
         });
 
-        inputStream.proceed();
+        try {
+            inputStream.proceed();
+        } catch (error) {
+            this.dataStream.emit("error", error);
+        }
 
         return this.dataStream;
     }
