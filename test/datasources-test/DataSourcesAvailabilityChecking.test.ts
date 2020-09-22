@@ -269,12 +269,14 @@ describe("DataSourcesAvailabilityChecking", () => {
             let datasource;
 
             beforeEach(() => {
-                const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "data.items" });
+                const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "" });
                 hoppyGoDataType.setFilter((item) =>
                     (item.localization && item.localization !== "" && item.localization !== ","));
                 datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
                     new HTTPProtocolStrategy({
-                        headers: {},
+                        headers: {
+                            "x-app-token": config.datasources.HoppyGoSharedCarsToken,
+                        },
                         method: "GET",
                         url: config.datasources.HoppyGoSharedCars,
                     }),
