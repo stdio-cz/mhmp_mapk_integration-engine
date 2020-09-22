@@ -22,6 +22,7 @@
     "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
     "HomeportSettingsSharedBikes": "https://prague.freebike.com/api/setting?Lang=cs",
     "HoppyGoSharedCars": "",
+    "HoppyGoSharedCarsToken": "",
     "IPRSortedWasteContainers": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOitem_b/WGS_84/ZPK_O_Kont_TOitem_b.json",
     "IPRSortedWasteStations": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOstan_b/WGS_84/ZPK_O_Kont_TOstan_b.json",
     "MedicalInstitutionsHealthCare": "https://opendata.mzcr.cz/data/nrpzs/narodni-registr-poskytovatelu-zdravotnich-sluzeb.csv",

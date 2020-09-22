@@ -35,12 +35,14 @@ export class SharedCarsWorker extends BaseWorker {
             new JSONDataTypeStrategy({ resultsPath: "cars" }),
             new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
                 SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
-        const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "data.items" });
+        const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "" });
         hoppyGoDataType.setFilter((item) =>
             (item.localization && item.localization !== "" && item.localization !== ","));
         this.hoppyGoDataSource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
             new HTTPProtocolStrategy({
-                headers: {},
+                headers: {
+                    "x-app-token": config.datasources.HoppyGoSharedCarsToken,
+                },
                 method: "GET",
                 url: config.datasources.HoppyGoSharedCars,
             }),
@@ -98,12 +100,20 @@ export class SharedCarsWorker extends BaseWorker {
         ];
 
         // filter the objects 18 km far from the center of Prague
+        // or the objects 7 km far from the center of Liberec
         const filteredData = concatenatedData.filter((item) => {
             // distance from center of Prague
-            const distance = ruler.distance([14.463401734828949, 50.06081863605803], item.geometry.coordinates);
-            return distance < 18;
+            return this.isInDistanceFrom(item.geometry.coordinates, [14.463401734828949, 50.06081863605803], 18)
+                // or distance from center of Liberec
+                || this.isInDistanceFrom(item.geometry.coordinates, [15.057755, 50.771333], 7);
         });
         await this.model.save(filteredData);
+    }
+
+    private isInDistanceFrom = (itemCoords: cheapruler.Point, targetCoords: cheapruler.Point, distance: number)
+    : boolean => {
+        const realDist = ruler.distance(targetCoords, itemCoords);
+        return realDist < distance;
     }
 
 }
