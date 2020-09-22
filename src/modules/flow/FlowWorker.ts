@@ -349,13 +349,13 @@ export class FlowWorker extends BaseWorker {
                     console.log(toLog);
                 }
 
-                await this.flowMeasurementModel.saveBySqlFunction(
-                    uniq,
-                    [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
-                );
-                // await this.flowMeasurementModel.save(
+                // await this.flowMeasurementModel.saveBySqlFunction(
                 //     uniq,
+                //     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
                 // );
+                await this.flowMeasurementModel.save(
+                    uniq,
+                );
             }).proceed();
         } catch (err) {
             throw new CustomError("Error while processing data.", true, this.constructor.name, 5050, err);
