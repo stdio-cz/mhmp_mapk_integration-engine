@@ -47,7 +47,10 @@ export class DataSourceStream extends Readable {
   public waitForEnd = async (): Promise<void> => {
     await new Promise((resolve, reject) => {
       this.on("error", (error) => {
-        reject(error);
+        if (!this.streamEnded) {
+          reject(error);
+          this.streamEnded = true;
+        }
       });
       this.on("end", async () => {
           const checker = setInterval(async () => {
@@ -55,6 +58,7 @@ export class DataSourceStream extends Readable {
                   clearInterval(checker);
                   if (this.onEndFunction && !this.streamEnded) {
                     await this.onEndFunction();
+                    this.streamEnded = true;
                   }
                   resolve();
               }

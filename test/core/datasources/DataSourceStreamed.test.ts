@@ -6,6 +6,8 @@ import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 
+import { IDataTypeStrategy, IProtocolStrategy } from "../../../src/core/datasources";
+
 import { DataSourceStreamed } from "../../../src/core/datasources";
 import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream";
 import { log } from "../../../src/core/helpers/Logger";
@@ -17,14 +19,15 @@ chai.use(chaiAsPromised);
 describe("DataSourceStreamed", () => {
 
     let sandbox;
-    let datasource;
+    let getDatasource;
+    let getStream;
+    let genericDatasource;
     let protocolStub;
     let dataTypeStub;
     let validatorStub;
 
     beforeEach(() => {
-
-        const getStream = async (data) => {
+        getStream = (data) => {
             const dataStream =  new DataSourceStream({
                 objectMode: true,
                 read: () => {
@@ -38,11 +41,12 @@ describe("DataSourceStreamed", () => {
         sandbox = sinon.createSandbox();
 
         protocolStub = {
-            getData: sandbox.stub().callsFake(() => {
-                return getStream(
+            getData: sandbox.stub().callsFake(async () => {
+                const dataStream = getStream(
                     {
                         message: "test",
                     });
+                return dataStream;
             }),
             getLastModified: sandbox.stub(),
             setCallerName: sandbox.stub(),
@@ -53,12 +57,18 @@ describe("DataSourceStreamed", () => {
         validatorStub = {
             Validate: sandbox.stub().callsFake(() => true),
         };
-        sandbox.spy(log, "warn");
 
-        datasource = new DataSourceStreamed("TestDataSource",
-            protocolStub,
-            dataTypeStub,
-            validatorStub);
+        getDatasource = (protocol, dataType, validator) => {
+            return new DataSourceStreamed(
+                "TestDataSource",
+                protocol as IProtocolStrategy,
+                dataType as IDataTypeStrategy,
+                validator,
+                );
+        };
+
+        genericDatasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+        sandbox.spy(log, "warn");
     });
 
     afterEach(() => {
@@ -70,34 +80,35 @@ describe("DataSourceStreamed", () => {
     });
 
     it("should has name method", () => {
-        chai.expect(datasource.name).not.to.be.undefined;
+        chai.expect(genericDatasource.name).not.to.be.undefined;
     });
 
     it("should has getAll method", () => {
-        chai.expect(datasource.getAll).not.to.be.undefined;
+        chai.expect(genericDatasource.getAll).not.to.be.undefined;
     });
 
     it("should has getLastModified method", () => {
-        chai.expect(datasource.getLastModified).not.to.be.undefined;
+        chai.expect(genericDatasource.getLastModified).not.to.be.undefined;
     });
 
     it("should has setProtocolStrategy method", () => {
-        chai.expect(datasource.setProtocolStrategy).not.to.be.undefined;
+        chai.expect(genericDatasource.setProtocolStrategy).not.to.be.undefined;
     });
 
     it("should has setDataTypeStrategy method", () => {
-        chai.expect(datasource.setDataTypeStrategy).not.to.be.undefined;
+        chai.expect(genericDatasource.setDataTypeStrategy).not.to.be.undefined;
     });
 
     it("should has setValidator method", () => {
-        chai.expect(datasource.setValidator).not.to.be.undefined;
+        chai.expect(genericDatasource.setValidator).not.to.be.undefined;
     });
 
     it("should has proceed method", () => {
-        chai.expect(datasource.setValidator).not.to.be.undefined;
+        chai.expect(genericDatasource.setValidator).not.to.be.undefined;
     });
 
     it("should properly get all data", async () => {
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
         const dataStream = await datasource.getAll();
         let outputData: any;
 
@@ -119,6 +130,8 @@ describe("DataSourceStreamed", () => {
         validatorStub.Validate =  sandbox.stub().callsFake(() => {
             throw new Error("oh noooooooooooooo")
         });
+
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
 
         datasource.setValidator(validatorStub);
 
@@ -145,6 +158,8 @@ describe("DataSourceStreamed", () => {
             return true;
         });
 
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+
         datasource.setValidator(validatorStub);
 
         const dataStream = await datasource.getAll();
@@ -170,9 +185,20 @@ describe("DataSourceStreamed", () => {
     });
 
     it("should warn if data are empty array", async () => {
+        protocolStub = {
+            getData: sandbox.stub().callsFake(async () => {
+                return getStream(
+                    {
+                        message: "test",
+                    });
+            }),
+            getLastModified: sandbox.stub(),
+            setCallerName: sandbox.stub(),
+        };
+
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
 
         const dataStream = await datasource.getAll();
-
         // need to init handlers
         dataStream.push("somedata");
         dataTypeStub.parseData = sandbox.stub().callsFake(() => []);
@@ -182,12 +208,23 @@ describe("DataSourceStreamed", () => {
         dataStream.push(null);
 
         await datasource.proceed();
-
         await waitTillStreamEnds(dataStream);
         sandbox.assert.calledOnce(log.warn);
     });
 
     it("should warn if data are null", async () => {
+        protocolStub = {
+            getData: sandbox.stub().callsFake(async () => {
+                return getStream(
+                    {
+                        message: "test",
+                    });
+            }),
+            getLastModified: sandbox.stub(),
+            setCallerName: sandbox.stub(),
+        };
+
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
 
         const dataStream = await datasource.getAll();
 
@@ -205,6 +242,18 @@ describe("DataSourceStreamed", () => {
     });
 
     it("should warn if data are empty object", async () => {
+        protocolStub = {
+            getData: sandbox.stub().callsFake(async () => {
+                return getStream(
+                    {
+                        message: "test",
+                    });
+            }),
+            getLastModified: sandbox.stub(),
+            setCallerName: sandbox.stub(),
+        };
+
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
 
         const dataStream = await datasource.getAll();
 
@@ -222,23 +271,31 @@ describe("DataSourceStreamed", () => {
     });
 
     it("should properly get last modified", async () => {
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+
         await datasource.getLastModified();
         sandbox.assert.calledOnce(protocolStub.getLastModified);
     });
 
     it("should set protocol strategy", async () => {
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+
         datasource.setProtocolStrategy(protocolStub);
-        sandbox.assert.calledTwice(protocolStub.setCallerName);
+        sandbox.assert.calledThrice(protocolStub.setCallerName);
         datasource.setProtocolStrategy({});
         chai.expect(datasource.protocolStrategy).to.be.deep.equal({});
     });
 
     it("should set datatype strategy", async () => {
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+
         datasource.setDataTypeStrategy(null);
         chai.expect(datasource.dataTypeStrategy).to.be.null;
     });
 
     it("should set validator", async () => {
+        const datasource = getDatasource(protocolStub, dataTypeStub, validatorStub);
+
         datasource.setValidator(null);
         chai.expect(datasource.validator).to.be.null;
     });
