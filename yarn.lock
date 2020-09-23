@@ -100,6 +100,7 @@
     winston "^3.2.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@golemio/schema-definitions@1.5.0-dev.193002440":
   version "1.5.0-dev.193002440"
   resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.5.0-dev.193002440.tgz#3053f9dbcf3433b679e7929689ac773020f8c128"
@@ -124,6 +125,12 @@
   resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.5.0-dev.187352817.tgz#7cfac950c535800cc4f43bf3556e18fde36aa47e"
   integrity sha512-Yy96WuigjbGeThK4J9MXiNrL/39WE3I0DZO9YXfldXbqYNdO+yNcoizmQb2yCA4F2/gp9K98mMW20z56N34+iQ==
 >>>>>>> 6893790... fix: flow fixes
+=======
+"@golemio/schema-definitions@1.5.0-dev.193506657":
+  version "1.5.0-dev.193506657"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.5.0-dev.193506657.tgz#bbfa52abee84b9fcb588d37291ef571bcb625ee4"
+  integrity sha512-76Pv9K9rZwx6+H+2qCyi/lUOIWT+xjGeWTEqWoWb3/u6JAzuBGBPTa78SXo7RJFJFgLp8xbkYq46QfhYjUZOag==
+>>>>>>> d96d8d8... feat: schema-definitions "1.5.0-dev.193506657"
   dependencies:
     "@golemio/utils" "0.0.4"
     connection-string-parser "^1.0.2"
