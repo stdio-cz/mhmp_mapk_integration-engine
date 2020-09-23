@@ -6,7 +6,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
 
-import { DataTypeStrategy, IProtocolStrategy } from "../../../src/core/datasources";
+import { IDataTypeStrategy, IProtocolStrategy } from "../../../src/core/datasources";
 
 import { DataSourceStreamed } from "../../../src/core/datasources";
 import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream";
