@@ -34,7 +34,8 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
                 parking_type: (element.pr)
                     ? { description: "P+R parkoviště", id: 1 }
                     : { description: "placené parkoviště", id: 2 },
-                payment_link: this.getMPLAPaymentLink(element.id),
+                payment_link: `${config.PARKINGS_PAYMENT_URL}?shortname=${this.getMPLAPaymentShortName(element.id)}`,
+                payment_shortname: this.getMPLAPaymentShortName(element.id),
                 total_num_of_places: !isNaN(parseInt(element.totalNumOfPlaces, 10))
                     ? parseInt(element.totalNumOfPlaces, 10)
                     : null,
@@ -42,8 +43,9 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
             },
             type: "Feature",
         };
-        if (!res.properties.payment_link) {
+        if (!res.properties.payment_shortname) {
             delete res.properties.payment_link;
+            delete res.properties.payment_shortname;
         }
 
         return res;
@@ -64,23 +66,22 @@ export class ParkingsTransformation extends BaseTransformation implements ITrans
         return res;
     }
 
-    private getMPLAPaymentLink = (id: number): string => {
-        const link = config.PARKINGS_PAYMENT_URL + "?shortname=";
+    private getMPLAPaymentShortName = (id: number): string | null => {
         switch (id) {
-            case 534002: return link + "139"; // Holešovice
-            case 534004: return link + "142"; // Rajska Zahrada
-            case 534007: return link + "141"; // Radotín
-            case 534008: return link + "144"; // Zličín 1
-            case 534009: return link + "145"; // Zličín 2
-            case 534010: return link + "143"; // Skalka 2
-            case 534011: return link + "147"; // Černý most
-            case 534012: return link + "143"; // Skalka 1
-            case 534014: return link + "121"; // Ládví
-            case 534015: return link + "122"; // Depo Hostivař
-            case 534016: return link + "123"; // Letňany
-            case 534017: return link + "106"; // Westfield Chodov
-            case 5340171: return link + "106"; // Chodov A
-            case 5340172: return link + "106"; // Chodov E
+            case 534002: return "139"; // Holešovice
+            case 534004: return "142"; // Rajska Zahrada
+            case 534007: return "141"; // Radotín
+            case 534008: return "144"; // Zličín 1
+            case 534009: return "145"; // Zličín 2
+            case 534010: return "143"; // Skalka 2
+            case 534011: return "147"; // Černý most
+            case 534012: return "143"; // Skalka 1
+            case 534014: return "121"; // Ládví
+            case 534015: return "122"; // Depo Hostivař
+            case 534016: return "123"; // Letňany
+            case 534017: return "106"; // Westfield Chodov
+            case 5340171: return "106"; // Chodov A
+            case 5340172: return "106"; // Chodov E
             default: return null;
         }
     }
