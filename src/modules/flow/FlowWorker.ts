@@ -18,8 +18,6 @@ import {
     IHTTPSettings,
 } from "../../core/datasources";
 
-import * as fs from "fs";
-
 export class FlowWorker extends BaseWorker {
 
     private cubesDataSource: DataSourceStreamed;
@@ -342,17 +340,11 @@ export class FlowWorker extends BaseWorker {
                     )),
                 );
 
-                if (input?.cube?.id === 10 && process.env.LOG_FLOW_CUBES) {
-                    const toLog = JSON.stringify(data, null, 2);
-                    fs.writeFileSync(`${(new Date()).getTime()}-flow.json`, toLog);
-                    // tslint:disable-next-line: no-console
-                    console.log(toLog);
-                }
-
                 // await this.flowMeasurementModel.saveBySqlFunction(
                 //     uniq,
                 //     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
                 // );
+
                 await this.flowMeasurementModel.save(
                     uniq,
                 );
