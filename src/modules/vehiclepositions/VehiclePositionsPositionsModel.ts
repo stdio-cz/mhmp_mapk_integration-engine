@@ -50,7 +50,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         const results = await this.tripsModel.findAll({
             attributes: [
                 // Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
-                "id", "gtfs_trip_id", "start_timestamp",
+                "id", "gtfs_trip_id", "start_timestamp", "agency_name_scheduled",
             ],
             include: [{
                 attributes: ["lat", "lng", "origin_time", "origin_timestamp",
@@ -60,8 +60,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                 },
             }],
             order: [
-                [{ model: this.sequelizeModel }, "origin_time", "ASC"],
-                [{ model: this.sequelizeModel }, "created_at", "ASC"],
+                [{ model: this.sequelizeModel }, "origin_timestamp", "ASC"],
             ],
             raw: true,
             where: {
@@ -76,6 +75,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             let pIndex = p.findIndex((e) => e.trips_id === c.id);
             if (pIndex === -1) {
                 p.push({
+                    agency_name_scheduled: c.agency_name_scheduled,
                     gtfs_trip_id: c.gtfs_trip_id,
                     positions: [],
                     start_timestamp: c.start_timestamp,
