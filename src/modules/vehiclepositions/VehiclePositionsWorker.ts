@@ -21,7 +21,10 @@ import * as _ from "lodash";
 import * as moment from "moment-timezone";
 import * as Sequelize from "sequelize";
 const ruler: any = cheapruler(50);
-// const fs = require("fs").promises;
+// const rulerGpsDistance = {
+//     latDiff: - 50 + ruler.destination([14.5, 50], 0.6, 0)[1],
+//     lngDiff: - 14.5 + ruler.destination([14.5, 50], 0.6, 90)[0],
+// };
 const gtfsRealtime = require("gtfs-realtime-bindings").transit_realtime;
 
 export class VehiclePositionsWorker extends BaseWorker {
@@ -89,7 +92,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
 
         // send message for update delay
-        for (let i = 0, chunkSize = 100; i < rows.updated.length; i += chunkSize) {
+        for (let i = 0, chunkSize = 200; i < rows.updated.length; i += chunkSize) {
             await this.sendMessageToExchange(
                 "workers." + this.queuePrefix + ".updateDelay",
                 JSON.stringify(rows.updated.slice(i, i + chunkSize)),
@@ -233,7 +236,14 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public computePositions = async (tripPositions: any): Promise<any> => {
         const startTimestamp = parseInt(tripPositions.start_timestamp, 10);
-        const startDayTimestamp = moment.utc(startTimestamp).startOf("day");
+        let startDayTimestamp = moment.utc(startTimestamp).tz("Europe/Prague").startOf("day").valueOf();
+
+        // if trip has 24+ stop times set real startDay to yesterday
+        const stopTimeDayOverflow =
+            Math.floor(tripPositions.gtfsData.shape_points[0].time_scheduled_seconds / (60 * 60 * 24));
+        if (stopTimeDayOverflow > 0) {
+            startDayTimestamp -= stopTimeDayOverflow * 60 * 60 * 24 * 1000;
+        }
 
         const updatePositionsIterator = (i: number, options: any, cb: () => any): void => {
             if (i === tripPositions.positions.length) {
@@ -269,7 +279,8 @@ export class VehiclePositionsWorker extends BaseWorker {
 
                     // CORE processing
                     this.getEstimatedPoint(
-                        tripPositions.gtfsData.shape_points, currentPosition, lastPosition, startDayTimestamp,
+                        tripPositions.gtfsData.shape_points, currentPosition, lastPosition,
+                        startDayTimestamp,
                     ).then((estimatedPoint) => {
                         if (estimatedPoint.properties.time_delay !== undefined
                             && estimatedPoint.properties.time_delay !== null) {
@@ -288,6 +299,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                                 next_stop_id: estimatedPoint.properties.next_stop_id,
                                 next_stop_sequence: estimatedPoint.properties.next_stop_sequence,
                                 shape_dist_traveled: estimatedPoint.properties.shape_dist_traveled,
+                                tracking: position.tracking,
                                 trips_id: tripPositions.trips_id,
                             };
                             options.lastPositionTracking = {
@@ -310,6 +322,30 @@ export class VehiclePositionsWorker extends BaseWorker {
                 }
             } else if (position.tracking === 0 && position.shape_dist_traveled === null) {
                 if (options.lastPositionTracking === null) {
+                    let doNotTrack = false;
+                    // For DPP PRAHA we need filter all buses which are not close to first/last stop (.5km)
+                    // and still not tracking (except those with time in range of theirs trip stop times)
+                    if (tripPositions.agency_name_scheduled === "DP PRAHA") {
+                        if (position.origin_timestamp < (startTimestamp - 1 * 60 * 1000)) {
+                            if (
+                                true
+                                // rulerGpsDistance.latDiff <=
+                                //     Math.abs(position.lat - tripPositions.gtfsData.shape_points[0].coordinates[1])
+                                // &&
+                                // rulerGpsDistance.lngDiff <=
+                                //     Math.abs(position.lng - tripPositions.gtfsData.shape_points[0].coordinates[0])
+                            ) {
+                                const distanceFromFirstStop = ruler.distance(
+                                    [position.lng, position.lat],
+                                    tripPositions.gtfsData.shape_points[0].coordinates,
+                                );
+                                if (distanceFromFirstStop > .5) {
+                                    doNotTrack = true;
+                                }
+                            }
+                        }
+                    }
+
                     const positionUpdate = {
                         bearing: (position.bearing !== undefined) ? position.bearing : null,
                         delay: null,
@@ -318,28 +354,51 @@ export class VehiclePositionsWorker extends BaseWorker {
                         last_stop_departure_time: null,
                         last_stop_id: null,
                         last_stop_sequence: null,
-                        next_stop_arrival_time: startTimestamp
-                            + tripPositions.gtfsData.shape_points[0].last_stop_arrival_time_seconds * 1000,
-                        next_stop_departure_time: startTimestamp
-                            + tripPositions.gtfsData.shape_points[0].last_stop_departure_time_seconds * 1000,
+                        next_stop_arrival_time: startDayTimestamp
+                            + tripPositions.gtfsData.shape_points[0].time_scheduled_seconds * 1000,
+                        next_stop_departure_time: startDayTimestamp
+                            + tripPositions.gtfsData.shape_points[0].time_scheduled_seconds * 1000,
                         next_stop_id: tripPositions.gtfsData.shape_points[0].last_stop,
                         next_stop_sequence: tripPositions.gtfsData.shape_points[0].last_stop_sequence,
                         shape_dist_traveled: tripPositions.gtfsData.shape_points[0].shape_dist_traveled,
+                        tracking: doNotTrack ? -1 : position.tracking,
                         trips_id: tripPositions.trips_id,
                     };
                     options.positions.push(positionUpdate);
                 } else {
                     const lastShapePointsIndex = tripPositions.gtfsData.shape_points.length - 1;
+                    let doNotTrack = false;
+                    // For DPP PRAHA we need filter all buses which are not close to first/last stop (.5km)
+                    // and still not tracking (except those with time in range of theirs trip stop times)
+                    if (tripPositions.agency_name_scheduled === "DP PRAHA") {
+                        if (
+                            true
+                            // rulerGpsDistance.latDiff <=
+                            //     Math.abs(position.lat - tripPositions.gtfsData.shape_points[0].coordinates[1])
+                            // &&
+                            // rulerGpsDistance.lngDiff <=
+                            //     Math.abs(position.lng - tripPositions.gtfsData.shape_points[0].coordinates[0])
+                        ) {
+                            const distanceFromLastStop = ruler.distance(
+                                [position.lng, position.lat],
+                                tripPositions.gtfsData.shape_points[lastShapePointsIndex].coordinates,
+                            );
+                            if (distanceFromLastStop > .5) {
+                                doNotTrack = true;
+                            }
+                        }
+                    }
+
                     const positionUpdate = {
                         bearing: (position.bearing !== undefined) ? position.bearing : null,
                         delay: null,
                         id: position.id,
-                        last_stop_arrival_time: startTimestamp
+                        last_stop_arrival_time: startDayTimestamp
                             + tripPositions.gtfsData.shape_points[lastShapePointsIndex]
-                                .next_stop_arrival_time_seconds * 1000,
-                        last_stop_departure_time: startTimestamp
+                                .time_scheduled_seconds * 1000,
+                        last_stop_departure_time: startDayTimestamp
                             + tripPositions.gtfsData.shape_points[lastShapePointsIndex]
-                                .next_stop_departure_time_seconds * 1000,
+                                .time_scheduled_seconds * 1000,
                         last_stop_id: tripPositions.gtfsData.shape_points[lastShapePointsIndex].next_stop,
                         last_stop_sequence: tripPositions.gtfsData.shape_points[lastShapePointsIndex]
                             .next_stop_sequence,
@@ -349,6 +408,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                         next_stop_sequence: null,
                         shape_dist_traveled: tripPositions.gtfsData.shape_points[lastShapePointsIndex]
                             .shape_dist_traveled,
+                        tracking: doNotTrack ? -1 : position.tracking,
                         trips_id: tripPositions.trips_id,
                     };
                     options.positions.push(positionUpdate);
@@ -424,7 +484,12 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
     }
 
-    private getEstimatedPoint = (tripShapePoints, currentPosition, lastPosition, startDayTimestamp): Promise<any> => {
+    private getEstimatedPoint = (
+            tripShapePoints,
+            currentPosition,
+            lastPosition,
+            startDayTimestamp,
+        ): Promise<any> => {
 
         const pt = currentPosition;
         // init radius around GPS position ( 200 meters radius, 16 points polygon aka circle)
@@ -539,22 +604,14 @@ export class VehiclePositionsWorker extends BaseWorker {
                 rightPoint.properties.last_stop_id = closestPts[i].last_stop;
                 rightPoint.properties.next_stop_sequence = closestPts[i].next_stop_sequence;
                 rightPoint.properties.last_stop_sequence = closestPts[i].last_stop_sequence;
-                rightPoint.properties.next_stop_arrival_time = startDayTimestamp
-                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
-                    .add(closestPts[i].next_stop_arrival_time_seconds, "seconds")
-                    .valueOf();
-                rightPoint.properties.last_stop_arrival_time = startDayTimestamp
-                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
-                    .add(closestPts[i].last_stop_arrival_time_seconds, "seconds")
-                    .valueOf();
-                rightPoint.properties.next_stop_departure_time = startDayTimestamp
-                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
-                    .add(closestPts[i].next_stop_departure_time_seconds, "seconds")
-                    .valueOf();
-                rightPoint.properties.last_stop_departure_time = startDayTimestamp
-                    .clone().subtract(startDayTimestamp.tz("Europe/Prague").utcOffset(), "minutes")
-                    .add(closestPts[i].last_stop_departure_time_seconds, "seconds")
-                    .valueOf();
+                rightPoint.properties.next_stop_arrival_time = startDayTimestamp +
+                    + closestPts[i].next_stop_arrival_time_seconds * 1000;
+                rightPoint.properties.last_stop_arrival_time = startDayTimestamp +
+                    + closestPts[i].last_stop_arrival_time_seconds * 1000;
+                rightPoint.properties.next_stop_departure_time = startDayTimestamp +
+                    + closestPts[i].next_stop_departure_time_seconds * 1000;
+                rightPoint.properties.last_stop_departure_time = startDayTimestamp +
+                    + closestPts[i].last_stop_departure_time_seconds * 1000;
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
             }
