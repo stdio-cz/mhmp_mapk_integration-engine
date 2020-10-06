@@ -91,6 +91,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 ? { "properties.id": { $in: id } }
                 : { "properties.id": id },
             updateValues: (a, b) => {
+                a.geometry = b.geometry;
                 a.properties.accessibility = b.properties.accessibility;
                 a.properties.containers = b.properties.containers;
                 a.properties.district = (b.properties.district) ? b.properties.district : null;
