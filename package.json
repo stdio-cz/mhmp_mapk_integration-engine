@@ -67,7 +67,7 @@
 	},
 	"dependencies": {
 		"@golemio/errors": "^0.0.5",
-		"@golemio/schema-definitions": "1.5.1-dev.194065130",
+		"@golemio/schema-definitions": "../schema-definitions/golemio-schema-definitions-1.5.4.tgz",
 		"@golemio/utils": "^0.0.3",
 		"@golemio/validator": "0.1.0-dev.163887901",
 		"@google-cloud/storage": "4.5.0",
