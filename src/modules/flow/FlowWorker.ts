@@ -125,7 +125,7 @@ export class FlowWorker extends BaseWorker {
 
         try {
             await dataStream.setDataProcessor(async (data: any) => {
-                this.flowCubesModel.save(data.map((cube) => {
+                this.flowCubesModel.save(data.map((cube: any) => {
                     return {
                         id: cube.id,
                         name: cube.name,
@@ -219,7 +219,7 @@ export class FlowWorker extends BaseWorker {
             }
 
             this.sinksDataSource.protocolStrategy.setConnectionSettings(this.getHttpSettings(
-                `/api/cubes/${input?.cube?.id}/analytics/${input?.analytic?.id}/sinks`,
+                `/api/cubes/${input.cube.id}/analytics/${input.analytic.id}/sinks`,
                 "GET",
                 null,
             ));
@@ -232,6 +232,7 @@ export class FlowWorker extends BaseWorker {
             await dataStream.setDataProcessor(async (data: any) => {
                 this.flowSinksModel.save(data.map((sink) => {
                     return {
+                        cube_id: +input.cube.id,
                         history_start_timestamp: sink.history_start_timestamp,
                         id: sink.id,
                         name: sink.name,
@@ -309,7 +310,7 @@ export class FlowWorker extends BaseWorker {
 
             this.sinksHistoryDataSource.protocolStrategy.setConnectionSettings(
                 this.getHttpSettings(
-                    `/api/cubes/${input?.cube?.id}/analytics/${input?.analytic?.id}/sinks/history`,
+                    `/api/cubes/${input.cube.id}/analytics/${input.analytic.id}/sinks/history`,
                     "POST",
                     input.payload,
                 ),

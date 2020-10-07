@@ -111,10 +111,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@1.5.1-dev.194065130":
-  version "1.5.1-dev.194065130"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.5.1-dev.194065130.tgz#9a614cf8f91508e487f635d4b859df756bf73ccd"
-  integrity sha512-iIjW0aQoTlWCw6/BvoF9r9cknDTfqOs/CCaqrBbRI2IsTsir3VXlPpePSg/4afxslaGzGdesjZubqQwuOJAK3g==
+"@golemio/schema-definitions@1.5.4-dev.198851273":
+  version "1.5.4-dev.198851273"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.5.4-dev.198851273.tgz#3fee85e1caffae2908fe0cdd82f02bb7dd9505c0"
+  integrity sha512-DyJjE5mjSLt2GOcbBHGKiHNQphb8gs1W5nc0fmnqb5U2g375KsG2Ac3DoncVB7FvjHQzU3Vyl7alQCBiJOyH7A==
   dependencies:
     "@golemio/utils" "0.0.4"
     connection-string-parser "^1.0.2"
