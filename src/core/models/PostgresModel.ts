@@ -119,6 +119,10 @@ export class PostgresModel implements IModel {
         const t = await connection.transaction();
 
         try {
+            await connection.query(
+                "SET lock_timeout TO '1min'",
+                { type: Sequelize.QueryTypes.RAW, transaction: t },
+            );
             await model.destroy({
                 cascade: false,
                 transaction: t,
