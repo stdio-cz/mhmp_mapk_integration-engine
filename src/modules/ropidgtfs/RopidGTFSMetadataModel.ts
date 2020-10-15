@@ -122,10 +122,11 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
                 return connection.query(
                     "LOCK " + tableName + " IN EXCLUSIVE MODE; "
+                    + "SET lock_timeout TO '1min'; "
                     + "TRUNCATE TABLE " + tableName + "; "
                     + "INSERT INTO " + tableName + " SELECT " + columnsString + " FROM " + tmpTableName + "; "
                     + "DROP TABLE IF EXISTS " + tmpTableName + "; ",
-                    { type: Sequelize.QueryTypes.SELECT, transaction: t });
+                    { type: Sequelize.QueryTypes.RAW, transaction: t });
             });
             await Promise.all(promises);
             await this.sequelizeModel.destroy({
