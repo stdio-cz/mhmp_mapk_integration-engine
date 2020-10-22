@@ -351,7 +351,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
             // setting default interval (normal situation)
             to = new Date();
             from = new Date();
-            from.setHours(to.getHours() - 6); // last six hour from now
+            from.setHours(to.getHours() - 24); // last six hour from now
         }
 
         this.sensorsMeasurementsHTTPSettings.body = JSON.stringify({ from, to });
