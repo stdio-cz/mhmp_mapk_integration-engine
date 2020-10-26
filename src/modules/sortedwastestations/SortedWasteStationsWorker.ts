@@ -351,12 +351,15 @@ export class SortedWasteStationsWorker extends BaseWorker {
             // setting default interval (normal situation)
             to = new Date();
             from = new Date();
-            from.setHours(to.getHours() - 24); // last six hour from now
+            from.setHours(to.getHours() - (24 * 6)); // last six days from now
         }
 
         this.sensorsMeasurementsHTTPSettings.body = JSON.stringify({ from, to });
         this.sensorsMeasurementsDatasource.setProtocolStrategy(new HTTPProtocolStrategy(
-            this.sensorsMeasurementsHTTPSettings));
+            this.sensorsMeasurementsHTTPSettings,
+            ),
+        );
+
         const data = await this.sensorsMeasurementsDatasource.getAll();
         const transformedData = await this.sensoneoMeasurementsTransformation.transform(data);
         await this.sensorsMeasurementsModel.save(transformedData);
