@@ -277,7 +277,7 @@ export class FlowWorker extends BaseWorker {
             // const payloads = this.getHistoryPayload(this.getTimeRanges(), input);
 
             await Promise.all(
-                this.getHistoryPayload([[now -  60 * 60 * 1000, now]], input).map((payload) => {
+                this.getHistoryPayload(this.getTimeRanges(), input).map((payload) => {
                     this.sendMessageToExchange(
                         "workers." + this.queuePrefix + ".getSinksHistory",
                         JSON.stringify({
@@ -333,6 +333,7 @@ export class FlowWorker extends BaseWorker {
                 // filter duplicate data
                 const uniq = detections.filter((thing, index, self) =>
                     index === self.findIndex((t) => (
+                        t.cube_id === thing.cube_id &&
                         t.sink_id === thing.sink_id &&
                         t.start_timestamp === thing.start_timestamp &&
                         t.end_timestamp === thing.end_timestamp &&
@@ -341,14 +342,14 @@ export class FlowWorker extends BaseWorker {
                     )),
                 );
 
-                // await this.flowMeasurementModel.saveBySqlFunction(
-                //     uniq,
-                //     [ "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
-                // );
-
-                await this.flowMeasurementModel.save(
+                await this.flowMeasurementModel.saveBySqlFunction(
                     uniq,
+                    [ "cube_id", "sink_id", "start_timestamp", "end_timestamp", "category", "sequence_number" ],
                 );
+
+                // await this.flowMeasurementModel.save(
+                //     uniq,
+                // );
             }).proceed();
         } catch (err) {
             throw new CustomError("Error while processing data.", true, this.constructor.name, 5050, err);
@@ -405,13 +406,12 @@ export class FlowWorker extends BaseWorker {
         return payloads;
     }
 
-    // not used for now - leaving it here just for case they screw up API
     // get array of all pastOffset to past timeranges [startTS, endTS]
     // where endTS - startTS === interval starting now - pastOffset
     private getTimeRanges = (
         start: moment.Moment = null,
         pastOffset: number = 60,
-        interval: number = 5,
+        interval: number = 15,
     ): any[] => {
         if (!start) {
             start = moment();
