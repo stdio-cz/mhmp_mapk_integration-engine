@@ -36,7 +36,12 @@ describe("BicycleCountersWorker", () => {
                 { vendor_id: "103047647", id: "ecoCounter-103047647", locations_id: "ecoCounter-100047647" },
                 { vendor_id: "104047647", id: "ecoCounter-104047647", locations_id: "ecoCounter-100047647" },
             ],
+            directionsPedestrians: [
+                { vendor_id: "103047647", id: "ecoCounter-103047647", locations_id: "ecoCounter-100047647" },
+                { vendor_id: "104047647", id: "ecoCounter-104047647", locations_id: "ecoCounter-100047647" },
+            ],
             locations: [{ vendor_id: "BC_BS-BMZL" }, { vendor_id: "BC_AT-STLA" }],
+            locationsPedestrians: [{ vendor_id: "BC_BS-BMZL" }, { vendor_id: "BC_AT-STLA" }],
         };
         testMeasurementsData = [1, 2];
         testCameaMeasurementsTransformedData = {
@@ -158,7 +163,11 @@ describe("BicycleCountersWorker", () => {
         sandbox.stub(worker.temperaturesModel, "saveBySqlFunction");
         sandbox.stub(worker.apiLogsHitsModel, "save");
         sandbox.stub(worker.apiLogsFailuresModel, "save");
-
+/*
+        sandbox.stub(worker.countersLocationsModel, "save");
+        sandbox.stub(worker.countersDirectionsModel, "save");
+        sandbox.stub(worker.countersDetectionsModel, "saveBySqlFunction");
+*/
         sandbox.spy(worker, "getApiLogsData");
 
         queuePrefix = config.RABBIT_EXCHANGE_NAME + "." + BicycleCounters.name.toLowerCase();
@@ -231,11 +240,26 @@ describe("BicycleCountersWorker", () => {
         sandbox.assert.calledWith(worker.ecoCounterTransformation.transform, testData);
         sandbox.assert.calledOnce(worker.locationsModel.save);
         sandbox.assert.calledOnce(worker.directionsModel.save);
-        sandbox.assert.calledTwice(worker.sendMessageToExchange);
+        sandbox.assert.callCount(worker.sendMessageToExchange, 2);
         testTransformedData.directions.map((f) => {
             sandbox.assert.calledWith(worker.sendMessageToExchange,
                 "workers." + queuePrefix + ".updateEcoCounter",
-                JSON.stringify({id: f.vendor_id, directions_id: f.id, locations_id: f.locations_id}));
+                JSON.stringify({
+                    category: "bicycle",
+                    directions_id: f.id,
+                    id: f.vendor_id,
+                    locations_id: f.locations_id,
+                }));
+/*
+                sandbox.assert.calledWith(worker.sendMessageToExchange,
+                "workers." + queuePrefix + ".updateEcoCounter",
+                JSON.stringify({
+                    category: "pedestrian",
+                    directions_id: f.id,
+                    id: f.vendor_id,
+                    locations_id: f.locations_id,
+                }));
+*/
         });
         sandbox.assert.callOrder(
             worker.dataSourceEcoCounter.getAll,
@@ -247,6 +271,7 @@ describe("BicycleCountersWorker", () => {
 
     it("should calls the correct methods by updateEcoCounter method (different geo)", async () => {
         await worker.updateEcoCounter({ content: Buffer.from(JSON.stringify({
+            category: "bicycle",
             directions_id: "ecoCounter-103047647",
             id: "103047647",
             locations_id: "ecoCounter-100047647",

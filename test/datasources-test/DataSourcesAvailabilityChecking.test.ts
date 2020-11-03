@@ -1083,7 +1083,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
                 const dataSourceHTTPSettings: IHTTPSettings = {
                     headers: {
-                        Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                        Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
                     },
                     method: "GET",
                     url,
@@ -1137,7 +1137,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 measurementsDatasource = new DataSource(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
                     new HTTPProtocolStrategy({
                         headers: {
-                            Authorization: `Bearer ${config.datasources.BicycleCountersEcoCounterToken}`,
+                            Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
                         },
                         json: true,
                         method: "GET",

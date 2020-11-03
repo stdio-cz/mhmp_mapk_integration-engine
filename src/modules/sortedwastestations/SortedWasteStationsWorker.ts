@@ -91,6 +91,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                 ? { "properties.id": { $in: id } }
                 : { "properties.id": id },
             updateValues: (a, b) => {
+                a.geometry = b.geometry;
                 a.properties.accessibility = b.properties.accessibility;
                 a.properties.containers = b.properties.containers;
                 a.properties.district = (b.properties.district) ? b.properties.district : null;
@@ -350,12 +351,15 @@ export class SortedWasteStationsWorker extends BaseWorker {
             // setting default interval (normal situation)
             to = new Date();
             from = new Date();
-            from.setHours(to.getHours() - 6); // last six hour from now
+            from.setHours(to.getHours() - (24 * 6)); // last six days from now
         }
 
         this.sensorsMeasurementsHTTPSettings.body = JSON.stringify({ from, to });
         this.sensorsMeasurementsDatasource.setProtocolStrategy(new HTTPProtocolStrategy(
-            this.sensorsMeasurementsHTTPSettings));
+            this.sensorsMeasurementsHTTPSettings,
+            ),
+        );
+
         const data = await this.sensorsMeasurementsDatasource.getAll();
         const transformedData = await this.sensoneoMeasurementsTransformation.transform(data);
         await this.sensorsMeasurementsModel.save(transformedData);

@@ -27,12 +27,15 @@ export class JSONDataTypeStrategy implements IDataTypeStrategy {
             if (typeof data === "string") {
                 data = JSON.parse(data);
             }
-            let parsed = getSubProperty<any>(this.resultsPath, data);
+
+            if (this.resultsPath) {
+                data = getSubProperty<any>(this.resultsPath, data);
+            }
 
             if (this.filter) {
-                parsed = parsed.filter(this.filter);
+                data = data.filter(this.filter);
             }
-            return parsed;
+            return data;
         } catch (err) {
             throw new CustomError("Error while parsing source data.", true, this.constructor.name, 2003, err);
         }

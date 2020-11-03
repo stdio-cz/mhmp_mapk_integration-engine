@@ -46,13 +46,19 @@ export class DataSourceStream extends Readable {
 
   public waitForEnd = async (): Promise<void> => {
     await new Promise((resolve, reject) => {
-      this.on("error", (error) => reject(error));
+      this.on("error", (error) => {
+        if (!this.streamEnded) {
+          reject(error);
+          this.streamEnded = true;
+        }
+      });
       this.on("end", async () => {
           const checker = setInterval(async () => {
               if (!this.processing && !this.streamEnded) {
                   clearInterval(checker);
                   if (this.onEndFunction && !this.streamEnded) {
                     await this.onEndFunction();
+                    this.streamEnded = true;
                   }
                   resolve();
               }
@@ -62,7 +68,8 @@ export class DataSourceStream extends Readable {
   }
 
   public proceed = async (): Promise<void> => {
+    const promise = this.waitForEnd();
     this.emit("streamReady");
-    return this.waitForEnd();
+    return promise;
   }
 }

@@ -13,6 +13,10 @@
         "password": ""
     },
     "CityDistricts": "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
+    "FlowAPI": {
+        "url": "https://10.200.4.4:8080/api/cubes",
+        "token": ""
+    },
     "Gardens": "https://www.mojepraha.eu/api/gardens",
     "HomeportLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Location/Map/Extended?lang=cs",
     "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
@@ -32,8 +36,11 @@
     "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
     "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
     "BicycleCountersEcoCounter": "https://apieco.eco-counter-tools.com/api/1.0/site",
-    "BicycleCountersEcoCounterToken": "",
     "BicycleCountersEcoCounterMeasurements": "https://apieco.eco-counter-tools.com/api/1.0/data/site/:id?begin=:from&end=:to&step=:step&complete=:complete",
+    "CountersEcoCounterTokens": {
+        "OICT": "",
+        "PRAHA": ""
+    },
     "BicycleCountersStatPing": {
         "url": "http://10.228.1.81:6565/api/services/6",
         "startOffsetSec": 186400,

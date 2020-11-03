@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Gardens,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Flow, Gardens,
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
@@ -13,7 +13,9 @@ import { AirQualityStationsWorker } from "../modules/airqualitystations";
 import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
+import { CountersWorker } from "../modules/counters";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
+import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
@@ -202,6 +204,32 @@ const definitions: IQueueDefinition[] = [
         ],
     },
     {
+        name: "Counters",
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + "counters",
+        queues: [
+            {
+                name: "refreshEcoCounterDataInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: CountersWorker,
+                workerMethod: "refreshEcoCounterDataInDB",
+            },
+            {
+                name: "updateEcoCounter",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: CountersWorker,
+                workerMethod: "updateEcoCounter",
+            },
+        ],
+    },
+    {
         name: FirebasePidlitacka.name,
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + FirebasePidlitacka.name.toLowerCase(),
         queues: [
@@ -254,6 +282,62 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: FirebasePidlitackaWorker,
                 workerMethod: "moveWebEvents",
+            },
+        ],
+    },
+    {
+        name: Flow.detections.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Flow.detections.name.toLowerCase(),
+        queues: [
+            {
+                name: "refreshCubes",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "refreshCubes",
+            },
+            {
+                name: "getAnalytics",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getAnalytics",
+            },
+            {
+                name: "getSinks",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinks",
+            },
+            {
+                name: "getSinksHistoryPayloads",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinksHistoryPayloads",
+            },
+            {
+                name: "getSinksHistory",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: FlowWorker,
+                workerMethod: "getSinksHistory",
             },
         ],
     },
@@ -615,6 +699,24 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: ParkingsWorker,
                 workerMethod: "saveOccupanciesToDB",
+            },
+            {
+                name: "saveKoridConfToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ParkingsWorker,
+                workerMethod: "saveKoridConfToDB",
+            },
+            {
+                name: "saveKoridDataToDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                },
+                worker: ParkingsWorker,
+                workerMethod: "saveKoridDataToDB",
             },
         ],
     },
