@@ -1,16 +1,11 @@
 "use strict";
 
-import { SortedWasteStations } from "@golemio/schema-definitions";
 import "mocha";
 import * as sinon from "sinon";
 import { PostgresConnector } from "../../../src/core/connectors";
 
-import { config } from "../../../src/core/config";
 import { DataSourceStream } from "../../../src/core/datasources/DataSourceStream";
 import { SortedWasteStationsWorkerPg } from "../../../src/modules/sortedwastestations";
-import { waitTillStreamEnds } from "../../helpers";
-import { emit } from "process";
-
 
 describe("SortedWasteStationsWorkerPg", () => {
 
@@ -18,174 +13,384 @@ describe("SortedWasteStationsWorkerPg", () => {
     let sandbox;
 
     // tslint:disable
-
-
-    const iprStationsData = [
-        {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.422439869000073,
-                50.09047325700004
-              ]
+    const ksnkoStationsData = [
+      {
+        "id": 115,
+        "number": "2021/ 011",
+        "name": "Lochenická 538",
+        "access": "volně",
+        "location": "outdoor",
+        "cityDistrict": {
+          "id": 51,
+          "name": "Klánovice",
+          "ruianCode": "538302"
+        },
+        "coordinate": {
+          "lat": -725122.182606,
+          "lon": -1044775.35985
+        },
+        "containers": [
+          {
+            "id": 623,
+            "code": "S2021011TPV1100HV623",
+            "sensorId": null,
+            "trashType": {
+              "code": "p",
+              "name": "Papír"
             },
-            "properties": {
-              "OBJECTID": 5346,
-              "ID": 5346,
-              "STATIONNUMBER": "0001/-132",
-              "STATIONNAME": "Kozí 914/9",
-              "CITYDISTRICTRUIANCODE": 500054,
-              "CITYDISTRICT": "Praha 1",
-              "PRISTUP": "obyvatelům domu"
-            }
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "13"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.421943246000069,
-                50.09114628700007
-              ]
+            "id": 624,
+            "code": "S2021011TPV1100HV624",
+            "sensorId": null,
+            "trashType": {
+              "code": "p",
+              "name": "Papír"
             },
-            "properties": {
-              "OBJECTID": 5347,
-              "ID": 5347,
-              "STATIONNUMBER": "0001/-134",
-              "STATIONNAME": "Bílkova 857/20",
-              "CITYDISTRICTRUIANCODE": 500054,
-              "CITYDISTRICT": "Praha 1",
-              "PRISTUP": "obyvatelům domu"
-            }
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "13"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.42829514300007,
-                50.07942290300008
-              ]
+            "id": 626,
+            "code": "S2021011TUV1100HV626",
+            "sensorId": null,
+            "trashType": {
+              "code": "u",
+              "name": "Plast"
             },
-            "properties": {
-              "OBJECTID": 5348,
-              "ID": 5348,
-              "STATIONNUMBER": "0001/-144",
-              "STATIONNAME": "Krakovská 582/23",
-              "CITYDISTRICTRUIANCODE": 500054,
-              "CITYDISTRICT": "Praha 1",
-              "PRISTUP": "obyvatelům domu"
-            }
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "14"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.427678951000075,
-                50.08859091200003
-              ]
+            "id": 622,
+            "code": "S2021011TNKV240HV622",
+            "sensorId": null,
+            "trashType": {
+              "code": "nk",
+              "name": "Nápojové kartóny"
             },
-            "properties": {
-              "OBJECTID": 5349,
-              "ID": 5349,
-              "STATIONNUMBER": "0001/-147",
-              "STATIONNAME": "Králodvorská 1086/14",
-              "CITYDISTRICTRUIANCODE": 500054,
-              "CITYDISTRICT": "Praha 1",
-              "PRISTUP": "obyvatelům domu"
-            }
+            "container": {
+              "name": "240 L normální - HV",
+              "volume": 240,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "11"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 625,
+            "code": "S2021011TSBV3350SV625",
+            "sensorId": null,
+            "trashType": {
+              "code": "sb",
+              "name": "Barevné sklo"
+            },
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 621,
+            "code": "S2021011TSCV3350SV621",
+            "sensorId": null,
+            "trashType": {
+              "code": "sc",
+              "name": "Čiré sklo"
+            },
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
           }
-    ]
-
-    const iprContainersData = [
-        {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.466997410000033,
-                50.08438533000003
-              ]
+        ]
+      },
+      {
+        "id": 116,
+        "number": "2021/ 012",
+        "name": "Medinská 495",
+        "access": "volně",
+        "location": "outdoor",
+        "cityDistrict": {
+          "id": 51,
+          "name": "Klánovice",
+          "ruianCode": "538302"
+        },
+        "coordinate": {
+          "lat": -725222.558281,
+          "lon": -1045099.2586
+        },
+        "containers": [
+          {
+            "id": 629,
+            "code": "S2021012TPV1100HV629",
+            "sensorId": null,
+            "trashType": {
+              "code": "p",
+              "name": "Papír"
             },
-            "properties": {
-              "OBJECTID": 21993,
-              "STATIONID": 5349,
-              "TRASHTYPENAME": "Elektrozařízení",
-              "CLEANINGFREQUENCYCODE": 41,
-              "CONTAINERTYPE": "2150 MEVA SV"
-            }
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "13"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.444171856000025,
-                50.06293381300003
-              ]
+            "id": 631,
+            "code": "S2021012TUV1100HV631",
+            "sensorId": null,
+            "trashType": {
+              "code": "u",
+              "name": "Plast"
             },
-            "properties": {
-              "OBJECTID": 21994,
-              "STATIONID": 5349,
-              "TRASHTYPENAME": "Elektrozařízení",
-              "CLEANINGFREQUENCYCODE": 41,
-              "CONTAINERTYPE": "2150 MEVA SV"
-            }
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "14"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.392175782000038,
-                50.10114180800008
-              ]
+            "id": 628,
+            "code": "S2021012TNKV240HV628",
+            "sensorId": null,
+            "trashType": {
+              "code": "nk",
+              "name": "Nápojové kartóny"
             },
-            "properties": {
-              "OBJECTID": 21995,
-              "STATIONID": 5347,
-              "TRASHTYPENAME": "Elektrozařízení",
-              "CLEANINGFREQUENCYCODE": 41,
-              "CONTAINERTYPE": "2150 MEVA SV"
-            }
+            "container": {
+              "name": "240 L normální - HV",
+              "volume": 240,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "11"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.37239457100003,
-                50.080122516000074
-              ]
+            "id": 630,
+            "code": "S2021012TSBV3350SV630",
+            "sensorId": null,
+            "trashType": {
+              "code": "sb",
+              "name": "Barevné sklo"
             },
-            "properties": {
-              "OBJECTID": 21996,
-              "STATIONID": 5347,
-              "TRASHTYPENAME": "Elektrozařízení",
-              "CLEANINGFREQUENCYCODE": 41,
-              "CONTAINERTYPE": "2150 MEVA SV"
-            }
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                14.38306370500004,
-                50.08546637000006
-              ]
+            "id": 627,
+            "code": "S2021012TSCV3350SV627",
+            "sensorId": null,
+            "trashType": {
+              "code": "sc",
+              "name": "Čiré sklo"
             },
-            "properties": {
-              "OBJECTID": 21997,
-              "STATIONID": 5349,
-              "TRASHTYPENAME": "Elektrozařízení",
-              "CLEANINGFREQUENCYCODE": 41,
-              "CONTAINERTYPE": "2150 MEVA SV"
-            }
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 21995,
+            "code": "S2021012TKOV1100SV21995",
+            "sensorId": null,
+            "trashType": {
+              "code": "ko",
+              "name": "Kovy"
+            },
+            "container": {
+              "name": "1100 L mini H - SV",
+              "volume": 1100,
+              "brand": "mini H",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
           }
-
+        ]
+      },
+      {
+        "id": 117,
+        "number": "2021/ 013",
+        "name": "V soudním 774",
+        "access": "volně",
+        "location": "outdoor",
+        "cityDistrict": {
+          "id": 51,
+          "name": "Klánovice",
+          "ruianCode": "538302"
+        },
+        "coordinate": {
+          "lat": -724994.874996,
+          "lon": -1044589.84962
+        },
+        "containers": [
+          {
+            "id": 634,
+            "code": "S2021013TPV1100HV634",
+            "sensorId": null,
+            "trashType": {
+              "code": "p",
+              "name": "Papír"
+            },
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "14"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 636,
+            "code": "S2021013TUV1100HV636",
+            "sensorId": null,
+            "trashType": {
+              "code": "u",
+              "name": "Plast"
+            },
+            "container": {
+              "name": "1100 L normální - HV",
+              "volume": 1100,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "14"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 633,
+            "code": "S2021013TNKV240HV633",
+            "sensorId": null,
+            "trashType": {
+              "code": "nk",
+              "name": "Nápojové kartóny"
+            },
+            "container": {
+              "name": "240 L normální - HV",
+              "volume": 240,
+              "brand": "normální",
+              "dump": "HV"
+            },
+            "cleaningFrequency": {
+              "code": "11"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 635,
+            "code": "S2021013TSBV3350SV635",
+            "sensorId": null,
+            "trashType": {
+              "code": "sb",
+              "name": "Barevné sklo"
+            },
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
+          },
+          {
+            "id": 632,
+            "code": "S2021013TSCV3350SV632",
+            "sensorId": null,
+            "trashType": {
+              "code": "sc",
+              "name": "Čiré sklo"
+            },
+            "container": {
+              "name": "3350 L Atomium Reflex - SV",
+              "volume": 3350,
+              "brand": "Atomium Reflex",
+              "dump": "SV"
+            },
+            "cleaningFrequency": {
+              "code": "41"
+            },
+            "currentPercentFullness": 0
+          }
+        ]
+      },
     ]
 
     const sensorContainersData = [
@@ -367,7 +572,6 @@ describe("SortedWasteStationsWorkerPg", () => {
             "accessibility": "volně",
             "trash_type": "Textil"
           }
-
     ]
 
     const potexContainersData = [
@@ -443,56 +647,59 @@ describe("SortedWasteStationsWorkerPg", () => {
       }
     ];
 
-    const testSensorPicksDataToSave = [
-        {
-          "container_code": "0003/ 043C00614",
-          "percent_before": 82,
-          "percent_now": 11,
-          "event_driven": false,
-          "decrease": 10,
-          "pick_at": "2020-07-21T13:14:07.000Z",
-          "pick_at_utc": "2020-07-21T13:14:07.000Z",
-          "pick_minfilllevel": 50
-        },
-        {
-          "container_code": "0006/ 260C00162",
-          "percent_before": 26,
-          "percent_now": 0,
-          "event_driven": false,
-          "decrease": 20,
-          "pick_at": "2020-07-21T14:00:34.000Z",
-          "pick_at_utc": "2020-07-21T14:00:34.000Z",
-          "pick_minfilllevel": 30
-        }
-      ];
+    const testSensorPicksDataToSave = [{
+      container_code: "0003/ 043C00614",
+      container_id: "9fc2d5d4-9b41-581e-abb4-c9c9d8930745",
+      decrease: 10,
+      event_driven: false,
+      percent_before: 82,
+      percent_now: 11,
+      pick_at: "2020-07-21T13:14:07.000Z",
+      pick_at_utc: "2020-07-21T13:14:07.000Z",
+      pick_minfilllevel: 50,
+      station_code: "0003/ 043"
+    }, {
+      container_code: "0006/ 260C00162",
+      container_id: "a6d9f888-7556-5846-bab3-1b020c3c5f35",
+      decrease: 20,
+      event_driven: false,
+      percent_before: 26,
+      percent_now: 0,
+      pick_at: "2020-07-21T14:00:34.000Z",
+      pick_at_utc: "2020-07-21T14:00:34.000Z",
+      pick_minfilllevel: 30,
+      station_code: "0006/ 260"
+    }];
 
 
-    const testSensorMeasurementDataToSave = [
-        {
-            "container_code": "0008/ 075C01401",
-            "percent_calculated": 35,
-            "upturned": 0,
-            "temperature": 23,
-            "battery_status": 3.78,
-            "measured_at": "2020-07-21T08:53:58.000Z",
-            "measured_at_utc": "2020-07-21T08:53:58.000Z",
-            "prediction": "2020-07-24T22:44:06.000Z",
-            "prediction_utc": "2020-07-24T22:44:06.000Z",
-            "firealarm": 0
-          },
-          {
-            "container_code": "0009/ 148C00275",
-            "percent_calculated": 48,
-            "upturned": 0,
-            "temperature": 21,
-            "battery_status": 3.76,
-            "measured_at": "2020-07-21T08:47:09.000Z",
-            "measured_at_utc": "2020-07-21T08:47:09.000Z",
-            "prediction": "2020-07-28T12:08:44.000Z",
-            "prediction_utc": "2020-07-28T12:08:44.000Z",
-            "firealarm": 0
-          }
-        ]
+    const testSensorMeasurementDataToSave = [{
+      battery_status: 3.78,
+      container_code: "0008/ 075C01401",
+      container_id: "004f1c5c-7fa0-5aea-b428-8e80f07b9a6e",
+      firealarm: 0,
+      measured_at: "2020-07-21T08:53:58.000Z",
+      measured_at_utc: "2020-07-21T08:53:58.000Z",
+      percent_calculated: 35,
+      prediction: "2020-07-24T22:44:06.000Z",
+      prediction_utc: "2020-07-24T22:44:06.000Z",
+      station_code: "0008/ 075",
+      temperature: 23,
+      upturned: 0
+    }, {
+      battery_status: 3.76,
+      container_code: "0009/ 148C00275",
+      container_id: "83da78cd-cb6d-5cec-bb22-ce13d970adf6",
+      firealarm: 0,
+      measured_at: "2020-07-21T08:47:09.000Z",
+      measured_at_utc: "2020-07-21T08:47:09.000Z",
+      percent_calculated: 48,
+      prediction: "2020-07-28T12:08:44.000Z",
+      prediction_utc: "2020-07-28T12:08:44.000Z",
+      station_code: "0009/ 148",
+      temperature: 21,
+      upturned: 0
+    }]
+
 
     const testSensorMeasurementData = [
         {
@@ -526,320 +733,551 @@ describe("SortedWasteStationsWorkerPg", () => {
 
     ];
 
-    const stationsSaveData = [
-        {
-          "accessibility": 2,
-          "address": "Králodvorská 1086/14",
-          "code": "0001/-147",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": 50.08859091200003,
-          "longitude": 14.427678951000075,
-          "source": "ipr"
-        },
-        {
-          "accessibility": 2,
-          "address": "Bílkova 857/20",
-          "code": "0001/-134",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": 50.09114628700007,
-          "longitude": 14.421943246000069,
-          "source": "ipr"
-        },
-        {
-          "accessibility": 3,
-          "address": "Široká 1083/24",
-          "code": "0001/-144",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": 50.089747374256866,
-          "longitude": 14.420333728221522,
-          "source": "sensoneo"
-        },
-        {
-          "accessibility": 1,
-          "address": "Výrobní",
-          "code": "14.42829514200007/50.07942290200008",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": 50.07942290200008,
-          "longitude": 14.42829514200007,
-          "source": "oict"
-        },
-        {
-          "accessibility": 1,
-          "address": "Peroutkova X Na Václavce",
-          "code": "14.389336/50.065129",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": 50.065129,
-          "longitude": 14.389336,
-          "source": "oict"
-        },
-        {
-          "accessibility": 3,
-          "address": "Malešická 2799/22B",
-          "code": "14.4878892/50.0866553",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": "50.0866553",
-          "longitude": "14.4878892",
-          "source": "potex"
-        },
-        {
-          "accessibility": 3,
-          "address": "Jetřichova",
-          "code": "14.2331186/50.0835464",
-          "district": "District-9",
-          "district_code": 1,
-          "latitude": "50.0835464",
-          "longitude": "14.2331186",
-          "source": "potex"
-        }
-      ]
+    const stationsSaveData = [{
+      accessibility: 1,
+      address: "Lochenická 538",
+      code: "2021/ 011",
+      district: "District-9",
+      district_code: 1,
+      id: "62311ad6-30ad-5dc2-993c-74119a6852ff",
+      knsko_id: 115,
+      latitude: 50.09318149699293,
+      longitude: 14.669507124560493,
+      source: "ksnko"
+    }, {
+      accessibility: 1,
+      address: "Medinská 495",
+      code: "2021/ 012",
+      district: "District-9",
+      district_code: 1,
+      id: "08a21340-5464-58d6-8bd2-f9181d4caf50",
+      knsko_id: 116,
+      latitude: 50.09017510696261,
+      longitude: 14.668719038004058,
+      source: "ksnko"
+    }, {
+      accessibility: 1,
+      address: "V soudním 774",
+      code: "2021/ 013",
+      district: "District-9",
+      district_code: 1,
+      id: "bd6b6b06-33e5-5228-bcf0-b538343bca6f",
+      knsko_id: 117,
+      latitude: 50.09498688513222,
+      longitude: 14.670925688316913,
+      source: "ksnko"
+    }, {
+      accessibility: 3,
+      address: "Široká 1083/24",
+      code: "0001/-147",
+      district: "District-9",
+      district_code: 1,
+      id: "f5d9a28d-c4b6-59ac-8722-f438ae0a9b2c",
+      knsko_id: null,
+      latitude: 50.089747374256866,
+      longitude: 14.420333728221522,
+      source: "sensoneo"
+    }, {
+      accessibility: 3,
+      address: "Široká 1083/24",
+      code: "0001/-144",
+      district: "District-9",
+      district_code: 1,
+      id: "8075863b-251a-594c-9f9f-b1dfc18f781d",
+      knsko_id: null,
+      latitude: 50.089747374256866,
+      longitude: 14.420333728221522,
+      source: "sensoneo"
+    }, {
+      accessibility: 3,
+      address: "Ortenovo náměstí 890/2",
+      code: "0001/-134",
+      district: "District-9",
+      district_code: 1,
+      id: "a71902da-676c-5a87-8c78-b048554d9f3f",
+      knsko_id: null,
+      latitude: 50.10692990636685,
+      longitude: 14.443819150355925,
+      source: "sensoneo"
+    }, {
+      accessibility: 1,
+      address: "U Modré školy",
+      code: "14.427678950000075/50.08859091000003",
+      district: "District-9",
+      district_code: 1,
+      id: "091c7f11-24ca-56c2-a03a-7ab215254ba8",
+      knsko_id: null,
+      latitude: 50.08859091000003,
+      longitude: 14.427678950000075,
+      source: "oict"
+    }, {
+      accessibility: 1,
+      address: "Výrobní",
+      code: "14.42829514200007/50.07942290200008",
+      district: "District-9",
+      district_code: 1,
+      id: "62920c7f-9cfe-5853-b0a8-e9f9c59dc032",
+      knsko_id: null,
+      latitude: 50.07942290200008,
+      longitude: 14.42829514200007,
+      source: "oict"
+    }, {
+      accessibility: 1,
+      address: "Peroutkova X Na Václavce",
+      code: "14.389336/50.065129",
+      district: "District-9",
+      district_code: 1,
+      id: "313e385a-6f79-5183-a5eb-8dbb6cf85d99",
+      knsko_id: null,
+      latitude: 50.065129,
+      longitude: 14.389336,
+      source: "oict"
+    }, {
+      accessibility: 3,
+      address: "Žirovnická 3160/8",
+      code: "14.421943246/50.091146287",
+      district: "District-9",
+      district_code: 1,
+      id: "a1ecd2c3-556c-58fb-a0b5-0a0ca7b6a91f",
+      knsko_id: null,
+      latitude: "50.091146287",
+      longitude: "14.421943246",
+      source: "potex"
+    }, {
+      accessibility: 3,
+      address: "Malešická 2799/22B",
+      code: "14.4878892/50.0866553",
+      district: "District-9",
+      district_code: 1,
+      id: "e8db91b9-c094-5283-91e6-f07d84771791",
+      knsko_id: null,
+      latitude: "50.0866553",
+      longitude: "14.4878892",
+      source: "potex"
+    }, {
+      accessibility: 3,
+      address: "Jetřichova",
+      code: "14.2331186/50.0835464",
+      district: "District-9",
+      district_code: 1,
+      id: "e03cc69e-cadb-5ce0-ab6c-fa94fec98c49",
+      knsko_id: null,
+      latitude: "50.0835464",
+      longitude: "14.2331186",
+      source: "potex"
+    }]
+    ;
 
-
-    const containersSaveData = [
-        {
-          code: '0001/-147C21993',
-          cleaning_frequency_interval: 4,
-          cleaning_frequency_frequency: 1,
-          station_code: '0001/-147',
-          total_volume: undefined,
-          trash_type: 2,
-          prediction: undefined,
-          bin_type: '2150 MEVA SV',
-          installed_at: undefined,
-          network: undefined,
-          source: 'ipr'
-        },
-        {
-          code: '0001/-147C21994',
-          cleaning_frequency_interval: 4,
-          cleaning_frequency_frequency: 1,
-          station_code: '0001/-147',
-          total_volume: undefined,
-          trash_type: 2,
-          prediction: undefined,
-          bin_type: '2150 MEVA SV',
-          installed_at: undefined,
-          network: undefined,
-          source: 'ipr'
-        },
-        {
-          code: '0001/-147C21997',
-          cleaning_frequency_interval: 4,
-          cleaning_frequency_frequency: 1,
-          station_code: '0001/-147',
-          total_volume: undefined,
-          trash_type: 2,
-          prediction: undefined,
-          bin_type: '2150 MEVA SV',
-          installed_at: undefined,
-          network: undefined,
-          source: 'ipr'
-        },
-        {
-          trash_type: 5,
-          code: '0001/-147C01602',
-          station_code: '0001/-147',
-          total_volume: 2000,
-          prediction: '2020-07-23T23:17:53.000Z',
-          bin_type: 'Semi-underground',
-          installed_at: '2019-01-28T00:00:00.000Z',
-          network: 'Lora',
-          source: 'sensoneo'
-        },
-        {
-          trash_type: 3,
-          code: '0001/-147C01603',
-          station_code: '0001/-147',
-          total_volume: 1100,
-          prediction: '2020-08-16T17:44:42.000Z',
-          bin_type: 'Semi-underground',
-          installed_at: '2019-01-28T00:00:00.000Z',
-          network: 'Lora',
-          source: 'sensoneo'
-        },
-        {
-          code: '0001/-147C14.427678950000075-50.08859091000003-diakonie-broumov_u-modre-skoly',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '0001/-147',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'oict'
-        },
-        {
-          code: '0001/-147C14.427678950000075-50.08859091000003-diakonie-broumov_zahradnickova',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '0001/-147',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'oict'
-        },
-        {
-          code: '0001/-134C21995',
-          cleaning_frequency_interval: 4,
-          cleaning_frequency_frequency: 1,
-          station_code: '0001/-134',
-          total_volume: undefined,
-          trash_type: 2,
-          prediction: undefined,
-          bin_type: '2150 MEVA SV',
-          installed_at: undefined,
-          network: undefined,
-          source: 'ipr'
-        },
-        {
-          code: '0001/-134C21996',
-          cleaning_frequency_interval: 4,
-          cleaning_frequency_frequency: 1,
-          station_code: '0001/-134',
-          total_volume: undefined,
-          trash_type: 2,
-          prediction: undefined,
-          bin_type: '2150 MEVA SV',
-          installed_at: undefined,
-          network: undefined,
-          source: 'ipr'
-        },
-        {
-          trash_type: 6,
-          code: '0001/-134C00404',
-          station_code: '0001/-134',
-          total_volume: 3000,
-          prediction: '2020-07-22T10:41:05.000Z',
-          bin_type: 'Schäfer/Europa-OV',
-          installed_at: '2018-12-18T00:00:00.000Z',
-          network: 'SIGFOX',
-          source: 'sensoneo'
-        },
-        {
-          code: '0001/-134C14.421943246-50.091146287',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '0001/-134',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'potex'
-        },
-        {
-          trash_type: 4,
-          code: '0001/-144C01604',
-          station_code: '0001/-144',
-          total_volume: 1100,
-          prediction: '2020-08-01T21:26:55.000Z',
-          bin_type: 'Semi-underground',
-          installed_at: '2019-01-28T00:00:00.000Z',
-          network: 'SIGFOX',
-          source: 'sensoneo'
-        },
-        {
-          trash_type: 5,
-          code: '0001/-144C00403',
-          station_code: '0001/-144',
-          total_volume: 3000,
-          prediction: null,
-          bin_type: 'Schäfer/Europa-OV',
-          installed_at: '2018-12-18T00:00:00.000Z',
-          network: 'SIGFOX',
-          source: 'sensoneo'
-        },
-        {
-          code: '14.42829514200007/50.07942290200008C14.42829514200007-50.07942290200008-diakonie-broumov_vyrobni',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.42829514200007/50.07942290200008',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'oict'
-        },
-        {
-          code: '14.42829514200007/50.07942290200008C14.428295143-50.079422903',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.42829514200007/50.07942290200008',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'potex'
-        },
-        {
-          code: '14.389336/50.065129C14.389336-50.065129-diakonie-broumov_peroutkova-x-na-vaclavce',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.389336/50.065129',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'oict'
-        },
-        {
-          code: '14.389336/50.065129C14.389336-50.065129',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.389336/50.065129',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'potex'
-        },
-        {
-          code: '14.4878892/50.0866553CPraha 3',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.4878892/50.0866553',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'potex'
-        },
-        {
-          code: '14.2331186/50.0835464CHostivice',
-          cleaning_frequency_interval: 0,
-          cleaning_frequency_frequency: 0,
-          station_code: '14.2331186/50.0835464',
-          total_volume: null,
-          trash_type: 8,
-          prediction: null,
-          bin_type: null,
-          installed_at: null,
-          network: null,
-          source: 'potex'
-        }
-      ]
-
+    const containersSaveData = [{
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 3,
+      code: "S2021011TPV1100HV623",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "2887c2eb-8c9e-537b-8c89-a2d55b91df8e",
+      installed_at: null,
+      knsko_code: "S2021011TPV1100HV623",
+      knsko_id: 623,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 5
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 3,
+      code: "S2021011TPV1100HV624",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "a4191f98-cbc2-5e4f-86e9-73deeb5bbcbb",
+      installed_at: null,
+      knsko_code: "S2021011TPV1100HV624",
+      knsko_id: 624,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 5
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 4,
+      code: "S2021011TUV1100HV626",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "5490bdb2-fd14-5129-bd5a-d81fca9d90f9",
+      installed_at: null,
+      knsko_code: "S2021011TUV1100HV626",
+      knsko_id: 626,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 6
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 1,
+      code: "S2021011TNKV240HV622",
+      company: null,
+      container_type: "240 L normální - HV",
+      id: "4b852a06-f387-5b73-8465-b2e987ce90da",
+      installed_at: null,
+      knsko_code: "S2021011TNKV240HV622",
+      knsko_id: 622,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 4
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021011TSBV3350SV625",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "852e2e55-e116-529f-8d76-b71582db329c",
+      installed_at: null,
+      knsko_code: "S2021011TSBV3350SV625",
+      knsko_id: 625,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 1
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021011TSCV3350SV621",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "6eaea1c0-9f38-58c8-90f7-668b27785200",
+      installed_at: null,
+      knsko_code: "S2021011TSCV3350SV621",
+      knsko_id: 621,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 011",
+      total_volume: null,
+      trash_type: 7
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 3,
+      code: "S2021012TPV1100HV629",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "feec14e8-9a69-56c9-8e6f-b834fd70687f",
+      installed_at: null,
+      knsko_code: "S2021012TPV1100HV629",
+      knsko_id: 629,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 5
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 4,
+      code: "S2021012TUV1100HV631",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "248d4901-7d84-510d-be19-54a6eb1777d0",
+      installed_at: null,
+      knsko_code: "S2021012TUV1100HV631",
+      knsko_id: 631,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 6
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 1,
+      code: "S2021012TNKV240HV628",
+      company: null,
+      container_type: "240 L normální - HV",
+      id: "fb650460-8a55-5a26-8229-0e352e4e1d21",
+      installed_at: null,
+      knsko_code: "S2021012TNKV240HV628",
+      knsko_id: 628,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 4
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021012TSBV3350SV630",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "13375fa9-81c0-5c1a-bf63-b788f41e95d1",
+      installed_at: null,
+      knsko_code: "S2021012TSBV3350SV630",
+      knsko_id: 630,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 1
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021012TSCV3350SV627",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "d16fdaeb-392b-5f45-91c7-9f8bd11a2621",
+      installed_at: null,
+      knsko_code: "S2021012TSCV3350SV627",
+      knsko_id: 627,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 7
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021012TKOV1100SV21995",
+      company: null,
+      container_type: "1100 L mini H - SV",
+      id: "55f21676-489b-5d4a-a6ef-cb1957fe1449",
+      installed_at: null,
+      knsko_code: "S2021012TKOV1100SV21995",
+      knsko_id: 21995,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 012",
+      total_volume: null,
+      trash_type: 3
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 4,
+      code: "S2021013TPV1100HV634",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "9a277c08-f564-50dc-8583-ebe8f598e0c3",
+      installed_at: null,
+      knsko_code: "S2021013TPV1100HV634",
+      knsko_id: 634,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 013",
+      total_volume: null,
+      trash_type: 5
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 4,
+      code: "S2021013TUV1100HV636",
+      company: null,
+      container_type: "1100 L normální - HV",
+      id: "76e79816-8022-5cf9-867c-bce1c5b16be9",
+      installed_at: null,
+      knsko_code: "S2021013TUV1100HV636",
+      knsko_id: 636,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 013",
+      total_volume: null,
+      trash_type: 6
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 1,
+      cleaning_frequency_interval: 1,
+      code: "S2021013TNKV240HV633",
+      company: null,
+      container_type: "240 L normální - HV",
+      id: "912efc54-fea1-5b64-af05-a650bf866f32",
+      installed_at: null,
+      knsko_code: "S2021013TNKV240HV633",
+      knsko_id: 633,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 013",
+      total_volume: null,
+      trash_type: 4
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021013TSBV3350SV635",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "2ef22c59-515e-5e6a-ba40-699cdd8a3e2c",
+      installed_at: null,
+      knsko_code: "S2021013TSBV3350SV635",
+      knsko_id: 635,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 013",
+      total_volume: null,
+      trash_type: 1
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 4,
+      cleaning_frequency_interval: 1,
+      code: "S2021013TSCV3350SV632",
+      company: null,
+      container_type: "3350 L Atomium Reflex - SV",
+      id: "2e01cefe-80d4-5d30-98ea-e37431e447e9",
+      installed_at: null,
+      knsko_code: "S2021013TSCV3350SV632",
+      knsko_id: 632,
+      network: null,
+      prediction: null,
+      source: "ksnko",
+      station_code: "2021/ 013",
+      total_volume: null,
+      trash_type: 7
+    }, {
+      bin_type: "Semi-underground",
+      code: "0001/-147C01602",
+      id: "33f18e17-d294-58af-a021-22f95e962b31",
+      installed_at: "2019-01-28T00:00:00.000Z",
+      network: "Lora",
+      prediction: "2020-07-23T23:17:53.000Z",
+      source: "sensoneo",
+      station_code: "0001/-147",
+      total_volume: 2000,
+      trash_type: 5
+    }, {
+      bin_type: "Semi-underground",
+      code: "0001/-147C01603",
+      id: "56412c30-8106-5efc-8ac4-b1bf40c8b468",
+      installed_at: "2019-01-28T00:00:00.000Z",
+      network: "Lora",
+      prediction: "2020-08-16T17:44:42.000Z",
+      source: "sensoneo",
+      station_code: "0001/-147",
+      total_volume: 1100,
+      trash_type: 3
+    }, {
+      bin_type: "Semi-underground",
+      code: "0001/-144C01604",
+      id: "4ea60a9d-7cbe-518a-860d-75535c9bf398",
+      installed_at: "2019-01-28T00:00:00.000Z",
+      network: "SIGFOX",
+      prediction: "2020-08-01T21:26:55.000Z",
+      source: "sensoneo",
+      station_code: "0001/-144",
+      total_volume: 1100,
+      trash_type: 4
+    }, {
+      bin_type: "Schäfer/Europa-OV",
+      code: "0001/-144C00403",
+      id: "52d2c520-76d2-5f39-b265-ac96a2bbcb00",
+      installed_at: "2018-12-18T00:00:00.000Z",
+      network: "SIGFOX",
+      prediction: null,
+      source: "sensoneo",
+      station_code: "0001/-144",
+      total_volume: 3000,
+      trash_type: 5
+    }, {
+      bin_type: "Schäfer/Europa-OV",
+      code: "0001/-134C00404",
+      id: "8dd2c0ae-4375-5e4e-98d3-31ead19c8370",
+      installed_at: "2018-12-18T00:00:00.000Z",
+      network: "SIGFOX",
+      prediction: "2020-07-22T10:41:05.000Z",
+      source: "sensoneo",
+      station_code: "0001/-134",
+      total_volume: 3000,
+      trash_type: 6
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 0,
+      cleaning_frequency_interval: 0,
+      code: "14.42829514200007/50.07942290200008C14.428295143-50.079422903",
+      id: "5cbc59c7-f157-5de3-a27d-1d7476127843",
+      installed_at: null,
+      network: null,
+      prediction: null,
+      source: "potex",
+      station_code: "14.42829514200007/50.07942290200008",
+      total_volume: null,
+      trash_type: 8
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 0,
+      cleaning_frequency_interval: 0,
+      code: "14.389336/50.065129C14.389336-50.065129",
+      id: "8c6664fe-43a7-5129-a7ae-14771091e21c",
+      installed_at: null,
+      network: null,
+      prediction: null,
+      source: "potex",
+      station_code: "14.389336/50.065129",
+      total_volume: null,
+      trash_type: 8
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 0,
+      cleaning_frequency_interval: 0,
+      code: "14.421943246/50.091146287CPraha 10",
+      id: "aa890ec9-4bc0-56f8-85f5-67c961017b36",
+      installed_at: null,
+      network: null,
+      prediction: null,
+      source: "potex",
+      station_code: "14.421943246/50.091146287",
+      total_volume: null,
+      trash_type: 8
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 0,
+      cleaning_frequency_interval: 0,
+      code: "14.4878892/50.0866553CPraha 3",
+      id: "6d6ad346-7532-5a9c-8fa0-4bbc51564502",
+      installed_at: null,
+      network: null,
+      prediction: null,
+      source: "potex",
+      station_code: "14.4878892/50.0866553",
+      total_volume: null,
+      trash_type: 8
+    }, {
+      bin_type: null,
+      cleaning_frequency_frequency: 0,
+      cleaning_frequency_interval: 0,
+      code: "14.2331186/50.0835464CHostivice",
+      id: "2ae92035-f8b9-5405-a797-5b564ea72fba",
+      installed_at: null,
+      network: null,
+      prediction: null,
+      source: "potex",
+      station_code: "14.2331186/50.0835464",
+      total_volume: null,
+      trash_type: 8
+    }];
 
     // tslint:enable
 
@@ -871,14 +1309,7 @@ describe("SortedWasteStationsWorkerPg", () => {
             },
         });
 
-        const iprStationsDataStream =  new DataSourceStream({
-            objectMode: true,
-            read: () => {
-                return;
-            },
-        });
-
-        const iprContainersDataStream =  new DataSourceStream({
+        const ksnkoContainersDataStream =  new DataSourceStream({
             objectMode: true,
             read: () => {
                 return;
@@ -916,13 +1347,14 @@ describe("SortedWasteStationsWorkerPg", () => {
         sandbox.spy(worker.sensorsPicksDatasource, "getAll");
         sandbox.stub(worker.sensorsPicksModel, "save");
 
-        sandbox.stub(worker.iprStationsDatasource, "getOutputStream")
-        .callsFake(() => getOutputStream(iprStationsData, iprStationsDataStream));
-        sandbox.spy(worker.iprStationsDatasource, "getAll");
+        sandbox.stub(worker, "getKSNKOToken")
+        .callsFake(() => {
+          return "token";
+        });
 
-        sandbox.stub(worker.iprContainersDatasource, "getOutputStream")
-        .callsFake(() => getOutputStream(iprContainersData, iprContainersDataStream));
-        sandbox.spy(worker.iprContainersDatasource, "getAll");
+        sandbox.stub(worker.ksnkoStationsDatasource, "getOutputStream")
+        .callsFake(() => getOutputStream(ksnkoStationsData, ksnkoContainersDataStream));
+        sandbox.spy(worker.ksnkoStationsDatasource, "getAll");
 
         sandbox.stub(worker.sensorsContainersDatasource, "getOutputStream")
         .callsFake(() => getOutputStream(sensorContainersData, sensorsContainersDataStream));
@@ -944,7 +1376,7 @@ describe("SortedWasteStationsWorkerPg", () => {
             return {
                 properties: {
                     id: 1,
-                    name: "District-9",
+                    slug: "District-9",
                 },
             };
         });
@@ -992,8 +1424,8 @@ describe("SortedWasteStationsWorkerPg", () => {
 
     it("should calls the correct methods by updateStationsAndContainers method", async () => {
         await worker.updateStationsAndContainers();
-        sandbox.assert.calledOnce(worker.iprStationsDatasource.getAll);
-        sandbox.assert.calledOnce(worker.iprContainersDatasource.getAll);
+        sandbox.assert.calledOnce(worker.getKSNKOToken);
+        sandbox.assert.calledOnce(worker.ksnkoStationsDatasource.getAll);
         sandbox.assert.calledOnce(worker.sensorsContainersDatasource.getAll);
         sandbox.assert.calledOnce(worker.oictDatasource.getAll);
         sandbox.assert.calledOnce(worker.potexDatasource.getAll);
@@ -1003,8 +1435,8 @@ describe("SortedWasteStationsWorkerPg", () => {
         sandbox.assert.calledWith(worker.sensorsContainersModel.saveBySqlFunction, containersSaveData, ["code"]);
 
         sandbox.assert.callOrder(
-            worker.iprStationsDatasource.getAll,
-            worker.iprContainersDatasource.getAll,
+            worker.getKSNKOToken,
+            worker.ksnkoStationsDatasource.getAll,
             worker.sensorsContainersDatasource.getAll,
             worker.oictDatasource.getAll,
             worker.potexDatasource.getAll,

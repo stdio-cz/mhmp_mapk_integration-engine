@@ -58,23 +58,29 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         switch (key) {
             case "Barevné sklo":
             case "glass_coloured":
+            case "sb":
                 return { description: "Barevné sklo", id: 1 };
             case "Elektrozařízení":
                 return { description: "Elektrozařízení", id: 2 };
             case "Kovy":
             case "metal":
+            case "ko":
                 return { description: "Kovy", id: 3 };
             case "Nápojové kartóny":
             case "beverage_cartons":
+            case "nk":
                 return { description: "Nápojové kartóny", id: 4 };
             case "Papír":
             case "paper":
+            case "p":
                 return { description: "Papír", id: 5 };
             case "Plast":
             case "plastic":
+            case "u":
                 return { description: "Plast", id: 6 };
             case "Čiré sklo":
             case "glass_white":
+            case "sc":
                 return { description: "Čiré sklo", id: 7 };
             case "Textil":
                 return { description: "Textil", id: 8 };

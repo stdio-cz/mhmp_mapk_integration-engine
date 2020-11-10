@@ -4,7 +4,6 @@ import { CustomError } from "@golemio/errors";
 import { DataSourceStream, HTTPProtocolStrategy, IProtocolStrategy} from "./";
 
 import axios, { AxiosRequestConfig, Method } from "axios";
-import request = require("request");
 
 import * as https from "https";
 
