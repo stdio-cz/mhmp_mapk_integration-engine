@@ -997,6 +997,16 @@ const definitions: IQueueDefinition[] = [
                 worker: SortedWasteStationsWorkerPg,
                 workerMethod: "updateStationsAndContainers",
             },
+            {
+                name: "updateSortedWastePicksPg",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: SortedWasteStationsWorkerPg,
+                workerMethod: "updateSortedWastePicks",
+            },
         ],
     },
     {

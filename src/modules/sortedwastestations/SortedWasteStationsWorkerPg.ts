@@ -13,12 +13,17 @@ import { CityDistricts, SortedWasteStations } from "@golemio/schema-definitions"
 import { JSONSchemaValidator, Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import {
+    CSVDataTypeStrategy,
+    DataSource,
+    DataSourceStream,
     DataSourceStreamed,
     HTTPProtocolStrategyStreamed,
     IHTTPSettings,
+    ISFTPSettings,
     JSONDataTypeStrategy,
+    SFTPProtocolStrategy,
 } from "../../core/datasources";
-import { DataSourceStream } from "../../core/datasources/DataSourceStream";
+
 import { log } from "../../core/helpers";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
@@ -27,10 +32,11 @@ import {
     SortedWasteTransformation,
 } from "./";
 
+import * as moment from "moment";
+
 export class SortedWasteStationsWorkerPg extends BaseWorker {
     private oictDatasource: DataSourceStreamed;
     private potexDatasource: DataSourceStreamed;
-    private iprTransformation: IPRSortedWasteStationsTransformation;
     private stationsModel: PostgresModel;
     private cityDistrictsModel: MongoModel;
     private sensorsContainersDatasource: DataSourceStreamed;
@@ -43,12 +49,56 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
     private sensorsPicksModel: PostgresModel;
     private ksnkoStationsDatasource: DataSourceStreamed;
     private sortedWasteTransformation: SortedWasteTransformation;
+    private sortedWastePicksDatasource: DataSource;
+    private SFTPSettings: ISFTPSettings;
+    private pickDatesModel: PostgresModel;
 
     constructor() {
         super();
 
+        this.SFTPSettings = {
+            algorithms: {
+                cipher: [
+                    "aes256-cbc",
+                  ],
+                serverHostKey: ["ssh-rsa", "ssh-dss"],
+              },
+              encoding: "win1250",
+            host: config.datasources.SortedWastePicks.host,
+            password: config.datasources.SortedWastePicks.password,
+            port: config.datasources.SortedWastePicks.port,
+            username: config.datasources.SortedWastePicks.username,
+        };
+
+        this.sortedWastePicksDatasource = new DataSource(
+            "sortedWastePicksDatasource",
+            new SFTPProtocolStrategy(this.SFTPSettings),
+            new CSVDataTypeStrategy({
+                fastcsvParams: {
+                    delimiter: ";",
+                    headers: false,
+                },
+                subscribe: ((json: any) => {
+                    return json;
+                }),
+            }),
+            null,
+        );
+
+        this.pickDatesModel = new PostgresModel(
+            SortedWasteStations.containersPickDates.name + "Model",
+            {
+                outputSequelizeAttributes: SortedWasteStations.containersPickDates.outputSequelizeAttributes,
+                pgTableName: SortedWasteStations.containersPickDates.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new JSONSchemaValidator(
+                SortedWasteStations.containersPickDates.name + "ModelValidator",
+                SortedWasteStations.containersPickDates.outputPickDatestsOutputJSONSchema,
+            ),
+        );
+
         this.sortedWasteTransformation = new SortedWasteTransformation();
-        this.iprTransformation = new IPRSortedWasteStationsTransformation();
 
         this.ksnkoStationsDatasource = new DataSourceStreamed(
             SortedWasteStations.ksnko.name + "StationsDataSource",
@@ -216,6 +266,28 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 SortedWasteStations.sensorsPicks.outputMongoosePgSchemaObject,
             ),
         );
+    }
+
+    public updateSortedWastePicks = async (msg: any): Promise<void> => {
+        try {
+            this.SFTPSettings.filename = await this.sortedWastePicksDatasource.getLastModified();
+            this.sortedWastePicksDatasource.protocolStrategy.setConnectionSettings(this.SFTPSettings);
+
+            const dates = await this.sortedWasteTransformation.getSortedWastePicksWithDates(
+                await this.sortedWastePicksDatasource.getAll(),
+                this.sensorsContainersModel,
+            );
+
+            await this.pickDatesModel.query(`delete from ${SortedWasteStations.containersPickDates.pgTableName}
+            where pick_date >= '${moment().format("YYYY-MM-DD 12:00:00")}'`);
+
+            await this.pickDatesModel.saveBySqlFunction(
+                dates,
+                ["container_id", "pick_date"],
+            );
+        } catch (err) {
+            throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
+        }
     }
 
     public updateSensorsPicks  = async (msg: any): Promise<void> => {
@@ -413,7 +485,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         log.verbose("Saving stations");
 
         await this.stationsModel.saveBySqlFunction(
-            this.uniqueArrat(stations, "code"),
+            this.uniqueArray(stations, "code"),
             ["code"],
         );
 
@@ -423,14 +495,14 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         //          this.uniqueArrat(containers, "code"));
 
         await this.sensorsContainersModel.saveBySqlFunction(
-            this.uniqueArrat(containers, "code"),
+            this.uniqueArray(containers, "code"),
             ["code"],
         );
 
         return;
     }
 
-    private uniqueArrat = (arr: any[], prop: any) => {
+    private uniqueArray = (arr: any[], prop: any) => {
         const arrP = arr.map((el: any) => el[prop]);
         return arr.filter( (obj: any, index: number) => {
             return arrP.indexOf(obj[prop]) === index;

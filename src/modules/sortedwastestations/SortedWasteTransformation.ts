@@ -1,17 +1,243 @@
 "use strict";
 
+import { config } from "../../core/config";
 import {
     IPRSortedWasteStationsTransformation,
 } from "./";
 
+import { PostgresModel } from "../../core/models";
+
 import * as proj4 from "proj4";
 import * as getUuid from "uuid-by-string";
+
+import * as moment from "moment";
 
 export class SortedWasteTransformation {
     private iprTransformation: IPRSortedWasteStationsTransformation;
 
     constructor() {
         this.iprTransformation = new IPRSortedWasteStationsTransformation();
+    }
+
+    public getSortedWastePicksWithDates = async (containers: any[], containerModel: PostgresModel) => {
+        const containersPickDates = {};
+        const foundContainers = {};
+        const outData = [];
+        let nomatch = 0;
+        let diffFreq = 0;
+
+        for (const container of containers) {
+            // trash type and station code (sometimes missing)
+            if (container[5] && container[11]) {
+                // multiple trash types - U,P,E
+                for (const trash of (container[5].split(","))) {
+                    let matchingContainer: any;
+                    if (!foundContainers[`${container[11]}${trash}`]) {
+                        matchingContainer = await this.getMatchingContainerFromDB(
+                            container[11],
+                            this.iprTransformation.getTrashTypeByString(trash).id,
+                            containerModel,
+                        );
+                        foundContainers[`${container[11]}${trash}`] = matchingContainer;
+                    } else {
+                        matchingContainer = foundContainers[`${container[11]}${trash}`];
+                    }
+                    if (matchingContainer) {
+                        if (!containersPickDates[matchingContainer.id]) {
+                            containersPickDates[matchingContainer.id] = {
+                                code: +container[3],
+                                codeStored: +`0${
+                                    (matchingContainer.cleaning_frequency_interval || 0 * 10) +
+                                    matchingContainer.cleaning_frequency_frequency || 0}`,
+                                counted: [],
+                                raw: [],
+                                storedCleaningFrequency: matchingContainer.cleaning_frequency_frequency,
+                                storedCleaningInterval: matchingContainer.cleaning_frequency_interval,
+                            };
+                        }
+                        if (containersPickDates[matchingContainer.id].code !==
+                            containersPickDates[matchingContainer.id].codeStored) {
+                            containersPickDates[matchingContainer.id].codeStored =
+                            containersPickDates[matchingContainer.id].code;
+                            // prepared for the future when data will be fixed
+                            diffFreq++;
+                        }
+                        containersPickDates[matchingContainer.id].raw.push({
+                            frequency: container[12],
+                            from: container[9],
+                            to: container[10],
+                        });
+                    } else {
+                        // prepared for the future when data will be fixed
+                        nomatch++;
+                    }
+                }
+            }
+        }
+
+        const yearFromNow = moment(moment().add(1, "years").format("YYYY-MM-DD 12:00:00"));
+
+        for (const id of Object.keys(containersPickDates)) {
+            // filter out duplicities
+            containersPickDates[id].raw = (containersPickDates[id].raw || [])
+                .filter((pick: any, index: number, self: any[]) =>
+                    index === self.findIndex((t: any) => (
+                        t.from === pick.from &&
+                        t.to === pick.to &&
+                        t.frequency === pick.frequency &&
+                        pick.frequency &&
+                        pick.from
+                    )),
+                );
+            // sort by from dates
+            containersPickDates[id].raw.sort((a: any, b: any) => (a.from > b.from) ? 1 : -1);
+            // set `to` dates - not present everywhere
+            containersPickDates[id].raw.forEach((pick: any, i: number) => {
+                if (pick.from) {
+                    pick.from = moment(pick.from);
+                    if (pick.to) {
+                        pick.to = moment(pick.to);
+                    } else {
+                        if (containersPickDates[id].raw[i + 1]) {
+                            pick.to = moment(containersPickDates[id].raw[i + 1].from);
+                        } else {
+                            pick.to = yearFromNow;
+                        }
+                    }
+                    pick.parsed = this.parsePicksIntervalString(pick.frequency);
+                }
+            });
+            // calculate pick dates
+            this.getPickDates(containersPickDates[id]).forEach((date: any) => {
+                outData.push({
+                    container_id: id,
+                    pick_date: `${date.format()}`,
+
+                });
+            });
+        }
+
+        return outData;
+    }
+
+    public getPickDates = (container: any) => {
+
+        const today = moment(moment().format("YYYY-MM-DD 12:00:00"));
+        const thisYear = today.year();
+        const calculateToTheFutureDays = config.datasources.SortedWastePicks.calculateToFutureDays;
+        const calculateToTheFuture = moment().add(calculateToTheFutureDays, "days");
+
+        const calculatedPickDates = [];
+        container.raw.forEach((pick: any) => {
+            const weeksOffset = Math.floor(container.code / 10);
+            // only future records
+            if (
+                ((thisYear <= pick.parsed.year) || !thisYear) &&
+                pick.from <= today &&
+                pick.to >= today &&
+                pick.parsed.days.length
+            ) {
+                let curProcDate = today;
+                let curOffset = 0;
+                let count = 0;
+
+                while (calculateToTheFuture >= curProcDate && count < 200) {
+                    // just in case - dirty data
+                    count++;
+                    pick.parsed.days.forEach((day: number) => {
+                        // new moment object, because it passes reference
+                        const calculatedDate = moment(moment().format("YYYY-MM-DD 12:00:00")).day(day + curOffset);
+
+                        if (calculatedDate >= today) {
+                            if (pick.parsed.weeks.length) {
+                                if (pick.parsed.weeks.includes(calculatedDate.week())) {
+                                    calculatedPickDates.push(calculatedDate);
+                                }
+                            } else {
+                                calculatedPickDates.push(calculatedDate);
+                            }
+                        }
+                        curProcDate = calculatedDate;
+                    });
+                    if (pick.parsed.weeks.length) {
+                        curOffset += 7;
+                    } else {
+                        curOffset += 7 * weeksOffset;
+                    }
+                }
+            }
+        });
+
+        return calculatedPickDates;
+    }
+
+    public getWeekDayFromString = (day: string) => {
+        switch (day) {
+            case "Po":
+                return 1;
+            case "Út":
+                return 2;
+            case "St":
+                return 3;
+            case "Čt":
+                return 4;
+            case "Pá":
+                return 5;
+            case "So":
+                return 6;
+            case "Ne":
+                return 7;
+            default:
+                return null;
+        }
+    }
+
+    public parsePicksIntervalString = (picksString: string) => {
+        // "2020-Po,Ne,2,6,10,14,18,22,26,30,34,38,42,46,50"
+        // "2020-Po,Ne"
+        const picksIntervals = {
+            days: [],
+            weeks: [],
+            year: null,
+        };
+
+        const toYear = picksString.split("-");
+
+        picksIntervals.year = toYear[0];
+
+        const toDaysAndWeeks = toYear[1].split(",");
+
+        toDaysAndWeeks.forEach((el: any) => {
+            const day = this.getWeekDayFromString(el);
+
+            if (day !== null) {
+                picksIntervals.days.push(day);
+            } else if (typeof +el === "number") {
+                picksIntervals.weeks.push(+el);
+            }
+
+            picksIntervals.days.sort();
+        });
+
+        return picksIntervals;
+    }
+
+    public getMatchingContainerFromDB = async (stationCode: string, trashType: number, model: PostgresModel) => {
+        return await model.findOne({
+            attributes: [
+                "id",
+                "station_code",
+                "code",
+                "trash_type",
+                "cleaning_frequency_frequency",
+                "cleaning_frequency_interval",
+            ],
+            raw: true,
+            where: {
+                station_code: stationCode,
+                trash_type: trashType,
+            },
+        });
     }
 
     public getStationCode = (containerCode: string): string => {
@@ -132,8 +358,8 @@ export class SortedWasteTransformation {
                     stationsByCode[stationCode].containers.push({
                         id: getUuid(code),
                         code,
-                        cleaning_frequency_interval: Math.floor((container?.cleaning_frequency || 0) / 10),
-                        cleaning_frequency_frequency: (container?.cleaning_frequency || 0) % 10,
+                        cleaning_frequency_interval: (container?.cleaning_frequency || 0) % 10,
+                        cleaning_frequency_frequency: Math.floor((container?.cleaning_frequency || 0) / 10),
                         station_code: stationCode,
                         total_volume: null,
                         trash_type: this.iprTransformation.getTrashTypeByString(container?.trash_type).id,
@@ -223,8 +449,8 @@ export class SortedWasteTransformation {
                     bin_type: null,
                     installed_at: null,
                     network: null,
-                    cleaning_frequency_interval: container?.cleaningFrequency?.code  % 10,
-                    cleaning_frequency_frequency: Math.floor(container?.cleaningFrequency?.code / 10),
+                    cleaning_frequency_interval: Math.floor(container?.cleaningFrequency?.code / 10),
+                    cleaning_frequency_frequency: container?.cleaningFrequency?.code  % 10,
                     company: null,
                     container_type: container?.container?.name,
                     trash_type: this.iprTransformation.getTrashTypeByString(container?.trashType?.code).id ||
@@ -269,8 +495,6 @@ export class SortedWasteTransformation {
                 if (trashType === storedContainer.trash_type) {
                     storedContainer.code = container.code;
                     storedContainer.id = getUuid(container.code);
-                    storedContainer.knsko_code = null;
-                    storedContainer.knsko_id = null;
                     storedContainer.station_code = storedContainer.station_code || this.getStationCode(container.code);
                     storedContainer.total_volume = container.total_volume;
                     storedContainer.trash_type = storedContainer.trash_type ||

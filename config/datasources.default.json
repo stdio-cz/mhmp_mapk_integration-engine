@@ -88,7 +88,13 @@
     "WazeCCP": "https://world-georss.waze.com/rtserver/web/TGeoRSS?format=JSON&polygon=14.613000,50.291000;14.468000,50.308000;14.324000,50.287000;14.290000,50.231000;14.178000,50.132000;14.153000,49.974000;14.465000,49.885000;14.863000,49.929000;14.752000,50.128000;14.829000,50.250000;14.613000,50.291000;14.613000,50.291000",
     "KSNKOApi": {
         "url": "https://ksnko.praha.eu/api",
-        "user":"apiOICT",
-        "password": "HP99DatPlat!"
+        "user":"",
+        "password": ""
+    },
+    "SortedWastePicks": {
+        "host": "217.64.8.178",
+        "username":"",
+        "password": "",
+        "calculateToFutureDays": 90
     }
 }
