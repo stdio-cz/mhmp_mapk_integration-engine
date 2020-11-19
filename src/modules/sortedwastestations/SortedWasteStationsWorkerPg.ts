@@ -351,15 +351,15 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
     public getKSNKOToken = async (): Promise<AxiosResponse> => {
         return (await axios.request({
             data : JSON.stringify({
-                password: config.datasources.KSNKO.pass,
-                username: config.datasources.KSNKO.user,
+                password: config.datasources.KSNKOApi.pass,
+                username: config.datasources.KSNKOApi.user,
             }),
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
             },
             method: "POST" as Method,
-            url: `${config.datasources.KSNKO.url}/login`,
+            url: `${config.datasources.KSNKOApi.url}/login`,
         } as AxiosRequestConfig))?.data?.token;
     }
 
@@ -387,7 +387,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 "accept": "application/json",
             },
             method: "GET",
-            url: `${config.datasources.KSNKO.url}/stations?full=1&detail=1`,
+            url: `${config.datasources.KSNKOApi.url}/stations?full=1&detail=1`,
         });
 
         ksnkoStationsHTTPProtocolStrategyStreamed.setStreamTransformer(JSONStream.parse("data.*"));
