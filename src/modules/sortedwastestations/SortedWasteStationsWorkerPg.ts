@@ -351,7 +351,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
     public getKSNKOToken = async (): Promise<AxiosResponse> => {
         return (await axios.request({
             data : JSON.stringify({
-                password: config.datasources.KSNKOApi.pass,
+                password: config.datasources.KSNKOApi.password,
                 username: config.datasources.KSNKOApi.user,
             }),
             headers: {
