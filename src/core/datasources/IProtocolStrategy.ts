@@ -50,6 +50,29 @@ export interface IFTPSettings {
     whitelistedFiles?: string[];
 }
 
+export interface ISFTPSettings {
+
+    /** Filename base of the data source. */
+    filename?: string;
+
+    /** IP address of the sftp host. */
+    host: string;
+
+    port?: number | 8080;
+
+    username?: string;
+
+    password?: string;
+
+    /** Path to file. */
+    path?: string | "/";
+
+    algorithms: any;
+
+    encoding: string;
+
+}
+
 export interface IPostgresSettings {
 
     /** Connection string to PostgreSQL. */
@@ -96,7 +119,7 @@ export interface IProtocolStrategy {
     setCallerName( caller: string): void;
 
     setConnectionSettings(settings: IHTTPSettings | IFTPSettings | IPostgresSettings
-        | IGoogleCloudStorageSettings): void;
+        | IGoogleCloudStorageSettings | ISFTPSettings): void;
 
     getData(): Promise<any | DataSourceStream>;
 

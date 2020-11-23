@@ -392,6 +392,7 @@ export class SortedWasteStationsWorker extends BaseWorker {
                     percent_calculated: measurement.percent_calculated,
                     prediction_utc: measurement.prediction_utc,
                 };
+
                 await this.model.updateOne(
                     {
                         "properties.containers.sensor_container_id": measurement.container_id,

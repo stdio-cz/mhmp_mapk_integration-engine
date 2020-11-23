@@ -58,28 +58,51 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
         switch (key) {
             case "Barevné sklo":
             case "glass_coloured":
+            case "sb":
+            case "S":
                 return { description: "Barevné sklo", id: 1 };
             case "Elektrozařízení":
                 return { description: "Elektrozařízení", id: 2 };
             case "Kovy":
             case "metal":
+            case "ko":
+            case "E":
                 return { description: "Kovy", id: 3 };
             case "Nápojové kartóny":
             case "beverage_cartons":
+            case "nk":
+            case "K":
                 return { description: "Nápojové kartóny", id: 4 };
             case "Papír":
             case "paper":
+            case "p":
+            case "P":
                 return { description: "Papír", id: 5 };
             case "Plast":
             case "plastic":
+            case "u":
+            case "U":
                 return { description: "Plast", id: 6 };
             case "Čiré sklo":
             case "glass_white":
+            case "sc":
+            case "C":
                 return { description: "Čiré sklo", id: 7 };
             case "Textil":
                 return { description: "Textil", id: 8 };
             default:
                 return { description: "neznámý", id: 0 };
+        }
+    }
+
+    public getAccessibilityByString = (key: string): { id: number, description: string } => {
+        switch (key) {
+            case "volně":
+                return { description: "volně", id: 1 };
+            case "obyvatelům domu":
+                return { description: "obyvatelům domu", id: 2 };
+            default:
+                return { description: "neznámá dostupnost", id: 3 };
         }
     }
 
@@ -97,16 +120,5 @@ export class IPRSortedWasteStationsTransformation extends BaseTransformation imp
             type: element.type,
         };
         return res;
-    }
-
-    private getAccessibilityByString = (key: string): { id: number, description: string } => {
-        switch (key) {
-            case "volně":
-                return { description: "volně", id: 1 };
-            case "obyvatelům domu":
-                return { description: "obyvatelům domu", id: 2 };
-            default:
-                return { description: "neznámá dostupnost", id: 3 };
-        }
     }
 }

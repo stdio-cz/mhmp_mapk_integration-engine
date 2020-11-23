@@ -4,4 +4,6 @@ export * from "./OICTSortedWasteStationsTransformation";
 export * from "./POTEXSortedWasteStationsTransformation";
 export * from "./SensoneoMeasurementsTransformation";
 export * from "./SensoneoPicksTransformation";
+export * from "./SortedWasteTransformation";
 export * from "./SortedWasteStationsWorker";
+export * from "./SortedWasteStationsWorkerPg";

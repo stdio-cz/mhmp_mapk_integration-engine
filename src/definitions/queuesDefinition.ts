@@ -36,7 +36,7 @@ import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
 import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
-import { SortedWasteStationsWorker } from "../modules/sortedwastestations";
+import { SortedWasteStationsWorker, SortedWasteStationsWorkerPg} from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { TrafficDetectorsWorker } from "../modules/trafficdetectors";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
@@ -960,6 +960,52 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: SharedCarsWorker,
                 workerMethod: "refreshDataInDB",
+            },
+        ],
+    },
+    {
+        name: `${SortedWasteStations.name}Pg`,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + SortedWasteStations.name.toLowerCase() + "Pg",
+        queues: [
+            {
+                name: "updateSensorsMeasurementPg",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: SortedWasteStationsWorkerPg,
+                workerMethod: "updateSensorsMeasurement",
+            },
+            {
+                name: "updateSensorsPicksPg",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: SortedWasteStationsWorkerPg,
+                workerMethod: "updateSensorsPicks",
+            },
+            {
+                name: "updateStationsAndContainersPg",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: SortedWasteStationsWorkerPg,
+                workerMethod: "updateStationsAndContainers",
+            },
+            {
+                name: "updateSortedWastePicksPg",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 23 * 60 * 60 * 1000, // 23 hours
+                },
+                worker: SortedWasteStationsWorkerPg,
+                workerMethod: "updateSortedWastePicks",
             },
         ],
     },
