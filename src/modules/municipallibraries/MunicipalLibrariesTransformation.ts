@@ -52,6 +52,12 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
             return null;
         }
         const gps = element.adresa.gps.split(",").map((e: string) => parseFloat(e.trim()));
+        // filter departments without gps
+        if (gps[0] === 0 || gps[1] === 0) {
+            log.debug(`Department '${element.nazev}' was filtered out.`);
+            return null;
+        }
+
         const res = {
             geometry: {
                 coordinates: [gps[1], gps[0]],
@@ -109,15 +115,17 @@ export class MunicipalLibrariesTransformation extends BaseTransformation impleme
 
         Object.keys(openingHoursDaysKeys).forEach((day: string) => {
             if (openingHoursObject[day] && !(typeof openingHoursObject[day] === "string")) {
-                res.push({
-                    closes: openingHoursObject[day].rano.do,
-                    day_of_week: openingHoursDaysKeys[day],
-                    description,
-                    is_default: isDefault,
-                    opens: openingHoursObject[day].rano.od,
-                    valid_from: validFrom,
-                    valid_through: validThrough,
-                });
+                if (openingHoursObject[day].rano) {
+                    res.push({
+                        closes: openingHoursObject[day].rano.do,
+                        day_of_week: openingHoursDaysKeys[day],
+                        description,
+                        is_default: isDefault,
+                        opens: openingHoursObject[day].rano.od,
+                        valid_from: validFrom,
+                        valid_through: validThrough,
+                    });
+                }
                 if (openingHoursObject[day].odpoledne) {
                     res.push({
                         closes: openingHoursObject[day].odpoledne.do,
