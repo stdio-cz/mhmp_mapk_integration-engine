@@ -1,7 +1,7 @@
 "use strict";
 
 import { CustomError } from "@golemio/errors";
-import { Validator } from "@golemio/validator";
+import { JSONSchemaValidator, Validator } from "@golemio/validator";
 import * as Sequelize from "sequelize";
 import { PostgresConnector } from "../connectors";
 import { log } from "../helpers";
@@ -16,13 +16,13 @@ export class PostgresModel implements IModel {
     /** The Sequelize Model for temporary table */
     protected tmpSequelizeModel: Sequelize.Model<any, any> | null;
     /** Validation helper */
-    protected validator: Validator;
+    protected validator: Validator | JSONSchemaValidator;
     /** Type/Strategy of saving the data */
     protected savingType: "insertOnly" | "insertOrUpdate";
     /** Table name */
     protected tableName: string;
 
-    constructor(name: string, settings: ISequelizeSettings, validator: Validator) {
+    constructor(name: string, settings: ISequelizeSettings, validator: Validator | JSONSchemaValidator) {
         this.name = name;
         this.tableName = settings.pgTableName;
 
@@ -68,6 +68,9 @@ export class PostgresModel implements IModel {
         return this[this.savingType](model, data);
     }
 
+    public query = async (query: string) => {
+        return await PostgresConnector.getConnection().query(query);
+    }
     public saveBySqlFunction = async (
         data: any,
         primaryKeys: string[],

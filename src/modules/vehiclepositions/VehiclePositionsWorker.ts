@@ -426,7 +426,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 positions: [],
             };
             updatePositionsIterator(0, options, () => {
-                // console.log(options.positions);
                 resolve(options.positions);
             });
         });
@@ -672,8 +671,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 ...stopTimes,
                 ...shapes,
             };
-
-            // console.log(trip);
 
             if (!trip.shape_id || !trip.shapes || trip.shapes.length === 0) {
                 throw new Error(`"trip.shape_id" or "trip.shapes" was not found for id ${tripId}.`);

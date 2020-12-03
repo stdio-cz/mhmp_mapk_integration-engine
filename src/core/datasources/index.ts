@@ -14,4 +14,5 @@ export * from "./GoogleCloudStorageProtocolStrategy";
 export * from "./PostgresProtocolStrategy";
 export * from "./PostgresProtocolStrategyStreamed";
 export * from "./ProtocolStrategy";
+export * from "./SFTPProtocolStrategy";
 export * from "./XMLDataTypeStrategy";

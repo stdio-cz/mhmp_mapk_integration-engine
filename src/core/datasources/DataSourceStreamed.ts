@@ -47,6 +47,7 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
      * @param {boolean} useDataBuffer data  is buffered and sent to output stream in `config.DATA_BATCH_SIZE` batches
      */
     protected getOutputStream = async (useDataBuffer: boolean = false): Promise<DataSourceStream> => {
+        let inputStreamEndedAttempts = 0;
         this.dataStream =  new DataSourceStream({
             objectMode: true,
             read: () => {
@@ -61,24 +62,53 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
         });
 
         inputStream.onDataListeners.push(async ( data: any ): Promise<void> => {
+            let somethingToProcess = false;
             inputStream.pause();
 
             if (useDataBuffer) {
                 this.dataBuffer.push(data);
-                await this.processData();
+                somethingToProcess = await this.processData();
             } else {
-                await this.processData(false, data);
+                somethingToProcess = await this.processData(false, data);
             }
 
-            inputStream.resume();
+            if (somethingToProcess) {
+                const checker = setInterval(async () => {
+                    // wait till batch is processed
+                    if (!this.dataStream.processing) {
+                        clearInterval(checker);
+                        inputStream.resume();
+                    }
+                }, 100);
+            } else {
+                inputStream.resume();
+            }
         });
 
         inputStream.on("end", async (): Promise<void>  => {
             if (useDataBuffer) {
                 await this.processData(true);
             }
-            // end the stream
-            this.dataStream.push(null);
+
+            if (!inputStream.isPaused()) {
+                this.dataStream.push(null);
+            } else {
+                const checker = setInterval(() => {
+                    inputStreamEndedAttempts++;
+                    // wait till all data is processed
+                    if (!inputStream.isPaused()) {
+                        clearInterval(checker);
+                        this.dataStream.push(null);
+                    } else if (inputStreamEndedAttempts > config.stream.wait_for_end_attempts) {
+                        this.dataStream.emit(
+                            "error",
+                            new CustomError("Data Source stream has not ended", true, this.name, 2001),
+                        );
+                        this.dataStream.push(null);
+                        clearInterval(checker);
+                    }
+                }, config.stream.wait_for_end_interval);
+            }
         });
 
         try {
@@ -90,7 +120,7 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
         return this.dataStream;
     }
 
-    private processData = async (force = false, data = null): Promise<void> => {
+    private processData = async (force = false, data = null): Promise<boolean> => {
         if ((this.dataBuffer.length >= config.DATA_BATCH_SIZE) || force || data) {
             try {
                 let content: any;
@@ -120,6 +150,7 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
                     this.dataStream.push(content);
                     // clear the buffer
                     this.dataBuffer.length = 0;
+                    return true;
                 }
             } catch (err) {
                 this.dataStream.emit(
@@ -127,6 +158,8 @@ export class DataSourceStreamed extends DataSource implements IDataSource {
                     new CustomError("Retrieving of the source data failed.", true, this.name, 2001, err),
                 );
             }
+        } else {
+            return false;
         }
     }
 }
