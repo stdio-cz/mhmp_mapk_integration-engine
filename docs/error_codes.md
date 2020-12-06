@@ -31,3 +31,4 @@
     - 6001: Method is not implemented.
     - 6002: Retrieving of the open street map nominatim data failed. // warning
     - 6003: The ENV variable {name} cannot be undefined.
+    - 6004: Cannot retrieve Unimonitor CEM API authorization token
