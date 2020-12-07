@@ -10,10 +10,13 @@ import { config } from "../config";
  * Helper class for requesting additional data from Unimonitor CEM API
  */
 class UnimonitorCemApi {
+    // tslint:disable:member-ordering
+    private static readonly COOKIE_KV_SEPARATOR = "=";
+
     /**
-     * Get authorization token from Cookie
+     * Get authorization cookie
      */
-    public static getAuthToken = async (): Promise<string> => {
+    public static getAuthCookie = async (): Promise<string> => {
         const { url, cookieName, paramsRecord } = config.unimonitorCemApiAuth;
         const options: request.Options = {
             resolveWithFullResponse: true,
@@ -22,9 +25,9 @@ class UnimonitorCemApi {
 
         try {
             const { headers }: IncomingMessage = await request(options);
-            const rawCookieString = headers["set-cookie"]?.[0];
+            const cookieHeader = headers["set-cookie"]?.[0];
 
-            return UnimonitorCemApi.extractAuthTokenFromHeader(rawCookieString, cookieName);
+            return UnimonitorCemApi.processAndFilterAuthCookie(cookieHeader, cookieName);
         } catch (err) {
             throw new CustomError("Cannot retrieve Unimonitor CEM API authorization token", true,
                 UnimonitorCemApi.name, 6004, err);
@@ -32,16 +35,33 @@ class UnimonitorCemApi {
     }
 
     /**
-     * Extract auth token from the raw cookie string (header)
+     * Return resource types/identifiers
      */
-    private static extractAuthTokenFromHeader = (rawCookieString: string | null, authCookieName: string): string => {
-        const rawCookieArray = rawCookieString?.split(";") ?? [];
+    public static get resourceType() {
+        return {
+            Measurement: "20",
+            MeasuringEquipment: "6",
+            MeterType: "14",
+            TypeMeasuringEquipment: "11",
+            Units: "7",
+        };
+    }
 
-        for (const rawCookie of rawCookieArray) {
-            const [cookieName, cookieValue] = rawCookie.split("=").map((prop) => prop.trim());
+    /**
+     * Process and filter auth cookie from the original cookie header
+     */
+    private static processAndFilterAuthCookie = (cookieHeader: string | null, authCookieName: string): string => {
+        const rawCookies = cookieHeader?.split(";") ?? [];
 
-            if (cookieName === authCookieName) {
-                return cookieValue ?? "";
+        for (const rawCookie of rawCookies) {
+            const rawCookieArray = rawCookie
+                .split(UnimonitorCemApi.COOKIE_KV_SEPARATOR)
+                .map((prop) => prop.trim());
+
+            const [cookieName, cookieValue] = rawCookieArray;
+
+            if (cookieName === authCookieName && !!cookieValue) {
+                return rawCookieArray.join(UnimonitorCemApi.COOKIE_KV_SEPARATOR);
             }
         }
 

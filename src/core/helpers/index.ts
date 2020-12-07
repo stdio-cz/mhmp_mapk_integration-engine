@@ -4,4 +4,5 @@ export * from "./GeocodeApi";
 export * from "./IntegrationErrorHandler";
 export * from "./Logger";
 export * from "./Jtsk2wgs84";
+export * from "./UnimonitorCemApi";
 // export * from "./RdfExportUtils"; // TODO

@@ -5,6 +5,7 @@ import {
     BicycleCounters,
     BicycleParkings,
     CityDistricts,
+    Energetics,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
@@ -39,6 +40,7 @@ import {
     CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy, HTTPProtocolStrategy,
     IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
+import { UnimonitorCemApi } from '../../src/core/helpers'
 
 chai.use(chaiAsPromised);
 
@@ -1358,6 +1360,41 @@ describe("DataSourcesAvailabilityChecking", () => {
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
+        });
+
+    });
+
+    describe("Energetics", () => {
+
+        describe("Vpalac", () => {
+            let dataSourceMeasuringEquipment: DataSource;
+
+            beforeEach(async () => {
+                const baseUrl = config.datasources.UnimonitorCemapiEnergetics;
+                const url = `${baseUrl}?${new URLSearchParams({ id: UnimonitorCemApi.resourceType.MeasuringEquipment })}`;
+                const authCookie = await UnimonitorCemApi.getAuthCookie();
+
+                dataSourceMeasuringEquipment = new DataSource(
+                    Energetics.vpalac.measuringEquipment.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {
+                            Cookie: authCookie,
+                        },
+                        method: "GET",
+                        url,
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        Energetics.vpalac.measuringEquipment.name + "DataSource",
+                        Energetics.vpalac.measuringEquipment.datasourceMongooseSchemaObject,
+                    ),
+                );
+            });
+
+            it("should return all objects in Alerts", async () => {
+                const data = await dataSourceMeasuringEquipment.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
         });
 
     });
