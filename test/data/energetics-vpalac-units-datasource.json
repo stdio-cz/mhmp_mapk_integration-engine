@@ -1,0 +1,522 @@
+[
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_ELDOD",
+    "pot_defcolor": "#C00000",
+    "pot_id": 27,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 3,
+    "jed_nazev": "m³",
+    "jed_zkr": "m³",
+    "lt_key": "LB_POCTYP_SV",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 3,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_EL",
+    "pot_defcolor": "#C00000",
+    "pot_id": 4,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 3,
+    "jed_nazev": "m³",
+    "jed_zkr": "m³",
+    "lt_key": "LB_POCTYP_TV",
+    "pot_defcolor": "#BD2729",
+    "pot_id": 5,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 3,
+    "jed_nazev": "m³",
+    "jed_zkr": "m³",
+    "lt_key": "LB_POCTYP_PLY",
+    "pot_defcolor": "#C08600",
+    "pot_id": 6,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 4,
+    "jed_nazev": "°C",
+    "jed_zkr": "°C",
+    "lt_key": "LB_POCTYP_OUTTEP",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 9,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_KALKWH",
+    "pot_defcolor": "#004040",
+    "pot_id": 13,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 2,
+    "jed_nazev": "GJ",
+    "jed_zkr": "GJ",
+    "lt_key": "LB_POCTYP_KALGJ",
+    "pot_defcolor": "#004040",
+    "pot_id": 14,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 3,
+    "jed_nazev": "m³",
+    "jed_zkr": "m³",
+    "lt_key": "LB_POCTYP_SVVEL",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 21,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 3,
+    "jed_nazev": "m³",
+    "jed_zkr": "m³",
+    "lt_key": "LB_POCTYP_TVVEL",
+    "pot_defcolor": "#BD2729",
+    "pot_id": 22,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 8,
+    "jed_nazev": "HCA",
+    "jed_zkr": "HCA",
+    "lt_key": "LB_POCTYP_TEPHCA",
+    "pot_defcolor": "#C05800",
+    "pot_id": 24,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 15,
+    "jed_nazev": "dílky",
+    "jed_zkr": "díl.",
+    "lt_key": "LB_POCTYP_TEPDIL",
+    "pot_defcolor": "#C05800",
+    "pot_id": 16,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 5,
+    "jed_nazev": "KPD°",
+    "jed_zkr": "KPD°",
+    "lt_key": "LB_POCTYP_TEP",
+    "pot_defcolor": "#C05800",
+    "pot_id": 8,
+    "pot_type": 3,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 4,
+    "jed_nazev": "°C",
+    "jed_zkr": "°C",
+    "lt_key": "LB_POCTYP_VSTUPTEPL",
+    "pot_defcolor": "#C00000",
+    "pot_id": 19,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 17,
+    "jed_nazev": "bar",
+    "jed_zkr": "bar",
+    "lt_key": "LB_POCTYP_TLAK",
+    "pot_defcolor": "#008080",
+    "pot_id": 25,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 4,
+    "jed_nazev": "°C",
+    "jed_zkr": "°C",
+    "lt_key": "LB_POCTYP_VYSTUPTEPL",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 20,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 13,
+    "jed_nazev": "cm",
+    "jed_zkr": "cm",
+    "lt_key": "LB_POCTYP_VZDA",
+    "pot_defcolor": "#008080",
+    "pot_id": 23,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 4,
+    "jed_nazev": "°C",
+    "jed_zkr": "°C",
+    "lt_key": "LB_POCTYP_PROTEP",
+    "pot_defcolor": "#585858",
+    "pot_id": 10,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 16,
+    "jed_nazev": "litr",
+    "jed_zkr": "l",
+    "lt_key": "LB_POCTYP_KAP",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 26,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 6,
+    "jed_nazev": "%",
+    "jed_zkr": "%",
+    "lt_key": "LB_POCTYP_VLH",
+    "pot_defcolor": "#008080",
+    "pot_id": 12,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 5,
+    "jed_nazev": "KPD°",
+    "jed_zkr": "KPD°",
+    "lt_key": "LB_POCTYP_TEPPRUM",
+    "pot_defcolor": "#C05800",
+    "pot_id": 11,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 7,
+    "jed_nazev": "kPa",
+    "jed_zkr": "kPa",
+    "lt_key": "LB_POCTYP_TLAKKPA",
+    "pot_defcolor": "#008080",
+    "pot_id": 15,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_ELVT",
+    "pot_defcolor": "#9C0F0F",
+    "pot_id": 1,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_ELNT",
+    "pot_defcolor": "#E20800",
+    "pot_id": 2,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 4,
+    "jed_nazev": "°C",
+    "jed_zkr": "°C",
+    "lt_key": "LB_POCTYP_INTEP",
+    "pot_defcolor": "#FF0000",
+    "pot_id": 7,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 11,
+    "jed_nazev": "V",
+    "jed_zkr": "V",
+    "lt_key": "LB_POCTYP_U",
+    "pot_defcolor": "#585858",
+    "pot_id": 30,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 10,
+    "jed_nazev": "dBm",
+    "jed_zkr": "dBm",
+    "lt_key": "LB_POCTYP_RSSI",
+    "pot_defcolor": "#585858",
+    "pot_id": 101,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 9,
+    "jed_nazev": "ppm ",
+    "jed_zkr": "ppm ",
+    "lt_key": "LB_POCTYP_CO2",
+    "pot_defcolor": "#585858",
+    "pot_id": 17,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 100,
+    "jed_nazev": "jednotka",
+    "jed_zkr": "jedn.",
+    "lt_key": "LB_POCTYP_OBAB",
+    "pot_defcolor": "#585858",
+    "pot_id": 1001,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 100,
+    "jed_nazev": "jednotka",
+    "jed_zkr": "jedn.",
+    "lt_key": "LB_POCTYP_OBPR",
+    "pot_defcolor": "#585858",
+    "pot_id": 1000,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 100,
+    "jed_nazev": "jednotka",
+    "jed_zkr": "jedn.",
+    "lt_key": "LB_POCTYP_OBSO",
+    "pot_defcolor": "#585858",
+    "pot_id": 1002,
+    "pot_type": 3,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 9,
+    "jed_nazev": "ppm ",
+    "jed_zkr": "ppm ",
+    "lt_key": "LB_POCTYP_CO2MAX",
+    "pot_defcolor": "#585858",
+    "pot_id": 38,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_ELSO",
+    "pot_defcolor": "#C00000",
+    "pot_id": 36,
+    "pot_type": 3,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 103,
+    "jed_nazev": "kVArh",
+    "jed_zkr": "kVArh",
+    "lt_key": "LB_POCTYP_ELQCS",
+    "pot_defcolor": "#FF00BF",
+    "pot_id": 37,
+    "pot_type": 3,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 102,
+    "jed_nazev": " ",
+    "jed_zkr": " ",
+    "lt_key": "LB_POCTYP_CITAC",
+    "pot_defcolor": "#005F66",
+    "pot_id": 29,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 103,
+    "jed_nazev": "kVArh",
+    "jed_zkr": "kVArh",
+    "lt_key": "LB_POCTYP_ELQI",
+    "pot_defcolor": "#A3007B",
+    "pot_id": 31,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 103,
+    "jed_nazev": "kVArh",
+    "jed_zkr": "kVArh",
+    "lt_key": "LB_POCTYP_ELQC",
+    "pot_defcolor": "#FF00BF",
+    "pot_id": 32,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 26,
+    "jed_nazev": "ppb",
+    "jed_zkr": "ppb",
+    "lt_key": "LB_POCTYP_TVOC",
+    "pot_defcolor": "#585858",
+    "pot_id": 39,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 26,
+    "jed_nazev": "ppb",
+    "jed_zkr": "ppb",
+    "lt_key": "LB_POCTYP_TVOCMAX",
+    "pot_defcolor": "#585858",
+    "pot_id": 40,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 2,
+    "jed_nazev": "GJ",
+    "jed_zkr": "GJ",
+    "lt_key": "LB_POCTYP_KALCHGJ",
+    "pot_defcolor": "#004040",
+    "pot_id": 41,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 2,
+    "jed_nazev": "GJ",
+    "jed_zkr": "GJ",
+    "lt_key": "LB_POCTYP_KALTGJ",
+    "pot_defcolor": "#004040",
+    "pot_id": 43,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 102,
+    "jed_nazev": " ",
+    "jed_zkr": " ",
+    "lt_key": "LB_POCTYP_SECURE",
+    "pot_defcolor": "#C00000",
+    "pot_id": 47,
+    "pot_type": 2,
+    "ptv_id": 3
+  },
+  {
+    "jed_id": 100,
+    "jed_nazev": "jednotka",
+    "jed_zkr": "jedn.",
+    "lt_key": "LB_POCTYP_KLAPK",
+    "pot_defcolor": "#585858",
+    "pot_id": 18,
+    "pot_type": 2,
+    "ptv_id": 1
+  },
+  {
+    "jed_id": 23,
+    "jed_nazev": "kW",
+    "jed_zkr": "kW",
+    "lt_key": "LB_POCTYP_STRCINVYK",
+    "pot_defcolor": "#C00000",
+    "pot_id": 33,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 23,
+    "jed_nazev": "kW",
+    "jed_zkr": "kW",
+    "lt_key": "LB_POCTYP_STRJALVYK",
+    "pot_defcolor": "#C00000",
+    "pot_id": 34,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 100,
+    "jed_nazev": "jednotka",
+    "jed_zkr": "jedn.",
+    "lt_key": "LB_POCTYP_TGFI",
+    "pot_defcolor": "#C00000",
+    "pot_id": 35,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_KALCHKWH",
+    "pot_defcolor": "#004040",
+    "pot_id": 42,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 1,
+    "jed_nazev": "kWh",
+    "jed_zkr": "kWh",
+    "lt_key": "LB_POCTYP_KALTKWH",
+    "pot_defcolor": "#004040",
+    "pot_id": 44,
+    "pot_type": 1,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 6,
+    "jed_nazev": "%",
+    "jed_zkr": "%",
+    "lt_key": "LB_POCTYP_CH4",
+    "pot_defcolor": "#a65932",
+    "pot_id": 48,
+    "pot_type": 0,
+    "ptv_id": 0
+  },
+  {
+    "jed_id": 102,
+    "jed_nazev": " ",
+    "jed_zkr": " ",
+    "lt_key": "LB_POCTYP_KONT",
+    "pot_defcolor": "#004c70",
+    "pot_id": 28,
+    "pot_type": 2,
+    "ptv_id": 4
+  },
+  {
+    "jed_id": 102,
+    "jed_nazev": " ",
+    "jed_zkr": " ",
+    "lt_key": "LB_POCTYP_DVERE",
+    "pot_defcolor": "#b87bb8",
+    "pot_id": 45,
+    "pot_type": 2,
+    "ptv_id": 1
+  },
+  {
+    "jed_id": 102,
+    "jed_nazev": " ",
+    "jed_zkr": " ",
+    "lt_key": "LB_POCTYP_ZAPLA",
+    "pot_defcolor": "#0000C0",
+    "pot_id": 46,
+    "pot_type": 2,
+    "ptv_id": 2
+  }
+]

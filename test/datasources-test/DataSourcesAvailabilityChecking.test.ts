@@ -1393,7 +1393,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             });
 
             it("should return all items the for measuring equipment datasource", async (done) => {
-                const dataStream = await measuringEquipmentDatasource.getAll();
+                const dataStream = await measuringEquipmentDatasource.getAll(false);
                 await dataStream.setDataProcessor(async (data: any) => {
                     expect(data).to.be.an.instanceOf(Array);
                     done();
