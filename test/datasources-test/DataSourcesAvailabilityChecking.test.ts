@@ -32,15 +32,16 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import { sign } from "jsonwebtoken";
+import * as JSONStream from "JSONStream";
 import "mocha";
 import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy, HTTPProtocolStrategy,
-    IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
+    CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
+    HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-import { UnimonitorCemApi } from '../../src/core/helpers'
+import { UnimonitorCemApi } from '../../src/modules/energetics'
 
 chai.use(chaiAsPromised);
 
@@ -1367,33 +1368,36 @@ describe("DataSourcesAvailabilityChecking", () => {
     describe("Energetics", () => {
 
         describe("Vpalac", () => {
-            let dataSourceMeasuringEquipment: DataSource;
+            let measuringEquipmentDatasource: DataSourceStreamed;
 
             beforeEach(async () => {
-                const baseUrl = config.datasources.UnimonitorCemapiEnergetics;
+                const baseUrl = config.datasources.UnimonitorCemapiEnergetics.url;
                 const url = `${baseUrl}?${new URLSearchParams({ id: UnimonitorCemApi.resourceType.MeasuringEquipment })}`;
                 const authCookie = await UnimonitorCemApi.getAuthCookie();
 
-                dataSourceMeasuringEquipment = new DataSource(
+                measuringEquipmentDatasource = new DataSourceStreamed(
                     Energetics.vpalac.measuringEquipment.name + "DataSource",
-                    new HTTPProtocolStrategy({
+                    new HTTPProtocolStrategyStreamed({
                         headers: {
                             Cookie: authCookie,
                         },
                         method: "GET",
                         url,
-                    }),
+                    }).setStreamTransformer(JSONStream.parse("*")),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
                     new JSONSchemaValidator(
                         Energetics.vpalac.measuringEquipment.name + "DataSource",
-                        Energetics.vpalac.measuringEquipment.datasourceMongooseSchemaObject,
+                        Energetics.vpalac.measuringEquipment.datasourceJsonSchema,
                     ),
                 );
             });
 
-            it("should return all objects in Alerts", async () => {
-                const data = await dataSourceMeasuringEquipment.getAll();
-                expect(data).to.be.an.instanceOf(Object);
+            it("should return all items the for measuring equipment datasource", async (done) => {
+                const dataStream = await measuringEquipmentDatasource.getAll();
+                await dataStream.setDataProcessor(async (data: any) => {
+                    expect(data).to.be.an.instanceOf(Array);
+                    done();
+                }).proceed();
             });
         });
 

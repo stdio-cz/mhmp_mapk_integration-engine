@@ -1,7 +1,7 @@
 "use strict";
 
 import { Energetics } from "@golemio/schema-definitions";
-import { Validator } from "@golemio/validator";
+import { JSONSchemaValidator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -35,8 +35,8 @@ describe("VpalacMeasuringEquipmentTransformation", () => {
     let validator;
 
     before(() => {
-        validator = new Validator(Energetics.vpalac.measuringEquipment.name + "ModelPostgresValidator",
-            Energetics.vpalac.measuringEquipment.outputMongooseSchemaObject);
+        validator = new JSONSchemaValidator(Energetics.vpalac.measuringEquipment.name + "ModelPostgresValidator",
+            Energetics.vpalac.measuringEquipment.outputJsonSchema);
     });
 
     beforeEach(async () => {

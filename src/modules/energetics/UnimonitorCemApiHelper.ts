@@ -4,7 +4,7 @@ import { CustomError } from "@golemio/errors";
 import { IncomingMessage } from "http";
 import * as request from "request-promise";
 
-import { config } from "../config";
+import { config } from "../../core/config";
 
 /**
  * Helper class for requesting additional data from Unimonitor CEM API
@@ -17,17 +17,23 @@ class UnimonitorCemApi {
      * Get authorization cookie
      */
     public static getAuthCookie = async (): Promise<string> => {
-        const { url, cookieName, paramsRecord } = config.unimonitorCemApiAuth;
+        const { url, authCookieName, user, pass } = config.datasources.UnimonitorCemApiEnergetics;
+        const params = new URLSearchParams({
+            id: UnimonitorCemApi.resourceType.UserLogin,
+            pass,
+            user,
+        });
+
         const options: request.Options = {
             resolveWithFullResponse: true,
-            url: `${url}?${new URLSearchParams(paramsRecord)}`,
+            url: `${url}?${params}`,
         };
 
         try {
             const { headers }: IncomingMessage = await request(options);
             const cookieHeader = headers["set-cookie"]?.[0];
 
-            return UnimonitorCemApi.processAndFilterAuthCookie(cookieHeader, cookieName);
+            return UnimonitorCemApi.processAndFilterAuthCookie(cookieHeader, authCookieName);
         } catch (err) {
             throw new CustomError("Cannot retrieve Unimonitor CEM API authorization token", true,
                 UnimonitorCemApi.name, 6004, err);
@@ -44,6 +50,7 @@ class UnimonitorCemApi {
             MeterType: "14",
             TypeMeasuringEquipment: "11",
             Units: "7",
+            UserLogin: "4",
         };
     }
 

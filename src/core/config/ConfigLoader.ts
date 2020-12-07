@@ -97,12 +97,4 @@ export const config = { // TODO prejmenovat na lower-case
         wait_for_end_attempts: parseInt(process.env.STREAM_WAIT_FOR_END_ATTEMPTS, 10) || 10,
         wait_for_end_interval: parseInt(process.env.STREAM_WAIT_FOR_END_INTERVAL, 10) || 100,
     },
-    unimonitorCemApiAuth: {
-        cookieName: process.env.UNIMONITOR_CEM_API_AUTH_COOKIE_NAME,
-        paramsRecord: {
-            pass: process.env.UNIMONITOR_CEM_API_AUTH_PASSWORD,
-            user: process.env.UNIMONITOR_CEM_API_AUTH_USERNAME,
-        },
-        url: process.env.UNIMONITOR_CEM_API_AUTH_URL,
-    },
 };
