@@ -93,7 +93,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 savingType: "insertOrUpdate",
             },
             new JSONSchemaValidator(
-                SortedWasteStations.containersPickDates.name + "ModelValidator",
+                SortedWasteStations.containersPickDates.name + "ModelValidatorPg",
                 SortedWasteStations.containersPickDates.outputPickDatestsOutputJSONSchema,
             ),
         );
@@ -105,7 +105,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             null,
             new JSONDataTypeStrategy({ resultsPath: "" }),
             new JSONSchemaValidator(
-                SortedWasteStations.ksnko.name + "StationsDataSource",
+                SortedWasteStations.ksnko.name + "StationsDataSourcePg",
                 SortedWasteStations.ksnko.ksnkoStationsJSONSchema,
             ),
         );
@@ -125,7 +125,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             oictHTTPProtocolStrategyStreamed,
             new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(
-                SortedWasteStations.oict.name + "DataSource",
+                SortedWasteStations.oict.name + "DataSourcePg",
                 SortedWasteStations.oict.datasourceMongooseSchemaObject,
             ),
         );
@@ -141,7 +141,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         this.potexDatasource = new DataSourceStreamed(SortedWasteStations.potex.name + "DataSource",
             potexHTTPProtocolStrategyStreamed,
             new JSONDataTypeStrategy({ resultsPath: "" }),
-            new Validator(SortedWasteStations.potex.name + "DataSource",
+            new Validator(SortedWasteStations.potex.name + "DataSourcePg",
                 SortedWasteStations.potex.datasourceMongooseSchemaObject,
             ),
         );
@@ -156,7 +156,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 ? { "properties.id": { $in: id } }
                 : { "properties.id": id },
         },
-            new Validator(CityDistricts.name + "ModelValidator", CityDistricts.outputMongooseSchemaObject),
+            new Validator(CityDistricts.name + "ModelValidatorPg", CityDistricts.outputMongooseSchemaObject),
         );
 
         this.stationsModel = new PostgresModel(
@@ -167,7 +167,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 savingType: "insertOrUpdate",
             },
             new Validator(
-                SortedWasteStations.stations.name + "ModelValidator",
+                SortedWasteStations.stations.name + "ModelValidatorPg",
                 SortedWasteStations.stations.outputMongooseSchemaObject,
             ),
         );
@@ -185,7 +185,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             containersHTTPProtocolStrategyStreamed,
             new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(
-                SortedWasteStations.sensorsContainers.name + "DataSource",
+                SortedWasteStations.sensorsContainers.name + "DataSourcePg",
                 SortedWasteStations.sensorsContainers.datasourceMongooseSchemaObject,
             ),
         );
@@ -198,7 +198,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 savingType: "insertOrUpdate",
             },
             new Validator(
-                SortedWasteStations.sensorsContainers.name + "ModelValidator",
+                SortedWasteStations.sensorsContainers.name + "ModelValidatorPg",
                 SortedWasteStations.sensorsContainers.outputMongooseSchemaObject,
             ),
         );
@@ -218,7 +218,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             null,
             new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(
-                SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                SortedWasteStations.sensorsMeasurements.name + "DataSourcePg",
                 SortedWasteStations.sensorsMeasurements.datasourceMongooseSchemaObject,
             ),
         );
@@ -231,7 +231,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 savingType: "insertOrUpdate",
             },
             new Validator(
-                SortedWasteStations.sensorsMeasurements.name + "ModelValidator",
+                SortedWasteStations.sensorsMeasurements.name + "ModelValidatorPg",
                 SortedWasteStations.sensorsMeasurements.outputMongoosePgSchemaObject,
             ),
         );
@@ -249,7 +249,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             null,
             new JSONDataTypeStrategy({ resultsPath: "" }),
             new Validator(
-                SortedWasteStations.sensorsPicks.name + "DataSource",
+                SortedWasteStations.sensorsPicks.name + "DataSourcePg",
                 SortedWasteStations.sensorsPicks.datasourceMongooseSchemaObject,
             ),
         );
@@ -262,7 +262,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 savingType: "insertOrUpdate",
             },
             new Validator(
-                SortedWasteStations.sensorsPicks.name + "ModelValidator",
+                SortedWasteStations.sensorsPicks.name + "ModelValidatorPg",
                 SortedWasteStations.sensorsPicks.outputMongoosePgSchemaObject,
             ),
         );
