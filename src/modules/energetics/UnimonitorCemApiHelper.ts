@@ -14,9 +14,9 @@ class UnimonitorCemApi {
     private static readonly COOKIE_KV_SEPARATOR = "=";
 
     /**
-     * Get authorization cookie
+     * Create API session and return authorization cookie
      */
-    public static getAuthCookie = async (): Promise<string> => {
+    public static createSession = async (): Promise<{ authCookie: string }> => {
         const { url, authCookieName, user, pass } = config.datasources.UnimonitorCemApiEnergetics;
         const params = new URLSearchParams({
             id: UnimonitorCemApi.resourceType.UserLogin,
@@ -25,7 +25,9 @@ class UnimonitorCemApi {
         });
 
         const options: request.Options = {
+            method: "GET",
             resolveWithFullResponse: true,
+            timeout: 10000,
             url: `${url}?${params}`,
         };
 
@@ -33,10 +35,38 @@ class UnimonitorCemApi {
             const { headers }: IncomingMessage = await request(options);
             const cookieHeader = headers["set-cookie"]?.[0];
 
-            return UnimonitorCemApi.processAndFilterAuthCookie(cookieHeader, authCookieName);
+            return {
+                authCookie: UnimonitorCemApi.processAndFilterAuthCookie(cookieHeader, authCookieName),
+            };
         } catch (err) {
             throw new CustomError("Cannot retrieve Unimonitor CEM API authorization token", true,
-                UnimonitorCemApi.name, 6004, err);
+                UnimonitorCemApi.name, 5006, err);
+        }
+    }
+
+    /**
+     * Terminate current session/invalidate auth cookie
+     */
+    public static terminateSession = async (authCookie: string): Promise<void> => {
+        const { url } = config.datasources.UnimonitorCemApiEnergetics;
+        const params = new URLSearchParams({
+            id: UnimonitorCemApi.resourceType.UserLogout,
+        });
+
+        const options: request.Options = {
+            headers: {
+                Cookie: authCookie,
+            },
+            method: "GET",
+            timeout: 10000,
+            url: `${url}?${params}`,
+        };
+
+        try {
+            await request(options);
+        } catch (err) {
+            throw new CustomError("Cannot terminate Unimonitor CEM API session", true,
+                UnimonitorCemApi.name, 5007, err);
         }
     }
 
@@ -51,6 +81,7 @@ class UnimonitorCemApi {
             TypeMeasuringEquipment: "11",
             Units: "7",
             UserLogin: "4",
+            UserLogout: "5",
         };
     }
 

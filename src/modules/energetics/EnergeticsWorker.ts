@@ -219,7 +219,7 @@ export class EnergeticsWorker extends BaseWorker {
      * Save and refresh Vpalac data in DB
      */
     private saveVpalacDataToDB = async (dateParams: VpalacDateParams): Promise<void> => {
-        const authCookie = await UnimonitorCemApi.getAuthCookie();
+        const { authCookie } = await UnimonitorCemApi.createSession();
 
         // Measuring Equipment - update connection settings
         this.datasourceVpalacMeasuringEquipment.protocolStrategy.setConnectionSettings(
@@ -242,6 +242,9 @@ export class EnergeticsWorker extends BaseWorker {
                 );
             },
         );
+
+        // Terminate API session
+        await UnimonitorCemApi.terminateSession(authCookie);
     }
 
     /**
@@ -284,7 +287,7 @@ export class EnergeticsWorker extends BaseWorker {
                 Cookie: authCookie,
             },
             method: "GET",
-            timeout: 10000,
+            timeout: 20000,
             url: `${config.datasources.UnimonitorCemapiEnergetics.url}?${params}`,
         };
     }
