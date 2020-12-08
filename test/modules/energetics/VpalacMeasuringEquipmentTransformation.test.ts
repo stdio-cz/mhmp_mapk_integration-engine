@@ -54,27 +54,6 @@ describe("VpalacMeasuringEquipmentTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
-        expect(data).to.have.property("me_do");
-        expect(data).to.have.property("me_extid");
-        expect(data).to.have.property("me_fakt");
-        expect(data).to.have.property("me_id");
-        expect(data).to.have.property("me_od");
-        expect(data).to.have.property("me_plom");
-        expect(data).to.have.property("me_serial");
-        expect(data).to.have.property("me_zapoc");
-        expect(data).to.have.property("met_id");
-        expect(data).to.have.property("mis_id");
-        expect(data).to.have.property("mis_nazev");
-        expect(data).to.have.property("poc_typode");
-        expect(data).to.have.property("pot_id");
-        expect(data).to.have.property("umisteni");
-        expect(data).to.have.property("var_id");
-    });
-
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         await expect(validator.Validate(data)).to.be.fulfilled;

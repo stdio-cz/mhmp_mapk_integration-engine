@@ -54,20 +54,6 @@ describe("VpalacUnitsTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
-        expect(data).to.have.property("jed_id");
-        expect(data).to.have.property("jed_nazev");
-        expect(data).to.have.property("jed_zkr");
-        expect(data).to.have.property("lt_key");
-        expect(data).to.have.property("pot_defcolor");
-        expect(data).to.have.property("pot_id");
-        expect(data).to.have.property("pot_type");
-        expect(data).to.have.property("ptv_id");
-    });
-
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         await expect(validator.Validate(data)).to.be.fulfilled;

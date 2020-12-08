@@ -35,8 +35,8 @@ describe("VpalacTypeMeasuringEquipmentTransformation", () => {
     let validator;
 
     before(() => {
-        validator = new JSONSchemaValidator(Energetics.vpalac.measuringEquipment.name + "ModelPostgresValidator",
-            Energetics.vpalac.measuringEquipment.outputJsonSchema);
+        validator = new JSONSchemaValidator(Energetics.vpalac.typeMeasuringEquipment.name + "ModelPostgresValidator",
+            Energetics.vpalac.typeMeasuringEquipment.outputJsonSchema);
     });
 
     beforeEach(async () => {
@@ -54,21 +54,6 @@ describe("VpalacTypeMeasuringEquipmentTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
-        expect(data).to.have.property("cik_akt");
-        expect(data).to.have.property("cik_char");
-        expect(data).to.have.property("cik_cislo");
-        expect(data).to.have.property("cik_cislo2");
-        expect(data).to.have.property("cik_double");
-        expect(data).to.have.property("cik_fk");
-        expect(data).to.have.property("cik_nazev");
-        expect(data).to.have.property("cik_zprac");
-        expect(data).to.have.property("lt_key");
-    });
-
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         await expect(validator.Validate(data)).to.be.fulfilled;
@@ -81,6 +66,7 @@ describe("VpalacTypeMeasuringEquipmentTransformation", () => {
             expect(data[i]).to.have.property("cik_double");
             expect(data[i]).to.have.property("cik_fk");
             expect(data[i]).to.have.property("cik_nazev");
+            expect(data[i]).to.have.property("cik_pzn");
             expect(data[i]).to.have.property("cik_zprac");
             expect(data[i]).to.have.property("lt_key");
         }

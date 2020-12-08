@@ -59,7 +59,8 @@ describe("VpalacMeasurementTransformation", () => {
         await expect(validator.Validate(data)).to.be.fulfilled;
 
         for (let i = 0, imax = data.length; i < imax; i++) {
-            expect(data[i]).to.have.property("values");
+            expect(data[i]).to.have.property("time_measurement");
+            expect(data[i]).to.have.property("value");
             expect(data[i]).to.have.property("var_id");
         }
     });

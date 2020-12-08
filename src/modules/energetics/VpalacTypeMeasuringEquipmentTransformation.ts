@@ -20,6 +20,7 @@ export class VpalacTypeMeasuringEquipmentTransformation extends BaseTransformati
             cik_double: element.cik_double,
             cik_fk: element.cik_fk,
             cik_nazev: element.cik_nazev,
+            cik_pzn: element.cik_pzn,
             cik_zprac: element.cik_zprac,
             lt_key: element.lt_key,
         };

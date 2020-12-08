@@ -54,20 +54,6 @@ describe("VpalacMeterTypeTransformation", () => {
         expect(transformation.transform).not.to.be.undefined;
     });
 
-    it("should properly transform element", async () => {
-        const data = await transformation.transform(testSourceData[0]);
-        await expect(validator.Validate(data)).to.be.fulfilled;
-
-        expect(data).to.have.property("fir_id");
-        expect(data).to.have.property("medium");
-        expect(data).to.have.property("met_druh");
-        expect(data).to.have.property("met_id");
-        expect(data).to.have.property("met_kod");
-        expect(data).to.have.property("met_nazev");
-        expect(data).to.have.property("met_ziv");
-        expect(data).to.have.property("vyr_zkr");
-    });
-
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
         await expect(validator.Validate(data)).to.be.fulfilled;
