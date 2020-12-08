@@ -47,7 +47,7 @@ describe("VpalacMeasuringEquipmentTransformation", () => {
 
     it("should has name", async () => {
         expect(transformation.name).not.to.be.undefined;
-        expect(transformation.name).is.equal("VpalacMeasuringEquipment");
+        expect(transformation.name).is.equal("EnergeticsVpalacMeasuringEquipment");
     });
 
     it("should has transform method", async () => {
