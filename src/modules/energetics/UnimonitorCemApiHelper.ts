@@ -27,14 +27,13 @@ class UnimonitorCemApi {
         });
 
         const options: request.Options = {
-            method: "GET",
             resolveWithFullResponse: true,
             timeout: 10000,
             url: `${url}?${params}`,
         };
 
         try {
-            const { headers }: IncomingMessage = await request(options);
+            const { headers }: IncomingMessage = await request.get(options);
             const cookieHeader = headers["set-cookie"]?.[0];
 
             return {
@@ -59,13 +58,12 @@ class UnimonitorCemApi {
             headers: {
                 Cookie: authCookie,
             },
-            method: "GET",
             timeout: 10000,
             url: `${url}?${params}`,
         };
 
         try {
-            await request(options);
+            await request.get(options);
         } catch (err) {
             throw new CustomError("Cannot terminate Unimonitor CEM API session", true,
                 UnimonitorCemApi.name, 5007, err);

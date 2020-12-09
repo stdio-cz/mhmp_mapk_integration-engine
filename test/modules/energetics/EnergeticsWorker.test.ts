@@ -23,7 +23,7 @@ describe("EnergeticssWorker", () => {
     });
 
     it("refreshVpalac1HourData: should call the correct methods", async () => {
-        await worker.refreshVpalac1HourData({});
+        await worker.fetchVpalac1HourData({});
         // TODO implement
     });
 });
