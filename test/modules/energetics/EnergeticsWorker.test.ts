@@ -1,11 +1,17 @@
 "use strict";
 
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import "mocha";
 import * as sinon from "sinon";
+import { config } from "../../../src/core/config";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { EnergeticsWorker } from "../../../src/modules/energetics";
 
-describe("EnergeticssWorker", () => {
+chai.use(chaiAsPromised);
+
+describe("EnergeticsWorker", () => {
     let worker: EnergeticsWorker;
     let sandbox: sinon.SinonSandbox;
 
@@ -22,8 +28,13 @@ describe("EnergeticssWorker", () => {
         sandbox.restore();
     });
 
-    it("refreshVpalac1HourData: should call the correct methods", async () => {
-        await worker.fetchVpalac1HourData({});
-        // TODO implement
+    it("getVpalacConnectionSettings should return settings with a cookie header", async () => {
+        const output = worker['getVpalacConnectionSettings'](
+            "TYPE",
+            "Cookie:Cookie",
+        );
+
+        expect(output.url).to.contain('TYPE');
+        expect(output.headers).to.have.property("Cookie", "Cookie:Cookie");
     });
 });

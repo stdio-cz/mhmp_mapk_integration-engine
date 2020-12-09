@@ -193,7 +193,7 @@ export class EnergeticsWorker extends BaseWorker {
      */
     public fetchVpalac1HourData = async (msg: any): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const timeFrom = now.subtract(1, "hour").unix().toString();
+        const timeFrom = now.clone().subtract(1, "hour").unix().toString();
         const timeTo = now.unix().toString();
         const dateParams: VpalacDateParams = {
             from_ms: timeFrom,
@@ -208,7 +208,7 @@ export class EnergeticsWorker extends BaseWorker {
      */
     public fetchVpalac14DaysData = async (msg: any): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const dateFrom = now.subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+        const dateFrom = now.clone().subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateParams: VpalacDateParams = {
             from: dateFrom,
@@ -389,7 +389,7 @@ export class EnergeticsWorker extends BaseWorker {
             },
             method: "GET",
             timeout: 20000,
-            url: `${config.datasources.UnimonitorCemapiEnergetics.url}?${params}`,
+            url: `${config.datasources.UnimonitorCemApiEnergetics.url}?${params}`,
         };
     }
 }

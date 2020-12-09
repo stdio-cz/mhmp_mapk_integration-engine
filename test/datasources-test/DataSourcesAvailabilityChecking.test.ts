@@ -1368,36 +1368,119 @@ describe("DataSourcesAvailabilityChecking", () => {
     describe("Energetics", () => {
 
         describe("Vpalac", () => {
-            let measuringEquipmentDatasource: DataSourceStreamed;
+            let authCookie = "";
+            let dateParams = {
+                from: "",
+                to: "",
+            };
 
-            beforeEach(async () => {
-                const baseUrl = config.datasources.UnimonitorCemapiEnergetics.url;
-                const url = `${baseUrl}?${new URLSearchParams({ id: UnimonitorCemApi.resourceType.MeasuringEquipment })}`;
-                const authCookie = await UnimonitorCemApi.getAuthCookie();
+            const testVpalacDataset = async (
+                resourceType: string,
+                schemaConfig: Record<string, any>,
+                additionalParams: Record<string, string>,
+                onDataFunction: (data: any) => Promise<void>,
+            ) => {
+                const baseUrl = config.datasources.UnimonitorCemApiEnergetics.url
+                const params = new URLSearchParams({
+                    ...dateParams,
+                    ...additionalParams,
+                    id: resourceType,
+                });
 
-                measuringEquipmentDatasource = new DataSourceStreamed(
-                    Energetics.vpalac.measuringEquipment.name + "DataSource",
+                const datasource = new DataSourceStreamed(
+                    schemaConfig.name + "DataSource",
                     new HTTPProtocolStrategyStreamed({
                         headers: {
                             Cookie: authCookie,
                         },
                         method: "GET",
-                        url,
+                        url: `${baseUrl}?${params}`,
                     }).setStreamTransformer(JSONStream.parse("*")),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
                     new JSONSchemaValidator(
-                        Energetics.vpalac.measuringEquipment.name + "DataSource",
-                        Energetics.vpalac.measuringEquipment.datasourceJsonSchema,
+                        schemaConfig.name + "DataSource",
+                        schemaConfig.datasourceJsonSchema,
                     ),
+                );
+
+                const dataStream = await datasource.getAll(false);
+                await dataStream.setDataProcessor(onDataFunction).proceed();
+            };
+
+            before(() => {
+                const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
+                const dateFrom = now.clone().subtract(2, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+                const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
+
+                dateParams = {
+                    from: dateFrom,
+                    to: dateTo,
+                };
+            });
+
+            beforeEach(async () => {
+                ({ authCookie } = await UnimonitorCemApi.createSession());
+            });
+
+            afterEach(async () => {
+                await UnimonitorCemApi.terminateSession(authCookie);
+            });
+
+
+            it("Measurement Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.Measurement,
+                    Energetics.vpalac.measurement,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
                 );
             });
 
-            it("should return all items the for measuring equipment datasource", async (done) => {
-                const dataStream = await measuringEquipmentDatasource.getAll(false);
-                await dataStream.setDataProcessor(async (data: any) => {
-                    expect(data).to.be.an.instanceOf(Array);
-                    done();
-                }).proceed();
+            it("Measuring Equipment Datasource should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.MeasuringEquipment,
+                    Energetics.vpalac.measuringEquipment,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+
+            it("Meter Type Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.MeterType,
+                    Energetics.vpalac.meterType,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Type Measuring Equipment Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.TypeMeasuringEquipment,
+                    Energetics.vpalac.typeMeasuringEquipment,
+                    { cis: "135" },
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Units Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.Units,
+                    Energetics.vpalac.units,
+                    { cis: "135" },
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
             });
         });
 

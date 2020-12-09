@@ -11,7 +11,7 @@ import { config } from "../../core/config";
  */
 class UnimonitorCemApi {
     // tslint:disable:member-ordering
-    public static API_DATE_FORMAT = "MM/DD/YYYY";
+    public static API_DATE_FORMAT = "YYYY-MM-DD";
     public static API_DATE_TZ = "Europe/Prague";
     private static COOKIE_KV_SEPARATOR = "=";
 
