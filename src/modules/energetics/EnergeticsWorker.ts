@@ -1,6 +1,7 @@
 "use strict";
 
 import * as JSONStream from "JSONStream";
+import * as moment from "moment";
 
 import { CustomError } from "@golemio/errors";
 import { Energetics } from "@golemio/schema-definitions";
@@ -51,9 +52,7 @@ export class EnergeticsWorker extends BaseWorker {
     constructor() {
         super();
 
-        // =============================================================================
         // Vpalac Measurement
-        // =============================================================================
         this.datasourceVpalacMeasurement = new DataSourceStreamed(
             Energetics.vpalac.measurement.name + "DataSource",
             new HTTPProtocolStrategyStreamed({
@@ -80,9 +79,7 @@ export class EnergeticsWorker extends BaseWorker {
             ),
         );
 
-        // =============================================================================
         // Vpalac Measuring Equipment
-        // =============================================================================
         this.datasourceVpalacMeasuringEquipment = new DataSourceStreamed(
             Energetics.vpalac.measuringEquipment.name + "DataSource",
             new HTTPProtocolStrategyStreamed({
@@ -109,9 +106,7 @@ export class EnergeticsWorker extends BaseWorker {
             ),
         );
 
-        // =============================================================================
         // Vpalac Meter Type
-        // =============================================================================
         this.datasourceVpalacMeterType = new DataSourceStreamed(
             Energetics.vpalac.meterType.name + "DataSource",
             new HTTPProtocolStrategyStreamed({
@@ -138,9 +133,7 @@ export class EnergeticsWorker extends BaseWorker {
             ),
         );
 
-        // =============================================================================
         // Vpalac Type Measuring Equipment
-        // =============================================================================
         this.datasourceVpalacTypeMeasuringEquipment = new DataSourceStreamed(
             Energetics.vpalac.typeMeasuringEquipment.name + "DataSource",
             new HTTPProtocolStrategyStreamed({
@@ -167,9 +160,7 @@ export class EnergeticsWorker extends BaseWorker {
             ),
         );
 
-        // =============================================================================
         // Vpalac Units
-        // =============================================================================
         this.datasourceVpalacUnits = new DataSourceStreamed(
             Energetics.vpalac.units.name + "DataSource",
             new HTTPProtocolStrategyStreamed({
@@ -198,19 +189,31 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
-     * Worker method - refresh Vpalac data (last 1 hour)
+     * Worker method - fetch Vpalac data (last 1 hour)
      */
-    public refreshVpalac1HourData = async (msg: any): Promise<void> => {
-        const dateParams: VpalacDateParams = {}; // TODO implement
+    public fetchVpalac1HourData = async (msg: any): Promise<void> => {
+        const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
+        const timeFrom = now.subtract(1, "hour").unix().toString();
+        const timeTo = now.unix().toString();
+        const dateParams: VpalacDateParams = {
+            from_ms: timeFrom,
+            to_ms: timeTo,
+        };
 
         await this.saveVpalacDataToDB(dateParams);
     }
 
     /**
-     * Worker method - refresh Vpalac data (last 14 days)
+     * Worker method - fetch Vpalac data (last 14 days)
      */
-    public refreshVpalac14DaysData = async (msg: any): Promise<void> => {
-        const dateParams: VpalacDateParams = {}; // TODO implement
+    public fetchVpalac14DaysData = async (msg: any): Promise<void> => {
+        const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
+        const dateFrom = now.subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+        const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
+        const dateParams: VpalacDateParams = {
+            from: dateFrom,
+            to: dateTo,
+        };
 
         await this.saveVpalacDataToDB(dateParams);
     }
@@ -221,7 +224,15 @@ export class EnergeticsWorker extends BaseWorker {
     private saveVpalacDataToDB = async (dateParams: VpalacDateParams): Promise<void> => {
         const { authCookie } = await UnimonitorCemApi.createSession();
 
-        // Measuring Equipment - update connection settings
+        // Update connection settings
+        this.datasourceVpalacMeasurement.protocolStrategy.setConnectionSettings(
+            this.getVpalacConnectionSettings(
+                UnimonitorCemApi.resourceType.Measurement,
+                authCookie,
+                dateParams,
+            ),
+        );
+
         this.datasourceVpalacMeasuringEquipment.protocolStrategy.setConnectionSettings(
             this.getVpalacConnectionSettings(
                 UnimonitorCemApi.resourceType.MeasuringEquipment,
@@ -230,18 +241,108 @@ export class EnergeticsWorker extends BaseWorker {
             ),
         );
 
-        // Measuring Equipment - proceed and save
-        await this.proceedVpalacDataStream(
-            this.datasourceVpalacMeasuringEquipment.getAll(false),
-            async (data: any) => {
-                const transformedData = await this.transformationVpalacMeasuringEquipment.transform(data);
-
-                await this.modelVpalacMeasuringEquipment.saveBySqlFunction(
-                    transformedData,
-                    ["me_id", "pot_id"],
-                );
-            },
+        this.datasourceVpalacMeterType.protocolStrategy.setConnectionSettings(
+            this.getVpalacConnectionSettings(
+                UnimonitorCemApi.resourceType.MeterType,
+                authCookie,
+                dateParams,
+            ),
         );
+
+        this.datasourceVpalacTypeMeasuringEquipment.protocolStrategy.setConnectionSettings(
+            this.getVpalacConnectionSettings(
+                UnimonitorCemApi.resourceType.TypeMeasuringEquipment,
+                authCookie,
+                {
+                    ...dateParams,
+                    cis: "135",
+                },
+            ),
+        );
+
+        this.datasourceVpalacUnits.protocolStrategy.setConnectionSettings(
+            this.getVpalacConnectionSettings(
+                UnimonitorCemApi.resourceType.Units,
+                authCookie,
+                dateParams,
+            ),
+        );
+
+        // Proceed and save
+        const apiPromises: Array<Promise<void>> = [];
+
+        apiPromises.push(
+            this.proceedVpalacDataStream(
+                this.datasourceVpalacMeasurement.getAll(false),
+                async (data: any) => {
+                    const transformedData = await this.transformationVpalacMeasurement.transform(data);
+
+                    await this.modelVpalacMeasurement.saveBySqlFunction(
+                        transformedData,
+                        ["var_id", "time_measurement"],
+                    );
+                },
+            ),
+        );
+
+        apiPromises.push(
+            this.proceedVpalacDataStream(
+                this.datasourceVpalacMeasuringEquipment.getAll(false),
+                async (data: any) => {
+                    const transformedData = await this.transformationVpalacMeasuringEquipment.transform(data);
+
+                    await this.modelVpalacMeasuringEquipment.saveBySqlFunction(
+                        transformedData,
+                        ["me_id", "pot_id"],
+                    );
+                },
+            ),
+        );
+
+        apiPromises.push(
+            this.proceedVpalacDataStream(
+                this.datasourceVpalacMeterType.getAll(false),
+                async (data: any) => {
+                    const transformedData = await this.transformationVpalacMeterType.transform(data);
+
+                    await this.modelVpalacMeterType.saveBySqlFunction(
+                        transformedData,
+                        ["met_id"],
+                    );
+                },
+            ),
+        );
+
+        apiPromises.push(
+            this.proceedVpalacDataStream(
+                this.datasourceVpalacTypeMeasuringEquipment.getAll(false),
+                async (data: any) => {
+                    const transformedData = await this.transformationVpalacTypeMeasuringEquipment.transform(data);
+
+                    await this.modelVpalacTypeMeasuringEquipment.saveBySqlFunction(
+                        transformedData,
+                        ["lt_key"],
+                    );
+                },
+            ),
+        );
+
+        apiPromises.push(
+            this.proceedVpalacDataStream(
+                this.datasourceVpalacUnits.getAll(false),
+                async (data: any) => {
+                    const transformedData = await this.transformationVpalacUnits.transform(data);
+
+                    await this.modelVpalacUnits.saveBySqlFunction(
+                        transformedData,
+                        ["lt_key"],
+                    );
+                },
+            ),
+        );
+
+        // Resolve all API promises
+        await Promise.all(apiPromises);
 
         // Terminate API session
         await UnimonitorCemApi.terminateSession(authCookie);

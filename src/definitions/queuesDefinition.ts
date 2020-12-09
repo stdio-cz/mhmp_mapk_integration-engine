@@ -1,7 +1,7 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Flow, Gardens,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Energetics, FirebasePidlitacka, Flow, Gardens,
     GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
@@ -14,6 +14,7 @@ import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { CountersWorker } from "../modules/counters";
+import { EnergeticsWorker } from "../modules/energetics";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
@@ -226,6 +227,32 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: CountersWorker,
                 workerMethod: "updateEcoCounter",
+            },
+        ],
+    },
+    {
+        name: Energetics.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Energetics.name.toLowerCase(),
+        queues: [
+            {
+                name: "fetchVpalac1HourData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 60 * 60 * 1000, // 1 hour
+                },
+                worker: EnergeticsWorker,
+                workerMethod: "refreshVpalac1HourData",
+            },
+            {
+                name: "fetchVpalac14DaysData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 24 * 60 * 60 * 1000, // 24 hours
+                },
+                worker: EnergeticsWorker,
+                workerMethod: "refreshVpalac14DaysData",
             },
         ],
     },

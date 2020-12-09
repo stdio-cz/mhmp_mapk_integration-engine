@@ -5,7 +5,7 @@ import * as sinon from "sinon";
 import { PostgresConnector } from "../../../src/core/connectors";
 import { EnergeticsWorker } from "../../../src/modules/energetics";
 
-describe("CityDistrictsWorker", () => {
+describe("EnergeticssWorker", () => {
     let worker: EnergeticsWorker;
     let sandbox: sinon.SinonSandbox;
 
@@ -13,7 +13,7 @@ describe("CityDistrictsWorker", () => {
         sandbox = sinon.createSandbox();
 
         sandbox.stub(PostgresConnector, "getConnection")
-            .callsFake(() => Object.assign({define: sandbox.stub()}));
+            .callsFake(() => Object.assign({ define: sandbox.stub() }));
 
         worker = new EnergeticsWorker();
     });

@@ -11,7 +11,9 @@ import { config } from "../../core/config";
  */
 class UnimonitorCemApi {
     // tslint:disable:member-ordering
-    private static readonly COOKIE_KV_SEPARATOR = "=";
+    public static API_DATE_FORMAT = "MM/DD/YYYY";
+    public static API_DATE_TZ = "Europe/Prague";
+    private static COOKIE_KV_SEPARATOR = "=";
 
     /**
      * Create API session and return authorization cookie
