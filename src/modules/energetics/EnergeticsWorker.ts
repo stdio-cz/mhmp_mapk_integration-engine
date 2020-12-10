@@ -276,11 +276,11 @@ export class EnergeticsWorker extends BaseWorker {
                 this.datasourceVpalacMeasurement.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasurement.transform(data);
+                    const dataPromises = transformedData.map((item) => {
+                        return this.modelVpalacMeasurement.save(item);
+                    });
 
-                    await this.modelVpalacMeasurement.saveBySqlFunction(
-                        transformedData,
-                        ["var_id", "time_measurement"],
-                    );
+                    await Promise.all(dataPromises);
                 },
             ),
         );
@@ -290,11 +290,7 @@ export class EnergeticsWorker extends BaseWorker {
                 this.datasourceVpalacMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasuringEquipment.transform(data);
-
-                    await this.modelVpalacMeasuringEquipment.saveBySqlFunction(
-                        transformedData,
-                        ["me_id", "pot_id"],
-                    );
+                    await this.modelVpalacMeasuringEquipment.save(transformedData);
                 },
             ),
         );
@@ -304,11 +300,7 @@ export class EnergeticsWorker extends BaseWorker {
                 this.datasourceVpalacMeterType.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeterType.transform(data);
-
-                    await this.modelVpalacMeterType.saveBySqlFunction(
-                        transformedData,
-                        ["met_id"],
-                    );
+                    await this.modelVpalacMeterType.save(transformedData);
                 },
             ),
         );
@@ -318,11 +310,7 @@ export class EnergeticsWorker extends BaseWorker {
                 this.datasourceVpalacTypeMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacTypeMeasuringEquipment.transform(data);
-
-                    await this.modelVpalacTypeMeasuringEquipment.saveBySqlFunction(
-                        transformedData,
-                        ["lt_key"],
-                    );
+                    await this.modelVpalacTypeMeasuringEquipment.save(transformedData);
                 },
             ),
         );
@@ -332,11 +320,7 @@ export class EnergeticsWorker extends BaseWorker {
                 this.datasourceVpalacUnits.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacUnits.transform(data);
-
-                    await this.modelVpalacUnits.saveBySqlFunction(
-                        transformedData,
-                        ["lt_key"],
-                    );
+                    await this.modelVpalacUnits.save(transformedData);
                 },
             ),
         );

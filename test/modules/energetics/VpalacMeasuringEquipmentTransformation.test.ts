@@ -1,6 +1,7 @@
 "use strict";
 
 import { Energetics } from "@golemio/schema-definitions";
+import * as fs from "fs";
 import { JSONSchemaValidator } from "@golemio/validator";
 import * as chai from "chai";
 import { expect } from "chai";
@@ -9,24 +10,6 @@ import "mocha";
 import { VpalacMeasuringEquipmentTransformation } from "../../../src/modules/energetics";
 
 chai.use(chaiAsPromised);
-import * as fs from "fs";
-
-const readFile = (file: string): Promise<Buffer> => {
-    return new Promise((resolve, reject) => {
-        const stream = fs.createReadStream(file);
-        const chunks = [];
-
-        stream.on("error", (err) => {
-            reject(err);
-        });
-        stream.on("data", (data) => {
-            chunks.push(data);
-        });
-        stream.on("close", () => {
-            resolve(Buffer.concat(chunks));
-        });
-    });
-};
 
 describe("VpalacMeasuringEquipmentTransformation", () => {
 
@@ -39,9 +22,9 @@ describe("VpalacMeasuringEquipmentTransformation", () => {
             Energetics.vpalac.measuringEquipment.outputJsonSchema);
     });
 
-    beforeEach(async () => {
+    beforeEach(() => {
         transformation = new VpalacMeasuringEquipmentTransformation();
-        const buffer = await readFile(__dirname + "/../../data/energetics-vpalac-measuringequipment-datasource.json");
+        const buffer = fs.readFileSync(__dirname + "/../../data/energetics-vpalac-measuringequipment-datasource.json");
         testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
     });
 
@@ -56,9 +39,9 @@ describe("VpalacMeasuringEquipmentTransformation", () => {
 
     it("should properly transform collection", async () => {
         const data = await transformation.transform(testSourceData);
-        await expect(validator.Validate(data)).to.be.fulfilled;
 
         for (let i = 0, imax = data.length; i < imax; i++) {
+            await expect(validator.Validate(data[i])).to.be.fulfilled;
             expect(data[i]).to.have.property("me_do");
             expect(data[i]).to.have.property("me_extid");
             expect(data[i]).to.have.property("me_fakt");
