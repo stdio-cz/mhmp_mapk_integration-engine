@@ -242,7 +242,7 @@ const definitions: IQueueDefinition[] = [
                     messageTtl: 60 * 60 * 1000, // 1 hour
                 },
                 worker: EnergeticsWorker,
-                workerMethod: "refreshVpalac1HourData",
+                workerMethod: "fetchVpalac1HourData",
             },
             {
                 name: "fetchVpalac14DaysData",
@@ -252,7 +252,7 @@ const definitions: IQueueDefinition[] = [
                     messageTtl: 24 * 60 * 60 * 1000, // 24 hours
                 },
                 worker: EnergeticsWorker,
-                workerMethod: "refreshVpalac14DaysData",
+                workerMethod: "fetchVpalac14DaysData",
             },
         ],
     },
