@@ -84,6 +84,12 @@
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",
     "TSKParkomats": "http://vyvoj.ctgroup.cz/cisservice/cisictservice.svc",
     "TSKParkomatsToken": "",
+    "UnimonitorCemApiEnergetics": {
+        "url": "https://cemapi.unimonitor.eu/api",
+        "authCookieName": "CEMAPI",
+        "user": "",
+        "pass": ""
+    },
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",
     "WazeCCP": "https://world-georss.waze.com/rtserver/web/TGeoRSS?format=JSON&polygon=14.613000,50.291000;14.468000,50.308000;14.324000,50.287000;14.290000,50.231000;14.178000,50.132000;14.153000,49.974000;14.465000,49.885000;14.863000,49.929000;14.752000,50.128000;14.829000,50.250000;14.613000,50.291000;14.613000,50.291000",
     "KSNKOApi": {

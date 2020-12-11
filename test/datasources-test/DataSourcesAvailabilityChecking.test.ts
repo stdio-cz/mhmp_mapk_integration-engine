@@ -5,6 +5,7 @@ import {
     BicycleCounters,
     BicycleParkings,
     CityDistricts,
+    Energetics,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
@@ -31,14 +32,16 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import { sign } from "jsonwebtoken";
+import * as JSONStream from "JSONStream";
 import "mocha";
 import * as moment from "moment-timezone";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy, HTTPProtocolStrategy,
-    IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
+    CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
+    HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
+import { UnimonitorCemApi } from '../../src/modules/energetics'
 
 chai.use(chaiAsPromised);
 
@@ -1358,6 +1361,127 @@ describe("DataSourcesAvailabilityChecking", () => {
         it("should returns last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
+        });
+
+    });
+
+    describe("Energetics", () => {
+
+        describe("Vpalac", () => {
+            let authCookie = "";
+            let dateParams = {
+                from: "",
+                to: "",
+            };
+
+            const testVpalacDataset = async (
+                resourceType: string,
+                schemaConfig: Record<string, any>,
+                additionalParams: Record<string, string>,
+                onDataFunction: (data: any) => Promise<void>,
+            ) => {
+                const baseUrl = config.datasources.UnimonitorCemApiEnergetics.url
+                const params = new URLSearchParams({
+                    ...dateParams,
+                    ...additionalParams,
+                    id: resourceType,
+                });
+
+                const datasource = new DataSourceStreamed(
+                    schemaConfig.name + "DataSource",
+                    new HTTPProtocolStrategyStreamed({
+                        headers: {
+                            Cookie: authCookie,
+                        },
+                        method: "GET",
+                        url: `${baseUrl}?${params}`,
+                    }).setStreamTransformer(JSONStream.parse("*")),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        schemaConfig.name + "DataSource",
+                        schemaConfig.datasourceJsonSchema,
+                    ),
+                );
+
+                const dataStream = await datasource.getAll(false);
+                await dataStream.setDataProcessor(onDataFunction).proceed();
+            };
+
+            before(() => {
+                const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
+                const dateFrom = now.clone().subtract(2, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+                const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
+
+                dateParams = {
+                    from: dateFrom,
+                    to: dateTo,
+                };
+            });
+
+            beforeEach(async () => {
+                ({ authCookie } = await UnimonitorCemApi.createSession());
+            });
+
+            afterEach(async () => {
+                await UnimonitorCemApi.terminateSession(authCookie);
+            });
+
+
+            it("Measurement Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.Measurement,
+                    Energetics.vpalac.measurement,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Measuring Equipment Datasource should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.MeasuringEquipment,
+                    Energetics.vpalac.measuringEquipment,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+
+            it("Meter Type Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.MeterType,
+                    Energetics.vpalac.meterType,
+                    {},
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Type Measuring Equipment Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.TypeMeasuringEquipment,
+                    Energetics.vpalac.typeMeasuringEquipment,
+                    { cis: "135" },
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Units Dataset should return all items", async () => {
+                await testVpalacDataset(
+                    UnimonitorCemApi.resourceType.Units,
+                    Energetics.vpalac.units,
+                    { cis: "135" },
+                    async (data: any) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
         });
 
     });
