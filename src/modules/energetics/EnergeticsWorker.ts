@@ -193,8 +193,8 @@ export class EnergeticsWorker extends BaseWorker {
      */
     public fetchVpalac1HourData = async (msg: any): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const timeFrom = now.clone().subtract(1, "hour").unix().toString();
-        const timeTo = now.unix().toString();
+        const timeFrom = now.clone().subtract(1, "hour").valueOf().toString();
+        const timeTo = now.valueOf().toString();
         const dateParams: VpalacDateParams = {
             from_ms: timeFrom,
             to_ms: timeTo,
