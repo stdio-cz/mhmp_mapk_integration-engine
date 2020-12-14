@@ -219,6 +219,34 @@ describe("BicycleCountersWorker", () => {
             worker.sendMessageToExchange);
     });
 
+    it("should calls the correct methods by refreshCameaDataSpecificDayInDB method", async () => {
+        await worker.refreshCameaDataSpecificDayInDB({ content: Buffer.from(JSON.stringify({
+                date: "2020-12-14",
+            }))},
+        );
+        sandbox.assert.calledOnce(worker.dataSourceCamea.getAll);
+        sandbox.assert.calledOnce(worker.cameaTransformation.transform);
+        sandbox.assert.calledWith(worker.cameaTransformation.transform, testData);
+        sandbox.assert.calledOnce(worker.locationsModel.save);
+        sandbox.assert.calledOnce(worker.directionsModel.save);
+        sandbox.assert.calledTwice(worker.sendMessageToExchange);
+        testTransformedData.locations.map((f) => {
+            sandbox.assert.calledWith(worker.sendMessageToExchange,
+                "workers." + queuePrefix + ".updateCamea",
+                JSON.stringify({
+                    date: "2020-12-14",
+                    duration: CameaRefreshDurations.specificDay,
+                    id: f.vendor_id,
+                }));
+        });
+        sandbox.assert.callOrder(
+            worker.dataSourceCamea.getAll,
+            worker.cameaTransformation.transform,
+            worker.locationsModel.save,
+            worker.directionsModel.save,
+            worker.sendMessageToExchange);
+    });
+
     it("should calls the correct methods by updateCamea method (different geo)", async () => {
         await worker.updateCamea({ content: Buffer.from(JSON.stringify({
             duration: CameaRefreshDurations.last3Hours,

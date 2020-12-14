@@ -131,6 +131,16 @@ const definitions: IQueueDefinition[] = [
                 workerMethod: "refreshCameaDataPreviousDayInDB",
             },
             {
+                name: "refreshCameaDataSpecificDayInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 5 * 60 * 1000, // 5 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataSpecificDayInDB",
+            },
+            {
                 name: "refreshEcoCounterDataInDB",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,

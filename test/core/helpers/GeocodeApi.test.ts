@@ -21,7 +21,7 @@ describe("GeocodeApi", () => {
         expect(data.street_address).to.include("Dělnická 213/10");
         expect(data.address_locality).to.include("Praha");
         expect(data.address_region).to.include("Holešovice");
-        expect(data.address_country).to.include("Česká republika");
+        expect(data.address_country).to.include("Česko");
     });
 
     it("should throws error if getting address by lat lng using Open Street Map API failed", async () => {
