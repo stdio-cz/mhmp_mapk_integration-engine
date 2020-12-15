@@ -12,6 +12,7 @@ class EnesaApi {
      */
     public static get resourceType() {
         return {
+            Buildings: "buildings/full",
             Devices: "devices",
         };
     }

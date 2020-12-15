@@ -44,6 +44,7 @@ import {
 } from "../../src/core/datasources";
 import { EnesaApi, UnimonitorCemApi } from '../../src/modules/energetics'
 
+import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 chai.use(chaiAsPromised);
@@ -1411,6 +1412,17 @@ describe("DataSourcesAvailabilityChecking", () => {
                     from: dateFrom,
                     to: dateTo,
                 };
+            });
+
+            it("Energy Buildings Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Buildings,
+                    Energetics.enesa.buildings,
+                    JSONStream.parse("buildings.*"),
+                    async (data: EnesaBuildings.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
             });
 
             it("Energy Devices Dataset should return all items", async () => {
