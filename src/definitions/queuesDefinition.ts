@@ -245,6 +245,16 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Energetics.name.toLowerCase(),
         queues: [
             {
+                name: "fetchEnesa2DaysData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 2 * 60 * 60 * 1000, // 2 hours
+                },
+                worker: EnergeticsWorker,
+                workerMethod: "fetchEnesa2DaysData",
+            },
+            {
                 name: "fetchVpalac1HourData",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,

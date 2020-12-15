@@ -6,6 +6,7 @@ import {
     BicycleParkings,
     CityDistricts,
     Energetics,
+    EnergeticsTypes,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
@@ -41,7 +42,9 @@ import {
     CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-import { UnimonitorCemApi } from '../../src/modules/energetics'
+import { EnesaApi, UnimonitorCemApi } from '../../src/modules/energetics'
+
+import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 chai.use(chaiAsPromised);
 
@@ -1366,6 +1369,61 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("Energetics", () => {
+
+        describe("Enesa", () => {
+            let dateParams = {
+                from: "",
+                to: "",
+            };
+
+            const testEnesaDataset = async (
+                resourceType: string,
+                schemaConfig: Record<string, any>,
+                jsonTransformer: any,
+                onDataFunction: (data: any) => Promise<void>,
+            ) => {
+                const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
+                const params = new URLSearchParams(dateParams);
+                const datasource = new DataSourceStreamed(
+                    schemaConfig.name + "DataSource",
+                    new HTTPProtocolStrategyStreamed({
+                        headers: config.datasources.EnesaApiEnergeticsHeaders,
+                        method: "GET",
+                        url: `${baseUrl}/${resourceType}?${params}`,
+                    }).setStreamTransformer(jsonTransformer),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        schemaConfig.name + "DataSource",
+                        schemaConfig.datasourceJsonSchema,
+                    ),
+                );
+
+                const dataStream = await datasource.getAll(false);
+                await dataStream.setDataProcessor(onDataFunction).proceed();
+            };
+
+            before(() => {
+                const now = moment().tz(EnesaApi.API_DATE_TZ);
+                const dateFrom = now.clone().subtract(1, "day").format(EnesaApi.API_DATE_FORMAT);
+                const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
+
+                dateParams = {
+                    from: dateFrom,
+                    to: dateTo,
+                };
+            });
+
+            it("Energy Devices Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Devices,
+                    Energetics.enesa.devices,
+                    JSONStream.parse("devices.*"),
+                    async (data: EnesaDevices.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+        });
 
         describe("Vpalac", () => {
             let authCookie = "";

@@ -13,6 +13,10 @@
         "password": ""
     },
     "CityDistricts": "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
+    "EnesaApiEnergeticsHeaders": {
+        "X-Api-Key": ""
+    },
+    "EnesaApiEnergeticsUrl": "https://data-oict1.enesa.cz:81",
     "FlowAPI": {
         "url": "https://10.200.4.4:8080/api/cubes",
         "token": ""

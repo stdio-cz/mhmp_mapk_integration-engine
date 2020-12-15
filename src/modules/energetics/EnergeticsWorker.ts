@@ -4,7 +4,7 @@ import * as JSONStream from "JSONStream";
 import * as moment from "moment";
 
 import { CustomError } from "@golemio/errors";
-import { Energetics } from "@golemio/schema-definitions";
+import { Energetics, EnergeticsTypes } from "@golemio/schema-definitions";
 import { JSONSchemaValidator } from "@golemio/validator";
 
 import { config } from "../../core/config";
@@ -18,6 +18,8 @@ import {
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
+    EnesaApi,
+    EnesaEnergyDevicesTransformation,
     UnimonitorCemApi,
     VpalacMeasurementTransformation,
     VpalacMeasuringEquipmentTransformation,
@@ -26,23 +28,28 @@ import {
     VpalacUnitsTransformation,
 } from "./";
 
-type VpalacDateParams = {
+import EnesaDevices = EnergeticsTypes.Enesa.Devices;
+
+type DateParams = {
     [P in "from" | "from_ms" | "to" | "to_ms"]?: string
 };
 
 export class EnergeticsWorker extends BaseWorker {
+    private readonly datasourceEnesaEnergyDevices: DataSourceStreamed;
     private readonly datasourceVpalacMeasurement: DataSourceStreamed;
     private readonly datasourceVpalacMeasuringEquipment: DataSourceStreamed;
     private readonly datasourceVpalacMeterType: DataSourceStreamed;
     private readonly datasourceVpalacTypeMeasuringEquipment: DataSourceStreamed;
     private readonly datasourceVpalacUnits: DataSourceStreamed;
 
+    private readonly transformationEnesaEnergyDevices: EnesaEnergyDevicesTransformation;
     private readonly transformationVpalacMeasurement: VpalacMeasurementTransformation;
     private readonly transformationVpalacMeasuringEquipment: VpalacMeasuringEquipmentTransformation;
     private readonly transformationVpalacMeterType: VpalacMeterTypeTransformation;
     private readonly transformationVpalacTypeMeasuringEquipment: VpalacTypeMeasuringEquipmentTransformation;
     private readonly transformationVpalacUnits: VpalacUnitsTransformation;
 
+    private readonly modelEnesaEnergyDevices: PostgresModel;
     private readonly modelVpalacMeasurement: PostgresModel;
     private readonly modelVpalacMeasuringEquipment: PostgresModel;
     private readonly modelVpalacMeterType: PostgresModel;
@@ -51,6 +58,33 @@ export class EnergeticsWorker extends BaseWorker {
 
     constructor() {
         super();
+
+        // Enesa Energy Devices
+        this.datasourceVpalacMeasurement = new DataSourceStreamed(
+            Energetics.enesa.devices.name + "DataSource",
+            new HTTPProtocolStrategyStreamed({
+                headers: {},
+                method: "",
+                url: "",
+            }).setStreamTransformer(
+                JSONStream.parse("devices.*")),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new JSONSchemaValidator(Energetics.enesa.devices.name + "DataSource",
+                Energetics.enesa.devices.datasourceJsonSchema));
+
+        this.transformationEnesaEnergyDevices = new EnesaEnergyDevicesTransformation();
+        this.modelEnesaEnergyDevices = new PostgresModel(
+            Energetics.enesa.devices.name + "Model",
+            {
+                outputSequelizeAttributes: Energetics.enesa.devices.outputSequelizeAttributes,
+                pgTableName: Energetics.enesa.devices.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new JSONSchemaValidator(
+                Energetics.enesa.devices.name + "ModelValidator",
+                Energetics.enesa.devices.outputJsonSchema,
+            ),
+        );
 
         // Vpalac Measurement
         this.datasourceVpalacMeasurement = new DataSourceStreamed(
@@ -65,7 +99,6 @@ export class EnergeticsWorker extends BaseWorker {
                 Energetics.vpalac.measurement.datasourceJsonSchema));
 
         this.transformationVpalacMeasurement = new VpalacMeasurementTransformation();
-
         this.modelVpalacMeasurement = new PostgresModel(
             Energetics.vpalac.measurement.name + "Model",
             {
@@ -92,7 +125,6 @@ export class EnergeticsWorker extends BaseWorker {
                 Energetics.vpalac.measuringEquipment.datasourceJsonSchema));
 
         this.transformationVpalacMeasuringEquipment = new VpalacMeasuringEquipmentTransformation();
-
         this.modelVpalacMeasuringEquipment = new PostgresModel(
             Energetics.vpalac.measuringEquipment.name + "Model",
             {
@@ -119,7 +151,6 @@ export class EnergeticsWorker extends BaseWorker {
                 Energetics.vpalac.meterType.datasourceJsonSchema));
 
         this.transformationVpalacMeterType = new VpalacMeterTypeTransformation();
-
         this.modelVpalacMeterType = new PostgresModel(
             Energetics.vpalac.meterType.name + "Model",
             {
@@ -146,7 +177,6 @@ export class EnergeticsWorker extends BaseWorker {
                 Energetics.vpalac.typeMeasuringEquipment.datasourceJsonSchema));
 
         this.transformationVpalacTypeMeasuringEquipment = new VpalacTypeMeasuringEquipmentTransformation();
-
         this.modelVpalacTypeMeasuringEquipment = new PostgresModel(
             Energetics.vpalac.typeMeasuringEquipment.name + "Model",
             {
@@ -173,7 +203,6 @@ export class EnergeticsWorker extends BaseWorker {
                 Energetics.vpalac.units.datasourceJsonSchema));
 
         this.transformationVpalacUnits = new VpalacUnitsTransformation();
-
         this.modelVpalacUnits = new PostgresModel(
             Energetics.vpalac.units.name + "Model",
             {
@@ -189,13 +218,28 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
+     * Worker method - fetch Enesa data (last 2 days)
+     */
+    public fetchEnesa2DaysData = async (msg: any): Promise<void> => {
+        const now = moment().tz(EnesaApi.API_DATE_TZ);
+        const dateFrom = now.clone().subtract(2, "days").format(EnesaApi.API_DATE_FORMAT);
+        const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
+        const dateParams: DateParams = {
+            from: dateFrom,
+            to: dateTo,
+        };
+
+        await this.saveEnesaDataToDB(dateParams);
+    }
+
+    /**
      * Worker method - fetch Vpalac data (last 1 hour)
      */
     public fetchVpalac1HourData = async (msg: any): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
         const timeFrom = now.clone().subtract(1, "hour").valueOf().toString();
         const timeTo = now.valueOf().toString();
-        const dateParams: VpalacDateParams = {
+        const dateParams: DateParams = {
             from_ms: timeFrom,
             to_ms: timeTo,
         };
@@ -210,7 +254,7 @@ export class EnergeticsWorker extends BaseWorker {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
         const dateFrom = now.clone().subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
-        const dateParams: VpalacDateParams = {
+        const dateParams: DateParams = {
             from: dateFrom,
             to: dateTo,
         };
@@ -219,9 +263,35 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
+     * Save and refresh Enesa data in DB
+     */
+    private saveEnesaDataToDB = async (dateParams: DateParams): Promise<void> => {
+        // Update connection settings
+        this.datasourceEnesaEnergyDevices.protocolStrategy.setConnectionSettings(
+            this.getEnesaConnectionSettings(EnesaApi.resourceType.Devices, dateParams),
+        );
+
+        // Proceed and save
+        const apiPromises: Array<Promise<void>> = [];
+
+        apiPromises.push(
+            this.proceedDataStream(
+                this.datasourceEnesaEnergyDevices.getAll(false),
+                async (data: EnesaDevices.InputElement) => {
+                    const transformedData = await this.transformationEnesaEnergyDevices.transform(data);
+                    await this.modelEnesaEnergyDevices.save(transformedData);
+                },
+            ),
+        );
+
+        // Resolve all API promises
+        await Promise.all(apiPromises);
+    }
+
+    /**
      * Save and refresh Vpalac data in DB
      */
-    private saveVpalacDataToDB = async (dateParams: VpalacDateParams): Promise<void> => {
+    private saveVpalacDataToDB = async (dateParams: DateParams): Promise<void> => {
         const { authCookie } = await UnimonitorCemApi.createSession();
 
         // Update connection settings
@@ -272,7 +342,7 @@ export class EnergeticsWorker extends BaseWorker {
         const apiPromises: Array<Promise<void>> = [];
 
         apiPromises.push(
-            this.proceedVpalacDataStream(
+            this.proceedDataStream(
                 this.datasourceVpalacMeasurement.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasurement.transform(data);
@@ -286,7 +356,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedVpalacDataStream(
+            this.proceedDataStream(
                 this.datasourceVpalacMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasuringEquipment.transform(data);
@@ -296,7 +366,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedVpalacDataStream(
+            this.proceedDataStream(
                 this.datasourceVpalacMeterType.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeterType.transform(data);
@@ -306,7 +376,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedVpalacDataStream(
+            this.proceedDataStream(
                 this.datasourceVpalacTypeMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacTypeMeasuringEquipment.transform(data);
@@ -316,7 +386,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedVpalacDataStream(
+            this.proceedDataStream(
                 this.datasourceVpalacUnits.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacUnits.transform(data);
@@ -335,7 +405,7 @@ export class EnergeticsWorker extends BaseWorker {
     /**
      * Proceed Vpalac data stream (generic)
      */
-    private proceedVpalacDataStream = async (
+    private proceedDataStream = async (
         dataSourceStream: Promise<DataSourceStream>,
         onDataFunction: (data: any) => Promise<void>,
     ): Promise<void> => {
@@ -355,7 +425,22 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
-     * Create and return a new Vpalac datasource URL
+     * Create and return Enesa connection settings
+     */
+    private getEnesaConnectionSettings = (resourceType: string, dateParams: DateParams): IHTTPSettings => {
+        const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
+        const params = new URLSearchParams(dateParams);
+
+        return {
+            headers: config.datasources.EnesaApiEnergeticsHeaders,
+            method: "GET",
+            timeout: 20000,
+            url: `${baseUrl}/${resourceType}?${params}`,
+        };
+    }
+
+    /**
+     * Create and return new Vpalac connection settings
      */
     private getVpalacConnectionSettings = (
         resourceType: string,
