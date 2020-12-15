@@ -4,11 +4,12 @@ import { CustomError } from "@golemio/errors";
 import { RopidGTFS, VehiclePositions } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
-import { log } from "../../core/helpers";
+import { IntegrationErrorHandler, log } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";
 import {
+    IUpdateGTFSTripIdData,
     VehiclePositionsLastPositionsModel,
     VehiclePositionsPositionsModel,
     VehiclePositionsTransformation,
@@ -21,10 +22,6 @@ import * as _ from "lodash";
 import * as moment from "moment-timezone";
 import * as Sequelize from "sequelize";
 const ruler: any = cheapruler(50);
-// const rulerGpsDistance = {
-//     latDiff: - 50 + ruler.destination([14.5, 50], 0.6, 0)[1],
-//     lngDiff: - 14.5 + ruler.destination([14.5, 50], 0.6, 90)[0],
-// };
 const gtfsRealtime = require("gtfs-realtime-bindings").transit_realtime;
 
 export class VehiclePositionsWorker extends BaseWorker {
@@ -113,7 +110,7 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString());
+        const inputData = JSON.parse(msg.content.toString()) as IUpdateGTFSTripIdData[];
         const promiseValues = await Promise.all(
             inputData.map(async (trip) => {
                 try {
@@ -131,16 +128,22 @@ export class VehiclePositionsWorker extends BaseWorker {
         );
 
         const foundedTripsPromiseValues = promiseValues.filter((result) => !(result instanceof CustomError));
-        for (let i = 0, chunkSize = 100; i < foundedTripsPromiseValues.length; i += chunkSize) {
+        const foundedTripsPromiseErrors = promiseValues.filter((result) => result instanceof CustomError);
+
+        // successfully updated gtfs ids
+        for (let i = 0, chunkSize = 100, imax = foundedTripsPromiseValues.length; i < imax; i += chunkSize) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
                 JSON.stringify(foundedTripsPromiseValues.slice(i, i + chunkSize)),
             );
         }
 
-        // TODO - do we need Error loging? Should by valid that sometimes no GTFS is given - To be moved into alerts.
-        // promiseValues.filter((result) => (result instanceof CustomError)).forEach(async (err) => {
-        //     throw new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001, err);
-        // });
+        // gtfsId updating errors
+        for (let i = 0, imax = foundedTripsPromiseErrors.length; i < imax; i++) {
+            IntegrationErrorHandler.handle(
+                new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001,
+                    foundedTripsPromiseErrors[i]),
+            );
+        }
     }
 
     public generateGtfsRt = async (msg: any): Promise<void> => {
@@ -234,7 +237,59 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
     }
 
-    public computePositions = async (tripPositions: any): Promise<any> => {
+    public updateDelay = async (msg: any): Promise<void> => {
+        try {
+            const tripIds = JSON.parse(msg.content.toString());
+
+            // Get all positions for each trip
+            const tripsPositionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripIds);
+
+            // Append gtfs data to each trip
+            const promisesGetGTFSData = tripsPositionsToUpdate.map(async (trip, i) => {
+                const gtfsData = await this.delayComputationTripsModel.getData(trip.gtfs_trip_id);
+                return {
+                    ...trip,
+                    gtfsData,
+                };
+            });
+            const tripsPositionsWithGTFSDataToUpdate = await Promise.all(promisesGetGTFSData);
+
+            const promisesToUpdate = [
+                // Lets process every position if gtfs shape points and schedules data is ready
+                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData !== null).map(async (trip: any) => {
+                    return this.computePositions(trip);
+                }),
+                // For those not ready firstly gather gtfs shape points and schedules
+                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData === null).map(async (trip: any) => {
+                    log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + trip.gtfs_trip_id + ")");
+                    try {
+                        const gtfs = await this.getResultObjectForDelayCalculation(trip.gtfs_trip_id);
+                        await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
+                        trip.gtfsData = gtfs;
+
+                        return this.computePositions(trip);
+                    } catch (err) {
+                        return Promise.resolve();
+                    }
+                }),
+            ];
+
+            // Both update in parallel and in one batch
+            await Promise.all([
+                Promise.all(promisesToUpdate[0]).then((computedPositions: any[][]) => {
+                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
+                }),
+                Promise.all(promisesToUpdate[1]).then((computedPositions: any[][]) => {
+                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
+                }),
+            ]);
+
+        } catch (err) {
+            throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
+        }
+    }
+
+    private computePositions = async (tripPositions: any): Promise<any> => {
         const startTimestamp = parseInt(tripPositions.start_timestamp, 10);
         let startDayTimestamp = moment.utc(startTimestamp).tz("Europe/Prague").startOf("day").valueOf();
 
@@ -429,58 +484,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 resolve(options.positions);
             });
         });
-    }
-
-    public updateDelay = async (msg: any): Promise<void> => {
-        try {
-            const tripIds = JSON.parse(msg.content.toString());
-
-            // Get all positions for each trip
-            const tripsPositionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripIds);
-
-            // Append gtfs data to each trip
-            const promisesGetGTFSData = tripsPositionsToUpdate.map(async (trip, i) => {
-                const gtfsData = await this.delayComputationTripsModel.getData(trip.gtfs_trip_id);
-                return {
-                    ...trip,
-                    gtfsData,
-                };
-            });
-            const tripsPositionsWithGTFSDataToUpdate = await Promise.all(promisesGetGTFSData);
-
-            const promisesToUpdate = [
-                // Lets process every position if gtfs shape points and schedules data is ready
-                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData !== null).map(async (trip: any) => {
-                    return this.computePositions(trip);
-                }),
-                // For those not ready firstly gather gtfs shape points and schedules
-                tripsPositionsWithGTFSDataToUpdate.filter((e: any) => e.gtfsData === null).map(async (trip: any) => {
-                    log.debug("Delay Computation data (Redis) was not found. (gtfsTripId = " + trip.gtfs_trip_id + ")");
-                    try {
-                        const gtfs = await this.getResultObjectForDelayCalculation(trip.gtfs_trip_id);
-                        await this.delayComputationTripsModel.save("trip.trip_id", [gtfs]);
-                        trip.gtfsData = gtfs;
-
-                        return this.computePositions(trip);
-                    } catch (err) {
-                        return Promise.resolve();
-                    }
-                }),
-            ];
-
-            // Both update in parallel and in one batch
-            await Promise.all([
-                Promise.all(promisesToUpdate[0]).then((computedPositions: any[][]) => {
-                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
-                }),
-                Promise.all(promisesToUpdate[1]).then((computedPositions: any[][]) => {
-                    return this.modelPositions.bulkUpdate(_.flatten(computedPositions));
-                }),
-            ]);
-
-        } catch (err) {
-            throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
-        }
     }
 
     private getEstimatedPoint = (
