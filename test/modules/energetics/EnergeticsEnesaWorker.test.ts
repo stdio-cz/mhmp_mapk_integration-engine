@@ -67,18 +67,18 @@ describe("EnergeticsEnesaWorker", () => {
         sandbox.restore();
     });
 
-    it("fetch2DaysData should call saveDataToDB once", async () => {
-        sandbox.stub(worker, "saveDataToDB" as any);
+    it("fetchXDaysData should call fetchAndsaveData once", async () => {
+        sandbox.stub(worker, "fetchAndsaveData" as any);
 
-        await worker.fetch2DaysData({});
-        sandbox.assert.calledOnce(worker["saveDataToDB"] as sinon.SinonSpy);
+        await worker.fetchXDaysData();
+        sandbox.assert.calledOnce(worker["fetchAndsaveData"] as sinon.SinonSpy);
     });
 
-    it("saveDataToDB should call certain functions", async () => {
+    it("fetchAndsaveData should call certain functions", async () => {
         sandbox.stub(worker, "getConnectionSettings" as any).returns({ testOutput: true });
         sandbox.stub(worker, "processDataStream" as any).resolves();
 
-        await worker["saveDataToDB"]({
+        await worker["fetchAndsaveData"]({
             from: "",
             to: "",
         });

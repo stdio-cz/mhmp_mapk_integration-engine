@@ -27,11 +27,11 @@
                 "yearOfAdjustment": null
             },
             "roof": {
-                "area": null,
-                "construction": null,
-                "technicalCondition": null,
-                "thermalInsulation": null,
-                "yearOfAdjustment": null
+                "area": 56.69,
+                "construction": "string",
+                "technicalCondition": "string",
+                "thermalInsulation": "string",
+                "yearOfAdjustment": 2019
             },
             "sideWall": {
                 "area": null,
@@ -53,7 +53,7 @@
         "EnergeticManagement": false,
         "EnergyAudits": {
             "createdAt": null,
-            "earegistrationNumber": null,
+            "earegistrationNumber": "969696",
             "energyAudit": null
         },
         "FuelAndEnergy": {
@@ -84,29 +84,29 @@
         },
         "OpeningHours": null,
         "PENB": {
-            "buildingEnvelope": null,
-            "buildingEnvelopeCategory": null,
-            "cooling": null,
-            "coolingCategory": null,
-            "heating": null,
-            "heatingCategory": null,
-            "humidityAdjustment": null,
-            "humidityAdjustmentCategory": null,
-            "issueDate": null,
-            "lighting": null,
-            "lightingCategory": null,
-            "penbnumber": null,
-            "primaryNonRenewableEnergy": null,
-            "primaryNonRenewableEnergyCategory": null,
-            "totalBuildingEnvelopeArea": null,
-            "totalEnergyReferenceArea": null,
-            "totalProvidedEnergy": null,
-            "totalProvidedEnergyCategory": null,
-            "ventilation": null,
-            "ventilationCategory": null,
-            "volumeFactorOfAvshape": null,
-            "warmWater": null,
-            "warmWaterCategory": null
+            "buildingEnvelope": 12,
+            "buildingEnvelopeCategory": "B",
+            "cooling": 12,
+            "coolingCategory": "B",
+            "heating": 12,
+            "heatingCategory": "B",
+            "humidityAdjustment": 12,
+            "humidityAdjustmentCategory": "B",
+            "issueDate": "2016",
+            "lighting": 12,
+            "lightingCategory": "B",
+            "penbnumber": "26594",
+            "primaryNonRenewableEnergy": 12,
+            "primaryNonRenewableEnergyCategory": "B",
+            "totalBuildingEnvelopeArea": 12,
+            "totalEnergyReferenceArea": 45,
+            "totalProvidedEnergy": 12,
+            "totalProvidedEnergyCategory": "B",
+            "ventilation": 12,
+            "ventilationCategory": "B",
+            "volumeFactorOfAvshape": "0",
+            "warmWater": 12,
+            "warmWaterCategory": "B"
         },
         "RegistrationUnit": null,
         "SecondaryUse": null,
@@ -175,7 +175,7 @@
         "BuildingAddressCode": "3.44                                              ",
         "BuildingEnvelope": {
             "fillingOfHole": {
-                "area": null,
+                "area": 55.6,
                 "construction": null,
                 "technicalCondition": null,
                 "yearOfAdjustment": null
@@ -188,18 +188,18 @@
                 "yearOfAdjustment": null
             },
             "roof": {
-                "area": null,
+                "area": 55.244,
                 "construction": null,
                 "technicalCondition": null,
                 "thermalInsulation": null,
                 "yearOfAdjustment": null
             },
             "sideWall": {
-                "area": null,
+                "area": 41,
                 "heatInsulation": null,
                 "prevailingConstruction": null,
-                "technicalCondition": null,
-                "yearOfAdjustment": null
+                "technicalCondition": "OK",
+                "yearOfAdjustment": 2016
             }
         },
         "BuiltUpArea": null,

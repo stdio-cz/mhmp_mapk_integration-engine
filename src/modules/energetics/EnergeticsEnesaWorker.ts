@@ -135,24 +135,24 @@ class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
     }
 
     /**
-     * Worker method - fetch data (last 2 days)
+     * Worker method - fetch data (last X days)
      */
-    public fetch2DaysData = async (msg: any): Promise<void> => {
+    public fetchXDaysData = async (msg: any = 2): Promise<void> => {
         const now = moment().tz(EnesaApi.API_DATE_TZ);
-        const dateFrom = now.clone().subtract(2, "days").format(EnesaApi.API_DATE_FORMAT);
+        const dateFrom = now.clone().subtract(msg, "days").format(EnesaApi.API_DATE_FORMAT);
         const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
         const dateParams: DateParams = {
             from: dateFrom,
             to: dateTo,
         };
 
-        await this.saveDataToDB(dateParams);
+        await this.fetchAndsaveData(dateParams);
     }
 
     /**
      * Save and refresh data in DB
      */
-    private saveDataToDB = async (dateParams: DateParams): Promise<void> => {
+    private fetchAndsaveData = async (dateParams: DateParams): Promise<void> => {
         // Update connection settings
         this.datasourceEnesaEnergyBuildings.protocolStrategy.setConnectionSettings(
             this.getConnectionSettings(EnesaApi.resourceType.Buildings, dateParams),

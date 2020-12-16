@@ -245,34 +245,34 @@ const definitions: IQueueDefinition[] = [
         queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Energetics.name.toLowerCase(),
         queues: [
             {
-                name: "fetchEnesa2DaysData",
+                name: "fetchEnesaXDaysData",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 2 * 60 * 60 * 1000, // 2 hours
                 },
                 worker: EnergeticsEnesaWorker,
-                workerMethod: "fetch2DaysData",
+                workerMethod: "fetchXDaysData",
             },
             {
-                name: "fetchVpalac1HourData",
+                name: "fetchVpalacXHoursData",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 60 * 60 * 1000, // 1 hour
                 },
                 worker: EnergeticsVpalacWorker,
-                workerMethod: "fetch1HourData",
+                workerMethod: "fetchXHoursData",
             },
             {
-                name: "fetchVpalac14DaysData",
+                name: "fetchVpalacXDaysData",
                 options: {
                     deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
                     deadLetterRoutingKey: "dead",
                     messageTtl: 24 * 60 * 60 * 1000, // 24 hours
                 },
                 worker: EnergeticsVpalacWorker,
-                workerMethod: "fetch14DaysData",
+                workerMethod: "fetchXDaysData",
             },
         ],
     },

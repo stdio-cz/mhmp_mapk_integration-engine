@@ -179,39 +179,39 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
     }
 
     /**
-     * Worker method - fetch data (last 14 days)
+     * Worker method - fetch data (last X days)
      */
-    public fetch14DaysData = async (msg: any): Promise<void> => {
+    public fetchXDaysData = async (msg: any = 14): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const dateFrom = now.clone().subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+        const dateFrom = now.clone().subtract(msg, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateParams: DateParams = {
             from: dateFrom,
             to: dateTo,
         };
 
-        await this.saveDataToDB(dateParams);
+        await this.fetchAndsaveData(dateParams);
     }
 
     /**
-     * Worker method - fetch data (last 1 hour)
+     * Worker method - fetch data (last X hours)
      */
-    public fetch1HourData = async (msg: any): Promise<void> => {
+    public fetchXHoursData = async (msg: any = 1): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const timeFrom = now.clone().subtract(1, "hour").valueOf().toString();
+        const timeFrom = now.clone().subtract(msg, "hour").valueOf().toString();
         const timeTo = now.valueOf().toString();
         const dateParams: DateParams = {
             from_ms: timeFrom,
             to_ms: timeTo,
         };
 
-        await this.saveDataToDB(dateParams);
+        await this.fetchAndsaveData(dateParams);
     }
 
     /**
      * Save and refresh data in DB
      */
-    private saveDataToDB = async (dateParams: DateParams): Promise<void> => {
+    private fetchAndsaveData = async (dateParams: DateParams): Promise<void> => {
         const { authCookie } = await UnimonitorCemApi.createSession();
 
         // Update connection settings
