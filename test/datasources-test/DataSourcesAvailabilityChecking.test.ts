@@ -36,6 +36,7 @@ import { sign } from "jsonwebtoken";
 import * as JSONStream from "JSONStream";
 import "mocha";
 import * as moment from "moment-timezone";
+import { promisify } from 'util'
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
@@ -45,9 +46,12 @@ import {
 import { EnesaApi, UnimonitorCemApi } from '../../src/modules/energetics'
 
 import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
+import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 chai.use(chaiAsPromised);
+
+const sleep = promisify(setTimeout);
 
 describe("DataSourcesAvailabilityChecking", () => {
 
@@ -1400,7 +1404,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await dataStream.setDataProcessor(onDataFunction).proceed();
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) dataStream.destroy();
             };
 
             before(() => {
@@ -1420,6 +1429,28 @@ describe("DataSourcesAvailabilityChecking", () => {
                     Energetics.enesa.buildings,
                     JSONStream.parse("buildings.*"),
                     async (data: EnesaBuildings.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Consumption,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Visapp Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.ConsumptionVisapp,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
                     },
                 );
@@ -1474,7 +1505,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await dataStream.setDataProcessor(onDataFunction).proceed();
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) dataStream.destroy();
             };
 
             before(() => {

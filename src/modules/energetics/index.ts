@@ -2,6 +2,7 @@
 export * from "./EnergeticsWorker";
 export * from "./EnesaApiHelper";
 export * from "./EnesaEnergyBuildingsTransformation";
+export * from "./EnesaEnergyConsumptionTransformation";
 export * from "./EnesaEnergyDevicesTransformation";
 export * from "./UnimonitorCemApiHelper";
 export * from "./VpalacMeasurementTransformation";

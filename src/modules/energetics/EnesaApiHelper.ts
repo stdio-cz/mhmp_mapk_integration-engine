@@ -1,5 +1,9 @@
 "use strict";
 
+type DateParams = {
+    [P in "from" | "from_ms" | "to" | "to_ms"]?: string
+};
+
 /**
  * Helper class for Enesa API
  */
@@ -13,9 +17,11 @@ class EnesaApi {
     public static get resourceType() {
         return {
             Buildings: "buildings/full",
+            Consumption: "Data/consumption",
+            ConsumptionVisapp: "Data/visapp",
             Devices: "devices",
         };
     }
 }
 
-export { EnesaApi };
+export { DateParams, EnesaApi };

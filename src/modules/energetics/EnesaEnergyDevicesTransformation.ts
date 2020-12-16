@@ -17,12 +17,14 @@ export class EnesaEnergyDevicesTransformation extends BaseTransformation impleme
 
     protected transformElement = async (element: EnesaDevices.InputElement): Promise<EnesaDevices.OutputElement> => {
         const res: EnesaDevices.OutputElement = {
+            // PK
+            id: element.id,
+
             addr: _.toString(element.addr),
             building_id: element.buildingId,
             category: _.toString(element.category),
             deleted: _.toString(element.deleted),
             description: _.toString(element.description),
-            id: element.id,
             include_in_evaluation: _.toString(element.includeInEvaluation),
             location_description: _.toString(element.locationDescription),
             location_number: _.toString(element.locationNumber),

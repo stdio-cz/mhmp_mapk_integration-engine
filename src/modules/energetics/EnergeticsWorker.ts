@@ -18,8 +18,10 @@ import {
 import { PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
+    DateParams,
     EnesaApi,
     EnesaEnergyBuildingsTransformation,
+    EnesaEnergyConsumptionTransformation,
     EnesaEnergyDevicesTransformation,
     UnimonitorCemApi,
     VpalacMeasurementTransformation,
@@ -30,15 +32,14 @@ import {
 } from "./";
 
 import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
+import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
-
-type DateParams = {
-    [P in "from" | "from_ms" | "to" | "to_ms"]?: string
-};
 
 // TODO move to separate workers
 export class EnergeticsWorker extends BaseWorker {
     private readonly datasourceEnesaEnergyBuildings: DataSourceStreamed;
+    private readonly datasourceEnesaEnergyConsumption: DataSourceStreamed;
+    private readonly datasourceEnesaEnergyConsumptionVisapp: DataSourceStreamed;
     private readonly datasourceEnesaEnergyDevices: DataSourceStreamed;
     private readonly datasourceVpalacMeasurement: DataSourceStreamed;
     private readonly datasourceVpalacMeasuringEquipment: DataSourceStreamed;
@@ -47,6 +48,7 @@ export class EnergeticsWorker extends BaseWorker {
     private readonly datasourceVpalacUnits: DataSourceStreamed;
 
     private readonly transformationEnesaEnergyBuildings: EnesaEnergyBuildingsTransformation;
+    private readonly transformationEnesaEnergyConsumption: EnesaEnergyConsumptionTransformation;
     private readonly transformationEnesaEnergyDevices: EnesaEnergyDevicesTransformation;
     private readonly transformationVpalacMeasurement: VpalacMeasurementTransformation;
     private readonly transformationVpalacMeasuringEquipment: VpalacMeasuringEquipmentTransformation;
@@ -55,6 +57,7 @@ export class EnergeticsWorker extends BaseWorker {
     private readonly transformationVpalacUnits: VpalacUnitsTransformation;
 
     private readonly modelEnesaEnergyBuildings: PostgresModel;
+    private readonly modelEnesaEnergyConsumption: PostgresModel;
     private readonly modelEnesaEnergyDevices: PostgresModel;
     private readonly modelVpalacMeasurement: PostgresModel;
     private readonly modelVpalacMeasuringEquipment: PostgresModel;
@@ -88,6 +91,43 @@ export class EnergeticsWorker extends BaseWorker {
             new JSONSchemaValidator(
                 Energetics.enesa.buildings.name + "ModelValidator",
                 Energetics.enesa.buildings.outputJsonSchema,
+            ),
+        );
+
+        // Enesa Energy Consumption
+        this.datasourceEnesaEnergyConsumption = new DataSourceStreamed(
+            Energetics.enesa.buildings.name + "DataSource",
+            new HTTPProtocolStrategyStreamed({
+                headers: {},
+                method: "",
+                url: "",
+            }).setStreamTransformer(JSONStream.parse("*")),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new JSONSchemaValidator(Energetics.enesa.consumption.name + "DataSource",
+                Energetics.enesa.consumption.datasourceJsonSchema));
+
+        this.datasourceEnesaEnergyConsumptionVisapp = new DataSourceStreamed(
+            Energetics.enesa.consumption.name + "VisappDataSource",
+            new HTTPProtocolStrategyStreamed({
+                headers: {},
+                method: "",
+                url: "",
+            }).setStreamTransformer(JSONStream.parse("*")),
+            new JSONDataTypeStrategy({ resultsPath: "" }),
+            new JSONSchemaValidator(Energetics.enesa.consumption.name + "VisappDataSource",
+                Energetics.enesa.consumption.datasourceJsonSchema));
+
+        this.transformationEnesaEnergyConsumption = new EnesaEnergyConsumptionTransformation();
+        this.modelEnesaEnergyConsumption = new PostgresModel(
+            Energetics.enesa.consumption.name + "Model",
+            {
+                outputSequelizeAttributes: Energetics.enesa.consumption.outputSequelizeAttributes,
+                pgTableName: Energetics.enesa.consumption.pgTableName,
+                savingType: "insertOrUpdate",
+            },
+            new JSONSchemaValidator(
+                Energetics.enesa.consumption.name + "ModelValidator",
+                Energetics.enesa.consumption.outputJsonSchema,
             ),
         );
 
@@ -302,6 +342,14 @@ export class EnergeticsWorker extends BaseWorker {
             this.getEnesaConnectionSettings(EnesaApi.resourceType.Buildings, dateParams),
         );
 
+        this.datasourceEnesaEnergyConsumption.protocolStrategy.setConnectionSettings(
+            this.getEnesaConnectionSettings(EnesaApi.resourceType.Consumption, dateParams),
+        );
+
+        this.datasourceEnesaEnergyConsumptionVisapp.protocolStrategy.setConnectionSettings(
+            this.getEnesaConnectionSettings(EnesaApi.resourceType.ConsumptionVisapp, dateParams),
+        );
+
         this.datasourceEnesaEnergyDevices.protocolStrategy.setConnectionSettings(
             this.getEnesaConnectionSettings(EnesaApi.resourceType.Devices, dateParams),
         );
@@ -317,6 +365,29 @@ export class EnergeticsWorker extends BaseWorker {
                     await this.modelEnesaEnergyBuildings.save(transformedData);
                 },
             ),
+        );
+
+        apiPromises.push(
+            new Promise(async (resolve) => {
+                // Process both consumption datasources sequentially
+                await this.proceedDataStream(
+                    this.datasourceEnesaEnergyConsumption.getAll(false),
+                    async (data: EnesaBuildings.InputElement) => {
+                        const transformedData = await this.transformationEnesaEnergyBuildings.transform(data);
+                        await this.modelEnesaEnergyBuildings.save(transformedData);
+                    },
+                );
+
+                await this.proceedDataStream(
+                    this.datasourceEnesaEnergyConsumptionVisapp.getAll(false),
+                    async (data: EnesaBuildings.InputElement) => {
+                        const transformedData = await this.transformationEnesaEnergyBuildings.transform(data);
+                        await this.modelEnesaEnergyBuildings.save(transformedData);
+                    },
+                );
+
+                resolve();
+            }),
         );
 
         apiPromises.push(

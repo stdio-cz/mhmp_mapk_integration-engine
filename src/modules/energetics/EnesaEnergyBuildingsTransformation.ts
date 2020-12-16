@@ -19,6 +19,7 @@ export class EnesaEnergyBuildingsTransformation extends BaseTransformation imple
         element: EnesaBuildings.InputElement,
     ): Promise<EnesaBuildings.OutputElement> => {
         const res: EnesaBuildings.OutputElement = {
+            // PK
             id: element.Id,
 
             address_city: _.toString(element.Address.city),
