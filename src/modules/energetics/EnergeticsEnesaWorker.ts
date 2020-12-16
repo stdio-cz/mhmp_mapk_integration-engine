@@ -184,26 +184,23 @@ class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
         );
 
         apiPromises.push(
-            new Promise(async (resolve) => {
-                // Process both consumption datasources sequentially
-                await this.processDataStream(
-                    this.datasourceEnesaEnergyConsumption.getAll(false),
-                    async (data: EnesaConsumption.InputElement) => {
-                        const transformedData = await this.transformationEnesaEnergyConsumption.transform(data);
-                        await this.modelEnesaEnergyConsumption.save(transformedData);
-                    },
-                );
+            this.processDataStream(
+                this.datasourceEnesaEnergyConsumption.getAll(false),
+                async (data: EnesaConsumption.InputElement) => {
+                    const transformedData = await this.transformationEnesaEnergyConsumption.transform(data);
+                    await this.modelEnesaEnergyConsumption.save(transformedData);
+                },
+            ),
+        );
 
-                await this.processDataStream(
-                    this.datasourceEnesaEnergyConsumptionVisapp.getAll(false),
-                    async (data: EnesaConsumption.InputElement) => {
-                        const transformedData = await this.transformationEnesaEnergyConsumption.transform(data);
-                        await this.modelEnesaEnergyConsumption.save(transformedData);
-                    },
-                );
-
-                resolve();
-            }),
+        apiPromises.push(
+            this.processDataStream(
+                this.datasourceEnesaEnergyConsumptionVisapp.getAll(false),
+                async (data: EnesaConsumption.InputElement) => {
+                    const transformedData = await this.transformationEnesaEnergyConsumption.transform(data);
+                    await this.modelEnesaEnergyConsumption.save(transformedData);
+                },
+            ),
         );
 
         apiPromises.push(
