@@ -190,7 +190,7 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
             to: dateTo,
         };
 
-        await this.fetchAndsaveData(dateParams);
+        await this.fetchAndSaveData(dateParams);
     }
 
     /**
@@ -205,13 +205,13 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
             to_ms: timeTo,
         };
 
-        await this.fetchAndsaveData(dateParams);
+        await this.fetchAndSaveData(dateParams);
     }
 
     /**
      * Save and refresh data in DB
      */
-    private fetchAndsaveData = async (dateParams: DateParams): Promise<void> => {
+    private fetchAndSaveData = async (dateParams: DateParams): Promise<void> => {
         const { authCookie } = await UnimonitorCemApi.createSession();
 
         // Update connection settings

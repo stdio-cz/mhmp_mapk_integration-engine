@@ -24,8 +24,8 @@ describe("VpalacUnitsTransformation", () => {
 
     beforeEach(() => {
         transformation = new VpalacUnitsTransformation();
-        const buffer = fs.readFileSync(__dirname + "/../../data/energetics-vpalac-units-datasource.json");
-        testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        const rawData = fs.readFileSync(__dirname + "/../../data/energetics-vpalac-units-datasource.json") as unknown;
+        testSourceData = JSON.parse(rawData as string);
     });
 
     it("should has name", async () => {

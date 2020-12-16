@@ -146,13 +146,13 @@ class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
             to: dateTo,
         };
 
-        await this.fetchAndsaveData(dateParams);
+        await this.fetchAndSaveData(dateParams);
     }
 
     /**
      * Save and refresh data in DB
      */
-    private fetchAndsaveData = async (dateParams: DateParams): Promise<void> => {
+    private fetchAndSaveData = async (dateParams: DateParams): Promise<void> => {
         // Update connection settings
         this.datasourceEnesaEnergyBuildings.protocolStrategy.setConnectionSettings(
             this.getConnectionSettings(EnesaApi.resourceType.Buildings, dateParams),

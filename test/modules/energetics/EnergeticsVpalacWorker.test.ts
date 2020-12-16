@@ -77,27 +77,27 @@ describe("EnergeticsVpalacWorker", () => {
         sandbox.restore();
     });
 
-    it("fetchXHoursData should call fetchAndsaveData once", async () => {
-        sandbox.stub(worker, "fetchAndsaveData" as any);
+    it("fetchXHoursData should call fetchAndSaveData once", async () => {
+        sandbox.stub(worker, "fetchAndSaveData" as any);
 
         await worker.fetchXHoursData();
-        sandbox.assert.calledOnce(worker["fetchAndsaveData"] as sinon.SinonSpy);
+        sandbox.assert.calledOnce(worker["fetchAndSaveData"] as sinon.SinonSpy);
     });
 
-    it("fetchXDaysData should call fetchAndsaveData once", async () => {
-        sandbox.stub(worker, "fetchAndsaveData" as any);
+    it("fetchXDaysData should call fetchAndSaveData once", async () => {
+        sandbox.stub(worker, "fetchAndSaveData" as any);
 
         await worker.fetchXDaysData();
-        sandbox.assert.calledOnce(worker["fetchAndsaveData"] as sinon.SinonSpy);
+        sandbox.assert.calledOnce(worker["fetchAndSaveData"] as sinon.SinonSpy);
     });
 
-    it("fetchAndsaveData should call certain functions", async () => {
+    it("fetchAndSaveData should call certain functions", async () => {
         sandbox.stub(UnimonitorCemApi, "createSession").resolves({ authCookie: "" });
         sandbox.stub(UnimonitorCemApi, "terminateSession").resolves();
         sandbox.stub(worker, "getConnectionSettings" as any).returns({ testOutput: true });
         sandbox.stub(worker, "processDataStream" as any).resolves();
 
-        await worker["fetchAndsaveData"]({
+        await worker["fetchAndSaveData"]({
             from: "",
             to: "",
         });
