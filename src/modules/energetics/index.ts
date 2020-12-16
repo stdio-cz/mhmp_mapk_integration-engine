@@ -1,5 +1,7 @@
 /* modules/energetics/index.ts */
-export * from "./EnergeticsWorker";
+export * from "./EnergeticsBaseWorker";
+export * from "./EnergeticsEnesaWorker";
+export * from "./EnergeticsVpalacWorker";
 export * from "./EnesaApiHelper";
 export * from "./EnesaEnergyBuildingsTransformation";
 export * from "./EnesaEnergyConsumptionTransformation";

@@ -3,26 +3,20 @@
 import * as JSONStream from "JSONStream";
 import * as moment from "moment";
 
-import { CustomError } from "@golemio/errors";
-import { Energetics, EnergeticsTypes } from "@golemio/schema-definitions";
+import { Energetics } from "@golemio/schema-definitions";
 import { JSONSchemaValidator } from "@golemio/validator";
 
 import { config } from "../../core/config";
 import {
-    DataSourceStream,
     DataSourceStreamed,
     HTTPProtocolStrategyStreamed,
     IHTTPSettings,
     JSONDataTypeStrategy,
 } from "../../core/datasources";
 import { PostgresModel } from "../../core/models";
-import { BaseWorker } from "../../core/workers";
 import {
     DateParams,
-    EnesaApi,
-    EnesaEnergyBuildingsTransformation,
-    EnesaEnergyConsumptionTransformation,
-    EnesaEnergyDevicesTransformation,
+    EnergeticsBaseWorker,
     UnimonitorCemApi,
     VpalacMeasurementTransformation,
     VpalacMeasuringEquipmentTransformation,
@@ -31,34 +25,19 @@ import {
     VpalacUnitsTransformation,
 } from "./";
 
-import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
-import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
-import EnesaDevices = EnergeticsTypes.Enesa.Devices;
-
-// TODO move to separate workers
-export class EnergeticsWorker extends BaseWorker {
-    private readonly datasourceEnesaEnergyBuildings: DataSourceStreamed;
-    private readonly datasourceEnesaEnergyConsumption: DataSourceStreamed;
-    private readonly datasourceEnesaEnergyConsumptionVisapp: DataSourceStreamed;
-    private readonly datasourceEnesaEnergyDevices: DataSourceStreamed;
+class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
     private readonly datasourceVpalacMeasurement: DataSourceStreamed;
     private readonly datasourceVpalacMeasuringEquipment: DataSourceStreamed;
     private readonly datasourceVpalacMeterType: DataSourceStreamed;
     private readonly datasourceVpalacTypeMeasuringEquipment: DataSourceStreamed;
     private readonly datasourceVpalacUnits: DataSourceStreamed;
 
-    private readonly transformationEnesaEnergyBuildings: EnesaEnergyBuildingsTransformation;
-    private readonly transformationEnesaEnergyConsumption: EnesaEnergyConsumptionTransformation;
-    private readonly transformationEnesaEnergyDevices: EnesaEnergyDevicesTransformation;
     private readonly transformationVpalacMeasurement: VpalacMeasurementTransformation;
     private readonly transformationVpalacMeasuringEquipment: VpalacMeasuringEquipmentTransformation;
     private readonly transformationVpalacMeterType: VpalacMeterTypeTransformation;
     private readonly transformationVpalacTypeMeasuringEquipment: VpalacTypeMeasuringEquipmentTransformation;
     private readonly transformationVpalacUnits: VpalacUnitsTransformation;
 
-    private readonly modelEnesaEnergyBuildings: PostgresModel;
-    private readonly modelEnesaEnergyConsumption: PostgresModel;
-    private readonly modelEnesaEnergyDevices: PostgresModel;
     private readonly modelVpalacMeasurement: PostgresModel;
     private readonly modelVpalacMeasuringEquipment: PostgresModel;
     private readonly modelVpalacMeterType: PostgresModel;
@@ -67,95 +46,6 @@ export class EnergeticsWorker extends BaseWorker {
 
     constructor() {
         super();
-
-        // Enesa Energy Buildings
-        this.datasourceEnesaEnergyBuildings = new DataSourceStreamed(
-            Energetics.enesa.buildings.name + "DataSource",
-            new HTTPProtocolStrategyStreamed({
-                headers: {},
-                method: "",
-                url: "",
-            }).setStreamTransformer(JSONStream.parse("buildings.*")),
-            new JSONDataTypeStrategy({ resultsPath: "" }),
-            new JSONSchemaValidator(Energetics.enesa.buildings.name + "DataSource",
-                Energetics.enesa.buildings.datasourceJsonSchema));
-
-        this.transformationEnesaEnergyBuildings = new EnesaEnergyBuildingsTransformation();
-        this.modelEnesaEnergyBuildings = new PostgresModel(
-            Energetics.enesa.buildings.name + "Model",
-            {
-                outputSequelizeAttributes: Energetics.enesa.buildings.outputSequelizeAttributes,
-                pgTableName: Energetics.enesa.buildings.pgTableName,
-                savingType: "insertOrUpdate",
-            },
-            new JSONSchemaValidator(
-                Energetics.enesa.buildings.name + "ModelValidator",
-                Energetics.enesa.buildings.outputJsonSchema,
-            ),
-        );
-
-        // Enesa Energy Consumption
-        this.datasourceEnesaEnergyConsumption = new DataSourceStreamed(
-            Energetics.enesa.buildings.name + "DataSource",
-            new HTTPProtocolStrategyStreamed({
-                headers: {},
-                method: "",
-                url: "",
-            }).setStreamTransformer(JSONStream.parse("*")),
-            new JSONDataTypeStrategy({ resultsPath: "" }),
-            new JSONSchemaValidator(Energetics.enesa.consumption.name + "DataSource",
-                Energetics.enesa.consumption.datasourceJsonSchema));
-
-        this.datasourceEnesaEnergyConsumptionVisapp = new DataSourceStreamed(
-            Energetics.enesa.consumption.name + "VisappDataSource",
-            new HTTPProtocolStrategyStreamed({
-                headers: {},
-                method: "",
-                url: "",
-            }).setStreamTransformer(JSONStream.parse("*")),
-            new JSONDataTypeStrategy({ resultsPath: "" }),
-            new JSONSchemaValidator(Energetics.enesa.consumption.name + "VisappDataSource",
-                Energetics.enesa.consumption.datasourceJsonSchema));
-
-        this.transformationEnesaEnergyConsumption = new EnesaEnergyConsumptionTransformation();
-        this.modelEnesaEnergyConsumption = new PostgresModel(
-            Energetics.enesa.consumption.name + "Model",
-            {
-                outputSequelizeAttributes: Energetics.enesa.consumption.outputSequelizeAttributes,
-                pgTableName: Energetics.enesa.consumption.pgTableName,
-                savingType: "insertOrUpdate",
-            },
-            new JSONSchemaValidator(
-                Energetics.enesa.consumption.name + "ModelValidator",
-                Energetics.enesa.consumption.outputJsonSchema,
-            ),
-        );
-
-        // Enesa Energy Devices
-        this.datasourceVpalacMeasurement = new DataSourceStreamed(
-            Energetics.enesa.devices.name + "DataSource",
-            new HTTPProtocolStrategyStreamed({
-                headers: {},
-                method: "",
-                url: "",
-            }).setStreamTransformer(JSONStream.parse("devices.*")),
-            new JSONDataTypeStrategy({ resultsPath: "" }),
-            new JSONSchemaValidator(Energetics.enesa.devices.name + "DataSource",
-                Energetics.enesa.devices.datasourceJsonSchema));
-
-        this.transformationEnesaEnergyDevices = new EnesaEnergyDevicesTransformation();
-        this.modelEnesaEnergyDevices = new PostgresModel(
-            Energetics.enesa.devices.name + "Model",
-            {
-                outputSequelizeAttributes: Energetics.enesa.devices.outputSequelizeAttributes,
-                pgTableName: Energetics.enesa.devices.pgTableName,
-                savingType: "insertOrUpdate",
-            },
-            new JSONSchemaValidator(
-                Energetics.enesa.devices.name + "ModelValidator",
-                Energetics.enesa.devices.outputJsonSchema,
-            ),
-        );
 
         // Vpalac Measurement
         this.datasourceVpalacMeasurement = new DataSourceStreamed(
@@ -289,39 +179,9 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
-     * Worker method - fetch Enesa data (last 2 days)
+     * Worker method - fetch data (last 14 days)
      */
-    public fetchEnesa2DaysData = async (msg: any): Promise<void> => {
-        const now = moment().tz(EnesaApi.API_DATE_TZ);
-        const dateFrom = now.clone().subtract(2, "days").format(EnesaApi.API_DATE_FORMAT);
-        const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
-        const dateParams: DateParams = {
-            from: dateFrom,
-            to: dateTo,
-        };
-
-        await this.saveEnesaDataToDB(dateParams);
-    }
-
-    /**
-     * Worker method - fetch Vpalac data (last 1 hour)
-     */
-    public fetchVpalac1HourData = async (msg: any): Promise<void> => {
-        const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const timeFrom = now.clone().subtract(1, "hour").valueOf().toString();
-        const timeTo = now.valueOf().toString();
-        const dateParams: DateParams = {
-            from_ms: timeFrom,
-            to_ms: timeTo,
-        };
-
-        await this.saveVpalacDataToDB(dateParams);
-    }
-
-    /**
-     * Worker method - fetch Vpalac data (last 14 days)
-     */
-    public fetchVpalac14DaysData = async (msg: any): Promise<void> => {
+    public fetch14DaysData = async (msg: any): Promise<void> => {
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
         const dateFrom = now.clone().subtract(14, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
@@ -330,89 +190,33 @@ export class EnergeticsWorker extends BaseWorker {
             to: dateTo,
         };
 
-        await this.saveVpalacDataToDB(dateParams);
+        await this.saveDataToDB(dateParams);
     }
 
     /**
-     * Save and refresh Enesa data in DB
+     * Worker method - fetch data (last 1 hour)
      */
-    private saveEnesaDataToDB = async (dateParams: DateParams): Promise<void> => {
-        // Update connection settings
-        this.datasourceEnesaEnergyBuildings.protocolStrategy.setConnectionSettings(
-            this.getEnesaConnectionSettings(EnesaApi.resourceType.Buildings, dateParams),
-        );
+    public fetch1HourData = async (msg: any): Promise<void> => {
+        const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
+        const timeFrom = now.clone().subtract(1, "hour").valueOf().toString();
+        const timeTo = now.valueOf().toString();
+        const dateParams: DateParams = {
+            from_ms: timeFrom,
+            to_ms: timeTo,
+        };
 
-        this.datasourceEnesaEnergyConsumption.protocolStrategy.setConnectionSettings(
-            this.getEnesaConnectionSettings(EnesaApi.resourceType.Consumption, dateParams),
-        );
-
-        this.datasourceEnesaEnergyConsumptionVisapp.protocolStrategy.setConnectionSettings(
-            this.getEnesaConnectionSettings(EnesaApi.resourceType.ConsumptionVisapp, dateParams),
-        );
-
-        this.datasourceEnesaEnergyDevices.protocolStrategy.setConnectionSettings(
-            this.getEnesaConnectionSettings(EnesaApi.resourceType.Devices, dateParams),
-        );
-
-        // Proceed and save
-        const apiPromises: Array<Promise<void>> = [];
-
-        apiPromises.push(
-            this.proceedDataStream(
-                this.datasourceEnesaEnergyBuildings.getAll(false),
-                async (data: EnesaBuildings.InputElement) => {
-                    const transformedData = await this.transformationEnesaEnergyBuildings.transform(data);
-                    await this.modelEnesaEnergyBuildings.save(transformedData);
-                },
-            ),
-        );
-
-        apiPromises.push(
-            new Promise(async (resolve) => {
-                // Process both consumption datasources sequentially
-                await this.proceedDataStream(
-                    this.datasourceEnesaEnergyConsumption.getAll(false),
-                    async (data: EnesaBuildings.InputElement) => {
-                        const transformedData = await this.transformationEnesaEnergyBuildings.transform(data);
-                        await this.modelEnesaEnergyBuildings.save(transformedData);
-                    },
-                );
-
-                await this.proceedDataStream(
-                    this.datasourceEnesaEnergyConsumptionVisapp.getAll(false),
-                    async (data: EnesaBuildings.InputElement) => {
-                        const transformedData = await this.transformationEnesaEnergyBuildings.transform(data);
-                        await this.modelEnesaEnergyBuildings.save(transformedData);
-                    },
-                );
-
-                resolve();
-            }),
-        );
-
-        apiPromises.push(
-            this.proceedDataStream(
-                this.datasourceEnesaEnergyDevices.getAll(false),
-                async (data: EnesaDevices.InputElement) => {
-                    const transformedData = await this.transformationEnesaEnergyDevices.transform(data);
-                    await this.modelEnesaEnergyDevices.save(transformedData);
-                },
-            ),
-        );
-
-        // Resolve all API promises
-        await Promise.all(apiPromises);
+        await this.saveDataToDB(dateParams);
     }
 
     /**
-     * Save and refresh Vpalac data in DB
+     * Save and refresh data in DB
      */
-    private saveVpalacDataToDB = async (dateParams: DateParams): Promise<void> => {
+    private saveDataToDB = async (dateParams: DateParams): Promise<void> => {
         const { authCookie } = await UnimonitorCemApi.createSession();
 
         // Update connection settings
         this.datasourceVpalacMeasurement.protocolStrategy.setConnectionSettings(
-            this.getVpalacConnectionSettings(
+            this.getConnectionSettings(
                 UnimonitorCemApi.resourceType.Measurement,
                 authCookie,
                 dateParams,
@@ -420,7 +224,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         this.datasourceVpalacMeasuringEquipment.protocolStrategy.setConnectionSettings(
-            this.getVpalacConnectionSettings(
+            this.getConnectionSettings(
                 UnimonitorCemApi.resourceType.MeasuringEquipment,
                 authCookie,
                 dateParams,
@@ -428,7 +232,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         this.datasourceVpalacMeterType.protocolStrategy.setConnectionSettings(
-            this.getVpalacConnectionSettings(
+            this.getConnectionSettings(
                 UnimonitorCemApi.resourceType.MeterType,
                 authCookie,
                 dateParams,
@@ -436,18 +240,18 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         this.datasourceVpalacTypeMeasuringEquipment.protocolStrategy.setConnectionSettings(
-            this.getVpalacConnectionSettings(
+            this.getConnectionSettings(
                 UnimonitorCemApi.resourceType.TypeMeasuringEquipment,
                 authCookie,
                 {
-                    ...dateParams,
                     cis: "135",
+                    ...dateParams,
                 },
             ),
         );
 
         this.datasourceVpalacUnits.protocolStrategy.setConnectionSettings(
-            this.getVpalacConnectionSettings(
+            this.getConnectionSettings(
                 UnimonitorCemApi.resourceType.Units,
                 authCookie,
                 dateParams,
@@ -458,7 +262,7 @@ export class EnergeticsWorker extends BaseWorker {
         const apiPromises: Array<Promise<void>> = [];
 
         apiPromises.push(
-            this.proceedDataStream(
+            this.processDataStream(
                 this.datasourceVpalacMeasurement.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasurement.transform(data);
@@ -472,7 +276,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedDataStream(
+            this.processDataStream(
                 this.datasourceVpalacMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeasuringEquipment.transform(data);
@@ -482,7 +286,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedDataStream(
+            this.processDataStream(
                 this.datasourceVpalacMeterType.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacMeterType.transform(data);
@@ -492,7 +296,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedDataStream(
+            this.processDataStream(
                 this.datasourceVpalacTypeMeasuringEquipment.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacTypeMeasuringEquipment.transform(data);
@@ -502,7 +306,7 @@ export class EnergeticsWorker extends BaseWorker {
         );
 
         apiPromises.push(
-            this.proceedDataStream(
+            this.processDataStream(
                 this.datasourceVpalacUnits.getAll(false),
                 async (data: any) => {
                     const transformedData = await this.transformationVpalacUnits.transform(data);
@@ -519,46 +323,9 @@ export class EnergeticsWorker extends BaseWorker {
     }
 
     /**
-     * Proceed Vpalac data stream (generic)
+     * Create and return new connection settings
      */
-    private proceedDataStream = async (
-        dataSourceStream: Promise<DataSourceStream>,
-        onDataFunction: (data: any) => Promise<void>,
-    ): Promise<void> => {
-        let dataStream: DataSourceStream;
-
-        try {
-            dataStream = await dataSourceStream;
-        } catch (err) {
-            throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
-        }
-
-        try {
-            await dataStream.setDataProcessor(onDataFunction).proceed();
-        } catch (err) {
-            throw new CustomError("Error while processing data.", true, this.constructor.name, 5051, err);
-        }
-    }
-
-    /**
-     * Create and return Enesa connection settings
-     */
-    private getEnesaConnectionSettings = (resourceType: string, dateParams: DateParams): IHTTPSettings => {
-        const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
-        const params = new URLSearchParams(dateParams);
-
-        return {
-            headers: config.datasources.EnesaApiEnergeticsHeaders,
-            method: "GET",
-            timeout: 20000,
-            url: `${baseUrl}/${resourceType}?${params}`,
-        };
-    }
-
-    /**
-     * Create and return new Vpalac connection settings
-     */
-    private getVpalacConnectionSettings = (
+    private getConnectionSettings = (
         resourceType: string,
         authCookie: string,
         additionalParams: Record<string, string> = {},
@@ -578,3 +345,5 @@ export class EnergeticsWorker extends BaseWorker {
         };
     }
 }
+
+export { EnergeticsVpalacWorker };

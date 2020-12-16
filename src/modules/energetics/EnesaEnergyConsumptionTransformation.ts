@@ -21,14 +21,14 @@ export class EnesaEnergyConsumptionTransformation extends BaseTransformation imp
         const res: EnesaConsumption.OutputElement = {
             // PK
             addr: element.addr,
-            meter: element.meter,
+            meter: _.toString(element.meter),
             time_utc: element.timeUtc,
-            var: element.var,
+            var: _.toString(element.var),
 
             commodity: element.commodity,
             type: element.type,
             unit: element.unit,
-            value: element.value,
+            value: _.toNumber(element.value),
         };
 
         return res;

@@ -14,7 +14,7 @@ import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { CountersWorker } from "../modules/counters";
-import { EnergeticsWorker } from "../modules/energetics";
+import { EnergeticsEnesaWorker, EnergeticsVpalacWorker } from "../modules/energetics";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
@@ -37,7 +37,7 @@ import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
 import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
-import { SortedWasteStationsWorker, SortedWasteStationsWorkerPg} from "../modules/sortedwastestations";
+import { SortedWasteStationsWorker, SortedWasteStationsWorkerPg } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { TrafficDetectorsWorker } from "../modules/trafficdetectors";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
@@ -251,8 +251,8 @@ const definitions: IQueueDefinition[] = [
                     deadLetterRoutingKey: "dead",
                     messageTtl: 2 * 60 * 60 * 1000, // 2 hours
                 },
-                worker: EnergeticsWorker,
-                workerMethod: "fetchEnesa2DaysData",
+                worker: EnergeticsEnesaWorker,
+                workerMethod: "fetch2DaysData",
             },
             {
                 name: "fetchVpalac1HourData",
@@ -261,8 +261,8 @@ const definitions: IQueueDefinition[] = [
                     deadLetterRoutingKey: "dead",
                     messageTtl: 60 * 60 * 1000, // 1 hour
                 },
-                worker: EnergeticsWorker,
-                workerMethod: "fetchVpalac1HourData",
+                worker: EnergeticsVpalacWorker,
+                workerMethod: "fetch1HourData",
             },
             {
                 name: "fetchVpalac14DaysData",
@@ -271,8 +271,8 @@ const definitions: IQueueDefinition[] = [
                     deadLetterRoutingKey: "dead",
                     messageTtl: 24 * 60 * 60 * 1000, // 24 hours
                 },
-                worker: EnergeticsWorker,
-                workerMethod: "fetchVpalac14DaysData",
+                worker: EnergeticsVpalacWorker,
+                workerMethod: "fetch14DaysData",
             },
         ],
     },
