@@ -6,6 +6,7 @@ import {
     BicycleParkings,
     CityDistricts,
     Energetics,
+    EnergeticsTypes,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
@@ -35,15 +36,22 @@ import { sign } from "jsonwebtoken";
 import * as JSONStream from "JSONStream";
 import "mocha";
 import * as moment from "moment-timezone";
+import { promisify } from 'util'
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
     CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-import { UnimonitorCemApi } from '../../src/modules/energetics'
+import { EnesaApi, UnimonitorCemApi } from '../../src/modules/energetics'
+
+import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
+import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
+import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 chai.use(chaiAsPromised);
+
+const sleep = promisify(setTimeout);
 
 describe("DataSourcesAvailabilityChecking", () => {
 
@@ -1367,6 +1375,99 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("Energetics", () => {
 
+        describe("Enesa", () => {
+            let dateParams = {
+                from: "",
+                to: "",
+            };
+
+            const testEnesaDataset = async (
+                resourceType: string,
+                schemaConfig: Record<string, any>,
+                jsonTransformer: any,
+                onDataFunction: (data: any) => Promise<void>,
+            ) => {
+                const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
+                const params = new URLSearchParams(dateParams);
+                const datasource = new DataSourceStreamed(
+                    schemaConfig.name + "DataSource",
+                    new HTTPProtocolStrategyStreamed({
+                        headers: config.datasources.EnesaApiEnergeticsHeaders,
+                        method: "GET",
+                        url: `${baseUrl}/${resourceType}?${params}`,
+                    }).setStreamTransformer(jsonTransformer),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        schemaConfig.name + "DataSource",
+                        schemaConfig.datasourceJsonSchema,
+                    ),
+                );
+
+                const dataStream = await datasource.getAll(false);
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) dataStream.destroy();
+            };
+
+            before(() => {
+                const now = moment().tz(EnesaApi.API_DATE_TZ);
+                const dateFrom = now.clone().subtract(1, "day").format(EnesaApi.API_DATE_FORMAT);
+                const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
+
+                dateParams = {
+                    from: dateFrom,
+                    to: dateTo,
+                };
+            });
+
+            it("Energy Buildings Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Buildings,
+                    Energetics.enesa.buildings,
+                    JSONStream.parse("buildings.*"),
+                    async (data: EnesaBuildings.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Consumption,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Visapp Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.ConsumptionVisapp,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Devices Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Devices,
+                    Energetics.enesa.devices,
+                    JSONStream.parse("devices.*"),
+                    async (data: EnesaDevices.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+        });
+
         describe("Vpalac", () => {
             let authCookie = "";
             let dateParams = {
@@ -1404,7 +1505,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await dataStream.setDataProcessor(onDataFunction).proceed();
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) dataStream.destroy();
             };
 
             before(() => {

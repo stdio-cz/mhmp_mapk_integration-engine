@@ -24,8 +24,8 @@ describe("VpalacMeterTypeTransformation", () => {
 
     beforeEach(() => {
         transformation = new VpalacMeterTypeTransformation();
-        const buffer = fs.readFileSync(__dirname + "/../../data/energetics-vpalac-metertype-datasource.json");
-        testSourceData = JSON.parse(Buffer.from(buffer).toString("utf8"));
+        const rawData = fs.readFileSync(__dirname + "/../../data/energetics-vpalac-metertype-datasource.json") as unknown;
+        testSourceData = JSON.parse(rawData as string);
     });
 
     it("should has name", async () => {
