@@ -70,7 +70,7 @@ describe("EnergeticsEnesaWorker", () => {
     it("fetchXDaysData should call fetchAndSaveData once", async () => {
         sandbox.stub(worker, "fetchAndSaveData" as any);
 
-        await worker.fetchXDaysData();
+        await worker.fetchXDaysData({});
         sandbox.assert.calledOnce(worker["fetchAndSaveData"] as sinon.SinonSpy);
     });
 

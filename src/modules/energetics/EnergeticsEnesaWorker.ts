@@ -28,6 +28,8 @@ import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
+    private static DEFAULT_DAYS = 2;
+
     private readonly datasourceEnesaEnergyBuildings: DataSourceStreamed;
     private readonly datasourceEnesaEnergyConsumption: DataSourceStreamed;
     private readonly datasourceEnesaEnergyConsumptionVisapp: DataSourceStreamed;
@@ -137,9 +139,10 @@ class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
     /**
      * Worker method - fetch data (last X days)
      */
-    public fetchXDaysData = async (msg: any = 2): Promise<void> => {
+    public fetchXDaysData = async (msg: any): Promise<void> => {
+        const targetDays = msg.content?.toString() || EnergeticsEnesaWorker.DEFAULT_DAYS;
         const now = moment().tz(EnesaApi.API_DATE_TZ);
-        const dateFrom = now.clone().subtract(msg, "days").format(EnesaApi.API_DATE_FORMAT);
+        const dateFrom = now.clone().subtract(targetDays, "days").format(EnesaApi.API_DATE_FORMAT);
         const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
         const dateParams: DateParams = {
             from: dateFrom,
