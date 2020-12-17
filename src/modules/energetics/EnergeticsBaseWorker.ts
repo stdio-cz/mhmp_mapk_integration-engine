@@ -5,6 +5,10 @@ import { CustomError } from "@golemio/errors";
 import { DataSourceStream } from "../../core/datasources";
 import { BaseWorker } from "../../core/workers";
 
+type DateParams = {
+    [P in "from" | "from_ms" | "to" | "to_ms"]?: string
+};
+
 abstract class EnergeticsBaseWorker extends BaseWorker {
     constructor() {
         super();
@@ -33,4 +37,4 @@ abstract class EnergeticsBaseWorker extends BaseWorker {
     }
 }
 
-export { EnergeticsBaseWorker };
+export { DateParams, EnergeticsBaseWorker };

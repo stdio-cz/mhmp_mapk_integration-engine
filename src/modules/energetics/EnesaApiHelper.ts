@@ -1,9 +1,5 @@
 "use strict";
 
-type DateParams = {
-    [P in "from" | "from_ms" | "to" | "to_ms"]?: string
-};
-
 /**
  * Helper class for Enesa API
  */
@@ -24,4 +20,4 @@ class EnesaApi {
     }
 }
 
-export { DateParams, EnesaApi };
+export { EnesaApi };

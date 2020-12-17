@@ -26,6 +26,9 @@ import {
 } from "./";
 
 class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
+    private static DEFAULT_HOURS = 1;
+    private static DEFAULT_DAYS = 14;
+
     private readonly datasourceVpalacMeasurement: DataSourceStreamed;
     private readonly datasourceVpalacMeasuringEquipment: DataSourceStreamed;
     private readonly datasourceVpalacMeterType: DataSourceStreamed;
@@ -181,9 +184,10 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
     /**
      * Worker method - fetch data (last X days)
      */
-    public fetchXDaysData = async (msg: any = 14): Promise<void> => {
+    public fetchXDaysData = async (msg: any): Promise<void> => {
+        const targetDays = msg.content?.toString() || EnergeticsVpalacWorker.DEFAULT_DAYS;
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const dateFrom = now.clone().subtract(msg, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
+        const dateFrom = now.clone().subtract(targetDays, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateParams: DateParams = {
             from: dateFrom,
@@ -196,9 +200,10 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
     /**
      * Worker method - fetch data (last X hours)
      */
-    public fetchXHoursData = async (msg: any = 1): Promise<void> => {
+    public fetchXHoursData = async (msg: any): Promise<void> => {
+        const targetHours = msg.content?.toString() || EnergeticsVpalacWorker.DEFAULT_HOURS;
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
-        const timeFrom = now.clone().subtract(msg, "hour").valueOf().toString();
+        const timeFrom = now.clone().subtract(targetHours, "hour").valueOf().toString();
         const timeTo = now.valueOf().toString();
         const dateParams: DateParams = {
             from_ms: timeFrom,
