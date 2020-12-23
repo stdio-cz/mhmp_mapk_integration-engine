@@ -68,17 +68,6 @@ export class PurgeWorker {
         }
     }
 
-    public deleteOldMerakiAccessPointsObservations = async (msg: any): Promise<void> => {
-        try {
-            const res = await PostgresConnector.getConnection().query(
-                "SELECT * FROM retention_bigint('merakiaccesspoints_observations','timestamp',168);",
-            );
-            log.debug(res);
-        } catch (err) {
-            throw new CustomError("Error while purging old data.", true, this.constructor.name, 5002, err);
-        }
-    }
-
     public deleteOldTrafficCamerasHistory = async (msg: any): Promise<void> => {
         const now = new Date();
         const ttl = new Date();
