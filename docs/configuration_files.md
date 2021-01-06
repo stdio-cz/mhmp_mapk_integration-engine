@@ -30,8 +30,8 @@ Example:
 
 ```queuesBlacklist.json
 {
-    "MerakiAccessPoints": [],
+    "BicycleCounters": [],
     "Parkings": ["saveDataToHistory", "updateAverageOccupancy"]
 }
 ```
-Where the `MerakiAccessPoints` dataset has blacklisted all queues and the `Parkings` dataset has blacklisted only mentioned queues, in this case `saveDataToHistory` and `updateAverageOccupancy`.
+Where the `BicycleCounters` dataset has blacklisted all queues and the `Parkings` dataset has blacklisted only mentioned queues, in this case `saveDataToHistory` and `updateAverageOccupancy`.

@@ -2,7 +2,7 @@
 
 import {
     AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Energetics, FirebasePidlitacka, Flow, Gardens,
-    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
+    GeneralImport, MedicalInstitutions, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, TSKSTD, VehiclePositions, WasteCollectionYards, WazeCCP,
@@ -20,7 +20,6 @@ import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
-import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
 import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
@@ -427,21 +426,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MedicalInstitutionsWorker,
                 workerMethod: "updateGeoAndDistrict",
-            },
-        ],
-    },
-    {
-        name: MerakiAccessPoints.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MerakiAccessPoints.name.toLowerCase(),
-        queues: [
-            {
-                name: "saveDataToDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: MerakiAccessPointsWorker,
-                workerMethod: "saveDataToDB",
             },
         ],
     },
@@ -873,15 +857,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: PurgeWorker,
                 workerMethod: "deleteOldVehiclePositions",
-            },
-            {
-                name: "deleteOldMerakiAccessPointsObservations",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: PurgeWorker,
-                workerMethod: "deleteOldMerakiAccessPointsObservations",
             },
             {
                 name: "deleteOldTrafficCamerasHistory",
