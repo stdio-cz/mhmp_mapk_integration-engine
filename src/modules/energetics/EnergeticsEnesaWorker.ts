@@ -140,7 +140,8 @@ class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
      * Worker method - fetch data (last X days)
      */
     public fetchXDaysData = async (msg: any): Promise<void> => {
-        const targetDays = msg.content?.toString() || EnergeticsEnesaWorker.DEFAULT_DAYS;
+        // TODO parse days from msg.content
+        const targetDays = EnergeticsEnesaWorker.DEFAULT_DAYS;
         const now = moment().tz(EnesaApi.API_DATE_TZ);
         const dateFrom = now.clone().subtract(targetDays, "days").format(EnesaApi.API_DATE_FORMAT);
         const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
