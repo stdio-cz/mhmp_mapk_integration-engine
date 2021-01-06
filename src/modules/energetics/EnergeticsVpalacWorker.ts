@@ -185,7 +185,8 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
      * Worker method - fetch data (last X days)
      */
     public fetchXDaysData = async (msg: any): Promise<void> => {
-        const targetDays = msg.content?.toString() || EnergeticsVpalacWorker.DEFAULT_DAYS;
+        // TODO parse days from msg.content
+        const targetDays = EnergeticsVpalacWorker.DEFAULT_DAYS;
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
         const dateFrom = now.clone().subtract(targetDays, "days").format(UnimonitorCemApi.API_DATE_FORMAT);
         const dateTo = now.format(UnimonitorCemApi.API_DATE_FORMAT);
@@ -201,7 +202,8 @@ class EnergeticsVpalacWorker extends EnergeticsBaseWorker {
      * Worker method - fetch data (last X hours)
      */
     public fetchXHoursData = async (msg: any): Promise<void> => {
-        const targetHours = msg.content?.toString() || EnergeticsVpalacWorker.DEFAULT_HOURS;
+        // TODO parse hours from msg.content
+        const targetHours = EnergeticsVpalacWorker.DEFAULT_HOURS;
         const now = moment().tz(UnimonitorCemApi.API_DATE_TZ);
         const timeFrom = now.clone().subtract(targetHours, "hour").valueOf().toString();
         const timeTo = now.valueOf().toString();
