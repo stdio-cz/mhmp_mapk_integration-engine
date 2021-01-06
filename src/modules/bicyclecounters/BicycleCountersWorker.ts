@@ -58,7 +58,6 @@ export class BicycleCountersWorker extends BaseWorker {
             new HTTPProtocolStrategy({
                 headers: {},
                 method: "GET",
-                strictSSL: false,
                 url: config.datasources.BicycleCountersCamea,
             }),
             new JSONDataTypeStrategy({ resultsPath: "" }),
@@ -362,7 +361,6 @@ export class BicycleCountersWorker extends BaseWorker {
             headers: {},
             json: true,
             method: "GET",
-            strictSSL: false,
             url,
         }));
 

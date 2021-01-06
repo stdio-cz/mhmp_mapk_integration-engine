@@ -1019,7 +1019,6 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const dataSourceHTTPSettings: IHTTPSettings = {
                     headers: {},
                     method: "GET",
-                    strictSSL: false,
                     url,
                 };
 
@@ -1065,7 +1064,6 @@ describe("DataSourcesAvailabilityChecking", () => {
                             headers: {},
                             json: true,
                             method: "GET",
-                            strictSSL: false,
                             url,
                         }),
                         new JSONDataTypeStrategy({ resultsPath: "" }),
