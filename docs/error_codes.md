@@ -27,6 +27,8 @@
     - 5003: Error while sending the POST request.
     - 5004: Error while checking RopidGTFS saved rows.
     - 5005: Worker and worker method must be defined.
+    - 5006: Error while retrieving Unimonitor CEM API authorization token
+    - 5007: Error while terminating Unimonitor CEM API session
 - Other Errors
     - 6001: Method is not implemented.
     - 6002: Retrieving of the open street map nominatim data failed. // warning

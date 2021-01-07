@@ -1,8 +1,8 @@
 "use strict";
 
 import {
-    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, FirebasePidlitacka, Flow, Gardens,
-    GeneralImport, MedicalInstitutions, MerakiAccessPoints, Meteosensors, MobileAppStatistics, MOS,
+    AirQualityStations, BicycleCounters, BicycleParkings, CityDistricts, Energetics, FirebasePidlitacka, Flow, Gardens,
+    GeneralImport, MedicalInstitutions, Meteosensors, MobileAppStatistics, MOS,
     MunicipalAuthorities, MunicipalLibraries, MunicipalPoliceStations, Parkings, ParkingZones, Parkomats,
     Playgrounds, PublicToilets, RopidGTFS, SharedBikes, SharedCars, SortedWasteStations,
     TrafficCameras, TSKSTD, VehiclePositions, WasteCollectionYards, WazeCCP,
@@ -14,12 +14,12 @@ import { BicycleCountersWorker } from "../modules/bicyclecounters";
 import { BicycleParkingsWorker } from "../modules/bicycleparkings";
 import { CityDistrictsWorker } from "../modules/citydistricts";
 import { CountersWorker } from "../modules/counters";
+import { EnergeticsEnesaWorker, EnergeticsVpalacWorker } from "../modules/energetics";
 import { FirebasePidlitackaWorker } from "../modules/firebasepidlitacka";
 import { FlowWorker } from "../modules/flow";
 import { GardensWorker } from "../modules/gardens";
 import { GeneralWorker } from "../modules/general";
 import { MedicalInstitutionsWorker } from "../modules/medicalinstitutions";
-import { MerakiAccessPointsWorker } from "../modules/merakiaccesspoints";
 import { MeteosensorsWorker } from "../modules/meteosensors";
 import { MobileAppStatisticsWorker } from "../modules/mobileappstatistics";
 import { MosBEWorker } from "../modules/mosbe";
@@ -36,7 +36,7 @@ import { PurgeWorker } from "../modules/purge";
 import { RopidGTFSWorker } from "../modules/ropidgtfs";
 import { SharedBikesWorker } from "../modules/sharedbikes";
 import { SharedCarsWorker } from "../modules/sharedcars";
-import { SortedWasteStationsWorker, SortedWasteStationsWorkerPg} from "../modules/sortedwastestations";
+import { SortedWasteStationsWorker, SortedWasteStationsWorkerPg } from "../modules/sortedwastestations";
 import { TrafficCamerasWorker } from "../modules/trafficcameras";
 import { TrafficDetectorsWorker } from "../modules/trafficdetectors";
 import { VehiclePositionsWorker } from "../modules/vehiclepositions";
@@ -128,6 +128,16 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: BicycleCountersWorker,
                 workerMethod: "refreshCameaDataPreviousDayInDB",
+            },
+            {
+                name: "refreshCameaDataSpecificDayInDB",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 5 * 60 * 1000, // 5 minutes
+                },
+                worker: BicycleCountersWorker,
+                workerMethod: "refreshCameaDataSpecificDayInDB",
             },
             {
                 name: "refreshEcoCounterDataInDB",
@@ -226,6 +236,42 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: CountersWorker,
                 workerMethod: "updateEcoCounter",
+            },
+        ],
+    },
+    {
+        name: Energetics.name,
+        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + Energetics.name.toLowerCase(),
+        queues: [
+            {
+                name: "fetchEnesaXDaysData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 2 * 60 * 60 * 1000, // 2 hours
+                },
+                worker: EnergeticsEnesaWorker,
+                workerMethod: "fetchXDaysData",
+            },
+            {
+                name: "fetchVpalacXHoursData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 60 * 60 * 1000, // 1 hour
+                },
+                worker: EnergeticsVpalacWorker,
+                workerMethod: "fetchXHoursData",
+            },
+            {
+                name: "fetchVpalacXDaysData",
+                options: {
+                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
+                    deadLetterRoutingKey: "dead",
+                    messageTtl: 24 * 60 * 60 * 1000, // 24 hours
+                },
+                worker: EnergeticsVpalacWorker,
+                workerMethod: "fetchXDaysData",
             },
         ],
     },
@@ -380,21 +426,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: MedicalInstitutionsWorker,
                 workerMethod: "updateGeoAndDistrict",
-            },
-        ],
-    },
-    {
-        name: MerakiAccessPoints.name,
-        queuePrefix: config.RABBIT_EXCHANGE_NAME + "." + MerakiAccessPoints.name.toLowerCase(),
-        queues: [
-            {
-                name: "saveDataToDB",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: MerakiAccessPointsWorker,
-                workerMethod: "saveDataToDB",
             },
         ],
     },
@@ -826,15 +857,6 @@ const definitions: IQueueDefinition[] = [
                 },
                 worker: PurgeWorker,
                 workerMethod: "deleteOldVehiclePositions",
-            },
-            {
-                name: "deleteOldMerakiAccessPointsObservations",
-                options: {
-                    deadLetterExchange: config.RABBIT_EXCHANGE_NAME,
-                    deadLetterRoutingKey: "dead",
-                },
-                worker: PurgeWorker,
-                workerMethod: "deleteOldMerakiAccessPointsObservations",
             },
             {
                 name: "deleteOldTrafficCamerasHistory",

@@ -20,6 +20,7 @@ import {
 export enum CameaRefreshDurations {
     last3Hours,
     previousDay,
+    specificDay,
 }
 
 export class BicycleCountersWorker extends BaseWorker {
@@ -286,6 +287,35 @@ export class BicycleCountersWorker extends BaseWorker {
         await Promise.all(promises);
     }
 
+    public refreshCameaDataSpecificDayInDB = async (msg: any): Promise<void> => {
+        let inputData: any;
+        try {
+            inputData = JSON.parse(msg.content.toString());
+        } catch (err) {
+            throw new CustomError("Message has to be JSON.", true, this.constructor.name, 5003, err);
+        }
+
+        if (!inputData.date) {
+            throw new CustomError("Message must contain the date property.", true, this.constructor.name, 5003);
+        }
+
+        const data = await this.dataSourceCamea.getAll();
+        const transformedData = await this.cameaTransformation.transform(data);
+        await this.locationsModel.save(transformedData.locations);
+        await this.directionsModel.save(transformedData.directions);
+
+        // send messages for updating measurements data
+        const promises = transformedData.locations.map((p) => {
+            this.sendMessageToExchange("workers." + this.queuePrefix + ".updateCamea",
+                JSON.stringify({
+                    date: inputData.date as string,
+                    duration: CameaRefreshDurations.specificDay,
+                    id: p.vendor_id,
+                }));
+        });
+        await Promise.all(promises);
+    }
+
     public updateCamea = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const id = inputData.id as string;
@@ -310,6 +340,13 @@ export class BicycleCountersWorker extends BaseWorker {
                 const yesterdayStart = todayStart.clone().subtract(1, "day");
                 to = todayStart.format("YYYY-MM-DD HH:mm:ss");
                 from = yesterdayStart.format("YYYY-MM-DD HH:mm:ss");
+                break;
+            case CameaRefreshDurations.specificDay:
+                const date = inputData.date as string;
+                const dayStart = moment(date).hours(0).minutes(0).seconds(0).milliseconds(0);
+                const nextDayStart = dayStart.clone().add(1, "day");
+                to = nextDayStart.format("YYYY-MM-DD HH:mm:ss");
+                from = dayStart.format("YYYY-MM-DD HH:mm:ss");
                 break;
             default:
                 throw new CustomError(`Undefined Camea refresh duration value.`, true, this.constructor.name, 5001);

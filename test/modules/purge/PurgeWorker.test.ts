@@ -29,10 +29,4 @@ describe("PurgeWorker", () => {
         sandbox.assert.calledThrice(queryStub);
     });
 
-    it("should calls the correct methods by deleteOldMerakiAccessPointsObservations method", async () => {
-        await worker.deleteOldMerakiAccessPointsObservations();
-        sandbox.assert.calledOnce(queryStub);
-        sandbox.assert.calledWith(queryStub,
-            "SELECT * FROM retention_bigint('merakiaccesspoints_observations','timestamp',168);");
-    });
 });
