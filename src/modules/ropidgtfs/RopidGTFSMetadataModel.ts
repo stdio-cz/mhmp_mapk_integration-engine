@@ -8,6 +8,31 @@ import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
 import { IModel, PostgresModel } from "../../core/models";
 
+export enum DatasetEnum {
+    PID_GTFS = "PID_GTFS",
+    CIS_STOPS = "CIS_STOPS",
+}
+
+export enum MetaTypeEnum {
+    DATASET_INFO = "DATASET_INFO",
+    STATE = "STATE",
+    TABLE_TOTAL_COUNT = "TABLE_TOTAL_COUNT",
+    SAVED_ROWS = "SAVED_ROWS",
+}
+
+export enum MetaStateEnum {
+    DOWNLOADED = "DOWNLOADED",
+    TRANSFORMED = "TRANSFORMED",
+    SAVED = "SAVED",
+}
+
+export enum MetaDatasetInfoKeyEnum {
+    LAST_MODIFIED = "last_modified",
+    FAILED = "failed",
+    DEPLOYED = "deployed",
+    NUMBER_OF_RETRIES = "number_of_retries",
+}
+
 export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
     /** Model name */
@@ -38,8 +63,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 order: [["version", "DESC"]],
                 where: {
                     dataset,
-                    key: "last_modified",
-                    type: "DATASET_INFO",
+                    key: MetaDatasetInfoKeyEnum.LAST_MODIFIED,
+                    type: MetaTypeEnum.DATASET_INFO,
                 },
             });
             return (lastMod) ? {
@@ -71,8 +96,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         const notSaved = await this.sequelizeModel.count({
             where: {
                 dataset,
-                type: "STATE",
-                value: { [Sequelize.Op.ne]: "SAVED" },
+                type: MetaTypeEnum.STATE,
+                value: { [Sequelize.Op.ne]: MetaStateEnum.SAVED },
                 version,
             },
         });
@@ -83,8 +108,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
         const alreadyDeployed = await this.sequelizeModel.count({
             where: {
                 dataset,
-                key: "deployed",
-                type: "DATASET_INFO",
+                key: MetaDatasetInfoKeyEnum.DEPLOYED,
+                type: MetaTypeEnum.DATASET_INFO,
                 value: "true",
                 version,
             },
@@ -101,7 +126,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                 transaction: t,
                 where: {
                     dataset,
-                    type: "TABLE_TOTAL_COUNT",
+                    type: MetaTypeEnum.TABLE_TOTAL_COUNT,
                     version,
                 },
             });
@@ -135,7 +160,8 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
                     dataset,
                     version: {
                         [Sequelize.Op.and]: [
-                            { [Sequelize.Op.ne]: version },
+                            // delete all versions older than ten versions back
+                            { [Sequelize.Op.lt]: version - 10 },
                             { [Sequelize.Op.ne]: -1 },
                         ],
                     },
@@ -151,42 +177,54 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
     }
 
     public rollbackFailedSaving = async (dataset: string, version: number): Promise<any> => {
-        const connection = PostgresConnector.getConnection();
-        const t = await connection.transaction();
-        await this.sequelizeModel.destroy({
-            transaction: t,
-            where: {
-                dataset,
-                version: {
-                    [Sequelize.Op.and]: [
-                        { [Sequelize.Op.eq]: version },
-                        { [Sequelize.Op.ne]: -1 },
-                    ],
-                },
-            },
-        });
         await this.save({
             dataset,
-            key: "failed",
-            type: "DATASET_INFO",
+            key: MetaDatasetInfoKeyEnum.FAILED,
+            type: MetaTypeEnum.DATASET_INFO,
             value: new Date().toISOString(),
-            version: -1,
+            version,
         });
-        t.commit();
+
+        const numberOfRetries = await this.sequelizeModel.findOne({
+            attributes: [["value", "retries"]],
+            where: {
+                dataset,
+                key: MetaDatasetInfoKeyEnum.NUMBER_OF_RETRIES,
+                type: MetaTypeEnum.DATASET_INFO,
+                version: version - 1,
+            },
+        });
+        if (!numberOfRetries) {
+            await this.save({
+                dataset,
+                key: MetaDatasetInfoKeyEnum.NUMBER_OF_RETRIES,
+                type: MetaTypeEnum.DATASET_INFO,
+                value: 1,
+                version,
+            });
+        } else {
+            await this.save({
+                dataset,
+                key: MetaDatasetInfoKeyEnum.NUMBER_OF_RETRIES,
+                type: MetaTypeEnum.DATASET_INFO,
+                value: +numberOfRetries.dataValues.retries + 1,
+                version,
+            });
+        }
     }
 
-    public updateState = async (dataset: string, name: string, state: string, version: number): Promise<any> => {
+    public updateState = async (dataset: string, name: string, state: MetaStateEnum, version: number): Promise<any> => {
         return this.sequelizeModel.update({
             dataset,
             key: name,
-            type: "STATE",
+            type: MetaTypeEnum.STATE,
             value: state,
             version,
         }, {
             where: {
                 dataset,
                 key: name,
-                type: "STATE",
+                type: MetaTypeEnum.STATE,
                 version,
             },
         });
@@ -209,7 +247,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             where: {
                 dataset,
                 key: name,
-                type: "SAVED_ROWS",
+                type: MetaTypeEnum.SAVED_ROWS,
                 version,
             },
         });
@@ -218,7 +256,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             await this.save({
                 dataset,
                 key: name,
-                type: "SAVED_ROWS",
+                type: MetaTypeEnum.SAVED_ROWS,
                 value: result[0].total,
                 version,
             });
@@ -226,14 +264,14 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             await this.sequelizeModel.update({
                 dataset,
                 key: name,
-                type: "SAVED_ROWS",
+                type: MetaTypeEnum.SAVED_ROWS,
                 value: result[0].total,
                 version,
             }, {
                 where: {
                     dataset,
                     key: name,
-                    type: "SAVED_ROWS",
+                    type: MetaTypeEnum.SAVED_ROWS,
                     version,
                 },
             });
@@ -243,7 +281,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             where: {
                 dataset,
                 key: name,
-                type: "TABLE_TOTAL_COUNT",
+                type: MetaTypeEnum.TABLE_TOTAL_COUNT,
                 version,
             },
         });
@@ -252,18 +290,36 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             await this.sequelizeModel.update({
                 dataset,
                 key: name,
-                type: "STATE",
-                value: "SAVED",
+                type: MetaTypeEnum.STATE,
+                value: MetaStateEnum.SAVED,
                 version,
             }, {
                 where: {
                     dataset,
                     key: name,
-                    type: "STATE",
+                    type: MetaTypeEnum.STATE,
                     version,
                 },
             });
         }
+    }
+
+    public getNumberOfDownloadRetries = async (dataset: string, version: number): Promise<number> => {
+        const numberOfRetries = await this.sequelizeModel.findOne({
+            attributes: [["value", "retries"]],
+            where: {
+                dataset,
+                key: MetaDatasetInfoKeyEnum.NUMBER_OF_RETRIES,
+                type: MetaTypeEnum.DATASET_INFO,
+                version: version - 1,
+            },
+        });
+
+        if (!numberOfRetries) {
+            return 0;
+        }
+
+        return +numberOfRetries.dataValues.retries;
     }
 
     public refreshMaterializedViews = async (): Promise<any> => {
@@ -278,7 +334,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             attributes: [["key", "tn"]],
             where: {
                 dataset,
-                type: "TABLE_TOTAL_COUNT",
+                type: MetaTypeEnum.TABLE_TOTAL_COUNT,
                 version,
             },
         });
@@ -286,7 +342,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             attributes: [[Sequelize.fn("SUM", Sequelize.cast(Sequelize.col("value"), "INTEGER")), "total"]],
             where: {
                 dataset,
-                type: "TABLE_TOTAL_COUNT",
+                type: MetaTypeEnum.TABLE_TOTAL_COUNT,
                 version,
             },
         });
@@ -304,7 +360,7 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
             attributes: [["key", "tn"]],
             where: {
                 dataset,
-                type: "TABLE_TOTAL_COUNT",
+                type: MetaTypeEnum.TABLE_TOTAL_COUNT,
                 version,
             },
         });
