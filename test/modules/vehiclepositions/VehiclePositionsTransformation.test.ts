@@ -93,7 +93,7 @@ describe("VehiclePositionsTransformation", () => {
         expect(data).to.have.property("positions");
         expect(data.positions.length).to.equal(324);
         expect(data).to.have.property("stops");
-        expect(data.stops.length).to.equal(5925);
+        expect(data.stops.length).to.equal(5998);
         expect(data).to.have.property("trips");
         expect(data.trips.length).to.equal(324);
     });
