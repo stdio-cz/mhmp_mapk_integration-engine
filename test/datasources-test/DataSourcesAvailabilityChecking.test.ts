@@ -6,6 +6,7 @@ import {
     BicycleParkings,
     CityDistricts,
     Energetics,
+    EnergeticsTypes,
     Gardens,
     MedicalInstitutions,
     Meteosensors,
@@ -31,19 +32,26 @@ import { File } from "@google-cloud/storage";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import { sign } from "jsonwebtoken";
 import * as JSONStream from "JSONStream";
+import { sign } from "jsonwebtoken";
 import "mocha";
 import * as moment from "moment-timezone";
+import { promisify } from "util";
 import { config } from "../../src/core/config";
 import { RedisConnector } from "../../src/core/connectors";
 import {
     CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
 } from "../../src/core/datasources";
-import { UnimonitorCemApi } from '../../src/modules/energetics'
+import { EnesaApi, UnimonitorCemApi } from "../../src/modules/energetics";
+
+import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
+import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
+import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 chai.use(chaiAsPromised);
+
+const sleep = promisify(setTimeout);
 
 describe("DataSourcesAvailabilityChecking", () => {
 
@@ -1075,6 +1083,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 });
 
             });
+
         });
 
         describe("EcoCounter", () => {
@@ -1109,60 +1118,62 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
+
+            describe("measurements", () => {
+
+                let measurementsDatasource: DataSource;
+
+                beforeEach(() => {
+                    // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
+                    // so we have to send local time to request.
+                    // Furthermore, the returned dates are START of the measurement interval, so if we want measurements
+                    // from interval between 06:00 and 07:00 UTC (which is local 07:00 - 08:00),
+                    // we have to send parameters
+                    // from=07:00 and to=07:45, because it returns all the measurements where
+                    // from and to parameters are INCLUDED.
+                    const now = moment.utc().tz("Europe/Prague");
+                    const step = 15;
+                    const remainder = (now.minute() % step);
+                    // rounded to nearest next 15 minutes
+                    const nowRounded = now.clone().subtract(remainder, "minutes").seconds(0).milliseconds(0);
+                    const strTo = nowRounded.clone().subtract(step, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+                    const strFrom = nowRounded.clone().subtract(12, "hours").format("YYYY-MM-DDTHH:mm:ss");
+
+                    let url = config.datasources.BicycleCountersEcoCounterMeasurements;
+                    url = url.replace(":id", "103047647"); // 100047647
+                    url = url.replace(":from", strFrom);
+                    url = url.replace(":to", strTo);
+                    url = url.replace(":step", `${step}m`);
+                    url = url.replace(":complete", "true");
+
+                    measurementsDatasource = new DataSource(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                        new HTTPProtocolStrategy({
+                            headers: {
+                                Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
+                            },
+                            json: true,
+                            method: "GET",
+                            url,
+                        }),
+                        new JSONDataTypeStrategy({ resultsPath: "" }),
+                        new Validator(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                            BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject),
+                    );
+                });
+
+                it("should returns all measurements objects", async () => {
+                    const data = await measurementsDatasource.getAll();
+                    expect(data).to.be.an.instanceOf(Object);
+                });
+
+                it("should returns measurements last modified", async () => {
+                    const data = await measurementsDatasource.getLastModified();
+                    expect(data).to.be.null;
+                });
+
+            });
         });
 
-        describe("measurements", () => {
-
-            let measurementsDatasource: DataSource;
-
-            beforeEach(() => {
-                // EcoCounter API is actually working with local Europe/Prague time, not ISO!!!
-                // so we have to send local time to request.
-                // Furthermore, the returned dates are START of the measurement interval, so if we want measurements
-                // from interval between 06:00 and 07:00 UTC (which is local 07:00 - 08:00), we have to send parameters
-                // from=07:00 and to=07:45, because it returns all the measurements where
-                // from and to parameters are INCLUDED.
-                const now = moment.utc().tz("Europe/Prague");
-                const step = 15;
-                const remainder = (now.minute() % step);
-                // rounded to nearest next 15 minutes
-                const nowRounded = now.clone().subtract(remainder, "minutes").seconds(0).milliseconds(0);
-                const strTo = nowRounded.clone().subtract(step, "minutes").format("YYYY-MM-DDTHH:mm:ss");
-                const strFrom = nowRounded.clone().subtract(12, "hours").format("YYYY-MM-DDTHH:mm:ss");
-
-                let url = config.datasources.BicycleCountersEcoCounterMeasurements;
-                url = url.replace(":id", "103047647"); // 100047647
-                url = url.replace(":from", strFrom);
-                url = url.replace(":to", strTo);
-                url = url.replace(":step", `${step}m`);
-                url = url.replace(":complete", "true");
-
-                measurementsDatasource = new DataSource(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
-                    new HTTPProtocolStrategy({
-                        headers: {
-                            Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
-                        },
-                        json: true,
-                        method: "GET",
-                        url,
-                    }),
-                    new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
-                        BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject),
-                );
-            });
-
-            it("should returns all measurements objects", async () => {
-                const data = await measurementsDatasource.getAll();
-                expect(data).to.be.an.instanceOf(Object);
-            });
-
-            it("should returns measurements last modified", async () => {
-                const data = await measurementsDatasource.getLastModified();
-                expect(data).to.be.null;
-            });
-
-        });
     });
 
     describe("WazeCCP", () => {
@@ -1367,6 +1378,101 @@ describe("DataSourcesAvailabilityChecking", () => {
 
     describe("Energetics", () => {
 
+        describe("Enesa", () => {
+            let dateParams = {
+                from: "",
+                to: "",
+            };
+
+            const testEnesaDataset = async (
+                resourceType: string,
+                schemaConfig: Record<string, any>,
+                jsonTransformer: any,
+                onDataFunction: (data: any) => Promise<void>,
+            ) => {
+                const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
+                const params = new URLSearchParams(dateParams);
+                const datasource = new DataSourceStreamed(
+                    schemaConfig.name + "DataSource",
+                    new HTTPProtocolStrategyStreamed({
+                        headers: config.datasources.EnesaApiEnergeticsHeaders,
+                        method: "GET",
+                        url: `${baseUrl}/${resourceType}?${params}`,
+                    }).setStreamTransformer(jsonTransformer),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        schemaConfig.name + "DataSource",
+                        schemaConfig.datasourceJsonSchema,
+                    ),
+                );
+
+                const dataStream = await datasource.getAll(false);
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) {
+                    dataStream.destroy();
+                }
+            };
+
+            before(() => {
+                const now = moment().tz(EnesaApi.API_DATE_TZ);
+                const dateFrom = now.clone().subtract(1, "day").format(EnesaApi.API_DATE_FORMAT);
+                const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
+
+                dateParams = {
+                    from: dateFrom,
+                    to: dateTo,
+                };
+            });
+
+            it("Energy Buildings Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Buildings,
+                    Energetics.enesa.buildings,
+                    JSONStream.parse("buildings.*"),
+                    async (data: EnesaBuildings.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Consumption,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Consumption Visapp Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.ConsumptionVisapp,
+                    Energetics.enesa.consumption,
+                    JSONStream.parse("*"),
+                    async (data: EnesaConsumption.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+
+            it("Energy Devices Dataset should return all items", async () => {
+                await testEnesaDataset(
+                    EnesaApi.resourceType.Devices,
+                    Energetics.enesa.devices,
+                    JSONStream.parse("devices.*"),
+                    async (data: EnesaDevices.InputElement) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    },
+                );
+            });
+        });
+
         describe("Vpalac", () => {
             let authCookie = "";
             let dateParams = {
@@ -1380,7 +1486,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 additionalParams: Record<string, string>,
                 onDataFunction: (data: any) => Promise<void>,
             ) => {
-                const baseUrl = config.datasources.UnimonitorCemApiEnergetics.url
+                const baseUrl = config.datasources.UnimonitorCemApiEnergetics.url;
                 const params = new URLSearchParams({
                     ...dateParams,
                     ...additionalParams,
@@ -1404,7 +1510,14 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await dataStream.setDataProcessor(onDataFunction).proceed();
+                await Promise.race([
+                    dataStream.setDataProcessor(onDataFunction).proceed(),
+                    sleep(1000),
+                ]);
+
+                if (!dataStream.destroyed) {
+                    dataStream.destroy();
+                }
             };
 
             before(() => {
@@ -1425,7 +1538,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             afterEach(async () => {
                 await UnimonitorCemApi.terminateSession(authCookie);
             });
-
 
             it("Measurement Dataset should return all items", async () => {
                 await testVpalacDataset(
@@ -1448,7 +1560,6 @@ describe("DataSourcesAvailabilityChecking", () => {
                     },
                 );
             });
-
 
             it("Meter Type Dataset should return all items", async () => {
                 await testVpalacDataset(

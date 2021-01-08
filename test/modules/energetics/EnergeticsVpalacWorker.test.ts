@@ -1,6 +1,5 @@
 "use strict";
 
-import { CustomError } from "@golemio/errors";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -8,12 +7,12 @@ import "mocha";
 import * as sinon from "sinon";
 import { DataSourceStream } from "../../../src/core/datasources";
 import { PostgresConnector } from "../../../src/core/connectors";
-import { EnergeticsWorker, UnimonitorCemApi } from "../../../src/modules/energetics";
+import { EnergeticsVpalacWorker, UnimonitorCemApi } from "../../../src/modules/energetics";
 
 chai.use(chaiAsPromised);
 
-describe("EnergeticsWorker", () => {
-    let worker: EnergeticsWorker;
+describe("EnergeticsVpalacWorker", () => {
+    let worker: EnergeticsVpalacWorker;
     let sandbox: sinon.SinonSandbox;
 
     const createDataStream = async () => {
@@ -36,7 +35,7 @@ describe("EnergeticsWorker", () => {
         sandbox.stub(PostgresConnector, "getConnection")
             .callsFake(() => Object.assign({ define: sandbox.stub() }));
 
-        worker = new EnergeticsWorker();
+        worker = new EnergeticsVpalacWorker();
 
         // Measurement
         sandbox.stub(worker["datasourceVpalacMeasurement"], "getOutputStream" as any)
@@ -78,29 +77,27 @@ describe("EnergeticsWorker", () => {
         sandbox.restore();
     });
 
-    it("fetchVpalac1HourData should call saveVpalacDataToDB once", async () => {
-        sandbox.stub(worker, "saveVpalacDataToDB" as any);
+    it("fetchXHoursData should call fetchAndSaveData once", async () => {
+        sandbox.stub(worker, "fetchAndSaveData" as any);
 
-        await worker.fetchVpalac1HourData({});
-
-        sandbox.assert.calledOnce(worker["saveVpalacDataToDB"] as sinon.SinonSpy);
+        await worker.fetchXHoursData({});
+        sandbox.assert.calledOnce(worker["fetchAndSaveData"] as sinon.SinonSpy);
     });
 
-    it("fetchVpalac1HourData should call saveVpalacDataToDB once", async () => {
-        sandbox.stub(worker, "saveVpalacDataToDB" as any);
+    it("fetchXDaysData should call fetchAndSaveData once", async () => {
+        sandbox.stub(worker, "fetchAndSaveData" as any);
 
-        await worker.fetchVpalac1HourData({});
-
-        sandbox.assert.calledOnce(worker["saveVpalacDataToDB"] as sinon.SinonSpy);
+        await worker.fetchXDaysData({});
+        sandbox.assert.calledOnce(worker["fetchAndSaveData"] as sinon.SinonSpy);
     });
 
-    it("saveVpalacDataToDB should call certain functions", async () => {
+    it("fetchAndSaveData should call certain functions", async () => {
         sandbox.stub(UnimonitorCemApi, "createSession").resolves({ authCookie: "" });
         sandbox.stub(UnimonitorCemApi, "terminateSession").resolves();
-        sandbox.stub(worker, "getVpalacConnectionSettings" as any).returns({ testOutput: true });
-        sandbox.stub(worker, "proceedVpalacDataStream" as any).resolves();
+        sandbox.stub(worker, "getConnectionSettings" as any).returns({ testOutput: true });
+        sandbox.stub(worker, "processDataStream" as any).resolves();
 
-        await worker["saveVpalacDataToDB"]({
+        await worker["fetchAndSaveData"]({
             from: "",
             to: "",
         });
@@ -126,67 +123,13 @@ describe("EnergeticsWorker", () => {
             worker["datasourceVpalacUnits"].protocolStrategy.setConnectionSettings as sinon.SinonSpy,
             { testOutput: true },
         );
-        sandbox.assert.callCount(worker["getVpalacConnectionSettings"] as sinon.SinonSpy, 5);
-        sandbox.assert.callCount(worker["proceedVpalacDataStream"] as sinon.SinonSpy, 5);
+        sandbox.assert.callCount(worker["getConnectionSettings"] as sinon.SinonSpy, 5);
+        sandbox.assert.callCount(worker["processDataStream"] as sinon.SinonSpy, 5);
 
     });
 
-    it("proceedVpalacDataStream should resolve", async () => {
-        const dataStream =  new DataSourceStream({
-            objectMode: true,
-            read: () => {
-                return;
-            },
-        });
-
-        sandbox.stub(dataStream, "proceed").resolves();
-
-        const promise = worker["proceedVpalacDataStream"](
-            Promise.resolve(dataStream),
-            (data: any) => Promise.resolve(),
-        );
-
-        expect(await promise).to.be.undefined;
-    });
-
-    it("proceedVpalacDataStream should reject (datasource error)", async () => {
-        const dataStream =  new DataSourceStream({
-            objectMode: true,
-            read: () => {
-                return;
-            },
-        });
-
-        sandbox.stub(dataStream, "proceed").resolves();
-
-        const promise = worker["proceedVpalacDataStream"](
-            Promise.reject(dataStream),
-            (data: any) => Promise.resolve(),
-        );
-
-        await expect(promise).to.be.rejectedWith(CustomError);
-    });
-
-    it("proceedVpalacDataStream should reject (data processor error)", async () => {
-        const dataStream =  new DataSourceStream({
-            objectMode: true,
-            read: () => {
-                return;
-            },
-        });
-
-        sandbox.stub(dataStream, "proceed").rejects();
-
-        const promise = worker["proceedVpalacDataStream"](
-            Promise.resolve(dataStream),
-            (data: any) => Promise.resolve(),
-        );
-
-        await expect(promise).to.be.rejectedWith(CustomError);
-    });
-
-    it("getVpalacConnectionSettings should return settings with a cookie header", () => {
-        const output = worker["getVpalacConnectionSettings"](
+    it("getConnectionSettings should return settings with a cookie header", () => {
+        const output = worker["getConnectionSettings"](
             "TYPE",
             "Cookie:Cookie",
         );
