@@ -72175,8 +72175,706 @@
                   }
                 }
               ]
-            }
-          ]
+            },
+            {
+              "$": {
+                 "alias": "S18",
+                 "spoj": "22209",
+                 "dopr": "ČESKÉ DRÁHY",
+                 "t": "0",
+                 "sled": "1",
+                 "np": "true",
+                 "zrus": "false",
+                 "lat": "50.0024872",
+                 "lng": "15.21893",
+                 "cpoz": "13:09:00",
+                 "zast": "5453414",
+                 "zpoz_prij": "0",
+                 "lin": "none"
+              },
+              "zast": [
+                 {
+                    "$": {
+                       "odj": "12:06",
+                       "zast": "5456006",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:09",
+                       "zast": "5456396",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:18",
+                       "zast": "5456406",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "-60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:22",
+                       "zast": "5456416",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:28",
+                       "zast": "5456426",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "12:31",
+                       "odj": "12:32",
+                       "zast": "5456386",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:35",
+                       "zast": "5456436",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:38",
+                       "zast": "5456446",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:42",
+                       "zast": "5456466",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "12:45",
+                       "odj": "12:46",
+                       "zast": "5456456",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:50",
+                       "zast": "5456486",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:52",
+                       "zast": "5456496",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "12:54",
+                       "zast": "5456506",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "12:58",
+                       "odj": "13:01",
+                       "zast": "5456476",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "-60",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:05",
+                       "zast": "5456516",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "120"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:09",
+                       "zast": "5453404",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "120"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:12",
+                       "zast": "5453444",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "120"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "13:15",
+                       "zast": "5453414",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_prij": "0"
+                    }
+                 }
+              ]
+           },
+           {
+              "$": {
+                 "alias": "S28",
+                 "spoj": "2425",
+                 "dopr": "ČESKÉ DRÁHY",
+                 "t": "0",
+                 "sled": "1",
+                 "np": "true",
+                 "zrus": "false",
+                 "lat": "49.95287",
+                 "lng": "15.2810659",
+                 "cpoz": "13:09:00",
+                 "zast": "5456136",
+                 "zpoz_prij": "0",
+                 "lin": "none"
+              },
+              "zast": [
+                 {
+                    "$": {
+                       "odj": "13:03",
+                       "zast": "5454014",
+                       "zpoz_typ": "3",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:07",
+                       "zast": "5456376",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "60"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "13:10",
+                       "odj": "13:11",
+                       "zast": "5456346",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_typ": "3",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:14",
+                       "zast": "5456366",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:18",
+                       "zast": "5456356",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "13:22",
+                       "odj": "13:23",
+                       "zast": "5456306",
+                       "zpoz_typ_prij": "2",
+                       "zpoz_typ": "2",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:27",
+                       "zast": "5456336",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:28",
+                       "zast": "5456305",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:31",
+                       "zast": "5456256",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:34",
+                       "zast": "5456326",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:36",
+                       "zast": "5456246",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:39",
+                       "zast": "5456296",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:42",
+                       "zast": "5456236",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "13:46",
+                       "odj": "13:52",
+                       "zast": "5456266",
+                       "zpoz_typ_prij": "2",
+                       "zpoz_typ": "2",
+                       "zpoz_prij": "0",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "13:59",
+                       "zast": "5456286",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "14:01",
+                       "zast": "5456226",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "odj": "14:07",
+                       "zast": "5456276",
+                       "zpoz_typ": "2",
+                       "zpoz_odj": "0"
+                    }
+                 },
+                 {
+                    "$": {
+                       "prij": "14:15",
+                       "zast": "5456136",
+                       "zpoz_typ_prij": "3",
+                       "zpoz_prij": "0"
+                    }
+                 }
+              ]
+           },
+           {
+            "$": {
+              "alias": "U4",
+              "spoj": "6914",
+              "dopr": "ČESKÉ DRÁHY",
+              "t": "0",
+              "sled": "1",
+              "np": "true",
+              "zrus": "false",
+              "lat": "50.1991",
+              "lng": "14.3654232",
+              "cpoz": "13:09:00",
+              "zast": "5454396",
+              "zpoz_prij": "120",
+              "zpoz_odj": "0"
+            },
+            "zast": [
+              {
+                "$": {
+                  "odj": "12:42",
+                  "zast": "5457236",
+                  "zpoz_typ": "3",
+                  "zpoz_odj": "60"
+                }
+              },
+              {
+                "$": {
+                  "odj": "12:46",
+                  "zast": "5457046",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "0",
+                  "zpoz_odj": "60"
+                }
+              },
+              {
+                "$": {
+                  "odj": "12:49",
+                  "zast": "5457027",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "12:52",
+                  "zast": "5454506",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "12:56",
+                  "zast": "5454466",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "0",
+                  "zpoz_odj": "60"
+                }
+              },
+              {
+                "$": {
+                  "odj": "12:59",
+                  "zast": "5454496",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:01",
+                  "zast": "5454486",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:03",
+                  "zast": "5454476",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:05",
+                  "zast": "5454456",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "120"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:07",
+                  "zast": "5454436",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "60",
+                  "zpoz_odj": "60"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:10",
+                  "zast": "5454446",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "0",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "prij": "13:15",
+                  "odj": "13:23",
+                  "zast": "5454396",
+                  "zpoz_typ_prij": "3",
+                  "zpoz_typ": "3",
+                  "zpoz_prij": "120",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:26",
+                  "zast": "5454386",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:29",
+                  "zast": "5454366",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:31",
+                  "zast": "5454376",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:34",
+                  "zast": "5454356",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:36",
+                  "zast": "5454326",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:40",
+                  "zast": "5454336",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:43",
+                  "zast": "5454306",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:47",
+                  "zast": "5454316",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:51",
+                  "zast": "5454287",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:54",
+                  "zast": "5454297",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "13:57",
+                  "zast": "5454267",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "prij": "14:00",
+                  "odj": "14:02",
+                  "zast": "5454257",
+                  "zpoz_typ_prij": "2",
+                  "zpoz_typ": "2",
+                  "zpoz_prij": "0",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:05",
+                  "zast": "5455949",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:08",
+                  "zast": "5455959",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:10",
+                  "zast": "5455919",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:13",
+                  "zast": "5455909",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:15",
+                  "zast": "5455939",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:17",
+                  "zast": "5455929",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "prij": "14:21",
+                  "odj": "14:29",
+                  "zast": "5455859",
+                  "zpoz_typ_prij": "2",
+                  "zpoz_typ": "2",
+                  "zpoz_prij": "0",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:31",
+                  "zast": "5455879",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:34",
+                  "zast": "5455899",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:37",
+                  "zast": "5455839",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:40",
+                  "zast": "5455819",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "odj": "14:43",
+                  "zast": "5455829",
+                  "zpoz_typ": "2",
+                  "zpoz_odj": "0"
+                }
+              },
+              {
+                "$": {
+                  "prij": "14:52",
+                  "zast": "5453179",
+                  "zpoz_typ_prij": "2",
+                  "zpoz_prij": "0"
+                }
+              }
+            ]
+          }
+        ]
 
     }
 }

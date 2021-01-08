@@ -91,11 +91,11 @@ describe("VehiclePositionsTransformation", () => {
         await expect(tripsValidator.Validate(data.trips)).to.be.fulfilled;
 
         expect(data).to.have.property("positions");
-        expect(data.positions.length).to.equal(321);
+        expect(data.positions.length).to.equal(324);
         expect(data).to.have.property("stops");
         expect(data.stops.length).to.equal(5925);
         expect(data).to.have.property("trips");
-        expect(data.trips.length).to.equal(321);
+        expect(data.trips.length).to.equal(324);
     });
 
     it("should properly transform DPP stop id (to AWS id)", async () => {

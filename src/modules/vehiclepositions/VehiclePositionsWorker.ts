@@ -111,23 +111,20 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString()) as IUpdateGTFSTripIdData[];
-        const promiseValues = await Promise.all(
+        const promiseValues: Array<string | string[] | CustomError> = await Promise.all(
             inputData.map(async (trip) => {
                 try {
-                    const result = await this.modelTrips.findGTFSTripId(trip);
-                    await this.modelTrips.update(result, {
-                        where: {
-                            id: trip.id,
-                        },
-                    });
-                    return Promise.resolve(trip.id);
+                    const results = await this.modelTrips.findGTFSTripId(trip);
+                    return Promise.resolve(results);
                 } catch (err) {
-                    return Promise.resolve(err);
+                    return Promise.resolve(err as CustomError);
                 }
             }),
         );
 
-        const foundedTripsPromiseValues = promiseValues.filter((result) => !(result instanceof CustomError));
+        const foundedTripsPromiseValues = [].concat(
+            ...promiseValues.filter((result) => !(result instanceof CustomError)),
+        );
         const foundedTripsPromiseErrors = promiseValues.filter((result) => result instanceof CustomError);
 
         // successfully updated gtfs ids

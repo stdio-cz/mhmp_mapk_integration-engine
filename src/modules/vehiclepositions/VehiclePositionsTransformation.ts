@@ -23,30 +23,27 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             trips: [],
         };
 
-        if (data instanceof Array) {
-            const promises = data.map(async (element, i) => {
-                const elemRes = await this.transformElement(element);
+        if (Array.isArray(data)) {
+            data.forEach((element, i) => {
+                const elemRes = this.transformElement(element);
                 if (elemRes) {
                     res.positions.push(elemRes.position);
                     res.stops = res.stops.concat(elemRes.stops);
                     res.trips.push(elemRes.trip);
                 }
-                return;
             });
-            await Promise.all(promises);
-            return res;
         } else {
-            const elemRes = await this.transformElement(data);
+            const elemRes = this.transformElement(data);
             if (elemRes) {
                 res.positions.push(elemRes.position);
                 res.stops = res.stops.concat(elemRes.stops);
                 res.trips.push(elemRes.trip);
             }
-            return res;
         }
+        return res;
     }
 
-    protected transformElement = async (element: any): Promise<any> => {
+    protected transformElement = (element: any): { position: any, stops: any[], trip: any } => {
         const attributes = element.$;
         const stops = element.zast;
 
@@ -81,9 +78,15 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         isOverMidnight = this.checkMidnight(now, timestamp); // returns -1, 1 or 0
         timestamp.add(isOverMidnight, "d");
 
+        // set "none" if lin or alias is null, undefined or "" (empty string)
+        attributes.lin = (attributes.lin === "") ? "none" : attributes.lin ?? "none";
+        attributes.alias = (attributes.alias === "") ? "none" : attributes.alias ?? "none";
+
         // primary key -> start_timestamp, cis_id, cis_short_name, cis_number
-        const primaryKey = startDate.utc().format()
-            + "_" + attributes.lin + "_" + attributes.alias + "_" + attributes.spoj;
+        const primaryKey = `${startDate.utc().format()}`
+            + `_${attributes.lin}`
+            + `_${attributes.alias}`
+            + `_${attributes.spoj}`;
 
         // DP PRAHA exception for missing attributes
         const agencyNameException = "DP PRAHA";
@@ -161,9 +164,9 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             },
         };
 
-        const promises = stops.map(async (stop, i) => {
-            let arrival;
-            let departure;
+        stops.forEach((stop: any, i: number) => {
+            let arrival: moment.Moment;
+            let departure: moment.Moment;
 
             // creating arival from stop.$.prij
             if (stop.$.prij && stop.$.prij !== "") {
@@ -206,7 +209,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
             const cisStopId = (attributes.dopr !== agencyNameException) ?
                 parseInt(stop.$.zast, 10) : null;
 
-            return {
+            res.stops.push({
                 arrival_delay_type: (stop.$.zpoz_typ_prij)
                     ? parseInt(stop.$.zpoz_typ_prij, 10)
                     : null,
@@ -228,9 +231,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 departure_time: (departure) ? stop.$.odj : null,
                 departure_timestamp: (departure) ? departure.utc().valueOf() : null,
                 trips_id: primaryKey,
-            };
+            });
         });
-        res.stops = await Promise.all(promises);
 
         return res;
     }

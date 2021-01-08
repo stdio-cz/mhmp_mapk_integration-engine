@@ -19,6 +19,17 @@ export interface IUpdateGTFSTripIdData {
     start_timestamp: number;
 }
 
+export interface IFoundGTFSTripData {
+    gtfs_trip_id: string;
+    gtfs_trip_headsign: string;
+    gtfs_route_id: string;
+    gtfs_route_short_name: string;
+
+    gtfs_block_id?: string;
+    gtfs_trip_short_name?: string;
+    cis_trip_number?: number;
+}
+
 export class VehiclePositionsTripsModel extends PostgresModel implements IModel {
 
     /** Model name */
@@ -189,16 +200,41 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         }
     }
 
-    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<any> => {
+    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
-            return await this.findGTFSTripIdTrain(trip);
+            const foundGtfsTrips = await this.findGTFSTripIdTrain(trip);
+
+            if (foundGtfsTrips.length === 1) {
+                await this.update(foundGtfsTrips[0], {
+                    where: {
+                        id: trip.id,
+                    },
+                });
+                return trip.id;
+            } else {
+                // TODO duplicate trips, positions and stops for each found gtfs id
+
+                // TODO temporary solution
+                await this.update(foundGtfsTrips[0], {
+                    where: {
+                        id: trip.id,
+                    },
+                });
+                return trip.id;
+            }
         } else if (0) {
             // DPP
             // TODO
         } else {
             // other
-            return await this.findGTFSTripIdBasic(trip);
+            const foundGtfsTrip = await this.findGTFSTripIdBasic(trip);
+            await this.update(foundGtfsTrip, {
+                where: {
+                    id: trip.id,
+                },
+            });
+            return trip.id;
         }
     }
 
@@ -210,7 +246,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         return this.sequelizeModel.findAll(options);
     }
 
-    private findGTFSTripIdBasic = async (trip: IUpdateGTFSTripIdData): Promise<any> => {
+    private findGTFSTripIdBasic = async (trip: IUpdateGTFSTripIdData): Promise<IFoundGTFSTripData> => {
         const connection = PostgresConnector.getConnection();
         const startDate = moment(trip.start_timestamp).tz("Europe/Prague");
         const startDateDayBefore = moment(trip.start_timestamp).tz("Europe/Prague").subtract(1, "day");
@@ -295,7 +331,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         return result[0];
     }
 
-    private findGTFSTripIdTrain = async (trip: IUpdateGTFSTripIdData): Promise<any> => {
+    private findGTFSTripIdTrain = async (trip: IUpdateGTFSTripIdData): Promise<IFoundGTFSTripData[]> => {
         const connection = PostgresConnector.getConnection();
 
         const result = await connection.query(`
@@ -384,7 +420,31 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             throw new CustomError(`Model data was not found for id '${trip.id}' (train).`, true,
                 this.constructor.name, 4003);
         }
-        return result[0];
+
+        // TODO more than one found gtfs trip id example
+        // 2021-01-08T11:42:00Z_none_U4_6914
+        // [
+        //     {
+        //         gtfs_trip_id: '1304_6914_201214',
+        //         gtfs_block_id: '1304_6914_201214',
+        //         gtfs_trip_headsign: 'Ústí n.L. hl.n.',
+        //         gtfs_trip_short_name: 'Os 6914',
+        //         gtfs_route_id: 'L1304',
+        //         gtfs_route_short_name: 'S4',
+        //         cis_trip_number: 6914
+        //     },
+        //     {
+        //         gtfs_trip_id: '1004_6914_201214',
+        //         gtfs_block_id: '1304_6914_201214',
+        //         gtfs_trip_headsign: 'Ústí n.L. hl.n.',
+        //         gtfs_trip_short_name: 'Os 6914',
+        //         gtfs_route_id: 'L1004',
+        //         gtfs_route_short_name: 'U4',
+        //         cis_trip_number: 6914
+        //     }
+        // ]
+
+        return result;
     }
 
     private findGTFSTripIdDPP = async (trip: IUpdateGTFSTripIdData): Promise<any> => {

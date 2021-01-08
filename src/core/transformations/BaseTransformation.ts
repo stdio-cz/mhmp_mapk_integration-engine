@@ -8,7 +8,7 @@ export abstract class BaseTransformation implements ITransformation {
     /** Transformation name */
     public abstract name: string;
     /** Transform one single element from input format (from data source) to output format */
-    protected abstract transformElement: (element: any) => Promise<any>;
+    protected abstract transformElement: (element: any) => Promise<any> | any;
 
     /**
      * Transform the whole collection or one single element
