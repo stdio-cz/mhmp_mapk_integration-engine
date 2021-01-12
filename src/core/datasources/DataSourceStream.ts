@@ -61,7 +61,7 @@ export class DataSourceStream extends Readable {
                     if (this.onEndFunction) {
                         await this.onEndFunction();
                     }
-                    resolve();
+                    resolve(true);
                 } else {
                     const checker = setInterval(async () => {
                         inputStreamEndedAttempts++;
@@ -72,7 +72,7 @@ export class DataSourceStream extends Readable {
                             if (this.onEndFunction) {
                                 await this.onEndFunction();
                             }
-                            resolve();
+                            resolve(true);
                         } else if (inputStreamEndedAttempts > config.stream.wait_for_end_attempts) {
                             this.emit(
                                 "error",
