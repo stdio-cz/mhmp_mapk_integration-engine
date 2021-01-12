@@ -5,6 +5,7 @@ import {
     IPRSortedWasteStationsTransformation,
 } from "./";
 
+import { log } from "../../core/helpers";
 import { PostgresModel } from "../../core/models";
 
 import * as proj4 from "proj4";
@@ -93,18 +94,22 @@ export class SortedWasteTransformation {
             containersPickDates[id].raw.sort((a: any, b: any) => (a.from > b.from) ? 1 : -1);
             // set `to` dates - not present everywhere
             containersPickDates[id].raw.forEach((pick: any, i: number) => {
-                if (pick.from) {
-                    pick.from = moment(pick.from);
-                    if (pick.to) {
-                        pick.to = moment(pick.to);
-                    } else {
-                        if (containersPickDates[id].raw[i + 1]) {
-                            pick.to = moment(containersPickDates[id].raw[i + 1].from);
+                if (pick.from && pick.frequency) {
+                    try {
+                        pick.from = moment(pick.from);
+                        if (pick.to) {
+                            pick.to = moment(pick.to);
                         } else {
-                            pick.to = yearFromNow;
+                            if (containersPickDates[id].raw[i + 1]) {
+                                pick.to = moment(containersPickDates[id].raw[i + 1].from);
+                            } else {
+                                pick.to = yearFromNow;
+                            }
                         }
+                        pick.parsed = this.parsePicksIntervalString(pick.frequency);
+                    } catch (err) {
+                        log.warn("Can not parse pick dates", err);
                     }
-                    pick.parsed = this.parsePicksIntervalString(pick.frequency);
                 }
             });
             // calculate pick dates
@@ -132,6 +137,7 @@ export class SortedWasteTransformation {
             const weeksOffset = Math.floor(container.code / 10);
             // only future records
             if (
+                pick.parsed &&
                 ((thisYear <= pick.parsed.year) || !thisYear) &&
                 pick.from <= today &&
                 pick.to >= today &&
