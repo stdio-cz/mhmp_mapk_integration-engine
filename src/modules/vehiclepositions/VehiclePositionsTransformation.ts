@@ -24,8 +24,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         };
 
         if (Array.isArray(data)) {
-            data.forEach((element, i) => {
-                const elemRes = this.transformElement(element);
+            data.forEach(async (element, i) => {
+                const elemRes = await this.transformElement(element);
                 if (elemRes) {
                     res.positions.push(elemRes.position);
                     res.stops = res.stops.concat(elemRes.stops);
@@ -33,7 +33,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 }
             });
         } else {
-            const elemRes = this.transformElement(data);
+            const elemRes = await this.transformElement(data);
             if (elemRes) {
                 res.positions.push(elemRes.position);
                 res.stops = res.stops.concat(elemRes.stops);
@@ -43,7 +43,7 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         return res;
     }
 
-    protected transformElement = (element: any): { position: any, stops: any[], trip: any } => {
+    protected transformElement = async (element: any): Promise<{ position: any, stops: any[], trip: any }> => {
         const attributes = element.$;
         const stops = element.zast;
 
