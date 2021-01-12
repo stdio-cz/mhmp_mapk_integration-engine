@@ -295,7 +295,6 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         let to: Date;
 
         ({from, to} = this.getFromToRange(msg));
-
         this.sensorsPicksHTTPSettings.body = JSON.stringify({ from, to });
 
         const pickStrategy = new HTTPProtocolStrategyStreamed(this.sensorsPicksHTTPSettings);
@@ -583,6 +582,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
     private getFromToRange = (msg: any): any => {
         let from: Date;
         let to: Date;
+
         try {
             const customInterval = JSON.parse(msg.content.toString());
             if (customInterval.from && customInterval.to) {
