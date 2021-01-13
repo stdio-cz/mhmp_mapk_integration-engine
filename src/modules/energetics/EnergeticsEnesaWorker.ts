@@ -28,7 +28,7 @@ import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 class EnergeticsEnesaWorker extends EnergeticsBaseWorker {
-    private static DEFAULT_DAYS = 2;
+    private static DEFAULT_DAYS = 14;
 
     private readonly datasourceEnesaEnergyBuildings: DataSourceStreamed;
     private readonly datasourceEnesaEnergyConsumption: DataSourceStreamed;
