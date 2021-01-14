@@ -24,14 +24,14 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
         };
 
         if (Array.isArray(data)) {
-            data.forEach(async (element, i) => {
+            for (const element of data) {
                 const elemRes = await this.transformElement(element);
                 if (elemRes) {
                     res.positions.push(elemRes.position);
                     res.stops = res.stops.concat(elemRes.stops);
                     res.trips.push(elemRes.trip);
                 }
-            });
+            }
         } else {
             const elemRes = await this.transformElement(data);
             if (elemRes) {

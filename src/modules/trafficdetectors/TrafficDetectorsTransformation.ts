@@ -69,12 +69,12 @@ export class TrafficDetectorsTransformation extends BaseTransformation implement
                 return (!!this.allowedDetectors[element.$.type]);
             });
 
-            filteredData.forEach(async (element: any, index: number) => {
+            for (const element of filteredData) {
                 const transformed = await this.transformElement(element);
 
                 result.data = [...result.data, ...transformed.data];
                 result.errors = [...result.errors, ...transformed.errors];
-            });
+            }
 
             return result;
         } else {
