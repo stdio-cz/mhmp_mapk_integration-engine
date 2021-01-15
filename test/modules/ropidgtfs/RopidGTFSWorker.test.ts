@@ -103,7 +103,9 @@ describe("RopidGTFSWorker", () => {
     });
 
     it("should calls the correct methods by downloadFiles method", async () => {
-        await worker.downloadFiles();
+        const promise = worker.downloadFiles();
+        await sandbox.clock.tickAsync(1 * 60 * 1000);
+        await promise;
         sandbox.assert.calledOnce(worker.dataSource.getAll);
         sandbox.assert.calledThrice(worker.metaModel.save);
         sandbox.assert.callCount(worker.sendMessageToExchange, 3);

@@ -142,6 +142,7 @@ export class RopidGTFSWorker extends BaseWorker {
         await Promise.all(promises);
 
         // sleep 1 minute send checkSavedRowsAndReplaceTables
+        await new Promise((done) => setTimeout(done, 1 * 60 * 1000));
         await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkSavedRowsAndReplaceTables",
             "Just do it!");
     }
