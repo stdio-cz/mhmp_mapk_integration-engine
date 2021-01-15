@@ -268,8 +268,11 @@ export class RopidGTFSMetadataModel extends PostgresModel implements IModel {
 
     public refreshMaterializedViews = async (): Promise<any> => {
         const connection = PostgresConnector.getConnection();
-        return connection.query(
+        await connection.query(
             `REFRESH MATERIALIZED VIEW "public"."v_ropidgtfs_services_first14days"`,
+            { type: Sequelize.QueryTypes.SELECT });
+        await connection.query(
+            `REFRESH MATERIALIZED VIEW "public"."v_ropidgtfs_trips_minmaxsequences"`,
             { type: Sequelize.QueryTypes.SELECT });
     }
 
