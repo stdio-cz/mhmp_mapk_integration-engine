@@ -111,22 +111,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.8.3.tgz":
-  version "1.8.3"
-  resolved "../schema-definitions/golemio-schema-definitions-1.8.3.tgz#554e1eef5f9b3d810348664ab5fef71ce2bc9c50"
-  dependencies:
-    "@golemio/utils" "1.0.0"
-    connection-string-parser "^1.0.3"
-    db-migrate "^0.11.11"
-    db-migrate-pg "^1.2.2"
-    migrate-mongo "^8.1.4"
-    mongoose "5.8.9"
-    mongoose-schema-jsonschema "^1.4.3"
-    sequelize "4.44.4"
-
-"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.8.4.tgz":
-  version "1.8.4"
-  resolved "../schema-definitions/golemio-schema-definitions-1.8.4.tgz#3a24e5e01e608cf3bed55ac034aa843661438681"
+"@golemio/schema-definitions@1.8.4-dev.243329123":
+  version "1.8.4-dev.243329123"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.8.4-dev.243329123.tgz#f0247e1020d9c389287f6b6de54c689b70a7707d"
+  integrity sha512-Xh53LQGN+qD2vyypNWDB6ae0DmLfRBkFW+J2Q2TsNpdfvRQ9OXeIEazjV2SmS18LfMXaWnbLr0WK3X5CPFIWQQ==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
