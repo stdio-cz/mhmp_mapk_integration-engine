@@ -5,10 +5,14 @@ import { RopidGTFS } from "@golemio/schema-definitions";
 import { Validator } from "@golemio/validator";
 import { config } from "../../core/config";
 import { DataSource, FTPProtocolStrategy, JSONDataTypeStrategy } from "../../core/datasources";
-import { log } from "../../core/helpers";
+import { IntegrationErrorHandler, log } from "../../core/helpers";
 import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import {
+    DatasetEnum,
+    MetaDatasetInfoKeyEnum,
+    MetaStateEnum,
+    MetaTypeEnum,
     RopidGTFSCisStopsTransformation,
     RopidGTFSMetadataModel,
     RopidGTFSTransformation,
@@ -95,7 +99,7 @@ export class RopidGTFSWorker extends BaseWorker {
     public checkForNewData = async (msg: any): Promise<void> => {
         // checking PID_GTFS dataset
         const serverLastModified = await this.dataSource.getLastModified();
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
         if (serverLastModified !== dbLastModified.lastModified) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadFiles",
                 "Just do it!");
@@ -103,7 +107,7 @@ export class RopidGTFSWorker extends BaseWorker {
 
         // checking CIS_STOPS dataset
         const CISserverLastModified = await this.dataSourceCisStops.getLastModified();
-        const CISdbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
+        const CISdbLastModified = await this.metaModel.getLastModified(DatasetEnum.CIS_STOPS);
         if (CISserverLastModified !== CISdbLastModified.lastModified) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadCisStops",
                 "Just do it!");
@@ -113,11 +117,11 @@ export class RopidGTFSWorker extends BaseWorker {
     public downloadFiles = async (msg: any): Promise<void> => {
         const files = await this.dataSource.getAll();
         const lastModified = await this.dataSource.getLastModified();
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
         await this.metaModel.save({
-            dataset: "PID_GTFS",
-            key: "last_modified",
-            type: "DATASET_INFO",
+            dataset: DatasetEnum.PID_GTFS,
+            key: MetaDatasetInfoKeyEnum.LAST_MODIFIED,
+            type: MetaTypeEnum.DATASET_INFO,
             value: lastModified,
             version: dbLastModified.version + 1 || 1,
         });
@@ -126,16 +130,21 @@ export class RopidGTFSWorker extends BaseWorker {
         const promises = files.map(async (file) => {
             // save meta
             await this.metaModel.save({
-                dataset: "PID_GTFS",
+                dataset: DatasetEnum.PID_GTFS,
                 key: file.name,
-                type: "STATE",
-                value: "DOWNLOADED",
+                type: MetaTypeEnum.STATE,
+                value: MetaStateEnum.DOWNLOADED,
                 version: dbLastModified.version + 1 || 1,
             });
             return this.sendMessageToExchange("workers." + this.queuePrefix + ".transformData",
                 JSON.stringify(file));
         });
         await Promise.all(promises);
+
+        // sleep 1 minute send checkSavedRowsAndReplaceTables
+        await new Promise((done) => setTimeout(done, 1 * 60 * 1000));
+        await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkSavedRowsAndReplaceTables",
+            "Just do it!");
     }
 
     public transformData = async (msg: any): Promise<void> => {
@@ -145,7 +154,7 @@ export class RopidGTFSWorker extends BaseWorker {
         const model = this.getModelByName(transformedData.name);
         await model.truncate(true);
 
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
 
         let parsed = [];
         let rowCount = 0;
@@ -173,15 +182,20 @@ export class RopidGTFSWorker extends BaseWorker {
 
         // save meta
         await this.metaModel.save({
-            dataset: "PID_GTFS",
+            dataset: DatasetEnum.PID_GTFS,
             key: transformedData.name,
-            type: "TABLE_TOTAL_COUNT",
+            type: MetaTypeEnum.TABLE_TOTAL_COUNT,
             value: rowCount,
             version: dbLastModified.version,
         });
 
         // save meta
-        await this.metaModel.updateState("PID_GTFS", transformedData.name, "TRANSFORMED", dbLastModified.version);
+        await this.metaModel.updateState(
+            DatasetEnum.PID_GTFS,
+            transformedData.name,
+            MetaStateEnum.TRANSFORMED,
+            dbLastModified.version,
+        );
         log.debug(`${transformedData.name}: parsed and sent ${rowCount} rows`);
     }
 
@@ -192,20 +206,25 @@ export class RopidGTFSWorker extends BaseWorker {
         await model.saveBySqlFunction(inputData.data, this.getPrimaryKeyByName(inputData.name), true);
 
         // save meta
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
-        await this.metaModel.updateSavedRows("PID_GTFS", inputData.name, inputData.data.length, dbLastModified.version);
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
+        await this.metaModel.updateSavedRows(
+            DatasetEnum.PID_GTFS,
+            inputData.name,
+            inputData.data.length,
+            dbLastModified.version,
+        );
     }
 
     public checkAllTablesHasSavedState = async (msg: any): Promise<boolean> => {
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
-        return this.metaModel.checkAllTablesHasSavedState("PID_GTFS", dbLastModified.version);
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
+        return this.metaModel.checkAllTablesHasSavedState(DatasetEnum.PID_GTFS, dbLastModified.version);
     }
 
     public checkSavedRowsAndReplaceTables = async (msg: any): Promise<boolean> => {
-        const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.PID_GTFS);
         const alreadyDeployed = await this.metaModel
-            .checkIfNewVersionIsAlreadyDeployed("PID_GTFS", dbLastModified.version);
-        const allSaved = await this.metaModel.checkAllTablesHasSavedState("PID_GTFS", dbLastModified.version);
+            .checkIfNewVersionIsAlreadyDeployed(DatasetEnum.PID_GTFS, dbLastModified.version);
+        const allSaved = await this.metaModel.checkAllTablesHasSavedState(DatasetEnum.PID_GTFS, dbLastModified.version);
 
         if (alreadyDeployed) {
             return true;
@@ -213,35 +232,60 @@ export class RopidGTFSWorker extends BaseWorker {
 
         try {
             if (!allSaved) {
-                throw new Error("Some tables are not completely saved.");
+                // wait to the saving process
+                log.debug("checkSavedRowsAndReplaceTables - not ready yet");
+                await new Promise((done) => setTimeout(done, 5 * 60 * 1000)); // sleeps for 5 minutes
+                await this.sendMessageToExchange("workers." + this.queuePrefix + ".checkSavedRowsAndReplaceTables",
+                    "Just do it!");
+                log.debug("checkSavedRowsAndReplaceTables - new message was resent");
+                return true;
             }
-            await this.metaModel.checkSavedRows("PID_GTFS", dbLastModified.version);
-            await this.metaModel.replaceTables("PID_GTFS", dbLastModified.version);
+            await this.metaModel.checkSavedRows(DatasetEnum.PID_GTFS, dbLastModified.version);
+            await this.metaModel.replaceTables(DatasetEnum.PID_GTFS, dbLastModified.version);
             await this.delayComputationTripsModel.truncate();
             await this.metaModel.refreshMaterializedViews();
             // save meta
             await this.metaModel.save({
-                dataset: "PID_GTFS",
-                key: "deployed",
-                type: "DATASET_INFO",
+                dataset: DatasetEnum.PID_GTFS,
+                key: MetaDatasetInfoKeyEnum.DEPLOYED,
+                type: MetaTypeEnum.DATASET_INFO,
                 value: "true",
                 version: dbLastModified.version,
             });
             return true;
         } catch (err) {
-            await this.metaModel.rollbackFailedSaving("PID_GTFS", dbLastModified.version);
-            throw new CustomError("Error while checking RopidGTFS saved rows.", true, this.constructor.name, 5004, err);
+            // log failed saving process
+            await this.metaModel.rollbackFailedSaving(DatasetEnum.PID_GTFS, dbLastModified.version);
+            // check number of tries
+            const retry = await this.metaModel.getNumberOfDownloadRetries(DatasetEnum.PID_GTFS, dbLastModified.version);
+
+            if (retry <= 5) {
+                // send new downloadFiles, log it and finish
+                await this.sendMessageToExchange("workers." + this.queuePrefix + ".downloadFiles",
+                    "Just do it!");
+                IntegrationErrorHandler.handle(
+                    new CustomError(
+                        `Error while checking RopidGTFS saved rows. Attemp number ${retry} was resent.`,
+                        true, this.constructor.name, 5004, err,
+                    ),
+                );
+                return true;
+            } else {
+                // finish with error
+                throw new CustomError("Error while checking RopidGTFS saved rows.", true,
+                    this.constructor.name, 5004, err);
+            }
         }
     }
 
     public downloadCisStops = async (msg: any): Promise<void> => {
         const data = await this.dataSourceCisStops.getAll();
         const lastModified = await this.dataSourceCisStops.getLastModified();
-        const dbLastModified = await this.metaModel.getLastModified("CIS_STOPS");
+        const dbLastModified = await this.metaModel.getLastModified(DatasetEnum.CIS_STOPS);
         await this.metaModel.save({
-            dataset: "CIS_STOPS",
-            key: "last_modified",
-            type: "DATASET_INFO",
+            dataset: DatasetEnum.CIS_STOPS,
+            key: MetaDatasetInfoKeyEnum.LAST_MODIFIED,
+            type: MetaTypeEnum.DATASET_INFO,
             value: lastModified,
             version: dbLastModified.version + 1,
         });
@@ -269,15 +313,15 @@ export class RopidGTFSWorker extends BaseWorker {
 
         // save meta
         await this.metaModel.save([{
-            dataset: "CIS_STOPS",
+            dataset: DatasetEnum.CIS_STOPS,
             key: "cis_stop_groups",
-            type: "TABLE_TOTAL_COUNT",
+            type: MetaTypeEnum.TABLE_TOTAL_COUNT,
             value: uniqueCisStopGroups.length,
             version: dbLastModified.version + 1,
         }, {
-            dataset: "CIS_STOPS",
+            dataset: DatasetEnum.CIS_STOPS,
             key: "cis_stops",
-            type: "TABLE_TOTAL_COUNT",
+            type: MetaTypeEnum.TABLE_TOTAL_COUNT,
             value: transformedData.cis_stops.length,
             version: dbLastModified.version + 1,
         }]);
@@ -286,11 +330,11 @@ export class RopidGTFSWorker extends BaseWorker {
             await this.cisStopGroupsModel.save(uniqueCisStopGroups, true);
             await this.cisStopsModel.truncate(true);
             await this.cisStopsModel.save(transformedData.cis_stops, true);
-            await this.metaModel.checkSavedRows("CIS_STOPS", dbLastModified.version + 1);
-            await this.metaModel.replaceTables("CIS_STOPS", dbLastModified.version + 1);
+            await this.metaModel.checkSavedRows(DatasetEnum.CIS_STOPS, dbLastModified.version + 1);
+            await this.metaModel.replaceTables(DatasetEnum.CIS_STOPS, dbLastModified.version + 1);
         } catch (err) {
             log.error(err);
-            await this.metaModel.rollbackFailedSaving("CIS_STOPS", dbLastModified.version + 1);
+            await this.metaModel.rollbackFailedSaving(DatasetEnum.CIS_STOPS, dbLastModified.version + 1);
         }
     }
 
