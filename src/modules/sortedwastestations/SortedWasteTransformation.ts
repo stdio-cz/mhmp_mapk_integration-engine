@@ -462,6 +462,7 @@ export class SortedWasteTransformation {
                     trash_type: this.iprTransformation.getTrashTypeByString(container?.trashType?.code).id ||
                         this.iprTransformation.getTrashTypeByString(container?.trashType?.name).id,
                     source: "ksnko",
+                    sensor_id: null,
                 });
             });
         });
@@ -469,7 +470,94 @@ export class SortedWasteTransformation {
         return stationsByCode;
     }
 
-    public getSensorContainersByStationCode = (containers: any, stationsByCode: any): any => {
+    public getAttachedDettachedContainers = (
+        storedContainers: any[],
+        newMonitoredContainers: any[],
+    ): {
+        attached: Array<{
+            knsko_id: number;
+            sensor_id: number;
+        }>,
+        detached: Array<{
+            knsko_id: number;
+            sensor_id: number;
+        }>,
+    } => {
+        const normalizedStored = {};
+        const normalizedNew = {};
+
+        const attached: Array<{
+            knsko_id: number;
+            sensor_id: number;
+        }> = [];
+
+        const detached: Array<{
+            knsko_id: number;
+            sensor_id: number;
+        }> = [];
+
+        for (const storedContainer of storedContainers) {
+            normalizedStored[storedContainer.knsko_id] = storedContainer.sensor_id;
+        }
+
+        for (const newContainer of newMonitoredContainers) {
+            if (newContainer.extern_id) {
+                normalizedNew[newContainer.extern_id] = newContainer.id;
+            }
+        }
+
+        for (const storedContainer of storedContainers) {
+            // sensor removed || changed
+            if (
+                storedContainer.knsko_id &&
+                !normalizedNew[storedContainer.knsko_id]
+            ) {
+                detached.push({
+                    knsko_id: storedContainer.knsko_id,
+                    sensor_id: normalizedStored[storedContainer.knsko_id],
+                });
+            }
+
+            if (
+                storedContainer.knsko_id &&
+                normalizedNew[storedContainer.knsko_id] &&
+                (
+                `${normalizedNew[storedContainer.knsko_id]}` !== `${normalizedStored[storedContainer.knsko_id]}`
+                )
+            ) {
+                attached.push({
+                    knsko_id: storedContainer.knsko_id,
+                    sensor_id: normalizedNew[storedContainer.knsko_id],
+                });
+                detached.push({
+                    knsko_id: storedContainer.knsko_id,
+                    sensor_id: normalizedStored[storedContainer.knsko_id],
+                });
+            }
+        }
+
+        for (const newContainer of newMonitoredContainers) {
+            if (
+                newContainer.extern_id &&
+                !normalizedStored[newContainer.extern_id]
+            ) {
+                attached.push({
+                    knsko_id: newContainer.id,
+                    sensor_id: normalizedNew[newContainer.extern_id],
+                });
+            }
+        }
+
+        return {
+            attached,
+            detached,
+        };
+    }
+
+    public getSensorContainersByStationCode = (
+        containers: any,
+        stationsByCode: any,
+        ): any => {
         containers.forEach((container: any) => {
             // tslint:disable: object-literal-sort-keys variable-name
             const station_code = this.getStationCode(container.code);
@@ -498,27 +586,29 @@ export class SortedWasteTransformation {
             let containerUpdated = false;
 
             for (const storedContainer of stationsByCode[station_code].containers) {
-                if (trashType === storedContainer.trash_type) {
+                if (`${container.extern_id}` === `${storedContainer.knsko_id}`) {
                     storedContainer.code = container.code;
                     storedContainer.id = getUuid(container.code);
                     storedContainer.station_code = storedContainer.station_code || this.getStationCode(container.code);
                     storedContainer.total_volume = container.total_volume;
-                    storedContainer.trash_type = storedContainer.trash_type ||
-                        this.iprTransformation.getTrashTypeByString(container.trash_type).id;
+                    storedContainer.trash_type = storedContainer.trash_type || trashType;
                     storedContainer.prediction = container.prediction;
                     storedContainer.bin_type = storedContainer.bin_type || container.bin_type;
                     storedContainer.installed_at = container.installed_at;
                     storedContainer.network = container.network;
                     storedContainer.source = "sensoneo",
+                    storedContainer.sensor_id = container.id || null;
                     containerUpdated = true;
                     break;
                 }
             }
 
-            // should we add new - only in sensoneo not in ksnko
-            if (!containerUpdated) {
+            // should we add new - only in sensoneo not in ksnko ?
+            if (!containerUpdated && container.extern_id) {
                 stationsByCode[station_code].containers.push({
                     id: getUuid(container.code),
+                    knsko_id: +container.extern_id || null,
+                    knsko_code: container.code,
                     trash_type: trashType,
                     code: container.code,
                     station_code: this.getStationCode(container.code),
@@ -528,9 +618,9 @@ export class SortedWasteTransformation {
                     installed_at: container.installed_at,
                     network: container.network,
                     source: "sensoneo",
+                    sensor_id: container.id || null,
                 });
             }
-
             // tslint:enable
         });
 
