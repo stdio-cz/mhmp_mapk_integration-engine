@@ -24,13 +24,12 @@ import {
     SFTPProtocolStrategy,
 } from "../../core/datasources";
 
+import * as Sequelize from "sequelize";
+import { PostgresConnector } from "../../core/connectors";
 import { log } from "../../core/helpers";
 import { MongoModel, PostgresModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
-import {
-    IPRSortedWasteStationsTransformation,
-    SortedWasteTransformation,
-} from "./";
+import { SortedWasteTransformation } from "./";
 
 import * as moment from "moment";
 
@@ -52,6 +51,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
     private sortedWastePicksDatasource: DataSource;
     private SFTPSettings: ISFTPSettings;
     private pickDatesModel: PostgresModel;
+    private knskoToken: string;
 
     constructor() {
         super();
@@ -347,7 +347,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         }
     }
 
-    public getKSNKOToken = async (): Promise<AxiosResponse> => {
+    public getKSNKOToken = async (): Promise<string> => {
         return (await axios.request({
             data : JSON.stringify({
                 password: config.datasources.KSNKOApi.password,
@@ -364,15 +364,15 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
 
     public updateStationsAndContainers = async (msg: any): Promise<void> => {
         let ksnkoStationsStream: DataSourceStream;
-        let token: any;
         let sensorContainersStream: DataSourceStream;
         let oictContainersStream: DataSourceStream;
         let potexContainersStream: DataSourceStream;
         let stationsByCode = {};
 
         try {
-            token = (await this.getKSNKOToken());
-            if (!token) {
+            this.knskoToken = (await this.getKSNKOToken());
+
+            if (!this.knskoToken) {
                 throw new Error("Can not obtain KSNKO auth token");
             }
         } catch (err) {
@@ -381,7 +381,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
 
         const ksnkoStationsHTTPProtocolStrategyStreamed = new HTTPProtocolStrategyStreamed({
             headers: {
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${this.knskoToken}`,
                 "Content-Type": "application/json",
                 "accept": "application/json",
             },
@@ -420,14 +420,62 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
             );
         }
 
+        let storedMonitoredContainers: any[] = [];
+        let newMonitoredContainers: any[] = [];
+
         try {
             await sensorContainersStream.setDataProcessor(async (data: any) => {
-                stationsByCode = this.sortedWasteTransformation.getSensorContainersByStationCode(data, stationsByCode);
+                newMonitoredContainers = newMonitoredContainers.concat(data);
+                stationsByCode = this.sortedWasteTransformation.getSensorContainersByStationCode(
+                    data,
+                    stationsByCode,
+                    );
             }).proceed();
         } catch (err) {
             throw new CustomError(
                 "Error while processing sensorsContainersDatasource data.", true, this.constructor.name, 5050, err,
             );
+        }
+
+        let changedContainers: {
+            attached: Array<{
+                knsko_id: number;
+                sensor_id: number;
+            }>,
+            detached: Array<{
+                knsko_id: number;
+                sensor_id: number;
+            }>,
+        } = {
+            attached: [],
+            detached: [],
+        };
+
+        if (+process.env.NOTIFY_KNSKO_ABOUT_SENSOR_CHANGES) {
+            try {
+                const connection = PostgresConnector.getConnection();
+                storedMonitoredContainers = await connection.query(`
+                    select sensor_id, knsko_id from ${SortedWasteStations.sensorsContainers.pgTableName}
+                    where sensor_id is not null;
+                `,
+                { type: Sequelize.QueryTypes.SELECT },
+                );
+            } catch (err) {
+                throw new CustomError(
+                    "Error while processing geting monitored containers.", true, this.constructor.name, 5050, err,
+                );
+            }
+
+            try {
+                changedContainers = this.sortedWasteTransformation.getAttachedDettachedContainers(
+                    storedMonitoredContainers,
+                    newMonitoredContainers,
+                );
+            } catch (err) {
+                throw new CustomError(
+                    "Error while processing attached/detached containers.", true, this.constructor.name, 5050, err,
+                );
+            }
         }
 
         try {
@@ -467,6 +515,61 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         } catch (err) {
             throw new CustomError("Error while saving data.", true, this.constructor.name, 5050, err);
         }
+
+        if (+process.env.NOTIFY_KNSKO_ABOUT_SENSOR_CHANGES) {
+            try {
+                await this.notifyChangedSensors(changedContainers, this.knskoToken);
+            } catch (err) {
+                if (!(
+                    err.response?.data?.message === "Station item container not found" ||
+                    err.response?.data?.message === "Sensor is already assigned" ||
+                    err.response?.data?.message === "Sensor is already unassigned"
+                )) {
+                    throw new CustomError(
+                        "Error while processing attached/detached containers.", true, this.constructor.name, 5050, err,
+                    );
+                }
+            }
+        }
+    }
+
+    private notifyChangedSensors = async (
+        containers: {
+            attached: Array<{
+                knsko_id: number;
+                sensor_id: number;
+            }>,
+            detached: Array<{
+                knsko_id: number;
+                sensor_id: number;
+            }>,
+        },
+        knskoToken: string,
+    ): Promise<void> => {
+        for (const mode of ["detached", "attached"]) {
+            for (const container of containers[mode]) {
+                const reqSettings = {
+                    data: {
+                        sensorId: container.sensor_id,
+                    },
+                    headers: {
+                        "Authorization": `Bearer ${knskoToken}`,
+                        "Content-Type": "application/json",
+                        "accept": "application/json",
+                    },
+                    method: "POST",
+                    url: `${
+                        config.datasources.KSNKOApi.url
+                    }/station-item-containers/${
+                        container.knsko_id
+                    }/sensor/${
+                        mode === "detached" ? "unassign" : "assign"
+                    }`,
+                };
+
+                return await axios.request(reqSettings as AxiosRequestConfig);
+            }
+        }
     }
 
     private saveStationsAndContainers = async (stationsByCode: any): Promise<void> => {
@@ -491,7 +594,7 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
         log.verbose("Saving containers");
 
         // await this.sensorsContainersModel.save(
-        //          this.uniqueArrat(containers, "code"));
+        //          this.uniqueArray(containers, "code"));
 
         await this.sensorsContainersModel.saveBySqlFunction(
             this.uniqueArray(containers, "code"),
