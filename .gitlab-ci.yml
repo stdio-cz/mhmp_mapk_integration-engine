@@ -10,9 +10,10 @@ variables:
 
 include:
   - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
-  - project: 'operator-ict/golemio/devops/gitlab-ci-pipelines'
+  - project: 'operator-ict/devops/gitlab-ci-pipeline'
     file:
       - '/docker/simple-build.yml'
+      - '/k8s-golemio/helm-deploy.yml'
 
 stages:
   - build
@@ -67,12 +68,3 @@ pages:
     - if: $CI_COMMIT_BRANCH == "master"
   tags:
     - docker
-
-k8s-rabin:
-  stage: deploy
-  variables:
-    HELM_APP: integration-engine
-    HELM_IMAGE_NAME: $DOCKER_IMAGE_NAME:$CI_PIPELINE_ID
-  trigger: operator-ict/golemio/devops/infrastructure
-  rules:
-    - if: $CI_COMMIT_REF_NAME == "master" || $CI_COMMIT_REF_NAME == "development"
