@@ -17,6 +17,7 @@ include:
 
 stages:
   - build
+  - release
   - deploy
 
 cache:
