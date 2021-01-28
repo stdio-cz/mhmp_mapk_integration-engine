@@ -13,7 +13,7 @@ include:
   - project: 'operator-ict/devops/gitlab-ci-pipeline'
     file:
       - '/docker/simple-build.yml'
-      - '/k8s-golemio/helm-deploy.yml'
+      - '/k8s-golemio/helm-golemio-deploy.yml'
 
 stages:
   - build
