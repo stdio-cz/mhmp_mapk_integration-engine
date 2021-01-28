@@ -1,49 +1,54 @@
-"use strict";
-
-import {
-    AirQualityStations,
-    BicycleCounters,
-    BicycleParkings,
-    CityDistricts,
-    Energetics,
-    EnergeticsTypes,
-    Gardens,
-    MedicalInstitutions,
-    Meteosensors,
-    MobileAppStatistics,
-    MunicipalAuthorities,
-    MunicipalLibraries,
-    MunicipalPoliceStations,
-    Parkings,
-    ParkingZones,
-    Parkomats,
-    Playgrounds,
-    PublicToilets,
-    RopidGTFS,
-    SharedBikes,
-    SharedCars,
-    SortedWasteStations,
-    TrafficCameras,
-    WasteCollectionYards,
-    WazeCCP,
-} from "@golemio/schema-definitions";
-import { JSONSchemaValidator, ObjectKeysValidator, Validator } from "@golemio/validator";
-import { File } from "@google-cloud/storage";
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as JSONStream from "JSONStream";
+/// <reference path="./DataSourcesAvailabilityChecking.test.d.ts" />
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import JSONStream from "JSONStream";
 import { sign } from "jsonwebtoken";
-import "mocha";
-import * as moment from "moment-timezone";
+import { File } from "@google-cloud/storage";
 import { promisify } from "util";
-import { config } from "../../src/core/config";
-import { RedisConnector } from "../../src/core/connectors";
+import { JSONSchemaValidator, ObjectKeysValidator, Validator } from "@golemio/core/dist/shared/golemio-validator";
+import moment from "@golemio/core/dist/shared/moment-timezone";
+import { config } from "@golemio/core/dist/integration-engine/config";
+import { RedisConnector } from "@golemio/core/dist/integration-engine/connectors";
 import {
-    CSVDataTypeStrategy, DataSource, DataSourceStreamed, FTPProtocolStrategy, GoogleCloudStorageProtocolStrategy,
-    HTTPProtocolStrategy, HTTPProtocolStrategyStreamed, IHTTPSettings, JSONDataTypeStrategy, XMLDataTypeStrategy,
-} from "../../src/core/datasources";
-import { EnesaApi, UnimonitorCemApi } from "../../src/modules/energetics";
+    CSVDataTypeStrategy,
+    DataSource,
+    DataSourceStreamed,
+    FTPProtocolStrategy,
+    GoogleCloudStorageProtocolStrategy,
+    HTTPProtocolStrategy,
+    HTTPProtocolStrategyStreamed,
+    IHTTPSettings,
+    JSONDataTypeStrategy,
+    XMLDataTypeStrategy,
+} from "@golemio/core/dist/integration-engine/datasources";
+
+// Schema definitions
+import { AirQualityStations } from "@golemio/air-quality-stations/dist/schema-definitions";
+import { BicycleCounters } from "@golemio/bicycle-counters/dist/schema-definitions";
+import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitions";
+import { CityDistricts } from "@golemio/city-districts/dist/schema-definitions";
+import { EnergeticsSchema as Energetics, EnergeticsTypes } from "@golemio/energetics/dist/schema-definitions";
+import { Gardens } from "@golemio/gardens/dist/schema-definitions";
+import { MedicalInstitutions } from "@golemio/medical-institutions/dist/schema-definitions";
+import { Meteosensors } from "@golemio/meteosensors/dist/schema-definitions";
+import { MobileAppStatistics } from "@golemio/mobile-app-statistics/dist/schema-definitions";
+import { MunicipalAuthorities } from "@golemio/municipal-authorities/dist/schema-definitions";
+import { MunicipalLibraries } from "@golemio/municipal-libraries/dist/schema-definitions";
+import { MunicipalPoliceStations } from "@golemio/municipal-police-stations/dist/schema-definitions";
+import { Parkings } from "@golemio/parkings/dist/schema-definitions";
+import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
+import { Parkomats } from "@golemio/parkomats/dist/schema-definitions";
+import { Playgrounds } from "@golemio/playgrounds/dist/schema-definitions";
+import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
+import { RopidGTFS } from "@golemio/ropid-gtfs/dist/schema-definitions";
+import { SharedBikes } from "@golemio/shared-bikes/dist/schema-definitions";
+import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
+import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-definitions";
+import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions";
+import { WasteCollectionYards } from "@golemio/waste-collection-yards/dist/schema-definitions";
+import { WazeCCP } from "@golemio/waze-ccp/dist/schema-definitions";
+
+import { EnesaApi, UnimonitorCemApi } from "@golemio/energetics/dist/integration-engine/helpers";
 
 import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
 import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
@@ -54,24 +59,24 @@ chai.use(chaiAsPromised);
 const sleep = promisify(setTimeout);
 
 describe("DataSourcesAvailabilityChecking", () => {
-
     before(async () => {
         await RedisConnector.connect();
     });
 
     describe("CityDistricts", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(CityDistricts.name + "DataSource",
+            datasource = new DataSource(
+                CityDistricts.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.CityDistricts,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(CityDistricts.name + "DataSource", CityDistricts.datasourceMongooseSchemaObject));
+                new Validator(CityDistricts.name + "DataSource", CityDistricts.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -86,22 +91,24 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("ParkingZones", () => {
-
-        let datasource;
-        let datasourceTariffs;
+        let datasource: DataSource;
+        let datasourceTariffs: DataSource;
 
         beforeEach(() => {
             const zonesProtocol = new JSONDataTypeStrategy({ resultsPath: "features" });
             zonesProtocol.setFilter((item) => item.properties.TARIFTAB);
-            datasource = new DataSource(ParkingZones.name + "DataSource",
+            datasource = new DataSource(
+                ParkingZones.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.ParkingZones,
                 }),
                 zonesProtocol,
-                new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject));
-            datasourceTariffs = new DataSource("ParkingZonesTariffsDataSource",
+                new Validator(ParkingZones.name + "DataSource", ParkingZones.datasourceMongooseSchemaObject)
+            );
+            datasourceTariffs = new DataSource(
+                "ParkingZonesTariffsDataSource",
                 new HTTPProtocolStrategy({
                     headers: {
                         authorization: config.datasources.ParkingZonesTariffsAuth,
@@ -111,7 +118,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.ParkingZonesTariffs + "P1-0133",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "dailyTariff" }),
-                new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject));
+                new Validator("ParkingZonesTariffsDataSource", ParkingZones.datasourceTariffsMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -136,12 +144,12 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("RopidGTFS", () => {
-
-        let datasource;
-        let datasourceCisStops;
+        let datasource: DataSource;
+        let datasourceCisStops: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(RopidGTFS.name + "DataSource",
+            datasource = new DataSource(
+                RopidGTFS.name + "DataSource",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSFilename,
                     isCompressed: true,
@@ -149,13 +157,21 @@ describe("DataSourcesAvailabilityChecking", () => {
                     tmpDir: "/tmp/",
                     url: config.datasources.RopidFTP,
                     whitelistedFiles: [
-                        "agency.txt", "calendar.txt", "calendar_dates.txt",
-                        "shapes.txt", "stop_times.txt", "stops.txt", "routes.txt", "trips.txt",
+                        "agency.txt",
+                        "calendar.txt",
+                        "calendar_dates.txt",
+                        "shapes.txt",
+                        "stop_times.txt",
+                        "stops.txt",
+                        "routes.txt",
+                        "trips.txt",
                     ],
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                null);
-            datasourceCisStops = new DataSource(RopidGTFS.name + "CisStops",
+                null as any
+            );
+            datasourceCisStops = new DataSource(
+                RopidGTFS.name + "CisStops",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSCisStopsFilename,
                     path: config.datasources.RopidGTFSCisStopsPath,
@@ -163,7 +179,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.RopidFTP,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "stopGroups" }),
-                null);
+                null as any
+            );
         });
 
         it("should returns all objects", async () => {
@@ -185,22 +202,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasourceCisStops.getLastModified();
             expect(data).to.be.a("string");
         });
-
     });
 
     describe("TSKParkings", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(Parkings.name + "DataSource",
+            datasource = new DataSource(
+                Parkings.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.TSKParkings,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "results" }),
-                new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject));
+                new Validator(Parkings.name + "DataSource", Parkings.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -212,22 +229,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("TSKTrafficCameras", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(TrafficCameras.name + "DataSource",
+            datasource = new DataSource(
+                TrafficCameras.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.TSKTrafficCameras,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "results" }),
-                new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject));
+                new Validator(TrafficCameras.name + "DataSource", TrafficCameras.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -239,17 +256,15 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("SharedCars", () => {
-
         describe("CeskyCarsharing", () => {
-
-            let datasource;
+            let datasource: DataSource;
 
             beforeEach(() => {
-                datasource = new DataSource(SharedCars.ceskyCarsharing.name + "DataSource",
+                datasource = new DataSource(
+                    SharedCars.ceskyCarsharing.name + "DataSource",
                     new HTTPProtocolStrategy({
                         body: JSON.stringify(config.datasources.CeskyCarsharingSharedCarsEndpointCredentials),
                         headers: {
@@ -259,8 +274,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: config.datasources.CeskyCarsharingSharedCars,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "cars" }),
-                    new Validator(SharedCars.ceskyCarsharing.name + "DataSource",
-                        SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject));
+                    new Validator(
+                        SharedCars.ceskyCarsharing.name + "DataSource",
+                        SharedCars.ceskyCarsharing.datasourceMongooseSchemaObject
+                    )
+                );
             });
 
             it("should returns all objects", async () => {
@@ -272,18 +290,16 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
 
         describe("HoppyGo", () => {
-
-            let datasource;
+            let datasource: DataSource;
 
             beforeEach(() => {
                 const hoppyGoDataType = new JSONDataTypeStrategy({ resultsPath: "" });
-                hoppyGoDataType.setFilter((item) =>
-                    (item.localization && item.localization !== "" && item.localization !== ","));
-                datasource = new DataSource(SharedCars.hoppyGo.name + "DataSource",
+                hoppyGoDataType.setFilter((item) => item.localization && item.localization !== "" && item.localization !== ",");
+                datasource = new DataSource(
+                    SharedCars.hoppyGo.name + "DataSource",
                     new HTTPProtocolStrategy({
                         headers: {
                             "x-app-token": config.datasources.HoppyGoSharedCarsToken,
@@ -292,8 +308,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: config.datasources.HoppyGoSharedCars,
                     }),
                     hoppyGoDataType,
-                    new Validator(SharedCars.hoppyGo.name + "DataSource",
-                        SharedCars.hoppyGo.datasourceMongooseSchemaObject));
+                    new Validator(SharedCars.hoppyGo.name + "DataSource", SharedCars.hoppyGo.datasourceMongooseSchemaObject)
+                );
             });
 
             it("should returns all objects", async () => {
@@ -305,16 +321,15 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
     });
 
     describe("Gardens", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(Gardens.name + "DataSource",
+            datasource = new DataSource(
+                Gardens.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
                         Authorization: "Basic " + config.datasources.OICTEndpointApikey,
@@ -323,7 +338,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.Gardens,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(Gardens.name + "DataSource", Gardens.datasourceMongooseSchemaObject));
+                new Validator(Gardens.name + "DataSource", Gardens.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -335,22 +351,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("Playgrounds", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(Playgrounds.name + "DataSource",
+            datasource = new DataSource(
+                Playgrounds.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.Playgrounds,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "items" }),
-                new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject));
+                new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -362,22 +378,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("PublicToilets", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(PublicToilets.name + "DataSource",
+            datasource = new DataSource(
+                PublicToilets.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.PublicToilets,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject));
+                new Validator(PublicToilets.name + "DataSource", PublicToilets.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -389,26 +405,23 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
-
     });
 
     describe("AirQualityStations", () => {
-
         describe("Actual hour data", () => {
-
-            let datasource;
+            let datasource: DataSource;
 
             beforeEach(() => {
-                datasource = new DataSource(AirQualityStations.name + "1HDataSource",
+                datasource = new DataSource(
+                    AirQualityStations.name + "1HDataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
                         url: config.datasources.AirQualityStations1H,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new JSONSchemaValidator(AirQualityStations.name + "1HDataSource",
-                        AirQualityStations.datasourceJsonSchema,
-                ));
+                    new JSONSchemaValidator(AirQualityStations.name + "1HDataSource", AirQualityStations.datasourceJsonSchema)
+                );
             });
 
             it("should returns all objects", async () => {
@@ -423,20 +436,19 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
 
         describe("AQIndex 3 hours data", () => {
-
-            let datasource;
+            let datasource: DataSource;
 
             beforeEach(() => {
-                datasource = new DataSource(AirQualityStations.name + "3HDataSource",
+                datasource = new DataSource(
+                    AirQualityStations.name + "3HDataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
                         url: config.datasources.AirQualityStations3H,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new JSONSchemaValidator(AirQualityStations.name + "3HDataSource",
-                        AirQualityStations.datasourceJsonSchema,
-                ));
+                    new JSONSchemaValidator(AirQualityStations.name + "3HDataSource", AirQualityStations.datasourceJsonSchema)
+                );
             });
 
             it("should returns all objects", async () => {
@@ -449,22 +461,22 @@ describe("DataSourcesAvailabilityChecking", () => {
                 expect(data).to.be.not.null;
             });
         });
-
     });
 
     describe("TSKMeteosensors", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(Meteosensors.name + "DataSource",
+            datasource = new DataSource(
+                Meteosensors.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.TSKMeteosensors,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "results" }),
-                new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject));
+                new Validator(Meteosensors.name + "DataSource", Meteosensors.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -476,15 +488,14 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("MunicipalAuthorities", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(MunicipalAuthorities.name + "DataSource",
+            datasource = new DataSource(
+                MunicipalAuthorities.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
                         Authorization: "Basic " + config.datasources.OICTEndpointApikey,
@@ -493,8 +504,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.MunicipalAuthorities,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(MunicipalAuthorities.name + "DataSource",
-                    MunicipalAuthorities.datasourceMongooseSchemaObject));
+                new Validator(MunicipalAuthorities.name + "DataSource", MunicipalAuthorities.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -508,11 +519,11 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
 
         describe("SkodaPalaceQueues", () => {
-
-            let skodaPalaceQueuesDatasource;
+            let skodaPalaceQueuesDatasource: DataSource;
 
             beforeEach(() => {
-                skodaPalaceQueuesDatasource = new DataSource(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                skodaPalaceQueuesDatasource = new DataSource(
+                    MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
@@ -522,8 +533,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                         resultsPath: "html.body.div",
                         xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
                     }),
-                    new Validator(MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
-                        MunicipalAuthorities.skodaPalaceQueues.datasourceMongooseSchemaObject));
+                    new Validator(
+                        MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
+                        MunicipalAuthorities.skodaPalaceQueues.datasourceMongooseSchemaObject
+                    )
+                );
             });
 
             it("should returns all objects", async () => {
@@ -535,27 +549,25 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await skodaPalaceQueuesDatasource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
-
     });
 
     describe("WasteCollectionYards", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
             const yardsDataType = new JSONDataTypeStrategy({ resultsPath: "features" });
             yardsDataType.setFilter((item) => item.properties.PLATNOST !== 0);
-            datasource = new DataSource(WasteCollectionYards.name + "DataSource",
+            datasource = new DataSource(
+                WasteCollectionYards.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.WasteCollectionYards,
                 }),
                 yardsDataType,
-                new Validator(WasteCollectionYards.name + "DataSource",
-                    WasteCollectionYards.datasourceMongooseSchemaObject));
+                new Validator(WasteCollectionYards.name + "DataSource", WasteCollectionYards.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -567,23 +579,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
-
     });
 
     describe("MunicipalPoliceStations", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(MunicipalPoliceStations.name + "DataSource",
+            datasource = new DataSource(
+                MunicipalPoliceStations.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.MunicipalPoliceStations,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(MunicipalPoliceStations.name + "DataSource",
-                    MunicipalPoliceStations.datasourceMongooseSchemaObject));
+                new Validator(MunicipalPoliceStations.name + "DataSource", MunicipalPoliceStations.datasourceMongooseSchemaObject)
+            );
         });
 
         it("should returns all objects", async () => {
@@ -595,16 +606,15 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
-
     });
 
     describe("MedicalInstitutions", () => {
-
         let pharmaciesDatasource: DataSource;
         let healthCareDatasource: DataSource;
 
         beforeEach(() => {
-            pharmaciesDatasource = new DataSource(MedicalInstitutions.pharmacies.name + "DataSource",
+            pharmaciesDatasource = new DataSource(
+                MedicalInstitutions.pharmacies.name + "DataSource",
                 new HTTPProtocolStrategy({
                     encoding: null,
                     headers: {},
@@ -612,16 +622,17 @@ describe("DataSourcesAvailabilityChecking", () => {
                     method: "GET",
                     rejectUnauthorized: false,
                     url: config.datasources.MedicalInstitutionsPharmacies,
-                    whitelistedFiles: [
-                        "lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv",
-                    ],
+                    whitelistedFiles: ["lekarny_prac_doba.csv", "lekarny_seznam.csv", "lekarny_typ.csv"],
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(MedicalInstitutions.pharmacies.name + "DataSource",
-                    MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject));
+                new Validator(
+                    MedicalInstitutions.pharmacies.name + "DataSource",
+                    MedicalInstitutions.pharmacies.datasourceMongooseSchemaObject
+                )
+            );
             const hcDataTypeStrategy = new CSVDataTypeStrategy({
                 fastcsvParams: { headers: true },
-                subscribe: ((json: any) => {
+                subscribe: (json: any) => {
                     delete json.CisloDomovniOrientacniSidlo;
                     delete json.DruhPece;
                     delete json.FormaPece;
@@ -643,26 +654,40 @@ describe("DataSourcesAvailabilityChecking", () => {
                     delete json.TypOsoby;
                     delete json.UliceSidlo;
                     return json;
-                }),
+                },
             });
             hcDataTypeStrategy.setFilter((item) => {
-                return item.KrajCode === "CZ010"
-                    && item.Lat
-                    && item.Lng
-                    && ["Fakultní nemocnice", "Nemocnice", "Nemocnice následné péče", "Ostatní ambulantní zařízení",
-                        "Ostatní zdravotnická zařízení", "Ostatní zvláštní zdravotnická zařízení",
-                        "Výdejna zdravotnických prostředků", "Záchytná stanice", "Zdravotní záchranná služba",
-                        "Zdravotnické středisko"].indexOf(item.DruhZarizeni) !== -1;
+                return (
+                    item.KrajCode === "CZ010" &&
+                    item.Lat &&
+                    item.Lng &&
+                    [
+                        "Fakultní nemocnice",
+                        "Nemocnice",
+                        "Nemocnice následné péče",
+                        "Ostatní ambulantní zařízení",
+                        "Ostatní zdravotnická zařízení",
+                        "Ostatní zvláštní zdravotnická zařízení",
+                        "Výdejna zdravotnických prostředků",
+                        "Záchytná stanice",
+                        "Zdravotní záchranná služba",
+                        "Zdravotnické středisko",
+                    ].indexOf(item.DruhZarizeni) !== -1
+                );
             });
-            healthCareDatasource = new DataSource(MedicalInstitutions.healthCare.name + "DataSource",
+            healthCareDatasource = new DataSource(
+                MedicalInstitutions.healthCare.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.MedicalInstitutionsHealthCare,
                 }),
                 hcDataTypeStrategy,
-                new Validator(MedicalInstitutions.healthCare.name + "DataSource",
-                    MedicalInstitutions.healthCare.datasourceMongooseSchemaObject));
+                new Validator(
+                    MedicalInstitutions.healthCare.name + "DataSource",
+                    MedicalInstitutions.healthCare.datasourceMongooseSchemaObject
+                )
+            );
         });
 
         it("should returns all pharmacies objects", async () => {
@@ -684,39 +709,46 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await healthCareDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
-
     });
 
     describe("SortedWasteStations", () => {
-
-        let iprContainersDatasource;
-        let iprStationsDatasource;
-        let oictDatasource;
-        let potexDatasource;
-        let sensorsContainersDatasource;
-        let sensorsMeasurementsDatasource;
-        let sensorsPicksDatasource;
+        let iprContainersDatasource: DataSource;
+        let iprStationsDatasource: DataSource;
+        let oictDatasource: DataSource;
+        let potexDatasource: DataSource;
+        let sensorsContainersDatasource: DataSource;
+        let sensorsMeasurementsDatasource: DataSource;
+        let sensorsPicksDatasource: DataSource;
 
         beforeEach(() => {
-            iprContainersDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
+            iprContainersDatasource = new DataSource(
+                SortedWasteStations.ipr.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.IPRSortedWasteContainers,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(SortedWasteStations.ipr.name + "ContainersDataSource",
-                    SortedWasteStations.ipr.datasourceContainersMongooseSchemaObject));
-            iprStationsDatasource = new DataSource(SortedWasteStations.ipr.name + "DataSource",
+                new Validator(
+                    SortedWasteStations.ipr.name + "ContainersDataSource",
+                    SortedWasteStations.ipr.datasourceContainersMongooseSchemaObject
+                )
+            );
+            iprStationsDatasource = new DataSource(
+                SortedWasteStations.ipr.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.IPRSortedWasteStations,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "features" }),
-                new Validator(SortedWasteStations.ipr.name + "StationsDataSource",
-                    SortedWasteStations.ipr.datasourceStationsMongooseSchemaObject));
-            oictDatasource = new DataSource(SortedWasteStations.oict.name + "DataSource",
+                new Validator(
+                    SortedWasteStations.ipr.name + "StationsDataSource",
+                    SortedWasteStations.ipr.datasourceStationsMongooseSchemaObject
+                )
+            );
+            oictDatasource = new DataSource(
+                SortedWasteStations.oict.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
                         Authorization: "Basic " + config.datasources.OICTEndpointApikey,
@@ -725,22 +757,30 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.OICTSortedWasteContainers,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new Validator(SortedWasteStations.oict.name + "DataSource",
-                    SortedWasteStations.oict.datasourceMongooseSchemaObject));
-            potexDatasource = new DataSource(SortedWasteStations.potex.name + "DataSource",
+                new Validator(
+                    SortedWasteStations.oict.name + "DataSource",
+                    SortedWasteStations.oict.datasourceMongooseSchemaObject
+                )
+            );
+            potexDatasource = new DataSource(
+                SortedWasteStations.potex.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.POTEXSortedWasteContainers,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "places" }),
-                new Validator(SortedWasteStations.potex.name + "DataSource",
-                    SortedWasteStations.potex.datasourceMongooseSchemaObject));
+                new Validator(
+                    SortedWasteStations.potex.name + "DataSource",
+                    SortedWasteStations.potex.datasourceMongooseSchemaObject
+                )
+            );
 
             const to = new Date();
             const from = new Date();
             from.setHours(to.getHours() - 6);
-            sensorsContainersDatasource = new DataSource(SortedWasteStations.sensorsContainers.name + "DataSource",
+            sensorsContainersDatasource = new DataSource(
+                SortedWasteStations.sensorsContainers.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {
                         "x-api-key": config.datasources.SensoneoSortedWasteSensorsApiKey,
@@ -749,9 +789,13 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.SensoneoSortedWasteSensors + "/container",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "containers" }),
-                new Validator(SortedWasteStations.sensorsContainers.name + "DataSource",
-                    SortedWasteStations.sensorsContainers.datasourceMongooseSchemaObject));
-            sensorsMeasurementsDatasource = new DataSource(SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                new Validator(
+                    SortedWasteStations.sensorsContainers.name + "DataSource",
+                    SortedWasteStations.sensorsContainers.datasourceMongooseSchemaObject
+                )
+            );
+            sensorsMeasurementsDatasource = new DataSource(
+                SortedWasteStations.sensorsMeasurements.name + "DataSource",
                 new HTTPProtocolStrategy({
                     body: JSON.stringify({ from, to }),
                     headers: {
@@ -762,9 +806,13 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.SensoneoSortedWasteSensors + "/measurement",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "measurements" }),
-                new Validator(SortedWasteStations.sensorsMeasurements.name + "DataSource",
-                    SortedWasteStations.sensorsMeasurements.datasourceMongooseSchemaObject));
-            sensorsPicksDatasource = new DataSource(SortedWasteStations.sensorsPicks.name + "DataSource",
+                new Validator(
+                    SortedWasteStations.sensorsMeasurements.name + "DataSource",
+                    SortedWasteStations.sensorsMeasurements.datasourceMongooseSchemaObject
+                )
+            );
+            sensorsPicksDatasource = new DataSource(
+                SortedWasteStations.sensorsPicks.name + "DataSource",
                 new HTTPProtocolStrategy({
                     body: JSON.stringify({ from, to }),
                     headers: {
@@ -775,8 +823,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: config.datasources.SensoneoSortedWasteSensors + "/picks",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "picks" }),
-                new Validator(SortedWasteStations.sensorsPicks.name + "DataSource",
-                    SortedWasteStations.sensorsPicks.datasourceMongooseSchemaObject));
+                new Validator(
+                    SortedWasteStations.sensorsPicks.name + "DataSource",
+                    SortedWasteStations.sensorsPicks.datasourceMongooseSchemaObject
+                )
+            );
         });
 
         it("should returns all IPR Containers objects", async () => {
@@ -833,25 +884,23 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await sensorsPicksDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
-
     });
 
     describe("SharedBikes", () => {
-
         describe("Rekola", () => {
-
-            let datasource;
+            let datasource: DataSource;
 
             beforeEach(() => {
-                datasource = new DataSource(SharedBikes.rekola.name + "DataSource",
+                datasource = new DataSource(
+                    SharedBikes.rekola.name + "DataSource",
                     new HTTPProtocolStrategy({
                         headers: config.datasources.RekolaSharedBikesHeaders,
                         method: "GET",
                         url: config.datasources.RekolaSharedBikes,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(SharedBikes.rekola.name + "DataSource",
-                        SharedBikes.rekola.datasourceMongooseSchemaObject));
+                    new Validator(SharedBikes.rekola.name + "DataSource", SharedBikes.rekola.datasourceMongooseSchemaObject)
+                );
             });
 
             it("should returns all objects", async () => {
@@ -863,17 +912,16 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
 
         describe("Homeport", () => {
-
-            let locationsDatasource;
-            let outOfLocationsDatasource;
-            let settingsDatasource;
+            let locationsDatasource: DataSource;
+            let outOfLocationsDatasource: DataSource;
+            let settingsDatasource: DataSource;
 
             beforeEach(() => {
-                locationsDatasource = new DataSource(SharedBikes.homeport.name + "LocDataSource",
+                locationsDatasource = new DataSource(
+                    SharedBikes.homeport.name + "LocDataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
@@ -881,11 +929,15 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: config.datasources.HomeportLocationsSharedBikes,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "Locations" }),
-                    new Validator(SharedBikes.homeport.name + "LocDataSource",
-                        SharedBikes.homeport.datasourceLocationsMongooseSchemaObject));
+                    new Validator(
+                        SharedBikes.homeport.name + "LocDataSource",
+                        SharedBikes.homeport.datasourceLocationsMongooseSchemaObject
+                    )
+                );
                 const homeportOutOfLocDataTypeStrategy = new JSONDataTypeStrategy({ resultsPath: "" });
                 homeportOutOfLocDataTypeStrategy.setFilter((item) => item.AvailabilityCode === 1);
-                outOfLocationsDatasource = new DataSource(SharedBikes.homeport.name + "OutOfLocDataSource",
+                outOfLocationsDatasource = new DataSource(
+                    SharedBikes.homeport.name + "OutOfLocDataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
@@ -893,9 +945,13 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: config.datasources.HomeportOutOfLocationsSharedBikes,
                     }),
                     homeportOutOfLocDataTypeStrategy,
-                    new Validator(SharedBikes.homeport.name + "OutOfLocDataSource",
-                        SharedBikes.homeport.datasourceOutOfLocationsMongooseSchemaObject));
-                settingsDatasource = new DataSource(SharedBikes.homeport.name + "SetDataSource",
+                    new Validator(
+                        SharedBikes.homeport.name + "OutOfLocDataSource",
+                        SharedBikes.homeport.datasourceOutOfLocationsMongooseSchemaObject
+                    )
+                );
+                settingsDatasource = new DataSource(
+                    SharedBikes.homeport.name + "SetDataSource",
                     new HTTPProtocolStrategy({
                         headers: {},
                         method: "GET",
@@ -903,8 +959,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: config.datasources.HomeportSettingsSharedBikes,
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "data.Map" }),
-                    new Validator(SharedBikes.homeport.name + "SetDataSource",
-                        SharedBikes.homeport.settingDatasourceMongooseSchemaObject));
+                    new Validator(
+                        SharedBikes.homeport.name + "SetDataSource",
+                        SharedBikes.homeport.settingDatasourceMongooseSchemaObject
+                    )
+                );
             });
 
             it("should returns all locations objects", async () => {
@@ -936,62 +995,22 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await settingsDatasource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
-
     });
 
     describe("BicycleParkings", () => {
-
-        let datasource;
+        let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(BicycleParkings.name + "DataSource",
+            datasource = new DataSource(
+                BicycleParkings.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
                     url: config.datasources.BicycleParkings,
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "elements" }),
-                new Validator(BicycleParkings.name + "DataSource",
-                    BicycleParkings.datasourceMongooseSchemaObject));
-        });
-
-        it("should returns all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should returns last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.null;
-        });
-
-    });
-
-    describe("TSKParkomats", () => {
-
-        let datasource: DataSource;
-
-        beforeEach(() => {
-            const to = moment.tz(new Date(), "Europe/Prague");
-            const from = to.clone();
-            from.subtract(12, "minutes");
-            const url = config.datasources.TSKParkomats +
-                `/parkingsessions?from=${from.format("YYYY-MM-DDTHH:mm:ss")}&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
-
-            const dataSourceHTTPSettings: IHTTPSettings = {
-                headers: {
-                    authorization: config.datasources.TSKParkomatsToken,
-                },
-                method: "GET",
-                url,
-            };
-
-            datasource = new DataSource(Parkomats.name + "DataSource",
-                new HTTPProtocolStrategy(dataSourceHTTPSettings),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject),
+                new Validator(BicycleParkings.name + "DataSource", BicycleParkings.datasourceMongooseSchemaObject)
             );
         });
 
@@ -1004,13 +1023,48 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
+    });
 
+    describe("TSKParkomats", () => {
+        let datasource: DataSource;
+
+        beforeEach(() => {
+            const to = moment.tz(new Date(), "Europe/Prague");
+            const from = to.clone();
+            from.subtract(12, "minutes");
+            const url =
+                config.datasources.TSKParkomats +
+                `/parkingsessions?from=${from.format("YYYY-MM-DDTHH:mm:ss")}&to=${to.format("YYYY-MM-DDTHH:mm:ss")}`;
+
+            const dataSourceHTTPSettings: IHTTPSettings = {
+                headers: {
+                    authorization: config.datasources.TSKParkomatsToken,
+                },
+                method: "GET",
+                url,
+            };
+
+            datasource = new DataSource(
+                Parkomats.name + "DataSource",
+                new HTTPProtocolStrategy(dataSourceHTTPSettings),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new ObjectKeysValidator(Parkomats.name + "DataSource", Parkomats.datasourceMongooseSchemaObject)
+            );
+        });
+
+        it("should returns all objects", async () => {
+            const data = await datasource.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should returns last modified", async () => {
+            const data = await datasource.getLastModified();
+            expect(data).to.be.null;
+        });
     });
 
     describe("BicycleCounters", () => {
-
         describe("Camea", () => {
-
             let datasource: DataSource;
 
             beforeEach(() => {
@@ -1022,11 +1076,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url,
                 };
 
-                datasource = new DataSource(BicycleCounters.camea.name + "DataSource",
+                datasource = new DataSource(
+                    BicycleCounters.camea.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(BicycleCounters.camea.name + "DataSource",
-                        BicycleCounters.camea.datasourceMongooseSchemaObject),
+                    new Validator(BicycleCounters.camea.name + "DataSource", BicycleCounters.camea.datasourceMongooseSchemaObject)
                 );
             });
 
@@ -1041,7 +1095,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             });
 
             describe("measurements", () => {
-
                 let measurementsDatasource: DataSource;
 
                 beforeEach(() => {
@@ -1059,7 +1112,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url = url.replace(":from", strNowMinus12h);
                     url = url.replace(":to", strNow);
 
-                    measurementsDatasource = new DataSource(BicycleCounters.camea.name + "MeasurementsDataSource",
+                    measurementsDatasource = new DataSource(
+                        BicycleCounters.camea.name + "MeasurementsDataSource",
                         new HTTPProtocolStrategy({
                             headers: {},
                             json: true,
@@ -1067,8 +1121,10 @@ describe("DataSourcesAvailabilityChecking", () => {
                             url,
                         }),
                         new JSONDataTypeStrategy({ resultsPath: "" }),
-                        new Validator(BicycleCounters.camea.name + "MeasurementsDataSource",
-                            BicycleCounters.camea.measurementsDatasourceMongooseSchemaObject),
+                        new Validator(
+                            BicycleCounters.camea.name + "MeasurementsDataSource",
+                            BicycleCounters.camea.measurementsDatasourceMongooseSchemaObject
+                        )
                     );
                 });
 
@@ -1081,13 +1137,10 @@ describe("DataSourcesAvailabilityChecking", () => {
                     const data = await measurementsDatasource.getLastModified();
                     expect(data).to.be.null;
                 });
-
             });
-
         });
 
         describe("EcoCounter", () => {
-
             let datasource: DataSource;
 
             beforeEach(() => {
@@ -1101,11 +1154,14 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url,
                 };
 
-                datasource = new DataSource(BicycleCounters.ecoCounter.name + "DataSource",
+                datasource = new DataSource(
+                    BicycleCounters.ecoCounter.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(BicycleCounters.ecoCounter.name + "DataSource",
-                        BicycleCounters.ecoCounter.datasourceMongooseSchemaObject),
+                    new Validator(
+                        BicycleCounters.ecoCounter.name + "DataSource",
+                        BicycleCounters.ecoCounter.datasourceMongooseSchemaObject
+                    )
                 );
             });
 
@@ -1120,7 +1176,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             });
 
             describe("measurements", () => {
-
                 let measurementsDatasource: DataSource;
 
                 beforeEach(() => {
@@ -1133,7 +1188,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     // from and to parameters are INCLUDED.
                     const now = moment.utc().tz("Europe/Prague");
                     const step = 15;
-                    const remainder = (now.minute() % step);
+                    const remainder = now.minute() % step;
                     // rounded to nearest next 15 minutes
                     const nowRounded = now.clone().subtract(remainder, "minutes").seconds(0).milliseconds(0);
                     const strTo = nowRounded.clone().subtract(step, "minutes").format("YYYY-MM-DDTHH:mm:ss");
@@ -1146,7 +1201,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url = url.replace(":step", `${step}m`);
                     url = url.replace(":complete", "true");
 
-                    measurementsDatasource = new DataSource(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                    measurementsDatasource = new DataSource(
+                        BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
                         new HTTPProtocolStrategy({
                             headers: {
                                 Authorization: `Bearer ${config.datasources.CountersEcoCounterTokens.PRAHA}`,
@@ -1156,8 +1212,10 @@ describe("DataSourcesAvailabilityChecking", () => {
                             url,
                         }),
                         new JSONDataTypeStrategy({ resultsPath: "" }),
-                        new Validator(BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
-                            BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject),
+                        new Validator(
+                            BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
+                            BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject
+                        )
                     );
                 });
 
@@ -1170,14 +1228,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                     const data = await measurementsDatasource.getLastModified();
                     expect(data).to.be.null;
                 });
-
             });
         });
-
     });
 
     describe("WazeCCP", () => {
-
         let dataSourceAlerts: DataSource;
         let dataSourceIrregularities: DataSource;
         let dataSourceJams: DataSource;
@@ -1196,10 +1251,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=alerts",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(
-                    WazeCCP.alerts.name + "DataSource",
-                    WazeCCP.alerts.datasourceJsonSchema,
-                ),
+                new JSONSchemaValidator(WazeCCP.alerts.name + "DataSource", WazeCCP.alerts.datasourceJsonSchema)
             );
             dataSourceIrregularities = new DataSource(
                 WazeCCP.irregularities.name + "DataSource",
@@ -1209,10 +1261,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=irregularities",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(
-                    WazeCCP.irregularities.name + "DataSource",
-                    WazeCCP.irregularities.datasourceJsonSchema,
-                ),
+                new JSONSchemaValidator(WazeCCP.irregularities.name + "DataSource", WazeCCP.irregularities.datasourceJsonSchema)
             );
             dataSourceJams = new DataSource(
                 WazeCCP.jams.name + "DataSource",
@@ -1222,10 +1271,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     url: url + "&types=traffic",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(
-                    WazeCCP.jams.name + "DataSource",
-                    WazeCCP.jams.datasourceJsonSchema,
-                ),
+                new JSONSchemaValidator(WazeCCP.jams.name + "DataSource", WazeCCP.jams.datasourceJsonSchema)
             );
         });
 
@@ -1261,17 +1307,16 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("MobileAppStatistics", () => {
-
         describe("AppStore", () => {
-
             let appStoreDataSource: DataSource;
             let bearerToken: string;
             const date = moment.tz(new Date(), "Europe/Prague");
             date.subtract(2, "day");
 
-            bearerToken = sign({
+            bearerToken = sign(
+                {
                     aud: "appstoreconnect-v1",
-                    exp: Math.floor(Date.now() / 1000) + (20 * 60),
+                    exp: Math.floor(Date.now() / 1000) + 20 * 60,
                     iss: config.datasources.AppStoreConnectCredentials.iss,
                 },
                 config.datasources.AppStoreConnectCredentials.private_key,
@@ -1281,10 +1326,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                         kid: config.datasources.AppStoreConnectCredentials.kid,
                         typ: "JWT",
                     },
-                });
+                }
+            );
 
             beforeEach(() => {
-                appStoreDataSource = new DataSource("AppStoreConnectDataSource",
+                appStoreDataSource = new DataSource(
+                    "AppStoreConnectDataSource",
                     new HTTPProtocolStrategy({
                         encoding: null,
                         headers: {
@@ -1299,8 +1346,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                         fastcsvParams: { headers: true, delimiter: "\t" },
                         subscribe: (json: any) => json,
                     }),
-                    new Validator(MobileAppStatistics.appStore.name,
-                        MobileAppStatistics.appStore.datasourceMongooseSchemaObject));
+                    new Validator(MobileAppStatistics.appStore.name, MobileAppStatistics.appStore.datasourceMongooseSchemaObject)
+                );
             });
 
             it("should returns data from AppStore", async () => {
@@ -1312,24 +1359,25 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await appStoreDataSource.getLastModified();
                 expect(data).to.be.null;
             });
-
         });
 
         describe("PlayStore", async () => {
-
             let playStoreDataSource: DataSource;
 
             beforeEach(() => {
-                playStoreDataSource = new DataSource(MobileAppStatistics.playStore.name + "DataSource",
+                playStoreDataSource = new DataSource(
+                    MobileAppStatistics.playStore.name + "DataSource",
                     new GoogleCloudStorageProtocolStrategy({
-                            bucketName: "pubsite_prod_rev_01447282685199189351",
-                            filesFilter: (f: File) => f.name.indexOf("_overview.csv") !== -1,
-                            filesPrefix: "stats/installs",
-                            keyFilename: config.datasources.PlayStoreKeyFilename,
-                        }),
+                        bucketName: "pubsite_prod_rev_01447282685199189351",
+                        filesFilter: (f: File) => f.name.indexOf("_overview.csv") !== -1,
+                        filesPrefix: "stats/installs",
+                        keyFilename: config.datasources.PlayStoreKeyFilename,
+                    }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(MobileAppStatistics.playStore.name + "DataSource",
-                        MobileAppStatistics.playStore.datasourceMongooseSchemaObject),
+                    new Validator(
+                        MobileAppStatistics.playStore.name + "DataSource",
+                        MobileAppStatistics.playStore.datasourceMongooseSchemaObject
+                    )
                 );
             });
 
@@ -1337,17 +1385,15 @@ describe("DataSourcesAvailabilityChecking", () => {
                 const data = await playStoreDataSource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
-
         });
-
     });
 
     describe("MunicipalLibraries", () => {
-
         let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(MunicipalLibraries.name + "DataSource",
+            datasource = new DataSource(
+                MunicipalLibraries.name + "DataSource",
                 new HTTPProtocolStrategy({
                     headers: {},
                     method: "GET",
@@ -1357,10 +1403,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     resultsPath: "pobocky.pobocka",
                     xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
                 }),
-                new JSONSchemaValidator(
-                    MunicipalLibraries.name + "DataSource",
-                    MunicipalLibraries.datasourceJsonSchema,
-                ),
+                new JSONSchemaValidator(MunicipalLibraries.name + "DataSource", MunicipalLibraries.datasourceJsonSchema)
             );
         });
 
@@ -1373,11 +1416,9 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
-
     });
 
     describe("Energetics", () => {
-
         describe("Enesa", () => {
             let dateParams = {
                 from: "",
@@ -1388,7 +1429,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 resourceType: string,
                 schemaConfig: Record<string, any>,
                 jsonTransformer: any,
-                onDataFunction: (data: any) => Promise<void>,
+                onDataFunction: (data: any) => Promise<void>
             ) => {
                 const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
                 const params = new URLSearchParams(dateParams);
@@ -1400,17 +1441,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: `${baseUrl}/${resourceType}?${params}`,
                     }).setStreamTransformer(jsonTransformer),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new JSONSchemaValidator(
-                        schemaConfig.name + "DataSource",
-                        schemaConfig.datasourceJsonSchema,
-                    ),
+                    new JSONSchemaValidator(schemaConfig.name + "DataSource", schemaConfig.datasourceJsonSchema)
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await Promise.race([
-                    dataStream.setDataProcessor(onDataFunction).proceed(),
-                    sleep(1000),
-                ]);
+                await Promise.race([dataStream.setDataProcessor(onDataFunction).proceed(), sleep(1000)]);
 
                 if (!dataStream.destroyed) {
                     dataStream.destroy();
@@ -1435,7 +1470,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     JSONStream.parse("buildings.*"),
                     async (data: EnesaBuildings.InputElement) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1446,7 +1481,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     JSONStream.parse("*"),
                     async (data: EnesaConsumption.InputElement) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1457,7 +1492,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     JSONStream.parse("*"),
                     async (data: EnesaConsumption.InputElement) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1468,7 +1503,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     JSONStream.parse("devices.*"),
                     async (data: EnesaDevices.InputElement) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
         });
@@ -1484,7 +1519,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 resourceType: string,
                 schemaConfig: Record<string, any>,
                 additionalParams: Record<string, string>,
-                onDataFunction: (data: any) => Promise<void>,
+                onDataFunction: (data: any) => Promise<void>
             ) => {
                 const baseUrl = config.datasources.UnimonitorCemApiEnergetics.url;
                 const params = new URLSearchParams({
@@ -1503,17 +1538,11 @@ describe("DataSourcesAvailabilityChecking", () => {
                         url: `${baseUrl}?${params}`,
                     }).setStreamTransformer(JSONStream.parse("*")),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new JSONSchemaValidator(
-                        schemaConfig.name + "DataSource",
-                        schemaConfig.datasourceJsonSchema,
-                    ),
+                    new JSONSchemaValidator(schemaConfig.name + "DataSource", schemaConfig.datasourceJsonSchema)
                 );
 
                 const dataStream = await datasource.getAll(false);
-                await Promise.race([
-                    dataStream.setDataProcessor(onDataFunction).proceed(),
-                    sleep(1000),
-                ]);
+                await Promise.race([dataStream.setDataProcessor(onDataFunction).proceed(), sleep(1000)]);
 
                 if (!dataStream.destroyed) {
                     dataStream.destroy();
@@ -1546,7 +1575,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     {},
                     async (data: any) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1557,7 +1586,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     {},
                     async (data: any) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1568,7 +1597,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     {},
                     async (data: any) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1579,7 +1608,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     { cis: "135" },
                     async (data: any) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
 
@@ -1590,11 +1619,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     { cis: "135" },
                     async (data: any) => {
                         expect(Object.keys(data).length).to.be.greaterThan(0);
-                    },
+                    }
                 );
             });
         });
-
     });
-
 });

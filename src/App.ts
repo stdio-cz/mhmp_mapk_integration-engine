@@ -1,28 +1,24 @@
-"use strict";
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import express from "@golemio/core/dist/shared/express";
+import { FieldType } from "@golemio/core/dist/shared/influx";
+import httpLogger from "morgan";
 
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import * as express from "express";
-import { FieldType } from "influx";
-import * as httpLogger from "morgan";
-
-import * as fs from "fs";
-import * as path from "path";
-import { config } from "./core/config";
+import fs from "fs";
+import path from "path";
+import http from "http";
+import { config } from "@golemio/core/dist/integration-engine/config";
 import {
     AMQPConnector,
     InfluxConnector,
     MongoConnector,
     PostgresConnector,
     RedisConnector,
-} from "./core/connectors";
-import { log } from "./core/helpers";
-import { QueueProcessor } from "./core/queueprocessors";
+} from "@golemio/core/dist/integration-engine/connectors";
+import { log } from "@golemio/core/dist/integration-engine/helpers";
+import { QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
-import http = require("http");
-
 export default class App {
-
     /// Create a new express application instance
     public express: express.Application = express();
     /// The port the express app will listen on
@@ -52,14 +48,14 @@ export default class App {
         } catch (err) {
             ErrorHandler.handle(err);
         }
-    }
+    };
 
     private setHeaders = (req: express.Request, res: express.Response, next: express.NextFunction) => {
         res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
-    }
+    };
 
     /**
      * Starts the database connection with initial configuration
@@ -75,14 +71,11 @@ export default class App {
                         number_of_records: FieldType.INTEGER,
                     },
                     measurement: "number_of_records",
-                    tags: [
-                        "name",
-                    ],
+                    tags: ["name"],
                 },
             ]);
         }
-
-    }
+    };
 
     /**
      * Starts the message queue connection, creates communication channel
@@ -92,19 +85,20 @@ export default class App {
         const channel = await AMQPConnector.connect();
 
         // filtering queue definitions by blacklist
-        let filteredQueuesDefinitions = queuesDefinition;
+        let filteredQueuesDefinitions = await queuesDefinition;
 
         for (const datasetName in config.queuesBlacklist) {
-            if (config.queuesBlacklist[datasetName].length === 0) { // all dataset queues are filtered
-                filteredQueuesDefinitions = filteredQueuesDefinitions
-                    .filter((queueDef) => queueDef.name !== datasetName);
-            } else { // only named queues of dataset are filtered
+            if (config.queuesBlacklist[datasetName].length === 0) {
+                // all dataset queues are filtered
+                filteredQueuesDefinitions = filteredQueuesDefinitions.filter((queueDef) => queueDef.name !== datasetName);
+            } else {
+                // only named queues of dataset are filtered
                 for (let i = 0, imax = filteredQueuesDefinitions.length; i < imax; i++) {
                     if (filteredQueuesDefinitions[i].name === datasetName) {
-                        filteredQueuesDefinitions[i].queues = filteredQueuesDefinitions[i].queues
-                            .filter(function(queue) {
-                                return this.indexOf(queue.name) < 0;
-                            }, config.queuesBlacklist[datasetName]);
+                        filteredQueuesDefinitions[i].queues = filteredQueuesDefinitions[i].queues.filter(function (queue) {
+                            // @ts-ignore
+                            return this.indexOf(queue.name) < 0;
+                        }, config.queuesBlacklist[datasetName]);
                     }
                 }
             }
@@ -115,21 +109,21 @@ export default class App {
             return new QueueProcessor(channel, queueDefinition).registerQueues();
         });
         await Promise.all(promises);
-    }
+    };
 
     /**
      * Loading the Commit SHA of the current build
      */
     private loadCommitSHA = async (): Promise<string> => {
-        return new Promise<string>((resolve, reject) => {
+        return new Promise<string>((resolve) => {
             fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
                 if (err) {
-                    return resolve(undefined);
+                    return resolve(undefined as any);
                 }
                 return resolve(data.toString());
             });
         });
-    }
+    };
 
     /**
      * Starts the express server
@@ -161,7 +155,7 @@ export default class App {
             this.express.use(httpLogger("combined"));
         }
         this.express.use(this.setHeaders);
-    }
+    };
 
     /**
      * Defines express server routes
@@ -170,9 +164,9 @@ export default class App {
         const defaultRouter = express.Router();
 
         // base url route handler
-        defaultRouter.get(["/", "/health-check", "/status"],
+        defaultRouter.get(
+            ["/", "/health-check", "/status"],
             (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
                 log.silly("Health check/status called.");
 
                 res.json({
@@ -181,7 +175,8 @@ export default class App {
                     status: "Up",
                     version: config.app_version,
                 });
-            });
+            }
+        );
 
         this.express.use("/", defaultRouter);
 
@@ -199,6 +194,5 @@ export default class App {
                 res.status(error.error_status || 500).send(error);
             }
         });
-    }
-
+    };
 }
