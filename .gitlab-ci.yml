@@ -7,6 +7,8 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass
   POSTGRES_DB: testdb
+  K8S_SERVICE_NAME: integration-engine
+  K8S_SERVICE_IMAGE_TAG: $CI_PIPELINE_ID
 
 include:
   - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
