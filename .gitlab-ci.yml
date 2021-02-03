@@ -7,8 +7,10 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass
   POSTGRES_DB: testdb
-  K8S_SERVICE_NAME: integration-engine
-  K8S_SERVICE_IMAGE_TAG: $CI_PIPELINE_ID
+  K8S_PROJECT_NAME: "golemio"
+  K8S_DEPLOY_NAMESPACE: "golemio"
+  K8S_DEPLOYMENT_NAME: integration-engine
+  K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 include:
   - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
