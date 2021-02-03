@@ -27,6 +27,7 @@ export interface IFoundGTFSTripData {
 
     gtfs_block_id?: string;
     gtfs_trip_short_name?: string;
+    gtfs_route_type?: number;
     cis_trip_number?: number;
 }
 
@@ -264,6 +265,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             SELECT ropidgtfs_trips.trip_id as gtfs_trip_id,
                 ropidgtfs_trips.trip_headsign as gtfs_trip_headsign,
                 ropidgtfs_routes.route_id as gtfs_route_id,
+                ropidgtfs_routes.route_type as gtfs_route_type,
                 ropidgtfs_routes.route_short_name as gtfs_route_short_name
             FROM ropidgtfs_trips
             INNER JOIN ropidgtfs_routes ON ropidgtfs_trips.route_id=ropidgtfs_routes.route_id
@@ -354,6 +356,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                 ropidgtfs_trips.trip_headsign as gtfs_trip_headsign,
                 ropidgtfs_trips.trip_short_name as gtfs_trip_short_name,
                 ropidgtfs_routes.route_id as gtfs_route_id,
+                ropidgtfs_routes.route_type as gtfs_route_type,
                 ropidgtfs_routes.route_short_name as gtfs_route_short_name,
                 wanted_trip.cis_trip_number
             FROM ropidgtfs_trips
