@@ -51,7 +51,13 @@ describe("VehiclePositionsWorker", () => {
             .callsFake(() => testData);
         sandbox.stub(worker.modelTrips, "findAll")
             .callsFake((options) => Object.assign([]));
-        sandbox.stub(worker.modelTrips, "findGTFSTripId");
+        sandbox.stub(worker.modelTrips, "findGTFSTripId")
+            .callsFake(() => Object.assign(
+                [
+                    "2021-02-03T10:23:00Z_none_S45_1573",
+                    "2021-02-03T10:23:00Z_none_S45_1573_gtfs_trip_id_1345_1573_201213",
+                ],
+            ));
         sandbox.stub(worker.modelTrips, "update");
         sandbox.stub(worker, "sendMessageToExchange");
         sandbox.stub(worker.delayComputationTripsModel, "getData")
@@ -69,14 +75,11 @@ describe("VehiclePositionsWorker", () => {
     it("should calls the correct methods by saveDataToDB method", async () => {
         await worker.saveDataToDB({ content: Buffer.from(JSON.stringify({ m: { spoj: {} } })) });
         sandbox.assert.calledOnce(worker.transformation.transform);
-        sandbox.assert.calledOnce(worker.modelPositions.save);
-        sandbox.assert.calledWith(worker.modelPositions.save, []);
         sandbox.assert.calledOnce(worker.modelTrips.saveBySqlFunction);
         sandbox.assert.calledWith(worker.modelTrips.saveBySqlFunction, []);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
         sandbox.assert.callOrder(
             worker.transformation.transform,
-            worker.modelPositions.save,
             worker.modelTrips.saveBySqlFunction,
             worker.sendMessageToExchange);
         sandbox.assert.callCount(PostgresConnector.getConnection, 5);
@@ -100,8 +103,97 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateGTFSTripId method", async () => {
-        await worker.updateGTFSTripId({ content: Buffer.from(JSON.stringify([{ id: 0 }])) });
+        await worker.updateGTFSTripId({ content: Buffer.from(JSON.stringify({
+            data: [
+              {
+                cis_line_short_name: "S45",
+                id: "2021-02-03T10:23:00Z_none_S45_1573",
+                start_asw_stop_id: null,
+                start_cis_stop_id: 5454396,
+                start_timestamp: 1612347780000,
+                // tslint:disable-next-line: object-literal-sort-keys
+                agency_name_real: null,
+                agency_name_scheduled: "ČESKÉ DRÁHY",
+                cis_line_id: "none",
+                cis_trip_number: 1573,
+                origin_route_name: null,
+                sequence_id: null,
+                vehicle_registration_number: null,
+                vehicle_type_id: 0,
+                wheelchair_accessible: true,
+              },
+            ],
+            positions: [
+              {
+                asw_last_stop_id: null,
+                bearing: null,
+                cis_last_stop_id: 5457066,
+                cis_last_stop_sequence: 15,
+                delay_stop_arrival: 0,
+                delay_stop_departure: 0,
+                is_canceled: false,
+                lat: 50.238575,
+                lng: 14.3130083,
+                origin_time: "11:23:00",
+                origin_timestamp: 1612347780000,
+                speed: null,
+                tracking: 1,
+                trips_id: "2021-02-03T10:23:00Z_none_S45_1573",
+              },
+              {
+                asw_last_stop_id: null,
+                bearing: null,
+                cis_last_stop_id: 5457066,
+                cis_last_stop_sequence: 15,
+                delay_stop_arrival: 0,
+                delay_stop_departure: 0,
+                is_canceled: false,
+                lat: 50.238575,
+                lng: 14.3130083,
+                origin_time: "11:23:00",
+                origin_timestamp: 1612347780000,
+                speed: null,
+                tracking: 1,
+                trips_id: "2021-02-03T10:23:00Z_none_S45_1573_gtfs_trip_id_1345_1573_201213",
+              },
+            ],
+          })) });
         sandbox.assert.calledOnce(worker.modelTrips.findGTFSTripId);
+        sandbox.assert.calledOnce(worker.modelPositions.save);
+        sandbox.assert.calledWith(worker.modelPositions.save, [
+            {
+              asw_last_stop_id: null,
+              bearing: null,
+              cis_last_stop_id: 5457066,
+              cis_last_stop_sequence: 15,
+              delay_stop_arrival: 0,
+              delay_stop_departure: 0,
+              is_canceled: false,
+              lat: 50.238575,
+              lng: 14.3130083,
+              origin_time: "11:23:00",
+              origin_timestamp: 1612347780000,
+              speed: null,
+              tracking: 1,
+              trips_id: "2021-02-03T10:23:00Z_none_S45_1573",
+            },
+            {
+              asw_last_stop_id: null,
+              bearing: null,
+              cis_last_stop_id: 5457066,
+              cis_last_stop_sequence: 15,
+              delay_stop_arrival: 0,
+              delay_stop_departure: 0,
+              is_canceled: false,
+              lat: 50.238575,
+              lng: 14.3130083,
+              origin_time: "11:23:00",
+              origin_timestamp: 1612347780000,
+              speed: null,
+              tracking: 1,
+              trips_id: "2021-02-03T10:23:00Z_none_S45_1573_gtfs_trip_id_1345_1573_201213",
+            },
+          ]);
         sandbox.assert.calledOnce(worker.sendMessageToExchange);
     });
 

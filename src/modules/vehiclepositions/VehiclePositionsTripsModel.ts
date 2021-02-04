@@ -17,9 +17,21 @@ export interface IUpdateGTFSTripIdData {
     start_cis_stop_id: number | null;
     start_cis_stop_platform_code?: string | null;
     start_timestamp: number;
+    agency_name_real: string | null;
+    agency_name_scheduled: string | null;
+    cis_line_id: string | null;
+    cis_trip_number: number | null;
+    origin_route_name: string | null;
+    sequence_id: string | null;
+    start_time: string | null;
+    vehicle_registration_number: string | null;
+    vehicle_type_id: number | null;
+    wheelchair_accessible: boolean | null;
+
 }
 
 export interface IFoundGTFSTripData {
+    id?: string;
     gtfs_trip_id: string;
     gtfs_trip_headsign: string;
     gtfs_route_id: string;
@@ -192,6 +204,17 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                         start_cis_stop_id: d.start_cis_stop_id,
                         start_cis_stop_platform_code: d.start_cis_stop_platform_code,
                         start_timestamp: d.start_timestamp,
+
+                        agency_name_real: d.agency_name_real,
+                        agency_name_scheduled: d.agency_name_scheduled,
+                        cis_line_id: d.cis_line_id,
+                        cis_trip_number: d.cis_trip_number,
+                        origin_route_name: d.origin_route_name,
+                        sequence_id: d.sequence_id,
+                        start_time: d.start_time,
+                        vehicle_registration_number: d.vehicle_registration_number,
+                        vehicle_type_id: d.vehicle_type_id,
+                        wheelchair_accessible: d.wheelchair_accessible,
                     });
                 }
             });
@@ -201,29 +224,48 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         }
     }
 
+    public findAllAsocTripIds = async (tripIds: string[]): Promise<string[]> => {
+        const connection = PostgresConnector.getConnection();
+        return (Array.isArray(tripIds) && tripIds.length > 0) ? (await connection.query(
+            `select id from ${this.tableName} where
+            id like any (array[${tripIds.map(
+                (id: string) => {
+                    return `'${id}%'`;
+                },
+            ).join(",")}])`,
+            { type: Sequelize.QueryTypes.SELECT },
+        )).map((res: any) => res.id) : [];
+    }
+
     public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
-            const foundGtfsTrips = await this.findGTFSTripIdTrain(trip);
+            let foundGtfsTrips = await this.findGTFSTripIdTrain(trip);
 
-            if (foundGtfsTrips.length === 1) {
-                await this.update(foundGtfsTrips[0], {
+            if (foundGtfsTrips && foundGtfsTrips.length) {
+                const newIds: string[] = [trip.id];
+                foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id > b.gtfs_trip_id ? -1 : 1);
+
+                await this.update(foundGtfsTrips.pop(), {
                     where: {
                         id: trip.id,
                     },
                 });
-                return trip.id;
-            } else {
-                // TODO duplicate trips, positions and stops for each found gtfs id
 
-                // TODO temporary solution
-                await this.update(foundGtfsTrips[0], {
-                    where: {
-                        id: trip.id,
-                    },
-                });
-                return trip.id;
+                for (const foundTrip of foundGtfsTrips) {
+                    const newId = `${trip.id}_gtfs_trip_id_${foundTrip.gtfs_trip_id}`;
+
+                    foundTrip.id = newId;
+                    newIds.push(newId);
+
+                    await this.save({...trip, ...foundTrip});
+
+                    // await this.query(`DELETE from ${this.tableName}
+                    //  where id = '${orgId}'`);
+                }
+                return newIds;
             }
+
         } else if (0) {
             // DPP
             // TODO
@@ -235,7 +277,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     id: trip.id,
                 },
             });
-            return trip.id;
+            return [trip.id];
         }
     }
 
@@ -330,7 +372,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             throw new CustomError(`Model data was not found for id '${trip.id}' (basic).`, true,
                 this.constructor.name, 4003);
         }
-        return result[0];
+        return result;
     }
 
     private findGTFSTripIdTrain = async (trip: IUpdateGTFSTripIdData): Promise<IFoundGTFSTripData[]> => {
@@ -426,7 +468,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
 
         // TODO more than one found gtfs trip id example
         // 2021-01-08T11:42:00Z_none_U4_6914
-        // [
+        // return [
         //     {
         //         gtfs_trip_id: '1304_6914_201214',
         //         gtfs_block_id: '1304_6914_201214',

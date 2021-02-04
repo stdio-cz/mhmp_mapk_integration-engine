@@ -65,7 +65,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
             raw: true,
             where: {
                 gtfs_trip_id: { [Sequelize.Op.ne]: null },
-                id: tripIds,
+                id: { [Sequelize.Op.any]: Array.isArray(tripIds) ? tripIds : [tripIds]},
             },
         });
 

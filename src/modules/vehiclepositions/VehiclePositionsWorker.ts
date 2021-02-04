@@ -72,9 +72,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         const transformedData = await this.transformation.transform(inputData);
 
-        // positions saving
-        await this.modelPositions.save(transformedData.positions);
-        // trips saving
+        // await this.modelTrips.truncate();
         const rows = await this.modelTrips.saveBySqlFunction(
             transformedData.trips,
             ["id"],
@@ -82,17 +80,30 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         // send message for update GTFSTripIds
         for (let i = 0, chunkSize = 50; i < rows.inserted.length; i += chunkSize) {
+            const inserted = rows.inserted.slice(i, i + chunkSize);
+            const insertedIds = inserted.map((ins: any) => {
+                return ins.id;
+            });
+
             await this.sendMessageToExchange(
                 "workers." + this.queuePrefix + ".updateGTFSTripId",
-                JSON.stringify(rows.inserted.slice(i, i + chunkSize)),
+                JSON.stringify({
+                    data: inserted,
+                    positions: transformedData.
+                        positions.
+                        filter((position: any) => insertedIds.includes(position.trips_id)),
+                }),
             );
         }
 
         // send message for update delay
         for (let i = 0, chunkSize = 200; i < rows.updated.length; i += chunkSize) {
+            const updated = rows.updated.slice(i, i + chunkSize);
+            const allIds = await this.modelTrips.findAllAsocTripIds(updated);
+
             await this.sendMessageToExchange(
                 "workers." + this.queuePrefix + ".updateDelay",
-                JSON.stringify(rows.updated.slice(i, i + chunkSize)),
+                JSON.stringify(allIds),
             );
         }
     }
@@ -110,9 +121,21 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
-        const inputData = JSON.parse(msg.content.toString()) as IUpdateGTFSTripIdData[];
+
+        const inputData = JSON.parse(msg.content.toString()) as {
+            data: IUpdateGTFSTripIdData[];
+            positions: any[];
+
+        };
+
+        const positionsByIds = {};
+
+        for (const position of inputData.positions) {
+            positionsByIds[position.trips_id] = position;
+        }
+
         const promiseValues: Array<string | string[] | CustomError> = await Promise.all(
-            inputData.map(async (trip) => {
+            inputData.data.map(async (trip) => {
                 try {
                     const results = await this.modelTrips.findGTFSTripId(trip);
                     return Promise.resolve(results);
@@ -126,6 +149,20 @@ export class VehiclePositionsWorker extends BaseWorker {
             ...promiseValues.filter((result) => !(result instanceof CustomError)),
         );
         const foundedTripsPromiseErrors = promiseValues.filter((result) => result instanceof CustomError);
+
+        let currentPosition: any;
+
+        for (const tripId of foundedTripsPromiseValues) {
+            if (positionsByIds[tripId]) {
+                currentPosition = positionsByIds[tripId];
+            } else {
+                const newPosition = {...currentPosition};
+                newPosition.trips_id = tripId;
+                inputData.positions.push(newPosition);
+            }
+        }
+
+        await this.modelPositions.save(inputData.positions);
 
         // successfully updated gtfs ids
         for (let i = 0, chunkSize = 100, imax = foundedTripsPromiseValues.length; i < imax; i += chunkSize) {
