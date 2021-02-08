@@ -121,7 +121,6 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public updateGTFSTripId = async (msg: any): Promise<void> => {
-
         const inputData = JSON.parse(msg.content.toString()) as {
             data: IUpdateGTFSTripIdData[];
             positions: any[];

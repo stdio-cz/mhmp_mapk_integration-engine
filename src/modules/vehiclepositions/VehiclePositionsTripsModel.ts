@@ -240,7 +240,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
     public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
-            let foundGtfsTrips = await this.findGTFSTripIdTrain(trip);
+            let foundGtfsTrips = await this.findGTFSTripIdsTrain(trip);
 
             if (foundGtfsTrips && foundGtfsTrips.length) {
                 const newIds: string[] = [trip.id];
@@ -272,6 +272,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         } else {
             // other
             const foundGtfsTrip = await this.findGTFSTripIdBasic(trip);
+
             await this.update(foundGtfsTrip, {
                 where: {
                     id: trip.id,
@@ -372,10 +373,10 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
             throw new CustomError(`Model data was not found for id '${trip.id}' (basic).`, true,
                 this.constructor.name, 4003);
         }
-        return result;
+        return result[0];
     }
 
-    private findGTFSTripIdTrain = async (trip: IUpdateGTFSTripIdData): Promise<IFoundGTFSTripData[]> => {
+    private findGTFSTripIdsTrain = async (trip: IUpdateGTFSTripIdData): Promise<IFoundGTFSTripData[]> => {
         const connection = PostgresConnector.getConnection();
 
         const result = await connection.query(`
