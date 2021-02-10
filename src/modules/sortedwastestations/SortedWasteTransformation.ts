@@ -23,9 +23,12 @@ export class SortedWasteTransformation {
     public getSortedWastePicksWithDates = async (containers: any[], containerModel: PostgresModel) => {
         const containersPickDates = {};
         const foundContainers = {};
-        const outData = [];
-        let nomatch = 0;
-        let diffFreq = 0;
+        const outData = {
+            pickDates: [],
+            pickDays: [],
+        };
+        // let nomatch = 0;
+        // let diffFreq = 0;
 
         for (const container of containers) {
             // trash type and station code (sometimes missing)
@@ -51,26 +54,27 @@ export class SortedWasteTransformation {
                                     (matchingContainer.cleaning_frequency_interval || 0 * 10) +
                                     matchingContainer.cleaning_frequency_frequency || 0}`,
                                 counted: [],
+                                pickDays: matchingContainer.pick_days,
                                 raw: [],
                                 storedCleaningFrequency: matchingContainer.cleaning_frequency_frequency,
                                 storedCleaningInterval: matchingContainer.cleaning_frequency_interval,
                             };
                         }
-                        if (containersPickDates[matchingContainer.id].code !==
-                            containersPickDates[matchingContainer.id].codeStored) {
-                            containersPickDates[matchingContainer.id].codeStored =
-                            containersPickDates[matchingContainer.id].code;
-                            // prepared for the future when data will be fixed
-                            diffFreq++;
-                        }
+                        // if (containersPickDates[matchingContainer.id].code !==
+                        //     containersPickDates[matchingContainer.id].codeStored) {
+                        //     containersPickDates[matchingContainer.id].codeStored =
+                        //     containersPickDates[matchingContainer.id].code;
+                        //     // prepared for the future when data will be fixed
+                        //     diffFreq++;
+                        // }
                         containersPickDates[matchingContainer.id].raw.push({
                             frequency: container[12],
                             from: container[9],
                             to: container[10],
                         });
-                    } else {
-                        // prepared for the future when data will be fixed
-                        nomatch++;
+                    // } else {
+                    //     // prepared for the future when data will be fixed
+                    //     nomatch++;
                     }
                 }
             }
@@ -112,14 +116,23 @@ export class SortedWasteTransformation {
                     }
                 }
             });
+
             // calculate pick dates
-            this.getPickDates(containersPickDates[id]).forEach((date: any) => {
-                outData.push({
+            const pickDates = this.getPickDates(containersPickDates[id]);
+
+            pickDates.dates.forEach((date: any) => {
+                outData.pickDates.push({
                     container_id: id,
                     pick_date: `${date.format()}`,
-
                 });
             });
+
+            if (pickDates.pickDays !== containersPickDates[id].pickDays) {
+                outData.pickDays.push({
+                    id,
+                    pickDays: pickDates.pickDays,
+                });
+            }
         }
 
         return outData;
@@ -132,7 +145,11 @@ export class SortedWasteTransformation {
         const calculateToTheFutureDays = config.datasources.SortedWastePicks.calculateToFutureDays;
         const calculateToTheFuture = moment().add(calculateToTheFutureDays, "days");
 
-        const calculatedPickDates = [];
+        const calculatedPickDates = {
+            dates: [],
+            pickDays: null,
+        };
+
         container.raw.forEach((pick: any) => {
             const weeksOffset = Math.floor(container.code / 10);
             // only future records
@@ -147,6 +164,8 @@ export class SortedWasteTransformation {
                 let curOffset = 0;
                 let count = 0;
 
+                calculatedPickDates.pickDays = pick.parsed.days.join(",");
+
                 while (calculateToTheFuture >= curProcDate && count < 200) {
                     // just in case - dirty data
                     count++;
@@ -157,10 +176,10 @@ export class SortedWasteTransformation {
                         if (calculatedDate >= today) {
                             if (pick.parsed.weeks.length) {
                                 if (pick.parsed.weeks.includes(calculatedDate.week())) {
-                                    calculatedPickDates.push(calculatedDate);
+                                    calculatedPickDates.dates.push(calculatedDate);
                                 }
                             } else {
-                                calculatedPickDates.push(calculatedDate);
+                                calculatedPickDates.dates.push(calculatedDate);
                             }
                         }
                         curProcDate = calculatedDate;
@@ -237,6 +256,7 @@ export class SortedWasteTransformation {
                 "trash_type",
                 "cleaning_frequency_frequency",
                 "cleaning_frequency_interval",
+                "pick_days",
             ],
             raw: true,
             where: {

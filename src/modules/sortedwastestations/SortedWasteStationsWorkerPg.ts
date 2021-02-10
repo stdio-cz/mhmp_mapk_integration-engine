@@ -58,9 +58,9 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
 
         this.SFTPSettings = {
             algorithms: {
-                cipher: [
-                    "aes256-cbc",
-                  ],
+                // cipher: [
+                //     "aes256-cbc",
+                //   ],
                 serverHostKey: ["ssh-rsa", "ssh-dss"],
               },
               encoding: "win1250",
@@ -278,13 +278,24 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
                 this.sensorsContainersModel,
             );
 
+            for (const pickDays of dates.pickDays) {
+                await this.sensorsContainersModel.update({
+                    pick_days: pickDays.pickDays,
+                }, {
+                    where: {
+                        id: pickDays.id,
+                    },
+                });
+            }
+
             await this.pickDatesModel.query(`delete from ${SortedWasteStations.containersPickDates.pgTableName}
             where pick_date >= '${moment().format("YYYY-MM-DD 12:00:00")}'`);
 
             await this.pickDatesModel.saveBySqlFunction(
-                dates,
+                dates.pickDates,
                 ["container_id", "pick_date"],
             );
+
         } catch (err) {
             throw new CustomError("Error while getting data.", true, this.constructor.name, 5050, err);
         }
