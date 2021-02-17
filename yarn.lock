@@ -111,10 +111,22 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@1.9.0-dev.254314297":
-  version "1.9.0-dev.254314297"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-1.9.0-dev.254314297.tgz#af1bbd9a3194141545b0bdcdeeb224d1f3b9f186"
-  integrity sha512-RV92cFGlFfVOus012UbOGmIFlK+e0besniN2ZsehV9ZtGU4VpXVZ+1ayxe9WA4S+Vjhp2jGdIyc2oPHtRq23fA==
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.9.0-vlasaty-3.tgz":
+  version "1.9.0-vlasaty-3"
+  resolved "../schema-definitions/golemio-schema-definitions-1.9.0-vlasaty-3.tgz#931c48d12ccd3f74e8b836565f8590ce884fc388"
+  dependencies:
+    "@golemio/utils" "1.0.0"
+    connection-string-parser "^1.0.3"
+    db-migrate "^0.11.11"
+    db-migrate-pg "^1.2.2"
+    migrate-mongo "^8.1.4"
+    mongoose "5.8.9"
+    mongoose-schema-jsonschema "^1.4.3"
+    sequelize "4.44.4"
+
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-1.9.0-vlasaty-4.tgz":
+  version "1.9.0-vlasaty-4"
+  resolved "../schema-definitions/golemio-schema-definitions-1.9.0-vlasaty-4.tgz#95f084d08453bda16c7002e89581d7f82534bf4e"
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"

@@ -224,6 +224,48 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         }
     }
 
+    public bulkUpdate = async (data): Promise<any> => {
+
+        const connection = PostgresConnector.getConnection();
+        const primaryKeys = ["id"];
+        const u = []; // updated
+
+        try {
+            // json stringify and escape quotes
+            const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
+
+            // TODO doplnit batch_id a author
+            const sqlQuery = "SELECT meta.import_from_json("
+                + "-1, " // p_batch_id bigint
+                + "E'" + stringifiedData + "'::json, " // p_data json
+                + "'" + "public" + "', " // p_table_schema character varying
+                + "'" + "vehiclepositions_trips" + "', " // p_table_name character varying
+                + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
+                + "NULL, " // p_sort json
+                + "'integration-engine'" // p_worker_name character varying
+                + ") ";
+
+            const rawRows = await connection.query(sqlQuery,
+                {
+                    type: Sequelize.QueryTypes.SELECT,
+                },
+            );
+
+            JSON.parse(rawRows[0].import_from_json
+                .replace('("', "")
+                .replace('",)', "")
+                .replace(/""/g, '"'),
+            ).forEach((r: { id: string, upd: boolean }) => {
+                if (r.upd === true) {
+                    u.push(r.id);
+                }
+            });
+            return { updated: u };
+        } catch (err) {
+            return false;
+        }
+    }
+
     public findAllAsocTripIds = async (tripIds: string[]): Promise<string[]> => {
         const connection = PostgresConnector.getConnection();
         return (Array.isArray(tripIds) && tripIds.length > 0) ? (await connection.query(

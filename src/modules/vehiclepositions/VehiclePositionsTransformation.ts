@@ -126,6 +126,8 @@ export class VehiclePositionsTransformation extends BaseTransformation implement
                 speed: (speed)
                     ? parseInt(speed, 10)
                     : null,
+                state_position: "unknown",
+                state_process: "input",
                 tracking: (attributes.sled)
                     ? parseInt(attributes.sled, 10)
                     : null,
