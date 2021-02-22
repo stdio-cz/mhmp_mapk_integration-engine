@@ -108,7 +108,12 @@ export class VehiclePositionsWorker extends BaseWorker {
 
             await this.sendMessageToExchange(
                 "workers." + this.queuePrefix + ".updateDelay",
-                JSON.stringify(allIds),
+                JSON.stringify({
+                    positions: transformedData.
+                        positions.
+                        filter((position: any) => updated.includes(position.trips_id)),
+                    updatedTrips: allIds,
+                }),
             );
         }
     }
@@ -132,12 +137,13 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         };
 
+        // unique ids in input data in key-value (id-positions) structure
         const positionsByIds = {};
-
         for (const position of inputData.positions) {
             positionsByIds[position.trips_id] = position;
         }
 
+        // find for each trip gtfs data
         const promiseValues: Array<string | string[] | CustomError> = await Promise.all(
             inputData.data.map(async (trip) => {
                 try {
@@ -149,6 +155,7 @@ export class VehiclePositionsWorker extends BaseWorker {
             }),
         );
 
+        // filter only trips with found gtfs data
         const foundedTripsPromiseValues = [].concat(
             ...promiseValues.filter((result) => !(result instanceof CustomError)),
         );
@@ -276,8 +283,52 @@ export class VehiclePositionsWorker extends BaseWorker {
     }
 
     public updateDelay = async (msg: any): Promise<void> => {
+        const inputData = JSON.parse(msg.content.toString()) as {
+            updatedTrips: IUpdateGTFSTripIdData[];
+            positions: any[];
+        };
+
+        const tripIds: string[] = [];
+
+        // unique ids in input data in key-value (id-positions) structure
+        const positionsByIds = {};
+        for (const position of inputData.positions) {
+            positionsByIds[position.trips_id] = position;
+        }
+
+        // unique block_id's and its parent input trips_id in key-value (block_id-trips_id) structure
+        const blockIdsToParentTripsId = inputData.updatedTrips
+            .reduce((reducer, currentTrip, i) => {
+                if (!reducer[currentTrip.gtfs_block_id]) {
+                    // init key value pair if not exists
+                    reducer[currentTrip.gtfs_block_id] = currentTrip.id;
+                } else {
+                    // otherwise save only the shorter trip_id (it is the raw input id with no suffixes)
+                    reducer[currentTrip.gtfs_block_id] =
+                        reducer[currentTrip.gtfs_block_id] > currentTrip.id ?
+                            currentTrip.id : reducer[currentTrip.gtfs_block_id];
+                }
+                return reducer;
+            }, ({}));
+
+        // duplicate positions for trips with block_ids
+        for (const trip of inputData.updatedTrips) {
+            if (!positionsByIds[trip.id]) {
+                const newPosition = {
+                    ...inputData.positions.find((position) => {
+                        return position.trips_id === blockIdsToParentTripsId[trip.gtfs_block_id];
+                    }),
+                };
+                newPosition.trips_id = trip.id;
+                inputData.positions.push(newPosition);
+            }
+            tripIds.push(trip.id);
+        }
+
+        // save all new positions
+        await this.modelPositions.save(inputData.positions);
+
         try {
-            const tripIds = JSON.parse(msg.content.toString());
 
             // Get all positions for each trip
             const tripsPositionsToUpdate = await this.modelPositions.getPositionsForUdpateDelay(tripIds);

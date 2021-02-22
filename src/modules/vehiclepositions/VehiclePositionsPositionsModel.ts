@@ -44,7 +44,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         this.tripsModel.hasMany(this.sequelizeModel, { foreignKey: "trips_id", sourceKey: "id" });
     }
 
-    public getPositionsForUdpateDelay = async (tripIds: [string]): Promise<any> => {
+    public getPositionsForUdpateDelay = async (tripIds: string[]): Promise<any> => {
         // TODO - check that origin_time is not duplicate for tracking == 2.
         // const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
         const results = await this.tripsModel.findAll({

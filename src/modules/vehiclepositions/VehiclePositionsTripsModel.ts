@@ -28,6 +28,11 @@ export interface IUpdateGTFSTripIdData {
     vehicle_type_id: number | null;
     wheelchair_accessible: boolean | null;
 
+    gtfs_trip_id?: string;
+    gtfs_trip_headsign?: string;
+    gtfs_route_id?: string;
+    gtfs_route_short_name?: string;
+    gtfs_block_id?: string;
 }
 
 export interface IFoundGTFSTripData {
@@ -269,31 +274,38 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
     public findAllAsocTripIds = async (tripIds: string[]): Promise<string[]> => {
         const connection = PostgresConnector.getConnection();
         return (Array.isArray(tripIds) && tripIds.length > 0) ? (await connection.query(
-            `select id from ${this.tableName} where
+            `select id, gtfs_block_id from ${this.tableName} where
             id like any (array[${tripIds.map(
                 (id: string) => {
                     return `'${id}%'`;
                 },
             ).join(",")}])`,
             { type: Sequelize.QueryTypes.SELECT },
-        )).map((res: any) => res.id) : [];
+        )).map((res: any) => ({ id: res.id, gtfs_block_id: res.gtfs_block_id })) : [];
     }
 
     public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
+
+            // array of founded gtfs trips, 0 or 1 or more with same block_id
             let foundGtfsTrips = await this.findGTFSTripIdsTrain(trip);
+
+            // console.log(foundGtfsTrips);
 
             if (foundGtfsTrips && foundGtfsTrips.length) {
                 const newIds: string[] = [trip.id];
-                foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id > b.gtfs_trip_id ? -1 : 1);
+                // sort ascending by gtfs_trip_id
+                foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id < b.gtfs_trip_id ? -1 : 1);
 
+                // update existing trip with gtfs_trip_id, gtfs_block_id and other gtfs data
                 await this.update(foundGtfsTrips.pop(), {
                     where: {
                         id: trip.id,
                     },
                 });
 
+                // for other trips insert new rows with suffixed id
                 for (const foundTrip of foundGtfsTrips) {
                     const newId = `${trip.id}_gtfs_trip_id_${foundTrip.gtfs_trip_id}`;
 
