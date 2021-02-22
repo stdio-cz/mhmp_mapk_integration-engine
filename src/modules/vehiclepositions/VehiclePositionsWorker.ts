@@ -178,7 +178,10 @@ export class VehiclePositionsWorker extends BaseWorker {
         // successfully updated gtfs ids
         for (let i = 0, chunkSize = 100, imax = foundedTripsPromiseValues.length; i < imax; i += chunkSize) {
             await this.sendMessageToExchange("workers." + this.queuePrefix + ".updateDelay",
-                JSON.stringify(foundedTripsPromiseValues.slice(i, i + chunkSize)),
+                JSON.stringify({
+                    positions: [],
+                    updatedTrips: foundedTripsPromiseValues.slice(i, i + chunkSize),
+                }),
             );
         }
 
@@ -288,45 +291,46 @@ export class VehiclePositionsWorker extends BaseWorker {
             positions: any[];
         };
 
-        const tripIds: string[] = [];
+        const tripIds: string[] = inputData.updatedTrips.map((trip) => trip.id);
 
-        // unique ids in input data in key-value (id-positions) structure
-        const positionsByIds = {};
-        for (const position of inputData.positions) {
-            positionsByIds[position.trips_id] = position;
-        }
-
-        // unique block_id's and its parent input trips_id in key-value (block_id-trips_id) structure
-        const blockIdsToParentTripsId = inputData.updatedTrips
-            .reduce((reducer, currentTrip, i) => {
-                if (!reducer[currentTrip.gtfs_block_id]) {
-                    // init key value pair if not exists
-                    reducer[currentTrip.gtfs_block_id] = currentTrip.id;
-                } else {
-                    // otherwise save only the shorter trip_id (it is the raw input id with no suffixes)
-                    reducer[currentTrip.gtfs_block_id] =
-                        reducer[currentTrip.gtfs_block_id] > currentTrip.id ?
-                            currentTrip.id : reducer[currentTrip.gtfs_block_id];
-                }
-                return reducer;
-            }, ({}));
-
-        // duplicate positions for trips with block_ids
-        for (const trip of inputData.updatedTrips) {
-            if (!positionsByIds[trip.id]) {
-                const newPosition = {
-                    ...inputData.positions.find((position) => {
-                        return position.trips_id === blockIdsToParentTripsId[trip.gtfs_block_id];
-                    }),
-                };
-                newPosition.trips_id = trip.id;
-                inputData.positions.push(newPosition);
+        if (inputData.positions?.length > 0) {
+            // unique ids in input data in key-value (id-positions) structure
+            const positionsByIds = {};
+            for (const position of inputData.positions) {
+                positionsByIds[position.trips_id] = position;
             }
-            tripIds.push(trip.id);
-        }
 
-        // save all new positions
-        await this.modelPositions.save(inputData.positions);
+            // unique block_id's and its parent input trips_id in key-value (block_id-trips_id) structure
+            const blockIdsToParentTripsId = inputData.updatedTrips
+                .reduce((reducer, currentTrip, i) => {
+                    if (!reducer[currentTrip.gtfs_block_id]) {
+                        // init key value pair if not exists
+                        reducer[currentTrip.gtfs_block_id] = currentTrip.id;
+                    } else {
+                        // otherwise save only the shorter trip_id (it is the raw input id with no suffixes)
+                        reducer[currentTrip.gtfs_block_id] =
+                            reducer[currentTrip.gtfs_block_id] > currentTrip.id ?
+                                currentTrip.id : reducer[currentTrip.gtfs_block_id];
+                    }
+                    return reducer;
+                }, ({}));
+
+            // duplicate positions for trips with block_ids
+            for (const trip of inputData.updatedTrips) {
+                if (!positionsByIds[trip.id]) {
+                    const newPosition = {
+                        ...inputData.positions.find((position) => {
+                            return position.trips_id === blockIdsToParentTripsId[trip.gtfs_block_id];
+                        }),
+                    };
+                    newPosition.trips_id = trip.id;
+                    inputData.positions.push(newPosition);
+                }
+            }
+
+            // save all new positions
+            await this.modelPositions.save(inputData.positions);
+        }
 
         try {
 
