@@ -9,14 +9,13 @@ import { PostgresModel, RedisModel } from "../../core/models";
 import { BaseWorker } from "../../core/workers";
 import { RopidGTFSTripsModel } from "../ropidgtfs";
 import {
+    IUpdateDelayTripsIdsData,
     IUpdateGTFSTripIdData,
     VehiclePositionsLastPositionsModel,
     VehiclePositionsPositionsModel,
     VehiclePositionsTransformation,
     VehiclePositionsTripsModel,
 } from "./";
-
-import * as fs from "fs";
 
 import * as turf from "@turf/turf";
 import * as cheapruler from "cheap-ruler";
@@ -134,7 +133,6 @@ export class VehiclePositionsWorker extends BaseWorker {
         const inputData = JSON.parse(msg.content.toString()) as {
             data: IUpdateGTFSTripIdData[];
             positions: any[];
-
         };
 
         // unique ids in input data in key-value (id-positions) structure
@@ -144,31 +142,33 @@ export class VehiclePositionsWorker extends BaseWorker {
         }
 
         // find for each trip gtfs data
-        const promiseValues: Array<string | string[] | CustomError> = await Promise.all(
-            inputData.data.map(async (trip) => {
-                try {
-                    const results = await this.modelTrips.findGTFSTripId(trip);
-                    return Promise.resolve(results);
-                } catch (err) {
-                    return Promise.resolve(err as CustomError);
-                }
-            }),
-        );
+        const promiseValues: Array<IUpdateDelayTripsIdsData | IUpdateDelayTripsIdsData[] | CustomError> =
+            await Promise.all(
+                inputData.data.map(async (trip) => {
+                    try {
+                        const results = await this.modelTrips.findGTFSTripId(trip);
+                        return Promise.resolve(results);
+                    } catch (err) {
+                        return Promise.resolve(err as CustomError);
+                    }
+                }),
+            );
 
         // filter only trips with found gtfs data
         const foundedTripsPromiseValues = [].concat(
-            ...promiseValues.filter((result) => !(result instanceof CustomError)),
+            ...promiseValues
+                .filter((result) => !(result instanceof CustomError)),
         );
         const foundedTripsPromiseErrors = promiseValues.filter((result) => result instanceof CustomError);
 
         let currentPosition: any;
 
-        for (const tripId of foundedTripsPromiseValues) {
-            if (positionsByIds[tripId]) {
-                currentPosition = positionsByIds[tripId];
+        for (const trip of foundedTripsPromiseValues) {
+            if (positionsByIds[trip.id]) {
+                currentPosition = positionsByIds[trip.id];
             } else {
                 const newPosition = {...currentPosition};
-                newPosition.trips_id = tripId;
+                newPosition.trips_id = trip.id;
                 inputData.positions.push(newPosition);
             }
         }
@@ -188,8 +188,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         // gtfsId updating errors
         for (let i = 0, imax = foundedTripsPromiseErrors.length; i < imax; i++) {
             IntegrationErrorHandler.handle(
-                new CustomError(`Error while updating gtfs_trip_id.`, true, this.constructor.name, 5001,
-                    foundedTripsPromiseErrors[i]),
+                foundedTripsPromiseErrors[i] as CustomError,
             );
         }
     }
@@ -287,7 +286,7 @@ export class VehiclePositionsWorker extends BaseWorker {
 
     public updateDelay = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString()) as {
-            updatedTrips: IUpdateGTFSTripIdData[];
+            updatedTrips: IUpdateDelayTripsIdsData[];
             positions: any[];
         };
 
@@ -424,7 +423,10 @@ export class VehiclePositionsWorker extends BaseWorker {
             }
 
             if (position.tracking === 2
-                    || (tripPositions.agency_name_scheduled === "ČESKÉ DRÁHY" && position.tracking === 1)) {
+                    || (tripPositions.start_cis_stop_id >= 5400000
+                            && tripPositions.start_cis_stop_id < 5500000
+                            && position.tracking === 1)
+            ) {
                 if (position.delay === null) {
                     const currentPosition = {
                         geometry: {
@@ -472,11 +474,14 @@ export class VehiclePositionsWorker extends BaseWorker {
                                 next_stop_id: estimatedPoint.properties.next_stop_id,
                                 next_stop_sequence: estimatedPoint.properties.next_stop_sequence,
                                 shape_dist_traveled: estimatedPoint.properties.shape_dist_traveled,
-                                state_position: "on_route",
+                                state_position: estimatedPoint.properties.at_stop ? "at_stop" : "on_route",
                                 state_process: "processed",
+                                this_stop_id: estimatedPoint.properties.at_stop ?
+                                    estimatedPoint.properties.this_stop_id : null,
                                 tracking: position.tracking,
                                 trips_id: tripPositions.trips_id,
                             };
+
                             options.lastPositionTracking = {
                                 ...positionUpdate,
                                 coordinates: estimatedPoint.geometry.coordinates,
@@ -536,8 +541,9 @@ export class VehiclePositionsWorker extends BaseWorker {
                         next_stop_id: tripPositions.gtfsData.shape_points[0].last_stop,
                         next_stop_sequence: tripPositions.gtfsData.shape_points[0].last_stop_sequence,
                         shape_dist_traveled: tripPositions.gtfsData.shape_points[0].shape_dist_traveled,
-                        state_position: "off_route",
+                        state_position: "before_route",
                         state_process: "processed",
+                        this_stop_id: null,
                         tracking: doNotTrack ? -1 : position.tracking,
                         trips_id: tripPositions.trips_id,
                     };
@@ -585,8 +591,9 @@ export class VehiclePositionsWorker extends BaseWorker {
                         next_stop_sequence: null,
                         shape_dist_traveled: tripPositions.gtfsData.shape_points[lastShapePointsIndex]
                             .shape_dist_traveled,
-                        state_position: "on_route",
+                        state_position: "after_route",
                         state_process: "processed",
+                        this_stop_id: null,
                         tracking: doNotTrack ? -1 : position.tracking,
                         trips_id: tripPositions.trips_id,
                     };
@@ -597,7 +604,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 // NEXT
                 setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
             } else {
-
                 // NEXT
                 setImmediate(updatePositionsIterator.bind(null, i + 1, options, cb));
             }
@@ -728,6 +734,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                 minTimeRealDiff = timeRealDiff;
 
                 // save it for result
+                rightPoint.properties.at_stop = closestPts[i].at_stop;
                 rightPoint.properties.bearing = closestPts[i].bearing;
                 rightPoint.geometry.coordinates = closestPts[i].coordinates;
                 rightPoint.properties.shape_dist_traveled =
@@ -746,6 +753,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                     + closestPts[i].last_stop_departure_time_seconds * 1000;
                 rightPoint.properties.time_delay = timeDelay;
                 rightPoint.properties.time_scheduled_seconds = closestPts[i].time_scheduled_seconds;
+                rightPoint.properties.this_stop_id = closestPts[i].this_stop;
             }
 
             // next step
@@ -872,7 +880,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                         );
                         if (r.distanceToStop > thisDistanceToStop) {
                             r.distanceToStop = thisDistanceToStop;
-                            r.stop_sequence = s.stop_sequence;
+                            r.this_stop_sequence = s.stop_sequence;
                             r.at_stop = true;
                         }
                     }
@@ -882,14 +890,14 @@ export class VehiclePositionsWorker extends BaseWorker {
                 // SET THIS STOP
                 if (stopNearby.at_stop) {
                     shapePoint.at_stop = true;
-                    shapePoint.this_stop = tmpStopTimes[stopNearby.stop_sequence - 1].stop_id;
-                    shapePoint.this_stop_sequence = stopNearby.stop_sequence;
+                    shapePoint.this_stop = tmpStopTimes[stopNearby.this_stop_sequence - 1].stop_id;
+                    shapePoint.this_stop_sequence = stopNearby.this_stop_sequence;
                     shapePoint.this_stop_arrival_time_seconds =
-                        tmpStopTimes[stopNearby.stop_sequence - 1].arrival_time_seconds;
+                        tmpStopTimes[stopNearby.this_stop_sequence - 1].arrival_time_seconds;
                     shapePoint.this_stop_departure_time_seconds =
-                        tmpStopTimes[stopNearby.stop_sequence - 1].departure_time_seconds;
-                    shapePoint.last_stop_sequence = Math.min(stopNearby.stop_sequence, stopSequenceMaximum - 1);
-                    shapePoint.next_stop_sequence = Math.min(stopNearby.stop_sequence + 1, stopSequenceMaximum);
+                        tmpStopTimes[stopNearby.this_stop_sequence - 1].departure_time_seconds;
+                    shapePoint.last_stop_sequence = Math.min(stopNearby.this_stop_sequence, stopSequenceMaximum - 1);
+                    shapePoint.next_stop_sequence = Math.min(stopNearby.this_stop_sequence + 1, stopSequenceMaximum);
                 } else {
                     const lastNextSequences = tmpStopTimes.reduce((r, s, j) => {
                         if (j < tmpStopTimes.length - 1) {
@@ -901,7 +909,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                             }
                         }
                         return r;
-                    }, { last_stop_sequence: 0, next_stop_sequence: 1 });
+                    }, { last_stop_sequence: 1, next_stop_sequence: 2 });
                     shapePoint.last_stop_sequence = lastNextSequences.last_stop_sequence;
                     shapePoint.next_stop_sequence = lastNextSequences.next_stop_sequence;
                 }

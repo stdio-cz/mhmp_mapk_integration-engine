@@ -10,6 +10,11 @@ import { IModel, PostgresModel } from "../../core/models";
 
 import * as moment from "moment-timezone";
 
+export interface IUpdateDelayTripsIdsData {
+    id: string;
+    gtfs_block_id?: string;
+}
+
 export interface IUpdateGTFSTripIdData {
     cis_line_short_name: string;
     id: string;
@@ -271,7 +276,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         }
     }
 
-    public findAllAsocTripIds = async (tripIds: string[]): Promise<string[]> => {
+    public findAllAsocTripIds = async (tripIds: string[]): Promise<IUpdateDelayTripsIdsData[]> => {
         const connection = PostgresConnector.getConnection();
         return (Array.isArray(tripIds) && tripIds.length > 0) ? (await connection.query(
             `select id, gtfs_block_id from ${this.tableName} where
@@ -284,17 +289,16 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         )).map((res: any) => ({ id: res.id, gtfs_block_id: res.gtfs_block_id })) : [];
     }
 
-    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
+    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData):
+            Promise<IUpdateDelayTripsIdsData | IUpdateDelayTripsIdsData[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
 
             // array of founded gtfs trips, 0 or 1 or more with same block_id
             let foundGtfsTrips = await this.findGTFSTripIdsTrain(trip);
 
-            // console.log(foundGtfsTrips);
-
             if (foundGtfsTrips && foundGtfsTrips.length) {
-                const newIds: string[] = [trip.id];
+                const newIds: IUpdateDelayTripsIdsData[] = [{ id: trip.id, gtfs_block_id: trip.gtfs_block_id }];
                 // sort ascending by gtfs_trip_id
                 foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id < b.gtfs_trip_id ? -1 : 1);
 
@@ -310,7 +314,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     const newId = `${trip.id}_gtfs_trip_id_${foundTrip.gtfs_trip_id}`;
 
                     foundTrip.id = newId;
-                    newIds.push(newId);
+                    newIds.push({ id: newId, gtfs_block_id: trip.gtfs_block_id });
 
                     await this.save({...trip, ...foundTrip});
 
@@ -332,7 +336,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     id: trip.id,
                 },
             });
-            return [trip.id];
+            return [{ id: trip.id, gtfs_block_id: null }];
         }
     }
 
