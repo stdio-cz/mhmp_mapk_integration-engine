@@ -73,10 +73,6 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         const transformedData = await this.transformation.transform(inputData);
 
-        // // positions saving
-        // await this.modelPositions.save(transformedData.positions);
-
-        // await this.modelTrips.truncate();
         const rows = await this.modelTrips.saveBySqlFunction(
             transformedData.trips,
             ["id"],
@@ -146,10 +142,9 @@ export class VehiclePositionsWorker extends BaseWorker {
             await Promise.all(
                 inputData.data.map(async (trip) => {
                     try {
-                        const results = await this.modelTrips.findGTFSTripId(trip);
-                        return Promise.resolve(results);
+                        return this.modelTrips.findGTFSTripId(trip);
                     } catch (err) {
-                        return Promise.resolve(err as CustomError);
+                        return err as CustomError;
                     }
                 }),
             );
@@ -294,25 +289,24 @@ export class VehiclePositionsWorker extends BaseWorker {
 
         if (inputData.positions?.length > 0) {
             // unique ids in input data in key-value (id-positions) structure
-            const positionsByIds = {};
-            for (const position of inputData.positions) {
-                positionsByIds[position.trips_id] = position;
-            }
+            const positionsByIds = inputData.positions.reduce((acc, position) => {
+                acc[position.trips_id] = position;
+                return acc;
+            }, {});
 
             // unique block_id's and its parent input trips_id in key-value (block_id-trips_id) structure
-            const blockIdsToParentTripsId = inputData.updatedTrips
-                .reduce((reducer, currentTrip, i) => {
-                    if (!reducer[currentTrip.gtfs_block_id]) {
-                        // init key value pair if not exists
-                        reducer[currentTrip.gtfs_block_id] = currentTrip.id;
-                    } else {
-                        // otherwise save only the shorter trip_id (it is the raw input id with no suffixes)
-                        reducer[currentTrip.gtfs_block_id] =
-                            reducer[currentTrip.gtfs_block_id] > currentTrip.id ?
-                                currentTrip.id : reducer[currentTrip.gtfs_block_id];
-                    }
-                    return reducer;
-                }, ({}));
+            const blockIdsToParentTripsId = inputData.updatedTrips.reduce((acc, currentTrip) => {
+                if (!acc[currentTrip.gtfs_block_id]) {
+                    // init key value pair if not exists
+                    acc[currentTrip.gtfs_block_id] = currentTrip.id;
+                } else {
+                    // otherwise save only the shorter trip_id (it is the raw input id with no suffixes)
+                    acc[currentTrip.gtfs_block_id] =
+                        acc[currentTrip.gtfs_block_id] > currentTrip.id ?
+                            currentTrip.id : acc[currentTrip.gtfs_block_id];
+                }
+                return acc;
+            }, ({}));
 
             // duplicate positions for trips with block_ids
             for (const trip of inputData.updatedTrips) {
@@ -366,36 +360,36 @@ export class VehiclePositionsWorker extends BaseWorker {
                     }
                 });
 
-            // func for saving and updating computed positions and trips
-            const updateComputedPositions = async (computedPositions: any) => {
-                const positionsUpdated = await this.modelPositions.bulkUpdate(
-                    _.flatten(computedPositions.map((e) => e.positions)),
-                );
-                const tripsUpdated = await this.modelTrips.bulkUpdate(
-                    _.flatten(computedPositions.map((e) => ({
-                        id: e.tripId,
-                        last_position_id: e.lastPositionId,
-                    }))),
-                );
-                return {
-                    positionsUpdated,
-                    tripsUpdated,
-                };
-            };
-
             // Both update in parallel and in one batch
-            const updatedPositions = await Promise.all([
+            await Promise.all([
                 Promise.all(promisesPositionsToUpdateWithGTFSData).then(async (computedPositions: any) => {
-                    return updateComputedPositions(computedPositions);
+                    return this.updateComputedPositionsAndTrips(computedPositions);
                 }),
                 Promise.all(promisesPositionsToUpdateWithoutGTFSData).then(async (computedPositions: any) => {
-                    return updateComputedPositions(computedPositions);
+                    return this.updateComputedPositionsAndTrips(computedPositions);
                 }),
             ]);
 
         } catch (err) {
             throw new CustomError(`Error while updating delay.`, true, this.constructor.name, 5001, err);
         }
+    }
+
+    // func for saving and updating computed positions and trips
+    private updateComputedPositionsAndTrips = async (computedPositions: any) => {
+        const positionsUpdated = await this.modelPositions.bulkUpdate(
+            _.flatten(computedPositions.map((e) => e.positions)),
+        );
+        const tripsUpdated = await this.modelTrips.bulkUpdate(
+            _.flatten(computedPositions.map((e) => ({
+                id: e.tripId,
+                last_position_id: e.lastPositionId,
+            }))),
+        );
+        return {
+            positionsUpdated,
+            tripsUpdated,
+        };
     }
 
     private computePositions = async (tripPositions: any): Promise<any> => {
@@ -885,7 +879,7 @@ export class VehiclePositionsWorker extends BaseWorker {
                         }
                     }
                     return r;
-                }, { at_stop: false, stop_sequence: null, distanceToStop: Infinity });
+                }, { at_stop: false, stop_sequence: null, distanceToStop: Infinity, this_stop_sequence: null });
 
                 // SET THIS STOP
                 if (stopNearby.at_stop) {
