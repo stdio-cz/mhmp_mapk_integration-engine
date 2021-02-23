@@ -11,7 +11,6 @@ import { RopidGTFSTripsModel } from "../ropidgtfs";
 import {
     IUpdateDelayTripsIdsData,
     IUpdateGTFSTripIdData,
-    VehiclePositionsLastPositionsModel,
     VehiclePositionsPositionsModel,
     VehiclePositionsTransformation,
     VehiclePositionsTripsModel,
@@ -30,7 +29,6 @@ export class VehiclePositionsWorker extends BaseWorker {
     private modelPositions: VehiclePositionsPositionsModel;
     private modelStops: PostgresModel;
     private modelTrips: VehiclePositionsTripsModel;
-    private modelLastPositions: VehiclePositionsLastPositionsModel;
     private transformation: VehiclePositionsTransformation;
     private delayComputationTripsModel: RedisModel;
     private gtfsRtModel: RedisModel;
@@ -49,7 +47,6 @@ export class VehiclePositionsWorker extends BaseWorker {
                 VehiclePositions.stops.outputMongooseSchemaObject),
         );
         this.modelTrips = new VehiclePositionsTripsModel();
-        this.modelLastPositions = new VehiclePositionsLastPositionsModel();
         this.transformation = new VehiclePositionsTransformation();
         this.delayComputationTripsModel = new RedisModel(RopidGTFS.delayComputationTrips.name + "Model", {
             decodeDataAfterGet: JSON.parse,
@@ -65,7 +62,7 @@ export class VehiclePositionsWorker extends BaseWorker {
             prefix: "files",
         }, null);
 
-        this.modelTrips.associate(this.modelLastPositions.sequelizeModel);
+        this.modelTrips.associate(this.modelPositions.sequelizeModel);
     }
 
     public saveDataToDB = async (msg: any): Promise<void> => {
@@ -193,7 +190,7 @@ export class VehiclePositionsWorker extends BaseWorker {
         const results = await this.modelTrips.findAll({
             include: [{
                 as: "last_position",
-                model: this.modelLastPositions.sequelizeModel,
+                model: this.modelPositions.sequelizeModel,
                 where: {
                     tracking: 2,
                 },

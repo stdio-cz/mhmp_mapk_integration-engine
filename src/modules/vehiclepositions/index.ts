@@ -1,5 +1,4 @@
 /* modules/VehiclePositions/index.ts */
-export * from "./VehiclePositionsLastPositionsModel";
 export * from "./VehiclePositionsPositionsModel";
 export * from "./VehiclePositionsTransformation";
 export * from "./VehiclePositionsTripsModel";
