@@ -10,6 +10,11 @@ import { IModel, PostgresModel } from "../../core/models";
 
 import * as moment from "moment-timezone";
 
+export interface IUpdateDelayTripsIdsData {
+    id: string;
+    gtfs_block_id?: string;
+}
+
 export interface IUpdateGTFSTripIdData {
     cis_line_short_name: string;
     id: string;
@@ -28,6 +33,11 @@ export interface IUpdateGTFSTripIdData {
     vehicle_type_id: number | null;
     wheelchair_accessible: boolean | null;
 
+    gtfs_trip_id?: string;
+    gtfs_trip_headsign?: string;
+    gtfs_route_id?: string;
+    gtfs_route_short_name?: string;
+    gtfs_block_id?: string;
 }
 
 export interface IFoundGTFSTripData {
@@ -224,39 +234,87 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         }
     }
 
-    public findAllAsocTripIds = async (tripIds: string[]): Promise<string[]> => {
+    public bulkUpdate = async (data): Promise<any> => {
+
+        const connection = PostgresConnector.getConnection();
+        const primaryKeys = ["id"];
+        const u = []; // updated
+
+        try {
+            // json stringify and escape quotes
+            const stringifiedData = JSON.stringify(data).replace(/'/g, "\\'").replace(/\"/g, "\\\"");
+
+            // TODO doplnit batch_id a author
+            const sqlQuery = "SELECT meta.import_from_json("
+                + "-1, " // p_batch_id bigint
+                + "E'" + stringifiedData + "'::json, " // p_data json
+                + "'" + "public" + "', " // p_table_schema character varying
+                + "'" + "vehiclepositions_trips" + "', " // p_table_name character varying
+                + "'" + JSON.stringify(primaryKeys) + "'::json, " // p_pk json
+                + "NULL, " // p_sort json
+                + "'integration-engine'" // p_worker_name character varying
+                + ") ";
+
+            const rawRows = await connection.query(sqlQuery,
+                {
+                    type: Sequelize.QueryTypes.SELECT,
+                },
+            );
+
+            JSON.parse(rawRows[0].import_from_json
+                .replace('("', "")
+                .replace('",)', "")
+                .replace(/""/g, '"'),
+            ).forEach((r: { id: string, upd: boolean }) => {
+                if (r.upd === true) {
+                    u.push(r.id);
+                }
+            });
+            return { updated: u };
+        } catch (err) {
+            return false;
+        }
+    }
+
+    public findAllAsocTripIds = async (tripIds: string[]): Promise<IUpdateDelayTripsIdsData[]> => {
         const connection = PostgresConnector.getConnection();
         return (Array.isArray(tripIds) && tripIds.length > 0) ? (await connection.query(
-            `select id from ${this.tableName} where
+            `select id, gtfs_block_id from ${this.tableName} where
             id like any (array[${tripIds.map(
                 (id: string) => {
                     return `'${id}%'`;
                 },
             ).join(",")}])`,
             { type: Sequelize.QueryTypes.SELECT },
-        )).map((res: any) => res.id) : [];
+        )).map((res: any) => ({ id: res.id, gtfs_block_id: res.gtfs_block_id })) : [];
     }
 
-    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData): Promise<string | string[]> => {
+    public findGTFSTripId = async (trip: IUpdateGTFSTripIdData):
+            Promise<IUpdateDelayTripsIdsData | IUpdateDelayTripsIdsData[]> => {
         if (trip.start_cis_stop_id >= 5400000 && trip.start_cis_stop_id < 5500000) {
             // trains
+
+            // array of founded gtfs trips, 0 or 1 or more with same block_id
             let foundGtfsTrips = await this.findGTFSTripIdsTrain(trip);
 
             if (foundGtfsTrips && foundGtfsTrips.length) {
-                const newIds: string[] = [trip.id];
-                foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id > b.gtfs_trip_id ? -1 : 1);
+                const newIds: IUpdateDelayTripsIdsData[] = [{ id: trip.id, gtfs_block_id: trip.gtfs_block_id }];
+                // sort ascending by gtfs_trip_id
+                foundGtfsTrips = foundGtfsTrips.sort((a, b) => a.gtfs_trip_id < b.gtfs_trip_id ? -1 : 1);
 
+                // update existing trip with gtfs_trip_id, gtfs_block_id and other gtfs data
                 await this.update(foundGtfsTrips.pop(), {
                     where: {
                         id: trip.id,
                     },
                 });
 
+                // for other trips insert new rows with suffixed id
                 for (const foundTrip of foundGtfsTrips) {
                     const newId = `${trip.id}_gtfs_trip_id_${foundTrip.gtfs_trip_id}`;
 
                     foundTrip.id = newId;
-                    newIds.push(newId);
+                    newIds.push({ id: newId, gtfs_block_id: trip.gtfs_block_id });
 
                     await this.save({...trip, ...foundTrip});
 
@@ -278,7 +336,7 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
                     id: trip.id,
                 },
             });
-            return [trip.id];
+            return [{ id: trip.id, gtfs_block_id: null }];
         }
     }
 

@@ -54,8 +54,8 @@ describe("VehiclePositionsWorker", () => {
         sandbox.stub(worker.modelTrips, "findGTFSTripId")
             .callsFake(() => Object.assign(
                 [
-                    "2021-02-03T10:23:00Z_none_S45_1573",
-                    "2021-02-03T10:23:00Z_none_S45_1573_gtfs_trip_id_1345_1573_201213",
+                    { id: "2021-02-03T10:23:00Z_none_S45_1573", block_id: 1 },
+                    { id: "2021-02-03T10:23:00Z_none_S45_1573_gtfs_trip_id_1345_1573_201213", block_id: 1 },
                 ],
             ));
         sandbox.stub(worker.modelTrips, "update");
@@ -198,7 +198,10 @@ describe("VehiclePositionsWorker", () => {
     });
 
     it("should calls the correct methods by updateDelay method", async () => {
-        await worker.updateDelay({ content: Buffer.from(JSON.stringify(new Array("0"))) });
+        await worker.updateDelay({ content: Buffer.from(JSON.stringify({
+            positions: [],
+            updatedTrips: new Array(0),
+        })) });
         sandbox.assert.calledOnce(worker.modelPositions.getPositionsForUdpateDelay);
         sandbox.assert.calledOnce(worker.delayComputationTripsModel.getData);
         sandbox.assert.calledOnce(worker.computePositions);

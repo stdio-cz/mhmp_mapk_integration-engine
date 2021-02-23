@@ -44,13 +44,13 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
         this.tripsModel.hasMany(this.sequelizeModel, { foreignKey: "trips_id", sourceKey: "id" });
     }
 
-    public getPositionsForUdpateDelay = async (tripIds: [string]): Promise<any> => {
+    public getPositionsForUdpateDelay = async (tripIds: string[]): Promise<any> => {
         // TODO - check that origin_time is not duplicate for tracking == 2.
         // const originTimeColumn = `"vehiclepositions_positions"."origin_time"`;
         const results = await this.tripsModel.findAll({
             attributes: [
                 // Sequelize.literal(`DISTINCT ON (${originTimeColumn}) ${originTimeColumn}`),
-                "id", "gtfs_trip_id", "start_timestamp", "agency_name_scheduled",
+                "id", "gtfs_trip_id", "start_timestamp", "agency_name_scheduled", "start_cis_stop_id",
             ],
             include: [{
                 attributes: ["lat", "lng", "origin_time", "origin_timestamp",
@@ -78,6 +78,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
                     agency_name_scheduled: c.agency_name_scheduled,
                     gtfs_trip_id: c.gtfs_trip_id,
                     positions: [],
+                    start_cis_stop_id: c.start_cis_stop_id,
                     start_timestamp: c.start_timestamp,
                     trips_id: c.id,
                 });
