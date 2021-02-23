@@ -11,7 +11,7 @@ export class VehiclePositionsPositionsModel extends PostgresModel implements IMo
     /** Model name */
     public name: string;
     /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
+    public sequelizeModel: Sequelize.Model<any, any>;
     /** The Sequelize Model for temporary table */
     protected tmpSequelizeModel: Sequelize.Model<any, any> | null;
     /** Validation helper */

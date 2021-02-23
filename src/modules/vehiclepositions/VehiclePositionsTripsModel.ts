@@ -77,10 +77,10 @@ export class VehiclePositionsTripsModel extends PostgresModel implements IModel 
         );
     }
 
-    public associate = (lastPositionsModel: Sequelize.Model<any, any>): any => {
-        this.sequelizeModel.hasOne(lastPositionsModel, {
+    public associate = (positionsModel: Sequelize.Model<any, any>): any => {
+        this.sequelizeModel.belongsTo(positionsModel, {
             as: "last_position",
-            foreignKey: "trips_id",
+            foreignKey: "last_position_id",
         });
     }
 
