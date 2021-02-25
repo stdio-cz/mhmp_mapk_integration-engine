@@ -3,6 +3,11 @@
 import { BicycleCounters } from "@golemio/schema-definitions";
 import { BaseTransformation, ITransformation } from "../../core/transformations";
 
+enum EcoUsertype {
+    PEDESTRIAN = 1,
+    BICYCLE = 2,
+}
+
 export class EcoCounterTransformation extends BaseTransformation implements ITransformation {
 
     public name: string;
@@ -57,7 +62,7 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
         const res = {
             directions: element.channels
                 ? element.channels
-                .filter((direction) => direction.userType === 2)
+                .filter((direction) => direction.userType === EcoUsertype.BICYCLE)
                 .map((direction) => ({
                     id: "ecoCounter-" + direction.id,
                     locations_id: "ecoCounter-" + element.id,
@@ -67,7 +72,7 @@ export class EcoCounterTransformation extends BaseTransformation implements ITra
                 : [],
             directionsPedestrians: element.channels
                 ? element.channels
-                .filter((direction) => direction.userType === 1)
+                .filter((direction) => direction.userType === EcoUsertype.PEDESTRIAN)
                 .map((direction) => ({
                     id: "ecoCounter-" + direction.id,
                     locations_id: "ecoCounter-" + element.id,

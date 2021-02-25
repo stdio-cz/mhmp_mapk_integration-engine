@@ -59,6 +59,7 @@ export class CameaMeasurementsTransformation extends BaseTransformation implemen
                     measured_from: measuredFrom.valueOf(),
                     measured_to: measuredTo.valueOf(),
                     value: direction.detections,
+                    value_pedestrians: direction.pedestrians,
                 }))
                 : [],
             temperature: !isNaN(parseFloat(element.temperature))
