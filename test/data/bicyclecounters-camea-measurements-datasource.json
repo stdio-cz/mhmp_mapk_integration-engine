@@ -7,17 +7,20 @@
     "lat": 50.0718897,
     "lon": 14.3986383,
     "detections": 1,
+    "pedestrians": 8,
     "temperature": "5",
     "directions": [
       {
         "id": "BC_AL-ST",
         "name": "Štefánikova (centrum)",
-        "detections": 0
+        "detections": 0,
+        "pedestrians": 2
       },
       {
         "id": "BC_AL-PL",
         "name": "Plzeňská (z centra)",
-        "detections": 1
+        "detections": 1,
+        "pedestrians": 6
       }
     ]
   },
@@ -29,17 +32,20 @@
     "lat": 50.0718897,
     "lon": 14.3986383,
     "detections": 1,
+    "pedestrians": 5,
     "temperature": "5",
     "directions": [
       {
         "id": "BC_AL-ST",
         "name": "Štefánikova (centrum)",
-        "detections": null
+        "detections": null,
+        "pedestrians": 5
       },
       {
         "id": "BC_AL-PL",
         "name": "Plzeňská (z centra)",
-        "detections": 1
+        "detections": 1,
+        "pedestrians": null
       }
     ]
   },
@@ -51,6 +57,7 @@
     "lat": 50.0718897,
     "lon": 14.3986383,
     "detections": 1,
+    "pedestrians": null,
     "temperature": "5",
     "directions": [
       {
