@@ -1,9 +1,18 @@
-FROM node:12
+FROM node:12 AS build
 WORKDIR /user/src/app/
-
 COPY package.json yarn.lock ./
 RUN yarn install
-COPY --chown=node:node . .
-RUN npm run build-minimal && \
-    rm -rf "$(find . -maxdepth 1 ! -name . ! -name dist ! -name package.json ! -name config ! -name node_modules ! -name commitsha ! -name test -print)"
-CMD ["npm","start"]
+COPY . .
+RUN yarn build-minimal
+
+
+FROM node:12
+WORKDIR /user/src/app/
+COPY --chown=node:node --from=build /user/src/app/node_modules node_modules
+COPY --chown=node:node --from=build /user/src/app/dist dist
+COPY --chown=node:node config config
+COPY --chown=node:node package.json ./
+
+USER node
+
+CMD ["yarn", "start"]
