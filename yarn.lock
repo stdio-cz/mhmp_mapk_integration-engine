@@ -312,10 +312,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.0-dev.262002905":
-  version "1.0.0-dev.262002905"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.0-dev.262002905.tgz#f838f08dd3fae9250c7ac8f7a60726e9f8060216"
-  integrity sha512-sxupe2UrtU7OpuiuYsm8O0oAeFR3yv7sdknjN1TiGV6mfvb+WXK9YZF9FsLJfbuPEkqHZiipNJCnRld2tSVHDQ==
+"@golemio/core@1.0.0-dev.262275946":
+  version "1.0.0-dev.262275946"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.0-dev.262275946.tgz#422cfd5fbdb81c11e0d6a41b59ff30880e3b6625"
+  integrity sha512-7n+QVGdAhdAxHEeUcHXHseS/hMLaUO5aVyL3gnaRHSdzu2VEzqF5cQUGDhLiJy+IUK10vzFHn380XT0XARopJA==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -342,6 +342,7 @@
     mongoose "^5.3.6"
     morgan "^1.10.0"
     path-to-regexp "^6.2.0"
+    pg "7.6.1"
     redis "^3.0.2"
     request "2.88.0"
     request-promise "^4.2.5"
@@ -6196,11 +6197,11 @@ pg@7.6.1:
     semver "4.3.2"
 
 pgpass@1.x:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.2.tgz#2a7bb41b6065b67907e91da1b07c1847c877b306"
-  integrity sha1-Knu0G2BltnkH6R2hsHwYR8h3swY=
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.4.tgz#85eb93a83800b20f8057a2b029bf05abaf94ea9c"
+  integrity sha512-YmuA56alyBq7M59vxVBfPJrGSozru8QAdoNlWuW3cz8l+UX3cWge0vTvjKhsSHSJpo3Bom8/Mm6hf0TR5GY0+w==
   dependencies:
-    split "^1.0.0"
+    split2 "^3.1.1"
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
@@ -7161,19 +7162,12 @@ split2@^2.0.0:
   dependencies:
     through2 "^2.0.2"
 
-split2@^3.0.0:
+split2@^3.0.0, split2@^3.1.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/split2/-/split2-3.2.2.tgz#bf2cf2a37d838312c249c89206fd7a17dd12365f"
   integrity sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==
   dependencies:
     readable-stream "^3.0.0"
-
-split@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/split/-/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
-  integrity sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==
-  dependencies:
-    through "2"
 
 sprintf-js@~1.0.2:
   version "1.0.3"
@@ -7549,7 +7543,7 @@ through2@^4.0.0:
   dependencies:
     readable-stream "3"
 
-through@2, "through@>=2.2.7 <3", through@^2.3.8:
+"through@>=2.2.7 <3", through@^2.3.8:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
