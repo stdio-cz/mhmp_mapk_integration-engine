@@ -1,21 +1,21 @@
-"use strict";
-
-import { CustomError } from "@golemio/errors";
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import "mocha";
-import * as sinon from "sinon";
-import * as request from "supertest";
+import { CustomError } from "@golemio/core/dist/shared/golemio-errors";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import express from "@golemio/core/dist/shared/express";
+import sinon from "sinon";
+import request from "supertest";
 import App from "../src/App";
-import { config } from "../src/core/config";
-import { AMQPConnector, MongoConnector, PostgresConnector, RedisConnector } from "../src/core/connectors";
+import { config } from "@golemio/core/dist/integration-engine/config";
+import {
+    AMQPConnector,
+    MongoConnector,
+    PostgresConnector,
+    RedisConnector,
+} from "@golemio/core/dist/integration-engine/connectors";
 
 chai.use(chaiAsPromised);
 
 describe("App", () => {
-
     let expressApp: express.Application;
     let app: App;
     let sandbox: any;
@@ -46,11 +46,7 @@ describe("App", () => {
     });
 
     it("should have health check on /", (done) => {
-        request(expressApp)
-            .get("/")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(expressApp).get("/").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("should have health check on /health-check", (done) => {
@@ -67,5 +63,4 @@ describe("App", () => {
         expect(PostgresConnector.getConnection).not.to.throw(CustomError);
         expect(RedisConnector.getConnection).not.to.throw(CustomError);
     });
-
 });

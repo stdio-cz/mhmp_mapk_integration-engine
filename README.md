@@ -7,41 +7,41 @@ Integration Engine of the Golemio data platform.
 
 Developed by http://operatorict.cz
 
-
 ## Docker instalation
 
 ### Prerequisites
-- Docker Engine (https://docs.docker.com/)
-- RabbitMQ (https://www.rabbitmq.com/)
-- Mongo (https://www.mongodb.com)
-- Postgres (https://www.postgresql.org/)
-- Redis (https://redis.io/)
-- Golemio Schema Definitions
+
+-   Docker Engine (https://docs.docker.com/)
+-   RabbitMQ (https://www.rabbitmq.com/)
+-   Mongo (https://www.mongodb.com)
+-   Postgres (https://www.postgresql.org/)
+-   Redis (https://redis.io/)
+-   Golemio Schema Definitions
 
 ### Instalation & run using Docker Compose
 
 1. create docker network if not already exists `docker network create golemio`
 2. `docker-compose up -d` will start all necessary services
 
-
 ## Local instalation
 
 ### Prerequisites
 
-- node.js (https://nodejs.org)
-- RabbitMQ (https://www.rabbitmq.com/)
-- Mongo (https://www.mongodb.com)
-- Postgres (https://www.postgresql.org/)
-- Redis (https://redis.io/)
-- yarn (https://yarnpkg.com)
-- TypeScript (https://www.typescriptlang.org/)
-- Golemio Schema Definitions
+-   node.js (https://nodejs.org)
+-   RabbitMQ (https://www.rabbitmq.com/)
+-   Mongo (https://www.mongodb.com)
+-   Postgres (https://www.postgresql.org/)
+-   Redis (https://redis.io/)
+-   yarn (https://yarnpkg.com)
+-   TypeScript (https://www.typescriptlang.org/)
+-   Golemio Schema Definitions
 
 ### Installation
 
 Install all prerequisites
 
 Install all dependencies using command:
+
 ```
 yarn install
 ```
@@ -69,9 +69,11 @@ For more informations see [`@golemio/schema-definitions` README](https://gitlab.
 #### Production
 
 To compile typescript code into js one-time (production build):
+
 ```
 npm run build
 ```
+
 To run the app:
 
 ```
@@ -81,10 +83,13 @@ npm start
 #### Dev/debug
 
 Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
+
 ```
 npm run dev-start
 ```
+
 or run with a debugger:
+
 ```
 npm run dev-start-debug
 ```
@@ -94,15 +99,19 @@ Application is now running locally on port 3006 or on port specified in the envi
 ## Tests
 
 To run all test defined in /test directory simply run this command:
+
 ```
 npm test
 ```
+
 from the application's root directory. All tests should pass.
 
 To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.test.ts file run this command:
+
 ```
 npm run datasources-test
 ```
+
 from the application's root directory.
 
 ## Logging
@@ -117,7 +126,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
-More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and `configuration_files.md` for description on how properly work with config files.
+More documentation in `docs/`. If you want to add a new dataset or create new API routes, check out our existing [modules](https://gitlab.com/operator-ict/golemio/code/modules).
 
 ## Contribution guidelines
 

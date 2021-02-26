@@ -1,0 +1,11 @@
+{
+    "check-coverage": true,
+    "extension": [".ts", ".tsx"],
+    "exclude": ["**/*rc.js", "**/*.config.js", "**/*.d.ts", "coverage", "dist", "docs", "node_modules", "test"],
+    "reporter": ["text", "lcov"],
+    "all": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0
+}
