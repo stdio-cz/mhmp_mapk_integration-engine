@@ -1,6 +1,6 @@
 # Configuration files
 
-All configuration files used by ConfigLoader (`src/core/cofig/ConfigLoader.ts`) are located in `config/` directory. The configuration files are saved in JSON format.
+All configuration files used by ConfigLoader (`@golemio/core`) are located in `config/` directory. The configuration files are saved in JSON format.
 
 ## Datasources (`datasources.json`)
 
@@ -34,4 +34,5 @@ Example:
     "Parkings": ["saveDataToHistory", "updateAverageOccupancy"]
 }
 ```
+
 Where the `BicycleCounters` dataset has blacklisted all queues and the `Parkings` dataset has blacklisted only mentioned queues, in this case `saveDataToHistory` and `updateAverageOccupancy`.
