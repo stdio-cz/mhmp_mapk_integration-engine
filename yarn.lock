@@ -579,10 +579,10 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/vehicle-positions@1.0.0-dev.262331700":
-  version "1.0.0-dev.262331700"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.262331700.tgz#913886212bd2f91862f0cd71c79bfd2559bbe592"
-  integrity sha512-0AifAI6Cou+DEMJaZ78Zdp1+mqI9PFFA6tpANw/cPusZp0Qzg2QQOczlnY4SYWiO8YIwqf8Gr3rnYklf6Csb4w==
+"@golemio/vehicle-positions@1.0.0-dev.264054083":
+  version "1.0.0-dev.264054083"
+  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.264054083.tgz#d4d476c0482e122c86286941ca5ab6b8fa3f7dda"
+  integrity sha512-rTGfGfgng03uX8SyV1fim30fcm74KHcIg8BdTT/PouNDSLrWjK6uHQdK3hvhhHmOhRDlm3fMvY7A/L85wNPeRQ==
   dependencies:
     "@golemio/ropid-gtfs" "1.0.0-dev.262004541"
     "@turf/turf" "^5.1.6"
