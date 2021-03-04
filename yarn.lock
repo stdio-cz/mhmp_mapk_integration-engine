@@ -519,6 +519,14 @@
     csv-parser "^3.0.0"
     lodash "^4.17.19"
 
+"@golemio/ropid-gtfs@1.0.0-dev.265541738":
+  version "1.0.0-dev.265541738"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.265541738.tgz#4a5d1eba826bdb948d16a7dcbe26a01c8b9cc850"
+  integrity sha512-efOWW+NkiKiKdnhdFzrjaw/soBG3LMRjgsjZyZouQKPJEyNNF0SyHdP2KvmERFXKyAmXog9gvoM3ffN5ApDf4A==
+  dependencies:
+    csv-parser "^3.0.0"
+    lodash "^4.17.19"
+
 "@golemio/shared-bikes@1.0.0-dev.262046920":
   version "1.0.0-dev.262046920"
   resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.0-dev.262046920.tgz#e397a0478d3191f3da3b5e9042bca9c49e2493f6"
