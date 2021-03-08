@@ -188,8 +188,7 @@ export class RopidGTFSWorker extends BaseWorker {
     public saveDataToDB = async (msg: any): Promise<void> => {
         const inputData = JSON.parse(msg.content.toString());
         const model = this.getModelByName(inputData.name);
-        // await model.save(inputData.data, true);
-        await model.saveBySqlFunction(inputData.data, this.getPrimaryKeyByName(inputData.name), true);
+        await model.save(inputData.data, true);
 
         // save meta
         const dbLastModified = await this.metaModel.getLastModified("PID_GTFS");
