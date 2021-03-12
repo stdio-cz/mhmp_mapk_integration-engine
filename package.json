@@ -81,7 +81,7 @@
         "@golemio/municipal-libraries": "1.0.0-dev.262042058",
         "@golemio/municipal-police-stations": "1.0.0-dev.262042642",
         "@golemio/parking-zones": "1.0.0-dev.262042988",
-        "@golemio/parkings": "1.0.0-dev.262043352",
+        "@golemio/parkings": "1.0.0-dev.269537359",
         "@golemio/parkomats": "1.0.0-dev.262043904",
         "@golemio/playgrounds": "1.0.0-dev.262044483",
         "@golemio/public-toilets": "1.0.0-dev.262044763",
