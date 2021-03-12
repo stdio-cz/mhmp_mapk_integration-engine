@@ -721,6 +721,13 @@
   dependencies:
     object-hash "^2.0.0"
 
+"@golemio/waze-tt@1.0.0-dev.269547532":
+  version "1.0.0-dev.269547532"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.0-dev.269547532.tgz#f9061dd57af29beaa5a53d9ac4db25d2024a5ba0"
+  integrity sha512-6qxjYnMQWoKuBoRRq8aD5iMYxjHsA7N8gmCQwHOwbePEGhiBYL654DTmQovnSH2nXM+RctHOegK1OxcowlnDhA==
+  dependencies:
+    object-hash "^2.0.0"
+
 "@google-cloud/common@^3.5.0":
   version "3.5.0"
   resolved "https://registry.npmjs.org/@google-cloud/common/-/common-3.5.0.tgz"

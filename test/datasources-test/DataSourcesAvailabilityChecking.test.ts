@@ -47,6 +47,7 @@ import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-
 import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions";
 import { WasteCollectionYards } from "@golemio/waste-collection-yards/dist/schema-definitions";
 import { WazeCCP } from "@golemio/waze-ccp/dist/schema-definitions";
+import { WazeTT } from "@golemio/waze-tt/dist/schema-definitions";
 
 import { EnesaApi, UnimonitorCemApi } from "@golemio/energetics/dist/integration-engine/helpers";
 
@@ -1622,6 +1623,29 @@ describe("DataSourcesAvailabilityChecking", () => {
                     }
                 );
             });
+        });
+    });
+
+    describe("WazeTT", () => {
+        let dataSourcesWazeTTArr: DataSource[];
+        beforeEach(() => {
+            dataSourcesWazeTTArr = config.datasources.WazeTT.map((sourceUrl: string) => {
+                return new DataSource(
+                    WazeTT.name + "DataSource",
+                    new HTTPProtocolStrategy({
+                        headers: {},
+                        method: "GET",
+                        url: sourceUrl,
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(WazeTT.name + "DataSource", WazeTT.datasourceWazeTTJsonSchema)
+                );
+            });
+        });
+
+        it("should return WazeTT feed object", async () => {
+            const data = await dataSourcesWazeTTArr[0].getAll();
+            expect(data).to.be.an.instanceOf(Object);
         });
     });
 });
