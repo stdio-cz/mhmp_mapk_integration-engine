@@ -36,6 +36,7 @@ const datasets = [
     "vehicle-positions",
     "waste-collection-yards",
     "waze-ccp",
+    "waze-tt",
 ];
 
 const definitions = datasets.reduce(async (accProm, dataset) => {
