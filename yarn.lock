@@ -583,12 +583,13 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.0-dev.262043352":
-  version "1.0.0-dev.262043352"
-  resolved "https://registry.npmjs.org/@golemio/parkings/-/parkings-1.0.0-dev.262043352.tgz"
-  integrity sha512-YYZMlr5QMZUD8ktcsmCuKkwu0+FCILum6zeU2bN3aV8mZEu45YIX/KVXwxwqyHXicOicruKdUwVZMKtzTS7Yew==
+"@golemio/parkings@1.0.0-dev.269537359":
+  version "1.0.0-dev.269537359"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.0-dev.269537359.tgz#891147e1b1618a34a87783974586698939144852"
+  integrity sha512-KyxkofTc8dDLCZXyTi0PN42M7kuqiRVKPOR7nlsEzOMZKHvp/B4OiBipjEWWl+m9vcCCHU+VYUeX94Ww+ccLsQ==
   dependencies:
     "@golemio/city-districts" "1.0.0-dev.262011736"
+    uuid-by-string "^3.0.2"
 
 "@golemio/parkomats@1.0.0-dev.262043904":
   version "1.0.0-dev.262043904"
