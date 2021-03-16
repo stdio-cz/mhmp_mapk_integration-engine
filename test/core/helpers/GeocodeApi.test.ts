@@ -35,7 +35,7 @@ describe("GeocodeApi", () => {
     });
 
     it("should throws error if getting address by lat lng using Open Street Map API failed", async () => {
-        await expect(GeocodeApi.getGeoByAddress("aaa", "bbb")).to.be.rejected;
+        await expect(GeocodeApi.getGeoByAddress("aaaaaaa", "bbb")).to.be.rejected;
     });
 
 });
