@@ -90,7 +90,7 @@
         "@golemio/ropid-gtfs": "1.0.0-dev.265541738",
         "@golemio/shared-bikes": "1.0.0-dev.262046920",
         "@golemio/shared-cars": "1.0.0-dev.262047113",
-        "@golemio/sorted-waste-stations": "1.0.0-dev.262047758",
+        "@golemio/sorted-waste-stations": "1.0.0-dev.271164286",
         "@golemio/traffic-cameras": "1.0.0-dev.262048082",
         "@golemio/traffic-detectors": "1.0.0-dev.262048284",
         "@golemio/vehicle-positions": "1.0.0-dev.264302917",
