@@ -58,12 +58,9 @@ export class SortedWasteStationsWorkerPg extends BaseWorker {
 
         this.SFTPSettings = {
             algorithms: {
-                cipher: [
-                    "aes256-cbc",
-                  ],
                 serverHostKey: ["ssh-rsa", "ssh-dss"],
-              },
-              encoding: "win1250",
+            },
+            encoding: "win1250",
             host: config.datasources.SortedWastePicks.host,
             password: config.datasources.SortedWastePicks.password,
             port: config.datasources.SortedWastePicks.port,
