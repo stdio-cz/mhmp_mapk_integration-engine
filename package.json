@@ -71,7 +71,7 @@
         "@golemio/counters": "1.0.0-dev.262015419",
         "@golemio/energetics": "1.0.0-dev.262016134",
         "@golemio/firebase-pid-litacka": "1.0.0-dev.262033851",
-        "@golemio/flow": "1.0.0-dev.267003101",
+        "@golemio/flow": "1.0.0-dev.270742457",
         "@golemio/gardens": "1.0.0-dev.262035413",
         "@golemio/general": "1.0.0-dev.262035892",
         "@golemio/medical-institutions": "1.0.0-dev.262036714",
