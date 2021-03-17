@@ -642,10 +642,10 @@
     csv-parser "^3.0.0"
     lodash "^4.17.19"
 
-"@golemio/schema-definitions@2.0.0-dev.271926078":
-  version "2.0.0-dev.271926078"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0-dev.271926078.tgz#f42e621fbba61a065f6151de347f2301ca46d513"
-  integrity sha512-YVrATHKPaRD1+3aNy0dPLP+IywigVIPzGrn7+XJItm6heJKcGdfx8I5YtiPBsWSkaV4o9NzW37jT2GqNlHJBzQ==
+"@golemio/schema-definitions@2.0.0-dev.271992742":
+  version "2.0.0-dev.271992742"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0-dev.271992742.tgz#0c86c5cbe90d924554d1c2429f13e4cc1ee56ade"
+  integrity sha512-1i2n3n0TX8WidtaykFyKS7mAS0SLh66NgDnYbfr9XXsG70M41lGl4Fwp4zXDtczhyxs+3UmgLSdFmdvD0SMycA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
