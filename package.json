@@ -96,7 +96,7 @@
         "@golemio/vehicle-positions": "1.0.0-dev.264302917",
         "@golemio/waste-collection-yards": "1.0.0-dev.262049418",
         "@golemio/waze-ccp": "1.0.0-dev.262049607",
-        "@golemio/waze-tt": "1.0.0-dev.269547532",
+        "@golemio/waze-tt": "1.0.0-dev.271757454",
         "dotenv": "6.1.0",
         "morgan": "^1.9.1"
     }
