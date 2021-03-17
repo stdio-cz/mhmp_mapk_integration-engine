@@ -634,10 +634,10 @@
     csv-parser "^3.0.0"
     lodash "^4.17.19"
 
-"@golemio/ropid-gtfs@1.0.0-dev.265541738":
-  version "1.0.0-dev.265541738"
-  resolved "https://registry.npmjs.org/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.265541738.tgz"
-  integrity sha512-efOWW+NkiKiKdnhdFzrjaw/soBG3LMRjgsjZyZouQKPJEyNNF0SyHdP2KvmERFXKyAmXog9gvoM3ffN5ApDf4A==
+"@golemio/ropid-gtfs@1.0.0-dev.271844356":
+  version "1.0.0-dev.271844356"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.271844356.tgz#d046d458a8724056e3590d6b42a8b0c614d25140"
+  integrity sha512-cLMVTaxexkqenrZCZcrV81Z+cHSrnKcLUjSG2b/BzWTF+k/pDH490mwKOxoGaY8Iujn6g7HVb7VrLDx8kycZ3g==
   dependencies:
     csv-parser "^3.0.0"
     lodash "^4.17.19"

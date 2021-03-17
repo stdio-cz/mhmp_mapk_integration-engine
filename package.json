@@ -87,7 +87,7 @@
         "@golemio/playgrounds": "1.0.0-dev.262044483",
         "@golemio/public-toilets": "1.0.0-dev.262044763",
         "@golemio/purge": "1.0.0-dev.262050363",
-        "@golemio/ropid-gtfs": "1.0.0-dev.265541738",
+        "@golemio/ropid-gtfs": "1.0.0-dev.271844356",
         "@golemio/shared-bikes": "1.0.0-dev.262046920",
         "@golemio/shared-cars": "1.0.0-dev.262047113",
         "@golemio/sorted-waste-stations": "1.0.0-dev.271164286",
