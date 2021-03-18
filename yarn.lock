@@ -642,10 +642,10 @@
     csv-parser "^3.0.0"
     lodash "^4.17.19"
 
-"@golemio/schema-definitions@2.0.0-dev.271992742":
-  version "2.0.0-dev.271992742"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0-dev.271992742.tgz#0c86c5cbe90d924554d1c2429f13e4cc1ee56ade"
-  integrity sha512-1i2n3n0TX8WidtaykFyKS7mAS0SLh66NgDnYbfr9XXsG70M41lGl4Fwp4zXDtczhyxs+3UmgLSdFmdvD0SMycA==
+"@golemio/schema-definitions@2.0.0-dev.272520228":
+  version "2.0.0-dev.272520228"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0-dev.272520228.tgz#62c58c74e53372d14e3cae523c6c11873434cb3f"
+  integrity sha512-3TziUWYz0oTh7l31/X+sC3t3tjrFugjp4w9iJ7THluynFGOirII14JIZvR8KJx4KRmMGZXrVgEL+ehYF+WcBDA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -741,10 +741,10 @@
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.0-dev.271757454":
-  version "1.0.0-dev.271757454"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.0-dev.271757454.tgz#fb484838c06da7d338af84f9dfdf656e1eff8f7d"
-  integrity sha512-NlV9BmdsU7qlcdmSqU/eXGdd3AcKGbrMCZl826X4IbgUOaEIaFhWEO/fOKy4uyLX/9EXFuRcC07MNJ/EC7sfjw==
+"@golemio/waze-tt@1.0.0-dev.272607695":
+  version "1.0.0-dev.272607695"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.0-dev.272607695.tgz#5672d3a2e8f748d3caf872585748a203b1153807"
+  integrity sha512-0IlqGeLDhTG+Svd5UdS34qRZbMjFwNU2YRoAlkRulLyxzYmoeb8qQ2fVhnqwpWOTjAWtfD4rNwY+AoRpSX1Gdg==
   dependencies:
     object-hash "^2.0.0"
 
