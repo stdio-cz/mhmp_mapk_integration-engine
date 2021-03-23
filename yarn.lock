@@ -634,13 +634,15 @@
     csv-parser "^3.0.0"
     lodash "^4.17.19"
 
-"@golemio/ropid-gtfs@1.0.0-dev.272651570":
-  version "1.0.0-dev.272651570"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.272651570.tgz#f26517387a82c4de6b5384ed4a6ca4ce4f19d23c"
-  integrity sha512-e/vZCGxpLe26UgKm/2ojLfWfzo3HG32MrOzyXRd3NcsZlSGGE3DIgme9ZkgU/s3zEKWi+Ac1osL5xJg0LL/jRQ==
+"@golemio/ropid-gtfs@1.0.0-dev.274965649":
+  version "1.0.0-dev.274965649"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.274965649.tgz#ff2396dd293e372f4da3c01b02fc8bbafe7832ad"
+  integrity sha512-WdFxGIwoEjD0gL0w+7Z6bTSS2vgYiosMiA19X+JPmiTjQXIIG1tDa3xb9ylIy5NGHpwK5OcJA+43DFNWi8oXRw==
   dependencies:
     csv-parser "^3.0.0"
+    csv-stringify "^5.6.2"
     lodash "^4.17.19"
+    pg-copy-streams "^5.1.1"
 
 "@golemio/schema-definitions@2.0.0-dev.274932622":
   version "2.0.0-dev.274932622"
@@ -3387,6 +3389,11 @@ csv-parser@^3.0.0:
   integrity sha512-s6OYSXAK3IdKqYO33y09jhypG/bSDHPuyCme/IdEHfWpLf/jKcpitVFyOC6UemgGk8v7Q5u2XE0vvwmanxhGlQ==
   dependencies:
     minimist "^1.2.0"
+
+csv-stringify@^5.6.2:
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-5.6.2.tgz#e653783e2189c4c797fbb12abf7f4943c787caa9"
+  integrity sha512-n3rIVbX6ylm1YsX2NEug9IaPV8xRnT+9/NNZbrA/bcHgOSSeqtWla6XnI/xmyu57wIw+ASCAoX1oM6EZtqJV0A==
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -6192,6 +6199,11 @@ object.assign@^4.1.2:
     has-symbols "^1.0.1"
     object-keys "^1.1.1"
 
+obuf@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
+  integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
+
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/on-finished/-/on-finished-2.3.0.tgz"
@@ -6462,6 +6474,13 @@ pg-connection-string@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.4.0.tgz#c979922eb47832999a204da5dbe1ebf2341b6a10"
   integrity sha512-3iBXuv7XKvxeMrIgym7njT+HlZkwZqqGX4Bu9cci8xHZNT+Um1gWKqCsAzcC0d95rcKMU5WBg6YRUcHyV0HZKQ==
+
+pg-copy-streams@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/pg-copy-streams/-/pg-copy-streams-5.1.1.tgz#012f48c332cc31490aa0b5330bc571795963230f"
+  integrity sha512-ieW6JuiIo/4WQ7n+Wevr9zYvpM1AwUs6EwNCCA0VgKZ6ZQ7Y9k3IW00vqc6svX9FtENhbaTbLN7MxekraCrbfg==
+  dependencies:
+    obuf "^1.1.2"
 
 pg-int8@1.0.1:
   version "1.0.1"
