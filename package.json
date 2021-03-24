@@ -93,7 +93,7 @@
         "@golemio/sorted-waste-stations": "1.0.0-dev.271164286",
         "@golemio/traffic-cameras": "1.0.0-dev.262048082",
         "@golemio/traffic-detectors": "1.0.0-dev.262048284",
-        "@golemio/vehicle-positions": "1.0.0-dev.274381823",
+        "@golemio/vehicle-positions": "1.0.0-dev.275785332",
         "@golemio/waste-collection-yards": "1.0.0-dev.262049418",
         "@golemio/waze-ccp": "1.0.0-dev.262049607",
         "@golemio/waze-tt": "1.0.0-dev.272607695",
