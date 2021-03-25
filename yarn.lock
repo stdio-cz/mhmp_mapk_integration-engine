@@ -626,14 +626,6 @@
     "@golemio/shared-cars" "1.0.0-dev.262047113"
     "@golemio/traffic-cameras" "1.0.0-dev.262048082"
 
-"@golemio/ropid-gtfs@1.0.0-dev.265541738":
-  version "1.0.0-dev.265541738"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.265541738.tgz#4a5d1eba826bdb948d16a7dcbe26a01c8b9cc850"
-  integrity sha512-efOWW+NkiKiKdnhdFzrjaw/soBG3LMRjgsjZyZouQKPJEyNNF0SyHdP2KvmERFXKyAmXog9gvoM3ffN5ApDf4A==
-  dependencies:
-    csv-parser "^3.0.0"
-    lodash "^4.17.19"
-
 "@golemio/ropid-gtfs@1.0.0-dev.274965649":
   version "1.0.0-dev.274965649"
   resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0-dev.274965649.tgz#ff2396dd293e372f4da3c01b02fc8bbafe7832ad"
@@ -717,12 +709,12 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/vehicle-positions@1.0.0-dev.275785332":
-  version "1.0.0-dev.275785332"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.275785332.tgz#1f96f2e8ebe2338e421301e55890a86fe21810e5"
-  integrity sha512-3QcV3CNdna5zh3ZAS9zkv2GpCh4X1WzxRP4XvU1M1vp/9ikB9P0So8hvTEMb0NVBZddQotILOIc4Ne5COUtZ4A==
+"@golemio/vehicle-positions@1.0.0-dev.276439876":
+  version "1.0.0-dev.276439876"
+  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.276439876.tgz#8a4375e2b46fccf6848fc1d53e396cf94b1f4a04"
+  integrity sha512-aCAoMfEhhtx1D1Wnr/8u/4Dtolyty1iBytWuxqR74sqWJXI8lrW2pYij1lzU/TziBwtUyeytLdsM7ylFqlpW7g==
   dependencies:
-    "@golemio/ropid-gtfs" "1.0.0-dev.265541738"
+    "@golemio/ropid-gtfs" "1.0.0-dev.274965649"
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"
     gtfs-realtime-bindings "^0.0.6"
