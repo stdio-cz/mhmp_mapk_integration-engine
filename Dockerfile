@@ -1,18 +1,22 @@
-FROM node:12 AS build
-WORKDIR /user/src/app/
+FROM bitnami/node:12.21.0 AS build
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN yarn build-minimal
 
 
-FROM node:12
-WORKDIR /user/src/app/
-COPY --chown=node:node --from=build /user/src/app/node_modules node_modules
-COPY --chown=node:node --from=build /user/src/app/dist dist
-COPY --chown=node:node config config
-COPY --chown=node:node package.json ./
+FROM bitnami/node:12.21.0-prod
+WORKDIR /app
 
-USER node
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/dist /app/dist
+COPY config config
+COPY package.json ./
 
+# Create a non-root user
+RUN useradd -r -u 1001 -g root nonroot && \
+    chown -R nonroot /app
+USER nonroot
+
+EXPOSE 3006
 CMD ["yarn", "start"]
