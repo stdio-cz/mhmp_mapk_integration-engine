@@ -402,6 +402,13 @@
   dependencies:
     lodash "^4.17.19"
 
+"@golemio/bicycle-counters@1.0.0-dev.276924475":
+  version "1.0.0-dev.276924475"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.0-dev.276924475.tgz#4efd080e547d6843aeda21d4b3f6be393439b3af"
+  integrity sha512-N1i6zT2tBkeSdta2aW1KG88h+S4EMwjXbkEF4DsXumv8JKfcZnREqxpSCqxi+p1fmMA8u3QDRdWF5DLruK4e3Q==
+  dependencies:
+    lodash "^4.17.19"
+
 "@golemio/bicycle-parkings@1.0.0-dev.262014618":
   version "1.0.0-dev.262014618"
   resolved "https://registry.npmjs.org/@golemio/bicycle-parkings/-/bicycle-parkings-1.0.0-dev.262014618.tgz"
@@ -559,10 +566,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.0-dev.262041650":
-  version "1.0.0-dev.262041650"
-  resolved "https://registry.npmjs.org/@golemio/municipal-authorities/-/municipal-authorities-1.0.0-dev.262041650.tgz"
-  integrity sha512-SnxDSGVc8/6pPeBYs+2ljaXKrHSynMNorp8BhUCFapZy4DhgzfACP7WW7sn6UMi2P/y06CjfCl3LJTDRI8wgAg==
+"@golemio/municipal-authorities@1.0.0-dev.276925440":
+  version "1.0.0-dev.276925440"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.0-dev.276925440.tgz#389d5c6de376030f4fea27fbfa0dcc62b80bf2b5"
+  integrity sha512-adty/r6QViCucaE5+ILKVOSQVVCLvmViW0/wcYB9/8L5l0zHc4jhQuY5LuPopzr6+SWFj4KRVxdNXmMy4jiv1g==
   dependencies:
     lodash "^4.17.19"
 

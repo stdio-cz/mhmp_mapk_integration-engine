@@ -64,7 +64,7 @@
     },
     "dependencies": {
         "@golemio/air-quality-stations": "1.0.0-dev.262012769",
-        "@golemio/bicycle-counters": "1.0.0-dev.262013335",
+        "@golemio/bicycle-counters": "1.0.0-dev.276924475",
         "@golemio/bicycle-parkings": "1.0.0-dev.262014618",
         "@golemio/city-districts": "1.0.0-dev.262011736",
         "@golemio/core": "1.0.0-dev.276388361",
@@ -78,7 +78,7 @@
         "@golemio/meteosensors": "1.0.0-dev.262037652",
         "@golemio/mobile-app-statistics": "1.0.0-dev.262038005",
         "@golemio/mos": "1.0.0-dev.262041227",
-        "@golemio/municipal-authorities": "1.0.0-dev.262041650",
+        "@golemio/municipal-authorities": "1.0.0-dev.276925440",
         "@golemio/municipal-libraries": "1.0.0-dev.262042058",
         "@golemio/municipal-police-stations": "1.0.0-dev.262042642",
         "@golemio/parking-zones": "1.0.0-dev.262042988",
