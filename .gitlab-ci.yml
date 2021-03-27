@@ -1,99 +1,81 @@
 image: docker:stable
 
 variables:
-  DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG"
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: test-pass
+    POSTGRES_DB: testdb
+    K8S_PROJECT_NAME: "golemio"
+    K8S_DEPLOY_NAMESPACE: "golemio"
+    K8S_DEPLOYMENT_NAME: integration-engine
+    K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
-variables:
-  POSTGRES_HOST: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: test-pass
-  POSTGRES_DB: testdb
+include:
+    - template: "Workflows/Branch-Pipelines.gitlab-ci.yml"
+    - project: "operator-ict/devops/gitlab-ci-pipeline"
+      file:
+          - "/docker/simple-build.yml"
+          - "/k8s-golemio/helm-golemio-deploy.yml"
 
 stages:
-  - build
-  - deploy
-
-services:
-  - docker:dind
+    - build
+    - release
+    - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-  - node_modules/
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
 
 run_tests:
-  stage: build
-  image: node:12
-  services:
-    - postgres:12.3
-    - mongo:4.0
-    - redis:5.0-alpine
-    - rabbitmq:3.8
-  script:
-    - export NODE_ENV=development
-    - yarn
-    - yarn run tslint
-    - yarn run build
-    - export MONGO_CONN=mongodb://mongo/testdb
-    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
-    - export REDIS_CONN=redis://redis/
-    - export NODE_ENV=test
-    - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
-    - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE
-    - export RABBIT_CONN=amqp://guest:guest@rabbitmq
-    - export RABBIT_EXCHANGE_NAME=citests
-    - export S3_BUCKET_NAME=integration-engine
-    - export S3_UPLOAD_PART_SIZE=10
-    - export S3_UPLOAD_QUEUE_SIZE=2
-    - yarn run code-coverage
-  tags:
-    - docker
-  rules:
-    - when: always
-
-build_image:
-  stage: build
-  script:
-    - >
-      docker build --build-arg NODE_ENV=production 
-      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
-      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest 
-      .
-  rules:
-    - if: $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "development"
-  tags:
-    - docker
-
-registry_deployment:
-  stage: deploy
-  script:
-    - echo $CI_COMMIT_SHA > commitsha
-    - >
-      docker build --build-arg NODE_ENV=production 
-      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
-      -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest 
-      .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - >
-      docker push
-      $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID &&
-      docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:latest
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
-  tags:
-    - docker
+    stage: build
+    image: node:12
+    services:
+        - postgres:12.3
+        - mongo:4.0
+        - redis:5.0-alpine
+        - rabbitmq:3.8
+    script:
+        - export NODE_ENV=development
+        - yarn
+        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
+        # 1 for INFO
+        # 2 for LOW
+        # 4 for MODERATE
+        # 8 for HIGH
+        # 16 for CRITICAL
+        - yarn lint
+        - yarn build
+        - export MONGO_CONN=mongodb://mongo/testdb
+        - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
+        - export REDIS_CONN=redis://redis/
+        - export NODE_ENV=test
+        - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
+        - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE
+        - export RABBIT_CONN=amqp://guest:guest@rabbitmq
+        - export RABBIT_EXCHANGE_NAME=citests
+        - export S3_BUCKET_NAME=integration-engine
+        - export S3_UPLOAD_PART_SIZE=10
+        - export S3_UPLOAD_QUEUE_SIZE=2
+        - yarn code-coverage
+    tags:
+        - docker
+    rules:
+        - when: always
 
 pages:
-  stage: deploy
-  image: node:12
-  script:
-  - yarn install
-  - npm run generate-docs
-  - mv docs/typedoc public
-  artifacts:
-    paths:
-    - public
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-  tags:
-    - docker
+    stage: deploy
+    image: node:12
+    script:
+        - yarn install
+        - npm run generate-docs
+        - mv docs/typedoc public
+    artifacts:
+        paths:
+            - public
+    rules:
+        - if: $CI_COMMIT_BRANCH == "master"
+    tags:
+        - docker
