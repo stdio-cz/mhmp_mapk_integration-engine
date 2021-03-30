@@ -416,10 +416,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.1-dev.278637963":
-  version "1.0.1-dev.278637963"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.1-dev.278637963.tgz#4dc62c14a91fde11f59373799331caa8ee7fe0f1"
-  integrity sha512-Jt5g6cVwjzithGXf7W5aoAzhY/CAUqY2ZLaNqNq0Tl/GNjuivZoAHX38A5KyrsPeb8LzNYLFFAemxIAK8gApPA==
+"@golemio/core@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.1.tgz#ca084b3f4214c0979717b19940cf40d9f1bb4b71"
+  integrity sha512-V24HYVkXVe5FEr45bMaJdCfhrIpum6NzsO8ZvzACGxUgzkRlmHzArXs0TYbZgB6BNUBg5oLfFt+PLQdxBar4fw==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -657,10 +657,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.0.2-dev.278128060":
-  version "1.0.2-dev.278128060"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.2-dev.278128060.tgz#2c64e34b2b613ba9f85fa82fa696fbd7dadabf84"
-  integrity sha512-3UZykXTpV+GLnMeKZ6GndSYKElp5VdPZJP5upV9jk4+dh5n/C3GKyuAB197V2LAd6v+1Mfmukq2didR7TZIZFQ==
+"@golemio/sorted-waste-stations@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.2.tgz#22bfecedb644525585e02c4732d14d8fca578f15"
+  integrity sha512-x/mQE+jrUckw/LJUfKb/3DQd+MMAfTBaBb8WOfBcwG2E2cyKj3uHKdQlxGReTVFqhiyQ0ubH6rAwNrQrJhuCuQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -677,10 +677,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/traffic-detectors@1.0.1-dev.278628498":
-  version "1.0.1-dev.278628498"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.1-dev.278628498.tgz#4e5cb4ad88f82c5d4e2d600e0d4ebf909aca5751"
-  integrity sha512-o3uyIcGZ2hosJlmrM7CCkTh5mFaBdaQeO6jtyXwBxxv0ptfgscHkaVRBWTskkwonHyFHiD/YNfN1ux0fmrnzyA==
+"@golemio/traffic-detectors@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.1.tgz#e45133259def8d379a2e77489831ae5e8cf0009b"
+  integrity sha512-8PkYHzWn0hsTs5HpSud9aNVe9PafkfXgh9IW+YO/gdDB5N2pdsb/fOL9zFLancSGX9TVqj3YYl6OgAdrkmR+Dg==
   dependencies:
     uuid "^8.3.2"
     xml-to-json-stream "^1.1.0"
