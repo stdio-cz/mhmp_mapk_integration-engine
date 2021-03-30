@@ -416,10 +416,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.0.tgz#9cbf60cc98ea44bc665913879bde1b84424564e3"
-  integrity sha512-cmHsBKYtxLII5GrfjwEm+bondl6I01CnG2eL7vPqZzWJuiU9A891wZqDYRAWRn+nXzIDLOGRnh5TEqkC64EeCQ==
+"@golemio/core@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.1.tgz#ca084b3f4214c0979717b19940cf40d9f1bb4b71"
+  integrity sha512-V24HYVkXVe5FEr45bMaJdCfhrIpum6NzsO8ZvzACGxUgzkRlmHzArXs0TYbZgB6BNUBg5oLfFt+PLQdxBar4fw==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -657,10 +657,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.1.tgz#9d9a1e3a06c3e78906482da5223e16d1f905454a"
-  integrity sha512-v62hXaSN/BY610ISo9Bgl73YNw0AW0vWc7ZYzRLYwEP0REDG05g4R0g2ni4YTsBAScrV0VEqcibc1zGv2yDEXA==
+"@golemio/sorted-waste-stations@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.2.tgz#22bfecedb644525585e02c4732d14d8fca578f15"
+  integrity sha512-x/mQE+jrUckw/LJUfKb/3DQd+MMAfTBaBb8WOfBcwG2E2cyKj3uHKdQlxGReTVFqhiyQ0ubH6rAwNrQrJhuCuQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -677,10 +677,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/traffic-detectors@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.0.tgz#d602e38df11c9d03abf42d3921fdcbc50ce2a399"
-  integrity sha512-/vzEmD15XsTnZrQQNMkKdqtYF30cZK+64CdouqgIcjEp29bRFiQLcjmJE19E1feFOo8GrqDrzpW8v+D/T/CJVw==
+"@golemio/traffic-detectors@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.1.tgz#e45133259def8d379a2e77489831ae5e8cf0009b"
+  integrity sha512-8PkYHzWn0hsTs5HpSud9aNVe9PafkfXgh9IW+YO/gdDB5N2pdsb/fOL9zFLancSGX9TVqj3YYl6OgAdrkmR+Dg==
   dependencies:
     uuid "^8.3.2"
     xml-to-json-stream "^1.1.0"
