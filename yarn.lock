@@ -677,10 +677,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/traffic-detectors@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.0.tgz#d602e38df11c9d03abf42d3921fdcbc50ce2a399"
-  integrity sha512-/vzEmD15XsTnZrQQNMkKdqtYF30cZK+64CdouqgIcjEp29bRFiQLcjmJE19E1feFOo8GrqDrzpW8v+D/T/CJVw==
+"@golemio/traffic-detectors@1.0.1-dev.278628498":
+  version "1.0.1-dev.278628498"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.1-dev.278628498.tgz#4e5cb4ad88f82c5d4e2d600e0d4ebf909aca5751"
+  integrity sha512-o3uyIcGZ2hosJlmrM7CCkTh5mFaBdaQeO6jtyXwBxxv0ptfgscHkaVRBWTskkwonHyFHiD/YNfN1ux0fmrnzyA==
   dependencies:
     uuid "^8.3.2"
     xml-to-json-stream "^1.1.0"
