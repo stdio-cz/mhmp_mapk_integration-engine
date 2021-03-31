@@ -629,10 +629,10 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0.tgz#9cf896f4d1c8eccd93d7549b89d0a7b6256f4f59"
-  integrity sha512-SeVeApn9BTYPJYDW+Xp+mSbVbK+9OrhJYyuuQtRS4zkViQA4qd0yveYpy3OuwBd0abrJFJ9PCq7cN06W9wEB/Q==
+"@golemio/schema-definitions@2.0.1-dev.279330796":
+  version "2.0.1-dev.279330796"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.279330796.tgz#296a7da0faecfd22d7f81c160811bb424aabc9dd"
+  integrity sha512-czLx3sspZpQvg9fyfSuEuNJ9AbElhyIuMZrAj5sr0Tv29tYqUymcSWsn5MBD5jLCTxS7CspldMC9Pv1BL1wxaw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -657,10 +657,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.2.tgz#22bfecedb644525585e02c4732d14d8fca578f15"
-  integrity sha512-x/mQE+jrUckw/LJUfKb/3DQd+MMAfTBaBb8WOfBcwG2E2cyKj3uHKdQlxGReTVFqhiyQ0ubH6rAwNrQrJhuCuQ==
+"@golemio/sorted-waste-stations@1.0.3-dev.279509448":
+  version "1.0.3-dev.279509448"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.3-dev.279509448.tgz#9a3d09a7d8f0303c0b8e60768c14345bf93a84c1"
+  integrity sha512-zczB4gSHCKnFhl3hvm54XDEqVad0wi7BQe3/0DRsFwseAMw5yIRZfiLQ/tqu8YSC/vm8UxX/PoFvnbd0cH2MQQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
