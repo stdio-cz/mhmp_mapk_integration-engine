@@ -629,10 +629,10 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.1-dev.279330796":
-  version "2.0.1-dev.279330796"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.279330796.tgz#296a7da0faecfd22d7f81c160811bb424aabc9dd"
-  integrity sha512-czLx3sspZpQvg9fyfSuEuNJ9AbElhyIuMZrAj5sr0Tv29tYqUymcSWsn5MBD5jLCTxS7CspldMC9Pv1BL1wxaw==
+"@golemio/schema-definitions@2.0.1-dev.282085590":
+  version "2.0.1-dev.282085590"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.282085590.tgz#e0e03ac40bc26c478335712b758b85a2304cd9a1"
+  integrity sha512-8zfgebPjONMD3QmTHEhWHf9GsetKXfVCSmiXYq3ZwRpZGDyXLcPJ5gBj2B20ahheF7HUXw/1fvUovjt0NQlBBA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
