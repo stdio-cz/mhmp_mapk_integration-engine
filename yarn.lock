@@ -416,10 +416,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.2-dev.281642758":
-  version "1.0.2-dev.281642758"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.2-dev.281642758.tgz#7614ed403e4fbc11d3f123c80a3890d0b94c1b35"
-  integrity sha512-oRwzIhGVmurDSQqrWI5qKM04DyITCG+gDtgJjYdMkfojYeSkqDkeQMHV6QMU0jZm+RPWjg1QdRa9BJPId0Gotg==
+"@golemio/core@1.0.2-dev.283219861":
+  version "1.0.2-dev.283219861"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.2-dev.283219861.tgz#7edf8b22eaed6cb6c2eaf610db6c829d1c836bf9"
+  integrity sha512-C3BKaKIvoV0DPw7P76yBmXaNBQDBiG4GUdo+aliZfuvS+RDCVSZCIdWi89rCVSXjEgo3SWszMHRreR0VOqHJzw==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -583,10 +583,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.0.tgz#108d6ab4d9ec5a82bf33698e4b2d6b81b26a1d34"
-  integrity sha512-io4UAzl3Pu5vVwtQ79WC8Cj80cD2/LiW+VVD/Yi1Rw7t3iDRrzmhWzu/dy1RXEVl5hDBDrLXEvKU3SLMb1/HWQ==
+"@golemio/parkings@1.0.1-dev.284851277":
+  version "1.0.1-dev.284851277"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.1-dev.284851277.tgz#058c667d8e9d7e371a7730f9e89cd36830141c81"
+  integrity sha512-FsFR7nm2JuaNRVPe16qM0r2twGPPZqbCZmjmg2Z8CMLCcY7Ft2L8pX5KE0WxUk3lhqjt7pqe32QNBUCCLix4mw==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
@@ -639,10 +639,10 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.1-dev.282085590":
-  version "2.0.1-dev.282085590"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.282085590.tgz#e0e03ac40bc26c478335712b758b85a2304cd9a1"
-  integrity sha512-8zfgebPjONMD3QmTHEhWHf9GsetKXfVCSmiXYq3ZwRpZGDyXLcPJ5gBj2B20ahheF7HUXw/1fvUovjt0NQlBBA==
+"@golemio/schema-definitions@2.0.1-dev.282796125":
+  version "2.0.1-dev.282796125"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.282796125.tgz#8c9c3316be4225690c10cf3674e70144c6b28f96"
+  integrity sha512-ZFUif1esQghEbxmy1aQggXcHbXG8Ufb33vSTl2rILRi0aYSAs3Yu81ozTVdQ1E2FjLH0jISLJuQDOpmhcMpMJw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
