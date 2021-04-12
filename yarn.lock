@@ -639,10 +639,10 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.1-dev.282796125":
-  version "2.0.1-dev.282796125"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.282796125.tgz#8c9c3316be4225690c10cf3674e70144c6b28f96"
-  integrity sha512-ZFUif1esQghEbxmy1aQggXcHbXG8Ufb33vSTl2rILRi0aYSAs3Yu81ozTVdQ1E2FjLH0jISLJuQDOpmhcMpMJw==
+"@golemio/schema-definitions@2.0.1-dev.285168392":
+  version "2.0.1-dev.285168392"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.285168392.tgz#5710e37121bd0cca4843e61cd1d6e01a34509c6c"
+  integrity sha512-bGEZfwH0mukra8K4/mIq/TP2/bY4HOR4hcB+/zpDGCYEwc/SFnK1i+abA6rEqpz0fX0wQga9TMKwYdbFAnkh6g==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -712,10 +712,10 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/vehicle-positions@1.0.2-dev.285070223":
-  version "1.0.2-dev.285070223"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.2-dev.285070223.tgz#f216ea18e7ff00034cc2623b0a9d7704a397d04b"
-  integrity sha512-sUrA/PALWLTS2GQ4I3uMkvD1txhUZAL01PVsgUB8a8xmhTW88/OWgxB3JSeV71SlzmNKzV1qAN1GMbjCTUDmSw==
+"@golemio/vehicle-positions@1.0.2-dev.285181918":
+  version "1.0.2-dev.285181918"
+  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.2-dev.285181918.tgz#28bf903faf1b9f6a93e21ab6df294170e8065323"
+  integrity sha512-Hi7srSlKGunuKh9bqZLBl2erKdydpg8Uw5uCuWueo5Q1t/VsRLS1m3NMlU2PErEDHXZrEzDbCeHY23j1xUYMxA==
   dependencies:
     "@golemio/ropid-gtfs" "1.0.0"
     "@turf/turf" "^5.1.6"
