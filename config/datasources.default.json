@@ -78,6 +78,13 @@
     "SkodaPalaceQueues": "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
     "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
     "SensoneoSortedWasteSensorsApiKey": "",
+    "TSKFTP" : {
+        "host": "",
+        "port": 21,
+        "user": "",
+        "password": ""
+    },
+    "TSKFTPParkingZonesPath": "/external/tsk/parking-zones",
     "TSKSTD": {
         "user": "",
         "pass": "",
