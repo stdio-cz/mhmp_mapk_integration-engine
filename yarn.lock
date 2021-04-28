@@ -416,10 +416,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.2-dev.292971815":
-  version "1.0.2-dev.292971815"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.2-dev.292971815.tgz#15601e0fa3e509f9af355b2338b159e36a906872"
-  integrity sha512-RCCcDEi1uyxRN5jt9jid7uo7ixz0X5uJDQQnWl40hylzwckqoTaPjsWtcPGN5b7u4uh9gsx+pp74wHmF6OCLbg==
+"@golemio/core@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.2.tgz#9759428fb4214e2857d6686f1247760735168d2c"
+  integrity sha512-SCaXbbKVP+/6H+zvvD9pO4Trhc8rtFu4YaYgy4yoxJnoMDADrgOoRQ3sd6dkMRAmQ03UnpDAMZsdqlRY/0nOJQ==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -583,10 +583,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.1-dev.293119391":
-  version "1.0.1-dev.293119391"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.1-dev.293119391.tgz#a10eb52ad78edae16bd7da18907b300e3be6177c"
-  integrity sha512-vIMuuNm9tvTs+mBHDJs1CCBFEFwo5U/sMUtun8BD/ZEmDWGLjRzBG9TCPHYzHfjVRhrjgj2+yumoawVPtwnp8A==
+"@golemio/parkings@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.1.tgz#cd9f202437359c36f16313c2d4ff5c1a9c77a4d6"
+  integrity sha512-1XHf3lG/0vSxjTHuvSe8L3l4no88fwfd6o114nBHVFO5vxJnqwCN21gCVZpFW6EX7ytKE/f2t8vXOhSoMmzSqg==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
@@ -629,20 +629,20 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/ropid-gtfs@1.0.1-dev.282123935":
-  version "1.0.1-dev.282123935"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1-dev.282123935.tgz#e0a359d2f1ec91aac7eda916535e4f3b2356d148"
-  integrity sha512-VA9zMQKoWoH16w9GczPXZskOAzyA7h/CaoRHM/dl5MmXkAscB1MtHdHzSnAYrNFaX7DobMB92z1AYbESEayDWw==
+"@golemio/ropid-gtfs@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1.tgz#7aac88f6b12ec62f91b8c478d41933996e12e624"
+  integrity sha512-LFQARYxuT4+PfPkfFVyfRfRYuxHYXwYv2yAgV+j3RiHCGn4WUCvwnRU6J6M4vk3sTKmwU8uZoK/YpBkdcaRJHw==
   dependencies:
     csv-parser "^3.0.0"
     csv-stringify "^5.6.2"
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.2-dev.291363671":
-  version "2.0.2-dev.291363671"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.2-dev.291363671.tgz#49bd18a4a4b1071960d5f91d49e7834bdcbfd064"
-  integrity sha512-KeyEPt7HFS+pNx2BZnOJCia2HMw2vrP8SNTa4u6OU0S6rUgbqg5ql5ww3xHq4GC4yiUrnvy3qFZCNXLgmlTHPg==
+"@golemio/schema-definitions@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.2.tgz#d9299ca3b7fddcbf77fd14a91f8e9480bf0b3787"
+  integrity sha512-D1SA+iuEIi99YetlnD2cshit2OG6i5FYGQp9ub4ic34S8/jGhzy2/PpjHe5TlKFZXVPqkG0gIM5VB8bKNe/dbQ==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -667,10 +667,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.0.3-dev.290480717":
-  version "1.0.3-dev.290480717"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.0.3-dev.290480717.tgz#8acd6047955553fc30560e20c4c64e83afacc158"
-  integrity sha512-tx279xpppFtBlRXHFfOBD9GoazJC8uakhy8wldaeHJgbukCoQecG5HCT5eGzX1phHbtYZSVd4Ipu5xR2dldq5A==
+"@golemio/sorted-waste-stations@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.0.tgz#37e08196fff0290e3ba0adcf4aad3dc9236e0c53"
+  integrity sha512-VRot5wpAvrKJPqb9uFTD50uMwv23NNntdrgpvd+Jp76F1/0Gcr8rTbA0v1fe7sZ3CGQm2r/CRaOwWrOBI5kI8g==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -712,10 +712,10 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/vehicle-positions@1.0.2-dev.285181918":
-  version "1.0.2-dev.285181918"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.2-dev.285181918.tgz#28bf903faf1b9f6a93e21ab6df294170e8065323"
-  integrity sha512-Hi7srSlKGunuKh9bqZLBl2erKdydpg8Uw5uCuWueo5Q1t/VsRLS1m3NMlU2PErEDHXZrEzDbCeHY23j1xUYMxA==
+"@golemio/vehicle-positions@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.2.tgz#2d9dab0ffe8f1878db0f5627403d3eee8e060fe7"
+  integrity sha512-U8QjKkovdD/axoXA3Ttsg4Uku0qj0M0usfYF60AXgBuO6E7/LiO7+j+BLOApMdeKTsKzMZIQQxbjy7sbkl+Sbg==
   dependencies:
     "@golemio/ropid-gtfs" "1.0.0"
     "@turf/turf" "^5.1.6"
