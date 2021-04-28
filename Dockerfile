@@ -14,7 +14,8 @@ COPY config config
 COPY package.json ./
 
 # Create a non-root user
-RUN useradd -r -u 1001 -g root nonroot && \
+RUN groupadd --system nonroot &&\
+    useradd --system --base-dir /app --uid 1001 --gid nonroot nonroot && \
     chown -R nonroot /app
 USER nonroot
 
