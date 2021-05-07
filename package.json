@@ -31,7 +31,7 @@
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@golemio/eslint-config": "^1.0.2",
-        "@golemio/schema-definitions": "2.0.2",
+        "@golemio/schema-definitions": "2.0.3-dev.298932454",
         "@google-cloud/storage": "^5.7.1",
         "@types/chai": "4.2.3",
         "@types/chai-as-promised": "7.1.2",
@@ -67,7 +67,7 @@
         "@golemio/bicycle-counters": "1.0.0",
         "@golemio/bicycle-parkings": "1.0.0",
         "@golemio/city-districts": "1.0.0",
-        "@golemio/core": "1.0.2",
+        "@golemio/core": "1.0.3-dev.298972397",
         "@golemio/counters": "1.0.0",
         "@golemio/energetics": "1.0.0",
         "@golemio/firebase-pid-litacka": "1.0.0",
@@ -98,5 +98,9 @@
         "@golemio/waze-tt": "1.0.0",
         "dotenv": "6.1.0",
         "morgan": "^1.9.1"
+    },
+    "resolutions": {
+        "hosted-git-info": "^3.0.8",
+        "lodash": "^4.17.21"
     }
 }
