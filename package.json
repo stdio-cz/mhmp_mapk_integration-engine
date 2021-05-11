@@ -77,7 +77,7 @@
         "@golemio/medical-institutions": "1.0.0",
         "@golemio/meteosensors": "1.0.0",
         "@golemio/mobile-app-statistics": "1.0.0",
-        "@golemio/mos": "1.0.0",
+        "@golemio/mos": "1.0.2",
         "@golemio/municipal-authorities": "1.0.0",
         "@golemio/municipal-libraries": "1.0.1",
         "@golemio/municipal-police-stations": "1.0.0",
