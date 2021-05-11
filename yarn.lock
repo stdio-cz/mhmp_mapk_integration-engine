@@ -554,10 +554,10 @@
   dependencies:
     jsonwebtoken "8.5.1"
 
-"@golemio/mos@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/mos/-/mos-1.0.0.tgz#1c0a1cdbdbb64fc26fc9bb8abd0fe643c3b119e3"
-  integrity sha512-TUMvn1/N4qFAPEqW2DAevz/JUHXBl6wpHUajBCYypgAO3il9hqX2FEnAimZWZLY/D2LBMZgOObT+u97jyRutYw==
+"@golemio/mos@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/mos/-/mos-1.0.2.tgz#8ff4f51fa03879e28bc7958d9da0f8daee2b99ac"
+  integrity sha512-ZqhZKOlN0sUQPshwvJ79QwUd9HcIv5jKdLwegiiFP3CKOtD8lz92CI+3qws4ZrL4v5+nvdSGvXLkD7h1HiVWiQ==
   dependencies:
     JSONStream "^1.0.4"
 
