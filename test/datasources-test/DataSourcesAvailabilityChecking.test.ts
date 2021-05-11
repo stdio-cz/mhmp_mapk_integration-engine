@@ -1,6 +1,5 @@
 /// <reference path="./DataSourcesAvailabilityChecking.test.d.ts" />
-import chai, { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import { expect } from "chai";
 import JSONStream from "JSONStream";
 import { sign } from "jsonwebtoken";
 import { File } from "@google-cloud/storage";
@@ -40,7 +39,7 @@ import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
 import { Parkomats } from "@golemio/parkomats/dist/schema-definitions";
 import { Playgrounds } from "@golemio/playgrounds/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
-import { RopidGTFS } from "@golemio/ropid-gtfs/dist/schema-definitions";
+import { RopidGTFS } from "@golemio/pid/dist/schema-definitions";
 import { SharedBikes } from "@golemio/shared-bikes/dist/schema-definitions";
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
 import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-definitions";
@@ -54,8 +53,6 @@ import { EnesaApi, UnimonitorCemApi } from "@golemio/energetics/dist/integration
 import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
 import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
 import EnesaDevices = EnergeticsTypes.Enesa.Devices;
-
-chai.use(chaiAsPromised);
 
 const sleep = promisify(setTimeout);
 
@@ -150,7 +147,7 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         beforeEach(() => {
             datasource = new DataSource(
-                RopidGTFS.name + "DataSource",
+                RopidGTFS.RopidGTFS.name + "DataSource",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSFilename,
                     isCompressed: true,
@@ -172,7 +169,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 null as any
             );
             datasourceCisStops = new DataSource(
-                RopidGTFS.name + "CisStops",
+                RopidGTFS.RopidGTFS.name + "CisStops",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSCisStopsFilename,
                     path: config.datasources.RopidGTFSCisStopsPath,
