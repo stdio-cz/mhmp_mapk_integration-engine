@@ -592,10 +592,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.1.tgz#cd9f202437359c36f16313c2d4ff5c1a9c77a4d6"
-  integrity sha512-1XHf3lG/0vSxjTHuvSe8L3l4no88fwfd6o114nBHVFO5vxJnqwCN21gCVZpFW6EX7ytKE/f2t8vXOhSoMmzSqg==
+"@golemio/parkings@1.0.2-dev.301389865":
+  version "1.0.2-dev.301389865"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.2-dev.301389865.tgz#5910cea4406336a159c4bd2ff0094b9bb78d8eed"
+  integrity sha512-rzv5NUbOsH53+pFp+cEET09oWbjZO5szbS+q1UD8daKC30lSVtaBRpBUZtWqZI2yvhD2D2PQ76iEqCANhbWKaw==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"

@@ -83,7 +83,7 @@
         "@golemio/municipal-libraries": "1.0.1",
         "@golemio/municipal-police-stations": "1.0.0",
         "@golemio/parking-zones": "1.0.0",
-        "@golemio/parkings": "1.0.1",
+        "@golemio/parkings": "1.0.2-dev.301389865",
         "@golemio/parkomats": "1.0.0",
         "@golemio/pid": "2.0.0-dev.294376389",
         "@golemio/playgrounds": "1.0.0",
