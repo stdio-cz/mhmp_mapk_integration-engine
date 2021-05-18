@@ -539,10 +539,10 @@
     lodash "^4.17.19"
     slugify "1.3.2"
 
-"@golemio/meteosensors@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/meteosensors/-/meteosensors-1.0.0.tgz#88e51b8be266d9b86117b0b26d66437af1fb77bc"
-  integrity sha512-qT/RYqQDc0TbQW9DdzXuFuGNKJOeJoHMEZ8pnFrPKM2M4GPjqqouY1f5eZUkY8uswjTWN7OsVGqPHOoKPlyNuQ==
+"@golemio/meteosensors@1.0.1-dev.304749298":
+  version "1.0.1-dev.304749298"
+  resolved "https://registry.yarnpkg.com/@golemio/meteosensors/-/meteosensors-1.0.1-dev.304749298.tgz#b94bb9e579ab1bee2d028cd160715678e1c22b88"
+  integrity sha512-fvy9JcIq1BtNjn49ZC/rEWEpwocW4ikUrahAA59NfL3Qjgnh5oo0KKuIUsT8UUC9qByPId6RMNAIJgN96TycZA==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
