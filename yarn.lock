@@ -425,10 +425,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.3.tgz#89de3bf91edb0c9ab274d674c44d4bd6eb616b18"
-  integrity sha512-epF1nzTVCw18QVkBkcF0gA+XmMIfqXqZ1bmirkhvsfWYrKVrZw+/YIdnSl+PFO7JnFnqtL8JM2jz/Ed+Seagcw==
+"@golemio/core@1.0.4-dev.307207992":
+  version "1.0.4-dev.307207992"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.4-dev.307207992.tgz#ea9f9cf6c036829718f2cda108f0456ff67cf595"
+  integrity sha512-v2kyH91akZDznPI8wB7eqCun6RWffOuhesU1iBTbTi9pjIRPGduUIq2XWcj6l7pri2qP8srQmZiUupeQWj75YQ==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -440,7 +440,7 @@
     apicache "^1.5.3"
     aws-sdk "^2.823.0"
     axios "^0.21.1"
-    basic-ftp "^2.17.0"
+    basic-ftp "^4.6.6"
     content-type "^1.0.4"
     debug "3.1.0"
     decompress "^4.2.1"
@@ -528,10 +528,10 @@
   dependencies:
     body-parser "1.19.0"
 
-"@golemio/medical-institutions@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.0.tgz#3e28b4e698f17b952ee2f38588ca77c641e63d4f"
-  integrity sha512-KMUR+St0FpDAusK1LWKnqyp6unIkghXam+v1jCMbG37nasDGanfGrSh+HuM0ycnHmxyO7rAHz1H5cbWUE0gC4Q==
+"@golemio/medical-institutions@1.0.1-dev.308918392":
+  version "1.0.1-dev.308918392"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.1-dev.308918392.tgz#bf3184f80a7ff2fa8ae62249757c5ffd7520f84c"
+  integrity sha512-W7dIu5OwsfaiB3rXIKIcthnivhtVM3OqwOqG22kmQot/WVsM5vLipsdukeEVvsblsdgHBxRqRX3wky0jTHKVtQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     fast-csv "^4.3.6"
@@ -547,10 +547,10 @@
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
 
-"@golemio/mobile-app-statistics@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.0.tgz#b612f752c0d84b3da46fc648737489a38ca91d55"
-  integrity sha512-n0xHpBbUzkGUNewNfv3HTSi5Mim+F1JEW3dVKMphg8CGH93Vxfk5ZeHNP/k1n1xXlUTdgoGjLK5r6fjwsdEWtA==
+"@golemio/mobile-app-statistics@1.0.1-dev.308918276":
+  version "1.0.1-dev.308918276"
+  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.1-dev.308918276.tgz#f4546968a8b1d343c14d386e4810c8f3de32a406"
+  integrity sha512-F8Tt4AnhHGbu/vFQy8k3Fg5H1PdoTyUvhA5KwrSQzOFv7/bccRx5W7sLIeWw8qOS6X51ZTlvzTSnSj8qfhd3nw==
   dependencies:
     jsonwebtoken "8.5.1"
 
@@ -592,10 +592,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.2.tgz#26517c747feb36f2f93a5fadd285ff439c5a7bb3"
-  integrity sha512-5SKAy1k0CJu04IoVkyoJRhSQcaLjVmaLxTN7mAbZNX/pDiaPMiARnzYZ6qcWtLzrjLjj4OyEiHXjg+DDj5HaRA==
+"@golemio/parkings@1.0.3-dev.308917968":
+  version "1.0.3-dev.308917968"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.3-dev.308917968.tgz#9324f9d43c3c1ebc712f0a490981aa6021d2486d"
+  integrity sha512-VYib0HRxWBxmv9C5wPCjp/mJQGt06wA0xOH3oPYNMj41G16zcEQSs/kRrGb0D8TT52hO/jKu+KBdHIsKSh1Amw==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
@@ -605,10 +605,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.0.tgz#f1ec1f562428493552851864f2b7f4353e9dc581"
   integrity sha512-3Zn+CeCPJIZM676loiS4/9sDZXWbtJXC9j0tLRbH6GmQs58cIycbSLJJr3+T9+0vqrNFyBepUYsKNG2mDR8tDQ==
 
-"@golemio/pid@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.0.tgz#18c67f5d5f1c46113e633ffa1109c3d86b3e7efd"
-  integrity sha512-aqaMearnPXLXHuBRt3se2pNq8iPhJr6fvi4Q53TCUz8UBMOJrds/XbsIXc9c+y8BJIxIRA4gj3NO2l4T9H8Sxw==
+"@golemio/pid@2.0.1-dev.308917923":
+  version "2.0.1-dev.308917923"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.1-dev.308917923.tgz#4dfd6a99088f5c09fd1975c117d3657d1c475a48"
+  integrity sha512-urksxXzL2Jwm0XqRnHY7b4QaV3eYqL/5jk3rFeXaS7cf3RxgiAF4+ErFdT7Wuz5rBydIjrsqp2Nke1rzoCFf/A==
   dependencies:
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"
@@ -2697,10 +2697,10 @@ basic-auth@~2.0.1:
   dependencies:
     safe-buffer "5.1.2"
 
-basic-ftp@^2.17.0:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/basic-ftp/-/basic-ftp-2.17.1.tgz#efa34749f26632531ab8a7b1670de482a615e192"
-  integrity sha512-ANcl1HZc+aNCvVX70XRzUIA6NpYUz3HitZdGD/oNaibJTgWOsHES+7bazcBYQ2I3tad8eKm8FosviKTDLu9DYg==
+basic-ftp@^4.6.6:
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/basic-ftp/-/basic-ftp-4.6.6.tgz#c37abae3b3bffa131027adb6a5b60938d9109501"
+  integrity sha512-5nTclY5mVxjeFoq9cBTzgQvcM1UfeGTd4hCCvb8AgC88wHMDQCD4UX5hZo2jaiSh96Nf+gFy1joNI9iH639bvQ==
 
 bcrypt-pbkdf@^1.0.0, bcrypt-pbkdf@^1.0.2:
   version "1.0.2"
