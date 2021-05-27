@@ -508,10 +508,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/flow@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.1.tgz#7bd3e952a1bf1502f77be47445e9eed236ba5820"
-  integrity sha512-UpUaF51HXp4in5Xs4t6nFCQZxGzmvUjwQu4dTUfLDyrCskgFuQGSrV04F2AC7HbVi4Fgr4PhA7pCylr54ujLIw==
+"@golemio/flow@1.0.2-dev.310623893":
+  version "1.0.2-dev.310623893"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.2-dev.310623893.tgz#9ef9abdad515073a027edd9c44f3698d73c0eaff"
+  integrity sha512-v4WWSfbDvnKaf9/br4F/z3GP3OWFlw5Stjytxp5dGh+B1f3hI1RAdPDr5mCmSPXbyFYBapKkEKGknV0F/B+ZDg==
   dependencies:
     JSONStream "^1.0.4"
     axios "^0.21.1"
@@ -641,10 +641,10 @@
     "@golemio/shared-cars" "1.0.0"
     "@golemio/traffic-cameras" "1.0.0"
 
-"@golemio/schema-definitions@2.0.7-dev.309697751":
-  version "2.0.7-dev.309697751"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.7-dev.309697751.tgz#9a16ab0adb61a046af75f99b06527e49d2439e8a"
-  integrity sha512-iVvEWefETdVEuo6WItBrudl7NEXHj2NOUCYihhIWnZ2KGHspsNzaWmmFBPZ+p+gU5pQD6b8PIFLXC/AKfkLrbQ==
+"@golemio/schema-definitions@2.0.7-dev.310425992":
+  version "2.0.7-dev.310425992"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.7-dev.310425992.tgz#5dd9f8b34a8dec6eaff3cd178e1dc25b9a6b65cd"
+  integrity sha512-Q0QUrJYxEwLFV5hE5Fnw5OiUnWQwBMLtrsXbLp6HtJ1MYzvkPimotCJc1gphqFmMiA6dpjGnkN+pTIQcemDpxw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
