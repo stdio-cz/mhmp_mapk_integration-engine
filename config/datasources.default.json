@@ -75,6 +75,8 @@
     "RopidGTFSCisStopsPath": "PUBLIC/ZASTAVKY/JSON/",
     "RopidGTFSFilename": "PID_GTFS.zip",
     "RopidGTFSPath": "GTFS/",
+    "RopidGTFSRunNumbersFilename": "obehy.csv",
+    "RopidGTFSRunNumbersPath": "",
     "SkodaPalaceQueues": "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
     "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
     "SensoneoSortedWasteSensorsApiKey": "",
