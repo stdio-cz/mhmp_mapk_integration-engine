@@ -21,6 +21,7 @@ const datasets = [
     "municipal-authorities",
     "municipal-libraries",
     "municipal-police-stations",
+    "ndic",
     "parkings",
     "parking-zones",
     "parkomats",

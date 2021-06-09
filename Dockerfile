@@ -1,11 +1,12 @@
-FROM bitnami/node:12.21.0 AS build
+FROM bitnami/node:12.22.1 AS build
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN yarn build-minimal
 
 
-FROM bitnami/node:12.21.0-prod
+#FROM bitnami/node:12.22.1-prod
+FROM node:12
 WORKDIR /app
 
 COPY --from=build /app/node_modules /app/node_modules
