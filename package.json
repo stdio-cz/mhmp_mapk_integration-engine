@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -31,7 +31,7 @@
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@golemio/eslint-config": "^1.0.2",
-        "@golemio/schema-definitions": "2.0.8",
+        "@golemio/schema-definitions": "2.0.9",
         "@google-cloud/storage": "^5.7.1",
         "@types/chai": "4.2.3",
         "@types/chai-as-promised": "7.1.2",
