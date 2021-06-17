@@ -613,10 +613,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.0.tgz#f1ec1f562428493552851864f2b7f4353e9dc581"
   integrity "sha1-8ewfViQoSTVShRhk8rf0NT6dxYE= sha512-3Zn+CeCPJIZM676loiS4/9sDZXWbtJXC9j0tLRbH6GmQs58cIycbSLJJr3+T9+0vqrNFyBepUYsKNG2mDR8tDQ=="
 
-"@golemio/pid@2.0.2-dev.321964878":
-  version "2.0.2-dev.321964878"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.2-dev.321964878.tgz#5aa0d28bd4e75891bf91020f0a02f0aa177c4452"
-  integrity sha512-EKDRQOPZW70wCOyy1GlC/1O0N3LjIo3/iQHgEX2pq+a0bN2G2ztipJKmx0++FwJdQ9Kvi3PsU4JiZ5memx/vBg==
+"@golemio/pid@2.0.2-dev.322546091":
+  version "2.0.2-dev.322546091"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.2-dev.322546091.tgz#54cac599d4f95298def251552292217dce7ec52a"
+  integrity sha512-uhlIsOrEW4M+04sfpAyLItQGv2bN9zcygg6lPnYm9CJAtkRvj1aGV2jRs0dmzZCQadXjA89eRAs6//3KAw3W9Q==
   dependencies:
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"
