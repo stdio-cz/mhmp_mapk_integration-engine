@@ -18,6 +18,7 @@ include:
       file:
           - "/docker/simple-build.yml"
           - "/k8s-golemio/helm-golemio-deploy.yml"
+          - "/docs/golemio-gitlab-docs-pages.yml"
 
 stages:
     - build
@@ -64,18 +65,3 @@ run_tests:
         - docker
     rules:
         - when: always
-
-pages:
-    stage: deploy
-    image: node:12
-    script:
-        - yarn install
-        - npm run generate-docs
-        - mv docs/typedoc public
-    artifacts:
-        paths:
-            - public
-    rules:
-        - if: $CI_COMMIT_BRANCH == "master"
-    tags:
-        - docker
