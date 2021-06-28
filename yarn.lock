@@ -649,10 +649,10 @@
     "@golemio/shared-cars" "1.0.0"
     "@golemio/traffic-cameras" "1.0.0"
 
-"@golemio/schema-definitions@2.0.10-dev.321811045":
-  version "2.0.10-dev.321811045"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.10-dev.321811045.tgz#c16d8ad8e69dc2729703b456b80313377bd9bd11"
-  integrity sha512-2hjCL/4/eBYmxhX6WkbqOjH7LZ2wqAfROZwbmncpXUmQzfOJFbYge06nlH3SA9COIJ8C5jdyu7WQGn1R4qL2JQ==
+"@golemio/schema-definitions@2.0.10-dev.328146618":
+  version "2.0.10-dev.328146618"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.10-dev.328146618.tgz#52da7c5bf097e4452cdbc6978b0212748b0f29c6"
+  integrity sha512-Tu1bQOlH3SUI5ISt9qOybIkFeTxAhk8j3l49qEa5pYPihKWbcqGE6jd+4QlclW1sv+ITfoi53H2fiJo4lS2Fiw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
