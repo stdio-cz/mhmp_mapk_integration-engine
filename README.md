@@ -71,13 +71,13 @@ For more informations see [`@golemio/schema-definitions` README](https://gitlab.
 To compile typescript code into js one-time (production build):
 
 ```
-npm run build
+yarn build
 ```
 
 To run the app:
 
 ```
-npm start
+yarn start
 ```
 
 #### Dev/debug
@@ -85,13 +85,13 @@ npm start
 Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
 
 ```
-npm run dev-start
+yarn dev-start
 ```
 
 or run with a debugger:
 
 ```
-npm run dev-start-debug
+yarn dev-start-debug
 ```
 
 Application is now running locally on port 3006 or on port specified in the environment variable.
@@ -109,7 +109,7 @@ from the application's root directory. All tests should pass.
 To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.test.ts file run this command:
 
 ```
-npm run datasources-test
+yarn datasources-test
 ```
 
 from the application's root directory.
@@ -124,7 +124,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 ## Documentation
 
-For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
+For generating documentation run `yarn generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
 More documentation in `docs/`. If you want to add a new dataset or create new API routes, check out our existing [modules](https://gitlab.com/operator-ict/golemio/code/modules).
 
