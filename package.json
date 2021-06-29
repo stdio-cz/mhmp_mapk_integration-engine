@@ -17,7 +17,7 @@
         "code-coverage": "nyc mocha --timeout 120000 -r ts-node/register -r source-map-support/register -r dotenv/config test/App.test.ts --exit",
         "datasources-test": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config test/datasources-test/DataSourcesAvailabilityChecking.test.ts --exit",
         "datasources-test-report": "mocha --check-leaks --timeout 120000 -r ts-node/register -r dotenv/config --file test/datasources-test/reportErrors.ts test/datasources-test/DataSourcesAvailabilityChecking.test.ts --exit",
-        "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Integration Engine\" --mode file --out docs/typedoc src",
+        "generate-docs": "typedoc --out docs/typedoc src",
         "lint": "eslint src/**/*.ts"
     },
     "keywords": [],
