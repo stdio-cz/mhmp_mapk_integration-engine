@@ -13,6 +13,7 @@ import {
     DataSource,
     DataSourceStreamed,
     FTPProtocolStrategy,
+    FTPTargetType,
     GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy,
     HTTPProtocolStrategyStreamed,
@@ -150,9 +151,8 @@ describe("DataSourcesAvailabilityChecking", () => {
                 RopidGTFS.RopidGTFS.name + "DataSource",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSFilename,
-                    isCompressed: true,
+                    targetType: FTPTargetType.COMPRESSED,
                     path: config.datasources.RopidGTFSPath,
-                    tmpDir: "/tmp/",
                     url: config.datasources.RopidFTP,
                     whitelistedFiles: [
                         "agency.txt",
