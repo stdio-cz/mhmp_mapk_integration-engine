@@ -31,7 +31,7 @@
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@golemio/eslint-config": "^1.0.2",
-        "@golemio/schema-definitions": "2.0.11-dev.330096310",
+        "@golemio/schema-definitions": "2.0.11-dev.330397544",
         "@google-cloud/storage": "^5.7.1",
         "@types/chai": "4.2.3",
         "@types/chai-as-promised": "7.1.2",
@@ -97,7 +97,7 @@
         "@golemio/traffic-detectors": "1.0.3",
         "@golemio/waste-collection-yards": "1.0.0",
         "@golemio/waze-ccp": "1.0.0",
-        "@golemio/waze-tt": "1.0.0",
+        "@golemio/waze-tt": "1.0.1-dev.330406990",
         "dotenv": "6.1.0",
         "morgan": "^1.9.1"
     },
