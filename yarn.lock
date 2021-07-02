@@ -425,10 +425,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.6-dev.329576571":
-  version "1.0.6-dev.329576571"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.6-dev.329576571.tgz#7c4e8562191b4648e24e2edb575e347034247972"
-  integrity sha512-zjDNcMmI8Gjm7cCWXBZC1l+3avprOYLSwu0v6+NCBvdR6BumhpMPA3ihdvQbk1azoif5t+UgKMY0iC6tV49elg==
+"@golemio/core@1.0.6-dev.330527286":
+  version "1.0.6-dev.330527286"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.6-dev.330527286.tgz#4890dc2a2abd38846b97aa9213b331a85321070a"
+  integrity sha512-IsBp0WNIZVkWnKo2AW5omn12aLwxT/b6L/XKbhWSByxrUrvTMtCamYl4jRBTvLHF1Cbj5N2u2kRe8AeAeDrYCg==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -613,10 +613,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.0.tgz#f1ec1f562428493552851864f2b7f4353e9dc581"
   integrity "sha1-8ewfViQoSTVShRhk8rf0NT6dxYE= sha512-3Zn+CeCPJIZM676loiS4/9sDZXWbtJXC9j0tLRbH6GmQs58cIycbSLJJr3+T9+0vqrNFyBepUYsKNG2mDR8tDQ=="
 
-"@golemio/pid@2.0.5-dev.330791511":
-  version "2.0.5-dev.330791511"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.5-dev.330791511.tgz#ecb2385da7f4a0ce72c23bc3c85feb9b250e6175"
-  integrity sha512-7pdYGCe/v5+XwO1QQ2EOWf4yMq1XTSPjHMm8NmXmVvuGoTz4LD53O4Jw4VfcNLgBzZjF9GFrX3cO6GVTY5UA7Q==
+"@golemio/pid@2.0.5-dev.330869789":
+  version "2.0.5-dev.330869789"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.5-dev.330869789.tgz#5d06562e534a76b1366703b99c792046acb7e200"
+  integrity sha512-u+hh3p0IovBQ5NijW0/hNvZMP1fWRXgPgKI6sq2JyJCfUIAj/s3zGEq/sqlOpDClybtyYMkhZilmvnMgUgz64g==
   dependencies:
     "@turf/turf" "^5.1.6"
     JSONStream "^1.3.5"
