@@ -706,6 +706,13 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
+"@golemio/traffic-cameras@1.0.1-dev.333196545":
+  version "1.0.1-dev.333196545"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.1-dev.333196545.tgz#ab42d599871296607c2d82ac64f70f7b502298f4"
+  integrity sha512-XUuMxNsiEGTByNK0SOem8mmc3UNZ8W7Tk+PTxRH0hc8Wk6p+3jjDQDObxRxgGqyin3ygmn7UVGo01LLWju0EOw==
+  dependencies:
+    "@golemio/city-districts" "1.0.0"
+
 "@golemio/traffic-detectors@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.3.tgz#6c08258ffff214f7f6219d43196b90466ba1aa23"
