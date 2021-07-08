@@ -528,10 +528,10 @@
   dependencies:
     body-parser "1.19.0"
 
-"@golemio/medical-institutions@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.1.tgz#d3a08b76454170c3177f6003f372cf2432bccdbd"
-  integrity sha512-CoQvB6SYP3/NpY1dXZtc2ykvCWXr8fSVCXzRh3MYTQ0uVg5OSf0iAnMX8q3r3vz0uDTbrUrR/XHT4tXtSZu40w==
+"@golemio/medical-institutions@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.2.tgz#1e8cdf6775922191a3fe2b5a3959e01304250d33"
+  integrity sha512-ltFSRTmgl8ib7xQxffMlMKZHH8psp09NiFAd9AmHWP1Cwa/Im8kB7557iIUwzV8PwPk2d5Lr9EgsEczfSC/NEg==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     fast-csv "^4.3.6"
@@ -539,18 +539,18 @@
     lodash "^4.17.19"
     slugify "1.3.2"
 
-"@golemio/meteosensors@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/meteosensors/-/meteosensors-1.0.1.tgz#c1d3aabf3ee61a9d4ac7eb92aa970e89c0044cff"
-  integrity sha512-NZRlL+hGnDsSrIo0ZR9H7alujYXYEVn2LExuQUCsgGUqkd2sp913wbZSCUKJTGkFW96GPRarjvoAPzCPMpOHYQ==
+"@golemio/meteosensors@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/meteosensors/-/meteosensors-1.0.2.tgz#980e749dc6b25842e7d9aaab6a1cf2cc3474e80e"
+  integrity sha512-g39X+E5vdLOxKZZudiheok4sV5zUpNrrWLMCYyXBZvNhd2n+r45reZRPiDpwaUeOBTjFUjURJu05ltPmstrQIQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
 
-"@golemio/mobile-app-statistics@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.1.tgz#b74a5bfe2fa8e325c8d73dbfefb68c9b32e3b03d"
-  integrity sha512-D5DLNgjO3/pXBJ5xyhpr1uKcmh4d+819nyAqINocXrCfEbIt+D08h5EsxNFOE1jVw3xRLV1Fy9dc0R6a3DV79g==
+"@golemio/mobile-app-statistics@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.2.tgz#ff4389744233b0d0e67125f8886bff103da813e8"
+  integrity sha512-LeGalFWcD4gGWZeZQ1Smuu72Ys94/KHA1eGq9TU1Gg7j41yOWYl2ddBkwacW5DqzUEBTe1P/RaRth02pJ096Sw==
   dependencies:
     jsonwebtoken "8.5.1"
 
@@ -600,10 +600,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.3.tgz#9185537c23f31ab002c9e033af38b8499897e3be"
-  integrity sha512-UJ9HEStl+YgfcktiGpLGW/XfqN4ozc4KEh5kWYF70hu7lwjsEjCnVysOV7aLea7Xy7h2ZVlHB0FYmTTDCRaIWA==
+"@golemio/parkings@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.4.tgz#4a23f5f0ef48fae85ab748e68cd1920765f4498e"
+  integrity sha512-QRfLwbaO1ZWta3Bn3ymSyFmleWNfp3An7HZHEIWoQQUXcES4wMGA9XuPeFqMQUYSmqkVOuyfmp4MrXq7otl99w==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
@@ -686,10 +686,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.3.tgz#a7e2c13b7a9d50c2fe903ddd40b9e9b59b7c669f"
-  integrity sha512-zOhJ9n/sHEeSitIrEcPnZzlU8jGUBiCiF7ruCN9TndvhF+nN06M4Q+UHNuxjayH4PBjzdQhZKlhgpRC3PxNp7w==
+"@golemio/sorted-waste-stations@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.4.tgz#817e7402ce1d20f42762b36f7ae4b7181bb88caf"
+  integrity sha512-+jge7x4aSFxHbLV9C7myXt5ZpXRWhpr74wIP6qRbgT1Z5AKgbJccuyUd+TBJBUKP3pfKNIYNFE7mu1i7UmEhzA==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -713,10 +713,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/traffic-detectors@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.3.tgz#6c08258ffff214f7f6219d43196b90466ba1aa23"
-  integrity sha512-Cqyzjaz7n4+shHnWyTQehLX2Dk1VJlyKrbn8FMZjFj+RP856RYGRHw0zZmFg1QotpQsXqkokSswY05CjrJMmVw==
+"@golemio/traffic-detectors@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.4.tgz#9363d89e86a30103cf786e85d07ce2033554371f"
+  integrity sha512-9rw0uy7uszg3/hiRIPJg1pg2utkSS9Ne/AbxBjXoICBtqzofIgAio8knCk/wEtkOi98PJ/vP967so1v7fv/vtA==
   dependencies:
     uuid "^8.3.2"
     xml-to-json-stream "^1.1.0"
