@@ -508,10 +508,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/flow@1.0.4-dev.333941745":
-  version "1.0.4-dev.333941745"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.4-dev.333941745.tgz#7358059e30b3275db0ed312c289e826a8a6e2c6c"
-  integrity sha512-n3vGcMG35nKQa0TwNXXYTdymiCTqKK4USstoB33x8mKBt4r+VypHJG1N46JnDp7qnEIT0mKxKgkN+HEbitllLw==
+"@golemio/flow@1.0.4-dev.334044848":
+  version "1.0.4-dev.334044848"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.4-dev.334044848.tgz#dac71f6a68e69e1d648cb3f290577a5e6d48b432"
+  integrity sha512-LxA5jfgRq5+tooZw+hb1nxvVQZu2VTp0GO5324zKT9I5WB1AckrXFE/PBCEkWGFvCPIFma1f5h1p9rphxDUugw==
   dependencies:
     JSONStream "^1.0.4"
     axios "^0.21.1"
