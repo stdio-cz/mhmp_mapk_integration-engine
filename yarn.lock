@@ -591,10 +591,10 @@
     "@golemio/city-districts" "1.0.0"
     slugify "1.3.2"
 
-"@golemio/ndic@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-0.0.2.tgz#92d254b1fbef607329f8907a49a94ded07439c39"
-  integrity sha512-kE1NdxTZXjLFRJA/k8YjgEdqylBDTiQXDNQGhCU0HxUEJyMwHq+fJ8YmfUj7TWNM8g4aSIveB2+6U1BASJjhwQ==
+"@golemio/ndic@1.0.0-dev.337746650":
+  version "1.0.0-dev.337746650"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.0-dev.337746650.tgz#b6b6a26e5fc9fdc146ce25c2407a6f729b3993a8"
+  integrity sha512-LopMm28tGTSKRcPDd9Xgn+oSldQMELUrEffTj9HyCrP2K/PjFYvUfvh3f4lwhehWMjFjsb7SFVU1AjkSwZMopA==
   dependencies:
     ajv "^8.2.0"
     xsd2jsonschema "^0.3.7"
