@@ -182,7 +182,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it.skip("should returns all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
