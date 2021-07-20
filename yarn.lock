@@ -412,10 +412,10 @@
   dependencies:
     lodash "^4.17.19"
 
-"@golemio/bicycle-counters@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.1.tgz#dd016f18b207783ed481d1ceb610b3ca7fbc9631"
-  integrity sha512-/jltYUOY2J6YIJy0XFrMdZp2/SlxeQisXNdeeATRjI7e0MA5Z2mhYT+RzfUlwLyAcv2R5Updz78QovsHXSOM9A==
+"@golemio/bicycle-counters@1.0.2-dev.339932115":
+  version "1.0.2-dev.339932115"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.2-dev.339932115.tgz#0e2f012a32aa1fdb1d9f98a70138c61dad78aa13"
+  integrity sha512-wY1icCxetUV1uIFov8a3347WxBfknB47/AvoGb+uKWTscLFWr7EQM9FG9Xu9fIMQWT8lfvVUGTbBWWhEJqPLVw==
   dependencies:
     lodash "^4.17.21"
 
@@ -8254,10 +8254,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.1:
-  version "1.19.6"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.6.tgz#51f8cb17ca16faefb20b9a31ac60f84aa2b7c870"
-  integrity sha512-eSXsXZ2jLvGWeLYlQA3Gh36BcjF+0amo92+wHPyN1mdR8Nxf75fuEuYTd9c0a+m/vhCjRK0ESlE9YNLW+E1VEw==
+urijs@^1.19.1, urijs@^1.19.7:
+  version "1.19.7"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.7.tgz#4f594e59113928fea63c00ce688fb395b1168ab9"
+  integrity sha512-Id+IKjdU0Hx+7Zx717jwLPsPeUqz7rAtuVBRLLs+qn+J2nf9NGITWVCxcijgYxBqe83C7sqsQPs6H1pyz3x9gA==
 
 url-parse@~1.5.1:
   version "1.5.1"
