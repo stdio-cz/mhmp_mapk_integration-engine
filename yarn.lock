@@ -412,10 +412,10 @@
   dependencies:
     lodash "^4.17.19"
 
-"@golemio/bicycle-counters@1.0.2-dev.339932115":
-  version "1.0.2-dev.339932115"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.2-dev.339932115.tgz#0e2f012a32aa1fdb1d9f98a70138c61dad78aa13"
-  integrity sha512-wY1icCxetUV1uIFov8a3347WxBfknB47/AvoGb+uKWTscLFWr7EQM9FG9Xu9fIMQWT8lfvVUGTbBWWhEJqPLVw==
+"@golemio/bicycle-counters@1.0.2-dev.341100986":
+  version "1.0.2-dev.341100986"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.2-dev.341100986.tgz#c81166daa44dddfe5d9dc36b23fd7fd25b1becac"
+  integrity sha512-BU9W+CTUZUW8TBreA+8bOTaocNBeyuamYFBQgeGdXTSljvX7Cji0sr3El28y+jbbvCZ6dIt7MwHxHMjl2aaCWA==
   dependencies:
     lodash "^4.17.21"
 
@@ -433,10 +433,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.7-dev.337535682":
-  version "1.0.7-dev.337535682"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.7-dev.337535682.tgz#8e88427258029420b7a0d9d99e149abe2835a4d0"
-  integrity sha512-fnyBeRWxIng1qnXrWtkaaynDuX3j3WlPpviL0VXtCju7tpK4REOZWjyOuZQI6k0slVAsyw9zD0RdnJg/llwzYQ==
+"@golemio/core@1.1.0-dev.340587549":
+  version "1.1.0-dev.340587549"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.0-dev.340587549.tgz#70404483a9f2025853b8cc0533af5a4f4bf7e0c8"
+  integrity sha512-NlqAvJdbSJcY3ntNy3t4X5GEhulGG3pLqf1OjE65Uxvs2iTu3uJcsE7qQcb7jTTbHgJ2Rsre3iCKaXixHtlBrw==
   dependencies:
     "@golemio/errors" "^1.0.1-dev.333311734"
     "@golemio/utils" "^1.0.0"
@@ -466,7 +466,7 @@
     mongoose "^5.3.6"
     morgan "^1.10.0"
     path-to-regexp "^6.2.0"
-    pg "7.6.1"
+    pg "^8.6.0"
     redis "^3.1.1"
     request "2.88.0"
     request-promise "^4.2.5"
@@ -516,10 +516,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/flow@1.0.4-dev.334044848":
-  version "1.0.4-dev.334044848"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.4-dev.334044848.tgz#dac71f6a68e69e1d648cb3f290577a5e6d48b432"
-  integrity sha512-LxA5jfgRq5+tooZw+hb1nxvVQZu2VTp0GO5324zKT9I5WB1AckrXFE/PBCEkWGFvCPIFma1f5h1p9rphxDUugw==
+"@golemio/flow@1.0.4-dev.341101670":
+  version "1.0.4-dev.341101670"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.4-dev.341101670.tgz#6d7f40836ca6ecc1c782a34a32e83e35635ebb9e"
+  integrity sha512-a4Xm/ZffP//pW51OW+z6c5PMqpYu3Tt+t3HVdPVim4insX8/WOujmTmx6y1HbrcdAHMe3QpeLJYBTwrYwBBFgQ==
   dependencies:
     JSONStream "^1.0.4"
     axios "^0.21.1"
@@ -536,10 +536,10 @@
   dependencies:
     body-parser "1.19.0"
 
-"@golemio/medical-institutions@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.2.tgz#1e8cdf6775922191a3fe2b5a3959e01304250d33"
-  integrity sha512-ltFSRTmgl8ib7xQxffMlMKZHH8psp09NiFAd9AmHWP1Cwa/Im8kB7557iIUwzV8PwPk2d5Lr9EgsEczfSC/NEg==
+"@golemio/medical-institutions@1.0.3-dev.341101131":
+  version "1.0.3-dev.341101131"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.3-dev.341101131.tgz#ea804aa90ac8c804b915c554670f50fe6b9327a9"
+  integrity sha512-GYUqEIBMSq6pITgLCzaPH8SZnzXjJWublXtwBFCnp8EVtsn635E19yUpZ69g33wth8jsz+gYQy9dDnJD7vCrLw==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     fast-csv "^4.3.6"
@@ -569,10 +569,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.0.tgz#48a41ade24a0fe61a802b06f5011e74179999a6b"
-  integrity sha512-VaRCG4WxJqugrgcTfPK5YdFEnwCTYWgZaHGHWDIVqfXsOOnytH1lryUF6B9DTiCf2dx8BmVuALJDCGGbPU17Yw==
+"@golemio/municipal-authorities@1.0.1-dev.341101539":
+  version "1.0.1-dev.341101539"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.1-dev.341101539.tgz#350a9d0fe9b52d80ca89f8f476371be5d4df8078"
+  integrity sha512-kI6Cn85ha54hIq3DRCJFVeU3uSyM6oK7sQof+9e1bMsPtX2u/vxuYHzuujrQ8nWUE3XA9uKbuAjANSLZrYXqAw==
   dependencies:
     lodash "^4.17.19"
 
@@ -608,10 +608,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.4.tgz#4a23f5f0ef48fae85ab748e68cd1920765f4498e"
-  integrity sha512-QRfLwbaO1ZWta3Bn3ymSyFmleWNfp3An7HZHEIWoQQUXcES4wMGA9XuPeFqMQUYSmqkVOuyfmp4MrXq7otl99w==
+"@golemio/parkings@1.0.5-dev.341101484":
+  version "1.0.5-dev.341101484"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.5-dev.341101484.tgz#fbbbe2d06b446b448ff4330895c7b152abcb767a"
+  integrity sha512-+e2Dpy/6EMp6goiD1FKUMsqJSsjTVmWhClo0b9pfoCnVr/KlwVrshqW/WV9xfaKXnnsVlBrVoR4ecvDFPLFBHQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
@@ -621,10 +621,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.0.tgz#f1ec1f562428493552851864f2b7f4353e9dc581"
   integrity sha512-3Zn+CeCPJIZM676loiS4/9sDZXWbtJXC9j0tLRbH6GmQs58cIycbSLJJr3+T9+0vqrNFyBepUYsKNG2mDR8tDQ==
 
-"@golemio/pid@2.0.5-dev.340502116":
-  version "2.0.5-dev.340502116"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.5-dev.340502116.tgz#794ce770bfe2365c379695f862a826ec82b0d108"
-  integrity sha512-KAwTzm1rDwFllUaNifSMwASlhaHDsJcyscdN4y9Kc1YFVDLgRoFNLDIn3lbrQ2OV/rcDCpH0xUvcSVTg2d26Jg==
+"@golemio/pid@2.0.5-dev.341102661":
+  version "2.0.5-dev.341102661"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.5-dev.341102661.tgz#c19aa575b1731e023e7ea39a72edb2911a0b1768"
+  integrity sha512-v1tg+XY7JdWqCuSXwEXdLaJtoBPN6twyVWjWx1bREGyKwaoWqTOUHJFJS08DoLWhPYvfTyAE4uAz7zhBOG9DnQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -681,6 +681,14 @@
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
 
+"@golemio/shared-bikes@1.0.1-dev.341102014":
+  version "1.0.1-dev.341102014"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.1-dev.341102014.tgz#48016aad227cfea74b14089d7d23f71a4704268c"
+  integrity sha512-BQFiIN55YgMf4XG/Kma3KTDQfoKZwZVORwuptRkciLe31FC94/WlS/0TuOgdlajmvwqalTRrROzmWYdRabkcBQ==
+  dependencies:
+    cheap-ruler "2.5.1"
+    lodash "^4.17.19"
+
 "@golemio/shared-cars@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@golemio/shared-cars/-/shared-cars-1.0.0.tgz#70931c0e67cf49144973ee47eafa40ceb9e43c99"
@@ -695,10 +703,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.5-dev.336872494":
-  version "1.1.5-dev.336872494"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.5-dev.336872494.tgz#49d1a16e934fb31d32788b797e877542a428854e"
-  integrity sha512-jwmd5wvbEPifE3nxJTTbE0pHHkAHPzkVoKdFtKbZhocELuCSkiV3/AKF+ngbKKgtYpDLrmyIDxm/Y1eIh4FNIQ==
+"@golemio/sorted-waste-stations@1.1.5-dev.341102423":
+  version "1.1.5-dev.341102423"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.5-dev.341102423.tgz#49d4b50f526d3d6811dbc5e7ed05a29efd12c372"
+  integrity sha512-BOdlAtNmM6O1lsPfu+uc7BNH3mlVr6rZRbP54dlQhKu8s2ljajsqG9pUS51KqgkXavNXxGwlMTOB8Pzai45/QA==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -706,6 +714,7 @@
     lodash "^4.17.19"
     proj4 "^2.6.2"
     slugify "1.3.2"
+    trim-newlines "^4.0.1"
     uuid-by-string "^3.0.2"
 
 "@golemio/traffic-cameras@1.0.0":
@@ -6386,11 +6395,6 @@ package-hash@^4.0.0:
     lodash.flattendeep "^4.4.0"
     release-zalgo "^1.0.0"
 
-packet-reader@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-0.3.1.tgz#cd62e60af8d7fea8a705ec4ff990871c46871f27"
-  integrity sha1-zWLmCvjX/qinBexP+ZCHHEaHHyc=
-
 packet-reader@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
@@ -6507,11 +6511,6 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-pg-connection-string@0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-0.1.3.tgz#da1847b20940e42ee1492beaf65d49d91b245df7"
-  integrity sha1-2hhHsglA5C7hSSvq9l1J2RskXfc=
-
 pg-connection-string@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.5.0.tgz#538cadd0f7e603fc09a12590f3b8a452c2c0cf34"
@@ -6534,11 +6533,6 @@ pg-pool@^3.3.0:
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.3.0.tgz#12d5c7f65ea18a6e99ca9811bd18129071e562fc"
   integrity sha512-0O5huCql8/D6PIRFAlmccjphLYWC+JIzvUhSzXSpGaf+tjTZc4nn+Lr7mLXBbFJfvwbP0ywDv73EiaBsxn7zdg==
 
-pg-pool@~2.0.3:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.10.tgz#842ee23b04e86824ce9d786430f8365082d81c4a"
-  integrity sha512-qdwzY92bHf3nwzIUcj+zJ0Qo5lpG/YxchahxIN8+ZVmXqkahKXsnl2aiJPHLYN9o5mB/leG+Xh6XKxtP7e0sjg==
-
 pg-protocol@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.5.0.tgz#b5dd452257314565e2d54ab3c132adc46565a6a0"
@@ -6555,30 +6549,7 @@ pg-types@^2.1.0:
     postgres-date "~1.0.4"
     postgres-interval "^1.1.0"
 
-pg-types@~1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.1.tgz#d64087e3903b58ffaad279e7595c52208a14c3d2"
-  integrity sha1-1kCH45A7WP+q0nnnWVxSIIoUw9I=
-  dependencies:
-    postgres-array "~1.0.0"
-    postgres-bytea "~1.0.0"
-    postgres-date "~1.0.0"
-    postgres-interval "^1.1.0"
-
-pg@7.6.1:
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-7.6.1.tgz#42c68aed37bf38b813616e3d21f4338f350c1b79"
-  integrity sha512-rAItIkYrRaNGinZN/Hs8F9R5mQjQSPlnzxPF+eCimSl92qnuNGR42gkpOQKP1bnvTwkSjRTBL+VNC5EcFhtCuQ==
-  dependencies:
-    buffer-writer "2.0.0"
-    packet-reader "0.3.1"
-    pg-connection-string "0.1.3"
-    pg-pool "~2.0.3"
-    pg-types "~1.12.1"
-    pgpass "1.x"
-    semver "4.3.2"
-
-pg@^8.0.3:
+pg@^8.0.3, pg@^8.6.0:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/pg/-/pg-8.6.0.tgz#e222296b0b079b280cce106ea991703335487db2"
   integrity sha512-qNS9u61lqljTDFvmk/N66EeGq3n6Ujzj0FFyNMGQr6XuEv4tgNTXvJQTfJdcvGit5p5/DWPu+wj920hAJFI+QQ==
@@ -6668,11 +6639,6 @@ polygon-clipping@^0.15.3:
   dependencies:
     splaytree "^3.1.0"
 
-postgres-array@~1.0.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/postgres-array/-/postgres-array-1.0.3.tgz#c561fc3b266b21451fc6555384f4986d78ec80f5"
-  integrity sha512-5wClXrAP0+78mcsNX3/ithQ5exKvCyK5lr5NEEEeGwwM6NJdQgzIJBVxLvRW+huFpX92F2QnZ5CcokH0VhK2qQ==
-
 postgres-array@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/postgres-array/-/postgres-array-2.0.0.tgz#48f8fce054fbc69671999329b8834b772652d82e"
@@ -6683,7 +6649,7 @@ postgres-bytea@~1.0.0:
   resolved "https://registry.yarnpkg.com/postgres-bytea/-/postgres-bytea-1.0.0.tgz#027b533c0aa890e26d172d47cf9ccecc521acd35"
   integrity sha1-AntTPAqokOJtFy1Hz5zOzFIazTU=
 
-postgres-date@~1.0.0, postgres-date@~1.0.4:
+postgres-date@~1.0.4:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/postgres-date/-/postgres-date-1.0.7.tgz#51bc086006005e5061c591cee727f2531bf641a8"
   integrity sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==
@@ -7296,11 +7262,6 @@ semver-regex@^3.1.2:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
-
-semver@4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.2.tgz#c7a07158a80bedd052355b770d82d6640f803be7"
-  integrity sha1-x6BxWKgL7dBSNVt3DYLWZA+AO+c=
 
 semver@7.3.2:
   version "7.3.2"
@@ -8018,6 +7979,11 @@ trim-newlines@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-3.0.1.tgz#260a5d962d8b752425b32f3a7db0dcacd176c144"
   integrity sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==
+
+trim-newlines@^4.0.1:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.0.2.tgz#d6aaaf6a0df1b4b536d183879a6b939489808c7c"
+  integrity sha512-GJtWyq9InR/2HRiLZgpIKv+ufIKrVrvjQWEj7PxAXNc5dwbNJkqhAUoAGgzRmULAnoOM5EIpveYd3J2VeSAIew==
 
 trim-off-newlines@^1.0.0:
   version "1.0.1"
