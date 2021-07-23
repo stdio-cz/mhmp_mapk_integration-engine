@@ -433,10 +433,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.1.0-dev.340587549":
-  version "1.1.0-dev.340587549"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.0-dev.340587549.tgz#70404483a9f2025853b8cc0533af5a4f4bf7e0c8"
-  integrity sha512-NlqAvJdbSJcY3ntNy3t4X5GEhulGG3pLqf1OjE65Uxvs2iTu3uJcsE7qQcb7jTTbHgJ2Rsre3iCKaXixHtlBrw==
+"@golemio/core@1.1.0-dev.341349238":
+  version "1.1.0-dev.341349238"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.0-dev.341349238.tgz#21c99f32587d896f9fb6f73930ec0ce35b9ee01c"
+  integrity sha512-tXKR9dI0kM4YQkVgXlQA5J4s8MeaUXqVRd26TeC08n2nGgurCLvuCiW2FRjcoZITvqgXwaxbvflJVn5VDm52/w==
   dependencies:
     "@golemio/errors" "^1.0.1-dev.333311734"
     "@golemio/utils" "^1.0.0"
@@ -509,10 +509,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/firebase-pid-litacka@1.0.1-dev.334329210":
-  version "1.0.1-dev.334329210"
-  resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.1-dev.334329210.tgz#f350738c0bbbb7894369cafbbc21bfe739716934"
-  integrity sha512-L9Nv5pcCm7oWuMQoYDXcX8SWHfnxAREf0JVWhXL2yhUWD7GYwsZnGI1Jn0mRzo3DUaSC4IBBwe7D3b51SruOVQ==
+"@golemio/firebase-pid-litacka@1.0.1-dev.341947261":
+  version "1.0.1-dev.341947261"
+  resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.1-dev.341947261.tgz#d3f4b624d50d96ba210aa6b9306c0305c8140aa9"
+  integrity sha512-P4m6UP6dFxhFc37ggRWr9u8SM3FoolklhfzmGy9e1Pi1KIk8ev9TELUgxfnOwsqXbAo8z9SjzGhKMt8xlsPnKg==
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
