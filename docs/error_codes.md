@@ -12,6 +12,8 @@
     -   2002: Error while getting data from server.
     -   2003: Error while parsing source data.
     -   2004: Error while validating source data.
+    -   2005: Error while getting data from DataSource stream.
+    -   2006: Error while processing data from DataSource stream.
 -   Transformations Errors
     -   3001: Sorted Waste Containers were not set. Use method setContaners().
     -   3002: {name} must be a valid number.

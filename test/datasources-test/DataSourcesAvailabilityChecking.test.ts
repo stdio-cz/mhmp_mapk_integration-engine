@@ -13,6 +13,7 @@ import {
     DataSource,
     DataSourceStreamed,
     FTPProtocolStrategy,
+    FTPTargetType,
     GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy,
     HTTPProtocolStrategyStreamed,
@@ -39,7 +40,8 @@ import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
 import { Parkomats } from "@golemio/parkomats/dist/schema-definitions";
 import { Playgrounds } from "@golemio/playgrounds/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
-import { RopidGTFS } from "@golemio/pid/dist/schema-definitions";
+import { RopidGTFS } from "@golemio/pid/dist/schema-definitions/ropid-gtfs";
+import { RopidVYMI, IRopidVYMIEvent } from "@golemio/pid/dist/schema-definitions/ropid-vymi";
 import { SharedBikes } from "@golemio/shared-bikes/dist/schema-definitions";
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
 import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-definitions";
@@ -147,12 +149,11 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         beforeEach(() => {
             datasource = new DataSource(
-                RopidGTFS.RopidGTFS.name + "DataSource",
+                RopidGTFS.name + "DataSource",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSFilename,
-                    isCompressed: true,
+                    targetType: FTPTargetType.COMPRESSED,
                     path: config.datasources.RopidGTFSPath,
-                    tmpDir: "/tmp/",
                     url: config.datasources.RopidFTP,
                     whitelistedFiles: [
                         "agency.txt",
@@ -169,7 +170,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 null as any
             );
             datasourceCisStops = new DataSource(
-                RopidGTFS.RopidGTFS.name + "CisStops",
+                RopidGTFS.name + "CisStops",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSCisStopsFilename,
                     path: config.datasources.RopidGTFSCisStopsPath,
@@ -181,7 +182,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it.skip("should returns all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
@@ -199,6 +200,46 @@ describe("DataSourcesAvailabilityChecking", () => {
         it("should returns cis last modified", async () => {
             const data = await datasourceCisStops.getLastModified();
             expect(data).to.be.a("string");
+        });
+    });
+
+    describe("RopidVYMI", () => {
+        let datasource: DataSourceStreamed;
+
+        beforeEach(() => {
+            const baseUrl = config.datasources.RopidVYMIApiUrl;
+            const params = new URLSearchParams({
+                level: "1", // Standard output, see RopidVYMIWorker
+            });
+
+            datasource = new DataSourceStreamed(
+                RopidVYMI.events.name + "DataSource",
+                new HTTPProtocolStrategyStreamed({
+                    headers: config.datasources.RopidVYMIApiHeaders,
+                    method: "GET",
+                    timeout: 20000,
+                    url: `${baseUrl}?${params}`,
+                }).setStreamTransformer(JSONStream.parse("vymi-report.vymi-list.*")),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new JSONSchemaValidator(RopidVYMI.events.name + "DataSource", RopidVYMI.events.datasourceJsonSchema)
+            );
+        });
+
+        it("RopidVYMI data source should return items", async () => {
+            const dataStream = await datasource.getAll(false);
+
+            await Promise.race([
+                dataStream
+                    .setDataProcessor(async (data: IRopidVYMIEvent) => {
+                        expect(Object.keys(data).length).to.be.greaterThan(0);
+                    })
+                    .proceed(),
+                sleep(1000),
+            ]);
+
+            if (!dataStream.destroyed) {
+                dataStream.destroy();
+            }
         });
     });
 
