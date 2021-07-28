@@ -688,10 +688,10 @@
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
 
-"@golemio/shared-bikes@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.1.tgz#8b1ad8a7ffd7c2781b295f037ae40d1ee3b86a44"
-  integrity sha512-GnH8j3DhLbD3b72vROjPTYMk4c4Cuez1eqB8fNVsqANh/zz/PyA4g8aRkyU3pyq3VNSAOypwZmTa+/sM0/HYZA==
+"@golemio/shared-bikes@1.0.2-dev.344073926":
+  version "1.0.2-dev.344073926"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.2-dev.344073926.tgz#7495486c02b338e2faf31fe065d484669b643df3"
+  integrity sha512-RC1n7juv+Ygn/Z/P0AlPgF4CqlY+fCLz0XdqoP0zNbKKBGoM1fHw3YKUWpWW1mPNonjgT3gDedzu1CMWEUL7BA==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
