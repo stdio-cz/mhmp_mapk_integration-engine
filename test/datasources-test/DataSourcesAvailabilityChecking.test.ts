@@ -79,12 +79,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.a("string");
         });
@@ -122,22 +122,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.a("string");
         });
 
-        it("should returns all tariffs objects", async () => {
+        it("should return all tariffs objects", async () => {
             const data = await datasourceTariffs.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns tariffs last modified", async () => {
+        it("should return tariffs last modified", async () => {
             const data = await datasourceTariffs.getLastModified();
             expect(data).to.be.null;
         });
@@ -146,6 +146,7 @@ describe("DataSourcesAvailabilityChecking", () => {
     describe("RopidGTFS", () => {
         let datasource: DataSource;
         let datasourceCisStops: DataSource;
+        let dataSourceRunNumbers: DataSource;
 
         beforeEach(() => {
             datasource = new DataSource(
@@ -165,6 +166,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                         "routes.txt",
                         "trips.txt",
                     ],
+                    encoding: "utf8",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "" }),
                 null as any
@@ -174,30 +176,54 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSCisStopsFilename,
                     path: config.datasources.RopidGTFSCisStopsPath,
-                    tmpDir: "/tmp/",
                     url: config.datasources.RopidFTP,
+                    encoding: "utf8",
                 }),
                 new JSONDataTypeStrategy({ resultsPath: "stopGroups" }),
                 null as any
             );
+            dataSourceRunNumbers = new DataSource(
+                RopidGTFS.runNumbers.name + "DataSource",
+                new FTPProtocolStrategy({
+                    filename: config.datasources.RopidGTFSRunNumbersFilename,
+                    path: config.datasources.RopidGTFSRunNumbersPath,
+                    url: config.datasources.RopidFTP,
+                    encoding: "utf8",
+                }),
+                new CSVDataTypeStrategy({
+                    fastcsvParams: { delimiter: ",", headers: true },
+                    subscribe: (json: any) => json,
+                }),
+                new JSONSchemaValidator(RopidGTFS.runNumbers.name + "DataSource", RopidGTFS.runNumbers.datasourceJsonSchema)
+            );
         });
 
-        it.skip("should returns all objects", async () => {
+        it.skip("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.a("string");
         });
 
-        it("should returns all cis objects", async () => {
+        it("should return all cis objects", async () => {
             const data = await datasourceCisStops.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns cis last modified", async () => {
+        it("should return cis last modified", async () => {
+            const data = await datasourceCisStops.getLastModified();
+            expect(data).to.be.a("string");
+        });
+
+        it("should return all run numbers objects", async () => {
+            const data = await datasourceCisStops.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should return run numbers last modified", async () => {
             const data = await datasourceCisStops.getLastModified();
             expect(data).to.be.a("string");
         });
@@ -259,12 +285,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -286,12 +312,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -320,12 +346,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -351,12 +377,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -381,12 +407,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -408,12 +434,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -435,12 +461,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
@@ -463,12 +489,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.not.null;
             });
@@ -490,12 +516,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.not.null;
             });
@@ -518,12 +544,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -547,17 +573,17 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
 
-        describe("SkodaPalaceQueues", () => {
+        describe.skip("SkodaPalaceQueues", () => {
             let skodaPalaceQueuesDatasource: DataSource;
 
             beforeEach(() => {
@@ -579,12 +605,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await skodaPalaceQueuesDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await skodaPalaceQueuesDatasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -609,12 +635,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
@@ -636,12 +662,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.not.null;
         });
@@ -729,22 +755,22 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all pharmacies objects", async () => {
+        it("should return all pharmacies objects", async () => {
             const data = await pharmaciesDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns pharmacies last modified", async () => {
+        it("should return pharmacies last modified", async () => {
             const data = await pharmaciesDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
 
-        it("should returns all health care objects", async () => {
+        it("should return all health care objects", async () => {
             const data = await healthCareDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns health care last modified", async () => {
+        it("should return health care last modified", async () => {
             const data = await healthCareDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
@@ -869,57 +895,57 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all IPR Containers objects", async () => {
+        it("should return all IPR Containers objects", async () => {
             const data = await iprContainersDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns IPR Containers last modified", async () => {
+        it("should return IPR Containers last modified", async () => {
             const data = await iprContainersDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
 
-        it("should returns all IPR Stations objects", async () => {
+        it("should return all IPR Stations objects", async () => {
             const data = await iprStationsDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns IPR Stations last modified", async () => {
+        it("should return IPR Stations last modified", async () => {
             const data = await iprStationsDatasource.getLastModified();
             expect(data).to.be.not.null;
         });
 
-        it("should returns all OICT Containers objects", async () => {
+        it("should return all OICT Containers objects", async () => {
             const data = await oictDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns OICT Containers last modified", async () => {
+        it("should return OICT Containers last modified", async () => {
             const data = await oictDatasource.getLastModified();
             expect(data).to.be.null;
         });
 
-        it("should returns all POTEX Containers objects", async () => {
+        it("should return all POTEX Containers objects", async () => {
             const data = await potexDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns POTEX Containers last modified", async () => {
+        it("should return POTEX Containers last modified", async () => {
             const data = await potexDatasource.getLastModified();
             expect(data).to.be.null;
         });
 
-        it("should returns all sensors containers objects", async () => {
+        it("should return all sensors containers objects", async () => {
             const data = await sensorsContainersDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns all sensors measurements objects", async () => {
+        it("should return all sensors measurements objects", async () => {
             const data = await sensorsMeasurementsDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns all sensors picks objects", async () => {
+        it("should return all sensors picks objects", async () => {
             const data = await sensorsPicksDatasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
@@ -942,12 +968,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -1005,32 +1031,32 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all locations objects", async () => {
+            it.skip("should return all locations objects", async () => {
                 const data = await locationsDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns locations last modified", async () => {
+            it.skip("should return locations last modified", async () => {
                 const data = await locationsDatasource.getLastModified();
                 expect(data).to.be.null;
             });
 
-            it("should returns all out of locations objects", async () => {
+            it.skip("should return all out of locations objects", async () => {
                 const data = await outOfLocationsDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns out of locations last modified", async () => {
+            it.skip("should return out of locations last modified", async () => {
                 const data = await outOfLocationsDatasource.getLastModified();
                 expect(data).to.be.null;
             });
 
-            it("should returns all settings objects", async () => {
+            it("should return all settings objects", async () => {
                 const data = await settingsDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns settings last modified", async () => {
+            it("should return settings last modified", async () => {
                 const data = await settingsDatasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -1053,12 +1079,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -1091,12 +1117,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
@@ -1123,12 +1149,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -1167,12 +1193,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                     );
                 });
 
-                it("should returns all measurements objects", async () => {
+                it("should return all measurements objects", async () => {
                     const data = await measurementsDatasource.getAll();
                     expect(data).to.be.an.instanceOf(Object);
                 });
 
-                it("should returns measurements last modified", async () => {
+                it("should return measurements last modified", async () => {
                     const data = await measurementsDatasource.getLastModified();
                     expect(data).to.be.null;
                 });
@@ -1204,12 +1230,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns all objects", async () => {
+            it("should return all objects", async () => {
                 const data = await datasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should returns last modified", async () => {
+            it("should return last modified", async () => {
                 const data = await datasource.getLastModified();
                 expect(data).to.be.null;
             });
@@ -1258,12 +1284,12 @@ describe("DataSourcesAvailabilityChecking", () => {
                     );
                 });
 
-                it("should returns all measurements objects", async () => {
+                it("should return all measurements objects", async () => {
                     const data = await measurementsDatasource.getAll();
                     expect(data).to.be.an.instanceOf(Object);
                 });
 
-                it("should returns measurements last modified", async () => {
+                it("should return measurements last modified", async () => {
                     const data = await measurementsDatasource.getLastModified();
                     expect(data).to.be.null;
                 });
@@ -1389,7 +1415,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns data from AppStore", async () => {
+            it("should return data from AppStore", async () => {
                 const data = await appStoreDataSource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
@@ -1420,7 +1446,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 );
             });
 
-            it("should returns data from PlayStore", async () => {
+            it("should return data from PlayStore", async () => {
                 const data = await playStoreDataSource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
@@ -1446,12 +1472,12 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it("should returns all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should returns last modified", async () => {
+        it("should return last modified", async () => {
             const data = await datasource.getLastModified();
             expect(data).to.be.null;
         });
