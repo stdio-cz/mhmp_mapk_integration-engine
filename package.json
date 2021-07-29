@@ -70,7 +70,7 @@
         "@golemio/city-districts": "1.0.1",
         "@golemio/core": "1.1.1",
         "@golemio/counters": "1.0.1",
-        "@golemio/energetics": "1.0.1",
+        "@golemio/energetics": "1.0.2",
         "@golemio/firebase-pid-litacka": "1.0.1",
         "@golemio/flow": "1.0.4",
         "@golemio/gardens": "1.0.1",
