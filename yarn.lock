@@ -489,10 +489,10 @@
   dependencies:
     "@golemio/bicycle-counters" "1.0.1"
 
-"@golemio/energetics@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.1.tgz#2fa8a4305e2d8b3b4e04e693cae90cc53d29458d"
-  integrity sha512-l0OXKpLyAvWnpiWw4VKSlOpaA+HOyLPMxa1uvLHC5PQT6voGnHqabgTgOivYLOC4iKw5Zspj/QWGttgpt8YyIQ==
+"@golemio/energetics@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.2.tgz#3a5086db7bb25245dd7322ba9ba0f21bc946cd1b"
+  integrity sha512-x6594BdVEdTVPTO2vLNNAcb51dh5udamu/E9z/LK5NBulKNcXtUZHwxkOB1Ap0nCkSec2IdbedrVBIbMX027Bw==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
