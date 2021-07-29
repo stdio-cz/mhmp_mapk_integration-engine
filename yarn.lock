@@ -710,10 +710,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.6.tgz#3030fe40558ec203c701ae73b280e4852fba97a4"
-  integrity sha512-U8ziY7ivDpd6hP+YzDE057ByhCpFHlGRsnrwvTOMLLVmiUvb2vmVKC6j90i4H/KnwJy+A0akSi33/Eof+N1G/Q==
+"@golemio/sorted-waste-stations@1.1.7-dev.344865246":
+  version "1.1.7-dev.344865246"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.7-dev.344865246.tgz#107ab0c0d03eb7b4cca4544b7232a7c6094e284f"
+  integrity sha512-FBgLnKyYvPRPN0wlWTSZipUK9cRieh8UMcrkIJmlEE/rujOG7su9ML7alt/y/Q/vcQDgFO7PQ1DfCgifXAgPPQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
