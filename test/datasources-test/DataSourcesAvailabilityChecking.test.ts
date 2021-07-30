@@ -1509,7 +1509,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     new JSONSchemaValidator(schemaConfig.name + "DataSource", schemaConfig.datasourceJsonSchema)
                 );
 
-                const dataStream = await datasource.getAll(false);
+                const dataStream = await datasource.getAll(true);
                 await Promise.race([dataStream.setDataProcessor(onDataFunction).proceed(), sleep(1000)]);
 
                 if (!dataStream.destroyed) {
