@@ -628,10 +628,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.1.tgz#7e5fdc3435333c7bd9e0a6972fb28e478be931fe"
   integrity sha512-SzUqiRGom+zhg+T49rKsQQUK1iy0U+Q+OcLcstZ4msatQIdyLwcBso7+5fgfW91j9e3mE/673Dod3rYpVQGUuQ==
 
-"@golemio/pid@2.0.6-dev.345065952":
-  version "2.0.6-dev.345065952"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.6-dev.345065952.tgz#19aac87bf677e950fdaa9f113d15223d504f79f8"
-  integrity sha512-wk82KQBJOFa8JAc/7QGD74koQIsI92EqfebFzebgFOe2ygfO5SEa81RBn0fF2ES7+AepSF/8F6LJVCJIJABk/g==
+"@golemio/pid@2.0.6-dev.347134537":
+  version "2.0.6-dev.347134537"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.6-dev.347134537.tgz#586c26d85f15fc4ad054be53f8b1dc874e3522f5"
+  integrity sha512-2STYOLYN/qSkw0GP514JXmbmNdAEPIuoy4In6HZgTy4+fq6EOAC0SNFsWBWliEJP4pmAKo/f70ydovD1t3bPyQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -667,10 +667,10 @@
     "@golemio/shared-cars" "1.0.1"
     "@golemio/traffic-cameras" "1.0.0"
 
-"@golemio/schema-definitions@2.0.14-dev.345574975":
-  version "2.0.14-dev.345574975"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.14-dev.345574975.tgz#75ccdca45f45488117aa0c5207e1d3dd970dbfdb"
-  integrity sha512-SDFqePwRJgwtsDV/3FW/7Jf8cECxSxX/gAkqt9f0c77+K2jhKjh9LYQAocw62RqfbZMhGeXIyv0fONQW0hMkLw==
+"@golemio/schema-definitions@2.0.14-dev.346604817":
+  version "2.0.14-dev.346604817"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.14-dev.346604817.tgz#f426b2a6ed88b4da3f6e527d202ed82fdd180aaf"
+  integrity sha512-aQuI2d/8EYq5fzf2ZcyKhz9rhjgi4NexjFUN9C4+KPTg9eePUfvnXXXEy/1rJVyQJXextQoUJzk4neRMPkCK6A==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
