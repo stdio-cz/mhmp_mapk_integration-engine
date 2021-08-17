@@ -46,7 +46,35 @@ describe("App", () => {
     });
 
     it("should have health check on /", (done) => {
-        request(expressApp).get("/").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
+        request(expressApp)
+            .get("/")
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect((res: Response) => {
+                expect(res.body).to.deep.include({
+                    app: "Golemio Data Platform Integration Engine",
+                    health: true,
+                    services: [
+                        {
+                            name: "PostgreSQL",
+                            status: "UP",
+                        },
+                        {
+                            name: "MongoDB",
+                            status: "UP",
+                        },
+                        {
+                            name: "RedisDB",
+                            status: "UP",
+                        },
+                        {
+                            name: "RabbitMQ",
+                            status: "UP",
+                        },
+                    ],
+                });
+            })
+            .expect(200, done);
     });
 
     it("should have health check on /health-check", (done) => {
@@ -54,6 +82,30 @@ describe("App", () => {
             .get("/health-check")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
+            .expect((res: Response) => {
+                expect(res.body).to.deep.include({
+                    app: "Golemio Data Platform Integration Engine",
+                    health: true,
+                    services: [
+                        {
+                            name: "PostgreSQL",
+                            status: "UP",
+                        },
+                        {
+                            name: "MongoDB",
+                            status: "UP",
+                        },
+                        {
+                            name: "RedisDB",
+                            status: "UP",
+                        },
+                        {
+                            name: "RabbitMQ",
+                            status: "UP",
+                        },
+                    ],
+                });
+            })
             .expect(200, done);
     });
 
