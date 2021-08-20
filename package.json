@@ -79,7 +79,7 @@
         "@golemio/meteosensors": "1.0.4",
         "@golemio/mobile-app-statistics": "1.0.4",
         "@golemio/mos": "1.0.3",
-        "@golemio/municipal-authorities": "1.0.1",
+        "@golemio/municipal-authorities": "1.0.2-dev.356383913",
         "@golemio/municipal-libraries": "1.0.2",
         "@golemio/municipal-police-stations": "1.0.1",
         "@golemio/ndic": "1.0.3",

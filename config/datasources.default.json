@@ -78,7 +78,8 @@
         "X-VYMI-Password": ""
     },
     "RopidVYMIApiUrl": "https://vymipid.ropid.cz/ws/list_publ",
-    "SkodaPalaceQueues": "http://jungmannova.webcall.praha.eu/mon/wc-mon.php",
+    "SkodaPalaceQueues": "https://prod.kadlecelektro.cz/webcall/v4_mhmp/master/json.php",
+    "SkodaPalaceQueuesApiKey": "",
     "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
     "SensoneoSortedWasteSensorsApiKey": "",
     "TSKFTP": {

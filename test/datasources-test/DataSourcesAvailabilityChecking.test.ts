@@ -583,24 +583,31 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.null;
         });
 
-        describe.skip("SkodaPalaceQueues", () => {
+        describe("SkodaPalaceQueues", () => {
             let skodaPalaceQueuesDatasource: DataSource;
 
             beforeEach(() => {
                 skodaPalaceQueuesDatasource = new DataSource(
                     MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
                     new HTTPProtocolStrategy({
+                        body: {
+                            methodName: "mon_dej_cinnost",
+                            params: {
+                                poboID: 1,
+                                apiKey: config.datasources.SkodaPalaceQueuesApiKey,
+                            },
+                        },
                         headers: {},
-                        method: "GET",
+                        json: true,
+                        method: "POST",
                         url: config.datasources.SkodaPalaceQueues,
                     }),
-                    new XMLDataTypeStrategy({
-                        resultsPath: "html.body.div",
-                        xml2jsParams: { explicitArray: false, ignoreAttrs: true, trim: true },
+                    new JSONDataTypeStrategy({
+                        resultsPath: "",
                     }),
-                    new Validator(
+                    new JSONSchemaValidator(
                         MunicipalAuthorities.skodaPalaceQueues.name + "DataSource",
-                        MunicipalAuthorities.skodaPalaceQueues.datasourceMongooseSchemaObject
+                        MunicipalAuthorities.skodaPalaceQueues.datasourceJsonSchema
                     )
                 );
             });
@@ -608,11 +615,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             it("should return all objects", async () => {
                 const data = await skodaPalaceQueuesDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
-            });
-
-            it("should return last modified", async () => {
-                const data = await skodaPalaceQueuesDatasource.getLastModified();
-                expect(data).to.be.null;
             });
         });
     });
