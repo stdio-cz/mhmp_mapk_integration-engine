@@ -614,7 +614,6 @@ describe("DataSourcesAvailabilityChecking", () => {
 
             it("should return all objects", async () => {
                 const data = await skodaPalaceQueuesDatasource.getAll();
-                console.log(JSON.stringify(data, null, 4));
                 expect(data).to.be.an.instanceOf(Object);
             });
         });
