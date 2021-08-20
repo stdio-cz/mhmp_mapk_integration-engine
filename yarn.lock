@@ -589,10 +589,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.2-dev.356360407":
-  version "1.0.2-dev.356360407"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.2-dev.356360407.tgz#489dcb44722037ca20d38d0b565fb169723cd814"
-  integrity sha512-4bFfO2fnNbVP5s6fr+KQQCupY7wSKuofNUdptwOfj8Vvr6bjCrP5w2rWy2sSLhB6nQQM0EeVOV8Ka27rRcb22g==
+"@golemio/municipal-authorities@1.0.2-dev.356383913":
+  version "1.0.2-dev.356383913"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.2-dev.356383913.tgz#cce714098d3a06cdeccba1abaed0149321ebf966"
+  integrity sha512-FwjtKn7iNKwB05RsPQosVM5X7OJ+hPv9AI13kuUlO2JYvo8b5y4gcpmMsDRkAIfjyrtYobIxbJtvtZ4dJN11Cg==
   dependencies:
     lodash "^4.17.19"
 
