@@ -30,9 +30,8 @@ cache:
     paths:
         - node_modules/
 
-run_tests:
+.run_tests:
     stage: build
-    image: node:12
     services:
         - postgres:12.3
         - mongo:4.0
@@ -65,3 +64,12 @@ run_tests:
         - docker
     rules:
         - when: always
+
+
+run_tests:
+    extends: .run_tests
+    image: bitnami/node:12.22.1
+
+run_tests-node14:
+    extends: .run_tests
+    image: bitnami/node:14.17.5
