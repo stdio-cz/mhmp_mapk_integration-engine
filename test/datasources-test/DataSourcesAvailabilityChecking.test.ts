@@ -42,6 +42,7 @@ import { Playgrounds } from "@golemio/playgrounds/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { RopidGTFS } from "@golemio/pid/dist/schema-definitions/ropid-gtfs";
 import { RopidVYMI, IRopidVYMIEvent } from "@golemio/pid/dist/schema-definitions/ropid-vymi";
+import { RopidDeparturesPresets } from "@golemio/pid/dist/schema-definitions/ropid-departures-presets";
 import { SharedBikes } from "@golemio/shared-bikes/dist/schema-definitions";
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
 import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-definitions";
@@ -147,6 +148,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         let datasource: DataSource;
         let datasourceCisStops: DataSource;
         let dataSourceRunNumbers: DataSource;
+        let dataSourceDeparturesPresets: DataSource;
 
         beforeEach(() => {
             datasource = new DataSource(
@@ -196,6 +198,18 @@ describe("DataSourcesAvailabilityChecking", () => {
                 }),
                 new JSONSchemaValidator(RopidGTFS.runNumbers.name + "DataSource", RopidGTFS.runNumbers.datasourceJsonSchema)
             );
+
+            dataSourceDeparturesPresets = new DataSource(
+                RopidDeparturesPresets.name + "DataSource",
+                new FTPProtocolStrategy({
+                    filename: config.datasources.RopidDeparturesPresetsFilename,
+                    path: config.datasources.RopidDeparturesPresetsPath,
+                    url: config.datasources.RopidFTP,
+                    encoding: "utf8",
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new JSONSchemaValidator(RopidDeparturesPresets.name + "DataSource", RopidDeparturesPresets.datasourceJsonSchema)
+            );
         });
 
         it.skip("should return all objects", async () => {
@@ -219,12 +233,22 @@ describe("DataSourcesAvailabilityChecking", () => {
         });
 
         it("should return all run numbers objects", async () => {
-            const data = await datasourceCisStops.getAll();
+            const data = await dataSourceRunNumbers.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
 
         it("should return run numbers last modified", async () => {
-            const data = await datasourceCisStops.getLastModified();
+            const data = await dataSourceRunNumbers.getLastModified();
+            expect(data).to.be.a("string");
+        });
+
+        it("should return all departure presets", async () => {
+            const { data } = await dataSourceDeparturesPresets.getAll();
+            expect(data).to.be.an.instanceOf(Array);
+        });
+
+        it("should return departures presets last modified", async () => {
+            const data = await dataSourceDeparturesPresets.getLastModified();
             expect(data).to.be.a("string");
         });
     });
