@@ -15,23 +15,37 @@ import {
     RedisConnector,
 } from "@golemio/core/dist/integration-engine/connectors";
 import { log } from "@golemio/core/dist/integration-engine/helpers";
+import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
+import { getServiceHealth, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import { QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { queuesDefinition } from "./definitions";
 
 export default class App {
     /// Create a new express application instance
     public express: express.Application = express();
+    public server?: http.Server;
     /// The port the express app will listen on
     public port: number = parseInt(config.port || "3006", 10);
     /// The SHA of the last commit from the application running
     private commitSHA: string | undefined = undefined;
+    private lightship: Lightship;
 
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
-        //
+        this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
+        process.on("uncaughtException", (err: Error) => {
+            log.warn("IE uncaughtException");
+            log.error(err);
+            this.lightship.shutdown();
+        });
+        process.on("unhandledRejection", (err: Error) => {
+            log.warn("IE unhandledRejection");
+            log.error(err);
+            this.lightship.shutdown();
+        });
     }
 
     /**
@@ -39,12 +53,16 @@ export default class App {
      */
     public start = async (): Promise<void> => {
         try {
+            await this.expressServer();
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             await this.queueProcessors();
-            await this.expressServer();
             log.info("Started!");
+            this.lightship.registerShutdownHandler(async () => {
+                await this.gracefulShutdown();
+            });
+            this.lightship.signalReady();
         } catch (err) {
             ErrorHandler.handle(err);
         }
@@ -75,6 +93,21 @@ export default class App {
                 },
             ]);
         }
+    };
+
+    /**
+     * Graceful shutdown - terminate connections and server
+     */
+    private gracefulShutdown = async (): Promise<void> => {
+        log.info("Graceful shutdown initiated.");
+        await MongoConnector.disconnect();
+        await PostgresConnector.disconnect();
+        await RedisConnector.disconnect();
+        if (config.influx_db.enabled) {
+            await InfluxConnector.disconnect();
+        }
+        await AMQPConnector.disconnect();
+        await this.server?.close();
     };
 
     /**
@@ -129,17 +162,16 @@ export default class App {
      * Starts the express server
      */
     private async expressServer(): Promise<void> {
-        this.express = express();
         this.middleware();
         this.routes();
 
-        const server = http.createServer(this.express);
+        this.server = http.createServer(this.express);
         // Setup error handler hook on server error
-        server.on("error", (err: any) => {
+        this.server.on("error", (err: any) => {
             ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
         });
         // Serve the application at the given port
-        server.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             // Success callback
             log.info(`Listening at http://localhost:${this.port}/`);
         });
@@ -157,6 +189,29 @@ export default class App {
         this.express.use(this.setHeaders);
     };
 
+    private healthCheck = async () => {
+        const description = {
+            app: "Golemio Data Platform Integration Engine",
+            commitSha: this.commitSHA,
+            version: config.app_version,
+        };
+
+        const services: IServiceCheck[] = [
+            { name: Service.POSTGRES, check: PostgresConnector.isConnected },
+            { name: Service.MONGO, check: MongoConnector.isConnected },
+            { name: Service.REDIS, check: RedisConnector.isConnected },
+            { name: Service.RABBITMQ, check: AMQPConnector.isConnected },
+        ];
+
+        if (config.influx_db.enabled) {
+            services.push({ name: Service.INFLUX, check: InfluxConnector.isConnected });
+        }
+
+        const serviceStats = await getServiceHealth(services);
+
+        return { ...description, ...serviceStats };
+    };
+
     /**
      * Defines express server routes
      */
@@ -166,15 +221,17 @@ export default class App {
         // base url route handler
         defaultRouter.get(
             ["/", "/health-check", "/status"],
-            (req: express.Request, res: express.Response, next: express.NextFunction) => {
-                log.silly("Health check/status called.");
-
-                res.json({
-                    app_name: "Golemio Data Platform Integration Engine",
-                    commit_sha: this.commitSHA,
-                    status: "Up",
-                    version: config.app_version,
-                });
+            async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+                try {
+                    const healthStats = await this.healthCheck();
+                    if (healthStats.health) {
+                        return res.json(healthStats);
+                    } else {
+                        return res.status(503).send(healthStats);
+                    }
+                } catch (err) {
+                    return res.status(503);
+                }
             }
         );
 
