@@ -2,7 +2,6 @@ import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from 
 import express from "@golemio/core/dist/shared/express";
 import { FieldType } from "@golemio/core/dist/shared/influx";
 import httpLogger from "morgan";
-import sentry from "@golemio/core/dist/shared/sentry";
 
 import fs from "fs";
 import path from "path";
@@ -20,7 +19,6 @@ import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship"
 import { getServiceHealth, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import { QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { queuesDefinition } from "./definitions";
-import { initSentry } from "@golemio/core/dist/monitoring";
 
 export default class App {
     /// Create a new express application instance
@@ -39,10 +37,12 @@ export default class App {
     constructor() {
         this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
         process.on("uncaughtException", (err: Error) => {
+            log.warn("IE uncaughtException");
             log.error(err);
             this.lightship.shutdown();
         });
         process.on("unhandledRejection", (err: Error) => {
+            log.warn("IE unhandledRejection");
             log.error(err);
             this.lightship.shutdown();
         });
@@ -53,7 +53,6 @@ export default class App {
      */
     public start = async (): Promise<void> => {
         try {
-            initSentry(config.sentry, config.app_name);
             await this.expressServer();
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
@@ -65,7 +64,6 @@ export default class App {
             });
             this.lightship.signalReady();
         } catch (err) {
-            sentry.captureException(err);
             ErrorHandler.handle(err);
         }
     };
@@ -166,12 +164,10 @@ export default class App {
     private async expressServer(): Promise<void> {
         this.middleware();
         this.routes();
-        this.errorHandlers();
 
         this.server = http.createServer(this.express);
         // Setup error handler hook on server error
         this.server.on("error", (err: any) => {
-            sentry.captureException(err);
             ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
         });
         // Serve the application at the given port
@@ -185,9 +181,6 @@ export default class App {
      * Binds middlewares to express server
      */
     private middleware = (): void => {
-        this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
-        this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
-
         if (config.NODE_ENV === "development") {
             this.express.use(httpLogger("dev"));
         } else {
@@ -243,10 +236,6 @@ export default class App {
         );
 
         this.express.use("/", defaultRouter);
-    };
-
-    private errorHandlers = (): void => {
-        this.express.use(sentry.Handlers.errorHandler({ shouldHandleError: () => true }) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
         this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
