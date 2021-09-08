@@ -650,10 +650,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.0.10-dev.363287696":
-  version "2.0.10-dev.363287696"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.10-dev.363287696.tgz#4801c2ba43b409c19c151146e68327b763d784e5"
-  integrity sha512-9qrY4cHaWNcP4oMqFjK2giXto+Fc160XkgzZdD7jXy8WxzWqXubyQ+uQRjVapufJ8FyxJjg/2Zga9Rlz/KbdKw==
+"@golemio/pid@2.0.10-dev.367013910":
+  version "2.0.10-dev.367013910"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.10-dev.367013910.tgz#f9d25c512ff9e48574f285478804beeea9d3cfdd"
+  integrity sha512-o+QR+MJutZ0JpiomFk9PoGJExF6u2V975HdweTZoP4it7Nr671lt8bWKdzgoq4eF2nH1fGnElvEq/ryj9F6oHA==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
