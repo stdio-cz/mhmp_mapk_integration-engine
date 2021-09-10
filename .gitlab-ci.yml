@@ -13,6 +13,7 @@ variables:
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 include:
+    - template: Security/SAST.gitlab-ci.yml
     - template: "Workflows/Branch-Pipelines.gitlab-ci.yml"
     - project: "operator-ict/devops/gitlab-ci-pipeline"
       file:
@@ -21,6 +22,7 @@ include:
           - "/docs/golemio-gitlab-docs-pages.yml"
 
 stages:
+    - test
     - build
     - release
     - deploy
