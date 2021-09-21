@@ -40,6 +40,7 @@ cache:
         - rabbitmq:3.8
     script:
         - export NODE_ENV=development
+        - export LOG_LEVEL=warn
         - yarn
         - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         # 1 for INFO
@@ -65,7 +66,6 @@ cache:
         - docker
     rules:
         - when: always
-
 
 run_tests:
     extends: .run_tests
