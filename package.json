@@ -68,7 +68,7 @@
         "@golemio/bicycle-counters": "1.0.3",
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.2",
-        "@golemio/core": "1.1.5",
+        "@golemio/core": "1.1.6-dev.375250440",
         "@golemio/counters": "1.0.2",
         "@golemio/energetics": "1.0.5-dev.367980179",
         "@golemio/firebase-pid-litacka": "1.0.2",
