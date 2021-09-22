@@ -16,7 +16,7 @@ import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship"
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import { QueueProcessor, filterQueueDefinitions } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry } from "@golemio/core/dist/monitoring";
-import { queueDefinitions } from "./definitions";
+import { queueDefinitions } from "./queue-definitions";
 
 export default class App extends BaseApp {
     public express: express.Application = express();
