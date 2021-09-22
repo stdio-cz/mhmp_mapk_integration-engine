@@ -66,14 +66,6 @@ export default class App extends BaseApp {
     };
 
     /**
-     * Set common and customer headers
-     */
-    private customHeaders = (_req: Request, res: Response, next: NextFunction) => {
-        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
-        next();
-    };
-
-    /**
      * Start the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
@@ -121,6 +113,14 @@ export default class App extends BaseApp {
                 return new QueueProcessor(channel, queueDefinition).registerQueues();
             })
         );
+    };
+
+    /**
+     * Set custom headers
+     */
+    private customHeaders = (_req: Request, res: Response, next: NextFunction) => {
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        next();
     };
 
     /**
