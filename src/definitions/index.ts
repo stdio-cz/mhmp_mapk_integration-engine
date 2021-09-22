@@ -1,2 +1,2 @@
 /* definitions/index.ts */
-export * from "./queuesDefinition";
+export * from "./queueDefinitions";

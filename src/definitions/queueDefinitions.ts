@@ -39,7 +39,7 @@ const datasets = [
     "waze-tt",
 ];
 
-const definitions = datasets.reduce(async (accProm, dataset) => {
+export const queueDefinitions = datasets.reduce(async (accProm, dataset) => {
     const pkg = `@golemio/${dataset}/dist/integration-engine`;
     const acc = await accProm;
 
@@ -50,5 +50,3 @@ const definitions = datasets.reduce(async (accProm, dataset) => {
         throw new CustomError(`Cannot import queue definitions from ${pkg}.`, false, undefined, 6004);
     }
 }, Promise.resolve([] as IQueueDefinition[]));
-
-export { definitions as queuesDefinition };
