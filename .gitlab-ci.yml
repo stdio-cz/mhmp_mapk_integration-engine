@@ -21,6 +21,7 @@ include:
           - "/docs/golemio-gitlab-docs-pages.yml"
 
 stages:
+    - test
     - build
     - release
     - deploy
@@ -31,7 +32,7 @@ cache:
         - node_modules/
 
 .run_tests:
-    stage: build
+    stage: test
     services:
         - postgres:12.3
         - mongo:4.0

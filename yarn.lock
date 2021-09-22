@@ -447,10 +447,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.3.tgz#29f6cf8fdb0b3d76ea07a8dca10d93086b20febe"
-  integrity sha512-GIPxKwY8KHKFby3UcQi+Qp0WUj1B8pnQckBHccBMSnPhOwccFPHqYqAcgIHtZqR5AVsEu9TDSLDf6pC1rdQiVQ==
+"@golemio/core@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.5.tgz#522f1db028344957843642defac050347d81c964"
+  integrity sha512-pz7R6yhWNAOT1xo8PCYoeEgvIu6PiCCoFM67CKc/8RHyX+XcNBSjqCThMy6jzT/U/1ef7lYvw3gaCc8wJDi9bw==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -464,6 +464,8 @@
     "@opentelemetry/node" "^0.24.0"
     "@opentelemetry/resources" "^0.24.0"
     "@opentelemetry/tracing" "^0.24.0"
+    "@sentry/node" "^6.11.0"
+    "@sentry/tracing" "^6.11.0"
     "@types/express" "^4.16.0"
     "@types/request-promise" "^4.1.45"
     amqplib "^0.7.1"
@@ -509,10 +511,10 @@
   dependencies:
     "@golemio/bicycle-counters" "1.0.2"
 
-"@golemio/energetics@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.4.tgz#42df047eb17999eeca87f093dcd781c92ac1e687"
-  integrity sha512-f5wyJZQct5suoYCXa5WsENamQ1kkhdqxywboKgAh6CAgDlOf1VoS3KhzBL/Fc1VGnv0sRtA1UMt5znzPnm5Prg==
+"@golemio/energetics@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.5.tgz#16740f8d19cfc42518451a3b3bb6ec80ac3f03a9"
+  integrity sha512-kNumGcaq6FYjN0o3d/si7ES6H+vZnE3gHck2rBqcbEcXryJzeJXDxt8bw48i9tHiluiTxahXw7ISwA3D1QBCtA==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
@@ -648,10 +650,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.9.tgz#9e081e6cec7925fdbb6958db58b1b8bd98748824"
-  integrity sha512-xjiU0HI6RgwEVh9IUetAJeR5FW7FYBIKiGA8zTlyRxLOLZMVTJg3cDkZtJDgbPdF+2BGMBGA5G4zxP7r0nZ11A==
+"@golemio/pid@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.12.tgz#d801a04e37f0ea4b5dadef7403cf9ed208d1dfa5"
+  integrity sha512-TGz93Vw8KcYwAl0BfPKXT+zXPJDSpLC5sxf6MGSRcmaE7mKLYy/vQI/pKygthTx/ymMwNGJcl0qCONbFfq6FQQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -687,10 +689,10 @@
     "@golemio/shared-cars" "1.0.1"
     "@golemio/traffic-cameras" "1.0.0"
 
-"@golemio/schema-definitions@2.0.16":
-  version "2.0.16"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.16.tgz#a055860a60299ae776b33c71da02bfee29fab53d"
-  integrity sha512-rCwLcHIBodHt3XFoV5PPQqC+jcsfJY50u82v7dZlK1ZiFgajADWzUj4YRu5GyXwpXu0EChioMCsYHSdAA/8q+g==
+"@golemio/schema-definitions@2.0.18":
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.18.tgz#2b647b7d0ca55ddb48c9db351a3df66b5e83ef44"
+  integrity sha512-wCDdtHvqpnPnsLkTAkrybpsGYjBqUKaM3epH0fIcY72MA1hSO2nvBQugRnUeug5qdY9ImvSNC5uPoMpQLo5K/A==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -1101,6 +1103,17 @@
     "@sentry/utils" "6.11.0"
     tslib "^1.9.3"
 
+"@sentry/core@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-6.12.0.tgz#bc7c5f0785b6a392d9ad47bd9b1fae3f5389996c"
+  integrity sha512-mU/zdjlzFHzdXDZCPZm8OeCw7c9xsbL49Mq0TrY0KJjLt4CJBkiq5SDTGfRsenBLgTedYhe5Z/J8Z+xVVq+MfQ==
+  dependencies:
+    "@sentry/hub" "6.12.0"
+    "@sentry/minimal" "6.12.0"
+    "@sentry/types" "6.12.0"
+    "@sentry/utils" "6.12.0"
+    tslib "^1.9.3"
+
 "@sentry/hub@6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.11.0.tgz#ddf9ddb0577d1c8290dc02c0242d274fe84d6c16"
@@ -1110,6 +1123,15 @@
     "@sentry/utils" "6.11.0"
     tslib "^1.9.3"
 
+"@sentry/hub@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.12.0.tgz#29e323ab6a95e178fb14fffb684aa0e09707197f"
+  integrity sha512-yR/UQVU+ukr42bSYpeqvb989SowIXlKBanU0cqLFDmv5LPCnaQB8PGeXwJAwWhQgx44PARhmB82S6Xor8gYNxg==
+  dependencies:
+    "@sentry/types" "6.12.0"
+    "@sentry/utils" "6.12.0"
+    tslib "^1.9.3"
+
 "@sentry/minimal@6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.11.0.tgz#806d5512658370e40827b3e3663061db708fff33"
@@ -1117,6 +1139,30 @@
   dependencies:
     "@sentry/hub" "6.11.0"
     "@sentry/types" "6.11.0"
+    tslib "^1.9.3"
+
+"@sentry/minimal@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.12.0.tgz#cbe20e95056cedb9709d7d5b2119ef95206a9f8c"
+  integrity sha512-r3C54Q1KN+xIqUvcgX9DlcoWE7ezWvFk2pSu1Ojx9De81hVqR9u5T3sdSAP2Xma+um0zr6coOtDJG4WtYlOtsw==
+  dependencies:
+    "@sentry/hub" "6.12.0"
+    "@sentry/types" "6.12.0"
+    tslib "^1.9.3"
+
+"@sentry/node@^6.11.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-6.12.0.tgz#6adf9f8d92d70f38dd4208ef89fe7c8534fe4016"
+  integrity sha512-hfAU3cX5sNWgqyDQBCOIQOZj21l0w1z2dG4MjmrMMHKrQ18pfMaaOtEwRXMCdjTUlwsK+L3TOoUB23lbezmu1A==
+  dependencies:
+    "@sentry/core" "6.12.0"
+    "@sentry/hub" "6.12.0"
+    "@sentry/tracing" "6.12.0"
+    "@sentry/types" "6.12.0"
+    "@sentry/utils" "6.12.0"
+    cookie "^0.4.1"
+    https-proxy-agent "^5.0.0"
+    lru_map "^0.3.3"
     tslib "^1.9.3"
 
 "@sentry/node@^6.2.5":
@@ -1145,10 +1191,26 @@
     "@sentry/utils" "6.11.0"
     tslib "^1.9.3"
 
+"@sentry/tracing@6.12.0", "@sentry/tracing@^6.11.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.12.0.tgz#a05c8985ee7fed7310b029b147d8f9f14f2a2e67"
+  integrity sha512-u10QHNknPBzbWSUUNMkvuH53sQd5NaBo6YdNPj4p5b7sE7445Sh0PwBpRbY3ZiUUiwyxV59fx9UQ4yVnPGxZQA==
+  dependencies:
+    "@sentry/hub" "6.12.0"
+    "@sentry/minimal" "6.12.0"
+    "@sentry/types" "6.12.0"
+    "@sentry/utils" "6.12.0"
+    tslib "^1.9.3"
+
 "@sentry/types@6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-6.11.0.tgz#5122685478d32ddacd3a891cbcf550012df85f7c"
   integrity sha512-gm5H9eZhL6bsIy/h3T+/Fzzz2vINhHhqd92CjHle3w7uXdTdFV98i2pDpErBGNTSNzbntqOMifYEB5ENtZAvcg==
+
+"@sentry/types@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-6.12.0.tgz#b7395688a79403c6df8d8bb8d81deb8222519853"
+  integrity sha512-urtgLzE4EDMAYQHYdkgC0Ei9QvLajodK1ntg71bGn0Pm84QUpaqpPDfHRU+i6jLeteyC7kWwa5O5W1m/jrjGXA==
 
 "@sentry/utils@6.11.0":
   version "6.11.0"
@@ -1156,6 +1218,14 @@
   integrity sha512-IOvyFHcnbRQxa++jO+ZUzRvFHEJ1cZjrBIQaNVc0IYF0twUOB5PTP6joTcix38ldaLeapaPZ9LGfudbvYvxkdg==
   dependencies:
     "@sentry/types" "6.11.0"
+    tslib "^1.9.3"
+
+"@sentry/utils@6.12.0":
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-6.12.0.tgz#3de261e8d11bdfdc7add64a3065d43517802e975"
+  integrity sha512-oRHQ7TH5TSsJqoP9Gqq25Jvn9LKexXfAh/OoKwjMhYCGKGhqpDNUIZVgl9DWsGw5A5N5xnQyLOxDfyRV5RshdA==
+  dependencies:
+    "@sentry/types" "6.12.0"
     tslib "^1.9.3"
 
 "@sinonjs/commons@^1.6.0", "@sinonjs/commons@^1.7.0", "@sinonjs/commons@^1.8.1":
@@ -6402,10 +6472,10 @@ morgan@^1.10.0, morgan@^1.9.1:
     on-finished "~2.3.0"
     on-headers "~1.0.2"
 
-mpath@0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.3.tgz#828ac0d187f7f42674839d74921970979abbdd8f"
-  integrity sha512-eb9rRvhDltXVNL6Fxd2zM9D4vKBxjVVQNLNijlj7uoXUy19zNDsIif5zR+pWmPCWNKwAtqyo4JveQm4nfD5+eA==
+mpath@0.8.3, mpath@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.4.tgz#6b566d9581621d9e931dd3b142ed3618e7599313"
+  integrity sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==
 
 mquery@3.2.5:
   version "3.2.5"
