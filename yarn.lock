@@ -447,10 +447,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.1.4-dev.365827117":
-  version "1.1.4-dev.365827117"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.4-dev.365827117.tgz#bfe72edde80370c8d2f4b6dd300e888f8d93f2c1"
-  integrity sha512-bEQSp90wLOQpp/ntp6jrP/Ppr8PlLNuDGPo2oVAbFT8k5i+GD8e8AablACWEtA605lcDkqWZdkfUr5BWuLEw6w==
+"@golemio/core@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.5.tgz#522f1db028344957843642defac050347d81c964"
+  integrity sha512-pz7R6yhWNAOT1xo8PCYoeEgvIu6PiCCoFM67CKc/8RHyX+XcNBSjqCThMy6jzT/U/1ef7lYvw3gaCc8wJDi9bw==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -650,10 +650,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.0.10-dev.371739423":
-  version "2.0.10-dev.371739423"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.10-dev.371739423.tgz#048c38f8448b4f325a7f443a612e5b09b373202a"
-  integrity sha512-+mI7d8h/Fj8igN/yXPxo5hfFIV5iTckp9DYSIZ+Pp8SGNrFDE+891D9bdB668PIJsK7B8b7dJR2suEzWxovT7g==
+"@golemio/pid@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.12.tgz#d801a04e37f0ea4b5dadef7403cf9ed208d1dfa5"
+  integrity sha512-TGz93Vw8KcYwAl0BfPKXT+zXPJDSpLC5sxf6MGSRcmaE7mKLYy/vQI/pKygthTx/ymMwNGJcl0qCONbFfq6FQQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -6472,10 +6472,10 @@ morgan@^1.10.0, morgan@^1.9.1:
     on-finished "~2.3.0"
     on-headers "~1.0.2"
 
-mpath@0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.3.tgz#828ac0d187f7f42674839d74921970979abbdd8f"
-  integrity sha512-eb9rRvhDltXVNL6Fxd2zM9D4vKBxjVVQNLNijlj7uoXUy19zNDsIif5zR+pWmPCWNKwAtqyo4JveQm4nfD5+eA==
+mpath@0.8.3, mpath@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.4.tgz#6b566d9581621d9e931dd3b142ed3618e7599313"
+  integrity sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==
 
 mquery@3.2.5:
   version "3.2.5"
