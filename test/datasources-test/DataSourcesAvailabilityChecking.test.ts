@@ -147,6 +147,7 @@ describe("DataSourcesAvailabilityChecking", () => {
     describe("RopidGTFS", () => {
         let datasource: DataSource;
         let datasourceCisStops: DataSource;
+        let datasourceOisMapping: DataSource;
         let dataSourceRunNumbers: DataSource;
         let dataSourceDeparturesPresets: DataSource;
 
@@ -184,8 +185,19 @@ describe("DataSourcesAvailabilityChecking", () => {
                 new JSONDataTypeStrategy({ resultsPath: "stopGroups" }),
                 null as any
             );
+            datasourceOisMapping = new DataSource(
+                RopidGTFS.name + "Ois",
+                new FTPProtocolStrategy({
+                    filename: config.datasources.RopidGTFSOisFilename,
+                    path: config.datasources.RopidGTFSOisPath,
+                    url: config.datasources.RopidFTP,
+                    encoding: "utf8",
+                }),
+                new JSONDataTypeStrategy({ resultsPath: "" }),
+                new JSONSchemaValidator(RopidGTFS.ois.name + "DataSource", RopidGTFS.ois.datasourceJsonSchema)
+            );
             dataSourceRunNumbers = new DataSource(
-                RopidGTFS.runNumbers.name + "DataSource",
+                RopidGTFS.run_numbers.name + "DataSource",
                 new FTPProtocolStrategy({
                     filename: config.datasources.RopidGTFSRunNumbersFilename,
                     path: config.datasources.RopidGTFSRunNumbersPath,
@@ -196,7 +208,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     fastcsvParams: { delimiter: ",", headers: true },
                     subscribe: (json: any) => json,
                 }),
-                new JSONSchemaValidator(RopidGTFS.runNumbers.name + "DataSource", RopidGTFS.runNumbers.datasourceJsonSchema)
+                new JSONSchemaValidator(RopidGTFS.run_numbers.name + "DataSource", RopidGTFS.run_numbers.datasourceJsonSchema)
             );
 
             dataSourceDeparturesPresets = new DataSource(
@@ -212,7 +224,7 @@ describe("DataSourcesAvailabilityChecking", () => {
             );
         });
 
-        it.skip("should return all objects", async () => {
+        it("should return all objects", async () => {
             const data = await datasource.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
@@ -229,6 +241,16 @@ describe("DataSourcesAvailabilityChecking", () => {
 
         it("should return cis last modified", async () => {
             const data = await datasourceCisStops.getLastModified();
+            expect(data).to.be.a("string");
+        });
+
+        it("should return all ois objects", async () => {
+            const data = await datasourceOisMapping.getAll();
+            expect(data).to.be.an.instanceOf(Object);
+        });
+
+        it("should return ois last modified", async () => {
+            const data = await datasourceOisMapping.getLastModified();
             expect(data).to.be.a("string");
         });
 
