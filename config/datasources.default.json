@@ -22,9 +22,6 @@
         "token": ""
     },
     "Gardens": "https://www.mojepraha.eu/api/gardens",
-    "HomeportLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Location/Map/Extended?lang=cs",
-    "HomeportOutOfLocationsSharedBikes": "https://tkhs-freebikeprague.kite.cz/Services/Api/Bike/GetBikesOutOfLocation?lang=cs",
-    "HomeportSettingsSharedBikes": "https://prague.freebike.com/api/setting?Lang=cs",
     "HoppyGoSharedCars": "",
     "HoppyGoSharedCarsToken": "",
     "IPRSortedWasteContainers": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOitem_b/WGS_84/ZPK_O_Kont_TOitem_b.json",
