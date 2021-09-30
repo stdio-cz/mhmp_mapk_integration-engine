@@ -710,10 +710,10 @@
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
 
-"@golemio/shared-bikes@1.0.3-dev.376580081":
-  version "1.0.3-dev.376580081"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.3-dev.376580081.tgz#46584ca7224d7305624fbcd1c13e37d2ee00219a"
-  integrity sha512-Jp82pdWDQo8VjuGsk6jZsR2PFd+bc5XAgBgWsKxGlQJ1cZ8HHWY90zttkQps0H4xOK0FhA1krC9Mh4ugW45OZA==
+"@golemio/shared-bikes@1.0.3-dev.379984870":
+  version "1.0.3-dev.379984870"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.3-dev.379984870.tgz#546cf2f24d09d0ae7975eab2c2fa845e3aa22bb8"
+  integrity sha512-15X22XyFgGb2UmYkS6iM8li3fbATeQmsrKmRvnD8zdLx2WgGChuRQDBF8f8llslt8efga9QbwA8gH8QWY3enMQ==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -725,10 +725,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/shared-cars@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-cars/-/shared-cars-1.0.2.tgz#2a3af4e3d41f6f871f6e2351b930e546d162eada"
-  integrity sha512-59zairFxkePW8urYJwR3MQkVWqVH8iKLKbLT1IZDTkAd3zbBCoy34LfsqRT5g7Ie+HxrL36sjZ85lfqI31m5PQ==
+"@golemio/shared-cars@1.0.3-dev.379984771":
+  version "1.0.3-dev.379984771"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-cars/-/shared-cars-1.0.3-dev.379984771.tgz#fabb6ccd58a4ce021ed32df2d8f9465384e0904f"
+  integrity sha512-/m5b14tGLY/RiobfuIO6XQQE9sxvHJmNfMdn8f2Ha8AP5r+4R9wlTDGeZq8ZWX5P4wfgFtjVC8RZ1G5+8D6ECQ==
   dependencies:
     cheap-ruler "2.5.1"
 
@@ -753,10 +753,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/traffic-cameras@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.1.tgz#af6501881b880cba9a387221b20db8e682bbe6a0"
-  integrity sha512-DcE9uZ4jw3ldB5w3JC9I7xU/xZgkb06Xi1Elsz1oMHzjeBodCYwIh5PextTzRICtUXCMzmnqz1jLUFNw/7dDLA==
+"@golemio/traffic-cameras@1.0.2-dev.379984999":
+  version "1.0.2-dev.379984999"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.2-dev.379984999.tgz#6d86934def150609b657145ac6b495bd744967ce"
+  integrity sha512-kdc5cl2cG1x2xUZ7fLJgQIO12tahpKrrT0gwK3k+VbG9q+NgOWScStzYW3q2Lk5HtSNNBSZtYuckxdMWCOVgIA==
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
