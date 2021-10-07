@@ -1,12 +1,8 @@
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
-import express from "@golemio/core/dist/shared/express";
-import { FieldType } from "@golemio/core/dist/shared/influx";
-import httpLogger from "morgan";
-import sentry from "@golemio/core/dist/shared/sentry";
-
-import fs from "fs";
-import path from "path";
 import http from "http";
+import express, { Request, Response, NextFunction, RequestHandler } from "@golemio/core/dist/shared/express";
+import { FieldType } from "@golemio/core/dist/shared/influx";
+import sentry from "@golemio/core/dist/shared/sentry";
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { config } from "@golemio/core/dist/integration-engine/config";
 import {
     AMQPConnector,
@@ -15,28 +11,27 @@ import {
     PostgresConnector,
     RedisConnector,
 } from "@golemio/core/dist/integration-engine/connectors";
-import { log } from "@golemio/core/dist/integration-engine/helpers";
+import { log, requestLogger } from "@golemio/core/dist/integration-engine/helpers";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
-import { getServiceHealth, Service, IServiceCheck } from "@golemio/core/dist/helpers";
-import { QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
-import { queuesDefinition } from "./definitions";
+import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
+import { QueueProcessor, filterQueueDefinitions } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry } from "@golemio/core/dist/monitoring";
+import { queueDefinitions } from "./queue-definitions";
 
-export default class App {
-    /// Create a new express application instance
+export default class App extends BaseApp {
     public express: express.Application = express();
     public server?: http.Server;
-    /// The port the express app will listen on
     public port: number = parseInt(config.port || "3006", 10);
-    /// The SHA of the last commit from the application running
     private commitSHA: string | undefined = undefined;
     private lightship: Lightship;
 
     /**
-     * Runs configuration methods on the Express instance
+     * Run configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
+        super();
+
         this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
@@ -49,7 +44,7 @@ export default class App {
     }
 
     /**
-     * Starts the application
+     * Start the application
      */
     public start = async (): Promise<void> => {
         try {
@@ -70,15 +65,8 @@ export default class App {
         }
     };
 
-    private setHeaders = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-        res.setHeader("x-powered-by", "shem");
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
-        next();
-    };
-
     /**
-     * Starts the database connection with initial configuration
+     * Start the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
         await MongoConnector.connect();
@@ -113,55 +101,30 @@ export default class App {
     };
 
     /**
-     * Starts the message queue connection, creates communication channel
+     * Start the message queue connection, create communication channel
      * and register queue processors to consume messages
      */
-    private queueProcessors = async (): Promise<void> => {
+    private queueProcessors = async (): Promise<void[]> => {
+        const filteredQueueDefinitions = filterQueueDefinitions(await queueDefinitions, config.queuesBlacklist);
         const channel = await AMQPConnector.connect();
 
-        // filtering queue definitions by blacklist
-        let filteredQueuesDefinitions = await queuesDefinition;
-
-        for (const datasetName in config.queuesBlacklist) {
-            if (config.queuesBlacklist[datasetName].length === 0) {
-                // all dataset queues are filtered
-                filteredQueuesDefinitions = filteredQueuesDefinitions.filter((queueDef) => queueDef.name !== datasetName);
-            } else {
-                // only named queues of dataset are filtered
-                for (let i = 0, imax = filteredQueuesDefinitions.length; i < imax; i++) {
-                    if (filteredQueuesDefinitions[i].name === datasetName) {
-                        filteredQueuesDefinitions[i].queues = filteredQueuesDefinitions[i].queues.filter(function (queue) {
-                            // @ts-ignore
-                            return this.indexOf(queue.name) < 0;
-                        }, config.queuesBlacklist[datasetName]);
-                    }
-                }
-            }
-        }
-
-        // use generic queue processor for register (filtered) queues
-        const promises = filteredQueuesDefinitions.map((queueDefinition) => {
-            return new QueueProcessor(channel, queueDefinition).registerQueues();
-        });
-        await Promise.all(promises);
+        return Promise.all(
+            filteredQueueDefinitions.map((queueDefinition) => {
+                return new QueueProcessor(channel, queueDefinition).registerQueues();
+            })
+        );
     };
 
     /**
-     * Loading the Commit SHA of the current build
+     * Set custom headers
      */
-    private loadCommitSHA = async (): Promise<string> => {
-        return new Promise<string>((resolve) => {
-            fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
-                if (err) {
-                    return resolve(undefined as any);
-                }
-                return resolve(data.toString());
-            });
-        });
+    private customHeaders = (_req: Request, res: Response, next: NextFunction) => {
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        next();
     };
 
     /**
-     * Starts the express server
+     * Start the express server
      */
     private async expressServer(): Promise<void> {
         this.middleware();
@@ -170,7 +133,7 @@ export default class App {
 
         this.server = http.createServer(this.express);
         // Setup error handler hook on server error
-        this.server.on("error", (err: any) => {
+        this.server.on("error", (err) => {
             sentry.captureException(err);
             ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
         });
@@ -182,18 +145,14 @@ export default class App {
     }
 
     /**
-     * Binds middlewares to express server
+     * Bind middleware to express server
      */
     private middleware = (): void => {
-        this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
-        this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
-
-        if (config.NODE_ENV === "development") {
-            this.express.use(httpLogger("dev"));
-        } else {
-            this.express.use(httpLogger("combined"));
-        }
-        this.express.use(this.setHeaders);
+        this.express.use(sentry.Handlers.requestHandler() as RequestHandler);
+        this.express.use(sentry.Handlers.tracingHandler() as RequestHandler);
+        this.express.use(requestLogger);
+        this.express.use(this.commonHeaders);
+        this.express.use(this.customHeaders);
     };
 
     private healthCheck = async () => {
@@ -220,41 +179,41 @@ export default class App {
     };
 
     /**
-     * Defines express server routes
+     * Define express server routes
      */
     private routes = (): void => {
         const defaultRouter = express.Router();
 
         // base url route handler
-        defaultRouter.get(
-            ["/", "/health-check", "/status"],
-            async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-                try {
-                    const healthStats = await this.healthCheck();
-                    if (healthStats.health) {
-                        return res.json(healthStats);
-                    } else {
-                        return res.status(503).send(healthStats);
-                    }
-                } catch (err) {
-                    return res.status(503);
+        defaultRouter.get(["/", "/health-check", "/status"], async (_req: Request, res: Response, _next: NextFunction) => {
+            try {
+                const healthStats = await this.healthCheck();
+                if (healthStats.health) {
+                    return res.json(healthStats);
+                } else {
+                    return res.status(503).send(healthStats);
                 }
+            } catch (err) {
+                return res.status(503);
             }
-        );
+        });
 
         this.express.use("/", defaultRouter);
     };
 
+    /**
+     * Define error handling middleware
+     */
     private errorHandlers = (): void => {
         this.express.use(sentry.Handlers.errorHandler({ shouldHandleError: () => true }) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
-        this.express.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+        this.express.use((_req: Request, _res: Response, next: NextFunction) => {
             next(new CustomError("Not found", true, undefined, 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
-        this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+        this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
             const error: ICustomErrorObject = HTTPErrorHandler.handle(err);
             if (error) {
                 log.silly("Error caught by the router error handler.");
