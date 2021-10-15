@@ -90,7 +90,6 @@
         "@golemio/pid": "2.0.12",
         "@golemio/playgrounds": "1.0.2",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/purge": "1.0.1",
         "@golemio/shared-bikes": "1.0.3",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.9",
