@@ -554,6 +554,14 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
+"@golemio/fcd@1.0.0-dev.390217720":
+  version "1.0.0-dev.390217720"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.0-dev.390217720.tgz#be5528b38088c1555992927ebb287fcc5ba20cc5"
+  integrity sha512-c1EPoHebm4tglwzwkaVwEsaWo8g8lEMAfKl0810coT6+TKefvXJJpQGiLwrRz85dVoZqWJfyCQlwtkpR9FV+Jg==
+  dependencies:
+    ajv "^8.2.0"
+    xsd2jsonschema "^0.3.7"
+
 "@golemio/firebase-pid-litacka@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.2.tgz#427051e74d7683ca2de0ba3d463bd358ec429c0b"
@@ -696,10 +704,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.20-dev.384864308":
-  version "2.0.20-dev.384864308"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.20-dev.384864308.tgz#8978c98c8c019e3c9e821ce69fef51b8069bb686"
-  integrity sha512-iF4M6LYjVZjFcxlGV6C4jfz1DFImxc9Ggt8hmC14ouJbawllgJeXR6Eaab0fgWWIkQyo+XPv8uGs+oLWE/nm1Q==
+"@golemio/schema-definitions@2.0.20-dev.387389862":
+  version "2.0.20-dev.387389862"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.20-dev.387389862.tgz#0b83a373dd85c370bcd9882b1336e24002ba65fe"
+  integrity sha512-xOfkHmnq9G5wJeOZo96+xZ6gGHLolPIixs4tw4/9JA2sv9nrNJ0TcI52KOmWNCGo81y9T0gnh/UYOamBrJBYLw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
