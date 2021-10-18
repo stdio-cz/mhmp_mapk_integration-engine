@@ -10,6 +10,7 @@ const datasets = [
     "city-districts",
     "counters",
     "energetics",
+    "fcd",
     "firebase-pid-litacka",
     "flow",
     "gardens",
