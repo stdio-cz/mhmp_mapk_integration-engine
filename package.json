@@ -93,7 +93,7 @@
         "@golemio/public-toilets": "1.0.2",
         "@golemio/shared-bikes": "1.0.3",
         "@golemio/shared-cars": "1.0.3",
-        "@golemio/sorted-waste-stations": "1.1.9",
+        "@golemio/sorted-waste-stations": "1.1.10-dev.406628697",
         "@golemio/traffic-cameras": "1.0.2",
         "@golemio/traffic-detectors": "1.0.7",
         "@golemio/waste-collection-yards": "1.0.1",
