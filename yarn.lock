@@ -713,11 +713,12 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.4.tgz#84c03c625e0db037266c51ccc80662198ae4bc81"
-  integrity sha512-fT/6aYIyRl3tfd0vxQDz/pnD0UEfcR2No9uR1J23j2lSnye3siFAnrDgojsWCri5GuXC3fmvUxy6P3aTYPxSTw==
+"@golemio/ndic@1.0.5-dev.408938695":
+  version "1.0.5-dev.408938695"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.5-dev.408938695.tgz#1476032c8de005bcf5e1af25ad9cb56241b97723"
+  integrity sha512-qugo9rEMdhbtBO2KegyaXcq34QgQT+0r73TqPIANN2VUDn1aiWRjb3KYWPs+mJGC7OcQdu6UZ5WGbTwvRHlIpA==
   dependencies:
+    "@apideck/portman" "^1.8.1"
     ajv "^8.2.0"
     xsd2jsonschema "^0.3.7"
 
