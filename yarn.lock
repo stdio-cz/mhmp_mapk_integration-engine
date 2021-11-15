@@ -773,10 +773,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.20-dev.407832289":
-  version "2.0.20-dev.407832289"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.20-dev.407832289.tgz#35c0d258f8397fcc0646bb9be2b0e81294b49d8a"
-  integrity sha512-BNiKBb0DZ1+0LoeoNFPuHDapaut+z+daFPbkJF8DNG1FB0ah8d4vcwgszCIQfOv6eWX93N581/sGbt70LChxSA==
+"@golemio/schema-definitions@2.0.20":
+  version "2.0.20"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.20.tgz#e5e8487439c878c682bca765df2c7a9ebb669b64"
+  integrity sha512-T8OoGXI3ZgNYM064yy8+F8mqYboNtTG0Bc2Gp+mkgo9uLGNUwtNWL5IrgkdonStzif+e+PUFAYqzrn38y+Tv6A==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -801,10 +801,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.10-dev.406628697":
-  version "1.1.10-dev.406628697"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.10-dev.406628697.tgz#37d63cabdfc8bafc258bf420bafd709c53ddd24a"
-  integrity sha512-9/0eZ4+AuLp90iDvcl5VpMwEJnlYh09wBcvabougHTCoB3Sqv6GN44nWe+7dgAEWW7dRnpJKojus1lKvD9Aq7A==
+"@golemio/sorted-waste-stations@1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.10.tgz#338e8998df3a8dc6a3ea5068ad8cdc621cdec84b"
+  integrity sha512-WPzaSXf9GqUC47ncI1WgARSBPVrxEDTk1i0arLte4QjoDXEeXsMvXqf2qSMb3uCWL0idAOU5fiV43V6wtKDsiQ==
   dependencies:
     "@apideck/portman" "^1.8.1"
     "@golemio/city-districts" "1.0.2"
