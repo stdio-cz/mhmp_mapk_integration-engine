@@ -20,6 +20,13 @@ include:
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
 
+cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
+
 stages:
     - test
     - build
