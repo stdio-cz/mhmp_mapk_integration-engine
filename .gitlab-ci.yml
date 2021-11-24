@@ -64,8 +64,9 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:12.22.1
+    image: bitnami/node:14.17.6
 
-run_tests-node14:
+run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:14.17.5
+    image: bitnami/node:16.13.0
+    allow_failure: true
