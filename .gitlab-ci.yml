@@ -76,4 +76,4 @@ run_tests:
 run_tests-node-next:
     extends: .run_tests
     image: bitnami/node:16.13.0
-    allow_failure: true
+    #allow_failure: true
