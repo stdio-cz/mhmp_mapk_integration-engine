@@ -26,17 +26,12 @@ stages:
     - release
     - deploy
 
-cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-
 .run_tests:
     stage: test
     services:
         - postgres:12.3
         - mongo:4.0
-        - redis:5.0-alpine
+        - redis:6.0-alpine
         - rabbitmq:3.8
     script:
         - export NODE_ENV=development
