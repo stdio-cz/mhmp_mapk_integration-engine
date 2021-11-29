@@ -784,10 +784,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.21-dev.414544840":
-  version "2.0.21-dev.414544840"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.21-dev.414544840.tgz#6e1602b8ea8f3208d61842f459acf5975a32821e"
-  integrity sha512-A7z3zqPfeH4bJXtW7yFyRucfW4G2nv1QLEyH7Pmt3s1mLfHhlZemnsZQ5Z0mIzcCKrkrNNRXHFUy23bJ23NxoQ==
+"@golemio/schema-definitions@2.0.21-dev.418361680":
+  version "2.0.21-dev.418361680"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.21-dev.418361680.tgz#935a3511a530f7a9345ca941787eebbccb90e44d"
+  integrity sha512-z6C7zTGnyFVs51/N3Gc5hc0qDPGM3xvgfpXTe1+K6Xf90tDIkPyfOO4pVvRP2ChcCGqRMIvGVQGbAoiPSH7lNw==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
