@@ -20,23 +20,25 @@ include:
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
 
+cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
+
 stages:
     - test
     - build
     - release
     - deploy
 
-cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-
 .run_tests:
     stage: test
     services:
         - postgres:12.3
         - mongo:4.0
-        - redis:5.0-alpine
+        - redis:6.0-alpine
         - rabbitmq:3.8
     script:
         - export NODE_ENV=development
@@ -69,8 +71,9 @@ cache:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:12.22.1
+    image: bitnami/node:14.17.6
 
-run_tests-node14:
+run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:14.17.5
+    image: bitnami/node:16.13.0
+    #allow_failure: true
