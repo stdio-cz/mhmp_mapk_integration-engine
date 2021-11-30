@@ -36,7 +36,7 @@ stages:
 .run_tests:
     stage: test
     services:
-        - postgres:12.3
+        - postgres:12.9
         - mongo:4.0
         - redis:6.0-alpine
         - rabbitmq:3.8
@@ -71,9 +71,9 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:14.17.6
-
-run_tests-node-next:
-    extends: .run_tests
     image: bitnami/node:16.13.0
-    #allow_failure: true
+
+#run_tests-node-next:
+#    extends: .run_tests
+#    image: bitnami/node:16.13.0
+#    #allow_failure: true
