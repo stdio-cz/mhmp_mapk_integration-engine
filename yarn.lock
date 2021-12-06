@@ -11,6 +11,45 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
+"@apideck/better-ajv-errors@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@apideck/better-ajv-errors/-/better-ajv-errors-0.3.1.tgz#a8d4ef3ce67c418b8b24f2b76b6bc84eb547baf7"
+  integrity sha512-6RMV31esAxqlDIvVCG/CJxY/s8dFNVOI5w8RWIfDMhjg/iwqnawko9tJXau/leqC4+T1Bu8et99QVWCwU5wk+g==
+  dependencies:
+    json-schema "^0.4.0"
+    jsonpointer "^5.0.0"
+    leven "^3.1.0"
+
+"@apideck/portman@^1.12.0":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.12.1.tgz#12aee035bb163365d00fb3bc6359c08be3362328"
+  integrity sha512-W3dkPDabgeOsKQ2qNQCQFq+3eT/wWAlquSCiD0GTHeQMDXZM1TK3w35l5lH3obeQXUH7h12LHHqFhDToLpwC6g==
+  dependencies:
+    "@apideck/better-ajv-errors" "^0.3.1"
+    "@apidevtools/swagger-parser" "^10.0.3"
+    ajv "^8.6.3"
+    axios "^0.21.4"
+    camel-case "^4.1.2"
+    chalk "^4.1.2"
+    dot-object "^2.1.4"
+    dotenv "^10.0.0"
+    faker "^5.5.3"
+    fp-ts "^2.10.5"
+    fs-extra "^10.0.0"
+    newman "^5.3.0"
+    node-emoji "^1.10.0"
+    openapi-format "^1.7.1"
+    openapi-to-postmanv2 "^2.12.0"
+    openapi-types "9.1.0"
+    ora "^5.4.1"
+    pluralize "^8.0.0"
+    postman-collection "4.1.0"
+    prompts "^2.4.1"
+    replace-in-file "^6.2.0"
+    traverse "^0.6.6"
+    yaml "^1.10.2"
+    yargs "^17.0.1"
+
 "@apideck/portman@^1.8.1":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.10.0.tgz#a016c977e01cef8fd27ad3b6c6ec0dd423788649"
@@ -630,11 +669,12 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/fcd@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.0.tgz#cebe22f6ee9ecdc025cee0cc9974c19b94b31009"
-  integrity sha512-uLLqMlT8KeMTvM6/lt5lmidVI6X4TJHzUzPTmWd88qsHmt4UXBsNnSTC5xOfdsCX7iRwErRMo+nbCJhV+MNosg==
+"@golemio/fcd@1.0.1-dev.423382545":
+  version "1.0.1-dev.423382545"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.1-dev.423382545.tgz#10d083e76c8cd0a0e8b8880ecea50a298ac2e6f5"
+  integrity sha512-9DCEajJ0F0yDuTbjom/GxlaY7ZLHm8652PDMVNLYKHTMVerNkWNvIfbrlAMvljoG8yhYqzWSiq+oQRh1SFsHFQ==
   dependencies:
+    "@apideck/portman" "^1.12.0"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
     xsd2jsonschema "^0.3.7"
@@ -6798,6 +6838,11 @@ json-schema@^0.3.0:
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.3.0.tgz#90a9c5054bd065422c00241851ce8d59475b701b"
   integrity sha512-TYfxx36xfl52Rf1LU9HyWSLGPdYLL+SQ8/E/0yVyKG8wCCDaSrhPap0vEdlsZWRaS6tnKKLPGiEJGiREVC8kxQ==
 
+json-schema@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.4.0.tgz#f7de4cf6efab838ebaeb3236474cbba5a1930ab5"
+  integrity sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==
+
 json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
@@ -8496,7 +8541,16 @@ openapi-format@^1.6.3:
     commander "^7.1.0"
     traverse "^0.6.6"
 
-openapi-to-postmanv2@^2.11.0:
+openapi-format@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/openapi-format/-/openapi-format-1.7.1.tgz#b32d31417cd392d067e10a15a693bba72cacf0c8"
+  integrity sha512-E/YJXwMheiOHZg4De6S/cPFILuDzZf1marA/g0mKmNLIj5BcGAZ+bd/PUdYpW+XdTmN7no98+nz8CeCjVWvxiw==
+  dependencies:
+    "@stoplight/yaml" "^4.2.2"
+    commander "^7.1.0"
+    traverse "^0.6.6"
+
+openapi-to-postmanv2@^2.11.0, openapi-to-postmanv2@^2.12.0:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/openapi-to-postmanv2/-/openapi-to-postmanv2-2.12.0.tgz#afd686ace584f41969799dada35f8ebbfaa80f3c"
   integrity sha512-OpCIN4G15YO9cvZ+gOhwfbI6tC+KGXAP9utxOHtpqY1m9LfJRQMiYXb9DqImKthZFpclCGyWNs6zn4071Cjr/g==
