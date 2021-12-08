@@ -527,10 +527,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@golemio/bicycle-counters@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.3.tgz#f88c92fffea10faaf01d85f28ae25b2f97e0cc9e"
-  integrity sha512-dFy7ahdOdlLeC38AKhC9aoDALK07JJsiI+04FHXw5LMXRHw+kEGBIQJH3Go/Pu0oGdCBwm/w+DhMTw1x9Jgwxw==
+"@golemio/bicycle-counters@1.0.4-dev.425139894":
+  version "1.0.4-dev.425139894"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.4-dev.425139894.tgz#7e0c2e8133ce9a94a149388ae256caf5e3ea3b83"
+  integrity sha512-dXQEqtde89F4/5kV2DZt1hoR/+oMoBGOESPFQ6exYJgPpb08dZ/Sb9DjjH7UtVSgZVOOLB2j/Icm9NtbpMwdXA==
   dependencies:
     lodash "^4.17.21"
 
