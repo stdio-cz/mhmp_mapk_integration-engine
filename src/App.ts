@@ -15,12 +15,13 @@ import { log, requestLogger } from "@golemio/core/dist/integration-engine/helper
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import { QueueProcessor, filterQueueDefinitions } from "@golemio/core/dist/integration-engine/queueprocessors";
-import { initSentry } from "@golemio/core/dist/monitoring";
+import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import { queueDefinitions } from "./queue-definitions";
 
 export default class App extends BaseApp {
     public express: express.Application = express();
     public server?: http.Server;
+    public metricsServer?: http.Server;
     public port: number = parseInt(config.port || "3006", 10);
     private commitSHA: string | undefined = undefined;
     private lightship: Lightship;
@@ -49,6 +50,8 @@ export default class App extends BaseApp {
     public start = async (): Promise<void> => {
         try {
             initSentry(config.sentry, config.app_name);
+            metricsService.init(config, log);
+            this.metricsServer = metricsService.serveMetrics();
             await this.expressServer();
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
@@ -98,6 +101,7 @@ export default class App extends BaseApp {
         }
         await AMQPConnector.disconnect();
         await this.server?.close();
+        await this.metricsServer?.close();
     };
 
     /**
