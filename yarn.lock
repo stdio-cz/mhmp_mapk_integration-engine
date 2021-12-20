@@ -578,10 +578,10 @@
     mongoose "^6.0.8"
     pg "^8.7.1"
 
-"@golemio/core@1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.9.tgz#52d522699fe8e65a65b4be2ac011be2fa51f5ad9"
-  integrity sha512-pMroq2ZhEpBauCgzQr7OZQWoO4FRiwhsYfsmB/f8bClf7adst6ORsc3Dyy7nr89eXqMrQQobUfJ8/WkUNxaN5w==
+"@golemio/core@1.1.10-dev.433269623":
+  version "1.1.10-dev.433269623"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.10-dev.433269623.tgz#ef2ab3e8aff1a571753d1e09341b8e7d8352717e"
+  integrity sha512-2s4wy2gx5YEhweNetpDypC2UkosFpjmOpwzsM0ATGuq5/kepfO77XcVou2nnMS6sODRmm5jfGbjZGkkLg9+Dyg==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
