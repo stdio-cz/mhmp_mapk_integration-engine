@@ -88,6 +88,8 @@ run_migrations:
         # Run migrations from modules
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
         - yarn
+        # TODO remove; Temporary solution, pid module really should not be here (external tests yada yada)
+        - rm -rf node_modules/@golemio/pid/db/migrations
         - yarn golemio migrate-db up --postgres
         - yarn golemio migrate-db reset --postgres
     tags:
