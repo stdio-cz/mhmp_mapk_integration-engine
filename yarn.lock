@@ -2,15 +2,6 @@
 # yarn lockfile v1
 
 
-"@apideck/better-ajv-errors@^0.2.5":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@apideck/better-ajv-errors/-/better-ajv-errors-0.2.7.tgz#cc71652ecb111708c01bdc10206ca85886c118ea"
-  integrity sha512-J2dW+EHYudbwI7MGovcHWLBrxasl21uuroc2zT8bH2RxYuv2g5GqsO5jcKUZz4LaMST45xhKjVuyRYkhcWyMhA==
-  dependencies:
-    json-schema "^0.3.0"
-    jsonpointer "^5.0.0"
-    leven "^3.1.0"
-
 "@apideck/better-ajv-errors@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@apideck/better-ajv-errors/-/better-ajv-errors-0.3.1.tgz#a8d4ef3ce67c418b8b24f2b76b6bc84eb547baf7"
@@ -78,36 +69,6 @@
     traverse "^0.6.6"
     yaml "^1.10.2"
     yargs "^17.2.1"
-
-"@apideck/portman@^1.8.1":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.10.0.tgz#a016c977e01cef8fd27ad3b6c6ec0dd423788649"
-  integrity sha512-qqU+/6R1RTZEXHIUojZnk8fKwKhe33C8OcAv/s1/eLKKt4wTy/a20T3BLBnc7yFZIN17SPQr/PtIankpXVPMGA==
-  dependencies:
-    "@apideck/better-ajv-errors" "^0.2.5"
-    "@apidevtools/swagger-parser" "^10.0.3"
-    ajv "^8.6.3"
-    axios "^0.21.4"
-    camel-case "^4.1.2"
-    chalk "^4.1.2"
-    dot-object "^2.1.4"
-    dotenv "^10.0.0"
-    faker "^5.5.3"
-    fp-ts "^2.10.5"
-    fs-extra "^10.0.0"
-    newman "^5.3.0"
-    node-emoji "^1.10.0"
-    openapi-format "^1.6.3"
-    openapi-to-postmanv2 "^2.11.0"
-    openapi-types "9.1.0"
-    ora "^5.4.1"
-    pluralize "^8.0.0"
-    postman-collection "4.1.0"
-    prompts "^2.4.1"
-    replace-in-file "^6.2.0"
-    traverse "^0.6.6"
-    yaml "^1.10.2"
-    yargs "^17.0.1"
 
 "@apidevtools/json-schema-ref-parser@^9.0.6":
   version "9.0.9"
@@ -870,15 +831,15 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.10.tgz#338e8998df3a8dc6a3ea5068ad8cdc621cdec84b"
-  integrity sha512-WPzaSXf9GqUC47ncI1WgARSBPVrxEDTk1i0arLte4QjoDXEeXsMvXqf2qSMb3uCWL0idAOU5fiV43V6wtKDsiQ==
+"@golemio/sorted-waste-stations@1.1.11-dev.443442677":
+  version "1.1.11-dev.443442677"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11-dev.443442677.tgz#61b378c7a49f9ba9cf8dee481b10a07ac81790a2"
+  integrity sha512-zXbTGCfmZmZF4nu+JJc+bByzorGXoWm1TorJxklr0tvPaadofR/vFC7VnvNnwlF9vDu6BdIfz3UuAfCdCyrPmg==
   dependencies:
-    "@apideck/portman" "^1.8.1"
+    "@apideck/portman" "^1.13.0"
     "@golemio/city-districts" "1.0.2"
     JSONStream "^1.0.4"
-    axios "^0.21.1"
+    axios "^0.21.2"
     lodash "^4.17.19"
     proj4 "^2.6.2"
     slugify "1.3.2"
@@ -6789,11 +6750,6 @@ json-schema@0.2.3:
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
   integrity sha1-tIDIkuWaLwWVTOcnvT8qTogvnhM=
 
-json-schema@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.3.0.tgz#90a9c5054bd065422c00241851ce8d59475b701b"
-  integrity sha512-TYfxx36xfl52Rf1LU9HyWSLGPdYLL+SQ8/E/0yVyKG8wCCDaSrhPap0vEdlsZWRaS6tnKKLPGiEJGiREVC8kxQ==
-
 json-schema@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.4.0.tgz#f7de4cf6efab838ebaeb3236474cbba5a1930ab5"
@@ -8413,15 +8369,6 @@ onigasm@^2.2.5:
   dependencies:
     lru-cache "^5.1.1"
 
-openapi-format@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/openapi-format/-/openapi-format-1.6.3.tgz#8e180dcf87af256e7abfa3651fd76370797e186b"
-  integrity sha512-FykFukiY8M6jwyrcQnhArbPdm80MARcw0LJf3rbcMlqCxprW+Mj48rsVXUsJYqmvsFuGJXJzjgR42PlKTol/8A==
-  dependencies:
-    "@stoplight/yaml" "^4.2.2"
-    commander "^7.1.0"
-    traverse "^0.6.6"
-
 openapi-format@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/openapi-format/-/openapi-format-1.7.1.tgz#b32d31417cd392d067e10a15a693bba72cacf0c8"
@@ -8441,7 +8388,7 @@ openapi-format@^1.7.2:
     commander "^7.1.0"
     traverse "^0.6.6"
 
-openapi-to-postmanv2@^2.11.0, openapi-to-postmanv2@^2.12.0:
+openapi-to-postmanv2@^2.12.0:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/openapi-to-postmanv2/-/openapi-to-postmanv2-2.12.0.tgz#afd686ace584f41969799dada35f8ebbfaa80f3c"
   integrity sha512-OpCIN4G15YO9cvZ+gOhwfbI6tC+KGXAP9utxOHtpqY1m9LfJRQMiYXb9DqImKthZFpclCGyWNs6zn4071Cjr/g==
