@@ -1110,7 +1110,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                     BicycleCounters.camea.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(BicycleCounters.camea.name + "DataSource", BicycleCounters.camea.datasourceMongooseSchemaObject)
+                    new JSONSchemaValidator(BicycleCounters.camea.name + "DataSource", BicycleCounters.camea.datasourceJsonSchema)
                 );
             });
 
@@ -1151,9 +1151,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                             url,
                         }),
                         new JSONDataTypeStrategy({ resultsPath: "" }),
-                        new Validator(
+                        new JSONSchemaValidator(
                             BicycleCounters.camea.name + "MeasurementsDataSource",
-                            BicycleCounters.camea.measurementsDatasourceMongooseSchemaObject
+                            BicycleCounters.camea.measurementsDatasourceJsonSchema
                         )
                     );
                 });
@@ -1188,9 +1188,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                     BicycleCounters.ecoCounter.name + "DataSource",
                     new HTTPProtocolStrategy(dataSourceHTTPSettings),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(
+                    new JSONSchemaValidator(
                         BicycleCounters.ecoCounter.name + "DataSource",
-                        BicycleCounters.ecoCounter.datasourceMongooseSchemaObject
+                        BicycleCounters.ecoCounter.datasourceJsonSchema
                     )
                 );
             });
@@ -1242,9 +1242,9 @@ describe("DataSourcesAvailabilityChecking", () => {
                             url,
                         }),
                         new JSONDataTypeStrategy({ resultsPath: "" }),
-                        new Validator(
+                        new JSONSchemaValidator(
                             BicycleCounters.ecoCounter.name + "MeasurementsDataSource",
-                            BicycleCounters.ecoCounter.measurementsDatasourceMongooseSchemaObject
+                            BicycleCounters.ecoCounter.measurementsDatasourceJsonSchema
                         )
                     );
                 });
