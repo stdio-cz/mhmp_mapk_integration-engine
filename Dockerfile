@@ -14,15 +14,12 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz && \
 
 FROM bitnami/node:16.13.2-prod
 # OpenSSL hack BEGIN:
-WORKDIR /usr/lib/x86_64-linux-gnu/engines-1.1
-COPY --from=build /usr/src/openssl-1.1.1m/engines/*.so ./
-WORKDIR /usr/lib/x86_64-linux-gnu
-COPY --from=build /usr/src/openssl-1.1.1m/*.so.1.1 ./
-WORKDIR /etc/ssl
-COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf .
-WORKDIR /usr/lib/ssl/
-COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf .
+COPY --from=build /usr/src/openssl-1.1.1m/engines/*.so /usr/lib/x86_64-linux-gnu/engines-1.1/
+COPY --from=build /usr/src/openssl-1.1.1m/*.so.1.1 /usr/lib/x86_64-linux-gnu/
+COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf /etc/ssl/
+COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf /usr/lib/ssl/
 # OpenSSL hack END.
+
 WORKDIR /app
 
 COPY --from=build /app/node_modules /app/node_modules
