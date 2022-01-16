@@ -11,7 +11,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apideck/portman@^1.12.0", "@apideck/portman@^1.13.0":
+"@apideck/portman@^1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.13.0.tgz#15266a5f9e3a40b08fbc0a62f2f6eff102b563db"
   integrity sha512-wUfvlKOlAJQH9WWg+BVPRyZz0T61dHjGJ6r0Fej0yiHVoorGvITPNlmi89zqF7VMMRAKFVoYlSrAnZ5h80800g==
@@ -646,12 +646,12 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/fcd@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.1.tgz#9bc7c4ccbc0f158b16ea39b8567f3c1556945c60"
-  integrity sha512-Ilcx5ifUrS5/AT3BZwqazRdIKfQja2M39aGW3c7QEWq5IvUy8cSUYNJE9rQFLzR/1LF/LAK5zk6z+0gZNFlSow==
+"@golemio/fcd@1.0.2-dev.447475505":
+  version "1.0.2-dev.447475505"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2-dev.447475505.tgz#40cc85f4840464c34e7ae0efbd54125deba1da8e"
+  integrity sha512-clI89e1lZNM6A3kHaUgh6WxzKNTPDkIOa1v6xvcMo2HhIPz6LDnSE2cNkHsCk3nYHj6tzijf154tdXZxr94FWQ==
   dependencies:
-    "@apideck/portman" "^1.12.0"
+    "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
     xsd2jsonschema "^0.3.7"
