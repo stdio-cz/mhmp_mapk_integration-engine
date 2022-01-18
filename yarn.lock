@@ -646,10 +646,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/fcd@1.0.2-dev.447475505":
-  version "1.0.2-dev.447475505"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2-dev.447475505.tgz#40cc85f4840464c34e7ae0efbd54125deba1da8e"
-  integrity sha512-clI89e1lZNM6A3kHaUgh6WxzKNTPDkIOa1v6xvcMo2HhIPz6LDnSE2cNkHsCk3nYHj6tzijf154tdXZxr94FWQ==
+"@golemio/fcd@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2.tgz#57a2cdfeb022b1bd483b93c0946ec164d36198ae"
+  integrity sha512-VNEUQ7EgkJ6SBBNGHB/DjaC6f92ziGy7YhZO7NmldC+wBodzsMCHHQseg7W+cvFvsDFrIR2TcuPLy13+4hY/yQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
@@ -817,10 +817,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.11-dev.443442677":
-  version "1.1.11-dev.443442677"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11-dev.443442677.tgz#61b378c7a49f9ba9cf8dee481b10a07ac81790a2"
-  integrity sha512-zXbTGCfmZmZF4nu+JJc+bByzorGXoWm1TorJxklr0tvPaadofR/vFC7VnvNnwlF9vDu6BdIfz3UuAfCdCyrPmg==
+"@golemio/sorted-waste-stations@1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11.tgz#dab7e39252b3a521239be79e2479a69837bf2f2e"
+  integrity sha512-8Paw7Xr8u9Ag1c1P6Ir2+jO5BcWrkn11fiJmupj3kntLCpYmUIWD8zG+AZWYeCmjJ7iShSO8AZVJ7PRLfk8KvQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
     "@golemio/city-districts" "1.0.2"
@@ -879,10 +879,10 @@
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.4.tgz#8d4d29d285ad9237fe2dd5810a3e15accbfa96ad"
-  integrity sha512-kMXJXegT83mOpb+VXPHqX2Z+ZRQEo9op12EYvSvqIObY2QBBVxDx9UTIgCq1f3ThLwsYTbZaoaTb0sjoDxMLug==
+"@golemio/waze-tt@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.5.tgz#c6985d993ab832e56f3faaae977cee8525283ee4"
+  integrity sha512-gbAJu/dB0FV9QXITtb5r2nkwNvYURJ7gSjYEMde8NvvZ9wIrUpMv8auzfpton/uoX/h89/YSvinM1BytLwmpTw==
   dependencies:
     object-hash "^2.0.0"
 
