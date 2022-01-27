@@ -109,6 +109,7 @@
         "ansi-regex": "^5.0.1",
         "ssh2": "^1.4.0",
         "validator": "^13.7.0",
-        "yargs-parser": "^18.1.2"
+        "yargs-parser": "^18.1.2",
+        "**/@google-cloud/storage/**/node-fetch": "^2.6.7"
     }
 }
