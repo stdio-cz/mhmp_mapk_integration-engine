@@ -554,10 +554,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.1.12-dev.459808985":
-  version "1.1.12-dev.459808985"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.12-dev.459808985.tgz#77de590828d64525a278e0baf1fc4c031e0bd877"
-  integrity sha512-EYir8EwlrSD6UVzgBb5JqO0wNTwqtwftixALcFekQsiLfsyEPHsxD1zr/d5JLy41IGCclSWmerxqIwWwpede/w==
+"@golemio/core@1.1.12-dev.460649780":
+  version "1.1.12-dev.460649780"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.12-dev.460649780.tgz#4f6539d36a032b0303181ea716921b86bbc2fd6e"
+  integrity sha512-S19ARAYvCuCJK+jaQTzCMC5ib1J2Mmer0XoljaRLjWKlmM0O2enbj+3IM1gQhiR4GsoD2+b4i+SAHQ4DCqd8Ow==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
