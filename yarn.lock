@@ -832,10 +832,10 @@
     trim-newlines "^4.0.1"
     uuid-by-string "^3.0.4"
 
-"@golemio/traffic-cameras@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.2.tgz#0c6f7c10a3cf14dbc625b79c3f42aaf0594a3c7e"
-  integrity sha512-KKF5hSH/WK5fnLJkF8RmY5CULBIaACy7pX8XMaZfMuIBtkznBalq71gCFvtH1ol/nevpJ2KWkzUKkjBzCX2hYQ==
+"@golemio/traffic-cameras@1.0.3-dev.460765153":
+  version "1.0.3-dev.460765153"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.3-dev.460765153.tgz#d5ea8fa4c16a9990a7d944bff54e8af02ac91e65"
+  integrity sha512-MBUx1aF+UwhzPnBUmVBlj4wN1qbI0nbDv51ljI98UPFpPh8CgPmke+QnzmjMCwAkXIZA7knBz3OSBG5zfAdUfA==
   dependencies:
     "@golemio/city-districts" "1.0.2"
 
