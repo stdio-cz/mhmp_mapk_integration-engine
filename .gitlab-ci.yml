@@ -36,7 +36,7 @@ stages:
 .run_tests:
     stage: test
     services:
-        - postgres:13.5
+        - postgres:12.9
         - mongo:4.0
         - redis:6.0-alpine
         - rabbitmq:3.8
