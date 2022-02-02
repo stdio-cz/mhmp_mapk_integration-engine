@@ -36,7 +36,7 @@ stages:
 .run_tests:
     stage: test
     services:
-        - postgres:12.9
+        - postgres:13.5
         - mongo:4.0
         - redis:6.0-alpine
         - rabbitmq:3.8
@@ -74,7 +74,7 @@ run_migrations:
     stage: test
     image: bitnami/node:16.13.0
     services:
-        - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.8:postgis3
+        - name: postgis/postgis:13-3.2
           alias: postgres
     script:
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
