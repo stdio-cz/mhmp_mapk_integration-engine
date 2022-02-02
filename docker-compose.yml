@@ -36,7 +36,7 @@ services:
      - golemio
 
   postgres:
-    image: postgres:10.5
+    image: postgres:13.5
     environment:
       POSTGRES_PASSWORD: pass
     ports:
