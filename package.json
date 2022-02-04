@@ -85,7 +85,7 @@
         "@golemio/municipal-police-stations": "1.0.2",
         "@golemio/ndic": "1.0.6",
         "@golemio/parking-zones": "1.0.2",
-        "@golemio/parkings": "1.0.10",
+        "@golemio/parkings": "1.0.11-dev.463368908",
         "@golemio/parkomats": "1.0.2",
         "@golemio/pid": "2.1.5",
         "@golemio/playgrounds": "1.0.2",
