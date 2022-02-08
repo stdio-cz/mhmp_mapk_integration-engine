@@ -554,10 +554,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.1.12-dev.460649780":
-  version "1.1.12-dev.460649780"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.12-dev.460649780.tgz#4f6539d36a032b0303181ea716921b86bbc2fd6e"
-  integrity sha512-S19ARAYvCuCJK+jaQTzCMC5ib1J2Mmer0XoljaRLjWKlmM0O2enbj+3IM1gQhiR4GsoD2+b4i+SAHQ4DCqd8Ow==
+"@golemio/core@1.1.12-dev.465182329":
+  version "1.1.12-dev.465182329"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.12-dev.465182329.tgz#d256e1f7872592cd7b5f3ef9d1143f2b22ec5f77"
+  integrity sha512-/iqwzNtO9ygU67DeVA1tZ59GZth2Fr72ctxzfI0ramQ7T/0FthRQGfgH81tIqQTBiBn+V8XY4tBF2tHXFge5VA==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -619,10 +619,10 @@
   dependencies:
     "@golemio/bicycle-counters" "1.0.2"
 
-"@golemio/energetics@1.0.7-dev.460778671":
-  version "1.0.7-dev.460778671"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.7-dev.460778671.tgz#d72c21644aed3d9f184cb7e54c916bb09efd7bc3"
-  integrity sha512-qIUyJfIehHpDnxhN67aXHZO0MT+xF4YefWiEgLiX9SwcxJ93QwK4l+CXEdQGAUcf40xLoqVmcN5zWL9dcCSNDA==
+"@golemio/energetics@1.0.7-dev.465198237":
+  version "1.0.7-dev.465198237"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.7-dev.465198237.tgz#b40647b4bb6bc55003a6dadf2ffcc3b0973d42f9"
+  integrity sha512-VrclmqCzy8WzmgfIWzjNVSqEuVodHnLOTKU/j7n3KTxM0jn/wGIkF4fjfXsjMhiJg+0bwcX70Z7oxUPR9w9Pmw==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
@@ -832,10 +832,10 @@
     trim-newlines "^4.0.1"
     uuid-by-string "^3.0.4"
 
-"@golemio/traffic-cameras@1.0.3-dev.460765153":
-  version "1.0.3-dev.460765153"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.3-dev.460765153.tgz#d5ea8fa4c16a9990a7d944bff54e8af02ac91e65"
-  integrity sha512-MBUx1aF+UwhzPnBUmVBlj4wN1qbI0nbDv51ljI98UPFpPh8CgPmke+QnzmjMCwAkXIZA7knBz3OSBG5zfAdUfA==
+"@golemio/traffic-cameras@1.0.3-dev.465198418":
+  version "1.0.3-dev.465198418"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.3-dev.465198418.tgz#a871ac8f7e6c50a25dee2d599870eaa18094dc8a"
+  integrity sha512-wMRI45vmgESxF20RrqUYODqOf3X7j0PWvyoY8Qzw1+p6uF9udIdIXZy0Iz3xEk+DyViEGBXWxXr3g8lIg5am2g==
   dependencies:
     "@golemio/city-districts" "1.0.2"
 
