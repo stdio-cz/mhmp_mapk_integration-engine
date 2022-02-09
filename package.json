@@ -30,7 +30,7 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@golemio/cli": "1.2.0",
+        "@golemio/cli": "1.2.1-dev.461806964",
         "@golemio/eslint-config": "^1.0.2",
         "@google-cloud/storage": "^5.7.1",
         "@types/chai": "4.2.3",
@@ -90,7 +90,7 @@
         "@golemio/pid": "2.1.5",
         "@golemio/playgrounds": "1.0.2",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/shared-bikes": "1.0.3",
+        "@golemio/shared-bikes": "2.0.0-dev.467126062",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",
         "@golemio/traffic-cameras": "1.0.3-dev.465198418",

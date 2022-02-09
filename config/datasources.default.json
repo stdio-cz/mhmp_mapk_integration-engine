@@ -49,8 +49,9 @@
     "Playgrounds": "http://www.hristepraha.cz/api/get-all-items?type=hriste",
     "PlayStoreKeyFilename": "config/filename.json",
     "PublicToilets": "http://opendata.iprpraha.cz/CUR/FSV/FSV_VerejnaWC_b/WGS_84/FSV_VerejnaWC_b.json",
-    "RekolaSharedBikes": "https://www.rekola.cz/api/mobile/regions/1/trackables?mapLat=0&mapLng=0&mapZoom=0&gpsLat=0&gpsLng=0&gpsAcc=0",
+    "RekolaSharedBikesBaseUrl": "https://www.rekola.cz/api/mobile/regions/1",
     "RekolaSharedBikesHeaders": {
+        "X-Api-Version": "",
         "X-Client": "",
         "X-Api-Key": "",
         "X-Client-OS": "",
