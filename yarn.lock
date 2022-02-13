@@ -646,10 +646,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/fcd@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2.tgz#57a2cdfeb022b1bd483b93c0946ec164d36198ae"
-  integrity sha512-VNEUQ7EgkJ6SBBNGHB/DjaC6f92ziGy7YhZO7NmldC+wBodzsMCHHQseg7W+cvFvsDFrIR2TcuPLy13+4hY/yQ==
+"@golemio/fcd@1.0.3-dev.468774735":
+  version "1.0.3-dev.468774735"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.3-dev.468774735.tgz#1ce8d9eb410fc93ffffe6bd9196337251b20f19d"
+  integrity sha512-9nnmrV0sHDev+UAqsBk3IydCc5+WQUiuxUrry75xDCrnTMvfcMEFwcQpCjQnHc5U1Efez+CasDotsf/wWRWjxA==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
