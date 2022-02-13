@@ -71,7 +71,7 @@
         "@golemio/core": "1.1.12-dev.465182329",
         "@golemio/counters": "1.0.2",
         "@golemio/energetics": "1.0.7-dev.465198237",
-        "@golemio/fcd": "1.0.2",
+        "@golemio/fcd": "1.0.3-dev.468774735",
         "@golemio/firebase-pid-litacka": "1.0.2",
         "@golemio/flow": "1.0.5",
         "@golemio/gardens": "1.0.2",
