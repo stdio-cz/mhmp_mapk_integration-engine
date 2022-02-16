@@ -1051,7 +1051,7 @@ describe("DataSourcesAvailabilityChecking", () => {
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should return geofencing data last modifie", async () => {
+            it("should return geofencing data last modified", async () => {
                 const data = await zonesDatasource.getLastModified();
                 expect(data).to.be.null;
             });
