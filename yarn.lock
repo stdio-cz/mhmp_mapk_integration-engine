@@ -554,15 +554,15 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.10.tgz#bb82decf1abe15e55376d5df07b328d6bfa1e390"
-  integrity sha512-izHFM34J9BwMTzYW2Bo0fKCQXbOEFAMSP10VO2zHu/lKnovn13bFqVVaXPGixtahf5rwp67Ot/mQ8MRcnqqdyA==
+"@golemio/core@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.0.tgz#b4ee7103c8a59632d16cf3c24c6e08002042cf26"
+  integrity sha512-mKTpQvVcpPTRpHGnfE0/K6K4cDvZXDN+od3Scr3P919wDoryszvhqmFYPkNigyk9FDU2jfV5u/v5jn4WtFfgEw==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
     "@golemio/validator" "0.2.0"
-    "@google-cloud/storage" "^5.7.1"
+    "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "^1.0.2"
     "@opentelemetry/exporter-jaeger" "^0.24.0"
     "@opentelemetry/instrumentation-express" "^0.24.0"
@@ -578,7 +578,7 @@
     amqplib "^0.7.1"
     apicache "^1.6.3"
     aws-sdk "^2.823.0"
-    axios "^0.21.2"
+    axios "^0.24.0"
     basic-ftp "^4.6.6"
     content-type "^1.0.4"
     debug "3.1.0"
@@ -619,10 +619,10 @@
   dependencies:
     "@golemio/bicycle-counters" "1.0.2"
 
-"@golemio/energetics@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.6.tgz#a27a5f5f0aef8565e21ea71b893fd576df522a0c"
-  integrity sha512-ireh1VOzk+OYvRAvweqoQONmo2Gbi8xM1W+Xrtt+xbYpLggcPG5PR6G2tx7grTegWTLGil0k21NlcnN9mbW60w==
+"@golemio/energetics@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.7.tgz#ab30828c5ee60e44f31831ed54a73af78b3271e6"
+  integrity sha512-fbglzLCBj9VZtXbUatYt0dmr6PENGhLi3KnsIB7yyvrLcOn8p15T4k257oKJhCOHijYOulrLhAHxEaXttAXQsA==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
@@ -646,10 +646,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/fcd@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2.tgz#57a2cdfeb022b1bd483b93c0946ec164d36198ae"
-  integrity sha512-VNEUQ7EgkJ6SBBNGHB/DjaC6f92ziGy7YhZO7NmldC+wBodzsMCHHQseg7W+cvFvsDFrIR2TcuPLy13+4hY/yQ==
+"@golemio/fcd@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.3.tgz#58cb2424bdceb61bc399553ad65af4b72dd410fb"
+  integrity sha512-uYk99uUnCx57G9vwGkB3ye8SfksAub7KOejene4xXRb3pFqSVjFIyfNUfmLSOZ4NcEaKud3B8JGQNJ+L/G4ANQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
@@ -756,10 +756,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.10.tgz#eff0eb31deb36c9bbe00f2b48ab8c03bb310966f"
-  integrity sha512-PUSmsFw/8nYZU0VE5FwtktEMY9tSDhnxDhQpbhZWpLfTvZzUrFiFLWkNcrcN/y0cetajwElpYe4Gbwrg46T1PQ==
+"@golemio/parkings@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.11.tgz#10bf3c650080ae34fb5325c5fe5da05bc38d9601"
+  integrity sha512-6XktBk8Z+DZr6jBPiZLmWn24lzbz/KAnU3dlvmznfg3HtQZqrMQ9ONHDHrUo1IOG6r7AuAUxXjDig4PUBtLvoQ==
   dependencies:
     "@golemio/city-districts" "1.0.2"
     install "^0.13.0"
@@ -772,10 +772,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.1.5.tgz#a91c8a01c8b503b5d47e5b533a34fabcf86f02d4"
-  integrity sha512-iGzpUGCKMwkWM3wm6VQ1Vub6wY7Nk97QFZYECI4JAyvcRfNwOjxGBXp+g4910dIOKP5+3QYG0kiSH0Y169IRRw==
+"@golemio/pid@2.1.9":
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.1.9.tgz#1498a8f5581c518678e360c817d3e9c9b737cc5a"
+  integrity sha512-9G7YgcBRuh8JnXomiEjLyU3FgZK7MPrkmJWIJ4EhROiNds0uU4n4Q2BuDCI4kXYorYO20j9LRi6a0xp5q/TULg==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -832,10 +832,10 @@
     trim-newlines "^4.0.1"
     uuid-by-string "^3.0.4"
 
-"@golemio/traffic-cameras@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.2.tgz#0c6f7c10a3cf14dbc625b79c3f42aaf0594a3c7e"
-  integrity sha512-KKF5hSH/WK5fnLJkF8RmY5CULBIaACy7pX8XMaZfMuIBtkznBalq71gCFvtH1ol/nevpJ2KWkzUKkjBzCX2hYQ==
+"@golemio/traffic-cameras@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.3.tgz#553a1bc097c220f111f83ebdb8298bf7b393b782"
+  integrity sha512-7p/gWHo5lE/KiYLZlyJgDUjsC90/W4E94orLqiWWTbIoICtHgo5AeZRQZ5yWeDDvyb+O9u8R8C4HDXEj6iQ9vw==
   dependencies:
     "@golemio/city-districts" "1.0.2"
 
@@ -918,6 +918,34 @@
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@google-cloud/promisify/-/promisify-2.0.4.tgz#9d8705ecb2baa41b6b2673f3a8e9b7b7e1abc52a"
   integrity sha512-j8yRSSqswWi1QqUGKVEKOG03Q7qOoZP6/h2zN2YO+F5h2+DHU0bSrHCK9Y7lo2DI9fBd8qGAw795sf+3Jva4yA==
+
+"@google-cloud/storage@^5.18.0":
+  version "5.18.1"
+  resolved "https://registry.yarnpkg.com/@google-cloud/storage/-/storage-5.18.1.tgz#1bae7345b3ec2b38e874cdefc94e8b62130577ea"
+  integrity sha512-EeVIarDb6u9vE5Se3YaXA8tuW8Ae2xmYLHy43doutTwzkXwizGXVS2Qmc2pouq9ln8qMD9A2f3arvhgAPtK9LQ==
+  dependencies:
+    "@google-cloud/common" "^3.8.1"
+    "@google-cloud/paginator" "^3.0.0"
+    "@google-cloud/promisify" "^2.0.0"
+    abort-controller "^3.0.0"
+    arrify "^2.0.0"
+    async-retry "^1.3.3"
+    compressible "^2.0.12"
+    configstore "^5.0.0"
+    date-and-time "^2.0.0"
+    duplexify "^4.0.0"
+    extend "^3.0.2"
+    gaxios "^4.0.0"
+    get-stream "^6.0.0"
+    google-auth-library "^7.0.0"
+    hash-stream-validation "^0.2.2"
+    mime "^3.0.0"
+    mime-types "^2.0.8"
+    p-limit "^3.0.1"
+    pumpify "^2.0.0"
+    snakeize "^0.1.0"
+    stream-events "^1.0.4"
+    xdg-basedir "^4.0.0"
 
 "@google-cloud/storage@^5.7.1":
   version "5.17.0"
@@ -7881,10 +7909,10 @@ node-fetch-h2@^2.3.0:
   dependencies:
     http2-client "^1.2.5"
 
-node-fetch@^2.6.1:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.6.tgz#1751a7c01834e8e1697758732e9efb6eeadfaf89"
-  integrity sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==
+node-fetch@^2.6.1, node-fetch@^2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
 
