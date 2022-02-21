@@ -74,7 +74,7 @@
         "@golemio/energetics": "1.0.7",
         "@golemio/fcd": "1.0.3",
         "@golemio/firebase-pid-litacka": "1.0.2",
-        "@golemio/flow": "1.0.5",
+        "@golemio/flow": "1.0.6-dev.475606815",
         "@golemio/gardens": "1.0.2",
         "@golemio/general": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",
@@ -111,6 +111,7 @@
         "ssh2": "^1.4.0",
         "validator": "^13.7.0",
         "yargs-parser": "^18.1.2",
+        "url-parse": "^1.5.6",
         "**/@google-cloud/storage/**/node-fetch": "^2.6.7"
     }
 }
