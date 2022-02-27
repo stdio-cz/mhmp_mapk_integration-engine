@@ -801,10 +801,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/shared-bikes@2.0.0-dev.468154183":
-  version "2.0.0-dev.468154183"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0-dev.468154183.tgz#da6a5162d97d099666f560ede340a4d32c2e868e"
-  integrity sha512-bxHtuFtRv6yTuHiZcYCxSiQ+WhRCxYY+MMjF6vtCrd1PkUNvQqyduPnan6DPzIogE7fcRJHKfe7CFqTmVj8qzQ==
+"@golemio/shared-bikes@2.0.0-dev.480365104":
+  version "2.0.0-dev.480365104"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0-dev.480365104.tgz#1a60b137df36a582816dec9fa0b6486f567767b5"
+  integrity sha512-JcmslKlctwFBq/AkSp8RyCA9bRms7lwZ/hpfzc/4EUw9cF78Y7Efy5XTlR74YGYCNsCwOObfkq0w8A1CB6PnPQ==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
