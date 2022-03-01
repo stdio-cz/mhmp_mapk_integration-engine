@@ -531,10 +531,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.2.1-dev.461806964":
-  version "1.2.1-dev.461806964"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.1-dev.461806964.tgz#9d820ec3433bbae6e8dd7de7b233f4ae532e93d1"
-  integrity sha512-85ZP39g4LATSutzVn6NvRFBmFYWbs6kZHZjYCyjY1SSLXXV6gEtYDR7tXsDZBcxOcV5DWlju14qrbBbA6NZvzw==
+"@golemio/cli@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.1.tgz#88b5792bc9c92cee5e7eea37e13a8de3934095a7"
+  integrity sha512-vCSOOgbghN0K1H4MI0lQfAkX0dIXZAD9iG55rFjcHWkK5gEwBmlIIr2UUgsRuUDax1sJUpOwPS9OC6ZMPql4yA==
   dependencies:
     cross-spawn "^7.0.3"
     db-migrate "1.0.0-beta.16"
@@ -547,10 +547,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.0.tgz#b4ee7103c8a59632d16cf3c24c6e08002042cf26"
-  integrity sha512-mKTpQvVcpPTRpHGnfE0/K6K4cDvZXDN+od3Scr3P919wDoryszvhqmFYPkNigyk9FDU2jfV5u/v5jn4WtFfgEw==
+"@golemio/core@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.1.tgz#25a867a3a9d9c75346e1d148b8601e73b992a073"
+  integrity sha512-HksxY/Tt5EGARpj5S3rT9X9qk8Hzq7uBTxaROTKKvwf6vpJD5BPeKpgXh7KUeJP1a8GQ9ey6IdqjbR/qR8mfCw==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -656,10 +656,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/flow@1.0.6-dev.475606815":
-  version "1.0.6-dev.475606815"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.6-dev.475606815.tgz#22ac6c707004fc28df44794e3792d8e1c56cab6b"
-  integrity sha512-7QrHZs1L2GuLM/lt3JHbPSj8jCUIelFbRorPdi4Cx2f2+Rd+PhAW2fIS7F6C818Er/gqQTu0ylsr2GX/Rmq67Q==
+"@golemio/flow@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.6.tgz#198b07c1da2a94eb11e4cd7b9ef0daa0382b8472"
+  integrity sha512-gq8Nu3mEOLIqx1NJNp6gCW+5bcjbCXskc66wS6sehT3WKeYt4BLL2fceN3WkJZ9Cj4/YWRgvy5U8jCzvkkHtvQ==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -764,10 +764,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.1.9":
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.1.9.tgz#1498a8f5581c518678e360c817d3e9c9b737cc5a"
-  integrity sha512-9G7YgcBRuh8JnXomiEjLyU3FgZK7MPrkmJWIJ4EhROiNds0uU4n4Q2BuDCI4kXYorYO20j9LRi6a0xp5q/TULg==
+"@golemio/pid@2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.1.10.tgz#c0ecb45a6e76421853599db569739693ce46c11a"
+  integrity sha512-wKjeR9/D16tImqCEVKlCCTYOMrJHePgaX+eL350IaGkY2CeuiFIhTY3/wjQHHM2B0EyggnY+zz2CQi6X3kLchQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -794,10 +794,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/shared-bikes@2.0.0-dev.480977646":
-  version "2.0.0-dev.480977646"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0-dev.480977646.tgz#3c3674e3c020c8fff568c4836b488c343ff5ec88"
-  integrity sha512-oMrragxaYVfvnGX5QkMEJKjBnNUaV7SOSsN2ywP7lXkkUdPkPpz149QAjSsIdTpPDbJNbJVmo2iRCBdDt2t+CQ==
+"@golemio/shared-bikes@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0.tgz#b37d37050abb8aa3a2ff71033590d34505124d5e"
+  integrity sha512-x0s7I0cUiC1cubNISLldG77sRZ4DOuAowJVP6bDOCJ+gyFdh4D9P8dfV3dQP6Qo5jF1EZ0WrdezkhsidjLqf+A==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -856,10 +856,10 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/waste-collection-yards@1.0.2-dev.480663805":
-  version "1.0.2-dev.480663805"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.2-dev.480663805.tgz#0b0cdba1dd3eeca5600cbb10b9ebd218f1bf3e42"
-  integrity sha512-tMdwI9lvmiuG0/rXZss0kW0wvSbP9Ih8fPQv+YiZxWfHMwYPmUW32bZDjXliH8np3JJdlJsyb78HvHOjGEiJ/w==
+"@golemio/waste-collection-yards@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.2.tgz#2685a85a231e54bd4b825e3ac346d22b19a4689f"
+  integrity sha512-CSHPkp5nmAAWRqb1H9NPalb3IZwNkUbq/tukyOPVe+Mq6zf+oaPNrGLtn12H3XpKj8EHb/9mpx+b7+niOUUvCw==
   dependencies:
     "@golemio/city-districts" "1.0.2"
     slugify "1.3.2"
