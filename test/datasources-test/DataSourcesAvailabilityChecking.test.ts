@@ -1000,29 +1000,59 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("SharedBikes", () => {
-        describe("Rekola", () => {
-            let datasource: DataSource;
+        describe("Rekola ", () => {
+            let zonesDatasource: DataSource;
+            let trackablesDatasource: DataSource;
 
             beforeEach(() => {
-                datasource = new DataSource(
-                    SharedBikes.rekola.name + "DataSource",
+                zonesDatasource = new DataSource(
+                    SharedBikes.datasources.rekolaGeofencingZones.name,
                     new HTTPProtocolStrategy({
                         headers: config.datasources.RekolaSharedBikesHeaders,
                         method: "GET",
-                        url: config.datasources.RekolaSharedBikes,
+                        url: config.datasources.RekolaSharedBikesBaseUrl + "/zones",
                     }),
                     new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new Validator(SharedBikes.rekola.name + "DataSource", SharedBikes.rekola.datasourceMongooseSchemaObject)
+                    new JSONSchemaValidator(
+                        SharedBikes.datasources.rekolaGeofencingZones.name,
+                        SharedBikes.datasources.rekolaGeofencingZones.jsonSchema
+                    )
+                );
+
+                trackablesDatasource = new DataSource(
+                    SharedBikes.datasources.rekolaTrackables.name,
+                    new HTTPProtocolStrategy({
+                        headers: config.datasources.RekolaSharedBikesHeaders,
+                        method: "GET",
+                        url:
+                            config.datasources.RekolaSharedBikesBaseUrl +
+                            "/trackables?mapLat=0&mapLng=0&mapZoom=0&gpsLat=0&gpsLng=0&gpsAcc=0",
+                    }),
+                    new JSONDataTypeStrategy({ resultsPath: "" }),
+                    new JSONSchemaValidator(
+                        SharedBikes.datasources.rekolaTrackables.name,
+                        SharedBikes.datasources.rekolaTrackables.jsonSchema
+                    )
                 );
             });
 
-            it("should return all objects", async () => {
-                const data = await datasource.getAll();
+            it("should return trackable data as object", async () => {
+                const data = await trackablesDatasource.getAll();
                 expect(data).to.be.an.instanceOf(Object);
             });
 
-            it("should return last modified", async () => {
-                const data = await datasource.getLastModified();
+            it("should return trackable data last modified", async () => {
+                const data = await trackablesDatasource.getLastModified();
+                expect(data).to.be.null;
+            });
+
+            it("should return geofencing data as object", async () => {
+                const data = await zonesDatasource.getAll();
+                expect(data).to.be.an.instanceOf(Object);
+            });
+
+            it("should return geofencing data last modified", async () => {
+                const data = await zonesDatasource.getLastModified();
                 expect(data).to.be.null;
             });
         });
