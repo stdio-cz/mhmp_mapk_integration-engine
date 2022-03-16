@@ -9,6 +9,7 @@
         "esModuleInterop": true,
         "sourceMap": true,
         "skipLibCheck": true,
+        "useUnknownInCatchVariables": false,
         "outDir": "./dist"
     },
     "include": ["src/**/*.ts"]
