@@ -91,7 +91,7 @@
         "@golemio/pid": "2.1.11",
         "@golemio/playgrounds": "1.0.3",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/shared-bikes": "2.0.1-dev.499022024",
+        "@golemio/shared-bikes": "2.0.1-dev.505041914",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",
         "@golemio/traffic-cameras": "1.0.3",
