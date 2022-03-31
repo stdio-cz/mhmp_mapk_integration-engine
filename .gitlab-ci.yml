@@ -69,8 +69,10 @@ stages:
     artifacts:
         when: always
         reports:
-            junit:
-                - junit.xml
+            junit: junit.xml
+            coverage_report:
+                coverage_format: cobertura
+                path: coverage/cobertura-coverage.xml
 
 run_tests:
     extends: .run_tests
