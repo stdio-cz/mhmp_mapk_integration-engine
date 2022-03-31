@@ -46,7 +46,8 @@ stages:
         - yarn
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        # - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
+        # TODO temporarily set level to critical
+        - bash -c 'yarn audit --groups dependencies --level critical; [[ $? -ge 16 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export MONGO_CONN=mongodb://mongo/testdb

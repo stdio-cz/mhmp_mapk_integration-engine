@@ -38,7 +38,7 @@ import { MunicipalPoliceStations } from "@golemio/municipal-police-stations/dist
 import { Parkings } from "@golemio/parkings/dist/schema-definitions";
 import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
 import { Parkomats } from "@golemio/parkomats/dist/schema-definitions";
-import { Playgrounds } from "@golemio/playgrounds/dist/schema-definitions";
+import { PlaygroundsDataSource } from "@golemio/playgrounds/dist/integration-engine/PlaygroundsDataSource";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { RopidGTFS } from "@golemio/pid/dist/schema-definitions/ropid-gtfs";
 import { RopidVYMI, IRopidVYMIEvent } from "@golemio/pid/dist/schema-definitions/ropid-vymi";
@@ -468,16 +468,7 @@ describe("DataSourcesAvailabilityChecking", () => {
         let datasource: DataSource;
 
         beforeEach(() => {
-            datasource = new DataSource(
-                Playgrounds.name + "DataSource",
-                new HTTPProtocolStrategy({
-                    headers: {},
-                    method: "GET",
-                    url: config.datasources.Playgrounds,
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "items" }),
-                new Validator(Playgrounds.name + "DataSource", Playgrounds.datasourceMongooseSchemaObject)
-            );
+            datasource = PlaygroundsDataSource.get();
         });
 
         it("should return all objects", async () => {
