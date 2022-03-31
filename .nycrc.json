@@ -2,7 +2,7 @@
     "check-coverage": true,
     "extension": [".ts", ".tsx"],
     "exclude": ["**/*rc.js", "**/*.config.js", "**/*.d.ts", "coverage", "dist", "docs", "node_modules", "test"],
-    "reporter": ["text", "lcov"],
+    "reporter": ["text", "lcov", "cobertura"],
     "all": true,
     "lines": 0,
     "statements": 0,
