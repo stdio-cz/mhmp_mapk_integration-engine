@@ -513,10 +513,12 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@golemio/air-quality-stations@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.2.tgz#f9591e50a764ca907ddfd0d726737f938f14556e"
-  integrity sha512-VzL0iPYruO85VJsX9cCCFlUu6P41LiqY0Qj4LolZBZjzaqdkS6UOqfA4KHQ+qxMM32IUbJmtYy4uzwkA6PJzQw==
+"@golemio/air-quality-stations@1.0.3-dev.509098240":
+  version "1.0.3-dev.509098240"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.3-dev.509098240.tgz#8b66019ac89e0da0cacf863e84956f4a313394d7"
+  integrity sha512-f9o0eL2FzyoF3cT8iDWdbx2x7b3sZD6DgKVxj+CZ4tbFSXYuoaeBQsIDyuRLtTr39gKx8Zh96uyyjyEBj5R/bQ==
+  dependencies:
+    "@golemio/city-districts" "^1.0.4-dev.508157651"
 
 "@golemio/bicycle-counters@1.0.2":
   version "1.0.2"
@@ -553,10 +555,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/city-districts@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.3.tgz#367c0583ebd6474f0e7a99dd19ce2db60f58ed6d"
-  integrity sha512-V5Hoz7fJzpbczGAm/rxcScsjW3jPzfx0Nu6Mrk6y6Xwn3X6u4EeQsrx6TuYj+YZ1a9ZoxPjdqVFryGQL19l1iQ==
+"@golemio/city-districts@1.0.4-dev.508157651", "@golemio/city-districts@^1.0.4-dev.508157651":
+  version "1.0.4-dev.508157651"
+  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.4-dev.508157651.tgz#dfae86bb83dcdbb5fe8b46b7d969b25341736a8c"
+  integrity sha512-rpI/71B/jHywqP6FXWIAzM0j2+Tqx4LswkUxUy39hax0Zk+9U+OGawaEuFlzm6qTugsSIbX43ZZldMs4JLyurg==
   dependencies:
     slugify "1.3.2"
 
@@ -576,10 +578,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.5.tgz#390f4bb07ff809ab9bb4bcf9ddfcb57353c3ed24"
-  integrity sha512-DBu5FjqPRNigkxcRabyVaebwpVuU4f3wncdlO8HQPpNLab2YsiY9qfgonho4kfzgVrqpADdd+T1gKsxTLxkuyQ==
+"@golemio/core@1.2.6-dev.508166941":
+  version "1.2.6-dev.508166941"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.6-dev.508166941.tgz#de0f91cd167408fe007f985f0c4663f48af30727"
+  integrity sha512-mCZ8ivvmu1n6cyFGNb0Icw6vS17la2lItnkUQhDSVEv9clNxmRxVI0EEJhJkkIbGVGVdB+7JiSrAMjJQEea/Ig==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -7629,10 +7631,10 @@ minimist-options@4.1.0:
     is-plain-obj "^1.1.0"
     kind-of "^6.0.3"
 
-minimist@^1.1.0, minimist@^1.2.0, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+minimist@^1.1.0, minimist@^1.2.0, minimist@^1.2.5, minimist@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 minipass-collect@^1.0.2:
   version "1.0.2"
