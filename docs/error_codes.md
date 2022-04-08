@@ -6,7 +6,6 @@
     -   1001: Error while connecting to {name}.
     -   1002: {name} connection not exists. Firts call connect() method.
     -   1003: Sending the message to exchange failed.
-    -   1004: Error while saving data to InfluxDB.
 -   Datasources Errors
     -   2001: Retrieving of the source data failed.
     -   2002: Error while getting data from server.
