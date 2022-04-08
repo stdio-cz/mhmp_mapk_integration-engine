@@ -1,12 +1,10 @@
 import http from "http";
 import express, { Request, Response, NextFunction, RequestHandler } from "@golemio/core/dist/shared/express";
-import { FieldType } from "@golemio/core/dist/shared/influx";
 import sentry from "@golemio/core/dist/shared/sentry";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { config } from "@golemio/core/dist/integration-engine/config";
 import {
     AMQPConnector,
-    InfluxConnector,
     MongoConnector,
     PostgresConnector,
     RedisConnector,
@@ -75,17 +73,6 @@ export default class App extends BaseApp {
         await MongoConnector.connect();
         await PostgresConnector.connect();
         await RedisConnector.connect();
-        if (config.influx_db.enabled) {
-            await InfluxConnector.connect([
-                {
-                    fields: {
-                        number_of_records: FieldType.INTEGER,
-                    },
-                    measurement: "number_of_records",
-                    tags: ["name"],
-                },
-            ]);
-        }
     };
 
     /**
@@ -96,9 +83,6 @@ export default class App extends BaseApp {
         await MongoConnector.disconnect();
         await PostgresConnector.disconnect();
         await RedisConnector.disconnect();
-        if (config.influx_db.enabled) {
-            await InfluxConnector.disconnect();
-        }
         await AMQPConnector.disconnect();
         await this.server?.close();
         await this.metricsServer?.close();
@@ -172,10 +156,6 @@ export default class App extends BaseApp {
             { name: Service.REDIS, check: RedisConnector.isConnected },
             { name: Service.RABBITMQ, check: AMQPConnector.isConnected },
         ];
-
-        if (config.influx_db.enabled) {
-            services.push({ name: Service.INFLUX, check: InfluxConnector.isConnected });
-        }
 
         const serviceStats = await getServiceHealth(services);
 
