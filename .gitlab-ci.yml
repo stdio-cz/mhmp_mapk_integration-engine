@@ -7,8 +7,7 @@ variables:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: test-pass
     POSTGRES_DB: testdb
-    K8S_PROJECT_NAME: "golemio"
-    K8S_DEPLOY_NAMESPACE: "golemio"
+    HELM_NAME: "golemio"
     K8S_DEPLOYMENT_NAME: integration-engine
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
@@ -36,10 +35,10 @@ stages:
 .run_tests:
     stage: test
     services:
-        - postgres:13.5
+        - postgres:13.6
         - mongo:4.0
         - redis:6.0-alpine
-        - rabbitmq:3.8
+        - rabbitmq:3.9
     script:
         - export NODE_ENV=development
         - export LOG_LEVEL=warn
