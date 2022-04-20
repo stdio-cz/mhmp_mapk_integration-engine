@@ -28,6 +28,7 @@ const datasets = [
     "parkomats",
     "playgrounds",
     "public-toilets",
+    "rush-hour-aggregation",
     "shared-bikes",
     "shared-cars",
     "sorted-waste-stations",
