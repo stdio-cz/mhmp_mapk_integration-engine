@@ -578,20 +578,21 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.7-dev.520392044":
-  version "1.2.7-dev.520392044"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.7-dev.520392044.tgz#0bdda94a4da866176056ad66069e84a1ddb8b553"
-  integrity sha512-2mf56NYLl3PuE1wKgw/iIxCCKSLKCw/f0VyflP9jhnYG/dYqxikd0me5SNaj7o9RvbjRwVmzlSWlMVXuLUD4bQ==
+"@golemio/core@1.2.7-dev.522263862":
+  version "1.2.7-dev.522263862"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.7-dev.522263862.tgz#b6ff49dd66667e6929555a16876e9ba7b15379a9"
+  integrity sha512-2/J0S2MmBUt60rEq6ds3NcI8xnqdOTAyPwGP1hErtNp2KB1gurE+8Lax3AzrZ8AI1Bz9NMUQUUMa+XVNJneW1w==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
-    "@golemio/validator" "0.2.0"
+    "@golemio/validator" "0.2.1-dev.522219464"
     "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "^1.0.2"
     "@opentelemetry/exporter-jaeger" "^0.24.0"
     "@opentelemetry/instrumentation-express" "^0.24.0"
     "@opentelemetry/instrumentation-http" "^0.24.0"
     "@opentelemetry/instrumentation-ioredis" "^0.24.0"
+    "@opentelemetry/instrumentation-redis" "^0.24.0"
     "@opentelemetry/node" "^0.24.0"
     "@opentelemetry/resources" "^0.24.0"
     "@opentelemetry/tracing" "^0.24.0"
@@ -827,10 +828,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/rush-hour-aggregation@^1.0.0-dev.520603218":
-  version "1.0.0-dev.520603218"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.0-dev.520603218.tgz#9ecb1efec46a83a6860fd8d15216d03f5ee2bd5e"
-  integrity sha512-IYk+CbQ7BSlsf6vR2qdCdICN4j2e9uV6IKw7WKLOA8FSfm5PQh+0D7hwVmBnxFTHhrNZUCOqsvKG4drTiHb9mQ==
+"@golemio/rush-hour-aggregation@1.0.0-dev.522143437":
+  version "1.0.0-dev.522143437"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.0-dev.522143437.tgz#9bfbc8f765f1acaafb5aae57c4611531e2d6eea8"
+  integrity sha512-sgPa7pI152LgwSV7TEuIZRYYcNHrOueSSlgbCp+BXuVJlCm1o4Lzn/noCFep9Y2U0ASdosIMirm2c2NJjfPmbw==
 
 "@golemio/shared-bikes@2.0.3-dev.520485733":
   version "2.0.3-dev.520485733"
@@ -883,10 +884,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
   integrity sha512-j7c/oiJpLvosuDN8sU0R75ZeyeFfaLqly62iNWlv+Se1cHRCFfe/YgjbWcc4EMXdS1Ssc//pn5L/UuG8PghMiw==
 
-"@golemio/validator@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.0.tgz#8a00aeb6e9ab68a556110a7e3538f97c8a973db0"
-  integrity sha512-PYL+6DVkgloanKrosgHVmB1UyH8h7YXq9U8Mu6857t9RxwBbYOzGp4kApF4NU36oF5W9wwttob6V/r9tRKax4g==
+"@golemio/validator@0.2.1-dev.522219464":
+  version "0.2.1-dev.522219464"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.1-dev.522219464.tgz#d6f8464a6d327462181a1d4e517b9e9652ebcd70"
+  integrity sha512-O855Kkx+42zRmufWlGozak8ZZotEvKOiGM7mp5YnZH+DWeGa63daCbWUKVzXu5MurBKIIYKvEk0c6a8+oZ/+xw==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"
@@ -1290,6 +1291,15 @@
     "@opentelemetry/instrumentation" "^0.24.0"
     "@opentelemetry/semantic-conventions" "^0.24.0"
     "@types/ioredis" "4.26.6"
+
+"@opentelemetry/instrumentation-redis@^0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-redis/-/instrumentation-redis-0.24.0.tgz#856c4e004964871792f416fcf18c3beeb2f2cf97"
+  integrity sha512-GiJEVyRFvi6PQtNeKGT859YMEM/NrAA60RGH3/bqPgB+g82N2Eb+6vMufrzJHI40c0BD1DXR5L9qNp7fSEe9gA==
+  dependencies:
+    "@opentelemetry/instrumentation" "^0.24.0"
+    "@opentelemetry/semantic-conventions" "^0.24.0"
+    "@types/redis" "2.8.31"
 
 "@opentelemetry/instrumentation@0.24.0", "@opentelemetry/instrumentation@^0.24.0":
   version "0.24.0"
@@ -2897,6 +2907,13 @@
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
+
+"@types/redis@2.8.31":
+  version "2.8.31"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.31.tgz#c11c1b269fec132ac2ec9eb891edf72fc549149e"
+  integrity sha512-daWrrTDYaa5iSDFbgzZ9gOOzyp2AJmYK59OlG/2KGBgYWF3lfs8GDKm1c//tik5Uc93hDD36O+qLPvzDolChbA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/request-promise@^4.1.45":
   version "4.1.48"
