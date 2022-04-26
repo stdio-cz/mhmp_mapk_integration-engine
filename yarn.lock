@@ -673,15 +673,14 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.5.tgz#949b1d197c65c5db818213318cb97fb67f02a261"
-  integrity sha512-vIYp9rzJBtaPwnhIxRJyPQSv/ntgQOCZgBUUmLjL5bGI1qHB696IAhvZz3qlLVFKDD8c5WLLiC+kb4JeqW/otw==
+"@golemio/fcd@1.0.6-dev.523743181":
+  version "1.0.6-dev.523743181"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.6-dev.523743181.tgz#80f2383708adcdea2a71fa5c326ae8ce7c1c4b82"
+  integrity sha512-JPnvQ6CrSUuZWptK622OZM8oIFA3GAFeYYwueb6KCXh0Smi/D8RTLUA6OLE2FKczVK6LdwgIL2ThglMnZ4sP1Q==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
-    xsd2jsonschema "^0.3.7"
 
 "@golemio/firebase-pid-litacka@1.0.2":
   version "1.0.2"
