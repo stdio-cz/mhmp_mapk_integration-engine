@@ -578,14 +578,14 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.7-dev.522263862":
-  version "1.2.7-dev.522263862"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.7-dev.522263862.tgz#b6ff49dd66667e6929555a16876e9ba7b15379a9"
-  integrity sha512-2/J0S2MmBUt60rEq6ds3NcI8xnqdOTAyPwGP1hErtNp2KB1gurE+8Lax3AzrZ8AI1Bz9NMUQUUMa+XVNJneW1w==
+"@golemio/core@1.2.7-dev.524881919":
+  version "1.2.7-dev.524881919"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.7-dev.524881919.tgz#6b70c8e83e1f64517d394827db328c953f6a6ae5"
+  integrity sha512-c8klXVu0XUnoDIfWGiTstGmur6PS1N28d3aJR8Y0YPP1Ldo5yUPBWVrX1L4afbAxn1m46r6gLyDeB/H3Bi1TRw==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
-    "@golemio/validator" "0.2.1-dev.522219464"
+    "@golemio/validator" "0.2.1-dev.524787371"
     "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "^1.0.2"
     "@opentelemetry/exporter-jaeger" "^0.24.0"
@@ -883,10 +883,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
   integrity sha512-j7c/oiJpLvosuDN8sU0R75ZeyeFfaLqly62iNWlv+Se1cHRCFfe/YgjbWcc4EMXdS1Ssc//pn5L/UuG8PghMiw==
 
-"@golemio/validator@0.2.1-dev.522219464":
-  version "0.2.1-dev.522219464"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.1-dev.522219464.tgz#d6f8464a6d327462181a1d4e517b9e9652ebcd70"
-  integrity sha512-O855Kkx+42zRmufWlGozak8ZZotEvKOiGM7mp5YnZH+DWeGa63daCbWUKVzXu5MurBKIIYKvEk0c6a8+oZ/+xw==
+"@golemio/validator@0.2.1-dev.524787371":
+  version "0.2.1-dev.524787371"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.1-dev.524787371.tgz#cfb0822083bb3289c7dfb34ae106f59a7f9ff010"
+  integrity sha512-6HTU7bzohZWMcBETGvGRo5R4I4SbP92fnOShHDYGT3x7i0AIEAgJYlWcS4Pzm3MVOz2PqunD8pAPIIL+XyNCiQ==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"
