@@ -513,10 +513,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@golemio/air-quality-stations@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.3.tgz#50dee5efbe8ffa97cd7ce002af30d5044f30ac75"
-  integrity sha512-HLVo3NQJhGbtqGZef9EbtKgJA7LdC5XS/mUcojxpdWVEMzqczEwSRCq61k82BV+xTa6Gi8QWU4aMjVft3tOuIg==
+"@golemio/air-quality-stations@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.4.tgz#ce56e7f3d931bbb11bfb8683fbb5aac2ba50d5e0"
+  integrity sha512-0R/bqkDd3guJ0rewsWnW+NbtU9Iz/gyixyCaVHylFDsN4ibulUEx9tI5QIV0hSbJwIjCbi+IIGtBW/IBQ8IR6Q==
   dependencies:
     "@golemio/city-districts" "^1.0.4"
 
@@ -527,10 +527,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@golemio/bicycle-counters@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.5.tgz#250499fcf67da18bcde1c23079d1d1f1041dd3d4"
-  integrity sha512-6hluzgpFNiN+zN5vxv5sjJZiridC04xqaO5mrREITa1JGyeML9VeeYIlTGHDThSpc82LP5bxIHTZLPWHu5Ytvw==
+"@golemio/bicycle-counters@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.6.tgz#5c33518f449a033d5b79c2f7b3ccf04af985f31e"
+  integrity sha512-Dz2jYcSJM1nlr0OOwEm71D5rXbPCFP2dKvtFF3LkuU5Kaoy0/iXcb+ica71uw0DiB/w9tZbCO7dy65X/75wY3Q==
   dependencies:
     lodash "^4.17.21"
 
@@ -562,42 +562,44 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.1.tgz#88b5792bc9c92cee5e7eea37e13a8de3934095a7"
-  integrity sha512-vCSOOgbghN0K1H4MI0lQfAkX0dIXZAD9iG55rFjcHWkK5gEwBmlIIr2UUgsRuUDax1sJUpOwPS9OC6ZMPql4yA==
+"@golemio/cli@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.2.tgz#c1afb012b3e252ad19943e1ae65585cc918a7d78"
+  integrity sha512-JkwT7db4jVtPpEVyXlXCpGPgivyAfQoO2bf8xNwI+I3+6HVQVx0VavTc1RfNSqVxtEr3/EOuk3fuOFiBPY8Vnw==
   dependencies:
     cross-spawn "^7.0.3"
     db-migrate "1.0.0-beta.16"
     db-migrate-pg "npm:@golemio/db-migrate-pg@1.2.3-diversion.3"
     dotenv "^10.0.0"
     fast-glob "^3.2.7"
-    gluegun "^5.0.0"
+    gluegun "^5.1.2"
     is-glob "^4.0.3"
     pg "^8.7.1"
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.6.tgz#a34e2f90d54991c479cd7dcc6bac6936127787b9"
-  integrity sha512-bsOfzIdlmbhgziN9ya9oYDEIQCp9rJBl6GqbbzeAt6o5HbWbW2M6fKfHqf1nIOIboIQpnBjwqPaUKGjfo0NvoQ==
+"@golemio/core@1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.7.tgz#c3ad6b3187d47766c48917a45ff82294515b6b38"
+  integrity sha512-P2xH8cg+ZsUyMlOxiGIABhePtHijwDcu8zNimBCBZCj4DarB8F91AZ79VhG3lzB5KQDZAlxFLhlEMUDWxZw/pA==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
-    "@golemio/validator" "0.2.0"
+    "@golemio/validator" "0.2.2"
     "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "^1.0.2"
     "@opentelemetry/exporter-jaeger" "^0.24.0"
     "@opentelemetry/instrumentation-express" "^0.24.0"
     "@opentelemetry/instrumentation-http" "^0.24.0"
     "@opentelemetry/instrumentation-ioredis" "^0.24.0"
+    "@opentelemetry/instrumentation-redis" "^0.24.0"
     "@opentelemetry/node" "^0.24.0"
     "@opentelemetry/resources" "^0.24.0"
     "@opentelemetry/tracing" "^0.24.0"
     "@sentry/node" "^6.11.0"
     "@sentry/tracing" "^6.11.0"
     "@types/express" "^4.16.0"
+    "@types/luxon" "^2.3.1"
     "@types/request-promise" "^4.1.45"
     ajv "^8.10.0"
     amqplib "^0.7.1"
@@ -614,10 +616,10 @@
     fast-csv "^4.3.6"
     fast-glob "^3.2.5"
     iconv-lite "^0.6.2"
-    influx "^5.6.3"
     ioredis "^4.19.4"
     lightship "^6.7.2"
     lodash "^4.17.21"
+    luxon "^2.3.2"
     moment-timezone "^0.5.26"
     mongodb-restore-dump "1.0.1"
     mongoose "^5.3.6"
@@ -671,15 +673,14 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.5.tgz#949b1d197c65c5db818213318cb97fb67f02a261"
-  integrity sha512-vIYp9rzJBtaPwnhIxRJyPQSv/ntgQOCZgBUUmLjL5bGI1qHB696IAhvZz3qlLVFKDD8c5WLLiC+kb4JeqW/otw==
+"@golemio/fcd@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.6.tgz#987087b9e964c7e78322826b298651bee569afc4"
+  integrity sha512-zLlLvcZB4ig6lEqfTvC4+l22zZ7CM0GM52UX/WdDkKT+J2W41u2yM9tuf25YRU1ID6a2lr0hR9Orx89D/SCl6w==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
-    xsd2jsonschema "^0.3.7"
 
 "@golemio/firebase-pid-litacka@1.0.2":
   version "1.0.2"
@@ -762,10 +763,10 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.7.tgz#2f9fe986ba25da7aaf385062d05c692d9ff40876"
-  integrity sha512-jjmukA9RpBnUCKt77qlUBAgVXaUUf2Jf8bGtKBjw3W7mAOJKyolfXnxpiNPcWGji+5HC45IwcOp4J4dQBNcDpQ==
+"@golemio/ndic@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.8.tgz#4d4197b7ed74c39a94293a953f2defc87575c320"
+  integrity sha512-7Pk7RZVt02Ea71Q6+yAFFUmEhqpyIj7ZeFrQdczfUMfR1UIS000pIuwdGym0d8+IZFz42foFKfC6lPaito65Eg==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
@@ -796,10 +797,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.1.12":
-  version "2.1.12"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.1.12.tgz#6901d2e07a593b318da3315a82416c0d89ea5630"
-  integrity sha512-q8Nv9TocEdPqCX4SSUICulHGeENpgAW3ABjc4N9vZAHWvPXqdMy4mmgK0b5M8Syb9TmqYJyco1/4rs3L/nuYhw==
+"@golemio/pid@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.0.tgz#ca543481a08ca3a365a466718144bfe8d7fe25c2"
+  integrity sha512-of0naI/zOvgIvi1sUz322PrDztNLKtZKnBv3sNkfxioP5WzLkOLI0qrXNIqD5OTxpJejn13OAR1mMdaK/XuVlA==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -826,10 +827,15 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/shared-bikes@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.1.tgz#242cc7ca8bdb1445f1053694364fa2fb4eb98ee6"
-  integrity sha512-s/Nkek2nYgr+rjEFR28eEunCSwCJeTMKwd1Wc6t8wtzci5+IJxp0BF4HDT9iwrJ8N/Rij2kcl6oNHHq3Lr2dWQ==
+"@golemio/rush-hour-aggregation@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.0.tgz#8b863706fa2b366cc3096cc90439726cd0f03ed8"
+  integrity sha512-7tMp/PytI2a3mXRusqI+3CN9J9bKfXD+4vmat+qlinpBbBW5yInrkzJrlCzhVsVlB6SJLGo3Z1DiyybcuyuqSA==
+
+"@golemio/shared-bikes@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.3.tgz#50e3c1ade26d5ebdd6e9eb0388dde82ad5516fad"
+  integrity sha512-f+uR2nO0xa6Ac5PQzma7K5CK9CkuRc+y2jisjjtL0d+iyMX/3DoK70G0eIXGpk39uGG4rt9OnKBlKZcNWN1VEA==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -877,10 +883,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
   integrity sha512-j7c/oiJpLvosuDN8sU0R75ZeyeFfaLqly62iNWlv+Se1cHRCFfe/YgjbWcc4EMXdS1Ssc//pn5L/UuG8PghMiw==
 
-"@golemio/validator@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.0.tgz#8a00aeb6e9ab68a556110a7e3538f97c8a973db0"
-  integrity sha512-PYL+6DVkgloanKrosgHVmB1UyH8h7YXq9U8Mu6857t9RxwBbYOzGp4kApF4NU36oF5W9wwttob6V/r9tRKax4g==
+"@golemio/validator@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.2.tgz#86b3fbb0f9598ae625344ecabb2afeb5e3241a8b"
+  integrity sha512-tMz9ccA9s0VJXZwGDucgGcyC5aQtRE/DXS37843Jqcsf03bQ/mIOlSvxgs47EwbWgUwXL77nrceYcd0HLylNHg==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"
@@ -1284,6 +1290,15 @@
     "@opentelemetry/instrumentation" "^0.24.0"
     "@opentelemetry/semantic-conventions" "^0.24.0"
     "@types/ioredis" "4.26.6"
+
+"@opentelemetry/instrumentation-redis@^0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-redis/-/instrumentation-redis-0.24.0.tgz#856c4e004964871792f416fcf18c3beeb2f2cf97"
+  integrity sha512-GiJEVyRFvi6PQtNeKGT859YMEM/NrAA60RGH3/bqPgB+g82N2Eb+6vMufrzJHI40c0BD1DXR5L9qNp7fSEe9gA==
+  dependencies:
+    "@opentelemetry/instrumentation" "^0.24.0"
+    "@opentelemetry/semantic-conventions" "^0.24.0"
+    "@types/redis" "2.8.31"
 
 "@opentelemetry/instrumentation@0.24.0", "@opentelemetry/instrumentation@^0.24.0":
   version "0.24.0"
@@ -2800,6 +2815,11 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-3.0.32.tgz#f4e5af31e9e9b196d8e5fca8a5e2e20aa3d60b69"
   integrity sha512-ZXyOOm83p7X8p3s0IYM3VeueNmHpkk/yMlP8CLeOnEcu6hIwPH7YjZBvhQkR0ZFS2DqZAxKtJ/M5fcuv3OU5BA==
 
+"@types/luxon@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.3.1.tgz#e34763178b46232e4c5f079f1706e18692415519"
+  integrity sha512-nAPUltOT28fal2eDZz8yyzNhBjHw1NEymFBP7Q9iCShqpflWPybxHbD7pw/46jQmT+HXOy1QN5hNTms8MOTlOQ==
+
 "@types/mime@^1":
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
@@ -2886,6 +2906,13 @@
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
+
+"@types/redis@2.8.31":
+  version "2.8.31"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.31.tgz#c11c1b269fec132ac2ec9eb891edf72fc549149e"
+  integrity sha512-daWrrTDYaa5iSDFbgzZ9gOOzyp2AJmYK59OlG/2KGBgYWF3lfs8GDKm1c//tik5Uc93hDD36O+qLPvzDolChbA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/request-promise@^4.1.45":
   version "4.1.48"
@@ -5561,10 +5588,10 @@ fs-extra@^9.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-jetpack@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/fs-jetpack/-/fs-jetpack-4.3.0.tgz#8202abd21c9160faadf3c258b4cf918a74f680de"
-  integrity sha512-Zx4OJ8HyKvZL9sgxegMGRCgAJSQET5Cqpj/SESwnzqHruHvhkilJBGLoZf6EiYr3UWJDqcPoWDX7aAfaj7D9Qw==
+fs-jetpack@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/fs-jetpack/-/fs-jetpack-4.3.1.tgz#cdfd4b64e6bfdec7c7dc55c76b39efaa7853bb20"
+  integrity sha512-dbeOK84F6BiQzk2yqqCVwCPWTxAvVGJ3fMQc6E2wuEohS28mR6yHngbrKuVCK1KHRx/ccByDylqu4H5PCP2urQ==
   dependencies:
     minimatch "^3.0.2"
     rimraf "^2.6.3"
@@ -5838,10 +5865,10 @@ globby@^11.0.4:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-gluegun@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/gluegun/-/gluegun-5.1.0.tgz#827beb3b3cf204acf1aeebbdcd5334bd24a255c7"
-  integrity sha512-A1FwiioW9b4QbzpnmD9XGJBOWPDU2oK2qAJfQMnDgPUkRxz9jhVp7qKcnKbuplR20pQX6b7Ai9S4TA2M3LqHQA==
+gluegun@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/gluegun/-/gluegun-5.1.2.tgz#ffa0beda0fb6bbc089a867157b08602beae2c8cf"
+  integrity sha512-Cwx/8S8Z4YQg07a6AFsaGnnnmd8mN17414NcPS3OoDtZRwxgsvwRNJNg69niD6fDa8oNwslCG0xH7rEpRNNE/g==
   dependencies:
     apisauce "^2.1.5"
     app-module-path "^2.2.0"
@@ -5852,7 +5879,7 @@ gluegun@^5.0.0:
     ejs "3.1.6"
     enquirer "2.3.6"
     execa "5.1.1"
-    fs-jetpack "4.3.0"
+    fs-jetpack "4.3.1"
     lodash.camelcase "^4.3.0"
     lodash.kebabcase "^4.1.1"
     lodash.lowercase "^4.3.0"
@@ -6268,11 +6295,6 @@ inflight@^1.0.4:
   dependencies:
     once "^1.3.0"
     wrappy "1"
-
-influx@^5.6.3:
-  version "5.9.2"
-  resolved "https://registry.yarnpkg.com/influx/-/influx-5.9.2.tgz#10711f7573058b1f0752c57f8f2ab13dbab9788a"
-  integrity sha512-N2YRIQiwCO60BzmzEzTxyWj/hDNsce2CLSmki8S1qbRwwuKecfvC6n0OwJrFV70lk5CpU/sLsOZFIy6PP01nOA==
 
 inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
@@ -7415,6 +7437,11 @@ lunr@^2.3.9:
   resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
   integrity sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==
 
+luxon@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.3.2.tgz#5f2f3002b8c39b60a7b7ad24b2a85d90dc5db49c"
+  integrity sha512-MlAQQVMFhGk4WUA6gpfsy0QycnKP0+NlCBJRVRNPxxSIbjrCbQ65nrpJD3FVyJNZLuJ0uoqL57ye6BmDYgHaSw==
+
 make-dir@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -7773,10 +7800,10 @@ moment-timezone@^0.5.26, moment-timezone@^0.5.34:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.29.1:
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+"moment@>= 2.9.0", moment@^2.29.1, moment@^2.29.2:
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 mongodb-restore-dump@1.0.1:
   version "1.0.1"
@@ -8031,10 +8058,10 @@ node-fetch@^2.6.1, node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-forge@^1.0.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-1.2.1.tgz#82794919071ef2eb5c509293325cec8afd0fd53c"
-  integrity sha512-Fcvtbb+zBcZXbTTVwqGA5W+MKBj56UjVRevvchv5XrcyXbmNdesfZL37nlcWOfpgHhgmxApw3tQbTr4CqNmX4w==
+node-forge@^1.0.0, node-forge@^1.3.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.1.tgz#be8da2af243b2417d5f646a770663a92b7e9ded3"
+  integrity sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==
 
 node-fs@~0.1.5:
   version "0.1.7"
@@ -11131,10 +11158,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-urijs@^1.19.1, urijs@^1.19.10:
-  version "1.19.10"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.10.tgz#8e2fe70a8192845c180f75074884278f1eea26cb"
-  integrity sha512-EzauQlgKuJgsXOqoMrCiePBf4At5jVqRhXykF3Wfb8ZsOBMxPcfiVBcsHXug4Aepb/ICm2PIgqAUGMelgdrWEg==
+urijs@^1.19.1, urijs@^1.19.11:
+  version "1.19.11"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.11.tgz#204b0d6b605ae80bea54bea39280cdb7c9f923cc"
+  integrity sha512-HXgFDgDommxn5/bIv0cnQZsPhHDA90NPHD6+c/v21U5+Sx5hoP8+dP9IZXBU1gIfvdRfhG8cel9QNPeionfcCQ==
 
 url-parse@^1.5.6, url-parse@~1.5.1:
   version "1.5.9"
@@ -11552,9 +11579,10 @@ xmlchars@^2.2.0:
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
-xmldom@^0.1.27, "xmldom@github:xmldom/xmldom#0.7.0":
-  version "0.7.0"
-  resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/c568938641cc1f121cef5b4df80fcfda1e489b6e"
+xmldom@^0.1.27, "xmldom@github:xmldom/xmldom#0.7.0", "xmldom@npm:@xmldom/xmldom@0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.7.5.tgz#09fa51e356d07d0be200642b0e4f91d8e6dd408d"
+  integrity sha512-V3BIhmY36fXZ1OtVcI9W+FxQqxVLsPKcNjWigIaa81dLC9IolJl5Mt4Cvhmr0flUnjSpTdrbMTSbXqYqV5dT6A==
 
 xorshift@^1.1.1:
   version "1.2.0"
