@@ -578,10 +578,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.8-dev.529201008":
-  version "1.2.8-dev.529201008"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.8-dev.529201008.tgz#d8f08fced1f3bd7e7b40a8cb2fad0a3e2fe96f92"
-  integrity sha512-Y8BZPSqAa0qplWrMivVVgEj7O/1AXeo1EX/uvXM/GaxBP0QM5tPybesqowCd5Lwvaolw/TtD/OMHBdc0uVrW8g==
+"@golemio/core@1.2.8-dev.529318188":
+  version "1.2.8-dev.529318188"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.8-dev.529318188.tgz#7bb285dd1401c93d8017bd834de2d65f00c66128"
+  integrity sha512-CGX8OB81uwe6zeh+VlRHzvLdKK4+taEUNL8MKTQaeS9sVAbe+jm/QRAYagYH5xYkaH2o1+a0hwm5sRXh803X2w==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
