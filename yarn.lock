@@ -781,15 +781,15 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.12.tgz#0ab71561eb7010c4532c11023d8babf9c854eb91"
-  integrity sha512-50+QAUsftdf7JgSd+ED7MmH8buGfJy5eh84+TW4t7zb8B33vURlG3LlhtyOAcAKakvdCCjxybVzHjKC6wWcf+A==
+"@golemio/parkings@1.0.13-dev.529946092":
+  version "1.0.13-dev.529946092"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.13-dev.529946092.tgz#f216c013bc6589350b239fd32c3486f2ea098ab4"
+  integrity sha512-Zdu+AFyVI9rsvnpgCWXuBq+bMCvIMnsczpnD+mh/fnD3o0nTnWGS7uS+EGIyeJ26cgoojmnPtLHSsgGBNbN5Ww==
   dependencies:
     "@golemio/city-districts" "1.0.2"
+    "@turf/turf" "^6.5.0"
     install "^0.13.0"
     npm "^8.1.4"
-    p-throttle "4.1.1"
     uuid-by-string "^3.0.2"
 
 "@golemio/parkomats@1.0.2":
@@ -8742,11 +8742,6 @@ p-map@^4.0.0:
   integrity sha512-/bjOqmgETBYB5BoEeGVea8dmvHb2m9GLy1E9W43yeyfP6QQCZGFNa+XRceJEuDB6zqr+gKpIAmlLebMpykw/MQ==
   dependencies:
     aggregate-error "^3.0.0"
-
-p-throttle@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/p-throttle/-/p-throttle-4.1.1.tgz#80b1fbd358af40a8bfa1667f9dc8b72b714ad692"
-  integrity sha512-TuU8Ato+pRTPJoDzYD4s7ocJYcNSEZRvlxoq3hcPI2kZDZ49IQ1Wkj7/gDJc3X7XiEAAvRGtDzdXJI0tC3IL1g==
 
 p-timeout@^3.0.0:
   version "3.2.0"
