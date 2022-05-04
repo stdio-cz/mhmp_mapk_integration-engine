@@ -237,4 +237,14 @@ describe("App", () => {
             sandbox.assert.calledWithExactly(resStatusMock, { error_status: 400 });
         });
     });
+
+    describe("cancelConsumers", () => {
+        it("should call cancelConsumers on every queueProcessor", async () => {
+            const cancelConsumersStub = sinon.stub();
+            sandbox.stub(app, "queueProcessors" as any).value(new Set().add({ cancelConsumers: cancelConsumersStub }));
+
+            await app["cancelConsumers"]();
+            sandbox.assert.calledOnce(cancelConsumersStub);
+        });
+    });
 });

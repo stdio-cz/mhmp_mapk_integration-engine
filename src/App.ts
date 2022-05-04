@@ -23,6 +23,7 @@ export default class App extends BaseApp {
     public port: number = parseInt(config.port || "3006", 10);
     private commitSHA: string | undefined = undefined;
     private lightship: Lightship;
+    private queueProcessors: Set<QueueProcessor>;
 
     /**
      * Run configuration methods on the Express instance
@@ -40,6 +41,8 @@ export default class App extends BaseApp {
             log.error(err);
             this.lightship.shutdown();
         });
+
+        this.queueProcessors = new Set();
     }
 
     /**
@@ -54,7 +57,7 @@ export default class App extends BaseApp {
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
-            await this.queueProcessors();
+            await this.registerQueues();
             log.info("Started!");
             this.lightship.registerShutdownHandler(async () => {
                 await this.gracefulShutdown();
@@ -80,6 +83,7 @@ export default class App extends BaseApp {
      */
     private gracefulShutdown = async (): Promise<void> => {
         log.info("Graceful shutdown initiated.");
+        await this.cancelConsumers();
         await MongoConnector.disconnect();
         await PostgresConnector.disconnect();
         await RedisConnector.disconnect();
@@ -92,15 +96,27 @@ export default class App extends BaseApp {
      * Start the message queue connection, create communication channel
      * and register queue processors to consume messages
      */
-    private queueProcessors = async (): Promise<void[]> => {
+    private registerQueues = async (): Promise<void[]> => {
         const filteredQueueDefinitions = filterQueueDefinitions(await queueDefinitions, config.queuesBlacklist);
         const channel = await AMQPConnector.connect();
 
         return Promise.all(
             filteredQueueDefinitions.map((queueDefinition) => {
-                return new QueueProcessor(channel, queueDefinition).registerQueues();
+                const queueProcessor = new QueueProcessor(channel, queueDefinition);
+
+                this.queueProcessors.add(queueProcessor);
+                return queueProcessor.registerQueues();
             })
         );
+    };
+
+    /**
+     * Cancel all consumer operations before shutting down
+     */
+    private cancelConsumers = async (): Promise<void> => {
+        for (const queueProcessor of this.queueProcessors.values()) {
+            await queueProcessor.cancelConsumers();
+        }
     };
 
     /**
