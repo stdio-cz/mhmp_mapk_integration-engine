@@ -522,10 +522,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.8-dev.529318188":
-  version "1.2.8-dev.529318188"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.8-dev.529318188.tgz#7bb285dd1401c93d8017bd834de2d65f00c66128"
-  integrity sha512-CGX8OB81uwe6zeh+VlRHzvLdKK4+taEUNL8MKTQaeS9sVAbe+jm/QRAYagYH5xYkaH2o1+a0hwm5sRXh803X2w==
+"@golemio/core@1.2.9-dev.530956955":
+  version "1.2.9-dev.530956955"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.9-dev.530956955.tgz#f621efbd07d2e05a2f29f768072f2b1819a1873f"
+  integrity sha512-bAKVW3mz61f9VbObxC+cmhFheGdB5E64oITJzi9TnKmq1rEGrw8FhumfpunJ0SlHQHKg+tacvTqPgXFumvUXqg==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
