@@ -7,11 +7,6 @@
     },
     "AirQualityStations1H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/actual_hour_data_cze.json",
     "AirQualityStations3H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/aqindex_3h_cze.json",
-    "BeRiderGeofencingHeaders": {
-        "x-app-token": "Q30fx0WSecEwC1rPdIJ",
-        "authorization": "Basic c3ZvYm9kYS5wZXRlckBvcGVyYXRvcmljdC5jejpBN01MVWpLdHJXWktaOGZq",
-        "Accept-Language": "cs_CZ"
-    },
     "BeRiderGeofencingApiUrl": "https://coaxuxqt62.execute-api.eu-west-1.amazonaws.com/api/v1/zone",
     "BeRiderVehiclesHeaders": {
         "cache-control": "no-cache"
