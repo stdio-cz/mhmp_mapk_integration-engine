@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.29",
+    "version": "2.0.30",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -69,7 +69,7 @@
         "@golemio/bicycle-counters": "1.0.6",
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.4",
-        "@golemio/core": "1.2.7",
+        "@golemio/core": "1.2.8",
         "@golemio/counters": "1.0.2",
         "@golemio/energetics": "1.0.7",
         "@golemio/fcd": "1.0.6",
