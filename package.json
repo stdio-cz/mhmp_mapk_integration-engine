@@ -99,7 +99,7 @@
         "@golemio/traffic-detectors": "1.0.7",
         "@golemio/waste-collection-yards": "1.0.2",
         "@golemio/waze-ccp": "1.0.2",
-        "@golemio/waze-tt": "1.0.6-dev.539744726",
+        "@golemio/waze-tt": "1.0.6-dev.540775939",
         "dotenv": "6.1.0",
         "morgan": "^1.9.1"
     },
