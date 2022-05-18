@@ -471,10 +471,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@golemio/bicycle-counters@1.0.7-dev.539940134":
-  version "1.0.7-dev.539940134"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.7-dev.539940134.tgz#b93c3a14cfd23f7175f25b39951cb9959e61d651"
-  integrity sha512-e7XcwbZR4O3Zbg8rBYXaTP7VnAtNNjfUCOf/MrLGgd/HyM/qnum0tw5jGtpNy93EXZogiU9ShACmWf8oAHWv+Q==
+"@golemio/bicycle-counters@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.7.tgz#ab7fb9ec7cde4f767012c11f02c255b4025a62a7"
+  integrity sha512-VF98Me0nTtHUOuEirVNbZP3gCkTQiU0gEFd1SraHtv3uMnJnRpk/NCZdeJersw7Safxik8s7Lqke6ksFLbevVg==
   dependencies:
     lodash "^4.17.21"
 
@@ -522,10 +522,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.9-dev.533136017":
-  version "1.2.9-dev.533136017"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.9-dev.533136017.tgz#188200df7c95a17408eeff468ac01accae39e744"
-  integrity sha512-Oqs/v6Yx3VVXEcrdqcZynsOWGIjk+9wZjW+69mwdWFC1cz7i1TFrrM5WGrucklhPrWL+NOAowZL+lf+uh4gzTQ==
+"@golemio/core@1.2.9":
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.9.tgz#c79193169627dc5282731b23af80773cfc89e6fe"
+  integrity sha512-/4spqiMHM39oZh8kd+bjeKnavYxd4BfW7iugMkG/3KJAcnDbTD0Mf3omxk4MY5mGH0E32rw0B4gWhinPjYGTVQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -536,7 +536,7 @@
     "@opentelemetry/instrumentation-amqplib" "^0.28.0"
     "@opentelemetry/instrumentation-aws-sdk" "^0.6.0"
     "@opentelemetry/instrumentation-express" "^0.28.0"
-    "@opentelemetry/instrumentation-http" "^0.28.0"
+    "@opentelemetry/instrumentation-http" "^0.27.0"
     "@opentelemetry/instrumentation-ioredis" "^0.28.0"
     "@opentelemetry/instrumentation-pg" "^0.28.0"
     "@opentelemetry/instrumentation-redis" "^0.29.0"
@@ -591,10 +591,10 @@
   dependencies:
     "@golemio/bicycle-counters" "1.0.2"
 
-"@golemio/energetics@1.0.8-dev.537376519":
-  version "1.0.8-dev.537376519"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.8-dev.537376519.tgz#a02a1c6f15b5cf00a9c0198d226f15b46b84bea6"
-  integrity sha512-aRdXFNpGPMLcBilXmntJrYFNJC4/CY8VvhlMjiMBd0/33U6B8RjLqmQ413Tl4kAIaTBvsARwax9/Tvic+rP4MA==
+"@golemio/energetics@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.8.tgz#c48c415e45667eb02171e80183ecc16da0c6dfd4"
+  integrity sha512-+l1gMpj+4Mi5RcYSBSlAeAvdpEqWCOSQZJ5K8ZdB3PuMq+4nNF+RayieiFmDE3EQzMf8RyB3Kax5z6wf4eCE+g==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
@@ -708,10 +708,10 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.9-dev.539889182":
-  version "1.0.9-dev.539889182"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.9-dev.539889182.tgz#e39ac290f044b1850da928b129105a4a90532d77"
-  integrity sha512-8LNq0o5jPGqgKZNz3QNBujFPVu/snwqn1n+C9uepZX+fTP58y/zuUS87SVE1sqBtQ/EKKz0wK36kwvCidoZUVw==
+"@golemio/ndic@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.9.tgz#0734898c39ae210e108e7e6ffac9b7bc37840d57"
+  integrity sha512-STu0S1ruykmrwf5pzwLy7KkGmrGnWED1m5IC+Ahg0veFgIpGiX7wbkvsqfG18te8MtwIwgEquE21whbcV3KtpQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.11.0"
@@ -726,10 +726,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.13-dev.537376583":
-  version "1.0.13-dev.537376583"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.13-dev.537376583.tgz#c4920e88ff416d0675f576cc9d8c51dee439680b"
-  integrity sha512-VLMf5LshQRTHjnQ3mwVWIsUidLNmPd7rHiaTxioHFGubOeRknDSFYJFJ5NTcKfJtOQXtqqewIwj4bXn+VsFyoA==
+"@golemio/parkings@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.0.tgz#7e2a07613187184003d4044210ae03e82d9ab745"
+  integrity sha512-CTZS6cb74og3/Ir+/ef/TK6sARTmMCo3gKkvOjD0hBdEosubcFadwuSqD04iw2ziOOnmly8hx00TeWTTXGhksA==
   dependencies:
     "@golemio/city-districts" "1.0.2"
     "@turf/turf" "^6.5.0"
@@ -742,10 +742,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.0.tgz#ca543481a08ca3a365a466718144bfe8d7fe25c2"
-  integrity sha512-of0naI/zOvgIvi1sUz322PrDztNLKtZKnBv3sNkfxioP5WzLkOLI0qrXNIqD5OTxpJejn13OAR1mMdaK/XuVlA==
+"@golemio/pid@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.1.tgz#be7bb1c75bbe71815021698461334c83e4076fce"
+  integrity sha512-zfCqB+dgWWrHGZ3NWzNZN/eS18VXqTpBbp8ra3NF7fGcGq+zldxsPBjnyCPlcGeQqhUa86mXBQNeXngIq2Z2KQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
@@ -772,15 +772,15 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/rush-hour-aggregation@1.0.1-dev.532695480":
-  version "1.0.1-dev.532695480"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.1-dev.532695480.tgz#47bf435c25a6ff21e3fa5e4a318dcc8e3391933d"
-  integrity sha512-MZFaKCeBKUuSfs0U8ZcFBcZNk0r0s4UOCzPgSLUgD6v0UEdTm17OFks6bcCgVIU2CmLQEev8928n4DKzdGHzBA==
+"@golemio/rush-hour-aggregation@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.1.tgz#84337b76ca0ad87a9f06428794877988bd4fa4a6"
+  integrity sha512-vau826KaIADZ0tnSK5W6V4hesg8plExOFI0D3ymoOANbWdV085bGdes9kLLjrUUjYlt1ZeLAa4Vn1T4xUxMQ2w==
 
-"@golemio/shared-bikes@2.0.4-dev.537376526":
-  version "2.0.4-dev.537376526"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.4-dev.537376526.tgz#e057886cd185db3a7e02eac8818ef3ad06225661"
-  integrity sha512-ReX5pB6vWpqXvuP3CG+rsobCT20d+1SK6lEe7QSc2laNXgDbk5bi3ElRLrdG3gFbjhMA1rM+Ou6EZtzPPx5fOg==
+"@golemio/shared-bikes@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.4.tgz#a382d758a63e9d9c11a5bb7b392182168e2eb31a"
+  integrity sha512-AigI5BXvZbA5JvbpmDUKiuxf4YIqcjyalHZPguoIgafSYVUXijqfXB+FAYmCBE0ugELXTY2n4XypWkhssa62kg==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -807,12 +807,12 @@
     trim-newlines "^4.0.1"
     uuid-by-string "^3.0.4"
 
-"@golemio/traffic-cameras@1.0.4-dev.536270249":
-  version "1.0.4-dev.536270249"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.4-dev.536270249.tgz#ed52e3da1d5a9eac5450a15f5afedcdd430544ac"
-  integrity sha512-zZCKk7kyfa+ONzaXb5IIYbwufwuH/mGEksr+VjTnvz+VOJWBOQ+MjQKlHwCL7fjTcSVZDAIyCWuLkb2lgprHBA==
+"@golemio/traffic-cameras@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.4.tgz#3ca6e106689b16807c0353183d283513a691f1a7"
+  integrity sha512-TQsw/yvgaod6RJreu743TcGOjiFU/GBxKueSjubuJWzUYTVGxSizwYsuaYYhlxJXOGm+DO5dlJ7JhllVmHTMzQ==
   dependencies:
-    "@golemio/city-districts" "1.0.2"
+    "@golemio/city-districts" "1.0.4"
 
 "@golemio/traffic-detectors@1.0.7":
   version "1.0.7"
@@ -854,10 +854,10 @@
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.6-dev.540775939":
-  version "1.0.6-dev.540775939"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.6-dev.540775939.tgz#6fed5a6fcb2b2ca490d8c037c7ee84ca713a77a8"
-  integrity sha512-Iyy40vZ5SDhnKGPY5I0Q9cWshgRtFP3yAFHnjB/Nbq7plFCZxx9AW2+wonEg7HpV+iovstYDOFgcv8GAiAQjoQ==
+"@golemio/waze-tt@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.6.tgz#9561c917a285effe6df76aecdfc9d87b502c8486"
+  integrity sha512-++XFKszAZy2soUQRT/Ch0XoUJiAEwq6mp+I83oEVPyAK7yk5CK6iJ7H33X4PyURol+rS2SK/KAKel/2rQk1+5A==
   dependencies:
     object-hash "^2.0.0"
 
@@ -1166,14 +1166,7 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/api-metrics/-/api-metrics-0.27.0.tgz#d8eca344ed1155f3ea8a8133ade827b4bb90efbf"
   integrity sha512-tB79288bwjkdhPNpw4UdOEy3bacVwtol6Que7cAu8KEJ9ULjRfSiwpYEwJY/oER3xZ7zNFz0uiJ7N1jSiotpVA==
 
-"@opentelemetry/api-metrics@0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/api-metrics/-/api-metrics-0.28.0.tgz#698acbb2f570ece49815fca8be6f3070ae41f016"
-  integrity sha512-UcrJqEiV20YTibYXUT0TDBtl4uLh4tMpAYSa1g1780QrVMlsOMAnBrdD3EYTMPog14Zw+2QzPnDJ4X7q67YrSA==
-  dependencies:
-    "@opentelemetry/api" "^1.0.0"
-
-"@opentelemetry/api@^1.0.0", "@opentelemetry/api@^1.1.0":
+"@opentelemetry/api@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.1.0.tgz#563539048255bbe1a5f4f586a4a10a1bb737f44a"
   integrity sha512-hf+3bwuBwtXsugA2ULBc95qxrOqP2pOekLz34BJhcAKawt94vfeNyUKpYc0lZQ/3sCP6LqRa7UAdHA7i5UODzQ==
@@ -1182,6 +1175,13 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-async-hooks/-/context-async-hooks-1.2.0.tgz#8af4ccdfd5b4725fe3c339e74d5715641b297308"
   integrity sha512-b0ui4aDc5UtU+EWkQlgyxPrTPjird8RhzdyaruoTyiHECWXs9O6qiTv4GLAnBt1XIPK4A/t5aqdW5whDcXDBnA==
+
+"@opentelemetry/core@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/core/-/core-1.0.1.tgz#5e08cef21946fdea7952f544e8f667f6d2a0ded8"
+  integrity sha512-90nQ2X6b/8X+xjcLDBYKooAcOsIlwLRYm+1VsxcX5cHl6V4CSVmDpBreQSDH/A21SqROzapk6813008SatmPpQ==
+  dependencies:
+    "@opentelemetry/semantic-conventions" "1.0.1"
 
 "@opentelemetry/core@1.2.0", "@opentelemetry/core@^1.0.0":
   version "1.2.0"
@@ -1230,14 +1230,14 @@
     "@opentelemetry/semantic-conventions" "^1.0.0"
     "@types/express" "4.17.13"
 
-"@opentelemetry/instrumentation-http@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-http/-/instrumentation-http-0.28.0.tgz#b12a54b1437299b4dc93b9f339366fb516cbe4e1"
-  integrity sha512-j6nqdGekv7Xtq3uRgiHdRrf1s9Y/fJTD//z8NG2RHGJAlOPRIzDO4m2tzZ5DX03Yzbb7tVgRsYhJJVsinQl9Bw==
+"@opentelemetry/instrumentation-http@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-http/-/instrumentation-http-0.27.0.tgz#4abeeeae69f2fb959343b8a96f75d8d8c7679689"
+  integrity sha512-Q1dxUt+5d70rbY6jJAC8nwpIQJontmJW94eIS5CsGngvCRYw6tgjLZp2fpVL1o7Lj7uiLpGigeE4EN5Lr2YDFA==
   dependencies:
-    "@opentelemetry/core" "1.2.0"
-    "@opentelemetry/instrumentation" "0.28.0"
-    "@opentelemetry/semantic-conventions" "1.2.0"
+    "@opentelemetry/core" "1.0.1"
+    "@opentelemetry/instrumentation" "0.27.0"
+    "@opentelemetry/semantic-conventions" "1.0.1"
     semver "^7.3.5"
 
 "@opentelemetry/instrumentation-ioredis@^0.28.0":
@@ -1268,17 +1268,7 @@
     "@opentelemetry/semantic-conventions" "^1.0.0"
     "@types/redis" "2.8.31"
 
-"@opentelemetry/instrumentation@0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation/-/instrumentation-0.28.0.tgz#152b1341be63991a9e940621e6b998b3d8d4ff9b"
-  integrity sha512-hcL+U02vp0vcouoMjoJArP0USBuBXnWF+sAt+Z5k77ROEcSCHZh0DkWigWGMyN8w3M5SpoqRlJiXLDM+9RtXNg==
-  dependencies:
-    "@opentelemetry/api-metrics" "0.28.0"
-    require-in-the-middle "^5.0.3"
-    semver "^7.3.2"
-    shimmer "^1.2.1"
-
-"@opentelemetry/instrumentation@^0.27.0":
+"@opentelemetry/instrumentation@0.27.0", "@opentelemetry/instrumentation@^0.27.0":
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation/-/instrumentation-0.27.0.tgz#8e9864aed24e5b265008ffb14466bdc27ce31897"
   integrity sha512-dUwY/VoDptdK8AYigwS3IKblG+unV5xIdV4VQKy+nX5aT3f7vd5PMYs4arCQSYLbLRe0s7GxK6S9dtjai/TsHQ==
@@ -1335,6 +1325,11 @@
     "@opentelemetry/propagator-jaeger" "1.2.0"
     "@opentelemetry/sdk-trace-base" "1.2.0"
     semver "^7.3.5"
+
+"@opentelemetry/semantic-conventions@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/semantic-conventions/-/semantic-conventions-1.0.1.tgz#9349c3860a53468fa2108b5df09aa843f22dbf94"
+  integrity sha512-7XU1sfQ8uCVcXLxtAHA8r3qaLJ2oq7sKtEwzZhzuEXqYmjW+n+J4yM3kNo0HQo3Xp1eUe47UM6Wy6yuAvIyllg==
 
 "@opentelemetry/semantic-conventions@1.2.0", "@opentelemetry/semantic-conventions@^1.0.0":
   version "1.2.0"
