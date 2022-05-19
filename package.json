@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.31",
+    "version": "2.0.32",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -92,7 +92,7 @@
         "@golemio/playgrounds": "1.0.4",
         "@golemio/public-toilets": "1.0.2",
         "@golemio/rush-hour-aggregation": "1.0.1",
-        "@golemio/shared-bikes": "2.0.4",
+        "@golemio/shared-bikes": "2.0.5",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",
         "@golemio/traffic-cameras": "1.0.4",
