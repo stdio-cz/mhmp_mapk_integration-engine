@@ -618,10 +618,10 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.6.tgz#987087b9e964c7e78322826b298651bee569afc4"
-  integrity sha512-zLlLvcZB4ig6lEqfTvC4+l22zZ7CM0GM52UX/WdDkKT+J2W41u2yM9tuf25YRU1ID6a2lr0hR9Orx89D/SCl6w==
+"@golemio/fcd@1.0.7-dev.542461532":
+  version "1.0.7-dev.542461532"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7-dev.542461532.tgz#ab90f1bb870b39919e0bb35f013159d5c17979c5"
+  integrity sha512-qRsLu9hRFVGykbbMfYQsu21f0NvQuaYgpKn+fKSqXBzS4StxxVdQ0LuXFZ4s9YBd5L8L36A8ixFPqzRh7Q/v+w==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -742,17 +742,17 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.1.tgz#be7bb1c75bbe71815021698461334c83e4076fce"
-  integrity sha512-zfCqB+dgWWrHGZ3NWzNZN/eS18VXqTpBbp8ra3NF7fGcGq+zldxsPBjnyCPlcGeQqhUa86mXBQNeXngIq2Z2KQ==
+"@golemio/pid@2.2.2-dev.541765182":
+  version "2.2.2-dev.541765182"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.2-dev.541765182.tgz#88678d88eaf1708ca23e4375b3ec179cae88f103"
+  integrity sha512-AEnCNpmLMR9zBR75iqIhlXGWVw+ES2NRvDTL1iF18gAvNg0nuaVB1u79LSlCnve5hAYxBAX0OUXATpTjcVsArw==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
     cheap-ruler "^2.5.1"
     csv-parser "^3.0.0"
     csv-stringify "^5.6.2"
-    fastq "^1.11.1"
+    fastq "^1.13.0"
     gtfs-realtime-bindings "^0.0.6"
     jsdom "^16.6.0"
     lodash "^4.17.21"
@@ -5311,7 +5311,7 @@ fastest-levenshtein@^1.0.12:
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
   integrity sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow==
 
-fastq@^1.11.1, fastq@^1.6.0:
+fastq@^1.13.0, fastq@^1.6.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.13.0.tgz#616760f88a7526bdfc596b7cab8c18938c36b98c"
   integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
