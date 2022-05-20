@@ -19,7 +19,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2":
+"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2", "@apideck/portman@^1.16.1":
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.16.1.tgz#8759c5c57c9d4e6c6c55c5eb04d8e5e7709b8380"
   integrity sha512-t/oWYl8giyku0Xv5vtRo3rUq2g141ADLJ1PMhaPMt3zsP2UZCgNdlOIEgTCmb8oaFhXa6eKpWyTpD/EC2xm67A==
@@ -792,12 +792,12 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11.tgz#dab7e39252b3a521239be79e2479a69837bf2f2e"
-  integrity sha512-8Paw7Xr8u9Ag1c1P6Ir2+jO5BcWrkn11fiJmupj3kntLCpYmUIWD8zG+AZWYeCmjJ7iShSO8AZVJ7PRLfk8KvQ==
+"@golemio/sorted-waste-stations@1.1.12-dev.544155046":
+  version "1.1.12-dev.544155046"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12-dev.544155046.tgz#cec8df815a657040c5792fc8bd33bd71d9380a68"
+  integrity sha512-tQiej5XW8h/4Drk9JYGm5BLphDQvrvOd/L/Y/VmrHZqI6Yc01BFgtUP86IUS+xhpjkBtTAC2U0sO5OzIY3NOwg==
   dependencies:
-    "@apideck/portman" "^1.13.0"
+    "@apideck/portman" "^1.16.1"
     "@golemio/city-districts" "1.0.2"
     JSONStream "^1.0.4"
     axios "^0.21.2"
