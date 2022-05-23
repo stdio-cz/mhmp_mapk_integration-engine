@@ -847,10 +847,10 @@
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.7-dev.545440479":
-  version "1.0.7-dev.545440479"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.7-dev.545440479.tgz#c0d04042dfa28a861aee593155324b9bb7ed581f"
-  integrity sha512-vLSbaNZYKW/pG+p7kj3GLLlAztW8NzFT8whLf9TTtwhZV89VprS+Kml7VVfi9IwqIy53Xe0pstEa0ig+EmlXiA==
+"@golemio/waze-tt@1.0.7-dev.545970844":
+  version "1.0.7-dev.545970844"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.7-dev.545970844.tgz#deb57f4af59962504e5bb84db3e625d21bbe741a"
+  integrity sha512-njUF5Ar9Ci2ZMrVmCGsZypoN/tFwiOHnY0qC+FVaFvpunhGX7b1WpObyJZOcJUwkR5kRfg8h1lc5Q4odL1ay0Q==
   dependencies:
     object-hash "^2.0.0"
 
