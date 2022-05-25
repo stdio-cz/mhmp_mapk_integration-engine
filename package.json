@@ -92,7 +92,7 @@
         "@golemio/pid": "2.2.4-dev.545434080",
         "@golemio/playgrounds": "1.0.5-dev.545434433",
         "@golemio/public-toilets": "1.0.3-dev.545434573",
-        "@golemio/rush-hour-aggregation": "1.0.2-dev.545435284",
+        "@golemio/rush-hour-aggregation": "1.0.2-dev.547620486",
         "@golemio/shared-bikes": "2.0.6-dev.545435795",
         "@golemio/shared-cars": "1.0.4-dev.545436673",
         "@golemio/sorted-waste-stations": "1.1.12-dev.545436984",
