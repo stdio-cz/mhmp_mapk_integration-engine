@@ -492,6 +492,13 @@
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
+"@golemio/city-districts@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.4.tgz#5e8c06da074a5a2fd45d7cab1fd179c31cb0649d"
+  integrity sha512-+nFIHwkIrpIJhTLd3eM1PK4iRDlPxoJlS6KUxFqVO3hXuAHvsB4pr35tIoOeWAZshehn/gntyLOrS0EK3rkfkA==
+  dependencies:
+    slugify "1.3.2"
+
 "@golemio/city-districts@1.0.5-dev.544272522":
   version "1.0.5-dev.544272522"
   resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.5-dev.544272522.tgz#b31e5f62d5a528062eaba5c208e4d003654c30b4"
@@ -515,10 +522,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.10-dev.544242823":
-  version "1.2.10-dev.544242823"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10-dev.544242823.tgz#a61081d8fb0d355ae8765f237e646235c79dbf77"
-  integrity sha512-cRwRHmeEDiNPzrPC3KVrc7J6eOH92hTauSR+3E0+nqSzrbNCObjOcubAFZ7iBsDfsdw8cOiRaWwoTrQbYf2MAA==
+"@golemio/core@1.2.10":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10.tgz#d48302ef0995e6b38fe2d3cfe6cb4ce311fe6c7c"
+  integrity sha512-CK/kmXgAWgE6uybSaFi/33MDGTfTejEd0WsrquGmbzvC2YcxHNL8JGPIDL6AJfvfp1n7XaNntkfykPWStlSRow==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -611,10 +618,10 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.7-dev.545427196":
-  version "1.0.7-dev.545427196"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7-dev.545427196.tgz#93964852521451a8c2c279d1d0d110de81cde68a"
-  integrity sha512-bS5LUiov1/xKFz69Up8CKP2M5YTrLOo8UM/+RD+kIdllV67FJmpXvqW8zVhNcG36cASw4IcIvIClYQBudKmq3A==
+"@golemio/fcd@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7.tgz#e3120a719a432a27c3b2dfdfc79287a43f78cf1b"
+  integrity sha512-QTyL+A8vBVRe2lGFe91/J8Bign24cF1SrQZiq/56sRyqzvmLIIxm/NrXJFspf02cdSt6lOIbK4CP3BJUwqL/ZQ==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -765,10 +772,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/rush-hour-aggregation@1.0.2-dev.547620486":
-  version "1.0.2-dev.547620486"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2-dev.547620486.tgz#7ae997810ef5cb7fb1a4258ad78b53efc2cd3f74"
-  integrity sha512-C5jQdRPeV18XYR7PXs1J3Ev41SCV+mesbCvscXvuR4yOUunRrMuAoH9MuuXtkglugCDUYfZQXLtkI4SHcMgz4A==
+"@golemio/rush-hour-aggregation@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2.tgz#ae86e329e40918e41bfd319605a5f478e1bb9a5e"
+  integrity sha512-xMcJWif7Yx6sD/oIXKLSLizRazAgQjdAHE3rVpUIT1JmcDQqSpfmALkQILsW9kr6dkgp3KAyuEb90fI/TokSAg==
 
 "@golemio/shared-bikes@2.0.6-dev.545435795":
   version "2.0.6-dev.545435795"
@@ -785,13 +792,13 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.12-dev.545436984":
-  version "1.1.12-dev.545436984"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12-dev.545436984.tgz#27119411cec155be45e942819b82878cc9ebb54d"
-  integrity sha512-w+XoPGdKxN+34r09VHQ7rXT0czdj9zlvqtfYJQoLzx4gnoD9WuFPSv+0E55n8wJl/Xi4Io+/IZACCnT1VE33lg==
+"@golemio/sorted-waste-stations@1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12.tgz#ee10d86b2d985c57987a23adefbf1caa48e1d9be"
+  integrity sha512-srRDdSXkj6X8UF+NB/29XkPTZBVnoNpIEnO4G4yV8aA2L2kpanUL0lh3rl/oUC/AkmQ916l++yz2GXSZr21agQ==
   dependencies:
     "@apideck/portman" "^1.16.1"
-    "@golemio/city-districts" "1.0.5-dev.544272522"
+    "@golemio/city-districts" "1.0.4"
     JSONStream "^1.0.4"
     axios "^0.21.2"
     lodash "^4.17.19"
@@ -840,17 +847,17 @@
     "@golemio/city-districts" "1.0.5-dev.544272522"
     slugify "1.3.2"
 
-"@golemio/waze-ccp@1.0.3-dev.545440191":
-  version "1.0.3-dev.545440191"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-ccp/-/waze-ccp-1.0.3-dev.545440191.tgz#8fd948ebec2cd6bc37b7981f6f0afffb98936c0a"
-  integrity sha512-Ydkk8flFa57wVBCaEERHBKdJ1bBa6i4ZbBrHAwOf7Ar0vdR70Y2cXBgt42v6Ly5P+Iojwn+8ssCgUcupLJyPpg==
+"@golemio/waze-ccp@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-ccp/-/waze-ccp-1.0.3.tgz#938bb6a1cd96b902cb66da1c80894d6f36535f47"
+  integrity sha512-spus0lvP5nT2m6gsVtAUHVuGTR/6n0hW5fp2QFRQyzvMxcMuh2SBykLZxeiZgrH5xG1pObQFqg8T0yoRg4JxAg==
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.7-dev.545970844":
-  version "1.0.7-dev.545970844"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.7-dev.545970844.tgz#deb57f4af59962504e5bb84db3e625d21bbe741a"
-  integrity sha512-njUF5Ar9Ci2ZMrVmCGsZypoN/tFwiOHnY0qC+FVaFvpunhGX7b1WpObyJZOcJUwkR5kRfg8h1lc5Q4odL1ay0Q==
+"@golemio/waze-tt@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.7.tgz#e3799f3bd598bff951618cb734d681a105549a2d"
+  integrity sha512-5/UyfizoJDfvNXCeVyrJJRZETeFUwlCZcd5oHzBBry0gnnpAF3zemit/P5kISqLSm5jKvNOGQ29f4cChzOZu4Q==
   dependencies:
     object-hash "^2.0.0"
 
