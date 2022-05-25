@@ -765,10 +765,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/rush-hour-aggregation@1.0.2-dev.545435284":
-  version "1.0.2-dev.545435284"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2-dev.545435284.tgz#c09b45d7e77a6f31f7d68f97aab6680313876df9"
-  integrity sha512-VzZbML0TNDWrItGZIb0vl3TUCj/9nrDtJy5hEXedC3c826lqbS2VorQxommcAWRwz0nT8u0hz7vQTYupUrrdYg==
+"@golemio/rush-hour-aggregation@1.0.2-dev.547620486":
+  version "1.0.2-dev.547620486"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2-dev.547620486.tgz#7ae997810ef5cb7fb1a4258ad78b53efc2cd3f74"
+  integrity sha512-C5jQdRPeV18XYR7PXs1J3Ev41SCV+mesbCvscXvuR4yOUunRrMuAoH9MuuXtkglugCDUYfZQXLtkI4SHcMgz4A==
 
 "@golemio/shared-bikes@2.0.6-dev.545435795":
   version "2.0.6-dev.545435795"
