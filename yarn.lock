@@ -19,7 +19,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2":
+"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2", "@apideck/portman@^1.16.1":
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.16.1.tgz#8759c5c57c9d4e6c6c55c5eb04d8e5e7709b8380"
   integrity sha512-t/oWYl8giyku0Xv5vtRo3rUq2g141ADLJ1PMhaPMt3zsP2UZCgNdlOIEgTCmb8oaFhXa6eKpWyTpD/EC2xm67A==
@@ -522,16 +522,16 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.9":
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.9.tgz#c79193169627dc5282731b23af80773cfc89e6fe"
-  integrity sha512-/4spqiMHM39oZh8kd+bjeKnavYxd4BfW7iugMkG/3KJAcnDbTD0Mf3omxk4MY5mGH0E32rw0B4gWhinPjYGTVQ==
+"@golemio/core@1.2.10":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10.tgz#d48302ef0995e6b38fe2d3cfe6cb4ce311fe6c7c"
+  integrity sha512-CK/kmXgAWgE6uybSaFi/33MDGTfTejEd0WsrquGmbzvC2YcxHNL8JGPIDL6AJfvfp1n7XaNntkfykPWStlSRow==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
     "@golemio/validator" "0.2.2"
     "@google-cloud/storage" "^5.18.0"
-    "@opentelemetry/api" "^1.1.0"
+    "@opentelemetry/api" "1.0.4"
     "@opentelemetry/exporter-jaeger" "^1.2.0"
     "@opentelemetry/instrumentation-amqplib" "^0.28.0"
     "@opentelemetry/instrumentation-aws-sdk" "^0.6.0"
@@ -543,8 +543,8 @@
     "@opentelemetry/resources" "^1.2.0"
     "@opentelemetry/sdk-trace-base" "^1.2.0"
     "@opentelemetry/sdk-trace-node" "^1.2.0"
-    "@sentry/node" "^6.11.0"
-    "@sentry/tracing" "^6.11.0"
+    "@sentry/node" "^6.19.7"
+    "@sentry/tracing" "^6.19.7"
     "@types/express" "^4.16.0"
     "@types/luxon" "^2.3.1"
     "@types/request-promise" "^4.1.45"
@@ -618,10 +618,10 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.6.tgz#987087b9e964c7e78322826b298651bee569afc4"
-  integrity sha512-zLlLvcZB4ig6lEqfTvC4+l22zZ7CM0GM52UX/WdDkKT+J2W41u2yM9tuf25YRU1ID6a2lr0hR9Orx89D/SCl6w==
+"@golemio/fcd@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7.tgz#e3120a719a432a27c3b2dfdfc79287a43f78cf1b"
+  integrity sha512-QTyL+A8vBVRe2lGFe91/J8Bign24cF1SrQZiq/56sRyqzvmLIIxm/NrXJFspf02cdSt6lOIbK4CP3BJUwqL/ZQ==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -742,17 +742,17 @@
   resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.2.tgz#17f8380729658f3233478de40c23ea51bbe73a87"
   integrity sha512-RQFdcUZLjZBIwdUOD88pIRFklVtEySKCgVvWrwXD7WZLlC8T+4igl+/4iwAhGOt7azXhVX88vsdOFtUat7hWHA==
 
-"@golemio/pid@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.1.tgz#be7bb1c75bbe71815021698461334c83e4076fce"
-  integrity sha512-zfCqB+dgWWrHGZ3NWzNZN/eS18VXqTpBbp8ra3NF7fGcGq+zldxsPBjnyCPlcGeQqhUa86mXBQNeXngIq2Z2KQ==
+"@golemio/pid@2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.3.tgz#24258d6bd13bf11509b6a21785ef44f7ca890a0d"
+  integrity sha512-s+fXZjxoPQvaDFNrIawksbkby/7/NK2hKQsNZEky8GayVmCAHN4b6oNBgW8ZE4QMP2WIg6yNjIm+odoESEhQWg==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"
     cheap-ruler "^2.5.1"
     csv-parser "^3.0.0"
     csv-stringify "^5.6.2"
-    fastq "^1.11.1"
+    fastq "^1.13.0"
     gtfs-realtime-bindings "^0.0.6"
     jsdom "^16.6.0"
     lodash "^4.17.21"
@@ -772,10 +772,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/rush-hour-aggregation@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.1.tgz#84337b76ca0ad87a9f06428794877988bd4fa4a6"
-  integrity sha512-vau826KaIADZ0tnSK5W6V4hesg8plExOFI0D3ymoOANbWdV085bGdes9kLLjrUUjYlt1ZeLAa4Vn1T4xUxMQ2w==
+"@golemio/rush-hour-aggregation@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2.tgz#ae86e329e40918e41bfd319605a5f478e1bb9a5e"
+  integrity sha512-xMcJWif7Yx6sD/oIXKLSLizRazAgQjdAHE3rVpUIT1JmcDQqSpfmALkQILsW9kr6dkgp3KAyuEb90fI/TokSAg==
 
 "@golemio/shared-bikes@2.0.5":
   version "2.0.5"
@@ -792,13 +792,13 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11.tgz#dab7e39252b3a521239be79e2479a69837bf2f2e"
-  integrity sha512-8Paw7Xr8u9Ag1c1P6Ir2+jO5BcWrkn11fiJmupj3kntLCpYmUIWD8zG+AZWYeCmjJ7iShSO8AZVJ7PRLfk8KvQ==
+"@golemio/sorted-waste-stations@1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12.tgz#ee10d86b2d985c57987a23adefbf1caa48e1d9be"
+  integrity sha512-srRDdSXkj6X8UF+NB/29XkPTZBVnoNpIEnO4G4yV8aA2L2kpanUL0lh3rl/oUC/AkmQ916l++yz2GXSZr21agQ==
   dependencies:
-    "@apideck/portman" "^1.13.0"
-    "@golemio/city-districts" "1.0.2"
+    "@apideck/portman" "^1.16.1"
+    "@golemio/city-districts" "1.0.4"
     JSONStream "^1.0.4"
     axios "^0.21.2"
     lodash "^4.17.19"
@@ -847,17 +847,17 @@
     "@golemio/city-districts" "1.0.2"
     slugify "1.3.2"
 
-"@golemio/waze-ccp@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-ccp/-/waze-ccp-1.0.2.tgz#6f776f13d58a65d4ae330dc9ed298b0963ac1a5a"
-  integrity sha512-XjP0o4DvEfuAR0HEjpzjrt7jMuuKkdssSZJSC7FYnzoTi3MRujr89RFh8OijhuKNvhS/o8tgyOFKhHE04HM9xw==
+"@golemio/waze-ccp@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-ccp/-/waze-ccp-1.0.3.tgz#938bb6a1cd96b902cb66da1c80894d6f36535f47"
+  integrity sha512-spus0lvP5nT2m6gsVtAUHVuGTR/6n0hW5fp2QFRQyzvMxcMuh2SBykLZxeiZgrH5xG1pObQFqg8T0yoRg4JxAg==
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.6.tgz#9561c917a285effe6df76aecdfc9d87b502c8486"
-  integrity sha512-++XFKszAZy2soUQRT/Ch0XoUJiAEwq6mp+I83oEVPyAK7yk5CK6iJ7H33X4PyURol+rS2SK/KAKel/2rQk1+5A==
+"@golemio/waze-tt@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.7.tgz#e3799f3bd598bff951618cb734d681a105549a2d"
+  integrity sha512-5/UyfizoJDfvNXCeVyrJJRZETeFUwlCZcd5oHzBBry0gnnpAF3zemit/P5kISqLSm5jKvNOGQ29f4cChzOZu4Q==
   dependencies:
     object-hash "^2.0.0"
 
@@ -1166,10 +1166,10 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/api-metrics/-/api-metrics-0.27.0.tgz#d8eca344ed1155f3ea8a8133ade827b4bb90efbf"
   integrity sha512-tB79288bwjkdhPNpw4UdOEy3bacVwtol6Que7cAu8KEJ9ULjRfSiwpYEwJY/oER3xZ7zNFz0uiJ7N1jSiotpVA==
 
-"@opentelemetry/api@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.1.0.tgz#563539048255bbe1a5f4f586a4a10a1bb737f44a"
-  integrity sha512-hf+3bwuBwtXsugA2ULBc95qxrOqP2pOekLz34BJhcAKawt94vfeNyUKpYc0lZQ/3sCP6LqRa7UAdHA7i5UODzQ==
+"@opentelemetry/api@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.0.4.tgz#a167e46c10d05a07ab299fc518793b0cff8f6924"
+  integrity sha512-BuJuXRSJNQ3QoKA6GWWDyuLpOUck+9hAXNMCnrloc1aWVoy6Xq6t9PUV08aBZ4Lutqq2LEHM486bpZqoViScog==
 
 "@opentelemetry/context-async-hooks@1.2.0":
   version "1.2.0"
@@ -1434,7 +1434,7 @@
     "@sentry/types" "6.19.7"
     tslib "^1.9.3"
 
-"@sentry/node@^6.11.0", "@sentry/node@^6.16.1":
+"@sentry/node@^6.16.1", "@sentry/node@^6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/node/-/node-6.19.7.tgz#32963b36b48daebbd559e6f13b1deb2415448592"
   integrity sha512-gtmRC4dAXKODMpHXKfrkfvyBL3cI8y64vEi3fDD046uqYcrWdgoQsffuBbxMAizc6Ez1ia+f0Flue6p15Qaltg==
@@ -1448,7 +1448,7 @@
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@^6.11.0":
+"@sentry/tracing@^6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-6.19.7.tgz#54bb99ed5705931cd33caf71da347af769f02a4c"
   integrity sha512-ol4TupNnv9Zd+bZei7B6Ygnr9N3Gp1PUrNI761QSlHtPC25xXC5ssSD3GMhBgyQrcvpuRcCFHVNNM97tN5cZiA==
@@ -5311,7 +5311,7 @@ fastest-levenshtein@^1.0.12:
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
   integrity sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow==
 
-fastq@^1.11.1, fastq@^1.6.0:
+fastq@^1.13.0, fastq@^1.6.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.13.0.tgz#616760f88a7526bdfc596b7cab8c18938c36b98c"
   integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
