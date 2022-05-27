@@ -70,7 +70,7 @@
         "@golemio/bicycle-counters": "1.0.8-dev.545424720",
         "@golemio/bicycle-parkings": "1.0.3-dev.545424859",
         "@golemio/city-districts": "1.0.5-dev.544272522",
-        "@golemio/core": "1.2.10",
+        "@golemio/core": "1.2.11-dev.549508070",
         "@golemio/counters": "1.0.3-dev.545425003",
         "@golemio/energetics": "1.0.9-dev.545426326",
         "@golemio/fcd": "1.0.7",
