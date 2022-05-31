@@ -93,7 +93,7 @@
         "@golemio/playgrounds": "1.0.5-dev.551872398",
         "@golemio/public-toilets": "1.0.3-dev.551937689",
         "@golemio/rush-hour-aggregation": "1.0.2",
-        "@golemio/shared-bikes": "2.0.6-dev.545435795",
+        "@golemio/shared-bikes": "2.0.6-dev.552136302",
         "@golemio/shared-cars": "1.0.4-dev.545436673",
         "@golemio/sorted-waste-stations": "1.1.13-dev.551943272",
         "@golemio/traffic-cameras": "1.0.5-dev.551945681",
