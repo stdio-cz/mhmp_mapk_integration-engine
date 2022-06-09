@@ -664,10 +664,10 @@
   dependencies:
     jsonwebtoken "8.5.1"
 
-"@golemio/mos@1.0.6-dev.551794271":
-  version "1.0.6-dev.551794271"
-  resolved "https://registry.yarnpkg.com/@golemio/mos/-/mos-1.0.6-dev.551794271.tgz#36a31de8706ec1131ceb2896570ef52df912916f"
-  integrity sha512-+lhUTAc5kjoD8ImEszEp/jyI2orjkH5hUcOjyNg4nZJtdxb90DDEOztNkULF9thxL97VIzdgoANmAuCNsqza4g==
+"@golemio/mos@1.0.6-dev.559831882":
+  version "1.0.6-dev.559831882"
+  resolved "https://registry.yarnpkg.com/@golemio/mos/-/mos-1.0.6-dev.559831882.tgz#e922b55caeffd01030fc07a344603fca5fbcb029"
+  integrity sha512-SlZNTUYJvZW4rgAFWDi+y//BH6X26jZiiE/7OgvbE7CVfTcda8djaNyPzVpKs0EgWHm904OwbYBi4OTkPqXlMA==
   dependencies:
     JSONStream "^1.0.4"
 
