@@ -55,6 +55,7 @@
     "ParkingZones": "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",
     "ParkingZonesTariffsAuth": "",
+    "ZtpParkingsApiUrl": "https://opendata.iprpraha.cz/CUR/DOP/DOP_TSK_Stani_ZTP_b/WGS_84/DOP_TSK_Stani_ZTP_b.json",
     "Playgrounds": "http://www.hristepraha.cz/api/get-all-items?type=hriste",
     "PlayStoreKeyFilename": "config/filename.json",
     "PublicToilets": "http://opendata.iprpraha.cz/CUR/FSV/FSV_VerejnaWC_b/WGS_84/FSV_VerejnaWC_b.json",
