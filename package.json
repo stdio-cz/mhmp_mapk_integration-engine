@@ -81,7 +81,7 @@
         "@golemio/medical-institutions": "1.0.6-dev.551909500",
         "@golemio/meteosensors": "1.0.6-dev.551912780",
         "@golemio/mobile-app-statistics": "1.0.6-dev.545431397",
-        "@golemio/mos": "1.0.6-dev.551794271",
+        "@golemio/mos": "1.0.6-dev.559831882",
         "@golemio/municipal-authorities": "1.0.3-dev.545431919",
         "@golemio/municipal-libraries": "1.0.4-dev.551918471",
         "@golemio/municipal-police-stations": "1.0.3-dev.552028921",
