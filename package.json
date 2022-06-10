@@ -66,7 +66,7 @@
         "typescript": "4.6.4"
     },
     "dependencies": {
-        "@golemio/air-quality-stations": "1.0.5-dev.560723680",
+        "@golemio/air-quality-stations": "1.0.5-dev.551875972",
         "@golemio/bicycle-counters": "1.0.8",
         "@golemio/bicycle-parkings": "1.0.3-dev.551884342",
         "@golemio/city-districts": "1.0.5",
