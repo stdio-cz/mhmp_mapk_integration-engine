@@ -464,10 +464,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@golemio/air-quality-stations@1.0.5-dev.560723680":
-  version "1.0.5-dev.560723680"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5-dev.560723680.tgz#15ce51841cfd20aca05bf2947e732015b0e8ed0d"
-  integrity sha512-u1YADpYxmH0BlvqA1hj5l2E8e3j11zrPvHC9eAwOInfTkGvEW3nC3H5oLc0NGhCoUqwTccnRFfNpFhLXk9h+UQ==
+"@golemio/air-quality-stations@1.0.5-dev.551875972":
+  version "1.0.5-dev.551875972"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5-dev.551875972.tgz#0b93de54796d653c1db1e74e4a802afde945077f"
+  integrity sha512-kzHMQpnQl1nbenTvJBFu5SWXKadGYqKnMLtBScYsPDNkNAfS8CUTEjIJcq/tnkXxc+I/NtyO67tepwErcYucCg==
 
 "@golemio/bicycle-counters@1.0.3":
   version "1.0.3"
