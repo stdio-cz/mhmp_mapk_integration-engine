@@ -708,10 +708,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.1.1-dev.553095105":
-  version "1.1.1-dev.553095105"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.553095105.tgz#b538decf2c6459dda848cb10150c1909fb8c701b"
-  integrity sha512-hv3PHlAJiJuh35luv5yG8/ooiPEP8fsL+waT3gbmd80wmVyBon/+M2wAjDS5glaUNXNOjyEbtbqLq7zNspKh8w==
+"@golemio/parkings@1.1.1-dev.560668363":
+  version "1.1.1-dev.560668363"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.560668363.tgz#6f8ba6005dbadf70b99ab19d696183c4d46e11fb"
+  integrity sha512-RdDkuS7En5Y1lFShL9N/ZE7LeDvm2JSERbd1OxF279wBjwMAl5+6an9d0mD6z8vUf0iqInXY5LCFrhxvonJcpw==
   dependencies:
     "@turf/turf" "^6.5.0"
     install "^0.13.0"
