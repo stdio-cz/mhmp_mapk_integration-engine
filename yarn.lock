@@ -488,13 +488,6 @@
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-parkings/-/bicycle-parkings-1.0.3.tgz#1380ad1a5f9a618bda0d187c74bbb88f1526cfb7"
   integrity sha512-6SXhC5j5CYu9uarPPELwR9IynhTssJCUp3lBpRS6euWrE5pq90JSE2sM5Mn21GPf2o6ddJ32I/+5D9Yqo3cpTw==
 
-"@golemio/city-districts@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.2.tgz#83f24610fab3e58694f847dcd8eb3d8a0a9660f5"
-  integrity sha512-D5w3ujunCd5tt+Yvmq9LgAsTEdKeV57/3BvW5P7VKR3J0vLqWoKIuELfOg7v4IPpAr5Nke77ikxxpEBcyxIuHQ==
-  dependencies:
-    slugify "1.3.2"
-
 "@golemio/city-districts@1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.5.tgz#b4742268fdbef3022376e6471f36a0db6acdabf0"
@@ -715,12 +708,11 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.0.tgz#7e2a07613187184003d4044210ae03e82d9ab745"
-  integrity sha512-CTZS6cb74og3/Ir+/ef/TK6sARTmMCo3gKkvOjD0hBdEosubcFadwuSqD04iw2ziOOnmly8hx00TeWTTXGhksA==
+"@golemio/parkings@1.1.1-dev.567930847":
+  version "1.1.1-dev.567930847"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.567930847.tgz#f303291edb52f8deb2962f182d07ee3eb8cdcb52"
+  integrity sha512-0BU+1dq0K6vnYoB7nOPo9axetNNuXaeYuFmuDtcIMMxt9JIiHxLu/AdTztO/b7NB49a+jDeQWBFjesjLQLv+kA==
   dependencies:
-    "@golemio/city-districts" "1.0.2"
     "@turf/turf" "^6.5.0"
     install "^0.13.0"
     npm "^8.1.4"
