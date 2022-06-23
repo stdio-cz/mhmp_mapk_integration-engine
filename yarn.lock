@@ -708,10 +708,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.1.1-dev.567930847":
-  version "1.1.1-dev.567930847"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.567930847.tgz#f303291edb52f8deb2962f182d07ee3eb8cdcb52"
-  integrity sha512-0BU+1dq0K6vnYoB7nOPo9axetNNuXaeYuFmuDtcIMMxt9JIiHxLu/AdTztO/b7NB49a+jDeQWBFjesjLQLv+kA==
+"@golemio/parkings@1.1.1-dev.571026581":
+  version "1.1.1-dev.571026581"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.571026581.tgz#747cd0754de5987f68f746a3708427bad385e63f"
+  integrity sha512-gH06O62amoO5OlOZsJ3kJCDrq9raKfEw6BUCAkwhIqLnZq1iQDcF1fr6tQTf6stxVoG7jimo1ctS7IV0cCG85Q==
   dependencies:
     "@turf/turf" "^6.5.0"
     install "^0.13.0"
@@ -755,13 +755,14 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2.tgz#ae86e329e40918e41bfd319605a5f478e1bb9a5e"
   integrity sha512-xMcJWif7Yx6sD/oIXKLSLizRazAgQjdAHE3rVpUIT1JmcDQqSpfmALkQILsW9kr6dkgp3KAyuEb90fI/TokSAg==
 
-"@golemio/shared-bikes@2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.6.tgz#b2725d61742c080e5ebbf5a1ccf82a48622a9160"
-  integrity sha512-EtMLoJgcN3GpenoGhYwXkdjKqU8F/tDElefN0LUx7ADiptUN0QhKlIYJjsIP2CHTkKIU5jTFA9eR/3TCmSS8/w==
+"@golemio/shared-bikes@2.0.7-dev.570374453":
+  version "2.0.7-dev.570374453"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.7-dev.570374453.tgz#c12f1a3267a0ce03046783e3f02f6f19eb04d9ac"
+  integrity sha512-E97N1Y+Vs6LImLrPZmDB1uSJsutAf0J6Bjp4Jkg2FGU+CnvYfpykGqO93nj2/lRBeRZLlTfElKrU/nmabxrT5w==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
+    uuid-by-string "^3.0.7"
 
 "@golemio/shared-cars@1.0.4":
   version "1.0.4"
@@ -10800,7 +10801,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid-by-string@^3.0.2, uuid-by-string@^3.0.4:
+uuid-by-string@^3.0.2, uuid-by-string@^3.0.4, uuid-by-string@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/uuid-by-string/-/uuid-by-string-3.0.7.tgz#3c9b7e60c3d4a1bf5da5dfb2601721acc813d8fc"
   integrity sha512-9xf+GAcwzLLGL2Z2Vb7hmi7jWIAKSiuaI5cLFsKw1IIlm7S5VpqvdJ5S7N36hqdy0v7DAwnnENJVAeev57/H1A==
