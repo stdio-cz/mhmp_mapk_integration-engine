@@ -708,20 +708,15 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.1.1-dev.571026581":
-  version "1.1.1-dev.571026581"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.571026581.tgz#747cd0754de5987f68f746a3708427bad385e63f"
-  integrity sha512-gH06O62amoO5OlOZsJ3kJCDrq9raKfEw6BUCAkwhIqLnZq1iQDcF1fr6tQTf6stxVoG7jimo1ctS7IV0cCG85Q==
+"@golemio/parkings@1.1.1-dev.574902058":
+  version "1.1.1-dev.574902058"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.574902058.tgz#6cd14a24e34d139856f68d2796c556cdc98b9a94"
+  integrity sha512-K3GTw8oyHN7lIjjPBfGuUHjxXEOu5DyRfOkFiaq0vOTC4kDh07FzBWifBMjBZyZKrSjT4nxkNxTGuTHBdm+ZVw==
   dependencies:
     "@turf/turf" "^6.5.0"
     install "^0.13.0"
     npm "^8.1.4"
     uuid-by-string "^3.0.2"
-
-"@golemio/parkomats@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/parkomats/-/parkomats-1.0.3.tgz#497118248fd23c1fa3cb80445ada1ebbd2a22bc3"
-  integrity sha512-xKyoPpXmwHVb9x9GQr28uhx2iYe7NDAubUWjROpZ3dANkH4wSZENPmKk7Su0RUr4R7vMYyL4yJd4ngDRH44a2g==
 
 "@golemio/pid@2.2.8":
   version "2.2.8"
