@@ -25,7 +25,6 @@ const datasets = [
     "ndic",
     "parkings",
     "parking-zones",
-    "parkomats",
     "playgrounds",
     "public-toilets",
     "rush-hour-aggregation",
