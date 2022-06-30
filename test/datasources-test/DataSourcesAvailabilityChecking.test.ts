@@ -1330,19 +1330,9 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should return last modified in Alerts", async () => {
-            const data = await dataSourceAlerts.getLastModified();
-            expect(data).to.be.not.null;
-        });
-
         it("should return all objects in Irregularities", async () => {
             const data = await dataSourceIrregularities.getAll();
             expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return last modified in Irregularities", async () => {
-            const data = await dataSourceIrregularities.getLastModified();
-            expect(data).to.be.not.null;
         });
 
         it("should return all objects in Traffic Jams", async () => {
@@ -1350,10 +1340,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should return last modified in Traffic Jams", async () => {
-            const data = await dataSourceJams.getLastModified();
-            expect(data).to.be.not.null;
-        });
     });
 
     describe("MobileAppStatistics", () => {
