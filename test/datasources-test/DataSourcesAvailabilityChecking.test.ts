@@ -35,9 +35,8 @@ import { MobileAppStatistics } from "@golemio/mobile-app-statistics/dist/schema-
 import { MunicipalAuthorities } from "@golemio/municipal-authorities/dist/schema-definitions";
 import { MunicipalLibraries } from "@golemio/municipal-libraries/dist/schema-definitions";
 import { MunicipalPoliceStations } from "@golemio/municipal-police-stations/dist/schema-definitions";
-import { Parkings } from "@golemio/parkings/dist/schema-definitions";
+import { Parkings, Parkomats } from "@golemio/parkings/dist/schema-definitions";
 import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
-import { Parkomats } from "@golemio/parkomats/dist/schema-definitions";
 import { PlaygroundsDataSource } from "@golemio/playgrounds/dist/integration-engine/PlaygroundsDataSource";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { RopidGTFS } from "@golemio/pid/dist/schema-definitions/ropid-gtfs";
@@ -1331,19 +1330,9 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should return last modified in Alerts", async () => {
-            const data = await dataSourceAlerts.getLastModified();
-            expect(data).to.be.not.null;
-        });
-
         it("should return all objects in Irregularities", async () => {
             const data = await dataSourceIrregularities.getAll();
             expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return last modified in Irregularities", async () => {
-            const data = await dataSourceIrregularities.getLastModified();
-            expect(data).to.be.not.null;
         });
 
         it("should return all objects in Traffic Jams", async () => {
@@ -1351,10 +1340,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             expect(data).to.be.an.instanceOf(Object);
         });
 
-        it("should return last modified in Traffic Jams", async () => {
-            const data = await dataSourceJams.getLastModified();
-            expect(data).to.be.not.null;
-        });
     });
 
     describe("MobileAppStatistics", () => {
