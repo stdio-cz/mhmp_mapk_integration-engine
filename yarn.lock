@@ -464,13 +464,6 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5.tgz#11c1dd2afbdc2ad0f097d1f3ba4e661bcc4517bc"
   integrity sha512-eGMUi1saNXz6ucCTxuIRwlJ7eTPmoPtU2g4lvvqpcm24nhOYQ0H/yTl6VdycOKurKCMIYMg9Q0TKSD3hgDCM6w==
 
-"@golemio/bicycle-counters@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.3.tgz#f88c92fffea10faaf01d85f28ae25b2f97e0cc9e"
-  integrity sha512-dFy7ahdOdlLeC38AKhC9aoDALK07JJsiI+04FHXw5LMXRHw+kEGBIQJH3Go/Pu0oGdCBwm/w+DhMTw1x9Jgwxw==
-  dependencies:
-    lodash "^4.17.21"
-
 "@golemio/bicycle-counters@1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.8.tgz#dedbdeb5504d220ee299e7f9f2e100408ec8cc83"
@@ -568,13 +561,6 @@
     winston "^3.3.3"
     xml2js-es6-promise "^1.1.1"
 
-"@golemio/counters@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/counters/-/counters-1.0.3.tgz#28730fef4b950f9a82627711c3836ea1057aefbe"
-  integrity sha512-Teh8McvEtB+4a5sxNh9exqQwEOd6XuVlQsYt07KM5FEtx+2bglB4DU1VSktujT1L+uqcOzNTfoCKkcwV9ixUBQ==
-  dependencies:
-    "@golemio/bicycle-counters" "1.0.3"
-
 "@golemio/energetics@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.9.tgz#8deedb76c67dcc7a9a8680124683b3e284f7dd03"
@@ -616,10 +602,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.3.tgz#bf31ff70d69b155d53547f7311ed7bb22dd8b91b"
   integrity sha512-hstaF07H4/227ULaC4CazW+QfbbVKgWt0yunKv6s3vGzmRyFPVBW9t6a5WnJTN8JIQUfgC8a39B0VczQo6B2fQ==
 
-"@golemio/flow@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.7.tgz#f0ca11aa86446c0d1b2d6ee5323ccfb294881c2c"
-  integrity sha512-I9cvGCMWRmlkeb7/mDloBB0UKj4Vs1VapoYX7hll77JsjKWLBKvaXEP35odZcTZ8ofdB6sITZTSiYeR5igvxhg==
+"@golemio/flow@1.0.8-dev.577679507":
+  version "1.0.8-dev.577679507"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8-dev.577679507.tgz#3807a5d810308c412ce51903054f5d9bf349fbfc"
+  integrity sha512-EW0+lYwhwp+tAu/khafhqu9+BbO1813mtFwGFTgugG6LgWQZurxZHdC1jE6Jh5tfptf8JSe70Hds1Fse5Yt4qQ==
   dependencies:
     JSONStream "^1.0.4"
 
