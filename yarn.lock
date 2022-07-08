@@ -499,10 +499,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.13":
-  version "1.2.13"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.13.tgz#71299c9d58d22adbcfa1cbef92da95ff5a2f6478"
-  integrity sha512-DCvwjWFF5x/dpAVcRMAAYZQk52n6bIJ9KGHgI2tUrXTIF/5pmKMIKU3h5Ixr1a+3dmiXywD0sADpJGvbRD0BzQ==
+"@golemio/core@^1.2.14-dev.575817871":
+  version "1.2.14-dev.575817871"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.14-dev.575817871.tgz#d8913f70e64c4568e64b4363bb5eedb3bd2dc9be"
+  integrity sha512-c9gy/9PAoEZzbEdhl9I7xZ1bUFFg3fltT2mt9UYGGpTBBke3PMe8sdLIF3LVFnzG6WstwBYJEVyX43uVnVzPiQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"

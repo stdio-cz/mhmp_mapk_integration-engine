@@ -32,7 +32,12 @@ export default class App extends BaseApp {
     constructor() {
         super();
 
-        this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
+        this.lightship = createLightship({
+            detectKubernetes: config.NODE_ENV !== "production",
+            shutdownHandlerTimeout: config.lightship.handlerTimeout,
+            gracefulShutdownTimeout: config.lightship.shutdownTimeout,
+            shutdownDelay: config.lightship.shutdownDelay,
+        });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
             this.lightship.shutdown();
