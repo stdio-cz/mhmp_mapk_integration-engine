@@ -602,10 +602,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.3.tgz#bf31ff70d69b155d53547f7311ed7bb22dd8b91b"
   integrity sha512-hstaF07H4/227ULaC4CazW+QfbbVKgWt0yunKv6s3vGzmRyFPVBW9t6a5WnJTN8JIQUfgC8a39B0VczQo6B2fQ==
 
-"@golemio/flow@1.0.8-dev.577679507":
-  version "1.0.8-dev.577679507"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8-dev.577679507.tgz#3807a5d810308c412ce51903054f5d9bf349fbfc"
-  integrity sha512-EW0+lYwhwp+tAu/khafhqu9+BbO1813mtFwGFTgugG6LgWQZurxZHdC1jE6Jh5tfptf8JSe70Hds1Fse5Yt4qQ==
+"@golemio/flow@1.0.8-dev.585575300":
+  version "1.0.8-dev.585575300"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8-dev.585575300.tgz#2cc2d709a0d2c64b884d62fcfe4edad763344a61"
+  integrity sha512-BW2lHNyycUaqeXGy5kRav7Ia6ZYDuVHwUlIHU9YAx38Pt8/F+xfY8EKjbLxeqfjinaRU6AGDIwqPIhGy61bl9w==
   dependencies:
     JSONStream "^1.0.4"
 
