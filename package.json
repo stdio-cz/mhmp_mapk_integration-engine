@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.36",
+    "version": "2.0.37",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -87,7 +87,7 @@
         "@golemio/municipal-police-stations": "1.0.3",
         "@golemio/ndic": "1.0.10",
         "@golemio/parking-zones": "1.0.3",
-        "@golemio/parkings": "1.2.0",
+        "@golemio/parkings": "1.2.1",
         "@golemio/pid": "2.2.9",
         "@golemio/playgrounds": "1.0.5",
         "@golemio/public-toilets": "1.0.3",
