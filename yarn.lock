@@ -735,10 +735,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2.tgz#ae86e329e40918e41bfd319605a5f478e1bb9a5e"
   integrity sha512-xMcJWif7Yx6sD/oIXKLSLizRazAgQjdAHE3rVpUIT1JmcDQqSpfmALkQILsW9kr6dkgp3KAyuEb90fI/TokSAg==
 
-"@golemio/shared-bikes@2.0.7-dev.586622064":
-  version "2.0.7-dev.586622064"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.7-dev.586622064.tgz#244c7ed854074338b4f73ab84f93fb42dd9050f9"
-  integrity sha512-pHoEP2/lt7M94b0bGRBtDe/Cu1RhZRVY/QkfGzQ3La5qIRMHed2FCNHPLH62jmMSxBzh/MAaJ7OXjtiq05pKKw==
+"@golemio/shared-bikes@2.0.7-dev.586708432":
+  version "2.0.7-dev.586708432"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.7-dev.586708432.tgz#f35e6d69ff3100aabf5ec52d7a93b57f8cdc8b14"
+  integrity sha512-5n3qgs1iRVdb4aiGRtmmjO9opbaMa6yniP3kn2xvHikaYQ1QjxkbEnEQ5APo8DaFMzc4uVQYQvSkzlECoFJhwg==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
