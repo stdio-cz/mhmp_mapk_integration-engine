@@ -730,10 +730,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/rush-hour-aggregation@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.2.tgz#ae86e329e40918e41bfd319605a5f478e1bb9a5e"
-  integrity sha512-xMcJWif7Yx6sD/oIXKLSLizRazAgQjdAHE3rVpUIT1JmcDQqSpfmALkQILsW9kr6dkgp3KAyuEb90fI/TokSAg==
+"@golemio/rush-hour-aggregation@1.0.3-dev.588733088":
+  version "1.0.3-dev.588733088"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.3-dev.588733088.tgz#251745d18588eec0d80490b0621c083f31001457"
+  integrity sha512-qqU7AaWAsuaSU8tuhWU35/nOJlEgeG1Blxo/cNTUS5fAy9I1BehHOxgY//hnj10bu6YuY7dPPKqwVgYHF/30zA==
 
 "@golemio/shared-bikes@2.0.7-dev.586708432":
   version "2.0.7-dev.586708432"
