@@ -27,6 +27,7 @@ cache:
         - node_modules
 
 stages:
+    - bump
     - test
     - build
     - release
