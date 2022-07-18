@@ -18,6 +18,7 @@ include:
           - "/docker/simple-build.yml"
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
+          - "/npm/bump-dependencies.yml"
 
 cache:
     key:
@@ -27,7 +28,7 @@ cache:
         - node_modules
 
 stages:
-    - bump
+    - pre-test
     - test
     - build
     - release
