@@ -8,7 +8,6 @@ const datasets = [
     "bicycle-counters",
     "bicycle-parkings",
     "city-districts",
-    "counters",
     "energetics",
     "fcd",
     "firebase-pid-litacka",
