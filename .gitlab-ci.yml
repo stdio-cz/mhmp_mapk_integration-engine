@@ -64,6 +64,8 @@ stages:
     tags:
         - docker
     rules:
+        - if: $SKIP_TEST_AND_STAGES_AFTER
+          when: never
         - when: always
     artifacts:
         when: always
@@ -102,4 +104,6 @@ up_down_migrations:
     tags:
         - docker
     rules:
+        - if: $SKIP_TEST_AND_STAGES_AFTER
+          when: never
         - when: always
