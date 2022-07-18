@@ -459,15 +459,15 @@
     lodash.isundefined "^3.0.1"
     lodash.uniq "^4.5.0"
 
-"@golemio/air-quality-stations@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5.tgz#11c1dd2afbdc2ad0f097d1f3ba4e661bcc4517bc"
-  integrity sha512-eGMUi1saNXz6ucCTxuIRwlJ7eTPmoPtU2g4lvvqpcm24nhOYQ0H/yTl6VdycOKurKCMIYMg9Q0TKSD3hgDCM6w==
+"@golemio/air-quality-stations@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
+  integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.8.tgz#dedbdeb5504d220ee299e7f9f2e100408ec8cc83"
-  integrity sha512-ySb/vyJp/tSoz9uiGivJuuxRRoh9+UgRMmfk+ABYKxwjk9WLOSP2P9DSy69bGTlcZEKXGpm3swys0nkBUaT9ww==
+"@golemio/bicycle-counters@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.9.tgz#e09d97f4b6f5a95f874e275a7e4b85aa827c1d8a"
+  integrity sha512-5ORNinXNp+zs0ZHvmV+LqRKcyt14fZc9xoVE/Hq901JFvBW56gzyZuxfXxRJw3+EVuujU5VFHpzAb6tJ3TsNbA==
   dependencies:
     lodash "^4.17.21"
 
@@ -483,11 +483,12 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.2.tgz#c1afb012b3e252ad19943e1ae65585cc918a7d78"
-  integrity sha512-JkwT7db4jVtPpEVyXlXCpGPgivyAfQoO2bf8xNwI+I3+6HVQVx0VavTc1RfNSqVxtEr3/EOuk3fuOFiBPY8Vnw==
+"@golemio/cli@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.0.tgz#177fc89c3f7424962562fd60a69473be07e75db1"
+  integrity sha512-LHLsAgpv0urnymDK72QDYpJdBsZrw6W0oYi0R/WiEv6na9ghQU4AGbJYisQ5XANd3Rn7HV58x7C92oyPwkmgMw==
   dependencies:
+    amqplib "^0.7.1"
     cross-spawn "^7.0.3"
     db-migrate "1.0.0-beta.16"
     db-migrate-pg "npm:@golemio/db-migrate-pg@1.2.3-diversion.3"
@@ -499,14 +500,14 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@^1.2.14-dev.586772039":
-  version "1.2.14-dev.586772039"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.14-dev.586772039.tgz#0b0363d38bf8150f1d8289d309ef4f89bfd7e409"
-  integrity sha512-uxi3hj14C5n3TUedEBcmei6YmRVh7yC85zc8U5izNMbJJawev3POblpT120AocNRv9wTy1eWHzyRh8pKsqjOIA==
+"@golemio/core@1.2.14":
+  version "1.2.14"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.14.tgz#3da05640c02bb4c373a89329a6d5b35438e61c78"
+  integrity sha512-L70uqSeFkIZRfDiB33GV/tDOk4LslGL/2btnSzEKgvqTMjDRh7YSYUIxzPuQk1fPf9M9aID8T7Y8P1wNNTX3gQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
-    "@golemio/validator" "0.2.3-dev.586741639"
+    "@golemio/validator" "0.2.3"
     "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "1.0.4"
     "@opentelemetry/exporter-jaeger" "^1.2.0"
@@ -602,10 +603,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.3.tgz#bf31ff70d69b155d53547f7311ed7bb22dd8b91b"
   integrity sha512-hstaF07H4/227ULaC4CazW+QfbbVKgWt0yunKv6s3vGzmRyFPVBW9t6a5WnJTN8JIQUfgC8a39B0VczQo6B2fQ==
 
-"@golemio/flow@1.0.8-dev.585575300":
-  version "1.0.8-dev.585575300"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8-dev.585575300.tgz#2cc2d709a0d2c64b884d62fcfe4edad763344a61"
-  integrity sha512-BW2lHNyycUaqeXGy5kRav7Ia6ZYDuVHwUlIHU9YAx38Pt8/F+xfY8EKjbLxeqfjinaRU6AGDIwqPIhGy61bl9w==
+"@golemio/flow@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8.tgz#fc209935a3c4179c67f3158cb1b74fe96fdaf79e"
+  integrity sha512-+QeUnEh9M8+pZr2xBQk6k3qwrPkf1ICSfg5SLXVBeMyA3/oWeu9bKe94wacs4eNOb9Fkvu0rglNX0QjUZCDxXg==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -730,15 +731,15 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/rush-hour-aggregation@1.0.3-dev.588733088":
-  version "1.0.3-dev.588733088"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.3-dev.588733088.tgz#251745d18588eec0d80490b0621c083f31001457"
-  integrity sha512-qqU7AaWAsuaSU8tuhWU35/nOJlEgeG1Blxo/cNTUS5fAy9I1BehHOxgY//hnj10bu6YuY7dPPKqwVgYHF/30zA==
+"@golemio/rush-hour-aggregation@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.3.tgz#341b003868a24954222b59898b83b7a10eca83e7"
+  integrity sha512-KNuUFSNul7k+GIyVBoIBiMkohVbPDycMwJQ73kgAzkaOENXZI/5bhHOvpELOD8O2yqBph+vLSIpc44Jlb0lp+Q==
 
-"@golemio/shared-bikes@2.0.7-dev.586708432":
-  version "2.0.7-dev.586708432"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.7-dev.586708432.tgz#f35e6d69ff3100aabf5ec52d7a93b57f8cdc8b14"
-  integrity sha512-5n3qgs1iRVdb4aiGRtmmjO9opbaMa6yniP3kn2xvHikaYQ1QjxkbEnEQ5APo8DaFMzc4uVQYQvSkzlECoFJhwg==
+"@golemio/shared-bikes@2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.7.tgz#e05458676c23eb239a524e57d1b5fcecaa962ee6"
+  integrity sha512-eMKjBbIIqz19E7Q4jCvqp2vHyObO7jOQQTqGVCWgxIXvoHYd8mG8rFt4FDl4UpxsIzxyeCeEmbQ0fXPK7eUxsg==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -784,10 +785,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
   integrity sha512-j7c/oiJpLvosuDN8sU0R75ZeyeFfaLqly62iNWlv+Se1cHRCFfe/YgjbWcc4EMXdS1Ssc//pn5L/UuG8PghMiw==
 
-"@golemio/validator@0.2.3-dev.586741639":
-  version "0.2.3-dev.586741639"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.3-dev.586741639.tgz#80d744c7404d8fd1ded9a25b5d241ab2efe05781"
-  integrity sha512-yHRXeLmu6GPvDThHm9tiqT5gpj5u09+gfvyLUYDNlqhLE9AjExZ2H2j0LBjzmZezkfafRfF5/woRhZV4p7eQ3A==
+"@golemio/validator@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.3.tgz#d9f73096d19de1cd80f5e299b7bd433ca6f773c6"
+  integrity sha512-edMiYCmzAAvJL1nygj1mUceIgN+7F4PmpwN1Rge7tLTcqWlNyQMvWtOwCfsA6rpnjihP78jlmfKPqYHGl3pUvA==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"
