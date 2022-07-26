@@ -5,7 +5,7 @@
 dist/
 docs/typedoc/
 config/*.json
-!config/*.default.json
+!config/*.template.json
 test/datasources-test/report.txt
 
 ## Template gitignore rules from https://github.com/github/gitignore
