@@ -589,10 +589,10 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/fcd@1.0.8-dev.597064643":
-  version "1.0.8-dev.597064643"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.8-dev.597064643.tgz#160e282097f1fefdd9b87652c0fe8ad8c86273ad"
-  integrity sha512-S20+ZF+n8b/c8P61oH8RqRNEcE7EWW4XutA2GlfZB5StYZPREUdyQdCYw20Fo89ueIe98xshjau01lK3ZA/P4w==
+"@golemio/fcd@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.8.tgz#7f72689a8cb4cf6f6d1c322ab2883069f52800ab"
+  integrity sha512-Aj+PnhWIP5rpE2IPzntuzuRXoPKLer4Qv3XyxvTL2jzv2LlM56uNJGX+3wAWhcpOWIK9kmgw6EQUoW6+eRPWnw==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -731,10 +731,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/rush-hour-aggregation@1.0.4-dev.597064858":
-  version "1.0.4-dev.597064858"
-  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.4-dev.597064858.tgz#8437960230fd98db68f724b1f74658bbd458b60f"
-  integrity sha512-a882YLrEsIppgc316CWLOQAJ0LP1gSKa/ZXyYK+dzFY/37gklPNr8m5+ZItvbuN+U61dS9viRJ8hBFdS/A/n3Q==
+"@golemio/rush-hour-aggregation@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.4.tgz#aa14510e9d0e6e33b5cb635afa1e87c967aa09f7"
+  integrity sha512-R2WByEi6rFe3T+C715fpGz+5hUDlbFNYjMl4pd3RMyOX73rQ1wakRIWySNZihXdC6cX31Qp5X2Y4LKyfHnc+kA==
 
 "@golemio/shared-bikes@2.0.8-dev.597227913":
   version "2.0.8-dev.597227913"
