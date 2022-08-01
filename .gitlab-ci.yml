@@ -18,6 +18,7 @@ include:
           - "/docker/simple-build.yml"
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
+          - "/npm/bump-dependencies.yml"
 
 cache:
     key:
@@ -27,6 +28,7 @@ cache:
         - node_modules
 
 stages:
+    - pre-test
     - test
     - build
     - release
@@ -40,9 +42,7 @@ stages:
         - redis:6.2-alpine
         - rabbitmq:3.9
     script:
-        - export NODE_ENV=development
-        - export LOG_LEVEL=warn
-        - yarn
+        - yarn --ignore-scripts
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
         # TODO temporarily set level to critical
@@ -51,8 +51,9 @@ stages:
         - yarn build
         - export MONGO_CONN=mongodb://mongo/testdb
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
-        - export REDIS_CONN=redis://redis/
+        - export REDIS_CONN=redis://redis
         - export NODE_ENV=test
+        - export LOG_LEVEL=warn
         - export OPEN_STREET_MAP_API_URL_SEARCH=$OPEN_STREET_MAP_API_URL_SEARCH
         - export OPEN_STREET_MAP_API_URL_REVERSE=$OPEN_STREET_MAP_API_URL_REVERSE
         - export RABBIT_CONN=amqp://guest:guest@rabbitmq
@@ -64,6 +65,8 @@ stages:
     tags:
         - docker
     rules:
+        - if: $SKIP_TEST_AND_STAGES_AFTER
+          when: never
         - when: always
     artifacts:
         when: always
@@ -90,11 +93,11 @@ up_down_migrations:
         - export SCH_VERSION=$(npm show @golemio/schema-definitions@$SCH_NPM_TAG version)
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
-        - npm i --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
+        - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
         - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
-        - yarn
+        - yarn --ignore-scripts
         # TODO remove; Temporary solution, pid module really should not be here (external tests yada yada)
         - rm -rf node_modules/@golemio/pid/db/migrations
         - yarn golemio migrate-db up --postgres
@@ -102,4 +105,6 @@ up_down_migrations:
     tags:
         - docker
     rules:
+        - if: $SKIP_TEST_AND_STAGES_AFTER
+          when: never
         - when: always
