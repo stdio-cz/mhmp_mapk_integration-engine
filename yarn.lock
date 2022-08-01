@@ -483,15 +483,15 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.0.tgz#177fc89c3f7424962562fd60a69473be07e75db1"
-  integrity sha512-LHLsAgpv0urnymDK72QDYpJdBsZrw6W0oYi0R/WiEv6na9ghQU4AGbJYisQ5XANd3Rn7HV58x7C92oyPwkmgMw==
+"@golemio/cli@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.1.tgz#b4f2289ee678f555ace7fa7376e8a450c314c84c"
+  integrity sha512-4HEaTIMOKnlZyIEQt7pOrWRPA+gncVrIpaeood5XQAQhYX0Jh2vM9hErmk4WJicDp/Lt7OExbLlB+FbHPbK8uw==
   dependencies:
     amqplib "^0.7.1"
     cross-spawn "^7.0.3"
     db-migrate "1.0.0-beta.16"
-    db-migrate-pg "npm:@golemio/db-migrate-pg@1.2.3-diversion.3"
+    db-migrate-pg "npm:@golemio/db-migrate-pg@1.2.3-diversion.4"
     dotenv "^10.0.0"
     fast-glob "^3.2.7"
     gluegun "^5.1.2"
@@ -500,10 +500,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.15-dev.596869374":
-  version "1.2.15-dev.596869374"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.15-dev.596869374.tgz#1ff7d136fa1927eb1193392677fd444c8bf9d811"
-  integrity sha512-Syi5XSxxkV4BlE9hLimLtlRWQikoAVdYMGxsKUUdZkuQYQZw3pqyGY5Y4KYrz87CoUZfaYyxllZr00MHvZ28wg==
+"@golemio/core@1.2.15":
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.15.tgz#157bcf7acc469064a7502a3780950bb3119998ab"
+  integrity sha512-OEWAN87JwNeE/3srSYUghVdj1GAbMncD/BC6qLyukLPSaZNbnjayhPpINwWRBdK2X/poQqXpgawhsZYzGdv4CA==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -603,10 +603,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.3.tgz#bf31ff70d69b155d53547f7311ed7bb22dd8b91b"
   integrity sha512-hstaF07H4/227ULaC4CazW+QfbbVKgWt0yunKv6s3vGzmRyFPVBW9t6a5WnJTN8JIQUfgC8a39B0VczQo6B2fQ==
 
-"@golemio/flow@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8.tgz#fc209935a3c4179c67f3158cb1b74fe96fdaf79e"
-  integrity sha512-+QeUnEh9M8+pZr2xBQk6k3qwrPkf1ICSfg5SLXVBeMyA3/oWeu9bKe94wacs4eNOb9Fkvu0rglNX0QjUZCDxXg==
+"@golemio/flow@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.9.tgz#7094291c675bd051cd640cfa0bec10fca1deed57"
+  integrity sha512-2V+EdV6AUo/AFKGFtslxcCq3vgLlIq9Lzl5QQ6VwrGUv8TT5o+WDL6/sxCDJGMkyzCyNvL+uLX6KrRod5AINqA==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -736,10 +736,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.4.tgz#aa14510e9d0e6e33b5cb635afa1e87c967aa09f7"
   integrity sha512-R2WByEi6rFe3T+C715fpGz+5hUDlbFNYjMl4pd3RMyOX73rQ1wakRIWySNZihXdC6cX31Qp5X2Y4LKyfHnc+kA==
 
-"@golemio/shared-bikes@2.0.8-dev.597227913":
-  version "2.0.8-dev.597227913"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.8-dev.597227913.tgz#708e126abc39c273f34d404e276267893f4a9f8b"
-  integrity sha512-nPKXAhUm8YErq7fS3N9QZ7l9nE74r7XCPRNWqurNRrmn2VP4uAgVvKQYb4GvXSm03BIwcePyGwQ5REJQm/LzDg==
+"@golemio/shared-bikes@2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.8.tgz#dc57b5139313802b6adece60dd9233b1c8061656"
+  integrity sha512-eDrWXMgxrCWRkrGJOteHFhs5ii2kOit2sFOCUT4CiOh5aYv5z6GfBaeeERWkwYAfMwRcIJ6nLPyQ1x7+43L7Fw==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
@@ -4098,20 +4098,20 @@ date-and-time@^2.0.0:
   resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-2.3.1.tgz#006675ec4943a0a5f85810e3a3fd6aa96f6130c9"
   integrity sha512-OaIRmSJXifwEN21rMVVDs0Kz8uhJ3wWPYd86atkRiqN54liaMQYEbbrgjZQea75YXOBWL4ZFb3rG/waenw1TEg==
 
-"db-migrate-base@npm:@golemio/db-migrate-base@2.3.2-diversion.3":
-  version "2.3.2-diversion.3"
-  resolved "https://registry.yarnpkg.com/@golemio/db-migrate-base/-/db-migrate-base-2.3.2-diversion.3.tgz#c3fcaa39f2de2760a347229ec3758a5c8d98a28b"
-  integrity sha512-OxVCpJvDaEIUIMhYjf+AmiEZPzP1tdtbmuhNW5wKqRMByGWln4zyL3UyL78xTq8EKVLOPVrPcFp3F+0bsYLzVA==
+"db-migrate-base@npm:@golemio/db-migrate-base@2.3.2-diversion.4":
+  version "2.3.2-diversion.4"
+  resolved "https://registry.yarnpkg.com/@golemio/db-migrate-base/-/db-migrate-base-2.3.2-diversion.4.tgz#5ffa2bc8f071a4da4564ef45eb799535c6fc5d6d"
+  integrity sha512-8j6gapXrL1PsixNzdFw7wOlAKkjKPFXJUsjkfJjZY8GzGtr6calU8RFbgmnnJL/cx7thZRmi9yag58LncMIkiQ==
   dependencies:
     bluebird "^3.1.1"
 
-"db-migrate-pg@npm:@golemio/db-migrate-pg@1.2.3-diversion.3":
-  version "1.2.3-diversion.3"
-  resolved "https://registry.yarnpkg.com/@golemio/db-migrate-pg/-/db-migrate-pg-1.2.3-diversion.3.tgz#1d8f1b64e78b385652c042882675285acafec98d"
-  integrity sha512-n8TUOnx/VE5igrlU0qDnSU7HzKoqD78TVlAZj93UIkNN5tWUiqIADtNaQPuFWJHppCxaWcn7X4908wsg0EFqrg==
+"db-migrate-pg@npm:@golemio/db-migrate-pg@1.2.3-diversion.4":
+  version "1.2.3-diversion.4"
+  resolved "https://registry.yarnpkg.com/@golemio/db-migrate-pg/-/db-migrate-pg-1.2.3-diversion.4.tgz#6630b8bd338b442b2ac4c5e3cd83821e999d472b"
+  integrity sha512-Lbd4bTzYOSUGudnBIwTuoEm1l5J2Nmig1QpJzfiL+ACW0oi3ZYh4kWzMsZuVb9Ksqh/dhcAuXO+jkJTkUZ4Nhw==
   dependencies:
     bluebird "^3.1.1"
-    db-migrate-base "npm:@golemio/db-migrate-base@2.3.2-diversion.3"
+    db-migrate-base "npm:@golemio/db-migrate-base@2.3.2-diversion.4"
     pg "^8.0.3"
     semver "^5.0.3"
 
@@ -6942,10 +6942,10 @@ moment-timezone@^0.5.26, moment-timezone@^0.5.34:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.29.1:
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
-  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+"moment@>= 2.9.0", moment@^2.29.1, moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mongodb-restore-dump@1.0.1:
   version "1.0.1"
