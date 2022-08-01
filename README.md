@@ -52,7 +52,7 @@ from the application's root directory.
 
 Configuration is split to environment (.env file) options and other specific options (e.g. datasources).
 
-The specific configuration files are in the `config/` directory. Default options are in the files, which names contains `.default`. If you want to override the default options, you can create the file with the same name but without word `.default`, e.g. `datasources.default.json` -> `datasources.json`. The default and specific configuration files are merged by the rule: specific options overrides default options.
+The specific configuration files are in the `config/` directory. For more information see [config files](https://gitlab.com/operator-ict/golemio/code/modules/core/-/blob/development/docs/configuration_files.md#integration-engine)
 
 Environment options can be set with the system (e.g. in debian with `export NODE_ENV=test`) or with the `.env` file. Example of the `.env` file is saved as `.env.template`.
 
