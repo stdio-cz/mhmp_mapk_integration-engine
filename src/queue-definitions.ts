@@ -33,6 +33,7 @@ const datasets = [
     "traffic-cameras",
     "traffic-detectors",
     "pid",
+    "waste-collection",
     "waste-collection-yards",
     "waze-ccp",
     "waze-tt",
