@@ -14,7 +14,7 @@ import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship"
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import { QueueProcessor, filterQueueDefinitions } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
-import { queueDefinitions } from "./queue-definitions";
+import { ModuleLoader } from "./ModuleLoader";
 
 export default class App extends BaseApp {
     public express: express.Application = express();
@@ -102,7 +102,15 @@ export default class App extends BaseApp {
      * and register queue processors to consume messages
      */
     private registerQueues = async (): Promise<void[]> => {
-        const filteredQueueDefinitions = filterQueueDefinitions(await queueDefinitions, config.queuesBlacklist);
+        let { queueDefinitions, workers } = await ModuleLoader.loadModules();
+
+        // Instantiate workers and generate queue definitions
+        for (const Worker of workers) {
+            const worker = new Worker();
+            queueDefinitions.push(worker.getQueueDefinition());
+        }
+
+        const filteredQueueDefinitions = filterQueueDefinitions(queueDefinitions, config.queuesBlacklist);
         const channel = await AMQPConnector.connect();
 
         return Promise.all(
