@@ -500,10 +500,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.15":
-  version "1.2.15"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.15.tgz#157bcf7acc469064a7502a3780950bb3119998ab"
-  integrity sha512-OEWAN87JwNeE/3srSYUghVdj1GAbMncD/BC6qLyukLPSaZNbnjayhPpINwWRBdK2X/poQqXpgawhsZYzGdv4CA==
+"@golemio/core@1.2.16-dev.614668565":
+  version "1.2.16-dev.614668565"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.16-dev.614668565.tgz#9ee54d5ae8cff8bf077b6713df6ed346d839b308"
+  integrity sha512-PSWmpg9ofvxQe+CyhMiLYiWx93WjLb2MGLjighH/xFu5kPx8LG/MUOtmsKyKTCNvccB8QReWEGcjQ6zXW6xbgg==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -532,6 +532,8 @@
     aws-sdk "^2.823.0"
     axios "^0.24.0"
     basic-ftp "^4.6.6"
+    class-transformer "^0.5.1"
+    class-validator "^0.13.2"
     content-type "^1.0.4"
     debug "3.1.0"
     decompress "^4.2.1"
@@ -557,7 +559,7 @@
     redis "^3.1.1"
     request "2.88.0"
     request-promise "^4.2.5"
-    sequelize "^6.6.5"
+    sequelize "^6.21.2"
     ssh2-sftp-client "^7.1.0"
     winston "^3.3.3"
     xml2js-es6-promise "^1.1.1"
@@ -721,10 +723,10 @@
     pg-copy-streams "^5.1.1"
     protobufjs "^6.11.3"
 
-"@golemio/playgrounds@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.5.tgz#1e1e956b932cbb50c917137a8d486f4b78180471"
-  integrity sha512-sM1XiVh1Og3SBZle40QGXQC6Ki0PadnLWaMlBwyaiiBysC3NSi7rHD65JFkj6XkRdpihmKzfJto7KvgVCoMs5A==
+"@golemio/playgrounds@1.0.6-dev.614680161":
+  version "1.0.6-dev.614680161"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.6-dev.614680161.tgz#6b5e4bdd9e7a343607d54344acb5b4c5bdfe3c32"
+  integrity sha512-uyO2aNBheX2grNNKWoYou2xbJKJT5vOlwNxi4PcAxKAJl7LifpB5IzByxuL0aHl1OXUGGdQMWryNXF4qYxnp5w==
 
 "@golemio/public-toilets@1.0.3":
   version "1.0.3"
@@ -3665,6 +3667,19 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
+class-transformer@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/class-transformer/-/class-transformer-0.5.1.tgz#24147d5dffd2a6cea930a3250a677addf96ab336"
+  integrity sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==
+
+class-validator@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/class-validator/-/class-validator-0.13.2.tgz#64b031e9f3f81a1e1dcd04a5d604734608b24143"
+  integrity sha512-yBUcQy07FPlGzUjoLuUfIOXzgynnQPPruyK1Ge2B74k9ROwnle1E+NxLWnUv5OLU8hA/qL5leAE9XnXq3byaBw==
+  dependencies:
+    libphonenumber-js "^1.9.43"
+    validator "^13.7.0"
+
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
@@ -6379,6 +6394,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+libphonenumber-js@^1.9.43:
+  version "1.10.12"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.12.tgz#75ebe2f1887d12bbf45af5655fdb63f55f4ee05b"
+  integrity sha512-xTFBs3ipFQNmjCUkDj6ZzRJvs97IyazFHBKWtrQrLiYs0Zk0GANob1hkMRlQUQXbJrpQGwnI+/yU4oyD4ohvpw==
+
 lightship@^6.7.2:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/lightship/-/lightship-6.8.0.tgz#59b57c805c774ae91ec659a1c2cdf4e8be500a80"
@@ -8705,10 +8725,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.6.5:
-  version "6.19.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.19.0.tgz#bea0ac091d89cbbc94cabe0797b8c1359734e2e6"
-  integrity sha512-B3oGIdpYBERDjRDm74h7Ky67f6ZLcmBXOA7HscYObiOSo4pD7VBc9mtm44wNV7unc0uk8I1d30nbZBTQCE377A==
+sequelize@^6.21.2:
+  version "6.21.3"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.3.tgz#6026b088b5327f8cc0501b0e7e5a8de1bf0346ce"
+  integrity sha512-cJPrTTVCofUxaaNKoIETiXCYh2xJ+OFq5jMHJQqftp34M4kNoLpTfUMPSwYtRUeTcSh1/5HodfJXIBi7troIFA==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"
