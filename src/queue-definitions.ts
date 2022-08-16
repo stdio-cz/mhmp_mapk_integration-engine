@@ -47,6 +47,6 @@ export const queueDefinitions = datasets.reduce(async (accProm, dataset) => {
         const { queueDefinitions } = await import(pkg);
         return acc.concat(...queueDefinitions);
     } catch (err) {
-        throw new CustomError(`Cannot import queue definitions from ${pkg}.`, false, undefined, 6004);
+        throw new CustomError(`Cannot import queue definitions from ${pkg}.`, false, undefined, 6004, err);
     }
 }, Promise.resolve([] as IQueueDefinition[]));

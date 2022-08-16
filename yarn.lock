@@ -803,10 +803,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.1-dev.602511375":
-  version "0.0.1-dev.602511375"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.1-dev.602511375.tgz#2ccef41215839f444d1cbe98e0a0bb988b9449e7"
-  integrity sha512-OYhaS3zxB9pZ8CkxsZu6zUskzoMFc4LWLYjt2Cr5Zjb2P0JSi1IUh2iwSEaervWMa8ulKgEiBImVSTIFATOjsQ==
+"@golemio/waste-collection@0.0.1-dev.614440896":
+  version "0.0.1-dev.614440896"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.1-dev.614440896.tgz#355fd9b9163b389a8f6e56a32959c9bf9260a7a7"
+  integrity sha512-thgdDVMcrgEX9Psd9aQBNR+rEswqLkA8pJpxSuhTUoqPY7ElDV31w7gUJo+swmmmMOAdUCvQMGfQa1Y4+cHpuQ==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
