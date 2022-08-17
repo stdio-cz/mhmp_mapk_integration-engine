@@ -464,10 +464,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.9.tgz#e09d97f4b6f5a95f874e275a7e4b85aa827c1d8a"
-  integrity sha512-5ORNinXNp+zs0ZHvmV+LqRKcyt14fZc9xoVE/Hq901JFvBW56gzyZuxfXxRJw3+EVuujU5VFHpzAb6tJ3TsNbA==
+"@golemio/bicycle-counters@1.0.10-dev.615425828":
+  version "1.0.10-dev.615425828"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.10-dev.615425828.tgz#e59e205b11f00d43054a7ff8f870beea6489fd9f"
+  integrity sha512-l2bNCN04eEm2nn6AwT1MkSALAPbFMkdD94z+Ff57B8u7lz4hueqoIriOeVsJozoargSgJOO3XcuHJ97B22KEPQ==
   dependencies:
     lodash "^4.17.21"
 
