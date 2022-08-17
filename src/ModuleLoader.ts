@@ -38,7 +38,6 @@ export class ModuleLoader {
         "sorted-waste-stations",
         "traffic-cameras",
         "traffic-detectors",
-        "pid",
         "waste-collection",
         "waste-collection-yards",
         "waze-ccp",
