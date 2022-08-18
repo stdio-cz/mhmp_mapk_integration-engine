@@ -67,7 +67,7 @@
     },
     "dependencies": {
         "@golemio/air-quality-stations": "1.0.6",
-        "@golemio/bicycle-counters": "1.0.10-dev.615425828",
+        "@golemio/bicycle-counters": "1.0.10-dev.616796989",
         "@golemio/bicycle-parkings": "1.0.3",
         "@golemio/city-districts": "1.0.5",
         "@golemio/core": "1.2.16-dev.614668565",
