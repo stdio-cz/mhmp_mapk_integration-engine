@@ -61,6 +61,11 @@
     "ZtpParkingsApiUrl": "https://opendata.iprpraha.cz/CUR/DOP/DOP_TSK_Stani_ZTP_b/WGS_84/DOP_TSK_Stani_ZTP_b.json",
     "Playgrounds": "http://www.hristepraha.cz/api/get-all-items?type=hriste",
     "PlayStoreKeyFilename": "config/filename.json",
+    "PSASApi": {
+        "url": "",
+        "user": "",
+        "password": ""
+    },
     "PublicToilets": "http://opendata.iprpraha.cz/CUR/FSV/FSV_VerejnaWC_b/WGS_84/FSV_VerejnaWC_b.json",
     "RekolaSharedBikesBaseUrl": "https://www.rekola.cz/api/mobile/regions/1",
     "RekolaSharedBikesHeaders": {
