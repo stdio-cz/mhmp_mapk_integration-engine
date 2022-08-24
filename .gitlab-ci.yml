@@ -61,6 +61,7 @@ stages:
         - export S3_BUCKET_NAME=integration-engine
         - export S3_UPLOAD_PART_SIZE=10
         - export S3_UPLOAD_QUEUE_SIZE=2
+        - cp config/datasources.template.json config/datasources.json
         - yarn code-coverage
     tags:
         - docker
