@@ -464,10 +464,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.11-dev.622566530":
-  version "1.0.11-dev.622566530"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11-dev.622566530.tgz#c436203d0c2d75883d4a747abfae59cf70df3d9f"
-  integrity sha512-8iPGi6sY8oS4ttUAcz9CbX8adkWYF2vv0aezju0BlVMKSbkQJaGrmnLRnwTIiGvTQl1+ex4SKILlKc1AM3ExNw==
+"@golemio/bicycle-counters@^1.0.11-dev.626787234":
+  version "1.0.11-dev.626787234"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11-dev.626787234.tgz#da4e6d306bc9bf40a3b10aa69f654fc172cbd513"
+  integrity sha512-dI9OFTAqP9GdoVhi1e7OPkvEW7ZduSiyg50JKvSuS/srLGzlk7N/lsxIvbUW+UftX1ROsyPZXu2Bxkq/c/411g==
 
 "@golemio/bicycle-parkings@1.0.3":
   version "1.0.3"
