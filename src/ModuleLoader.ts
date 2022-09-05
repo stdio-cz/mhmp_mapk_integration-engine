@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { CustomError } from "@golemio/core/dist/shared/golemio-errors";
 import { IQueueDefinition, AbstractWorker } from "@golemio/core/dist/integration-engine";
 

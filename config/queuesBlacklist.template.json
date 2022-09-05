@@ -9,6 +9,7 @@
     "ParkingZones": ["updateTariffs"],
     "Parkomats": [],
     "RopidGTFS": [],
+    "RopidVYMI": [],
     "SharedBikes": [],
     "SharedCars": [],
     "SortedWasteStations": [
@@ -19,6 +20,7 @@
         "updateSensorsPicksInContainer"
     ],
     "VehiclePositions": [],
+    "VehiclePositionsRuns": [],
     "WazeCCP": [],
     "WazeTT": []
 }
