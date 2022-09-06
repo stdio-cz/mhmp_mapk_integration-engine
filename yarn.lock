@@ -464,10 +464,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@^1.0.11-dev.626787234":
-  version "1.0.11-dev.626787234"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11-dev.626787234.tgz#da4e6d306bc9bf40a3b10aa69f654fc172cbd513"
-  integrity sha512-dI9OFTAqP9GdoVhi1e7OPkvEW7ZduSiyg50JKvSuS/srLGzlk7N/lsxIvbUW+UftX1ROsyPZXu2Bxkq/c/411g==
+"@golemio/bicycle-counters@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11.tgz#b821e1a5902e96dcdb73fe6bbca293def3889592"
+  integrity sha512-XCIUY1bfrgky8ml0vF8j5/qKT6fFdEQljhe5aCtECWAl7mOjyslawgThzP8CCuSLvCUn/EqaDSbrMo/nDwv2wA==
 
 "@golemio/bicycle-parkings@1.0.3":
   version "1.0.3"
@@ -561,10 +561,10 @@
     winston "^3.3.3"
     xml2js-es6-promise "^1.1.1"
 
-"@golemio/energetics@1.0.10-dev.622550607":
-  version "1.0.10-dev.622550607"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.10-dev.622550607.tgz#4ef97dceae44166b1866a751b024cb57b26ff7ed"
-  integrity sha512-i4TSgipEHY+nO69Bkhe2kZ/B8F5uLFWZsvZHnjOcdf9ToXm4Wmwt5gPWlb8MDqOv8l0esJK5hm9ZhH/S6UK+xg==
+"@golemio/energetics@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.10.tgz#be56d723c83efcbd3f64ce101806b80dd043c835"
+  integrity sha512-KHAs4HstTM4bLTemwRtaGB5EjkKarkyL8O5dE5Q1z40l0EpI4nhz91OICZOxqUbQrwSGgxf8Nqlifib6LSD6Dw==
   dependencies:
     JSONStream "^1.3.5"
     debug "3.1.0"
@@ -620,10 +620,10 @@
   dependencies:
     body-parser "1.19.0"
 
-"@golemio/medical-institutions@1.0.7-dev.622550676":
-  version "1.0.7-dev.622550676"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7-dev.622550676.tgz#8e986a469a22c887c6a20d70c179c153348cdb0b"
-  integrity sha512-v9xP9/YmYDNhzYO6BSCkPlXqxpkoltPCOpAu8jkz5at410nt657FsrLx94Rltdp+mk+v+GOQq9jwUVNeE2WSAg==
+"@golemio/medical-institutions@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7.tgz#d4a3b879d88e04bf784d2b660c8b43410f28a3e1"
+  integrity sha512-13sV1ikWQeY6PwUpzKv1ZHhRU48nb6HVMysJ6sDpk9SiCeT477OSyzlQIqFXJm4L80sMql3fHGuw5WUbOJB0tg==
   dependencies:
     fast-csv "^4.3.6"
     iconv-lite "0.4.24"
@@ -650,10 +650,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.4-dev.622550712":
-  version "1.0.4-dev.622550712"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4-dev.622550712.tgz#36c3a5ef30a784c4845939c8cecee6a5198b96cd"
-  integrity sha512-GFtGl+sqfYvLeJLT0f0v1U0Q+XLkS2aPlvWxxUNgEF7mQcSB/iTtbISiT5KuUv8Q8mmLsyRpw1Y2xSCLbjszLQ==
+"@golemio/municipal-authorities@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4.tgz#d7fe024e65bb444943d13e89e1e75f47f68b03a4"
+  integrity sha512-UwlkIIHoQFIeluYgUa8l9gifSlRYCzz+fzahen/AlXf2vykv9Rc+fbbGi/8YMhDuRuZGuSfR9JhP2+PBd2WbmQ==
 
 "@golemio/municipal-libraries@1.0.4":
   version "1.0.4"
@@ -683,10 +683,10 @@
   dependencies:
     protobufjs "^6.11.2"
 
-"@golemio/parking-zones@1.0.4-dev.622474206":
-  version "1.0.4-dev.622474206"
-  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4-dev.622474206.tgz#231394fc29da10bc463543227bc8c164e4d764ba"
-  integrity sha512-7m5e95zWU0dyDpDRFTUODRVUdevmlpQS3m+J8Y8izDxhxonXPsLKHQdfq9pX1YsS4Nro6Vd/aE3JzOkXHpKCwQ==
+"@golemio/parking-zones@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4.tgz#0823ba323b53f652c5360bca5955f0fc6cfb1dab"
+  integrity sha512-3+bGHr2FnIUCC34WasKhtWkGk4VkSbHLs8iAayxgq8K+F2qqM1KXvfmkhh68iBExSO7nWiQOBPaWtfxIvL39OQ==
   dependencies:
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
@@ -699,10 +699,10 @@
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.2.11-dev.622550755":
-  version "2.2.11-dev.622550755"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.11-dev.622550755.tgz#f1f5b74a8b24ab8c469f217002bf0a9efbb600ab"
-  integrity sha512-xW1TWxpwX4SPVhvk8jNDP7oJCEbN3r0dZteQqgN7s94C0gETIePF9IYOC/F9CnQGLZ0eWxxcYPIQkvFTiHbEEA==
+"@golemio/pid@2.2.11":
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.2.11.tgz#4dc74ddb02d0109daa764f8d899e6ece65bebb6c"
+  integrity sha512-9h5JBW91XGGiDEzWdaqNWrBlJysAj1rdiQSb2c7X4wSVRZ7XE43wpG5LrjK4F/mxKsg/kDZf/0vK4OAADb7xeg==
   dependencies:
     "@golemio/ovapi-gtfs-realtime-bindings" "1.0.0"
     "@turf/turf" "^6.5.0"
@@ -728,12 +728,13 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.5.tgz#d5cf4c4f9095b55e8b0ccbb85b238662865bf06c"
   integrity sha512-vwwX06NJ+4Oa2rncxoqkLReIwvTsscg/hH6lpbG+rslbU1CvM6B5WZGLrSOOl+ynJL/jJQM3abXAqyb3J7c4jA==
 
-"@golemio/shared-bikes@2.0.9-dev.622566739":
-  version "2.0.9-dev.622566739"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9-dev.622566739.tgz#1e0c8ec998310140d934574fe437963a4f19f3e4"
-  integrity sha512-SFLPSgP6nxccAfaIZthex5CvSq4VawMX5J7yaqUg3Zde4p3khObemM09aGk3Uphq4vuL4jQE6Fo4Z+ea0BJM6w==
+"@golemio/shared-bikes@2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.8.tgz#dc57b5139313802b6adece60dd9233b1c8061656"
+  integrity sha512-eDrWXMgxrCWRkrGJOteHFhs5ii2kOit2sFOCUT4CiOh5aYv5z6GfBaeeERWkwYAfMwRcIJ6nLPyQ1x7+43L7Fw==
   dependencies:
     cheap-ruler "2.5.1"
+    lodash "^4.17.19"
     uuid-by-string "^3.0.7"
 
 "@golemio/shared-cars@1.0.4":
@@ -794,10 +795,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.2-dev.625257298":
-  version "0.0.2-dev.625257298"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.2-dev.625257298.tgz#03dc5b7fdaa576040832a58f581fb1289f674e38"
-  integrity sha512-jiZs718UEVWXrMHiaoc5jp4To56i6r+dj2/2XD3WTywQ6wYuUViWo9t9n/DFcUZwO5iHEf1jxZJJquSY9mTkuw==
+"@golemio/waste-collection@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.2.tgz#465059d7d923c0163a711abcfd0947d3ebfe2017"
+  integrity sha512-vYASNNjFS52EoslAD7nuMafsa9SpU214uVdDjTBuSPZn7s2fidzolhMFJH4ByFGv5PmagTwebkiCrmxGhXE4yA==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
