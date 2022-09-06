@@ -1,4 +1,5 @@
 /// <reference path="./DataSourcesAvailabilityChecking.test.d.ts" />
+import "reflect-metadata";
 import { expect } from "chai";
 import JSONStream from "JSONStream";
 import { sign } from "jsonwebtoken";
@@ -1339,7 +1340,6 @@ describe("DataSourcesAvailabilityChecking", () => {
             const data = await dataSourceJams.getAll();
             expect(data).to.be.an.instanceOf(Object);
         });
-
     });
 
     describe("MobileAppStatistics", () => {
