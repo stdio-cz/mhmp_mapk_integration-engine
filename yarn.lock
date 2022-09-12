@@ -803,10 +803,10 @@
   dependencies:
     object-hash "^2.0.0"
 
-"@golemio/waze-tt@1.0.9-dev.637302535":
-  version "1.0.9-dev.637302535"
-  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.9-dev.637302535.tgz#03f5c2ed58c98f8c30aff91828247d42eed8432d"
-  integrity sha512-6PJFVozITY3qjaQfYDd6zpj8PAMCElF9tFKcaTR0dot3kQVYjKm8co5kuwyxj5BE1yihMGN3whmvFloDqXEkig==
+"@golemio/waze-tt@1.0.9-dev.637619355":
+  version "1.0.9-dev.637619355"
+  resolved "https://registry.yarnpkg.com/@golemio/waze-tt/-/waze-tt-1.0.9-dev.637619355.tgz#c0e5ceac883a13f4a95c95576bba87a806d31690"
+  integrity sha512-uGXNVF8s+HHoSDwhw2kHeck85Imusw8outW89E495xkjXL6Op7Ed1JeEL76x3vXAnT/lbmPtaW2dMzZB38v+rQ==
 
 "@google-cloud/paginator@^3.0.7":
   version "3.0.7"
