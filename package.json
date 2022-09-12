@@ -95,7 +95,7 @@
         "@golemio/waste-collection": "0.0.3-dev.637302486",
         "@golemio/waste-collection-yards": "1.0.4-dev.635514411",
         "@golemio/waze-ccp": "1.0.3",
-        "@golemio/waze-tt": "1.0.9-dev.637302535",
+        "@golemio/waze-tt": "1.0.9-dev.637619355",
         "dotenv": "6.1.0",
         "reflect-metadata": "^0.1.13"
     },
