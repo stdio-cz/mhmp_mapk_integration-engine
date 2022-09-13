@@ -677,10 +677,10 @@
   dependencies:
     protobufjs "^6.11.2"
 
-"@golemio/parking-zones@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4.tgz#0823ba323b53f652c5360bca5955f0fc6cfb1dab"
-  integrity sha512-3+bGHr2FnIUCC34WasKhtWkGk4VkSbHLs8iAayxgq8K+F2qqM1KXvfmkhh68iBExSO7nWiQOBPaWtfxIvL39OQ==
+"@golemio/parking-zones@1.0.5-dev.638357337":
+  version "1.0.5-dev.638357337"
+  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.5-dev.638357337.tgz#f8c14ce54336bfff8299ab2a73c074cb35159681"
+  integrity sha512-J3F1tUSPymS/oX/hW3WWiIgozFPzn8ei42bnZ4cG80Ww4q9nkRK7Vv1SC4INq3uelcZH4LCIb0AFx35ANT/e6A==
   dependencies:
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
@@ -787,10 +787,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.3-dev.637302486":
-  version "0.0.3-dev.637302486"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.3-dev.637302486.tgz#30610a909c1716ffcd9654017fdb845a659f14a7"
-  integrity sha512-IaAfcMUxPGvakw/2ArvgPAz8iaZ+d9Hh08Wy3Aj8PMvh4lxi6DktHWE7oJ7xnrM/S6tp9brKrSr7O7su5OZx6A==
+"@golemio/waste-collection@0.0.3-dev.638559090":
+  version "0.0.3-dev.638559090"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.3-dev.638559090.tgz#378777afcbd311d14c68ac1d82ee58132ba45fa1"
+  integrity sha512-bZd0j969iqw8XagDMSelWTo/qO95dyMG5SDN3VZTSuJfaY69DjjVQ3ISPfxw/10wsUXFjMnmYDReZNWsK4J7Ng==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
