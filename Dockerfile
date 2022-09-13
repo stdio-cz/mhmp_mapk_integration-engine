@@ -1,4 +1,4 @@
-FROM bitnami/node:16.13.2 AS build
+FROM bitnami/node:16.17.0 AS build
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
@@ -12,7 +12,7 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz && \
     make
 # OpenSSL hack END.
 
-FROM bitnami/node:16.13.2-prod
+FROM bitnami/node:16.17.0
 # OpenSSL hack BEGIN:
 COPY --from=build /usr/src/openssl-1.1.1m/engines/*.so /usr/lib/x86_64-linux-gnu/engines-1.1/
 COPY --from=build /usr/src/openssl-1.1.1m/*.so.1.1 /usr/lib/x86_64-linux-gnu/

@@ -78,11 +78,11 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.13.0
+    image: bitnami/node:16.17.0
 
 up_down_migrations:
     stage: test
-    image: bitnami/node:16.13.0
+    image: bitnami/node:16.17.0
     services:
         - name: postgis/postgis:13-3.2
           alias: postgres
