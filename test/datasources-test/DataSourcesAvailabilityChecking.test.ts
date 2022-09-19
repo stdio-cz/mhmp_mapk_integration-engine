@@ -1,5 +1,5 @@
 /// <reference path="./DataSourcesAvailabilityChecking.test.d.ts" />
-import "reflect-metadata";
+import "@golemio/core/dist/shared/_global";
 import { expect } from "chai";
 import JSONStream from "JSONStream";
 import { sign } from "jsonwebtoken";

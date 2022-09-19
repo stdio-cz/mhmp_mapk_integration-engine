@@ -1,3 +1,5 @@
+// Load reflection lib
+import "@golemio/core/dist/shared/_global";
 // Load telemetry before all deps
 import { initTraceProvider } from "@golemio/core/dist/monitoring";
 import { config } from "@golemio/core/dist/integration-engine/config";
