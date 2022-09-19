@@ -66,7 +66,7 @@
         "@golemio/bicycle-counters": "1.0.11",
         "@golemio/bicycle-parkings": "1.0.3",
         "@golemio/city-districts": "1.0.5",
-        "@golemio/core": "1.2.18-dev.637295537",
+        "@golemio/core": "1.2.18-dev.642290622",
         "@golemio/energetics": "1.0.11-dev.637295769",
         "@golemio/fcd": "1.0.9-dev.637295946",
         "@golemio/firebase-pid-litacka": "1.0.4-dev.637300528",
@@ -96,8 +96,7 @@
         "@golemio/waste-collection-yards": "1.0.4-dev.635514411",
         "@golemio/waze-ccp": "1.0.3",
         "@golemio/waze-tt": "1.0.9-dev.637619355",
-        "dotenv": "6.1.0",
-        "reflect-metadata": "^0.1.13"
+        "dotenv": "6.1.0"
     },
     "resolutions": {
         "moment": "^2.29.4"
