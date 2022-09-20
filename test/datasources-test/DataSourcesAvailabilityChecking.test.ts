@@ -13,8 +13,6 @@ import {
     CSVDataTypeStrategy,
     DataSource,
     DataSourceStreamed,
-    FTPProtocolStrategy,
-    FTPTargetType,
     GoogleCloudStorageProtocolStrategy,
     HTTPProtocolStrategy,
     HTTPProtocolStrategyStreamed,
@@ -40,9 +38,6 @@ import { Parkings, Parkomats } from "@golemio/parkings/dist/schema-definitions";
 import { ParkingZones } from "@golemio/parking-zones/dist/schema-definitions";
 import { PlaygroundsDataSource } from "@golemio/playgrounds/dist/integration-engine/PlaygroundsDataSource";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
-import { RopidGTFS } from "@golemio/pid/dist/schema-definitions/ropid-gtfs";
-import { RopidVYMI, IRopidVYMIEvent } from "@golemio/pid/dist/schema-definitions/ropid-vymi";
-import { RopidDeparturesPresets } from "@golemio/pid/dist/schema-definitions/ropid-departures-presets";
 import { SharedBikes } from "@golemio/shared-bikes/dist/schema-definitions";
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
 import { SortedWasteStations } from "@golemio/sorted-waste-stations/dist/schema-definitions";
@@ -141,177 +136,6 @@ describe("DataSourcesAvailabilityChecking", () => {
         it("should return tariffs last modified", async () => {
             const data = await datasourceTariffs.getLastModified();
             expect(data).to.be.null;
-        });
-    });
-
-    describe("RopidGTFS", () => {
-        let datasource: DataSource;
-        let datasourceCisStops: DataSource;
-        let datasourceOisMapping: DataSource;
-        let dataSourceRunNumbers: DataSource;
-        let dataSourceDeparturesPresets: DataSource;
-
-        beforeEach(() => {
-            datasource = new DataSource(
-                RopidGTFS.name + "DataSource",
-                new FTPProtocolStrategy({
-                    filename: config.datasources.RopidGTFSFilename,
-                    targetType: FTPTargetType.COMPRESSED,
-                    path: config.datasources.RopidGTFSPath,
-                    url: config.datasources.RopidFTP,
-                    whitelistedFiles: [
-                        "agency.txt",
-                        "calendar.txt",
-                        "calendar_dates.txt",
-                        "shapes.txt",
-                        "stop_times.txt",
-                        "stops.txt",
-                        "routes.txt",
-                        "trips.txt",
-                    ],
-                    encoding: "utf8",
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                null as any
-            );
-            datasourceCisStops = new DataSource(
-                RopidGTFS.name + "CisStops",
-                new FTPProtocolStrategy({
-                    filename: config.datasources.RopidGTFSCisStopsFilename,
-                    path: config.datasources.RopidGTFSCisStopsPath,
-                    url: config.datasources.RopidFTP,
-                    encoding: "utf8",
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "stopGroups" }),
-                null as any
-            );
-            datasourceOisMapping = new DataSource(
-                RopidGTFS.name + "Ois",
-                new FTPProtocolStrategy({
-                    filename: config.datasources.RopidGTFSOisFilename,
-                    path: config.datasources.RopidGTFSOisPath,
-                    url: config.datasources.RopidFTP,
-                    encoding: "utf8",
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(RopidGTFS.ois.name + "DataSource", RopidGTFS.ois.datasourceJsonSchema)
-            );
-            dataSourceRunNumbers = new DataSource(
-                RopidGTFS.run_numbers.name + "DataSource",
-                new FTPProtocolStrategy({
-                    filename: config.datasources.RopidGTFSRunNumbersFilename,
-                    path: config.datasources.RopidGTFSRunNumbersPath,
-                    url: config.datasources.RopidFTP,
-                    encoding: "utf8",
-                }),
-                new CSVDataTypeStrategy({
-                    fastcsvParams: { delimiter: ",", headers: true },
-                    subscribe: (json: any) => json,
-                }),
-                new JSONSchemaValidator(RopidGTFS.run_numbers.name + "DataSource", RopidGTFS.run_numbers.datasourceJsonSchema)
-            );
-
-            dataSourceDeparturesPresets = new DataSource(
-                RopidDeparturesPresets.name + "DataSource",
-                new FTPProtocolStrategy({
-                    filename: config.datasources.RopidDeparturesPresetsFilename,
-                    path: config.datasources.RopidDeparturesPresetsPath,
-                    url: config.datasources.RopidFTP,
-                    encoding: "utf8",
-                }),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(RopidDeparturesPresets.name + "DataSource", RopidDeparturesPresets.datasourceJsonSchema)
-            );
-        });
-
-        it("should return all objects", async () => {
-            const data = await datasource.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return last modified", async () => {
-            const data = await datasource.getLastModified();
-            expect(data).to.be.a("string");
-        });
-
-        it("should return all cis objects", async () => {
-            const data = await datasourceCisStops.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return cis last modified", async () => {
-            const data = await datasourceCisStops.getLastModified();
-            expect(data).to.be.a("string");
-        });
-
-        it("should return all ois objects", async () => {
-            const data = await datasourceOisMapping.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return ois last modified", async () => {
-            const data = await datasourceOisMapping.getLastModified();
-            expect(data).to.be.a("string");
-        });
-
-        it("should return all run numbers objects", async () => {
-            const data = await dataSourceRunNumbers.getAll();
-            expect(data).to.be.an.instanceOf(Object);
-        });
-
-        it("should return run numbers last modified", async () => {
-            const data = await dataSourceRunNumbers.getLastModified();
-            expect(data).to.be.a("string");
-        });
-
-        it("should return all departure presets", async () => {
-            const { data } = await dataSourceDeparturesPresets.getAll();
-            expect(data).to.be.an.instanceOf(Array);
-        });
-
-        it("should return departures presets last modified", async () => {
-            const data = await dataSourceDeparturesPresets.getLastModified();
-            expect(data).to.be.a("string");
-        });
-    });
-
-    describe("RopidVYMI", () => {
-        let datasource: DataSourceStreamed;
-
-        beforeEach(() => {
-            const baseUrl = config.datasources.RopidVYMIApiUrl;
-            const params = new URLSearchParams({
-                level: "1", // Standard output, see RopidVYMIWorker
-            });
-
-            datasource = new DataSourceStreamed(
-                RopidVYMI.events.name + "DataSource",
-                new HTTPProtocolStrategyStreamed({
-                    headers: config.datasources.RopidVYMIApiHeaders,
-                    method: "GET",
-                    timeout: 20000,
-                    url: `${baseUrl}?${params}`,
-                }).setStreamTransformer(JSONStream.parse("vymi-report.vymi-list.*")),
-                new JSONDataTypeStrategy({ resultsPath: "" }),
-                new JSONSchemaValidator(RopidVYMI.events.name + "DataSource", RopidVYMI.events.datasourceJsonSchema)
-            );
-        });
-
-        it("RopidVYMI data source should return items", async () => {
-            const dataStream = await datasource.getAll(true);
-
-            await Promise.race([
-                dataStream
-                    .setDataProcessor(async (data: IRopidVYMIEvent) => {
-                        expect(Object.keys(data).length).to.be.greaterThan(0);
-                    })
-                    .proceed(),
-                sleep(1000),
-            ]);
-
-            if (!dataStream.destroyed) {
-                dataStream.destroy();
-            }
         });
     });
 

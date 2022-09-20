@@ -8,8 +8,6 @@
     "Ndic": [],
     "ParkingZones": ["updateTariffs"],
     "Parkomats": [],
-    "RopidGTFS": [],
-    "RopidVYMI": [],
     "SharedBikes": [],
     "SharedCars": [],
     "SortedWasteStations": [
@@ -19,8 +17,6 @@
         "updateSensorsPicks",
         "updateSensorsPicksInContainer"
     ],
-    "VehiclePositions": [],
-    "VehiclePositionsRuns": [],
     "WazeCCP": [],
     "WazeTT": []
 }
