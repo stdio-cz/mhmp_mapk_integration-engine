@@ -751,11 +751,12 @@
   resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.0.4.tgz#7f95acffcb2d088955c07d7cf0fd6970b1337778"
   integrity sha512-NuK/kpTBPYQB368TiaX6uLyap0KI5rF2nMDs4Uih2rsxBsnAhFTVFEx9n+RrCCSkOovxHFh7KDxduL1A9dB7xA==
 
-"@golemio/municipal-police-stations@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-police-stations/-/municipal-police-stations-1.0.3.tgz#8cd84a0f875d4919ffa9a3e734a6cf73988c78b6"
-  integrity sha512-+9xwdDomTYwGhPfOPk3mnAMjtTaQiuQtOvbjzFcloOVmzWR8B5ACckiNEi0esh0T0Zn4h1ztaaeXJ06TwhJkHQ==
+"@golemio/municipal-police-stations@1.0.4-dev.650358162":
+  version "1.0.4-dev.650358162"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-police-stations/-/municipal-police-stations-1.0.4-dev.650358162.tgz#bc449fa379d2d212778695472c90d4b1dfd1f446"
+  integrity sha512-YeNOWfvO7EuCy4oSgjaEzovDuf6LHhW8BI5vGWFxYXHtZIXjPhuTvHkQRFsW6iirqZDM3iCqvN6f6Oflb/UMLA==
   dependencies:
+    geojson "^0.5.0"
     slugify "1.3.2"
 
 "@golemio/ndic@1.0.11":
