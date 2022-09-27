@@ -854,10 +854,10 @@
     mongoose "^6.5.3"
     winston "^3.2.1"
 
-"@golemio/waste-collection-yards@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.4.tgz#825c18196d30d113d9df97b44b8134399fcfaf41"
-  integrity sha512-nk5Fqyrli4fDfgJuIrpJLWWttYNSubJZGi4JcbZVCHfsQxlOjYPgntA1Vh7U3Syw5qpyqOhRE50XQqXNBurk5Q==
+"@golemio/waste-collection-yards@1.0.5-dev.651603646":
+  version "1.0.5-dev.651603646"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.5-dev.651603646.tgz#cfe964561e037cb94a2f0a8ae88c160af8a007bf"
+  integrity sha512-vPglTFfEfpAlkQk+e7CUYfvMk2u3TB/WZnp94QdoeKkWAtkMbZTs7apo98D+7OAayucnOmLgnAT9WYeoSWBZ0w==
   dependencies:
     geojson "^0.5.0"
     slugify "1.3.2"
