@@ -24,7 +24,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2", "@apideck/portman@^1.16.1":
+"@apideck/portman@^1.13.0", "@apideck/portman@^1.14.2":
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.16.1.tgz#8759c5c57c9d4e6c6c55c5eb04d8e5e7709b8380"
   integrity sha512-t/oWYl8giyku0Xv5vtRo3rUq2g141ADLJ1PMhaPMt3zsP2UZCgNdlOIEgTCmb8oaFhXa6eKpWyTpD/EC2xm67A==
@@ -811,14 +811,12 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.14.tgz#6fe2bb377ff16c061b4b574856b59f60cac6a84e"
-  integrity sha512-YEajlUh+tzdqXXeGN4yuXrGJMmJJGCr0cCxlpqdLjolM5YGS7tICZhqro/+z7QZzHns5ss7EmfOp7W/sRBgKTw==
+"@golemio/sorted-waste-stations@1.1.15-dev.656939637":
+  version "1.1.15-dev.656939637"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.15-dev.656939637.tgz#4d3f7a5de68cff49312c6f160d0a776b1d2c8107"
+  integrity sha512-NsZnii7rVRicAlOz/Gfow4at6jmLL/Q3BDzkZ2TiUCCqKDsOMhPuAuI8kYbrbBhZITuti8qCrD355sc/XUvJXQ==
   dependencies:
-    "@apideck/portman" "^1.16.1"
     JSONStream "^1.0.4"
-    axios "^0.21.2"
     lodash "^4.17.19"
     proj4 "^2.6.2"
     slugify "1.3.2"
@@ -3138,7 +3136,7 @@ aws4@1.11.0, aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.2, axios@^0.21.4:
+axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
