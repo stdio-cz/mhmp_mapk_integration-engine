@@ -88,7 +88,7 @@
         "@golemio/rush-hour-aggregation": "1.0.5",
         "@golemio/shared-bikes": "2.0.9",
         "@golemio/shared-cars": "1.0.4",
-        "@golemio/sorted-waste-stations": "1.1.14",
+        "@golemio/sorted-waste-stations": "1.1.15-dev.656939637",
         "@golemio/traffic-cameras": "1.0.5",
         "@golemio/traffic-detectors": "1.0.8",
         "@golemio/waste-collection": "0.0.3",
