@@ -759,10 +759,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.12-dev.660862462":
-  version "1.0.12-dev.660862462"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.12-dev.660862462.tgz#7194bf432fbb480593058cb803b614b491f126cb"
-  integrity sha512-nXaNCYDtoTYrjomlhyQ8e64maEmqx47FslBxGgN1R2IdtE8ampAocLG2qEO7dqIKYAIfNpd+HF6Tt1QvpG6SdQ==
+"@golemio/ndic@1.0.12-dev.662934348":
+  version "1.0.12-dev.662934348"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.12-dev.662934348.tgz#317e6ce3c74812047d1df80ca623e1d9bdd61dba"
+  integrity sha512-uOKyvm+735TNXO649w1nZB7zygQg5PoDB8Nt15Qrq4bo7TKLeT/8WbnxichleDCIa0dU6W3IOhaav4+a1MVSKQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
 
