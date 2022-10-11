@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.44] - 2022-10-11
+
+-   No changelog
+
 ## [2.0.43] - 2022-09-21
 
 ### Changed

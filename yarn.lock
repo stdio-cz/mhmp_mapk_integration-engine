@@ -574,10 +574,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.3.2-dev.650635067":
-  version "1.3.2-dev.650635067"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.2-dev.650635067.tgz#55bdbb3628eb4dcf09a43c1b760e4963bf27dbac"
-  integrity sha512-gD7Lcdmshkgkrxk2Cndx+4XBmKEV1waV5D/SvZVQMU8EsgbW1zrmt/D1BubVVGrI869k+7LUQ+tn8tNeweAP+w==
+"@golemio/cli@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.2.tgz#f9d940adcc8f89526756eaa8d66a96f4066dfc9b"
+  integrity sha512-oEzg4s5bT2D4XWfnv54ifUVPzFUWQ6xnY8ANFDR4Yabl3C0Gur2mH8OMhW7wzXX1ZrZGI5u976xssAEFUuWYgA==
   dependencies:
     amqplib "^0.7.1"
     cross-spawn "^7.0.3"
@@ -591,10 +591,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.19-dev.651907198":
-  version "1.2.19-dev.651907198"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.19-dev.651907198.tgz#a35f5805b54dcc1352e0a136846d777515c5a84d"
-  integrity sha512-Su4TXwpllZbWu4XkuRqUBPj8puEMvAFuINFv2q0vsBsRXTsMyadrbSjNYRfgXxVFXrWhrRiLRH3AXJeefuEbmA==
+"@golemio/core@1.2.20":
+  version "1.2.20"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.20.tgz#a86f13a91dafc497b521f1b3c067ee242af2ec32"
+  integrity sha512-qsRPkxa4B5V+gKviamUUfc0WDlKcDFwkhGBggMGD4tYyOdiOa+Ib/QZdE7crdTX1dEXax/0n5weQXr4n3UFQyg==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -609,6 +609,7 @@
     "@opentelemetry/instrumentation-express" "^0.28.0"
     "@opentelemetry/instrumentation-http" "^0.27.0"
     "@opentelemetry/instrumentation-ioredis" "^0.28.0"
+    "@opentelemetry/instrumentation-redis" "^0.29.0"
     "@opentelemetry/resources" "^1.2.0"
     "@opentelemetry/sdk-trace-base" "^1.2.0"
     "@opentelemetry/sdk-trace-node" "^1.2.0"
@@ -648,6 +649,7 @@
     path-to-regexp "^6.2.0"
     pg "^8.6.0"
     prom-client "^14.0.0"
+    redis "^3.1.1"
     request "2.88.0"
     request-promise "^4.2.5"
     sequelize "^6.21.2"
@@ -746,23 +748,23 @@
   resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4.tgz#d7fe024e65bb444943d13e89e1e75f47f68b03a4"
   integrity sha512-UwlkIIHoQFIeluYgUa8l9gifSlRYCzz+fzahen/AlXf2vykv9Rc+fbbGi/8YMhDuRuZGuSfR9JhP2+PBd2WbmQ==
 
-"@golemio/municipal-libraries@1.0.5-dev.656915294":
-  version "1.0.5-dev.656915294"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.0.5-dev.656915294.tgz#833db6f4c3b81ff5c78efd499b045493a24e56c0"
-  integrity sha512-gytcC9q+h6Ajd5+KYcJtSkj6Xgz+tHY3OsnNumM4u6FeyunGkIGHJzRU+huq7+UKttvIhTVRKF+s+Ed9hJXc9g==
+"@golemio/municipal-libraries@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.1.0.tgz#1bf727dd91ffd184d5a92e8f37d4e8c32cd2f849"
+  integrity sha512-rm4V64Qn/YyyOFeu3z3WkxbE3gUOUPgLbEir2/LkbQGzSE2APn9lZ+JODuYAPUkSBJw3vNP3WOrgbP0BCYXMfA==
 
-"@golemio/municipal-police-stations@1.0.4-dev.652195852":
-  version "1.0.4-dev.652195852"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-police-stations/-/municipal-police-stations-1.0.4-dev.652195852.tgz#d4c5e24847ff9de7456c8d75b03a2049248c9248"
-  integrity sha512-05Z1QQhm0RCdL2R1/VINsxsJ3mmDFTLBCQoW4VfLwfs6r7ZBBKZDna4XgiYhmi650RQJuTmHjmNpaR0Sg7hn9g==
+"@golemio/municipal-police-stations@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-police-stations/-/municipal-police-stations-1.1.0.tgz#b7168e0873ca5ff1a5af8e6c9b7ac09273c59afd"
+  integrity sha512-3U5vyVk5Z2yzBN/BE5zHYnjDYIt/zu2AXx1QAt2qdP2odohhGHWCIXElkkktwEUJYVLl2buw2oep7LqUR3ilnA==
   dependencies:
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.12-dev.662934348":
-  version "1.0.12-dev.662934348"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.12-dev.662934348.tgz#317e6ce3c74812047d1df80ca623e1d9bdd61dba"
-  integrity sha512-uOKyvm+735TNXO649w1nZB7zygQg5PoDB8Nt15Qrq4bo7TKLeT/8WbnxichleDCIa0dU6W3IOhaav4+a1MVSKQ==
+"@golemio/ndic@1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.12.tgz#eb7251614346f630c7e67a0a1ae97baad3cfa6e5"
+  integrity sha512-dKbz0o/+49D2xI3zUH5byO/uTE6opl64pe/rNZHVr+rywQI/+3ChYes95aWVB4qpFXeDZBSJ1tBWdbeXMWZfOw==
   dependencies:
     "@apideck/portman" "^1.13.0"
 
@@ -774,10 +776,10 @@
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.2.3-dev.646814609":
-  version "1.2.3-dev.646814609"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.3-dev.646814609.tgz#63b262846857ce13882ff57ab0b772fdf427056a"
-  integrity sha512-1UmTqc7P4Aq/VTjvaac9IGvBAXZxtOXy4YFxArspXtC4oLgIwDiS9m5MeCrgQGoiblbnVCcy7xzOZgWubsk31g==
+"@golemio/parkings@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.3.tgz#61570608164e2490a89127362813e61e9e4bac6b"
+  integrity sha512-H6HH2YrvJ3TMQEtivysVP6DlgfY3E74fxta8+QEgKjCWjB9QkZk1+bE01xC0rfGjfmQxz5pGDahQbxWYJ9pbeQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
@@ -797,10 +799,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.5.tgz#d5cf4c4f9095b55e8b0ccbb85b238662865bf06c"
   integrity sha512-vwwX06NJ+4Oa2rncxoqkLReIwvTsscg/hH6lpbG+rslbU1CvM6B5WZGLrSOOl+ynJL/jJQM3abXAqyb3J7c4jA==
 
-"@golemio/shared-bikes@2.0.10-dev.662841596":
-  version "2.0.10-dev.662841596"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.10-dev.662841596.tgz#4dac19121cf416d0382d96f0c46ded1fc3a4d346"
-  integrity sha512-+hiBAbMGfQViZW3mMBTagMEjvXg1trqnWKKnG8i3sSn1KtrTFQFEuACpskWwZwDVU39ik/4Q9SC1NpYOom+FNg==
+"@golemio/shared-bikes@2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.10.tgz#982efb2f10f8d773617910acd8d8ad71b3b7eb8b"
+  integrity sha512-ZIzxzSVASetMuCY6n5+bLWFnN0YjYmmn16GVJmVlcc64029sIRj25hCR69Bfq1oeoRpB9gSWuBKPEGBLXZ4UEQ==
   dependencies:
     uuid-by-string "^3.0.7"
 
@@ -811,10 +813,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.15-dev.656939637":
-  version "1.1.15-dev.656939637"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.15-dev.656939637.tgz#4d3f7a5de68cff49312c6f160d0a776b1d2c8107"
-  integrity sha512-NsZnii7rVRicAlOz/Gfow4at6jmLL/Q3BDzkZ2TiUCCqKDsOMhPuAuI8kYbrbBhZITuti8qCrD355sc/XUvJXQ==
+"@golemio/sorted-waste-stations@1.1.15":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.15.tgz#718bf26ae20fef051fc4ff1f66baeaf5b1ca9daf"
+  integrity sha512-Ab/UmCRUqyYQQU2awaegCbTiG+VKJBlgKqhJTuGEo0WZWkkhOirqHysEj6yxc5+PI8ldNuFBzhbUbBkaUudFHw==
   dependencies:
     JSONStream "^1.0.4"
     lodash "^4.17.19"
@@ -852,10 +854,10 @@
     mongoose "^6.5.3"
     winston "^3.2.1"
 
-"@golemio/waste-collection-yards@1.0.5-dev.651603646":
-  version "1.0.5-dev.651603646"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.5-dev.651603646.tgz#cfe964561e037cb94a2f0a8ae88c160af8a007bf"
-  integrity sha512-vPglTFfEfpAlkQk+e7CUYfvMk2u3TB/WZnp94QdoeKkWAtkMbZTs7apo98D+7OAayucnOmLgnAT9WYeoSWBZ0w==
+"@golemio/waste-collection-yards@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.1.0.tgz#2e68ac994f6a06454b9f0c4da55261c31b5eba26"
+  integrity sha512-H+UwB5xxSedSA1h5XR5f/HtrGAIieU1L0MuigqwgQyk/zia7xMDRA79wMeRERIgK99Nbp1UlYKot6FndJIm34Q==
   dependencies:
     geojson "^0.5.0"
     slugify "1.3.2"
@@ -1109,6 +1111,15 @@
     "@opentelemetry/instrumentation" "^0.27.0"
     "@opentelemetry/semantic-conventions" "^1.0.0"
     "@types/ioredis" "4.26.6"
+
+"@opentelemetry/instrumentation-redis@^0.29.0":
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-redis/-/instrumentation-redis-0.29.0.tgz#d9d8aa768db7e4763708662fabff90b99201c35d"
+  integrity sha512-4n2DuDRasMN4HSYGyiOGXP4LnCQw/8RHkqQxP8r3arVwueY49AGFxULLEJpK72zuGJkGT7InXUBIVuu0xzgSbw==
+  dependencies:
+    "@opentelemetry/instrumentation" "^0.27.0"
+    "@opentelemetry/semantic-conventions" "^1.0.0"
+    "@types/redis" "2.8.31"
 
 "@opentelemetry/instrumentation@0.27.0", "@opentelemetry/instrumentation@^0.27.0":
   version "0.27.0"
@@ -2668,6 +2679,13 @@
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
+
+"@types/redis@2.8.31":
+  version "2.8.31"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.31.tgz#c11c1b269fec132ac2ec9eb891edf72fc549149e"
+  integrity sha512-daWrrTDYaa5iSDFbgzZ9gOOzyp2AJmYK59OlG/2KGBgYWF3lfs8GDKm1c//tik5Uc93hDD36O+qLPvzDolChbA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/request-promise@^4.1.45":
   version "4.1.48"
@@ -4250,7 +4268,7 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-denque@^1.1.0, denque@^1.4.1:
+denque@^1.1.0, denque@^1.4.1, denque@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.5.1.tgz#07f670e29c9a78f8faecb2566a1e2c11929c5cbf"
   integrity sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==
@@ -8269,7 +8287,7 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redis-commands@1.7.0:
+redis-commands@1.7.0, redis-commands@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
   integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
@@ -8285,6 +8303,16 @@ redis-parser@^3.0.0:
   integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
     redis-errors "^1.0.0"
+
+redis@^3.1.1:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-3.1.2.tgz#766851117e80653d23e0ed536254677ab647638c"
+  integrity sha512-grn5KoZLr/qrRQVwoSkmzdbw6pwF+/rwODtrOr6vuBRiR/f3rjSTGupbF90Zpqm2oenix8Do6RV7pYEkGwlKkw==
+  dependencies:
+    denque "^1.5.0"
+    redis-commands "^1.7.0"
+    redis-errors "^1.2.0"
+    redis-parser "^3.0.0"
 
 redlock@^4.1.0:
   version "4.2.0"
