@@ -37,10 +37,12 @@ stages:
 .run_tests:
     stage: test
     services:
-        - postgres:13.6
-        - mongo:4.0
-        - redis:6.2-alpine
-        - rabbitmq:3.9
+        - name: postgis/postgis:13-3.2-alpine
+          alias: postgres
+        - name: mvertes/alpine-mongo:4.0.5-0
+          alias: mongo
+        - redis:6.2.6-alpine
+        - rabbitmq:3.9.12-alpine
     script:
         - yarn --ignore-scripts
         # Audit production dependencies for HIGH (8) vulnerabilities
@@ -84,7 +86,7 @@ up_down_migrations:
     stage: test
     image: bitnami/node:16.17.0
     services:
-        - name: postgis/postgis:13-3.2
+        - name: postgis/postgis:13-3.2-alpine
           alias: postgres
     script:
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
@@ -98,8 +100,8 @@ up_down_migrations:
         # Run migrations from modules
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
         - yarn --ignore-scripts
-        - yarn golemio migrate-db up
-        - yarn golemio migrate-db reset
+        - yarn golemio migrate-db up --silent
+        - yarn golemio migrate-db reset --silent
     tags:
         - docker
     rules:

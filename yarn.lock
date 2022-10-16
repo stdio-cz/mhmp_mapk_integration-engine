@@ -574,14 +574,14 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.2.tgz#f9d940adcc8f89526756eaa8d66a96f4066dfc9b"
-  integrity sha512-oEzg4s5bT2D4XWfnv54ifUVPzFUWQ6xnY8ANFDR4Yabl3C0Gur2mH8OMhW7wzXX1ZrZGI5u976xssAEFUuWYgA==
+"@golemio/cli@1.3.3-dev.668146967":
+  version "1.3.3-dev.668146967"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.3-dev.668146967.tgz#8183dc80dc02efd949e62ed5e8467660c33d9336"
+  integrity sha512-P8O6X1vfPwuu360wQi6WtjfJxRJ8QZJp0tedNCyZdMfKcoLeUsTYAFjK4pC4WOwwF/s7dWIKNP10GKCBZmGqLQ==
   dependencies:
     amqplib "^0.7.1"
     cross-spawn "^7.0.3"
-    db-migrate "1.0.0-beta.16"
+    db-migrate "1.0.0-beta.18"
     db-migrate-pg "npm:@golemio/db-migrate-pg@1.2.3-diversion.4"
     dotenv "^16.0.2"
     fast-glob "^3.2.12"
@@ -4077,10 +4077,10 @@ db-migrate-shared@^1.2.0:
   resolved "https://registry.yarnpkg.com/db-migrate-shared/-/db-migrate-shared-1.2.0.tgz#6125be1b3a5e661229fc75d50c85f6c3ffadbede"
   integrity sha512-65k86bVeHaMxb2L0Gw3y5V+CgZSRwhVQMwDMydmw5MvIpHHwD6SmBciqIwHsZfzJ9yzV/yYhdRefRM6FV5/siw==
 
-db-migrate@1.0.0-beta.16:
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-1.0.0-beta.16.tgz#975d253c56c0a89b1b4585d34a2545e821b0765f"
-  integrity sha512-RuJRJIPcAgJe7x4a+UTsCkC/R5a6RztDWO9wekXBDDRuRW7erC9Q6ISEgfSkSHtDLd8Vg9cQHlWZ6QQTCfuPjQ==
+db-migrate@1.0.0-beta.18:
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/db-migrate/-/db-migrate-1.0.0-beta.18.tgz#aff2d34306de62cecd6a47a8b8db5d9271f1bb22"
+  integrity sha512-Rc+8VsxNPkQVwKTejPORcSR7F6Vtyzzl5vXhSRfcx83GVJ05JtHnYnfhYDGVr7lMCOYBgO5xnSxKH8Lh2So2WQ==
   dependencies:
     bluebird "^3.1.1"
     db-migrate-shared "^1.2.0"
