@@ -862,10 +862,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.3.tgz#4e7f9810e54960151ae74e716e7b9da744204170"
-  integrity sha512-HpbccoW35cxjqth5BOlOHjCNy9HCI5Xj9Y6Nrpf2fI/HaHy2oyPiR+0TO7Uu3QPUyOVLS5WhYgm0knLZ0Ci3pA==
+"@golemio/waste-collection@0.0.4-dev.671133357":
+  version "0.0.4-dev.671133357"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.4-dev.671133357.tgz#4577daf63a438cfd7c573a413997b62a8fa49341"
+  integrity sha512-jnowDsy4gFWpSLYul7YcWUj+6ihzkOrcFmT+u8uowiVJPkIfHII7d8ZIg06Jh7+wV0Wod7kNG5aXg6CsBbOyEA==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
