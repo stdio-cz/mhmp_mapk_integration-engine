@@ -574,10 +574,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/cli@1.3.3-dev.668146967":
-  version "1.3.3-dev.668146967"
-  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.3-dev.668146967.tgz#8183dc80dc02efd949e62ed5e8467660c33d9336"
-  integrity sha512-P8O6X1vfPwuu360wQi6WtjfJxRJ8QZJp0tedNCyZdMfKcoLeUsTYAFjK4pC4WOwwF/s7dWIKNP10GKCBZmGqLQ==
+"@golemio/cli@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.3.3.tgz#0751c9ceb77bf3be7fb4a1de23da0b920810ff58"
+  integrity sha512-c+HdqqXjpElp9eVg5fb4msWt1TnwKxZtMDqZXUoqhiXZUHhw6NRKI88TpFDGLWpiHpWlfB25iVMWEB0VCmdwHw==
   dependencies:
     amqplib "^0.7.1"
     cross-spawn "^7.0.3"
@@ -694,10 +694,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.4.tgz#7a580adc294d553520e343d58346a3b8fad2cc0e"
   integrity sha512-+x1ovBzNPhXxFT/GjMDbkxxE9jr0tVCl9yLHRvypcdiSzfVSHE2Cn+jOnjHVVBrlvSRIl2aWA9TH23A9Y6z5OA==
 
-"@golemio/flow@1.0.11-dev.668805666":
-  version "1.0.11-dev.668805666"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.11-dev.668805666.tgz#e17d2fa7018b862bbac23a984a31107021d80e7b"
-  integrity sha512-oyXeUgskrQI0NHI+KLmC2I6jHjkKY5LF5kNaWcYE82AUkYWcwVJDoYOQTXjw0DD0E3CUvq7SlQe423RjU+pu4w==
+"@golemio/flow@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.11.tgz#cfee2b3136a07e4d4148fb69d4f72588c5c5c452"
+  integrity sha512-GqqmadKz4kanaYsqLUpAnVorenSjJvDaZPD+0YgomnnlHn0blq1vhCe6+dP3g46SViVSBmHTAR4nEOXTik1Baw==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -862,10 +862,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.4-dev.671133357":
-  version "0.0.4-dev.671133357"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.4-dev.671133357.tgz#4577daf63a438cfd7c573a413997b62a8fa49341"
-  integrity sha512-jnowDsy4gFWpSLYul7YcWUj+6ihzkOrcFmT+u8uowiVJPkIfHII7d8ZIg06Jh7+wV0Wod7kNG5aXg6CsBbOyEA==
+"@golemio/waste-collection@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.4.tgz#ec3f39f016df8f6a8e4f835bf14f0ba05a7816a4"
+  integrity sha512-bUD9+av26Dj7QTMB7pr/l6SB/XCgbvbRcTj+pzjpq2S5UuxfQnkBCV4xI8S3MsjRyHSob2VlkAxf+XlTiDbWFA==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
@@ -8865,7 +8865,7 @@ source-map-support@0.5.9:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
-source-map-support@^0.5.12, source-map-support@^0.5.17:
+source-map-support@^0.5.12:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
   integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
@@ -9427,21 +9427,40 @@ triple-beam@^1.3.0:
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-ts-node-dev@^1.0.0:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-1.1.8.tgz#95520d8ab9d45fffa854d6668e2f8f9286241066"
-  integrity sha512-Q/m3vEwzYwLZKmV6/0VlFxcZzVV/xcgOt+Tx/VjaaRHyiBcFlV0541yrT09QjzzCxlDZ34OzKjrFAynlmtflEg==
+ts-node-dev@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-2.0.0.tgz#bdd53e17ab3b5d822ef519928dc6b4a7e0f13065"
+  integrity sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==
   dependencies:
     chokidar "^3.5.1"
     dynamic-dedupe "^0.3.0"
-    minimist "^1.2.5"
+    minimist "^1.2.6"
     mkdirp "^1.0.4"
     resolve "^1.0.0"
     rimraf "^2.6.1"
     source-map-support "^0.5.12"
     tree-kill "^1.2.2"
-    ts-node "^9.0.0"
+    ts-node "^10.4.0"
     tsconfig "^7.0.0"
+
+ts-node@^10.4.0:
+  version "10.9.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.9.1.tgz#e73de9102958af9e1f0b168a6ff320e25adcff4b"
+  integrity sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==
+  dependencies:
+    "@cspotcode/source-map-support" "^0.8.0"
+    "@tsconfig/node10" "^1.0.7"
+    "@tsconfig/node12" "^1.0.7"
+    "@tsconfig/node14" "^1.0.0"
+    "@tsconfig/node16" "^1.0.2"
+    acorn "^8.4.1"
+    acorn-walk "^8.1.1"
+    arg "^4.1.0"
+    create-require "^1.1.0"
+    diff "^4.0.1"
+    make-error "^1.1.1"
+    v8-compile-cache-lib "^3.0.1"
+    yn "3.1.1"
 
 ts-node@^10.7.0:
   version "10.8.0"
@@ -9460,18 +9479,6 @@ ts-node@^10.7.0:
     diff "^4.0.1"
     make-error "^1.1.1"
     v8-compile-cache-lib "^3.0.1"
-    yn "3.1.1"
-
-ts-node@^9.0.0:
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
-  integrity sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==
-  dependencies:
-    arg "^4.1.0"
-    create-require "^1.1.0"
-    diff "^4.0.1"
-    make-error "^1.1.1"
-    source-map-support "^0.5.17"
     yn "3.1.1"
 
 tsconfig@^7.0.0:
