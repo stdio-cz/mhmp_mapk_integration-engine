@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+-   Update TypeScript to v4.7.2
+
 ## [2.0.44] - 2022-10-11
 
 -   No changelog
