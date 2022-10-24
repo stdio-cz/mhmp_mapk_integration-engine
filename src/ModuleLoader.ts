@@ -22,6 +22,7 @@ export class ModuleLoader {
         "general",
         "medical-institutions",
         "meteosensors",
+        "microclimate",
         "mobile-app-statistics",
         "mos",
         "municipal-authorities",

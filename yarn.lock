@@ -729,6 +729,13 @@
   dependencies:
     JSONStream "^1.0.4"
 
+"@golemio/microclimate@1.0.1-dev.675426205":
+  version "1.0.1-dev.675426205"
+  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.1-dev.675426205.tgz#3ff3c7609805423dde14e89876030718fe2967d7"
+  integrity sha512-tp+1oYYoeIysHWiTQmp7/pIMdD6E/uPmHHH/dGLsZNYGL9rT/xbQ9lBQjlF0DwrEUzXIUc0GrUo2U972xoBJfA==
+  dependencies:
+    geojson "^0.5.0"
+
 "@golemio/mobile-app-statistics@1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.6.tgz#739087212ee6931053d9b359794c386151e2dd30"
