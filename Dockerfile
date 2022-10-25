@@ -11,6 +11,19 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1m.tar.gz && \
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib/x86_64-linux-gnu && \
     make
 # OpenSSL hack END.
+# Upgrade libssh2 to avoid error
+# "Failure establishing ssh session: -43, Failed getting banner".
+# libssh2 hack BEGIN:
+RUN wget https://github.com/libssh2/libssh2/archive/refs/heads/master.zip && \
+    unzip master.zip && \
+    cd libssh2-master && \
+    apt update && \
+    apt install -y dh-autoreconf && \
+    autoreconf -fi && \
+    ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu && \
+    make && \
+    make install
+# libssh2 hack END.
 
 FROM bitnami/node:16.17.0
 # OpenSSL hack BEGIN:
@@ -19,6 +32,9 @@ COPY --from=build /usr/src/openssl-1.1.1m/*.so.1.1 /usr/lib/x86_64-linux-gnu/
 COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf /etc/ssl/
 COPY --from=build /usr/src/openssl-1.1.1m/apps/openssl.cnf /usr/lib/ssl/
 # OpenSSL hack END.
+# libssh2 hack BEGIN:
+COPY --from=build /usr/lib/x86_64-linux-gnu/libssh2* /usr/lib/x86_64-linux-gnu/
+# libssh2 hack END.
 
 WORKDIR /app
 
