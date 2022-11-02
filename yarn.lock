@@ -750,10 +750,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.5-dev.674689069":
-  version "1.0.5-dev.674689069"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.5-dev.674689069.tgz#04deaa4d093d27184951580ea453921392a7303d"
-  integrity sha512-E2fPM0HMRB0NiVYKVEFbgaFyoLdAfIYLY1I9Xs1nMihyHs+5HCTRmsDgYrWzua9VifC3rdat3Xoaf+8d/sPn8A==
+"@golemio/municipal-authorities@1.0.5-dev.683225979":
+  version "1.0.5-dev.683225979"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.5-dev.683225979.tgz#11fcdc37604ae09935aeaef7a6ea539cc96904b3"
+  integrity sha512-P1yPCqjbkyn7fw3XM/Pqs/rbz8w0LktourrCq0KtLK8WLfBXzVNWiUM1rm3i0cNZJW0M8bde2JyYw5FYAywAag==
   dependencies:
     geojson "^0.5.0"
 
