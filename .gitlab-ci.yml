@@ -108,3 +108,9 @@ up_down_migrations:
         - if: $SKIP_TEST_AND_STAGES_AFTER
           when: never
         - when: always
+
+
+run_tests-node-next:
+    extends: .run_tests
+    image: bitnami/node:18.11.0
+    allow_failure: true

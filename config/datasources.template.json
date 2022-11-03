@@ -123,5 +123,14 @@
         "password": "",
         "calculateToFutureDays": 90
     },
-    "WazeTT": []
+    "WazeTT": [],
+    "CeskyCarsharingRequestHeaders": {
+        "Content-Type": "application/json"
+    },
+    "CeskyCarsharingRequestBody": {
+        "guid": "",
+        "password": ""
+    },
+    "CeskyCarsharingVehiclesApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getAllCarsIct",
+    "CeskyCarsharingGeofencingApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api/IIS_API.svc/getPolygonsIct"
 }
