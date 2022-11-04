@@ -47,7 +47,7 @@ services:
      - golemio
 
   rabbitmq:
-    image: rabbitmq:3.9.12-management
+    image: rabbitmq:3.11.2-management-alpine
     environment:
       RABBITMQ_DEFAULT_USER: rabbit
       RABBITMQ_DEFAULT_PASS: pass
@@ -60,7 +60,7 @@ services:
      - golemio
 
   redis:
-    image: redis:6.2.6
+    image: redis:6.2.7-alpine
     volumes:
       - redis_data:/data
     networks:
