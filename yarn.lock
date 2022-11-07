@@ -1390,10 +1390,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/gardens@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3.tgz#6a4a2bc21e4f1109e2c2eea85cff9b41e6f35394"
-  integrity sha512-IzpSSo09ELVb+LGgOfj3nFBlNYUdY25kRenkxvBJ8xBIFcJtQpcR+FLl+Pmsz9XJpOpxJZYCkyfwjfKp3MlUHQ==
+"@golemio/gardens@1.0.4-dev.687605332":
+  version "1.0.4-dev.687605332"
+  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.4-dev.687605332.tgz#fb3489067b70ca178cc0597698be05156991d001"
+  integrity sha512-xCvFt+eOZ3VJBCqpthxhzD4PvqI4YZpjohOEiBGRH2f8woriIfcDqFg1wMEd+cUuikXBN5ViUtIXIMomfIe4OQ==
 
 "@golemio/general@1.0.3":
   version "1.0.3"
