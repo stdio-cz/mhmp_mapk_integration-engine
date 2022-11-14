@@ -1390,10 +1390,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/gardens@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3.tgz#6a4a2bc21e4f1109e2c2eea85cff9b41e6f35394"
-  integrity sha512-IzpSSo09ELVb+LGgOfj3nFBlNYUdY25kRenkxvBJ8xBIFcJtQpcR+FLl+Pmsz9XJpOpxJZYCkyfwjfKp3MlUHQ==
+"@golemio/gardens@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.1.0.tgz#d699600edc3e90750d7b7e45722fc7a6415e109b"
+  integrity sha512-VSO/FMYEWt0NGTzTszSmdE8nC9JwoCQ9Oj6TL8Y5JNgn9Dalgg/AE08OXSLcWtFlXM+z7fPyHd44QWxVm5jzlw==
 
 "@golemio/general@1.0.3":
   version "1.0.3"
@@ -1497,10 +1497,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.6.tgz#584cea14d0d15067995444dc438f1db36e9eb58b"
   integrity sha512-oyq4ldBihA+Kke9g8tTtQVZ2R806nKifrueapjUI9UwQ/k7Fx4ezpGaZNfhuxtdH+mYqYY0G4BonR1i+uoQa8g==
 
-"@golemio/shared-bikes@2.0.11":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.11.tgz#95be535e555281e5ac7780d4ad139bde19c3051c"
-  integrity sha512-wRYwWESZ3ZV9cowRC4Sq9v8mTaGpRu4zRmT+LdGBXSSXzGa9uDs7eM3lqufwEMlwQmszpF4SeSv4zd4fftFo4A==
+"@golemio/shared-bikes@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.12.tgz#21fe05d137cdd63a754b92bc9268a2932b4538c0"
+  integrity sha512-7k4lLqjVEjiN64RH4xtbAC3A6GA7o4TAYNydbOAxoFEbCVi/yRHBNUv2LVwxg+FCQlBBw56Nt8C2IzPNjG5ywg==
   dependencies:
     uuid-by-string "^3.0.7"
 
@@ -1560,10 +1560,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.4.tgz#ec3f39f016df8f6a8e4f835bf14f0ba05a7816a4"
-  integrity sha512-bUD9+av26Dj7QTMB7pr/l6SB/XCgbvbRcTj+pzjpq2S5UuxfQnkBCV4xI8S3MsjRyHSob2VlkAxf+XlTiDbWFA==
+"@golemio/waste-collection@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.5.tgz#0141817982b544ff8b6b34a3b7dd6f12864eb646"
+  integrity sha512-5frEV/G5As7F5sFmOxbHoKJXh37oMQ2T2GYGRoHtLVQPYbBK933f/fvRy7QFaAYqGbSmRs7NBEaJc220yyThrA==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
