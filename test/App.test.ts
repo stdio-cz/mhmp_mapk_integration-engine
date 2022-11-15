@@ -230,7 +230,7 @@ describe("App", () => {
             sandbox.stub(HTTPErrorHandler, "handle").returns({ error_status: 400 } as any);
 
             app["errorHandlers"]();
-            sandbox.assert.calledWithExactly(HTTPErrorHandler.handle as SinonStub, "test");
+            sandbox.assert.calledWithExactly(HTTPErrorHandler.handle as SinonStub, "test", log);
             sandbox.assert.calledWithExactly(log.silly as SinonStub, sinon.match.typeOf("string"));
             sandbox.assert.calledWithExactly(resMock.setHeader, sinon.match.typeOf("string"), sinon.match.typeOf("string"));
             sandbox.assert.calledWithExactly(resMock.status, 400);

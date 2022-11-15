@@ -70,7 +70,7 @@ export default class App extends BaseApp {
             this.lightship.signalReady();
         } catch (err) {
             sentry.captureException(err);
-            ErrorHandler.handle(err);
+            ErrorHandler.handle(err, log);
         }
     };
 
@@ -152,7 +152,7 @@ export default class App extends BaseApp {
         // Setup error handler hook on server error
         this.server.on("error", (err) => {
             sentry.captureException(err);
-            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err));
+            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err), log);
         });
         // Serve the application at the given port
         this.server.listen(this.port, () => {
@@ -227,7 +227,7 @@ export default class App extends BaseApp {
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-            const error: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            const error: ICustomErrorObject = HTTPErrorHandler.handle(err, log);
             if (error) {
                 log.silly("Error caught by the router error handler.");
                 res.setHeader("Content-Type", "application/json; charset=utf-8");
