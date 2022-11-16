@@ -1243,6 +1243,11 @@
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-parkings/-/bicycle-parkings-1.0.3.tgz#1380ad1a5f9a618bda0d187c74bbb88f1526cfb7"
   integrity sha512-6SXhC5j5CYu9uarPPELwR9IynhTssJCUp3lBpRS6euWrE5pq90JSE2sM5Mn21GPf2o6ddJ32I/+5D9Yqo3cpTw==
 
+"@golemio/chmu@^1.0.0-dev.696586298":
+  version "1.0.0-dev.696586298"
+  resolved "https://registry.yarnpkg.com/@golemio/chmu/-/chmu-1.0.0-dev.696586298.tgz#14c34ef8681eeba2c0f21c079760f83f9484a2a2"
+  integrity sha512-8n+GRthjHRGQx6RNCxHbOBc739LMUBZXQkY1pXRGopizi+oUAX2Cu9HbBiTjF/c/OOoTPhlw11SyJWl+0YpftQ==
+
 "@golemio/city-districts@1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.5.tgz#b4742268fdbef3022376e6471f36a0db6acdabf0"
