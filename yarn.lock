@@ -1272,10 +1272,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.22-dev.694978995":
-  version "1.2.22-dev.694978995"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.22-dev.694978995.tgz#8ce129565c46446e015e00045f77b4efdcf4ea30"
-  integrity sha512-NpQwiFRWHMj1dYNff5ch4gpmsG79ezVdGasxET/zzGfm0LZTSaGSaoTbo05GMwG9Dmm2GuXbJmFfCFhn9vwD7g==
+"@golemio/core@1.2.22-dev.701742189":
+  version "1.2.22-dev.701742189"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.22-dev.701742189.tgz#2c5848d3d680fdfabb25f507869d96f135b57cd1"
+  integrity sha512-H4j3/hCbr63IFn4v2xGB7wK7KA85yTU84mRl/RCQrvYcQd0a6AkOjy2nsandjWTX+Y4yuZzep+PNlhTtXX+e+Q==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -1393,10 +1393,10 @@
   dependencies:
     body-parser "1.19.0"
 
-"@golemio/medical-institutions@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7.tgz#d4a3b879d88e04bf784d2b660c8b43410f28a3e1"
-  integrity sha512-13sV1ikWQeY6PwUpzKv1ZHhRU48nb6HVMysJ6sDpk9SiCeT477OSyzlQIqFXJm4L80sMql3fHGuw5WUbOJB0tg==
+"@golemio/medical-institutions@1.0.8-dev.701986548":
+  version "1.0.8-dev.701986548"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.8-dev.701986548.tgz#b9a9fdf34c6f25ec972888d3d3bcc8c11f1f00e4"
+  integrity sha512-tCITDrKetvKa+pfuGsXFDZqh+OoQ6jmixi51UNOYskLKtKdgTzNGhNPvDAX0C3fp1ZEUbBNIUfb6PYBIZge7aw==
   dependencies:
     fast-csv "^4.3.6"
     iconv-lite "0.4.24"
