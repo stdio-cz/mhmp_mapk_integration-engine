@@ -1272,10 +1272,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.22-dev.701742189":
-  version "1.2.22-dev.701742189"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.22-dev.701742189.tgz#2c5848d3d680fdfabb25f507869d96f135b57cd1"
-  integrity sha512-H4j3/hCbr63IFn4v2xGB7wK7KA85yTU84mRl/RCQrvYcQd0a6AkOjy2nsandjWTX+Y4yuZzep+PNlhTtXX+e+Q==
+"@golemio/core@1.2.22-dev.705197124":
+  version "1.2.22-dev.705197124"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.22-dev.705197124.tgz#cc552c0459f5712cd505945f2b81cf9f18533e42"
+  integrity sha512-UQTqD8ZmrusHixCDT5Zdpm1QbVX1xgugLV+vUpRIsNoOkXb+30D+y7fzMBTlo+A11Q8X29uE2nZw4/w3XCg47g==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -1374,10 +1374,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/firebase-pid-litacka/-/firebase-pid-litacka-1.0.4.tgz#7a580adc294d553520e343d58346a3b8fad2cc0e"
   integrity sha512-+x1ovBzNPhXxFT/GjMDbkxxE9jr0tVCl9yLHRvypcdiSzfVSHE2Cn+jOnjHVVBrlvSRIl2aWA9TH23A9Y6z5OA==
 
-"@golemio/flow@1.0.12-dev.700840367":
-  version "1.0.12-dev.700840367"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.12-dev.700840367.tgz#46882af896081fb446b26b14eda5703f51867922"
-  integrity sha512-ceR2FCxplWVREsre8tBH0esxjDJs3cwHmjLL835EHtqVNr87l88O7+qNPOa8K6MV4XcFZrzCjfnBMc7WpWk/Bg==
+"@golemio/flow@1.0.12-dev.705311943":
+  version "1.0.12-dev.705311943"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.12-dev.705311943.tgz#429bbd704b4929abc82104d258f10b89535d271f"
+  integrity sha512-uAsAUboPTIbk5AxQoZYip/+keVOVwcsGnt3+tbEZRstx/AjhP3KHpgMMnECkhGxdbeVHBKI3BOX0te6Upf7uAg==
   dependencies:
     JSONStream "^1.0.4"
 
