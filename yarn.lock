@@ -1488,10 +1488,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.6.tgz#584cea14d0d15067995444dc438f1db36e9eb58b"
   integrity sha512-oyq4ldBihA+Kke9g8tTtQVZ2R806nKifrueapjUI9UwQ/k7Fx4ezpGaZNfhuxtdH+mYqYY0G4BonR1i+uoQa8g==
 
-"@golemio/shared-bikes@2.0.13-dev.703212196":
-  version "2.0.13-dev.703212196"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.13-dev.703212196.tgz#e246516bec239da050d48cc4e13035f5e760b112"
-  integrity sha512-2UeFhgir1IeC/GaXZbE9eOf0ZJICNwL6o5oOY+wfpvq4MII6jQBEoCh3T1quatWl5XpNGWvendKP0U6KXh30Ag==
+"@golemio/shared-bikes@2.0.13-dev.707114347":
+  version "2.0.13-dev.707114347"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.13-dev.707114347.tgz#ee5a3c197929dea9c74b79e516108f7e7058105a"
+  integrity sha512-4B/gX7sTHfQzKt3An03lEoeXl6TpFT8PqQbfv1D1yhkg2FDeHYj1ZAUpsKQHE8rApKL6Z81l/QxKVGjEVV8jNQ==
   dependencies:
     ts-md5 "^1.3.1"
     uuid-by-string "^3.0.7"
