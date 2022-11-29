@@ -116,9 +116,9 @@ from the application's root directory.
 
 ## Logging
 
-Logging uses `Winston` for standard logging with levels, `morgan` for http access logs and `debug` (https://www.npmjs.com/package/debug) for debugging.
+Logging uses `pino` for standard logging with levels, `pino-http` for http access logs and `debug` (https://www.npmjs.com/package/debug) for debugging.
 
-All logs with `silly` and `debug` level are printed as standard log (if appropriate log level is set) using Winston as well as using `debug` module with `"golemio:integration-engine"` settings.
+All logs with `silly` and `debug` level are printed as standard log (if appropriate log level is set) using `pino` as well as using `debug` module with `"golemio:integration-engine"` settings.
 
 You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
