@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.48",
+    "version": "2.0.49",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -67,7 +67,7 @@
         "@golemio/bicycle-counters": "1.0.12",
         "@golemio/bicycle-parkings": "1.0.4",
         "@golemio/city-districts": "1.0.6",
-        "@golemio/core": "1.2.22",
+        "@golemio/core": "1.2.23",
         "@golemio/energetics": "1.0.12",
         "@golemio/fcd": "1.0.11",
         "@golemio/firebase-pid-litacka": "1.0.5",
@@ -88,7 +88,7 @@
         "@golemio/playgrounds": "1.0.7",
         "@golemio/public-toilets": "1.0.4",
         "@golemio/rush-hour-aggregation": "1.0.7",
-        "@golemio/shared-bikes": "2.0.12",
+        "@golemio/shared-bikes": "2.0.13",
         "@golemio/shared-cars": "1.0.5",
         "@golemio/sorted-waste-stations": "1.1.17",
         "@golemio/traffic-cameras": "1.0.6",
@@ -100,6 +100,7 @@
         "dotenv": "6.1.0"
     },
     "resolutions": {
-        "moment": "^2.29.4"
+        "moment": "^2.29.4",
+        "**/body-parser/qs": "^6.7.3"
     }
 }
