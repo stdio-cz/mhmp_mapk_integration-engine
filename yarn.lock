@@ -1243,10 +1243,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-parkings/-/bicycle-parkings-1.0.4.tgz#23c79ea4e836c0f1de31ba1ffac2ea973a6215df"
   integrity sha512-YMdvajdWBuDMKyUCEFF4YHL3J0TmN1iqwmhbbWESBuESBQQGe/q4KyUrE9NCMcbu5gJyhD+vrCne2gNi3tnEsw==
 
-"@golemio/chmu@1.0.0-dev.700591142":
-  version "1.0.0-dev.700591142"
-  resolved "https://registry.yarnpkg.com/@golemio/chmu/-/chmu-1.0.0-dev.700591142.tgz#35a3c8f9c9fb4fe085158c15019c6ce34ef51159"
-  integrity sha512-65IlNectckuEU2RvdG30DrLfOEBBM5qYupeIXzsrovQXI88dH0mBcaekTXit8wIZAGNBzI3FJadSBxLvuxgPpA==
+"@golemio/chmu@1.0.0-dev.718082295":
+  version "1.0.0-dev.718082295"
+  resolved "https://registry.yarnpkg.com/@golemio/chmu/-/chmu-1.0.0-dev.718082295.tgz#6c4eec46508088c4c1498d56a89da06f10d48e85"
+  integrity sha512-GljFxpqnRE/5NaAisLlMJZvk5r7rcXu85RQH4RfMGfMyw1atZn4b+XK912gPnKqAuUgtjbwq/ji8CflDT5PRpw==
 
 "@golemio/city-districts@1.0.6":
   version "1.0.6"
