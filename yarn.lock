@@ -1409,10 +1409,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/microclimate@1.0.3-dev.718099219":
-  version "1.0.3-dev.718099219"
-  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.3-dev.718099219.tgz#06d8816eb0cca6781438273eb4f5a7806e2721db"
-  integrity sha512-RwQTtsFgdoH7jzBp31omYH3WOWJJnkMVTWIgP3E8+aGnHhIDMRBRp2D5gXfMmpvtvQX5cX0O75tQf8VTlcP9Aw==
+"@golemio/microclimate@1.0.3-dev.718126932":
+  version "1.0.3-dev.718126932"
+  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.3-dev.718126932.tgz#555d4b72fb14cc61179af2fd204f433cd6b6adca"
+  integrity sha512-U5guFfXdZw/28vhGL1JAhNIdmHJ5t6wk4VgAyq2Gp9TYz1vCZTKx6mruDkv9DlpklxYejklPy10CSOZ/+NPMuQ==
   dependencies:
     geojson "^0.5.0"
 
