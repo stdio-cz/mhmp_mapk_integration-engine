@@ -66,7 +66,7 @@
         "@golemio/air-quality-stations": "1.0.8",
         "@golemio/bicycle-counters": "1.0.12",
         "@golemio/bicycle-parkings": "1.0.4",
-        "@golemio/chmu": "1.0.0-dev.700591142",
+        "@golemio/chmu": "1.0.0-dev.718082295",
         "@golemio/city-districts": "1.0.6",
         "@golemio/core": "1.2.23",
         "@golemio/energetics": "1.0.12",
