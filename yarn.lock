@@ -1272,10 +1272,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.23":
-  version "1.2.23"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.23.tgz#bc359a0e68a99e7652a035a5b237164b3a0ac7f2"
-  integrity sha512-+E2c42zYYm3idqFcUUn/QbbkQHz7jfG/4JNYRVV4yqxNNCLDpfxwSrMr6wG2f8Dj0SafSQ2D4naxYfwyjUmW+A==
+"@golemio/core@1.2.24":
+  version "1.2.24"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.24.tgz#57dc7f8fb320b2a8b2684885e4794e995531c6f2"
+  integrity sha512-BKp4a2EygqjPKm8AMR7TNoKDKkkCMbJOKMZwvH+XhRms9Q+hcxBlvtI8sk/3S4KlqBa6wEG6nJKz8Q9gK3adlg==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -1409,10 +1409,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/microclimate@1.0.3-dev.718126932":
-  version "1.0.3-dev.718126932"
-  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.3-dev.718126932.tgz#555d4b72fb14cc61179af2fd204f433cd6b6adca"
-  integrity sha512-U5guFfXdZw/28vhGL1JAhNIdmHJ5t6wk4VgAyq2Gp9TYz1vCZTKx6mruDkv9DlpklxYejklPy10CSOZ/+NPMuQ==
+"@golemio/microclimate@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.3.tgz#9bd6ed7332ce7e3633fcedacec35ac452a0e6483"
+  integrity sha512-2M3x/glEqot3B/Fgs3M2E1KK5BR2qzXwYkwiLojeUy+6sdtdRAvMsbQ1RQDdwV9qjUXbkj8P3IDVCvS3JYAoJg==
   dependencies:
     geojson "^0.5.0"
 
