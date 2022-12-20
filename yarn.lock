@@ -1272,10 +1272,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.25-dev.723880707":
-  version "1.2.25-dev.723880707"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.25-dev.723880707.tgz#2d0186c22d34eb316f46cae0865839a0934a3bc5"
-  integrity sha512-Qv3pyhNzc3t/OZ40ka7USeGGhX9jcoti56Z5PzJlMRXDCPRWVm7b++qvTCwOb2rqvQ/jAGppbpboAGhg0o6Lqg==
+"@golemio/core@1.2.25-dev.726368711":
+  version "1.2.25-dev.726368711"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.25-dev.726368711.tgz#933c134b1cf14bfe78e9c46817b651f0e5f79c22"
+  integrity sha512-sjvJ6ANyLbGKCz3xXCghR3gex0doG9SHqvbLszOJdzK0VLA9L3QqpwPhlAQA18xiNk/R7SxnvImQKNgeRR+FRA==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -1339,6 +1339,7 @@
     request-promise "^4.2.5"
     sequelize "^6.21.2"
     ssh2-sftp-client "^7.1.0"
+    tsyringe "^4.7.0"
     xml2js-es6-promise "^1.1.1"
     yauzl "^2.10.0"
 
@@ -10246,6 +10247,13 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+tsyringe@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/tsyringe/-/tsyringe-4.7.0.tgz#aea0a9d565385deebb6def60cda342b15016f283"
+  integrity sha512-ncFDM1jTLsok4ejMvSW5jN1VGPQD48y2tfAR0pdptWRKYX4bkbqPt92k7KJ5RFJ1KV36JEs/+TMh7I6OUgj74g==
+  dependencies:
+    tslib "^1.9.3"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
