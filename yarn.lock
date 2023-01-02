@@ -1412,19 +1412,19 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/microclimate@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.3.tgz#9bd6ed7332ce7e3633fcedacec35ac452a0e6483"
-  integrity sha512-2M3x/glEqot3B/Fgs3M2E1KK5BR2qzXwYkwiLojeUy+6sdtdRAvMsbQ1RQDdwV9qjUXbkj8P3IDVCvS3JYAoJg==
+"@golemio/microclimate@1.0.4-dev.735991902":
+  version "1.0.4-dev.735991902"
+  resolved "https://registry.yarnpkg.com/@golemio/microclimate/-/microclimate-1.0.4-dev.735991902.tgz#94a16827c3b0d8feedbee836f047c1d621ffdaff"
+  integrity sha512-e6oHFLh5qYUP4hdZ8k3fdoHbJ/HOX/r6wgmAFX6j+1/wwyxA2Xo7i2f5sS8L1vkD1lTIAJ0ILpsKFSlyUojfUQ==
   dependencies:
     geojson "^0.5.0"
 
-"@golemio/mobile-app-statistics@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.7.tgz#5085e8837dea31f61cdfb160f28313ed69ecf2ef"
-  integrity sha512-ZN3+mpxW+Ov4kPHmhcgAmAmh4hfjq1L1lEbrAcmlLA4DQEbmfAcOEXPzGc11N1BabXxerk1LdAFsD9C5BvLgeQ==
+"@golemio/mobile-app-statistics@1.0.8-dev.736045115":
+  version "1.0.8-dev.736045115"
+  resolved "https://registry.yarnpkg.com/@golemio/mobile-app-statistics/-/mobile-app-statistics-1.0.8-dev.736045115.tgz#94097916bd65744965279f7ce1724ec1ef8a43ec"
+  integrity sha512-jZHDWVTxGM4HOaLUmHdwSLGf91LqE/Icjr4a+jxKPOZXDPV6h/tSsWCWbNhro00s56+NvpIzRpMkvgXJAFxGww==
   dependencies:
-    jsonwebtoken "8.5.1"
+    jsonwebtoken "9.0.0"
 
 "@golemio/mos@1.0.9":
   version "1.0.9"
@@ -6894,6 +6894,16 @@ jsonwebtoken@8.5.1:
     lodash.once "^4.0.0"
     ms "^2.1.1"
     semver "^5.6.0"
+
+jsonwebtoken@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-9.0.0.tgz#d0faf9ba1cc3a56255fe49c0961a67e520c1926d"
+  integrity sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==
+  dependencies:
+    jws "^3.2.2"
+    lodash "^4.17.21"
+    ms "^2.1.1"
+    semver "^7.3.8"
 
 jsprim@^1.2.2:
   version "1.4.2"
