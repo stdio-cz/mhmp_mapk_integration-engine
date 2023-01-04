@@ -1,29 +1,31 @@
-import http from "http";
-import express, { Request, Response, NextFunction, RequestHandler } from "@golemio/core/dist/shared/express";
-import sentry from "@golemio/core/dist/shared/sentry";
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
-import { config } from "@golemio/core/dist/integration-engine/config";
+import { BaseApp, getServiceHealth, ILogger, IServiceCheck, Service } from "@golemio/core/dist/helpers";
+import { IConfiguration } from "@golemio/core/dist/integration-engine/config";
 import {
     AMQPConnector,
     MongoConnector,
     PostgresConnector,
     RedisConnector,
 } from "@golemio/core/dist/integration-engine/connectors";
-import { log, requestLogger } from "@golemio/core/dist/integration-engine/helpers";
-import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
-import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
-import { QueueProcessor, filterQueueDefinitions } from "@golemio/core/dist/integration-engine/queueprocessors";
+import { IntegrationEngineContainer, ContainerToken } from "@golemio/core/dist/integration-engine/ioc/";
+import { filterQueueDefinitions, QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
+import express, { NextFunction, Request, RequestHandler, Response } from "@golemio/core/dist/shared/express";
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
+import sentry from "@golemio/core/dist/shared/sentry";
+import http from "http";
 import { ModuleLoader } from "./ModuleLoader";
 
 export default class App extends BaseApp {
     public express: express.Application = express();
     public server?: http.Server;
     public metricsServer?: http.Server;
-    public port: number = parseInt(config.port || "3006", 10);
+    public port: number;
     private commitSHA: string | undefined = undefined;
     private lightship: Lightship;
     private queueProcessors: Set<QueueProcessor>;
+    private log: ILogger;
+    private config: IConfiguration;
 
     /**
      * Run configuration methods on the Express instance
@@ -31,19 +33,21 @@ export default class App extends BaseApp {
      */
     constructor() {
         super();
-
+        this.config = IntegrationEngineContainer.resolve<IConfiguration>(ContainerToken.Config);
+        this.log = IntegrationEngineContainer.resolve<ILogger>(ContainerToken.Logger);
+        this.port = parseInt(this.config.port || "3006", 10);
         this.lightship = createLightship({
-            detectKubernetes: config.NODE_ENV !== "production",
-            shutdownHandlerTimeout: config.lightship.handlerTimeout,
-            gracefulShutdownTimeout: config.lightship.shutdownTimeout,
-            shutdownDelay: config.lightship.shutdownDelay,
+            detectKubernetes: this.config.NODE_ENV !== "production",
+            shutdownHandlerTimeout: this.config.lightship.handlerTimeout,
+            gracefulShutdownTimeout: this.config.lightship.shutdownTimeout,
+            shutdownDelay: this.config.lightship.shutdownDelay,
         });
         process.on("uncaughtException", (err: Error) => {
-            log.error(err);
+            this.log.error(err);
             this.lightship.shutdown();
         });
         process.on("unhandledRejection", (err: Error) => {
-            log.error(err);
+            this.log.error(err);
             this.lightship.shutdown();
         });
 
@@ -55,22 +59,22 @@ export default class App extends BaseApp {
      */
     public start = async (): Promise<void> => {
         try {
-            initSentry(config.sentry, config.app_name);
-            metricsService.init(config, log);
+            initSentry(this.config.sentry, this.config.app_name);
+            metricsService.init(this.config, this.log);
             this.metricsServer = metricsService.serveMetrics();
             await this.expressServer();
             this.commitSHA = await this.loadCommitSHA();
-            log.info(`Commit SHA: ${this.commitSHA}`);
+            this.log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             await this.registerQueues();
-            log.info("Started!");
+            this.log.info("Started!");
             this.lightship.registerShutdownHandler(async () => {
                 await this.gracefulShutdown();
             });
             this.lightship.signalReady();
         } catch (err) {
             sentry.captureException(err);
-            ErrorHandler.handle(err, log);
+            ErrorHandler.handle(err, this.log);
         }
     };
 
@@ -87,12 +91,9 @@ export default class App extends BaseApp {
      * Graceful shutdown - terminate connections and server
      */
     private gracefulShutdown = async (): Promise<void> => {
-        log.info("Graceful shutdown initiated.");
+        this.log.info("Graceful shutdown initiated.");
         await this.cancelConsumers();
-        await MongoConnector.disconnect();
-        await PostgresConnector.disconnect();
-        await RedisConnector.disconnect();
-        await AMQPConnector.disconnect();
+        await IntegrationEngineContainer.dispose();
         await this.server?.close();
         await this.metricsServer?.close();
     };
@@ -110,7 +111,7 @@ export default class App extends BaseApp {
             queueDefinitions.push(worker.getQueueDefinition());
         }
 
-        const filteredQueueDefinitions = filterQueueDefinitions(queueDefinitions, config.queuesBlacklist);
+        const filteredQueueDefinitions = filterQueueDefinitions(queueDefinitions, this.config.queuesBlacklist);
         const channel = await AMQPConnector.connect();
 
         return Promise.all(
@@ -152,12 +153,12 @@ export default class App extends BaseApp {
         // Setup error handler hook on server error
         this.server.on("error", (err) => {
             sentry.captureException(err);
-            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err), log);
+            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err), this.log);
         });
         // Serve the application at the given port
         this.server.listen(this.port, () => {
             // Success callback
-            log.info(`Listening at http://localhost:${this.port}/`);
+            this.log.info(`Listening at http://localhost:${this.port}/`);
         });
     }
 
@@ -167,7 +168,7 @@ export default class App extends BaseApp {
     private middleware = (): void => {
         this.express.use(sentry.Handlers.requestHandler() as RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as RequestHandler);
-        this.express.use(requestLogger);
+        this.express.use(IntegrationEngineContainer.resolve(ContainerToken.RequestLogger));
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);
     };
@@ -176,7 +177,7 @@ export default class App extends BaseApp {
         const description = {
             app: "Golemio Data Platform Integration Engine",
             commitSha: this.commitSHA,
-            version: config.app_version,
+            version: this.config.app_version,
         };
 
         const services: IServiceCheck[] = [
@@ -227,9 +228,9 @@ export default class App extends BaseApp {
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-            const error: ICustomErrorObject = HTTPErrorHandler.handle(err, log);
+            const error: ICustomErrorObject = HTTPErrorHandler.handle(err, this.log);
             if (error) {
-                log.silly("Error caught by the router error handler.");
+                this.log.silly("Error caught by the router error handler.");
                 res.setHeader("Content-Type", "application/json; charset=utf-8");
                 res.status(error.error_status || 500).send(error);
             }

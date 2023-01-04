@@ -108,6 +108,11 @@
             "name": "Sensoneo",
             "url": "https://sensoneotools.azurewebsites.net/api",
             "code": ""
+        },
+        "sensorityApi": {
+            "name": "Sensority",
+            "url": "https://sensemanag.sensority.eu/external",
+            "token": ""
         }
     },
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",
