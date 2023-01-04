@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.52] - 2023-01-04
+
 ### Changed
 
 -   update golemio core due to dependency injection implementation
