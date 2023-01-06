@@ -45,6 +45,10 @@
     },
     "OICTSortedWasteContainers": "https://www.mojepraha.eu/api/sorted-waste-stations",
     "OICTEndpointApikey": "",
+    "OICTEnergetikaApiHeaders": {
+        "X-Api-Key": ""
+    },
+    "OICTEnergetikaApiUrl": "https://api.oictenergetika.cz",
     "BicycleParkings": "https://overpass-api.de/api/interpreter/?data=[out:json];(node[amenity=bicycle_parking](poly:'50.1785 14.5295 50.152266272562684 14.37286376953125 50.1131 14.2053 49.9327 14.342 49.9954 14.6619 50.0902 14.7279 50.1785 14.5295'););out;",
     "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
     "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
