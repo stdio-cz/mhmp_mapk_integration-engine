@@ -7,6 +7,7 @@ import { File } from "@google-cloud/storage";
 import { promisify } from "util";
 import { JSONSchemaValidator, ObjectKeysValidator, Validator } from "@golemio/core/dist/shared/golemio-validator";
 import moment from "@golemio/core/dist/shared/moment-timezone";
+import { DateTime } from "@golemio/core/dist/shared/luxon";
 import { config } from "@golemio/core/dist/integration-engine/config";
 import { RedisConnector } from "@golemio/core/dist/integration-engine/connectors";
 import {
@@ -26,7 +27,10 @@ import { AirQualityStations } from "@golemio/air-quality-stations/dist/schema-de
 import { BicycleCounters } from "@golemio/bicycle-counters/dist/schema-definitions";
 import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitions";
 import { CityDistricts } from "@golemio/city-districts/dist/schema-definitions";
-import { EnergeticsSchema as Energetics, EnergeticsTypes } from "@golemio/energetics/dist/schema-definitions";
+import { EnergeticsSchema as Energetics } from "@golemio/energetics/dist/schema-definitions";
+import { OictDataSourceFactory } from "@golemio/energetics/dist/integration-engine/workers/oict-energetika/datasources/OictDataSourceFactory";
+import { OictResourceType } from "@golemio/energetics/dist/integration-engine/workers/oict-energetika/datasources/helpers";
+import { UnimonitorCemApi } from "@golemio/energetics/dist/integration-engine/helpers";
 import { Gardens } from "@golemio/gardens/dist/schema-definitions";
 import { MedicalInstitutions } from "@golemio/medical-institutions/dist/schema-definitions";
 import { Meteosensors } from "@golemio/meteosensors/dist/schema-definitions";
@@ -45,12 +49,6 @@ import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions
 import { WasteCollectionYards } from "@golemio/waste-collection-yards/dist/schema-definitions";
 import { WazeCCP } from "@golemio/waze-ccp/dist/schema-definitions";
 import { WazeTT } from "@golemio/waze-tt/dist/schema-definitions";
-
-import { EnesaApi, UnimonitorCemApi } from "@golemio/energetics/dist/integration-engine/helpers";
-
-import EnesaBuildings = EnergeticsTypes.Enesa.Buildings;
-import EnesaConsumption = EnergeticsTypes.Enesa.Consumption;
-import EnesaDevices = EnergeticsTypes.Enesa.Devices;
 
 const sleep = promisify(setTimeout);
 
@@ -1279,92 +1277,44 @@ describe("DataSourcesAvailabilityChecking", () => {
     });
 
     describe("Energetics", () => {
-        describe("Enesa", () => {
+        describe("OICT Energetika", () => {
             let dateParams = {
-                from: "",
-                to: "",
-            };
-
-            const testEnesaDataset = async (
-                resourceType: string,
-                schemaConfig: Record<string, any>,
-                jsonTransformer: any,
-                onDataFunction: (data: any) => Promise<void>
-            ) => {
-                const baseUrl = config.datasources.EnesaApiEnergeticsUrl;
-                const params = new URLSearchParams(dateParams);
-                const datasource = new DataSourceStreamed(
-                    schemaConfig.name + "DataSource",
-                    new HTTPProtocolStrategyStreamed({
-                        headers: config.datasources.EnesaApiEnergeticsHeaders,
-                        method: "GET",
-                        url: `${baseUrl}/${resourceType}?${params}`,
-                    }).setStreamTransformer(jsonTransformer),
-                    new JSONDataTypeStrategy({ resultsPath: "" }),
-                    new JSONSchemaValidator(schemaConfig.name + "DataSource", schemaConfig.datasourceJsonSchema)
-                );
-
-                const dataStream = await datasource.getAll(true);
-                await Promise.race([dataStream.setDataProcessor(onDataFunction).proceed(), sleep(1000)]);
-
-                if (!dataStream.destroyed) {
-                    dataStream.destroy();
-                }
+                dateFrom: "",
+                dateTo: "",
             };
 
             before(() => {
-                const now = moment().tz(EnesaApi.API_DATE_TZ);
-                const dateFrom = now.clone().subtract(1, "day").format(EnesaApi.API_DATE_FORMAT);
-                const dateTo = now.format(EnesaApi.API_DATE_FORMAT);
+                const currentDate = DateTime.now().startOf("day");
+                const leftBoundDate = currentDate.minus({ days: 2 });
 
                 dateParams = {
-                    from: dateFrom,
-                    to: dateTo,
+                    dateFrom: leftBoundDate.toISODate(),
+                    dateTo: currentDate.toISODate(),
                 };
             });
 
             it("Energy Buildings Dataset should return all items", async () => {
-                await testEnesaDataset(
-                    EnesaApi.resourceType.Buildings,
-                    Energetics.enesa.buildings,
-                    JSONStream.parse("buildings.*"),
-                    async (data: EnesaBuildings.InputElement) => {
-                        expect(Object.keys(data).length).to.be.greaterThan(0);
-                    }
-                );
+                const dataSource = OictDataSourceFactory.getDataSource(OictResourceType.Buildings);
+                const data = await dataSource.getAll();
+                expect(Object.keys(data).length).to.be.greaterThan(0);
             });
 
             it("Energy Consumption Dataset should return all items", async () => {
-                await testEnesaDataset(
-                    EnesaApi.resourceType.Consumption,
-                    Energetics.enesa.consumption,
-                    JSONStream.parse("*"),
-                    async (data: EnesaConsumption.InputElement) => {
-                        expect(Object.keys(data).length).to.be.greaterThan(0);
-                    }
-                );
+                const dataSource = OictDataSourceFactory.getDataSource(OictResourceType.Consumption, dateParams);
+                const data = await dataSource.getAll();
+                expect(Object.keys(data).length).to.be.greaterThan(0);
             });
 
             it("Energy Consumption Visapp Dataset should return all items", async () => {
-                await testEnesaDataset(
-                    EnesaApi.resourceType.ConsumptionVisapp,
-                    Energetics.enesa.consumption,
-                    JSONStream.parse("*"),
-                    async (data: EnesaConsumption.InputElement) => {
-                        expect(Object.keys(data).length).to.be.greaterThan(0);
-                    }
-                );
+                const dataSource = OictDataSourceFactory.getDataSource(OictResourceType.ConsumptionVisapp, dateParams);
+                const data = await dataSource.getAll();
+                expect(Object.keys(data).length).to.be.greaterThan(0);
             });
 
             it("Energy Devices Dataset should return all items", async () => {
-                await testEnesaDataset(
-                    EnesaApi.resourceType.Devices,
-                    Energetics.enesa.devices,
-                    JSONStream.parse("devices.*"),
-                    async (data: EnesaDevices.InputElement) => {
-                        expect(Object.keys(data).length).to.be.greaterThan(0);
-                    }
-                );
+                const dataSource = OictDataSourceFactory.getDataSource(OictResourceType.Devices);
+                const data = await dataSource.getAll();
+                expect(Object.keys(data).length).to.be.greaterThan(0);
             });
         });
 
