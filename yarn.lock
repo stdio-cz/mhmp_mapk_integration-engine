@@ -1343,10 +1343,10 @@
     xml2js-es6-promise "^1.1.1"
     yauzl "^2.10.0"
 
-"@golemio/energetics@1.0.14-dev.741822709":
-  version "1.0.14-dev.741822709"
-  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.14-dev.741822709.tgz#0e06d232a8159faac60b10cfa4223508b8c21748"
-  integrity sha512-KyZnNs8KH1QgIT/QR8lNOqQgtgBvJMcrpkvCy3tPlqkjewvwUm8XusAKLWOwoHMDMSQerVJWHf2gKl341AdtfQ==
+"@golemio/energetics@1.0.14-dev.741957153":
+  version "1.0.14-dev.741957153"
+  resolved "https://registry.yarnpkg.com/@golemio/energetics/-/energetics-1.0.14-dev.741957153.tgz#0082e0bad73fd5491ba3106045c8fa2ebf42c46c"
+  integrity sha512-Pwx8242/gjB5wym414zC/mziqY4LtlT93tgKUZsEVCDHhbH+B0pJzuyiVAjCij96S04UukCRBpinyWn3il+pEA==
   dependencies:
     JSONStream "^1.3.5"
 
