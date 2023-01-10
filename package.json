@@ -92,7 +92,6 @@
         "@golemio/shared-cars": "1.0.5",
         "@golemio/sorted-waste-stations": "1.1.17",
         "@golemio/traffic-cameras": "1.0.6",
-        "@golemio/traffic-detectors": "1.0.8",
         "@golemio/waste-collection": "0.0.7",
         "@golemio/waste-collection-yards": "1.1.1",
         "@golemio/waze-ccp": "1.0.4",
@@ -101,6 +100,7 @@
     },
     "resolutions": {
         "moment": "^2.29.4",
-        "**/body-parser/qs": "^6.7.3"
+        "**/body-parser/qs": "^6.7.3",
+        "luxon":"2.5.2"
     }
 }
