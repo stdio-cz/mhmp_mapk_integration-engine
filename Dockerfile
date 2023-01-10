@@ -12,6 +12,7 @@ WORKDIR /app
 
 COPY --from=build /app/dist /app/dist
 COPY config config
+COPY test/datasources-test test/datasources-test
 COPY package.json yarn.lock ./
 # TODO install only production dependencies after (re)moving data source availability check test
 RUN yarn --ignore-scripts --cache-folder .yarn-cache && \
