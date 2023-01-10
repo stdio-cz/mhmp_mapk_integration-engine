@@ -30,7 +30,6 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@golemio/cli": "1.3.3",
         "@golemio/eslint-config": "^1.1.0",
         "@google-cloud/storage": "^5.7.1",
         "@types/chai": "4.2.3",
@@ -68,6 +67,7 @@
         "@golemio/bicycle-parkings": "1.0.4",
         "@golemio/chmu": "1.0.0-dev.718082295",
         "@golemio/city-districts": "1.0.6",
+        "@golemio/cli": "1.3.3",
         "@golemio/core": "1.3.0",
         "@golemio/energetics": "1.1.0",
         "@golemio/fcd": "1.0.11",
@@ -101,6 +101,7 @@
     "resolutions": {
         "moment": "^2.29.4",
         "**/body-parser/qs": "^6.7.3",
-        "luxon": "2.5.2"
+        "luxon": "2.5.2",
+        "**/gluegun/ejs": "^3.1.7"
     }
 }

@@ -47,7 +47,7 @@ stages:
         - yarn --ignore-scripts
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
+        - sh -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export MONGO_CONN=mongodb://mongo/testdb
@@ -80,11 +80,11 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
 
 up_down_migrations:
     stage: test
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
     services:
         - name: postgis/postgis:13-3.2-alpine
           alias: postgres
@@ -96,7 +96,7 @@ up_down_migrations:
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
         - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
-        - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
+        - sh -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
         - yarn --ignore-scripts
@@ -108,7 +108,6 @@ up_down_migrations:
         - if: $SKIP_TEST_AND_STAGES_AFTER
           when: never
         - when: always
-
 
 run_tests-node-next:
     extends: .run_tests
