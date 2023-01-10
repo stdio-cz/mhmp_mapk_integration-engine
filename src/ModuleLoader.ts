@@ -19,7 +19,6 @@ export class ModuleLoader {
         "firebase-pid-litacka",
         "flow",
         "gardens",
-        "general",
         "medical-institutions",
         "meteosensors",
         "microclimate",
