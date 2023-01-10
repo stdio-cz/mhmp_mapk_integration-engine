@@ -111,5 +111,5 @@ up_down_migrations:
 
 run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:18.11.0
+    image: node:18.11.0-alpine
     allow_failure: true
