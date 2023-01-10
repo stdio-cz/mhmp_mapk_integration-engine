@@ -1517,15 +1517,6 @@
   resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.6.tgz#a74d107f6254f5acb1e6243b87087a4a373ce71e"
   integrity sha512-neBtCpH1TpnyFgvSenB+nodDo4Tj1H9P+K+LvuA7tpkO52h6Hc+LVc8o8dAbfuLP5x1XGbmYUT/uoKqQq0FYLg==
 
-"@golemio/traffic-detectors@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/traffic-detectors/-/traffic-detectors-1.0.8.tgz#844dbd6f0b440cf658bf16969f631a5f4911ae65"
-  integrity sha512-YkS8itybGgh4konzr5k2W2mmN0bFYZF+4Y54mHbQUSSni13M/row8jp1oYcLgkthd6eP1/83SGmROnvVk5fuvQ==
-  dependencies:
-    uuid "^8.3.2"
-    xml-to-json-stream "^1.1.0"
-    xml2js-es6-promise "^1.1.1"
-
 "@golemio/utils@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
@@ -7269,10 +7260,10 @@ lunr@^2.3.9:
   resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
   integrity sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==
 
-luxon@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.3.2.tgz#5f2f3002b8c39b60a7b7ad24b2a85d90dc5db49c"
-  integrity sha512-MlAQQVMFhGk4WUA6gpfsy0QycnKP0+NlCBJRVRNPxxSIbjrCbQ65nrpJD3FVyJNZLuJ0uoqL57ye6BmDYgHaSw==
+luxon@2.5.2, luxon@^2.3.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.2.tgz#17ed497f0277e72d58a4756d6a9abee4681457b6"
+  integrity sha512-Yg7/RDp4nedqmLgyH0LwgGRvMEKVzKbUdkBYyCosbHgJ+kaOUx0qzSiSatVc3DFygnirTPYnMM2P5dg2uH1WvA==
 
 make-dir@^3.0.0, make-dir@^3.0.2:
   version "3.1.0"
@@ -10700,11 +10691,6 @@ xdg-basedir@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"
   integrity sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==
-
-xml-to-json-stream@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/xml-to-json-stream/-/xml-to-json-stream-1.1.0.tgz#9dbc56391679f47d7e4370e1019d5251514dece9"
-  integrity sha512-JaxUCQOk9+KajLNUV51elxlXI8cmN9rX4LVuhdCUtD7Z6N3lBsaD6l6caqjBPB1rieCZXviaoq4OKwAeup4RhA==
 
 xml2js-es6-promise@^1.1.1:
   version "1.1.1"

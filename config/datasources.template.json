@@ -87,11 +87,6 @@
         "password": ""
     },
     "TSKFTPParkingZonesPath": "/external/tsk/parking-zones",
-    "TSKSTD": {
-        "user": "",
-        "pass": "",
-        "api_url": "https://185.176.138.144:45655/Transmitter3.svc"
-    },
     "TSKMeteosensors": "http://www.tsk-praha.cz/tskexport3/json/meteosensors",
     "TSKParkings": "http://www.tsk-praha.cz/tskexport3/json/parkings",
     "TSKTrafficCameras": "http://www.tsk-praha.cz/tskexport3/json/cameras",
