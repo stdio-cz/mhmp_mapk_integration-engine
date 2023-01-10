@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.52",
+    "version": "2.0.53",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -100,6 +100,6 @@
     "resolutions": {
         "moment": "^2.29.4",
         "**/body-parser/qs": "^6.7.3",
-        "luxon":"2.5.2"
+        "luxon": "2.5.2"
     }
 }
