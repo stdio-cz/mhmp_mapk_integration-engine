@@ -73,7 +73,6 @@
         "@golemio/firebase-pid-litacka": "1.0.5",
         "@golemio/flow": "1.1.0",
         "@golemio/gardens": "1.1.1",
-        "@golemio/general": "1.0.4",
         "@golemio/medical-institutions": "1.0.8",
         "@golemio/meteosensors": "1.0.7",
         "@golemio/microclimate": "1.0.4",
