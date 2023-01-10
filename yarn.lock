@@ -1267,10 +1267,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.3.0.tgz#a8cceac9fdc077a4632c4f35d1ea157886fa99d7"
-  integrity sha512-ZV+tGJ3zi6nsTdMDBxFeDWNh4LGT4ufPufA2938mf5C/qflXo+tIld1Sw/KKUsobvgmr1q1XIMUC1qWnSb0ZiA==
+"@golemio/core@1.3.1-dev.743035340":
+  version "1.3.1-dev.743035340"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.3.1-dev.743035340.tgz#e9f7d808228a0d7593d7d5d1b53a0dff5903ba61"
+  integrity sha512-WLzT78O7AzV4L3xq40BNDOLG5oEUF+VJCjHHsTtoxNs1ruDBLtOuj925aVAVWh8PNGeP5kIvIW1+pQtOiQpjoA==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -1314,7 +1314,7 @@
     iconv-lite "^0.6.2"
     ioredis "^4.28.5"
     lightship "^6.7.2"
-    luxon "^2.3.2"
+    luxon "^2.5.2"
     moment-timezone "^0.5.26"
     mongodb-restore-dump "1.0.1"
     mongoose "^6.6.5"
@@ -7211,7 +7211,7 @@ lunr@^2.3.9:
   resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
   integrity sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==
 
-luxon@2.5.2, luxon@^2.3.2:
+luxon@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.2.tgz#17ed497f0277e72d58a4756d6a9abee4681457b6"
   integrity sha512-Yg7/RDp4nedqmLgyH0LwgGRvMEKVzKbUdkBYyCosbHgJ+kaOUx0qzSiSatVc3DFygnirTPYnMM2P5dg2uH1WvA==
