@@ -76,7 +76,7 @@
         "@golemio/gardens": "1.1.1",
         "@golemio/medical-institutions": "1.0.8",
         "@golemio/meteosensors": "1.0.7",
-        "@golemio/microclimate": "1.0.5-dev.740164088",
+        "@golemio/microclimate": "1.0.5-dev.744012359",
         "@golemio/mobile-app-statistics": "1.0.8",
         "@golemio/mos": "1.0.9",
         "@golemio/municipal-authorities": "1.0.6",
