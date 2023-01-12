@@ -16,17 +16,28 @@ COPY test/datasources-test test/datasources-test
 COPY package.json yarn.lock ./
 # TODO install only production dependencies after (re)moving data source availability check test
 RUN yarn --ignore-scripts --cache-folder .yarn-cache && \
-    rm -rf .yarn-cache
+    rm -rf .yarn-cache yarn.lock
 
 # FAKETIME
 # USER root
 RUN apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ libfaketime && \
     rm -rf /var/cache/apk/*
 
+# Remove busybox links
+RUN busybox --list-full | \
+    grep -E "bin/ifconfig$|bin/ip$|bin/netstat$|bin/nc$|bin/poweroff$|bin/reboot$" | \
+    sed 's/^/\//' | xargs rm -f
+
 # Create a non-root user
 RUN addgroup -S nonroot && \
     adduser -S nonroot -G nonroot -h /app -u 1001 -D && \
     chown -R nonroot /app
+
+# Disable persistent history
+RUN touch /app/.ash_history && \
+    chmod a=-rwx /app/.ash_history && \
+    chown root:root /app/.ash_history
+
 USER nonroot
 
 EXPOSE 3006
