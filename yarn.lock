@@ -1461,10 +1461,10 @@
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.2.6-dev.741471677":
-  version "1.2.6-dev.741471677"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.6-dev.741471677.tgz#807294b29d2db197a6aacdb4f06116049a980f6c"
-  integrity sha512-bmAbC0mhUTOzE/mgGuIH0JCxe6IktkTb67UlAyNKrWBHM+Zd7eFOGxUuRL0/rte2VJAzFc0mfEraObVVtEpF9g==
+"@golemio/parkings@1.2.6-dev.745473934":
+  version "1.2.6-dev.745473934"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.6-dev.745473934.tgz#df93708ea099ddd2348ae67ddbccc595f224a132"
+  integrity sha512-x7nygWP7fabPkn9cH61rSrD57dRmc+pJsuEEyNPQGmDoqwGNs4+mfr4L40nvNkQvMZcx4Iq9nzYVKoZZKHlE1w==
   dependencies:
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
