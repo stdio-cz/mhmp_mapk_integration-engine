@@ -27,6 +27,11 @@
         "type": "git",
         "url": "https://gitlab.com/operator-ict/golemio/code/integration-engine"
     },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0",
+        "yarn": "Use npm!"
+    },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
@@ -98,9 +103,9 @@
         "@golemio/waze-tt": "1.0.10",
         "dotenv": "6.1.0"
     },
-    "resolutions": {
-        "moment": "^2.29.4",
-        "**/gluegun/ejs": "^3.1.7",
-        "**/body-parser/qs": "^6.7.3"
+    "overrides": {
+        "gluegun": {
+            "ejs": "3.1.7"
+        }
     }
 }

@@ -2,10 +2,10 @@ FROM node:16.17.0-alpine AS build
 WORKDIR /app
 
 # JS BUILD
-COPY package.json yarn.lock tsconfig.json ./
+COPY .npmrc package.json package-lock.json tsconfig.json ./
 COPY src src
-RUN yarn --ignore-scripts && \
-    yarn build-minimal
+RUN npm install --ignore-scripts --progress=false && \
+    npm run build-minimal
 
 FROM node:16.17.0-alpine
 WORKDIR /app
@@ -13,10 +13,10 @@ WORKDIR /app
 COPY --from=build /app/dist /app/dist
 COPY config config
 COPY test/datasources-test test/datasources-test
-COPY package.json yarn.lock ./
+COPY .npmrc package.json package-lock.json  ./
 # TODO install only production dependencies after (re)moving data source availability check test
-RUN yarn --ignore-scripts --cache-folder .yarn-cache && \
-    rm -rf .yarn-cache yarn.lock
+RUN npm install --ignore-scripts --progress=false --cache .npm-cache && \
+    rm -rf .npm-cache .npmrc package-lock.json
 
 # FAKETIME
 # USER root
@@ -45,4 +45,4 @@ CMD ["node", "-r",  "dotenv/config", "dist/index.js"]
 
 # For FAKETIME use prefix like:
 # LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="@2022-02-22 20:22:00" date
-# LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="@2022-02-22 20:22:00" yarn start
+# LD_PRELOAD=/usr/local/lib/libfaketime.so.1 FAKETIME="@2022-02-22 20:22:00" npm run start

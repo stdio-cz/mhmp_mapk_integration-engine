@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 -   Docker image optimization
+-   Migrate to npm
 
 ## [2.0.53] - 2023-01-10
 
