@@ -7,6 +7,7 @@ docs/typedoc/
 config/*.json
 !config/*.template.json
 test/datasources-test/report.txt
+yarn.lock
 
 ## Template gitignore rules from https://github.com/github/gitignore
 

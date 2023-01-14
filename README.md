@@ -32,7 +32,6 @@ Developed by http://operatorict.cz
 -   Mongo (https://www.mongodb.com)
 -   Postgres (https://www.postgresql.org/)
 -   Redis (https://redis.io/)
--   yarn (https://yarnpkg.com)
 -   TypeScript (https://www.typescriptlang.org/)
 -   Golemio Schema Definitions
 
@@ -43,7 +42,7 @@ Install all prerequisites
 Install all dependencies using command:
 
 ```
-yarn install
+npm install
 ```
 
 from the application's root directory.
@@ -71,13 +70,13 @@ For more informations see [`@golemio/schema-definitions` README](https://gitlab.
 To compile typescript code into js one-time (production build):
 
 ```
-yarn build
+npm run build
 ```
 
 To run the app:
 
 ```
-yarn start
+npm run start
 ```
 
 #### Dev/debug
@@ -85,13 +84,13 @@ yarn start
 Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
 
 ```
-yarn dev-start
+npm run dev-start
 ```
 
 or run with a debugger:
 
 ```
-yarn dev-start-debug
+npm run dev-start-debug
 ```
 
 Application is now running locally on port 3006 or on port specified in the environment variable.
@@ -101,7 +100,7 @@ Application is now running locally on port 3006 or on port specified in the envi
 To run all test defined in /test directory simply run this command:
 
 ```
-npm test
+npm run test
 ```
 
 from the application's root directory. All tests should pass.
@@ -109,7 +108,7 @@ from the application's root directory. All tests should pass.
 To run all DataSources tests defined in /test/DataSourcesAvailabilityChecking.test.ts file run this command:
 
 ```
-yarn datasources-test
+npm run datasources-test
 ```
 
 from the application's root directory.
@@ -124,7 +123,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 ## Documentation
 
-For generating documentation run `yarn generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
+For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
 More documentation in `docs/`. If you want to add a new dataset or create new API routes, check out our existing [modules](https://gitlab.com/operator-ict/golemio/code/modules).
 
