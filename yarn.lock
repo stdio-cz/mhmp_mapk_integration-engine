@@ -1456,10 +1456,10 @@
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.5.tgz#2d990c29c051673e4fa476fadac1c918d1401b5b"
-  integrity sha512-J5ZZY7QPpY/NwF8Ltq91cT/+w8ypeLI/3EnvTgKnBPU7CK2dQlM/cjl79+4SiuZAd2GYmnm+jZjKCYBVbSKiPw==
+"@golemio/parkings@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.6.tgz#315b364561e5cc475bc702ee02b5c5956eba88f4"
+  integrity sha512-GvGdRiavhLrmrH+4Rt9ceAPl+OKiPvrG7TvhoiK/M+voeAQmfjr1ZM8Cz296m4VS2wYWDGDnusSU2UY86+lvkQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
@@ -1534,10 +1534,10 @@
     geojson "^0.5.0"
     slugify "1.3.2"
 
-"@golemio/waste-collection@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.7.tgz#d4e6615c1c10540ff715a33f17ead60f1aa87c91"
-  integrity sha512-M82dKlbqb4dRAVWrdcZtNFCkaPI7QOv4Y53l0ymOJboviV09W2D2nMjd6lrbdk6bb1L9INrdw0JfTFkHEGQAJg==
+"@golemio/waste-collection@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/waste-collection/-/waste-collection-0.0.8.tgz#30577b3f171d7bb0e1b25e34a404adbc2434ab00"
+  integrity sha512-lXD3roqejRuB4WLH4FYV5sjeOlOZJrZzElmK+wlC7mvyMZ1V/cuD1FqgfLKRkvM5xnfIt1p821pdV4/8KjQmsw==
   dependencies:
     JSONStream "^1.3.5"
     geojson "^0.5.0"
