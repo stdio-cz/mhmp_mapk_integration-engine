@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.0.54",
+    "version": "2.0.55",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -68,7 +68,7 @@
         "@golemio/bicycle-parkings": "1.0.4",
         "@golemio/city-districts": "1.0.6",
         "@golemio/core": "1.3.1-dev.743035340",
-        "@golemio/energetics": "1.1.0",
+        "@golemio/energetics": "1.1.1",
         "@golemio/fcd": "1.0.11",
         "@golemio/firebase-pid-litacka": "1.0.5",
         "@golemio/flow": "1.1.0",
