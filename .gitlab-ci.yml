@@ -23,7 +23,7 @@ include:
 cache:
     key:
         files:
-            - yarn.lock
+            - package-lock.json
     paths:
         - node_modules
 
@@ -44,12 +44,11 @@ stages:
         - redis:6.2.7-alpine
         - rabbitmq:3.11.2-alpine
     script:
-        - yarn --ignore-scripts
-        # Audit production dependencies for HIGH (8) vulnerabilities
-        # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
-        - yarn lint
-        - yarn build
+        - npm install --ignore-scripts --progress=false
+        # Audit production dependencies for HIGH vulnerabilities
+        - npm audit --omit dev --audit-level high
+        - npm run lint
+        - npm run build
         - export MONGO_CONN=mongodb://mongo/testdb
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
         - export REDIS_CONN=redis://redis
@@ -63,7 +62,7 @@ stages:
         - export S3_UPLOAD_PART_SIZE=10
         - export S3_UPLOAD_QUEUE_SIZE=2
         - cp config/datasources.template.json config/datasources.json
-        - yarn code-coverage
+        - npm run code-coverage
     tags:
         - docker
     rules:
@@ -80,11 +79,11 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
 
 up_down_migrations:
     stage: test
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
     services:
         - name: postgis/postgis:13-3.2-alpine
           alias: postgres
@@ -96,12 +95,12 @@ up_down_migrations:
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
         - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
-        - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
+        - sh -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
-        - yarn --ignore-scripts
-        - yarn golemio migrate-db up --silent
-        - yarn golemio migrate-db reset --silent
+        - npm install --ignore-scripts --progress=false
+        - npx golemio migrate-db up --silent
+        - npx golemio migrate-db reset --silent
     tags:
         - docker
     rules:
@@ -109,8 +108,7 @@ up_down_migrations:
           when: never
         - when: always
 
-
 run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:18.11.0
+    image: node:18.11.0-alpine
     allow_failure: true

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+-   Docker image optimization
+-   Migrate to npm
+
 ## [2.0.55] - 2023-01-18
 
 -   No changelog
