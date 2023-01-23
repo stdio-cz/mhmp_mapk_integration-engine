@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-01-23
+
 ### Changed
 
 -   Docker image optimization
