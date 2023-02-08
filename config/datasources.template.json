@@ -132,5 +132,22 @@
         "password": ""
     },
     "CeskyCarsharingVehiclesApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api_demo/IIS_API.svc/getAllCarsIct",
-    "CeskyCarsharingGeofencingApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api_demo/IIS_API.svc/getPolygonsIct"
+    "CeskyCarsharingGeofencingApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api_demo/IIS_API.svc/getPolygonsIct",
+    "waste-collection": {
+        "rfid:": {
+            "containerVendorUrl": "",
+            "containerVendorCode": "",
+            "picksUrl": "",
+            "picksCode": ""
+        }
+    },
+    "chmu": {
+        "ftpInput": {
+            "path": "/external/chmi-meteo/",
+            "host": "",
+            "port": 21,
+            "user": "",
+            "password": ""
+        }
+    }
 }
