@@ -18,6 +18,7 @@ export class ModuleLoader {
         "fcd",
         "firebase-pid-litacka",
         "flow",
+        "chmu",
         "gardens",
         "medical-institutions",
         "meteosensors",
