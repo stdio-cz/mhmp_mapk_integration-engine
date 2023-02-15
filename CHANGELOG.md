@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 -   Chmu module
 
+## [2.4.1] - 2023-02-15
+
+-   No changelog
+
 ## [2.4.0] - 2023-02-13
 
 -   No changelog
