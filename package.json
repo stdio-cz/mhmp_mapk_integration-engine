@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -99,7 +99,7 @@
         "@golemio/waste-collection": "1.1.0",
         "@golemio/waste-collection-yards": "1.2.0",
         "@golemio/waze-ccp": "1.1.0",
-        "@golemio/waze-tt": "1.1.1",
+        "@golemio/waze-tt": "1.1.2",
         "dotenv": "6.1.0"
     },
     "overrides": {
