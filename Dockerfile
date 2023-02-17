@@ -1,4 +1,4 @@
-FROM node:16.17.0-alpine AS build
+FROM node:18.14.0-alpine AS build
 WORKDIR /app
 
 # JS BUILD
@@ -7,7 +7,7 @@ COPY src src
 RUN npm install --ignore-scripts --progress=false && \
     npm run build-minimal
 
-FROM node:16.17.0-alpine
+FROM node:18.14.0-alpine
 WORKDIR /app
 
 COPY --from=build /app/dist /app/dist
