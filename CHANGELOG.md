@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+-   Chmu module
+
 ## [2.4.1] - 2023-02-15
 
 -   No changelog
