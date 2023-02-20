@@ -4,13 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Added
-
--   Chmu module
-
 ### Changed
 
 -   Update Node.js to v18.14.0, Express to v4.18.2 ([core#50](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/50))
+
+## [2.4.2] - 2023-02-20
+
+### Added
+
+-   Chmu module
 
 ## [2.4.1] - 2023-02-15
 
