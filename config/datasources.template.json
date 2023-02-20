@@ -140,5 +140,14 @@
             "picksUrl": "",
             "picksCode": ""
         }
+    },
+    "chmu": {
+        "ftpInput": {
+            "path": "/external/chmi-meteo/",
+            "host": "",
+            "port": 21,
+            "user": "",
+            "password": ""
+        }
     }
 }
