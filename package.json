@@ -74,7 +74,7 @@
         "@golemio/city-districts": "1.2.0-dev.781381039",
         "@golemio/cli": "1.4.2-dev.781736252",
         "@golemio/core": "1.5.3-dev.785336364",
-        "@golemio/energetics": "1.2.4-dev.785775004",
+        "@golemio/energetics": "1.2.4-dev.786806113",
         "@golemio/fcd": "1.1.0-dev.781440665",
         "@golemio/firebase-pid-litacka": "1.1.0-dev.781424361",
         "@golemio/flow": "1.2.0-dev.781428480",
