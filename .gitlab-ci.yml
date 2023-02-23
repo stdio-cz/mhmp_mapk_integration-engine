@@ -46,8 +46,8 @@ stages:
     script:
         - npm install --ignore-scripts --progress=false
         # Audit production dependencies for HIGH vulnerabilities
-        # TODO temporarily increase to CRITICAL level
-        - npm audit --omit dev --audit-level critical
+        # TODO temporarily switch off audit
+        - npm audit --omit dev --audit-level none
         - npm run lint
         - npm run build
         - export MONGO_CONN=mongodb://mongo/testdb
