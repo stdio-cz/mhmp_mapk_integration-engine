@@ -1,5 +1,3 @@
-image: docker:stable
-
 variables:
     DOCKER_TLS_CERTDIR: "/certs"
     DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG"
@@ -80,11 +78,16 @@ stages:
 
 run_tests:
     extends: .run_tests
-    image: node:16.17.0-alpine
+    image: node:18.14.0-alpine
+
+run_tests-node-next:
+    extends: .run_tests
+    image: node:19.6.0-alpine
+    allow_failure: true
 
 up_down_migrations:
     stage: test
-    image: node:16.17.0-alpine
+    image: node:18.14.0-alpine
     services:
         - name: postgis/postgis:13-3.2-alpine
           alias: postgres
@@ -108,8 +111,3 @@ up_down_migrations:
         - if: $SKIP_TEST_AND_STAGES_AFTER
           when: never
         - when: always
-
-run_tests-node-next:
-    extends: .run_tests
-    image: node:18.11.0-alpine
-    allow_failure: true
