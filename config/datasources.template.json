@@ -25,8 +25,6 @@
     "Gardens": "https://www.mojepraha.eu/api/gardens",
     "HoppyGoSharedCars": "",
     "HoppyGoSharedCarsToken": "",
-    "IPRSortedWasteContainers": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOitem_b/WGS_84/ZPK_O_Kont_TOitem_b.json",
-    "IPRSortedWasteStations": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_Kont_TOstan_b/WGS_84/ZPK_O_Kont_TOstan_b.json",
     "MedicalInstitutionsHealthCare": "https://opendata.mzcr.cz/data/nrpzs/narodni-registr-poskytovatelu-zdravotnich-sluzeb.csv",
     "MedicalInstitutionsPharmacies": "https://opendata.sukl.cz/soubory/SODERECEPT/LEKARNYAKTUALNI.zip",
     "MunicipalAuthorities": "https://www.mojepraha.eu/api/municipal-authorities",
@@ -39,7 +37,6 @@
         "baseUrl": "https://gbfs.nextbike.net/maps/gbfs/v2/",
         "sourceIds": ["nextbike_tg", "nextbike_tq", "nextbike_tk", "nextbike_td"]
     },
-    "OICTSortedWasteContainers": "https://www.mojepraha.eu/api/sorted-waste-stations",
     "OICTEndpointApikey": "",
     "OICTEnergetikaApiHeaders": {
         "X-Api-Key": ""
@@ -54,7 +51,6 @@
         "OICT": "",
         "PRAHA": ""
     },
-    "POTEXSortedWasteContainers": "http://www.recyklujemetextil.cz/Api/places.json",
     "ParkingZones": "http://opendata.iprpraha.cz/CUR/DOP/DOP_ZPS_USEKY_p/WGS_84/DOP_ZPS_USEKY_p.json",
     "ParkingZonesTariffs": "https://vph.zpspraha.cz/api/v1/section/code/",
     "ParkingZonesTariffsAuth": "",
@@ -78,8 +74,6 @@
     },
     "SkodaPalaceQueues": "https://prod.kadlecelektro.cz/webcall/v4_mhmp/master/json.php",
     "SkodaPalaceQueuesApiKey": "",
-    "SensoneoSortedWasteSensors": "http://prodapiv1.sensoneo.com/data",
-    "SensoneoSortedWasteSensorsApiKey": "",
     "TSKFTP": {
         "host": "",
         "port": 21,
@@ -112,17 +106,6 @@
     },
     "WasteCollectionYards": "http://opendata.iprpraha.cz/CUR/ZPK/ZPK_O_SberOdpadu_b/WGS_84/ZPK_O_SberOdpadu_b.json",
     "WazeCCP": "https://world-georss.waze.com/rtserver/web/TGeoRSS?format=JSON&polygon=14.613000,50.291000;14.468000,50.308000;14.324000,50.287000;14.290000,50.231000;14.178000,50.132000;14.153000,49.974000;14.465000,49.885000;14.863000,49.929000;14.752000,50.128000;14.829000,50.250000;14.613000,50.291000;14.613000,50.291000",
-    "KSNKOApi": {
-        "url": "https://ksnko.praha.eu/api",
-        "user": "",
-        "password": ""
-    },
-    "SortedWastePicks": {
-        "host": "217.64.8.178",
-        "username": "",
-        "password": "",
-        "calculateToFutureDays": 90
-    },
     "WazeTT": [],
     "CeskyCarsharingRequestHeaders": {
         "Content-Type": "application/json"
