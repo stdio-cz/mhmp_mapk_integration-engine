@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Removed
+
+-   Removed Sorted Waste Stations module ([sorted-waste-stations/#17](https://gitlab.com/operator-ict/golemio/code/modules/sorted-waste-stations/-/issues/17))
+
 ## [2.5.1] - 2023-03-01
 
 -   No changelog
