@@ -10,13 +10,6 @@
     "Parkomats": [],
     "SharedBikes": [],
     "SharedCars": [],
-    "SortedWasteStations": [
-        "getSensorsAndPairThemWithContainers",
-        "updateSensorsMeasurement",
-        "updateSensorsMeasurementInContainer",
-        "updateSensorsPicks",
-        "updateSensorsPicksInContainer"
-    ],
     "WazeCCP": [],
     "WazeTT": []
 }
