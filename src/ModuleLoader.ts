@@ -36,7 +36,6 @@ export class ModuleLoader {
         "rush-hour-aggregation",
         "shared-bikes",
         "shared-cars",
-        "sorted-waste-stations",
         "traffic-cameras",
         "waste-collection",
         "waste-collection-yards",

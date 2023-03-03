@@ -4,7 +4,7 @@
 
 -   Connection Errors
     -   1001: Error while connecting to {name}.
-    -   1002: {name} connection not exists. Firts call connect() method.
+    -   1002: {name} connection not exists. First call connect() method.
     -   1003: Sending the message to exchange failed.
 -   Datasources Errors
     -   2001: Retrieving of the source data failed.
@@ -14,7 +14,6 @@
     -   2005: Error while getting data from DataSource stream.
     -   2006: Error while processing data from DataSource stream.
 -   Transformations Errors
-    -   3001: Sorted Waste Containers were not set. Use method setContaners().
     -   3002: {name} must be a valid number.
 -   Models Errors
     -   4001: Error while saving to database.
