@@ -98,7 +98,7 @@
         "@golemio/traffic-cameras": "1.1.2-dev.789822586",
         "@golemio/waste-collection": "1.1.5-dev.792442022",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
-        "@golemio/waze-ccp": "1.1.1-dev.791266521",
+        "@golemio/waze-ccp": "1.1.2-dev.797418563",
         "@golemio/waze-tt": "1.1.4-dev.789823073",
         "dotenv": "6.1.0"
     },
