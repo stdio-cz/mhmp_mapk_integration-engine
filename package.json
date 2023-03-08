@@ -96,7 +96,7 @@
         "@golemio/shared-bikes": "2.1.3-dev.799132944",
         "@golemio/shared-cars": "1.1.2-dev.789822228",
         "@golemio/traffic-cameras": "1.1.2-dev.789822586",
-        "@golemio/waste-collection": "1.1.6-dev.799460274",
+        "@golemio/waste-collection": "1.1.6-dev.799891162",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
         "@golemio/waze-ccp": "1.1.2-dev.797418563",
         "@golemio/waze-tt": "1.1.4-dev.789823073",
