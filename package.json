@@ -71,7 +71,7 @@
         "@golemio/bicycle-counters": "1.1.2-dev.783049297",
         "@golemio/bicycle-parkings": "1.1.0-dev.781404485",
         "@golemio/chmu": "1.0.1-dev.786936141",
-        "@golemio/city-districts": "1.2.2-dev.785543888",
+        "@golemio/city-districts": "1.2.3-dev.798873991",
         "@golemio/cli": "1.4.2-dev.781736252",
         "@golemio/core": "1.6.2-dev.792423989",
         "@golemio/energetics": "1.2.4-dev.786806113",
