@@ -123,10 +123,17 @@
     "CeskyCarsharingGeofencingApiUrl": "https://api.ceskycarsharing.cz/iis_cs_api_demo/IIS_API.svc/getPolygonsIct",
     "waste-collection": {
         "rfid": {
-            "containerVendorUrl": "",
-            "containerVendorCode": "",
-            "picksUrl": "",
-            "picksCode": ""
+            "sensoneo": {
+                "containerVendorUrl": "",
+                "containerVendorCode": "",
+                "picksUrl": "",
+                "picksCode": ""
+            },
+            "nam": {
+                "containerVendorUrl": "",
+                "picksUrl": "",
+                "apiKey": ""
+            }
         }
     },
     "chmu": {
