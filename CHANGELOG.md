@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.5.4] - 2023-03-13
+
 ### Fixed
 
 -   Update datasource template
