@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.5.4",
+    "version": "2.5.5",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -73,7 +73,7 @@
         "@golemio/chmu": "1.0.2",
         "@golemio/city-districts": "1.2.3",
         "@golemio/cli": "1.4.2",
-        "@golemio/core": "1.6.2",
+        "@golemio/core": "1.6.4",
         "@golemio/energetics": "1.2.4",
         "@golemio/fcd": "1.1.1",
         "@golemio/firebase-pid-litacka": "1.1.2",
