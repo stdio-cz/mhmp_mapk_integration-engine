@@ -94,7 +94,7 @@
         "@golemio/playgrounds": "1.1.2",
         "@golemio/public-toilets": "1.1.1",
         "@golemio/rush-hour-aggregation": "1.1.1",
-        "@golemio/shared-bikes": "2.1.7-dev.820198984",
+        "@golemio/shared-bikes": "2.1.7-dev.820208676",
         "@golemio/shared-cars": "1.1.1",
         "@golemio/traffic-cameras": "1.1.1",
         "@golemio/validator": "0.3.1",
