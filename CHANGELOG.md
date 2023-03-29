@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.5.9] - 2023-03-29
+
+-   No changelog
+
 ## [2.5.8] - 2023-03-27
 
 -   No changelog
