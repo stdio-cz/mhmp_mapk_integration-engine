@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+-   ITop configuration variables
+
 ## [2.5.9] - 2023-03-29
 
 -   No changelog
