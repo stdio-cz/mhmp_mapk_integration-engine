@@ -1,5 +1,5 @@
+import { AbstractWorker, IQueueDefinition } from "@golemio/core/dist/integration-engine";
 import { CustomError } from "@golemio/core/dist/shared/golemio-errors";
-import { IQueueDefinition, AbstractWorker } from "@golemio/core/dist/integration-engine";
 
 type LoadModulesOutput = {
     queueDefinitions: IQueueDefinition[];
@@ -12,7 +12,6 @@ export class ModuleLoader {
     private static modules = [
         "air-quality-stations",
         "bicycle-counters",
-        "bicycle-parkings",
         "city-districts",
         "energetics",
         "fcd",
@@ -30,9 +29,7 @@ export class ModuleLoader {
         "municipal-police-stations",
         "ndic",
         "parkings",
-        "parking-zones",
         "playgrounds",
-        "public-toilets",
         "rush-hour-aggregation",
         "shared-bikes",
         "shared-cars",
