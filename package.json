@@ -101,7 +101,7 @@
         "@golemio/waste-collection": "1.1.11-dev.826235572",
         "@golemio/waste-collection-yards": "1.2.2",
         "@golemio/waze-ccp": "1.1.3",
-        "@golemio/waze-tt": "1.1.5",
+        "@golemio/waze-tt": "1.1.5-dev.827567826",
         "dotenv": "6.1.0"
     },
     "overrides": {
