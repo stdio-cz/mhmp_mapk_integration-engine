@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 -   Removed modules: bicycle-parkings, parking-zones, public-toilets
 
+## [2.5.11] - 2023-04-05
+
+-   No changelog
+
 ## [2.5.10] - 2023-04-03
 
 -   No changelog
