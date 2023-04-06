@@ -123,6 +123,11 @@
                 "picksUrl": "",
                 "apiKey": ""
             }
+        },
+        "itop": {
+            "url": "",
+            "username": "",
+            "password": ""
         }
     },
     "chmu": {
