@@ -87,7 +87,7 @@
         "@golemio/municipal-libraries": "1.2.2",
         "@golemio/municipal-police-stations": "1.2.2",
         "@golemio/ndic": "1.1.2",
-        "@golemio/parkings": "1.4.6",
+        "@golemio/parkings": "1.4.7-dev.833498157",
         "@golemio/playgrounds": "1.1.2",
         "@golemio/rush-hour-aggregation": "1.1.2-dev.827352659",
         "@golemio/shared-bikes": "2.1.8",
