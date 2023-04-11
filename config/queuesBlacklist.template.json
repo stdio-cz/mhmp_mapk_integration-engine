@@ -9,7 +9,6 @@
     "ParkingZones": ["updateTariffs"],
     "Parkomats": [],
     "SharedBikes": [],
-    "SharedCars": [],
     "WazeCCP": [],
     "WazeTT": []
 }
