@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.6.0] - 2023-04-12
+
+### Added
+
+-   ITop configuration variables
+
+### Changed
+
+-   Removed modules: bicycle-parkings, parking-zones, public-toilets, shared-cars, meteosensors, traffic-cameras
+
 ## [2.5.11] - 2023-04-05
 
 -   No changelog
