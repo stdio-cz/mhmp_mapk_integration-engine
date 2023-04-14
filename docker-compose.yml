@@ -5,8 +5,7 @@ services:
       context: .
     environment:
       NODE_ENV: development
-      LOG_LEVEL: INFO
-      MONGO_CONN: mongodb://mongo:pass@mongo:27017/dataplatform?authSource=admin
+      LOG_LEVEL: INFO      
       POSTGRES_CONN: postgres://postgres:pass@postgres/dataplatform
       REDIS_CONN: redis://redis:6379/
       RABBIT_CONN: amqp://rabbit:pass@rabbitmq
@@ -22,18 +21,6 @@ services:
 ## Example how inject datasources.json file into build image
 #    volumes:
 #     - /my-path/datasources.json:/home/node/app/config/datasources.json
-
-  mongo:
-    image: mongo:4.0.5
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: pass
-    volumes:
-     - mongo_data:/data/db
-    ports:
-      - 27017:27017 # only for development
-    networks:
-     - golemio
 
   postgres:
     image: postgres:13.6
