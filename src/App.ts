@@ -1,11 +1,6 @@
 import { BaseApp, getServiceHealth, ILogger, IServiceCheck, Service } from "@golemio/core/dist/helpers";
 import { IConfiguration } from "@golemio/core/dist/integration-engine/config";
-import {
-    AMQPConnector,
-    MongoConnector,
-    PostgresConnector,
-    RedisConnector,
-} from "@golemio/core/dist/integration-engine/connectors";
+import { AMQPConnector, PostgresConnector, RedisConnector } from "@golemio/core/dist/integration-engine/connectors";
 import { IntegrationEngineContainer, ContainerToken } from "@golemio/core/dist/integration-engine/ioc/";
 import { filterQueueDefinitions, QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
@@ -82,7 +77,6 @@ export default class App extends BaseApp {
      * Start the database connection with initial configuration
      */
     private database = async (): Promise<void> => {
-        await MongoConnector.connect();
         await PostgresConnector.connect();
         await RedisConnector.connect();
     };
@@ -182,7 +176,6 @@ export default class App extends BaseApp {
 
         const services: IServiceCheck[] = [
             { name: Service.POSTGRES, check: PostgresConnector.isConnected },
-            { name: Service.MONGO, check: MongoConnector.isConnected },
             { name: Service.REDIS, check: RedisConnector.isConnected },
             { name: Service.RABBITMQ, check: AMQPConnector.isConnected },
         ];
