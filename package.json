@@ -92,7 +92,7 @@
         "@golemio/rush-hour-aggregation": "1.1.2",
         "@golemio/shared-bikes": "2.1.9",
         "@golemio/validator": "0.3.2-dev.833945190",
-        "@golemio/waste-collection": "1.2.1-dev.836242614",
+        "@golemio/waste-collection": "1.2.2-dev.844732164",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
         "@golemio/waze-ccp": "1.1.3-dev.799794087",
         "@golemio/waze-tt": "1.1.6-dev.842074412",
