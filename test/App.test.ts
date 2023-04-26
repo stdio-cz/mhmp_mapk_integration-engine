@@ -1,19 +1,14 @@
+import { config } from "@golemio/core/dist/integration-engine/config";
+import { AMQPConnector, PostgresConnector, RedisConnector } from "@golemio/core/dist/integration-engine/connectors";
+import { log } from "@golemio/core/dist/integration-engine/helpers";
+import express from "@golemio/core/dist/shared/express";
+import { CustomError, HTTPErrorHandler } from "@golemio/core/dist/shared/golemio-errors";
+import sentry from "@golemio/core/dist/shared/sentry";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
+import http from "http";
 import sinon, { SinonSandbox, SinonStub } from "sinon";
 import request from "supertest";
-import http from "http";
-import express from "@golemio/core/dist/shared/express";
-import sentry from "@golemio/core/dist/shared/sentry";
-import { HTTPErrorHandler, CustomError } from "@golemio/core/dist/shared/golemio-errors";
-import { log } from "@golemio/core/dist/integration-engine/helpers";
-import { config } from "@golemio/core/dist/integration-engine/config";
-import {
-    AMQPConnector,
-    MongoConnector,
-    PostgresConnector,
-    RedisConnector,
-} from "@golemio/core/dist/integration-engine/connectors";
 import App from "../src/App";
 
 chai.use(chaiAsPromised);
@@ -44,7 +39,6 @@ describe("App", () => {
 
     it("should have all config variables set", () => {
         expect(config).not.to.be.undefined;
-        expect(config.MONGO_CONN).not.to.be.undefined;
     });
 
     it("should have health check on /", (done) => {
@@ -59,10 +53,6 @@ describe("App", () => {
                     services: [
                         {
                             name: "PostgreSQL",
-                            status: "UP",
-                        },
-                        {
-                            name: "MongoDB",
                             status: "UP",
                         },
                         {
@@ -94,10 +84,6 @@ describe("App", () => {
                             status: "UP",
                         },
                         {
-                            name: "MongoDB",
-                            status: "UP",
-                        },
-                        {
                             name: "RedisDB",
                             status: "UP",
                         },
@@ -113,7 +99,6 @@ describe("App", () => {
 
     it("should have all connection/channels connected", async () => {
         expect(AMQPConnector.getChannel).not.to.throw(CustomError);
-        expect(MongoConnector.getConnection).not.to.throw(CustomError);
         expect(PostgresConnector.getConnection).not.to.throw(CustomError);
         expect(RedisConnector.getConnection).not.to.throw(CustomError);
     });
