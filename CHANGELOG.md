@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.6.3] - 2023-04-26
+
 ### Removed
 
 -   Mongo
