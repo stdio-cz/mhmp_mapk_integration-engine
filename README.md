@@ -13,7 +13,6 @@ Developed by http://operatorict.cz
 
 -   Docker Engine (https://docs.docker.com/)
 -   RabbitMQ (https://www.rabbitmq.com/)
--   Mongo (https://www.mongodb.com)
 -   Postgres (https://www.postgresql.org/)
 -   Redis (https://redis.io/)
 -   Golemio Schema Definitions
@@ -29,7 +28,6 @@ Developed by http://operatorict.cz
 
 -   node.js (https://nodejs.org)
 -   RabbitMQ (https://www.rabbitmq.com/)
--   Mongo (https://www.mongodb.com)
 -   Postgres (https://www.postgresql.org/)
 -   Redis (https://redis.io/)
 -   TypeScript (https://www.typescriptlang.org/)
@@ -57,7 +55,7 @@ Environment options can be set with the system (e.g. in debian with `export NODE
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
-### Migrating PostgreSQL and MongoDB databases
+### Migrating PostgreSQL database
 
 Before start the databases have to be created and migrated. In this case is used `db-migrate` from the `@golemio/schema-definitions` module.
 
