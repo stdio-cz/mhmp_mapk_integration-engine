@@ -36,7 +36,7 @@
     "OICTEnergetikaApiHeaders": {
         "X-Api-Key": ""
     },
-    "OICTEnergetikaApiUrl": "https://api.oictenergetika.cz",    
+    "OICTEnergetikaApiUrl": "https://api.oictenergetika.cz",
     "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
     "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
     "BicycleCountersEcoCounter": "https://apieco.eco-counter-tools.com/api/1.0/site",
@@ -53,7 +53,7 @@
         "url": "",
         "user": "",
         "password": ""
-    },    
+    },
     "RekolaSharedBikesBaseUrl": "https://www.rekola.cz/api/mobile/regions/1",
     "RekolaSharedBikesHeaders": {
         "X-Api-Version": "",
@@ -84,8 +84,8 @@
     "WasteCollectionSensorSources": {
         "sensoneoApi": {
             "name": "Sensoneo",
-            "url": "https://sensoneotools.azurewebsites.net/api",
-            "code": ""
+            "url": "https://api.sensoneo.com",
+            "token": ""
         },
         "sensorityApi": {
             "name": "Sensority",
@@ -114,9 +114,8 @@
         "rfid": {
             "sensoneo": {
                 "containerVendorUrl": "",
-                "containerVendorCode": "",
                 "picksUrl": "",
-                "picksCode": ""
+                "apiKey": ""
             },
             "nam": {
                 "containerVendorUrl": "",
