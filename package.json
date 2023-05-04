@@ -91,6 +91,7 @@
         "@golemio/playgrounds": "1.1.2-dev.789827119",
         "@golemio/rush-hour-aggregation": "1.1.3-dev.839634676",
         "@golemio/shared-bikes": "2.1.10-dev.839634997",
+        "@golemio/traffic-common": "0.1.0-dev.856907064",
         "@golemio/validator": "0.3.3-dev.849225543",
         "@golemio/waste-collection": "1.2.2-dev.855985685",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
