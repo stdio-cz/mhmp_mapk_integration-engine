@@ -137,5 +137,10 @@
             "user": "",
             "password": ""
         }
+    },
+    "TrafficCommon": {
+        "RsdTmcOsmMapping": {
+            "url": "https://deviptoict.blob.core.windows.net/storage/OSM-TMC/rsd_tmc_osm_mapping.csv"
+        }
     }
 }
