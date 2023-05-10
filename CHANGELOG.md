@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 -   New sensoneo API ([p0149#284](https://gitlab.com/operator-ict/golemio/projekty/oict/p0149-chytry-svoz-odpadu/-/issues/284))
 
+## [2.6.5] - 2023-05-10
+
+-   No changelog
+
 ## [2.6.4] - 2023-05-03
 
 -   No changelog
