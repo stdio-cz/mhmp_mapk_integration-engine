@@ -30,7 +30,7 @@
             "cache-control": "no-cache"
         },
         "baseUrl": "https://gbfs.nextbike.net/maps/gbfs/v2/",
-        "sourceIds": ["nextbike_tg", "nextbike_tq", "nextbike_tk", "nextbike_td"]
+        "sourceIds": ["nextbike_tg", "nextbike_tq", "nextbike_tk", "nextbike_td", "nextbike_co", "nextbike_ty"]
     },
     "OICTEndpointApikey": "",
     "OICTEnergetikaApiHeaders": {
