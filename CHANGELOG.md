@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+-   New datasources for Nextbike([ipt#131](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/131))
 -   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
 
 ### Changed
