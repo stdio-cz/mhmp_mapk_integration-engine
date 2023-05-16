@@ -36,6 +36,9 @@
     "OICTEnergetikaApiHeaders": {
         "X-Api-Key": ""
     },
+    "OICTEnergetikaConsumptionApiHeaders": {
+        "X-Api-Key": ""
+    },
     "OICTEnergetikaApiUrl": "https://api.oictenergetika.cz",
     "BicycleCountersCamea": "https://unicam.camea.cz/api/bike-counter/get-all-sensors/",
     "BicycleCountersCameaMeasurements": "https://unicam.camea.cz/api/bike-counter/get-sensor-data-history/id/:id/from/:from/to/:to",
