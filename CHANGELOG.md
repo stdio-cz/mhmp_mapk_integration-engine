@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+-   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
+
 ### Changed
 
 -   New sensoneo API ([p0149#284](https://gitlab.com/operator-ict/golemio/projekty/oict/p0149-chytry-svoz-odpadu/-/issues/284))
