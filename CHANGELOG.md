@@ -6,12 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
--   New datasources for Nextbike([ipt#131](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/131))
 -   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
 
 ### Changed
 
 -   New sensoneo API ([p0149#284](https://gitlab.com/operator-ict/golemio/projekty/oict/p0149-chytry-svoz-odpadu/-/issues/284))
+
+## [2.6.8] - 2023-05-22
+
+### Added
+
+-   New datasources for Nextbike([ipt#131](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/131))
 
 ## [2.6.7] - 2023-05-18
 
