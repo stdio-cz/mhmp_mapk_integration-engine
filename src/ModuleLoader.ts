@@ -1,5 +1,5 @@
 import { AbstractWorker, IQueueDefinition } from "@golemio/core/dist/integration-engine";
-import { CustomError } from "@golemio/core/dist/shared/golemio-errors";
+import { FatalError } from "@golemio/core/dist/shared/golemio-errors";
 
 type LoadModulesOutput = {
     queueDefinitions: IQueueDefinition[];
@@ -57,7 +57,7 @@ export class ModuleLoader {
                     output.workers = output.workers.concat(...workers);
                 }
             } catch (err) {
-                throw new CustomError(`Cannot import module ${pkg}.`, false, "ModuleLoader", 6004, err);
+                throw new FatalError(`Cannot import module ${pkg}.`, "ModuleLoader", err);
             }
         }
 

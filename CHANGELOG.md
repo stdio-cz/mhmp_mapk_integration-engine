@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+-   Update golemio errors ([core#62](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/62))
+
 ## [2.6.10] - 2023-05-29
 
 -   No changelog

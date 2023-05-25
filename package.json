@@ -72,7 +72,7 @@
         "@golemio/chmu": "1.0.2",
         "@golemio/city-districts": "1.2.4",
         "@golemio/cli": "1.4.2",
-        "@golemio/core": "1.6.9",
+        "@golemio/core": "1.7.0",
         "@golemio/energetics": "1.2.4",
         "@golemio/errors": "1.1.1",
         "@golemio/fcd": "1.1.3",
