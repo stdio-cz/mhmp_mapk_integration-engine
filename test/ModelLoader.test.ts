@@ -1,6 +1,6 @@
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { CustomError } from "@golemio/core/dist/shared/golemio-errors";
+import { FatalError } from "@golemio/core/dist/shared/golemio-errors";
 import { AbstractWorker } from "@golemio/core/dist/integration-engine";
 import { ModuleLoader } from "../src/ModuleLoader";
 
@@ -24,7 +24,7 @@ describe("ModuleLoader", () => {
 
             const promise = ModuleLoader.loadModules();
             await expect(promise).to.be.rejectedWith(
-                CustomError,
+                FatalError,
                 "Cannot import module @golemio/fus-ro-dah/dist/integration-engine"
             );
         });

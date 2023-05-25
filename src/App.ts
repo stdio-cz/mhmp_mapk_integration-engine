@@ -5,7 +5,13 @@ import { IntegrationEngineContainer, ContainerToken } from "@golemio/core/dist/i
 import { filterQueueDefinitions, QueueProcessor } from "@golemio/core/dist/integration-engine/queueprocessors";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import express, { NextFunction, Request, RequestHandler, Response } from "@golemio/core/dist/shared/express";
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import {
+    FatalError,
+    GeneralError,
+    ErrorHandler,
+    HTTPErrorHandler,
+    IGolemioError,
+} from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import sentry from "@golemio/core/dist/shared/sentry";
 import http from "http";
@@ -147,7 +153,7 @@ export default class App extends BaseApp {
         // Setup error handler hook on server error
         this.server.on("error", (err) => {
             sentry.captureException(err);
-            ErrorHandler.handle(new CustomError("Could not start a server", false, undefined, 1, err), this.log);
+            ErrorHandler.handle(new FatalError("Could not start a server", undefined, err), this.log);
         });
         // Serve the application at the given port
         this.server.listen(this.port, () => {
@@ -215,13 +221,13 @@ export default class App extends BaseApp {
         this.express.use(sentry.Handlers.errorHandler({ shouldHandleError: () => true }) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
-        this.express.use((_req: Request, _res: Response, next: NextFunction) => {
-            next(new CustomError("Not found", true, undefined, 404));
+        this.express.use((req: Request, _res: Response, next: NextFunction) => {
+            next(new GeneralError("Route not found", "App", new Error(`Called ${req.method} ${req.url}`), 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-            const error: ICustomErrorObject = HTTPErrorHandler.handle(err, this.log);
+            const error: IGolemioError = HTTPErrorHandler.handle(err, this.log);
             if (error) {
                 this.log.silly("Error caught by the router error handler.");
                 res.setHeader("Content-Type", "application/json; charset=utf-8");
