@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.6.7",
+    "version": "2.6.10",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
