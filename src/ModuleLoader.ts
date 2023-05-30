@@ -30,6 +30,7 @@ export class ModuleLoader {
         "parkings",
         "playgrounds",
         "rush-hour-aggregation",
+        "traffic-common",
         "shared-bikes",
         "waste-collection",
         "waste-collection-yards",
