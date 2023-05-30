@@ -76,7 +76,7 @@
         "@golemio/energetics": "1.2.5-dev.877451681",
         "@golemio/errors": "2.0.0-dev.877231197",
         "@golemio/fcd": "1.1.3-dev.877575111",
-        "@golemio/firebase-pid-litacka": "1.1.3-dev.877494445",
+        "@golemio/firebase-pid-litacka": "1.1.3-dev.882085174",
         "@golemio/flow": "1.2.2-dev.877589726",
         "@golemio/gardens": "1.2.2-dev.877601574",
         "@golemio/medical-institutions": "1.1.3-dev.877625444",
