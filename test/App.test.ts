@@ -2,7 +2,7 @@ import { config } from "@golemio/core/dist/integration-engine/config";
 import { AMQPConnector, PostgresConnector, RedisConnector } from "@golemio/core/dist/integration-engine/connectors";
 import { log } from "@golemio/core/dist/integration-engine/helpers";
 import express from "@golemio/core/dist/shared/express";
-import { CustomError, HTTPErrorHandler } from "@golemio/core/dist/shared/golemio-errors";
+import { HTTPErrorHandler } from "@golemio/core/dist/shared/golemio-errors";
 import sentry from "@golemio/core/dist/shared/sentry";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -98,9 +98,9 @@ describe("App", () => {
     });
 
     it("should have all connection/channels connected", async () => {
-        expect(AMQPConnector.getChannel).not.to.throw(CustomError);
-        expect(PostgresConnector.getConnection).not.to.throw(CustomError);
-        expect(RedisConnector.getConnection).not.to.throw(CustomError);
+        expect(AMQPConnector.getChannel).not.to.throw();
+        expect(PostgresConnector.getConnection).not.to.throw();
+        expect(RedisConnector.getConnection).not.to.throw();
     });
 
     describe("expressServer", () => {
