@@ -89,7 +89,7 @@
         "@golemio/ndic": "1.1.6-dev.884560634",
         "@golemio/parkings": "1.4.15-dev.883147140",
         "@golemio/playgrounds": "1.1.5-dev.884562078",
-        "@golemio/rush-hour-aggregation": "1.1.4-dev.884564006",
+        "@golemio/rush-hour-aggregation": "1.1.4-dev.884898489",
         "@golemio/shared-bikes": "2.1.12-dev.884565313",
         "@golemio/traffic-common": "0.1.2-dev.884654558",
         "@golemio/validator": "0.3.3-dev.849225543",
