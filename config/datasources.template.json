@@ -7,11 +7,6 @@
     },
     "AirQualityStations1H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/actual_hour_data_cze.json",
     "AirQualityStations3H": "http://portal.chmi.cz/files/portal/docs/uoco/web_generator/aqindex_3h_cze.json",
-    "BeRiderGeofencingApiUrl": "https://coaxuxqt62.execute-api.eu-west-1.amazonaws.com/api/v1/zone",
-    "BeRiderVehiclesHeaders": {
-        "cache-control": "no-cache"
-    },
-    "BeRiderVehiclesApiUrl": "https://coaxuxqt62.execute-api.eu-west-1.amazonaws.com/api/v1/external/my-prague/g5zzbif5h2ab1hd0isjs8wxjaci",
     "CityDistricts": "http://opendata.iprpraha.cz/CUR/DTMP/TMMESTSKECASTI_P/WGS_84/TMMESTSKECASTI_P.json",
     "FlowAPI": {
         "url": "https://10.200.4.4:8080/api/cubes",
