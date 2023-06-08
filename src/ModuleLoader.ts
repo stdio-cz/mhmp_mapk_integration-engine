@@ -32,6 +32,7 @@ export class ModuleLoader {
         "rush-hour-aggregation",
         "traffic-common",
         "shared-bikes",
+        "traffic-common",
         "waste-collection",
         "waste-collection-yards",
         "waze-ccp",

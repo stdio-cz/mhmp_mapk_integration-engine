@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+-   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
+
 ### Changed
 
+-   New sensoneo API ([p0149#284](https://gitlab.com/operator-ict/golemio/projekty/oict/p0149-chytry-svoz-odpadu/-/issues/284))
 -   Typescript version update to 5.1.3 ([core#70](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/70))
 
 ## [2.7.2] - 2023-06-07
@@ -32,7 +37,9 @@ All notable changes to this project will be documented in this file.
 
 ## [2.6.8] - 2023-05-22
 
--   No changelog
+### Added
+
+-   New datasources for Nextbike([ipt#131](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/131))
 
 ## [2.6.7] - 2023-05-18
 

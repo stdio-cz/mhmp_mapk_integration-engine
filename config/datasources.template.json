@@ -30,10 +30,13 @@
             "cache-control": "no-cache"
         },
         "baseUrl": "https://gbfs.nextbike.net/maps/gbfs/v2/",
-        "sourceIds": ["nextbike_tg", "nextbike_tq", "nextbike_tk", "nextbike_td"]
+        "sourceIds": ["nextbike_tg", "nextbike_tq", "nextbike_tk", "nextbike_td", "nextbike_co", "nextbike_ty"]
     },
     "OICTEndpointApikey": "",
     "OICTEnergetikaApiHeaders": {
+        "X-Api-Key": ""
+    },
+    "OICTEnergetikaConsumptionApiHeaders": {
         "X-Api-Key": ""
     },
     "OICTEnergetikaApiUrl": "https://api.oictenergetika.cz",
@@ -84,8 +87,8 @@
     "WasteCollectionSensorSources": {
         "sensoneoApi": {
             "name": "Sensoneo",
-            "url": "https://sensoneotools.azurewebsites.net/api",
-            "code": ""
+            "url": "https://api.sensoneo.com",
+            "token": ""
         },
         "sensorityApi": {
             "name": "Sensority",
@@ -114,9 +117,8 @@
         "rfid": {
             "sensoneo": {
                 "containerVendorUrl": "",
-                "containerVendorCode": "",
                 "picksUrl": "",
-                "picksCode": ""
+                "apiKey": ""
             },
             "nam": {
                 "containerVendorUrl": "",
