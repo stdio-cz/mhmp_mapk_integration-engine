@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Removed
+
+-   Remove BeRider integration ([p0131#136](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/136))
+
 ### Added
 
 -   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
