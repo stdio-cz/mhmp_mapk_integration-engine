@@ -1,6 +1,6 @@
 {
     "name": "@golemio/integration-engine",
-    "version": "2.7.3",
+    "version": "2.7.5",
     "description": "Integration Engine of the Golemio Data Platform System",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -85,7 +85,7 @@
         "@golemio/municipal-authorities": "1.1.4-dev.893772486",
         "@golemio/municipal-libraries": "1.2.6-dev.893773326",
         "@golemio/municipal-police-stations": "1.2.5-dev.893773781",
-        "@golemio/ndic": "1.1.6-dev.893837520",
+        "@golemio/ndic": "1.1.7-dev.897039022",
         "@golemio/parkings": "1.5.2-dev.893789552",
         "@golemio/playgrounds": "1.1.5-dev.893774497",
         "@golemio/rush-hour-aggregation": "1.1.5-dev.893791081",
