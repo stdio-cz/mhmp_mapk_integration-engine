@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 
 -   Typescript version update to 5.1.3 ([core#70](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/70))
 
+## [2.7.4] - 2023-06-12
+
+-   No changelog
+
+## [2.7.3] - 2023-06-12
+
+-   No changelog
+
 ## [2.7.2] - 2023-06-07
 
 -   No changelog
