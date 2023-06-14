@@ -4,10 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Removed
-
--   Remove BeRider integration ([p0131#136](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/136))
-
 ### Added
 
 -   New energetics consumption API key ([issue](https://gitlab.com/operator-ict/golemio/projekty/energetika/praha-10-spoluprace/-/issues/5))
@@ -15,6 +11,13 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 -   New sensoneo API ([p0149#284](https://gitlab.com/operator-ict/golemio/projekty/oict/p0149-chytry-svoz-odpadu/-/issues/284))
+
+### Removed
+
+-   Remove BeRider integration ([p0131#136](https://gitlab.com/operator-ict/golemio/projekty/oict/p0131.-data-pro-intermod-ln-naviga-n-syst-m/-/issues/136))
+
+## [2.7.5] - 2023-06-14
+
 -   Typescript version update to 5.1.3 ([core#70](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/70))
 
 ## [2.7.4] - 2023-06-12
