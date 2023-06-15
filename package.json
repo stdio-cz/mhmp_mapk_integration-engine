@@ -79,7 +79,7 @@
         "@golemio/flow": "1.2.3-dev.893769281",
         "@golemio/gardens": "1.2.4-dev.893770706",
         "@golemio/medical-institutions": "1.1.5-dev.893771106",
-        "@golemio/microclimate": "1.1.8-dev.898469744",
+        "@golemio/microclimate": "1.1.9-dev.901225675",
         "@golemio/mobile-app-statistics": "1.1.4-dev.893771805",
         "@golemio/mos": "1.1.6-dev.893772058",
         "@golemio/municipal-authorities": "1.1.4-dev.893772486",
